@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/tip_dialog_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/ic_agree"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_msg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="您的认证资料我们已经收到"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/tv_msg_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:text="我们将在24小时内进行审核\n如果你有疑问请随时拨打客户电话"
+        android:lineSpacingExtra="6dp"
+        android:textColor="#7d7d7d"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:background="#e5e5e5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="15dp"
+        >
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:text="010-58778731"
+            android:textStyle="bold"
+            android:textScaleX="1.2"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_toRightOf="@id/tv_phone"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_phone"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</LinearLayout>

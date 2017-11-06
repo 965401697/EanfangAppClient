@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+
+//lambda
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField("String", "OSS_SERVER", "\"http://eanfangx.oss-cn-beijing.aliyuncs.com/\"")
+        buildConfigField("String", "OSS_BUCKET", "\"eanfangx\"")
+        buildConfigField("String", "OSS_ENDPOINT", "\"http://img-cn-beijing.aliyuncs.com\"")
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:26.0.2'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    provided 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
+    provided 'com.github.bumptech.glide:glide:3.7.0'
+    provided 'com.squareup.picasso:picasso:2.5.2'
+    provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    provided 'org.xutils:xutils:3.3.36'
+    compile 'com.android.support:recyclerview-v7:26.0.2'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2'
+
+    //Stram API
+    compile 'com.annimon:stream:1.1.8'
+//    lambda
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
+}
+
+

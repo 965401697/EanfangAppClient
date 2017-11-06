@@ -3,4 +3,32 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary_client">#3F51B5</color>
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <color name="title_bar_color">#F8602F</color>
+    <color name="window_background">#f0f0f0</color>
+    <color name="client">#2e8bfc</color>
+    <color name="font_color">#8b8b8b</color>
+    <color name="font_dark_color">#313131</color>
+    <color name="content_bg">#F5F5F5</color>
+    <color name="tab_selected">#2297e8</color>
+    <color name="background">#F5F5F5</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
+    <color name="transparent_gray">#f8f8f8</color>
+    <color name="preson_leave_admin">#00d08e</color>
+    <color name="preson_leave_manager">#ffa53a</color>
+    <color name="preson_leave_employee">#cccccc</color>
+    <color name="gray">#ccc</color>
+    <color name="admin">#21ce90</color>
+    <color name="manage">#fda447</color>
+    <color name="staff">#ccc</color>
+    <color name="common_ext_color">#7f7f7f</color>
+
+    <color name="client_form_title_color">#009E97</color>
+    <!--<color name="worker_form_title_color">#E60013</color>-->
+    <color name="worker_form_title_color">#009E97</color>
+    <color name="config_black_color">#323333</color>
+    <color name="camera_color">#ff0000</color>
 </resources>

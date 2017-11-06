@@ -1,0 +1,47 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.eanfang">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!--获取Camera权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.hradware.camera" />
+    <uses-permission android:name="android.hradware.camera.autofocus" />
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-sdk tools:overrideLibrary="org.xutils" />
+
+    <application>
+        <!--图片预览界面-->
+        <activity
+            android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--图片选择界面-->
+        <activity
+            android:name="com.photopicker.com.activity.BGAPhotoPickerActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <!--图片选择预览界面-->
+        <activity
+            android:name="com.photopicker.com.activity.BGAPhotoPickerPreviewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/BGAPPTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.camera.view.TakePhotoActivity"
+            android:screenOrientation="portrait"
+            />
+    </application>
+
+</manifest>
