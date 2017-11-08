@@ -9,6 +9,7 @@ import android.content.Context;
 import com.eanfang.util.FileUtils;
 import com.eanfang.util.SharePreferenceUtil;
 
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.util.ConfigUtils;
 
 

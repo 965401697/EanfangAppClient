@@ -38,8 +38,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 
-
-
 /**
  * BaseAppCompatFragmentActivity
  *
@@ -220,4 +218,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
     public void startAnimActivity(Intent intent) {
         startActivity(intent);
     }
+
+
+
+
+
 }

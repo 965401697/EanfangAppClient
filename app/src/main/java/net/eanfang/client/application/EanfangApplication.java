@@ -1,5 +1,7 @@
 package net.eanfang.client.application;
 
+import android.util.Log;
+
 import com.camera.CameraApplication;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -13,9 +15,14 @@ import com.okgo.cookie.store.DBCookieStore;
 import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.client.config.Config;
 import net.eanfang.client.util.FrecsoImagePipelineUtil;
+import net.eanfang.client.util.LocationUtil;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -23,7 +30,7 @@ import java.util.logging.Level;
 import okhttp3.OkHttpClient;
 
 /**
- * @author hou
+ * @author Mr.hou
  *         Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
@@ -49,7 +56,29 @@ public class EanfangApplication extends CustomeApplication {
         Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
         SharePreferenceUtil.get().init(mEanfangApplication);
+        LocationUtil.get().init(this);
         Config.getConfig().init(getApplicationContext());
+        //bugly初始化
+        CrashReport.initCrashReport(getApplicationContext(), "6f03b7d57f", false);
+        initXinGe();
+    }
+
+    private void initXinGe() {
+        //开启信鸽日志输出
+        XGPushConfig.enableDebug(this, true);
+        //信鸽注册代码
+        XGPushManager.registerPush(this, "184849498", new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+
     }
 
     public void initOkGo() {

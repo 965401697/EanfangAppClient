@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "net.eanfang.client"
         minSdkVersion 17
@@ -9,19 +10,67 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
+        buildConfigField("String", "TYPE", "\"client\"")
+        buildConfigField("String", "TYPE_APP", "\"app\"")
+        buildConfigField("int", "APP_TYPE", "0")
+
+        buildConfigField("String", "HOST", "\"http://106.14.44.213:8080/eanfang/\"")
+        buildConfigField("String", "API_HOST", "\"http://106.14.44.213:8080/eanfang/app/\"")
+        // buildConfigField("String", "HOST", "\"http://192.168.0.220:8080/eanfang/\"")
+        // buildConfigField("String", "API_HOST", "\"http://192.168.0.220:8080/eanfang/app/\"")
+
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+        }
+        //信鸽配置
+        manifestPlaceholders = [
+                XG_ACCESS_ID : "2100270001",
+                XG_ACCESS_KEY: "ADCL916N8D7M",
+        ]
     }
-    buildTypes {
+
+    //签名设置
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            keyAlias 'clients'
+            keyPassword 'eanfang'
+            storeFile file('../app/keystore/client.jks')
+            storePassword 'eanfang'
         }
     }
-    buildToolsVersion '26.0.2'
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+        }
+        release {
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名配置
+            signingConfig signingConfigs.release
+        }
+
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    dexOptions {//解决分包gradle 编译oom问题
+        incremental true
+        javaMaxHeapSize "4g"
+    }
 }
 
 dependencies {
@@ -45,5 +94,26 @@ dependencies {
     compile 'com.aliyun.dpa:oss-android-sdk:2.4.4'
     //takephoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    //bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
+    //信鸽稳定版
+    compile 'com.tencent.xinge:xinge:3.1.81-alpha'
+    //wup包
+    compile 'com.tencent.wup:wup:1.0.0.E-alpha'
+    //mid包
+    compile 'com.tencent.mid:mid:3.72.4-alpha'
+    //信鸽beta版（推荐）
+    //不采集安装列表
+    compile 'com.tencent.xinge:xinge:3.1.2-beta'
+    //采集安装列表
+    compile 'com.tencent.xinge:xinge:3.1.2-a-beta'
+    //wup包
+    compile 'com.tencent.wup:wup:1.0.0.E-alpha'
+    //mid包
+    compile 'com.tencent.mid:mid:3.9.0-alpha'
 
 }
