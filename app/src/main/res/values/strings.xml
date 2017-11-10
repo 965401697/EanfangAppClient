@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">监控服务管家</string>
+    <!--登录页-->
+    <string name="read"><u>阅读协议</u></string>
+    <string name="forget_password"><u>忘记密码？</u></string>
+    <string name="user_register"><u>注册</u></string>
+    <string name="user_login">登录</string>
 </resources>

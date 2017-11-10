@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.jakewharton.butterknife'
+//lambda
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -16,10 +18,10 @@ android {
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
 
-        buildConfigField("String", "HOST", "\"http://106.14.44.213:8080/eanfang/\"")
-        buildConfigField("String", "API_HOST", "\"http://106.14.44.213:8080/eanfang/app/\"")
-        // buildConfigField("String", "HOST", "\"http://192.168.0.220:8080/eanfang/\"")
-        // buildConfigField("String", "API_HOST", "\"http://192.168.0.220:8080/eanfang/app/\"")
+//        buildConfigField("String", "HOST", "\"http://106.14.44.213:8080/eanfang/\"")
+//        buildConfigField("String", "API_HOST", "\"http://106.14.44.213:8080/eanfang/app/\"")
+         buildConfigField("String", "HOST", "\"http://192.168.0.220:8080/eanfang/\"")
+         buildConfigField("String", "API_HOST", "\"http://192.168.0.220:8080/eanfang/app/\"")
 
 
         ndk {
@@ -81,39 +83,72 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':eanfang')
+
     //fresco
     implementation 'com.facebook.fresco:fresco:1.5.0'
+
     //gson
     implementation 'com.google.code.gson:gson:2.8.2'
+
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support:multidex:1.0.0'
+
     //recyclerview adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.9'
+
     //OSS
     compile 'com.aliyun.dpa:oss-android-sdk:2.4.4'
+
     //takephoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
+
     //bugly
     compile 'com.tencent.bugly:crashreport:latest.release'
+
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
+
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
     //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
+
     //信鸽稳定版
     compile 'com.tencent.xinge:xinge:3.1.81-alpha'
+
     //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-alpha'
+
     //mid包
     compile 'com.tencent.mid:mid:3.72.4-alpha'
+
     //信鸽beta版（推荐）
+
     //不采集安装列表
     compile 'com.tencent.xinge:xinge:3.1.2-beta'
+
     //采集安装列表
     compile 'com.tencent.xinge:xinge:3.1.2-a-beta'
+
     //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-alpha'
+
     //mid包
     compile 'com.tencent.mid:mid:3.9.0-alpha'
 
+    //高德
+    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
+    implementation files('libs/AMap_Location_V3.6.0_20170918.jar')
+    implementation files('libs/Android_Map3D_SDK_V5.4.0_20170928.jar')
+    implementation files('libs/Volley.jar')
+    implementation files('libs/AMap_Search_V5.3.1_20170817.jar')
+    implementation files('libs/alipaySdk-20170922.jar')
+
+    //微信
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    //butterknife
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
 }
