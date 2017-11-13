@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseFragment;
@@ -26,7 +27,8 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        setTitle("我的");
+        setLeftVisible(View.GONE);
     }
 
     @Override

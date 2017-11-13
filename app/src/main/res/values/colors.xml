@@ -31,4 +31,5 @@
     <color name="worker_form_title_color">#009E97</color>
     <color name="config_black_color">#323333</color>
     <color name="camera_color">#ff0000</color>
+    <color name="work_logo_color">#2196f3</color>
 </resources>

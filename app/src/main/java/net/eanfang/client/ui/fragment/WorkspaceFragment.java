@@ -14,6 +14,7 @@ import net.eanfang.client.ui.base.BaseFragment;
  */
 
 public class WorkspaceFragment extends BaseFragment {
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_workspace;

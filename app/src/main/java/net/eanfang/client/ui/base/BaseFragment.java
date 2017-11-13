@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.eanfang.base.IBase;
 import com.eanfang.util.ToastUtil;
+
+import net.eanfang.client.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -173,6 +177,16 @@ public abstract class BaseFragment extends Fragment implements IBase {
         EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
+    public void setTitle(int id) {
+        ((TextView) findViewById(R.id.tv_title)).setText(id);
+    }
 
+    public void setTitle(String id) {
+        ((TextView) findViewById(R.id.tv_title)).setText(id);
+    }
+
+    public void setLeftVisible(int visible){
+        ((ImageView) findViewById(R.id.iv_left)).setVisibility(visible);
+    }
 
 }
