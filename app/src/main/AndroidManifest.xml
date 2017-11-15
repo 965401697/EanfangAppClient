@@ -67,6 +67,7 @@
             </intent-filter>
         </activity>
         <!--<activity android:name=".ui.activity.MainActivity" />-->
+        <activity android:name=".ui.activity.CameraActivity"/>
 
         <!--支付宝支付-->
         <activity
