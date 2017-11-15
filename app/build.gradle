@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-//lambda
-apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -151,4 +149,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
+
 }

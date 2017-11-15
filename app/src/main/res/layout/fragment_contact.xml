@@ -32,16 +32,14 @@
 
     </RelativeLayout>
 
-    <ScrollView
+
+    <include layout="@layout/layout_contacts_header" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rev_company_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>
