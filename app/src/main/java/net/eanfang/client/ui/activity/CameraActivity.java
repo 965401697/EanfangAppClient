@@ -41,6 +41,7 @@ import java.io.FileNotFoundException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
  * Created by Mr.hou
  *
@@ -85,7 +86,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
     @BindView(R.id.et_address)
     EditText etAddress;
 
-    public String time, weather, city_address;
+    private String time, weather, city_address;
 
     WeatherSearchQuery query;
     WeatherSearch search;
@@ -94,7 +95,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
     private String region_name;
     private String project_content;
     private String project_type;
-    public  String address;
+    private String address;
     private String creatUser;
     private int color;
 
