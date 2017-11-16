@@ -151,4 +151,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
 
+    compile 'cn.bingoogolapple:bga-adapter:1.1.5@aar'
+
+
 }

@@ -8,14 +8,20 @@ import android.view.ViewGroup;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.SharePreferenceUtil;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.network.apiservice.UserApi;
+import net.eanfang.client.network.request.EanfangCallback;
+import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.ConfigUtils;
 import net.eanfang.client.util.LogUtils;
 import net.eanfang.client.util.PrefUtils;
 import net.eanfang.client.util.StringUtils;
+
+import org.json.JSONObject;
 
 /**
  * Created by MrHou
@@ -35,6 +41,7 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     private boolean isLoginReady = false; //是否登录成功
     private boolean isCheckReady = false;//是否校验成功
     int[] drawables_client = {R.mipmap.client0, R.mipmap.client1, R.mipmap.client2, R.mipmap.client3};
+    int[] drawables_worker = {R.mipmap.worker0, R.mipmap.worker1, R.mipmap.worker2, R.mipmap.worker3};
     private boolean isValid;
 
     @Override
@@ -90,7 +97,13 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     //加载引导页
     void isFirst() {
         if (!isFirst) {
-            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_client, this);
+            if (BuildConfig.APP_TYPE == 0) {
+                new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_client, this);
+            } else {
+                new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_worker, this);
+            }
+
+
             try {
                 PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, true);
             } catch (Exception e) {
@@ -115,40 +128,40 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
             go();
             return;
         }
-//        EanfangHttp.get(UserService.CHECK_TOKEN)
-//                .execute(new EanfangCallback<User>(SplashActivity.this, false) {
-//                    @Override
-//                    public void onSuccess(User bean) {
-//                        super.onSuccess(bean);
-//                        Object object = bean;
-//                        EanfangApplication.get().set(User.class.getName(), object instanceof User);
-//
-//                        if (object instanceof User) {
-//                            LogUtils.d(TAG, "user" + object.toString());
-//                            User user = (User) object;
-//                            EanfangApplication.get().set(User.class.getName(), user);
-//                            isLoginReady = true;
-//                            go();
-//                        } else {
-//                            isCheckReady = true;
-//                            go();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        super.onError(message);
-//                        isCheckReady = true;
-//                        go();
-//                    }
-//
-//                    @Override
-//                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-//                        super.onFail(code, message, jsonObject);
-//                        isCheckReady = true;
-//                        go();
-//                    }
-//                });
+        EanfangHttp.get(UserApi.CHECK_TOKEN)
+                .execute(new EanfangCallback<User>(SplashActivity.this, false) {
+                    @Override
+                    public void onSuccess(User bean) {
+                        super.onSuccess(bean);
+                        Object object = bean;
+                        EanfangApplication.get().set(User.class.getName(), object instanceof User);
+
+                        if (object instanceof User) {
+                            LogUtils.d(TAG, "user" + object.toString());
+                            User user = (User) object;
+                            EanfangApplication.get().set(User.class.getName(), user);
+                            isLoginReady = true;
+                            go();
+                        } else {
+                            isCheckReady = true;
+                            go();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        super.onError(message);
+                        isCheckReady = true;
+                        go();
+                    }
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        isCheckReady = true;
+                        go();
+                    }
+                });
 
     }
 

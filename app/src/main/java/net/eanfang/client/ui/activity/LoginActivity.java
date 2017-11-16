@@ -17,11 +17,22 @@ import android.widget.Toast;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.okgo.OkGo;
+import com.okgo.model.HttpHeaders;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.network.apiservice.UserApi;
+import net.eanfang.client.network.request.EanfangCallback;
+import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
+import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.StringUtils;
 import net.eanfang.client.util.UpdateManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,7 +82,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nor_login);
+        setContentView(R.layout.activity_login);
         initView();
 //        supprotToolbar();
         registerListener();
@@ -143,46 +154,41 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
      * @param pwd   验证码
      */
     private void setLogin(String phone, String pwd) {
-//        JSONObject object = new JSONObject();
-//        try {
-//            object.put("account", phone);
-//            object.put("password", pwd);
-//            object.put("type", BuildConfig.TYPE);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        EanfangHttp.post(UserService.APP_LOGIN)
-//                .upJson(object)
-//                .execute(new EanfangCallback<User>(LoginActivity.this, false) {
-//                    @Override
-//                    public void onSuccess(User bean) {
-//                        super.onSuccess(bean);
-//                        goMain();
-//                        Object obj = bean;
-//                        if (obj instanceof User) {
-//                            EanfangApplication.get().set(User.class.getName(), obj);
-//                            JPushInterface.setAlias(getApplicationContext(), EanfangApplication.get().getUser().getToken(), new TagAliasCallback() {
-//                                @Override
-//                                public void gotResult(int i, String s, Set<String> set) {
-//                                    Log.d(TAG, "gotResult: " + s);
-//                                }
-//                            });
-//                            //OkGo  head 写入 token
-//                            OkGo http = EanfangApplication.get().getHttp();
-//                            //清除 headers
-//                            http.getCommonHeaders().clear();
-//                            HttpHeaders headers = new HttpHeaders();
-//                            headers.put("token", EanfangApplication.get().getUser().getToken());
-//                            http.addCommonHeaders(headers);
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-//                        super.onFail(code, message, jsonObject);
-//                        showToast(message);
-//                    }
-//                });
+        JSONObject object = new JSONObject();
+        try {
+            object.put("account", phone);
+            object.put("password", pwd);
+            object.put("type", BuildConfig.TYPE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        EanfangHttp.post(UserApi.APP_LOGIN)
+                .upJson(object)
+                .execute(new EanfangCallback<User>(LoginActivity.this, false) {
+                    @Override
+                    public void onSuccess(User bean) {
+                        super.onSuccess(bean);
+                        goMain();
+                        Object obj = bean;
+                        if (obj instanceof User) {
+                            EanfangApplication.get().set(User.class.getName(), obj);
+
+                            //OkGo  head 写入 token
+                            OkGo http = EanfangApplication.get().getHttp();
+                            //清除 headers
+                            http.getCommonHeaders().clear();
+                            HttpHeaders headers = new HttpHeaders();
+                            headers.put("token", EanfangApplication.get().getUser().getToken());
+                            http.addCommonHeaders(headers);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        showToast(message);
+                    }
+                });
 
     }
 
@@ -192,23 +198,23 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
      * @param phone 电话号
      */
     private void getVerificationCode(String phone) {
-//        EanfangHttp.get(UserService.GET_VERIFY_CODE)
-//                .tag(this)
-//                .params("account", phone)
-//                .params("type", BuildConfig.TYPE)
-//                .execute(new EanfangCallback(LoginActivity.this, false) {
-//                    @Override
-//                    public void onSuccess(Object bean) {
-//                        super.onSuccess(bean);
-//                        showToast("验证码获取成功");
-//                    }
-//
-//                    @Override
-//                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-//                        super.onFail(code, message, jsonObject);
-//                        showToast(message);
-//                    }
-//                });
+        EanfangHttp.get(UserApi.GET_VERIFY_CODE)
+                .tag(this)
+                .params("account", phone)
+                .params("type", BuildConfig.TYPE)
+                .execute(new EanfangCallback(LoginActivity.this, false) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        showToast("验证码获取成功");
+                    }
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        showToast(message);
+                    }
+                });
     }
 
     private void initView() {
@@ -291,4 +297,3 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         return super.onKeyDown(keyCode, event);
     }
 }
-

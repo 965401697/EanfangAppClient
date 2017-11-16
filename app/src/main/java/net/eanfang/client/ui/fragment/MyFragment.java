@@ -1,9 +1,11 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.PersonInfoActivity;
 import net.eanfang.client.ui.base.BaseFragment;
 
 /**
@@ -29,6 +31,9 @@ public class MyFragment extends BaseFragment {
     protected void initView() {
         setTitle("我的");
         setLeftVisible(View.GONE);
+        findViewById(R.id.iv_user_header).setOnClickListener((v)->{
+            startActivity(new Intent(getActivity(), PersonInfoActivity.class));
+        });
     }
 
     @Override

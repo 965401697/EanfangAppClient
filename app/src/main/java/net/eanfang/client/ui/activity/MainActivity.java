@@ -9,13 +9,20 @@ import android.widget.Toast;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.Local;
+import net.eanfang.client.network.apiservice.UserApi;
+import net.eanfang.client.network.request.EanfangCallback;
+import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
+import net.eanfang.client.ui.base.BaseEvent;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
 import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.UpdateManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 
@@ -37,17 +44,18 @@ public class MainActivity extends BaseActivity {
         UpdateManager manager = new UpdateManager(this);
         manager.checkUpdate();
     }
+
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
-        mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator),HomeFragment.class , null);
+        mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
-        mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class , null);
+        mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
-        mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class , null);
+        mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
@@ -64,22 +72,22 @@ public class MainActivity extends BaseActivity {
      * 检查token
      */
     public void getInfoBytoken() {
-//        EanfangHttp.get(UserService.CHECK_TOKEN)
-//                .execute(new EanfangCallback<User>(this, false) {
-//                    @Override
-//                    public void onSuccess(User bean) {
-//                        EanfangApplication.get().set(User.class.getName(), bean);
-//                        BaseEvent baseEvent = new BaseEvent();
-//                        baseEvent.setObject(bean);
-//                        baseEvent.setEventId(Local.CHECK_TOKEN_HOME_SUCCESS);
-//                        EventBus.getDefault().post(baseEvent);
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        showToast(message);
-//                    }
-//                });
+        EanfangHttp.get(UserApi.CHECK_TOKEN)
+                .execute(new EanfangCallback<User>(this, false) {
+                    @Override
+                    public void onSuccess(User bean) {
+                        EanfangApplication.get().set(User.class.getName(), bean);
+                        BaseEvent baseEvent = new BaseEvent();
+                        baseEvent.setObject(bean);
+                        baseEvent.setEventId(Local.CHECK_TOKEN_HOME_SUCCESS);
+                        EventBus.getDefault().post(baseEvent);
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        showToast(message);
+                    }
+                });
     }
 
     /**
