@@ -1,8 +1,10 @@
 package net.eanfang.client.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.TextUtils;
@@ -30,6 +32,7 @@ import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
@@ -198,6 +201,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
     private void initView() {
         setTitle("相机助手");
         setLeftBack();
+        initGPS();
         rgColor.setOnCheckedChangeListener(this);
         rgType.setOnCheckedChangeListener(this);
         //项目名称
@@ -432,6 +436,20 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 初始化gps
+     */
+
+    private void initGPS() {
+        LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        // 判断GPS模块是否开启，如果没有则开启
+        if (!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+            ToastUtil.get().showToast(this, "请打开GPS,定位更准确");
+        }
+        if (ConnectivityChangeReceiver.isNetConnected(this) == false) {
+            ToastUtil.get().showToast(this, "没有网络，请检查网络");
+        }
+    }
 }
 
 
