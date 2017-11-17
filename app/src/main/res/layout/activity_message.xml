@@ -7,6 +7,9 @@
 
     <include layout="@layout/header" />
 
-
+<TextView
+    android:text="dfjkajfgkjklagjklajklgjkl;aasdfjkljgklajkl;"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
 
 </LinearLayout>

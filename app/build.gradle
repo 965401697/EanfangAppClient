@@ -7,8 +7,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 20171117
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
@@ -150,8 +150,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
-
     compile 'cn.bingoogolapple:bga-adapter:1.1.5@aar'
-
+    implementation 'com.android.support:design:26.0.2'
 
 }

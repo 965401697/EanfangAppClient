@@ -10,7 +10,7 @@
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/work_logo_color"
+        android:background="@color/client"
         android:gravity="center"
         android:orientation="vertical">
 
