@@ -75,7 +75,7 @@
         <!--信鸽-->
         <receiver
             android:name="net.eanfang.client.ui.receiver.MessageReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <!-- 接收消息透传 -->
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
@@ -83,7 +83,41 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
+        <!-- 【必须】 信鸽service -->
+        <service
+            android:name="com.tencent.android.tpush.service.XGPushServiceV3"
+            android:exported="true"
+            android:persistent="true"
+            android:process=":xg_service_v3" />
 
+        <!-- 【必须】 通知service，此选项有助于提高抵达率 -->
+        <service
+            android:name="com.tencent.android.tpush.rpc.XGRemoteService"
+            android:exported="true">
+            <intent-filter>
+                <!-- 【必须】 请修改为当前APP包名.PUSH_ACTION-->
+                <action android:name="net.eanfang.client.PUSH_ACTION" />
+            </intent-filter>
+        </service>
+        <!-- 【必须】 【注意】authorities修改为 包名.AUTH_XGPUSH, 如demo的包名为：com.qq.xgdemo-->
+        <provider
+            android:name="com.tencent.android.tpush.XGPushProvider"
+            android:authorities="net.eanfang.client.AUTH_XGPUSH"
+            android:exported="true" />
+        <!-- 【必须】 【注意】authorities修改为 包名.TPUSH_PROVIDER, 如demo的包名为：com.qq.xgdemo-->
+        <provider
+            android:name="com.tencent.android.tpush.SettingsContentProvider"
+            android:authorities="net.eanfang.client.TPUSH_PROVIDER"
+            android:exported="false" />
+        <!-- 【必须】 【注意】authorities修改为 包名.TENCENT.MID.V3, 如demo的包名为：com.qq.xgdemo-->
+        <provider
+            android:name="com.tencent.mid.api.MidProvider"
+            android:authorities="net.eanfang.client.TENCENT.MID.V3"
+            android:exported="true"></provider>
+
+        <activity
+            android:name="com.tencent.android.tpush.XGPushActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/launch_theme">
@@ -112,12 +146,21 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.CameraActivity" />
-        <activity android:name=".ui.activity.MessageListActivity" />
-        <activity android:name=".ui.activity.PersonInfoActivity" />
+        <activity android:name=".ui.activity.my.MessageListActivity" />
+        <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name=".ui.activity.SelectAddressActivity" />
-        <activity android:name=".ui.activity.EvaluateActivity"/>
-        <activity android:name=".ui.activity.CollectActivity"/>
-        <activity android:name=".ui.activity.SettingActivity"/>
+        <activity android:name=".ui.activity.my.EvaluateActivity" />
+        <activity android:name=".ui.activity.my.CollectActivity" />
+        <activity android:name=".ui.activity.my.SettingActivity" />
+        <activity android:name=".ui.activity.worksapce.RepairActivity" />
+        <activity android:name=".ui.activity.worksapce.InstallActivity" />
+        <activity android:name=".ui.activity.worksapce.DesignActivity" />
+        <activity android:name=".ui.activity.worksapce.AddTroubleActivity" />
+        <activity android:name=".ui.activity.worksapce.CheckActivity" />
+        <activity android:name=".ui.activity.worksapce.ReportActivity" />
+        <activity android:name=".ui.activity.worksapce.TaskActivity" />
+        <activity android:name=".ui.activity.worksapce.SelectWorkerActivity" />
+        <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
     </application>
 
 </manifest>

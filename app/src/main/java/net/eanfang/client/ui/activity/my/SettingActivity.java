@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity;
+package net.eanfang.client.ui.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.ui.activity.LoginActivity;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.widget.AboutUsView;
 

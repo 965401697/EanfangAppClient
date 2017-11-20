@@ -10,7 +10,7 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
-import net.eanfang.client.ui.activity.MessageListActivity;
+import net.eanfang.client.ui.activity.my.MessageListActivity;
 
 /**
  * Created by MrHou

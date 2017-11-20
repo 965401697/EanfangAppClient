@@ -29,7 +29,6 @@ import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.StringUtils;
-import net.eanfang.client.util.UpdateManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -246,9 +245,9 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
             e1.printStackTrace();
         }
 
-        //更新
-        UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate();
+//        //更新
+//        UpdateManager manager = new UpdateManager(this);
+//        manager.checkUpdate();
 
     }
 

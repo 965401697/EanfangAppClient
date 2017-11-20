@@ -1,18 +1,24 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
-import com.eanfang.util.ToastUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.CollectActivity;
-import net.eanfang.client.ui.activity.EvaluateActivity;
-import net.eanfang.client.ui.activity.PersonInfoActivity;
-import net.eanfang.client.ui.activity.SettingActivity;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.ui.activity.my.CollectActivity;
+import net.eanfang.client.ui.activity.my.EvaluateActivity;
+import net.eanfang.client.ui.activity.my.MessageListActivity;
+import net.eanfang.client.ui.activity.my.PersonInfoActivity;
+import net.eanfang.client.ui.activity.my.SettingActivity;
 import net.eanfang.client.ui.base.BaseFragment;
+import net.eanfang.client.ui.model.User;
 import net.eanfang.client.ui.widget.InviteView;
+import net.eanfang.client.util.StringUtils;
 
 /**
  * Created by MrHou
@@ -23,6 +29,8 @@ import net.eanfang.client.ui.widget.InviteView;
  */
 
 public class MyFragment extends BaseFragment {
+    private TextView tv_user_name;
+    private SimpleDraweeView iv_header;
 
 
     @Override
@@ -39,18 +47,19 @@ public class MyFragment extends BaseFragment {
     protected void initView() {
         setTitle("我的");
         setLeftVisible(View.GONE);
-
+        tv_user_name = (TextView) findViewById(R.id.tv_user_name);
+        iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), PersonInfoActivity.class));
+            PersonInfoActivity.jumpToActivity(getActivity());
         });
         findViewById(R.id.rel_message).setOnClickListener((v) -> {
-            ToastUtil.get().showToast(getContext(), "待定");
+            startActivity(new Intent(getActivity(), MessageListActivity.class));
         });
         findViewById(R.id.rel_evaluate).setOnClickListener((v) -> {
-          startActivity(new Intent(getActivity(),EvaluateActivity.class));
+            startActivity(new Intent(getActivity(), EvaluateActivity.class));
         });
         findViewById(R.id.rel_collect).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(),CollectActivity.class));
+            startActivity(new Intent(getActivity(), CollectActivity.class));
         });
         findViewById(R.id.rel_invite).setOnClickListener((v) -> {
             InviteView inviteView = new InviteView(getActivity(), true);
@@ -67,8 +76,20 @@ public class MyFragment extends BaseFragment {
 
     }
 
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    public void initData() {
+        User user = EanfangApplication.getApplication().getUser();
+        tv_user_name.setText(user.getName());
+
+        if (!StringUtils.isEmpty(user.getHeadpic())) {
+            iv_header.setImageURI(Uri.parse(user.getHeadpic()));
+        }
+
     }
 }

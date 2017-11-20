@@ -39,4 +39,9 @@ public interface UserApi {
      * post
      */
     String INFO_HEAD_UPDATE = BASE_URL + "/myinfo/updateinfo";
+
+    /**
+     * 检测是否开通服务区域
+     */
+    String CHECK_SERVICE_REGION = BASE_URL + "/checkServiceRegion";
 }

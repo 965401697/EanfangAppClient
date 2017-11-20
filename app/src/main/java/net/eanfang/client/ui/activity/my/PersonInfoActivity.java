@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity;
+package net.eanfang.client.ui.activity.my;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,6 +30,7 @@ import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.oss.OSSCallBack;
+import net.eanfang.client.ui.activity.SelectAddressActivity;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.base.BaseActivityWithTakePhoto;
 import net.eanfang.client.ui.model.InfoBackBean;
@@ -39,6 +41,9 @@ import net.eanfang.client.util.StringUtils;
 
 import java.text.ParseException;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 /**
  * 我的-个人资料
@@ -47,19 +52,40 @@ import java.text.ParseException;
 
 public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
-    private SimpleDraweeView iv_upload;
-    private EditText tv_nickname;
-    private EditText et_realname;
-    private RadioButton rb_man;
-    private RadioButton rb_woman;
-    private RadioGroup rg_sex;
-    private TextView tv_date;
-    private EditText et_idcard;
-    private TextView tv_area;
-    private EditText et_address;
-    private LinearLayout ll_area;
-    private LinearLayout ll_birthday;
-
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.iv_upload)
+    SimpleDraweeView ivUpload;
+    @BindView(R.id.tv_nickname)
+    EditText tvNickname;
+    @BindView(R.id.et_realname)
+    EditText etRealname;
+    @BindView(R.id.et_departmentname)
+    EditText etDepartmentname;
+    @BindView(R.id.rb_man)
+    RadioButton rbMan;
+    @BindView(R.id.rb_woman)
+    RadioButton rbWoman;
+    @BindView(R.id.rg_sex)
+    RadioGroup rgSex;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+    @BindView(R.id.ll_birthday)
+    LinearLayout llBirthday;
+    @BindView(R.id.et_idcard)
+    EditText etIdcard;
+    @BindView(R.id.tv_area)
+    TextView tvArea;
+    @BindView(R.id.ll_area)
+    LinearLayout llArea;
+    @BindView(R.id.et_address)
+    EditText etAddress;
 
     private String path1;
     private boolean isUploadHead = false;
@@ -79,8 +105,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
+        ButterKnife.bind(this);
         initView();
-        initListener();
         initData();
 
         setTitle("我的资料");
@@ -88,12 +114,14 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitle("保存");
     }
 
-    private void initListener() {
-        ll_area.setOnClickListener(v -> {
+
+    private void initView() {
+        rbMan.isChecked();
+        llArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
             startActivityForResult(intent, 23221);
         });
-        iv_upload.setOnClickListener(v -> {
+        ivUpload.setOnClickListener(v -> {
             if (PermissionCheckUtil.cameraIsCanUse() == true) {
                 takePhoto(HEAD_PHOTO);
             } else {
@@ -101,23 +129,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             }
         });
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
-    }
-
-    private void initView() {
-        iv_upload = (SimpleDraweeView) findViewById(R.id.iv_upload);
-        tv_nickname = (EditText) findViewById(R.id.tv_nickname);
-        et_realname = (EditText) findViewById(R.id.et_realname);
-        rb_man = (RadioButton) findViewById(R.id.rb_man);
-        rb_woman = (RadioButton) findViewById(R.id.rb_woman);
-        rg_sex = (RadioGroup) findViewById(R.id.rg_sex);
-        tv_date = (TextView) findViewById(R.id.tv_date);
-        et_idcard = (EditText) findViewById(R.id.et_idcard);
-        tv_area = (TextView) findViewById(R.id.tv_area);
-        et_address = (EditText) findViewById(R.id.et_address);
-
-        ll_birthday = (LinearLayout) findViewById(R.id.ll_birthday);
-        ll_area = (LinearLayout) findViewById(R.id.ll_area);
-        rb_man.isChecked();
     }
 
 
@@ -133,20 +144,26 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     }
 
     private void fillData(InfoBackBean infoBackBean) {
-        ll_birthday.setVisibility(View.VISIBLE);
-        if (!StringUtils.isEmpty(infoBackBean.getHeadpic()))
-            iv_upload.setImageURI(Uri.parse(infoBackBean.getHeadpic()));
-        tv_nickname.setText(infoBackBean.getNickname());
-        et_realname.setText(infoBackBean.getRealname());
-        if (infoBackBean.getSex().equals("男"))
-            rb_man.setChecked(true);
-        else
-            rb_woman.setChecked(true);
-
-        tv_date.setText(GetDateUtils.dateToDateString(GetDateUtils.getDate(infoBackBean.getBirthday())));
-        et_idcard.setText(infoBackBean.getIdentity());
-        tv_area.setText(infoBackBean.getCity() + infoBackBean.getZone());
-        et_address.setText(infoBackBean.getStreet());
+        llBirthday.setVisibility(View.VISIBLE);
+        if (!StringUtils.isEmpty(infoBackBean.getHeadpic())){
+            ivUpload.setImageURI(Uri.parse(infoBackBean.getHeadpic()));
+        }
+        tvNickname.setText(infoBackBean.getNickname());
+        etRealname.setText(infoBackBean.getRealname());
+        etRealname.setEnabled(false);
+        rbMan.setClickable(false);
+        rbWoman.setClickable(false);
+        if (infoBackBean.getSex().equals("男")){
+            rbMan.setChecked(true);
+        }
+        else{
+            rbWoman.setChecked(true);
+        }
+        tvDate.setText(GetDateUtils.dateToDateString(GetDateUtils.getDate(infoBackBean.getBirthday())));
+        etIdcard.setText(infoBackBean.getIdentity());
+        etIdcard.setEnabled(false);
+        tvArea.setText(infoBackBean.getCity() + infoBackBean.getZone());
+        etAddress.setText(infoBackBean.getStreet());
     }
 
 
@@ -162,8 +179,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                 Log.e("address", item.toString());
                 city = item.getCity();
                 zone = item.getAddress();
-                tv_area.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
-                et_address.setText(item.getName());
+                tvArea.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
+                etAddress.setText(item.getName());
                 break;
         }
     }
@@ -176,7 +193,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         String imgKey = UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEAD_PHOTO:
-                iv_upload.setImageURI("file://" + result.getImage().getOriginalPath());
+                ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
                 callback = new OSSCallBack(this, true) {
                     @Override
                     public void onOssSuccess() {
@@ -197,7 +214,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
 
     private boolean checkInfo() {
-        String nickname = tv_nickname.getText().toString().trim();
+        String nickname = tvNickname.getText().toString().trim();
         if (TextUtils.isEmpty(nickname)) {
             showToast("请输入昵称");
             return false;
@@ -206,7 +223,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             showToast("昵称长度为8");
             return false;
         }
-        String realname = et_realname.getText().toString().trim();
+        String realname = etRealname.getText().toString().trim();
         if (TextUtils.isEmpty(realname)) {
             showToast("请输入真实姓名");
             return false;
@@ -215,7 +232,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             showToast("真实姓名长度为6");
             return false;
         }
-        String idcard = et_idcard.getText().toString().trim();
+        String idcard = etIdcard.getText().toString().trim();
         if (TextUtils.isEmpty(idcard)) {
             showToast("请输入证件号码");
             return false;
@@ -227,7 +244,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             }
         } catch (ParseException e) {
         }
-        String address = et_address.getText().toString().trim();
+        String address = etAddress.getText().toString().trim();
         if (TextUtils.isEmpty(address)) {
             showToast("请输入详细地址");
             return false;
@@ -243,23 +260,23 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void submit() {
         InfoBackBean bean = new InfoBackBean();
-        String idCare = et_idcard.getText().toString().trim();
+        String idCare = etIdcard.getText().toString().trim();
         year = idCare.substring(6, 10);
         month = idCare.substring(10, 12);
         date = idCare.substring(12, 14);
         bean.setBirthday(year + "-" + month + "-" + date);
         bean.setCity(city);
         bean.setHeadpic(path1);
-        bean.setIdentity(et_idcard.getText().toString().trim());
-        bean.setNickname(tv_nickname.getText().toString().trim());
-        bean.setRealname(et_realname.getText().toString().trim());
-        if (rb_man.isChecked()) {
+        bean.setIdentity(etIdcard.getText().toString().trim());
+        bean.setNickname(tvNickname.getText().toString().trim());
+        bean.setRealname(etRealname.getText().toString().trim());
+        if (rbMan.isChecked()) {
             bean.setSex("男");
         } else {
             bean.setSex("女");
         }
 
-        bean.setStreet(et_address.getText().toString().trim());
+        bean.setStreet(etAddress.getText().toString().trim());
         bean.setZone(zone);
         Gson gson = new Gson();
         String json = gson.toJson(bean);
@@ -274,7 +291,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         showToast("保存成功");
                         User user = EanfangApplication.get().getUser();
                         user.setInfoGood("1");
-                        user.setName(et_realname.getText().toString().trim());
+                        user.setName(etRealname.getText().toString().trim());
                         user.setHeadpic(path1);
                         EanfangApplication.get().saveUser(user);
                         finish();

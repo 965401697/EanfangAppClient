@@ -20,7 +20,6 @@ import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
 import net.eanfang.client.ui.model.User;
-import net.eanfang.client.util.UpdateManager;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -40,9 +39,9 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
         initFragment();
-        //更新
-        UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate();
+//        //更新
+//        UpdateManager manager = new UpdateManager(this);
+//        manager.checkUpdate();
     }
 
     private void initFragment() {

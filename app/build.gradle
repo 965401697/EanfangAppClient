@@ -152,5 +152,7 @@ dependencies {
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'cn.bingoogolapple:bga-adapter:1.1.5@aar'
     implementation 'com.android.support:design:26.0.2'
+    compile 'com.contrarywind:Android-PickerView:3.1.1'
+
 
 }

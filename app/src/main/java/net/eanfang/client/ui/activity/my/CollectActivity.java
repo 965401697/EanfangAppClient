@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity;
+package net.eanfang.client.ui.activity.my;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
