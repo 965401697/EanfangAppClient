@@ -161,6 +161,7 @@
         <activity android:name=".ui.activity.worksapce.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectWorkerActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.RepairCtrlActivity"/>
     </application>
 
 </manifest>

@@ -4,14 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CheckActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignActivity;
 import net.eanfang.client.ui.activity.worksapce.InstallActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.ReportActivity;
 import net.eanfang.client.ui.activity.worksapce.TaskActivity;
 import net.eanfang.client.ui.base.BaseFragment;
+import net.eanfang.client.ui.widget.CompanyQuoteView;
+import net.eanfang.client.ui.widget.InstallCtrlView;
+import net.eanfang.client.ui.widget.PersonQuoteView;
 
 /**
  * Created by MrHou
@@ -65,14 +70,25 @@ public class WorkspaceFragment extends BaseFragment {
     protected void setListener() {
         //工作管控
         findViewById(R.id.ll_repair_ctrl).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
         });
         findViewById(R.id.ll_install_ctrl).setOnClickListener((v) -> {
+            InstallCtrlView installCtrlView = new InstallCtrlView(getActivity(), true);
+            installCtrlView.show();
         });
         findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
+            if ("1".equals(EanfangApplication.get().getUser().getCompanyverify())) {
+                CompanyQuoteView companyQuoteView = new CompanyQuoteView(getActivity(), true);
+                companyQuoteView.show();
+            } else {
+                PersonQuoteView personQuoteView = new PersonQuoteView(getActivity(), true);
+                personQuoteView.show();
+            }
         });
         findViewById(R.id.ll_report_ctrl).setOnClickListener((v) -> {
         });
         findViewById(R.id.ll_check_ctrl).setOnClickListener((v) -> {
+
         });
         findViewById(R.id.ll_task_ctrl).setOnClickListener((v) -> {
         });

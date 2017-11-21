@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/20  15:04
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 技师列表
  */
 
 public class SelectWorkerActivity extends BaseActivity {

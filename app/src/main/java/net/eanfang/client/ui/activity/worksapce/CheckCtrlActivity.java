@@ -7,15 +7,14 @@ import net.eanfang.client.ui.base.BaseActivity;
 /**
  * Created by MrHou
  *
- * @on 2017/11/20  19:28
+ * @on 2017/11/21  10:18
  * @email houzhongzhou@yeah.net
- * @desc 公司列表
+ * @desc 检查管控
  */
 
-public class SelectCompanyActivity extends BaseActivity{
+public class CheckCtrlActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 }

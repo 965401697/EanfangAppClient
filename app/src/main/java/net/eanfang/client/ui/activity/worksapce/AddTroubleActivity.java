@@ -51,7 +51,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/20  15:10
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 添加故障
  */
 
 public class AddTroubleActivity extends BaseActivity {
