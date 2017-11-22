@@ -161,7 +161,14 @@
         <activity android:name=".ui.activity.worksapce.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectWorkerActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.RepairCtrlActivity"/>
+        <activity android:name=".ui.activity.worksapce.RepairCtrlActivity" />
+        <activity android:name=".ui.activity.pay.PayActivity" />
+        <activity android:name=".ui.activity.worksapce.StateChangeActivity" />
+        <activity android:name=".ui.activity.worksapce.FaPiaoActivity" />
+        <activity android:name=".ui.activity.worksapce.WorkReportListActivity" />
+        <activity android:name=".ui.activity.MyBGAPhotoPickerPreviewActivity" />
+        <activity android:name=".ui.activity.worksapce.WorkTaskListActivity"/>
+        <activity android:name=".ui.activity.worksapce.DesignOrderListActivity"/>
     </application>
 
 </manifest>

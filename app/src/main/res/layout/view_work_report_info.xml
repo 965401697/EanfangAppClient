@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical">
 
-    <TextView
-        android:textColor="@color/black"
-        android:background="@color/background"
-        android:textSize="@dimen/textSize_16"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="订单详情" />
+    <include layout="@layout/header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,46 +22,23 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="单位"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/et_company_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:text="项目名称"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_project_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="用户名称"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_client_company_name_wr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
+                    android:background="@null"
+                    android:gravity="right"
                     android:textColor="@color/font_color"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -81,195 +50,236 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="关联订单"
-                    android:textColor="@color/font_color"
+                    android:text="部门"
+                    android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/tv_order"
+                    android:id="@+id/et_department_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MO20163749837459"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
                     android:textColor="@color/font_color"
-                    android:textSize="16sp"
-                    tools:text="null" />
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="类型"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_report_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提交时间"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_report_commit_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="总结人"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_report_commit_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="接收人"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_report_rev_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系电话"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_report_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
             </LinearLayout>
 
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="报价明细"
-                android:textColor="@color/font_color"
-                android:textSize="18sp" />
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="完成工作"
+                    android:textColor="@color/client_form_title_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_list"
+                android:id="@+id/complete_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/bg_ll_selctor"
-                android:padding="5dp" />
-
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
-                android:gravity="right"
+                android:layout_margin="5dp"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="共计"
-                    android:textColor="@color/font_color"
+                    android:text="发现问题"
+                    android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv_count_money"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="¥0"
-                    android:textColor="@color/title_bar_color"
-                    android:textSize="18sp" />
             </LinearLayout>
 
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/find_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="提报人"
-                    android:textColor="@color/font_color"
+                    android:text="后续计划"
+                    android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tv_submitter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
             </LinearLayout>
 
 
-            <LinearLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/plan_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_margin="10dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="联系电话"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_submitter_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="汇报人"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_reporter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="联系电话"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="null"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/btn_pay"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/client"
-                    android:padding="10dp"
-                    android:text="去支付"
-                    android:textColor="#fff"
-                    android:textSize="20sp" />
-            </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
-
-
 </LinearLayout>

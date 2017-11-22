@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
+import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
 import net.eanfang.client.ui.model.PayOrderListBean;
 import net.eanfang.client.ui.model.User;
@@ -81,8 +83,7 @@ public class PersonQuoteView extends BaseDialog {
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                new CompanyQuoteItemView(mContext, mDataList.get(position).getSelfordernum()).show();
-                CompanyQuoteItemView companyQuoteItemView=new CompanyQuoteItemView(mContext, true,mDataList.get(position).getSelfordernum());
+                CompanyQuoteItemView companyQuoteItemView = new CompanyQuoteItemView(mContext, true, mDataList.get(position).getSelfordernum());
                 companyQuoteItemView.show();
             }
         });
@@ -103,12 +104,11 @@ public class PersonQuoteView extends BaseDialog {
                                 CallUtils.call(mContext, mDataList.get(position).getClientphone());
                             break;
                         case R.id.tv_do_second:
-                            // TODO: 2017/11/21 待修改 
-//                            Intent intent = new Intent(OfferAndPayActivity.this, PayActivity.class);
-//                            intent.putExtra("ordernum", mDataList.get(position).getSelfordernum());
-//                            intent.putExtra("doorfee", mDataList.get(position).getSum() + "");
-//                            intent.putExtra("orderType", "报价");
-//                            startActivity(intent);
+                            Intent intent = new Intent(mContext, PayActivity.class);
+                            intent.putExtra("ordernum", mDataList.get(position).getSelfordernum());
+                            intent.putExtra("doorfee", mDataList.get(position).getSum() + "");
+                            intent.putExtra("orderType", "报价");
+                            mContext.startActivity(intent);
                             break;
                     }
                 } else {

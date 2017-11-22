@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/iv_1"
-                    android:text="安防论坛"
+                    android:text="安防圈"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize_20"
                     android:textStyle="bold" />

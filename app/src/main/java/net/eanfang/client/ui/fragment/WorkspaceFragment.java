@@ -15,8 +15,11 @@ import net.eanfang.client.ui.activity.worksapce.ReportActivity;
 import net.eanfang.client.ui.activity.worksapce.TaskActivity;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.widget.CompanyQuoteView;
+import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
 import net.eanfang.client.ui.widget.PersonQuoteView;
+import net.eanfang.client.ui.widget.ReportCtrlView;
+import net.eanfang.client.ui.widget.TaskCtrlView;
 
 /**
  * Created by MrHou
@@ -25,7 +28,7 @@ import net.eanfang.client.ui.widget.PersonQuoteView;
  * @email houzhongzhou@yeah.net
  * @desc 工作台
  */
-
+// TODO: 2017/11/22 报修管控，检查管控,数据统计
 public class WorkspaceFragment extends BaseFragment {
 
 
@@ -73,26 +76,26 @@ public class WorkspaceFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
         });
         findViewById(R.id.ll_install_ctrl).setOnClickListener((v) -> {
-            InstallCtrlView installCtrlView = new InstallCtrlView(getActivity(), true);
-            installCtrlView.show();
+            new InstallCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
             if ("1".equals(EanfangApplication.get().getUser().getCompanyverify())) {
-                CompanyQuoteView companyQuoteView = new CompanyQuoteView(getActivity(), true);
-                companyQuoteView.show();
+                new CompanyQuoteView(getActivity(), true).show();
             } else {
-                PersonQuoteView personQuoteView = new PersonQuoteView(getActivity(), true);
-                personQuoteView.show();
+                new PersonQuoteView(getActivity(), true).show();
             }
         });
         findViewById(R.id.ll_report_ctrl).setOnClickListener((v) -> {
+            new ReportCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_check_ctrl).setOnClickListener((v) -> {
 
         });
         findViewById(R.id.ll_task_ctrl).setOnClickListener((v) -> {
+            new TaskCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_design_ctrl).setOnClickListener((v) -> {
+            new DesignCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
         });

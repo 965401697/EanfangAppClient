@@ -80,7 +80,6 @@ public class CompanyQuoteView extends BaseDialog {
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                new CompanyQuoteItemView(mContext, mDataList.get(position).getSelfordernum(),true).show();
                 CompanyQuoteItemView companyQuoteItemView=new CompanyQuoteItemView(mContext, true,mDataList.get(position).getSelfordernum());
                 companyQuoteItemView.show();
             }
@@ -101,7 +100,6 @@ public class CompanyQuoteView extends BaseDialog {
                 } else {
                     switch (view.getId()) {
                         case R.id.tv_do_first:
-//                            new CompanyQuoteItemView(mContext, mDataList.get(position).getSelfordernum()).show();
                             CompanyQuoteItemView companyQuoteItemView=new CompanyQuoteItemView(mContext, true,mDataList.get(position).getSelfordernum());
                             companyQuoteItemView.show();
                             break;

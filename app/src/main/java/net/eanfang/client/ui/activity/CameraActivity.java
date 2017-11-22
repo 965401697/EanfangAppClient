@@ -199,7 +199,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
     }
 
     private void initView() {
-        setTitle("相机助手");
+        setTitle("专业相机");
         setLeftBack();
         initGPS();
         rgColor.setOnCheckedChangeListener(this);
