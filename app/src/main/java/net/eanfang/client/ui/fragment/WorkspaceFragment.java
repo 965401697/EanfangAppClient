@@ -13,6 +13,7 @@ import net.eanfang.client.ui.activity.worksapce.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.ReportActivity;
 import net.eanfang.client.ui.activity.worksapce.TaskActivity;
+import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.widget.CompanyQuoteView;
 import net.eanfang.client.ui.widget.DesignCtrlView;
@@ -28,7 +29,7 @@ import net.eanfang.client.ui.widget.TaskCtrlView;
  * @email houzhongzhou@yeah.net
  * @desc 工作台
  */
-// TODO: 2017/11/22 报修管控，检查管控,数据统计
+// TODO: 2017/11/22 报修管控，检查管控
 public class WorkspaceFragment extends BaseFragment {
 
 
@@ -98,6 +99,7 @@ public class WorkspaceFragment extends BaseFragment {
             new DesignCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url","https://www.baidu.com/"));
         });
     }
 }
