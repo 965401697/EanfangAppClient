@@ -113,7 +113,7 @@
         <provider
             android:name="com.tencent.mid.api.MidProvider"
             android:authorities="net.eanfang.client.TENCENT.MID.V3"
-            android:exported="true"></provider>
+            android:exported="true" />
 
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
@@ -143,6 +143,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!--app-->
+
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.CameraActivity" />
@@ -171,7 +172,11 @@
         <activity android:name=".ui.activity.worksapce.DesignOrderListActivity" />
         <activity
             android:name=".ui.activity.worksapce.WebActivity"
-            android:process=":remote" />
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

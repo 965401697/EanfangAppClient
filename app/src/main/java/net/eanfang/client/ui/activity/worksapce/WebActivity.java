@@ -1,10 +1,13 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +29,11 @@ import android.widget.Toast;
 import com.eanfang.util.ConnectivityChangeReceiver;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.base.BaseActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,15 +55,24 @@ public class WebActivity extends BaseActivity {
     WebView mWebView;
     @BindView(R.id.ll_loading)
     LinearLayout llLoading;
+    @BindView(R.id.ll_check_net)
+    LinearLayout llCheckNet;
+    @BindView(R.id.ll_refresh)
+    LinearLayout llRefresh;
+    @BindView(R.id.ll_error_view)
+    LinearLayout llErrorView;
     private boolean mLastLoadFailed = false;
-    private String urls;
-
+    private String urls, title;
+    Map extraHeaders = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
+        urls = getIntent().getStringExtra("url");
+        title = getIntent().getStringExtra("title");
+        extraHeaders.put("userToken", EanfangApplication.get().getUser().getToken());
         //添加webView到布局中
         addWebViewToLayout();
 
@@ -68,9 +84,32 @@ public class WebActivity extends BaseActivity {
 
         //set webView chrome
         setWebViewChromeClient();
-        urls = getIntent().getStringExtra("url");
         //load web
         loadUrl(urls);
+        initCheck();
+
+    }
+
+    private void initCheck() {
+        setLeftBack();
+        setTitle(title);
+        if (ConnectivityChangeReceiver.isNetConnected(WebActivity.this) == false) {
+            llErrorView.setVisibility(View.VISIBLE);
+            loadUrl(urls);
+        } else {
+            llErrorView.setVisibility(View.GONE);
+            loadUrl(urls);
+        }
+        llCheckNet.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_SETTINGS)));
+
+        llRefresh.setOnClickListener((v) -> {
+            if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
+                llErrorView.setVisibility(View.GONE);
+                loadUrl(urls);
+            } else {
+                showToast("亲，没有网络！！！");
+            }
+        });
     }
 
 
@@ -87,6 +126,7 @@ public class WebActivity extends BaseActivity {
         mWebView = new WebView(getApplicationContext());
         mWebView.setLayoutParams(params);
         mRootLayout.addView(mWebView);
+
     }
 
     /**
@@ -113,17 +153,17 @@ public class WebActivity extends BaseActivity {
         //LOAD_DEFAULT: （默认）根据cache-control决定是否从网络上取数据。
         //LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
         //LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
-        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
-            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);//根据cache-control决定是否从网络上取数据。
-        } else {
-            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//没网，则从本地获取，即离线加载
-        }
+//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
+//            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);//根据cache-control决定是否从网络上取数据。
+//        } else {
+//            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//没网，则从本地获取，即离线加载
+//        }
         webSettings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
         webSettings.setDatabaseEnabled(true);   //开启 database storage API 功能
         webSettings.setAppCacheEnabled(true);//开启 Application Caches 功能
 
-        String cacheDirPath = getFilesDir().getAbsolutePath() + APP_CACAHE_DIRNAME;
-        webSettings.setAppCachePath(cacheDirPath); //设置  Application Caches 缓存目录
+//        String cacheDirPath = getFilesDir().getAbsolutePath() + APP_CACAHE_DIRNAME;
+//        webSettings.setAppCachePath(cacheDirPath); //设置  Application Caches 缓存目录
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
@@ -176,6 +216,7 @@ public class WebActivity extends BaseActivity {
                 if (!mLastLoadFailed) {
                     llLoading.setVisibility(View.GONE);
                 }
+
             }
 
             //页面加载每一个资源，如图片
@@ -207,6 +248,7 @@ public class WebActivity extends BaseActivity {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 mLastLoadFailed = true;
                 llLoading.setVisibility(View.GONE);
+
             }
 
             //页面加载出现错误,23以上的
@@ -216,7 +258,6 @@ public class WebActivity extends BaseActivity {
                 super.onReceivedError(view, request, error);
                 mLastLoadFailed = true;
                 llLoading.setVisibility(View.GONE);
-
             }
 
             //https错误
@@ -325,14 +366,15 @@ public class WebActivity extends BaseActivity {
      * 加载url
      */
     void loadUrl(String url) {
-        // 格式规定为:file:///android_asset/文件名.html
-//        mWebView.loadUrl("file:///android_asset/localHtml.html");
-        //方式1. 加载远程网页：
-        mWebView.loadUrl(url);
-        //方式2：加载asset的html页面
-        //mWebView.loadUrl("file:///android_asset/localHtml.html");
-        //方式3：加载手机SD的html页面
-        //mWebView.loadUrl("file:///mnt/sdcard/database/taobao.html");
+        mWebView.loadUrl(url, extraHeaders);
+
+/**  格式规定为:file:///android_asset/文件名.html
+ *   mWebView.loadUrl("file:///android_asset/localHtml.html");
+ 方式1. 加载远程网页：
+ 方式2：加载asset的html页面
+ mWebView.loadUrl("file:///android_asset/localHtml.html");
+ 方式3：加载手机SD的html页面
+ mWebView.loadUrl("file:///mnt/sdcard/database/taobao.html");*/
     }
 
     /**
@@ -356,4 +398,24 @@ public class WebActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @SuppressLint("NewApi")
+    public void onResume() {
+        super.onResume();
+        mWebView.onResume();
+    }
+
+    @SuppressLint("NewApi")
+    @Override
+    public void onPause() {
+        mWebView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mWebView.destroy();
+        super.onDestroy();
+    }
+
 }

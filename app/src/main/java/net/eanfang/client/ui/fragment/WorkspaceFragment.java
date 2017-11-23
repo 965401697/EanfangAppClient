@@ -99,7 +99,7 @@ public class WorkspaceFragment extends BaseFragment {
             new DesignCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url","https://www.baidu.com/"));
+            startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url", "http://www.jianshu.com/u/0e0821e94979").putExtra("title", "数据统计"));
         });
     }
 }
