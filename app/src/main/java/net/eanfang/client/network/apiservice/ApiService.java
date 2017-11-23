@@ -98,4 +98,25 @@ public interface ApiService {
      * 免费设计 明细
      */
     String GET_DESIGN_ORDER_INF = BASE_URL + "/getDesignOrderInfo";
+
+    /**
+     * 报修管控-报修单列表
+     *
+     * @parms page
+     * @parms rows
+     * @parms status
+     */
+    String REPAIR_LIST = BASE_URL + "/repairlist";
+
+    /**
+     * 工作台-已报修-订单详情  reairorderdetail
+     */
+    String GET_REAIR_ORDER_DETAIL = BASE_URL + "/reairorderdetail";
+
+    /**
+     * 订单进度的protocol
+     * get
+     */
+
+    String ORDER_PROGRESS = BASE_URL + "/reairorderstatus";
 }

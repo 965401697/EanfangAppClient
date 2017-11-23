@@ -111,6 +111,8 @@ public class EanfangApplication extends CustomeApplication {
 
         if (EanfangApplication.get().getUser() != null) {
             headers.put("token", EanfangApplication.get().getUser().getToken());
+//            headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+//            headers.put("SYS-Type", EanfangApplication.get().getUser().getToken());
         }
         //        HttpParams params = new HttpParams();
         //        params.put("参数可以", "参数value");

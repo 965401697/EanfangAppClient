@@ -170,6 +170,7 @@
         <activity android:name=".ui.activity.MyBGAPhotoPickerPreviewActivity" />
         <activity android:name=".ui.activity.worksapce.WorkTaskListActivity" />
         <activity android:name=".ui.activity.worksapce.DesignOrderListActivity" />
+        <activity android:name=".ui.activity.worksapce.OrderDetailActivity" />
         <activity
             android:name=".ui.activity.worksapce.WebActivity"
             android:process=":remote">
