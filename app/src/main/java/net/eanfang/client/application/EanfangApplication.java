@@ -46,12 +46,12 @@ public class EanfangApplication extends CustomeApplication {
     public void onCreate() {
         super.onCreate();
         mEanfangApplication = this;
-        initConfig();
+        initConfigs();
         initOkGo();
         CameraApplication.init(this, true);
     }
 
-    public void initConfig() {
+    public void initConfigs() {
         /**fresco加载图片*/
         Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));

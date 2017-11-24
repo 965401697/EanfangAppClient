@@ -171,6 +171,14 @@
         <activity android:name=".ui.activity.worksapce.WorkTaskListActivity" />
         <activity android:name=".ui.activity.worksapce.DesignOrderListActivity" />
         <activity android:name=".ui.activity.worksapce.OrderDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.EvaluateWorkerActivity" />
+        <activity android:name=".ui.activity.worksapce.TroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.PsTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.LookTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.PhoneLookTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.WorkCheckListActivity" />
+        <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
+
         <activity
             android:name=".ui.activity.worksapce.WebActivity"
             android:process=":remote">

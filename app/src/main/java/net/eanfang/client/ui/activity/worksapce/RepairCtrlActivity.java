@@ -1,7 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +9,6 @@ import android.view.View;
 
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.google.gson.Gson;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
@@ -38,7 +35,7 @@ import java.util.List;
  * @desc 报修管控
  */
 
-public class RepairCtrlActivity extends BaseActivity{
+public class RepairCtrlActivity extends BaseActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     private final List<String> mTitlesWorker = Config.getConfig().getRepairStatusWorker();
@@ -49,11 +46,6 @@ public class RepairCtrlActivity extends BaseActivity{
     private String[] mTitles;
     private OrderListFragment currentFragment;
 
-    public static void jumpActivity(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context,RepairCtrlActivity.class);
-        ((BaseActivity) context).startAnimActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +102,6 @@ public class RepairCtrlActivity extends BaseActivity{
 
 
     public void initData(int page) {
-        // loadingDialog.show();
         //2017年8月3日 lin
         JSONObject jsonObject = new JSONObject();
         try {
@@ -126,7 +117,6 @@ public class RepairCtrlActivity extends BaseActivity{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        // new CommonRequestProtocol("/repairlist", jsonObject.toString(), 100008, this).execute();
         EanfangHttp.post(ApiService.REPAIR_LIST)
                 .params("json", jsonObject.toString())
                 .execute(new EanfangCallback<RepairedOrderBean>(this, true) {
@@ -135,7 +125,6 @@ public class RepairCtrlActivity extends BaseActivity{
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Gson gson = new Gson();
                                 repairedOrderBean = bean;
                                 currentFragment.onDataReceived();
                             }

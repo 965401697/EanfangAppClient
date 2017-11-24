@@ -21,6 +21,7 @@ import net.eanfang.client.ui.widget.InstallCtrlView;
 import net.eanfang.client.ui.widget.PersonQuoteView;
 import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
+import net.eanfang.client.ui.widget.WorkCheckCtrlView;
 
 /**
  * Created by MrHou
@@ -29,7 +30,7 @@ import net.eanfang.client.ui.widget.TaskCtrlView;
  * @email houzhongzhou@yeah.net
  * @desc 工作台
  */
-// TODO: 2017/11/22 报修管控，检查管控
+// TODO: 2017/11/22 检查管控
 public class WorkspaceFragment extends BaseFragment {
 
 
@@ -90,7 +91,7 @@ public class WorkspaceFragment extends BaseFragment {
             new ReportCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_check_ctrl).setOnClickListener((v) -> {
-
+            new WorkCheckCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_task_ctrl).setOnClickListener((v) -> {
             new TaskCtrlView(getActivity(), true).show();

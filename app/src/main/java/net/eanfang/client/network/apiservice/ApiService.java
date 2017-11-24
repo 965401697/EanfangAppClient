@@ -11,6 +11,23 @@ import static net.eanfang.client.network.apiservice.BaseService.BASE_URL;
  */
 
 public interface ApiService {
+
+    /**
+     * 添加工作检查明细的处理
+     */
+
+    String ADD_WORK_INSPECT_DETAIL_DISPOSE = BASE_URL + "/addWorkInspectDetailDispose";
+
+    /**
+     * 审核 工作检查明细的处理
+     */
+    String GET_REVIEW_WORK_DETAIL_DISPOSE = BASE_URL + "/reviewWorkInspectDetailDispose";
+
+    /**
+     * 查看工作检查详细信息
+     */
+
+    String GET_WORK_INSPECT_INFO = BASE_URL + "/getWorkInspectInfo";
     /**
      * 根据一级业务类型编码 获取二、三级及品牌型号
      */
@@ -119,4 +136,31 @@ public interface ApiService {
      */
 
     String ORDER_PROGRESS = BASE_URL + "/reairorderstatus";
+    /**
+     * 马上回电
+     */
+    String REAIR_BY_PHONE_SOLVE = BASE_URL + "/reairbyphonesolve";
+    /**
+     * 客户端评价技师
+     * post
+     */
+    String EVALUATE_WORKER = BASE_URL + "/reviewworker";
+    /**
+     * 电话解决确认
+     * get
+     */
+    String TO_CONFIRM = BASE_URL + "/confirm";
+
+    /**
+     * 维修统计
+     * get
+     */
+
+    String BUG_DETAIL_INFO = BASE_URL + "/bugDetailInfo";
+
+    /**
+     * 查看工作检查列表
+     */
+
+    String GET_WORK_INSPECT_LIST = BASE_URL + "/getWorkInspectList";
 }
