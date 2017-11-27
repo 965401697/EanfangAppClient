@@ -9,6 +9,15 @@
         android:layout_height="50dp"
         android:background="@color/client">
 
+        <TextView
+            android:id="@+id/tv_safety"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="安防圈"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -22,7 +31,7 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/iv_camera"
+            android:id="@+id/iv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -33,7 +42,7 @@
     </RelativeLayout>
 
 
-    <include layout="@layout/layout_contacts_header" />
+    <!--<include layout="@layout/layout_contacts_header" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rev_company_list"

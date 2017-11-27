@@ -347,13 +347,13 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
                     }
                 } else {
                     String address = etAddress.getText().toString().trim();
-                    Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, "地址：" + address, 16, color, 5, 8);
-                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "内容：" + project_content, 16, color, 5, 28);
-                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "部位/区域：" + region_name, 16, color, 5, 48);
-                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "类型：" + project_type, 16, color, 5, 68);
-                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "名称：" + project_name, 16, color, 5, 88);
-                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "创建者:" + creatUser, 16, color, 5, 108);
-                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "时间：" + time, 16, color, 5, 128);
+                    Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, "地址：" + address, 12, color, 5, 8);
+                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "内容：" + project_content, 12, color, 5, 28);
+                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "部位/区域：" + region_name, 12, color, 5, 48);
+                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "类型：" + project_type, 12, color, 5, 68);
+                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "名称：" + project_name, 12, color, 5, 88);
+                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "创建者:" + creatUser, 12, color, 5, 108);
+                    textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "时间：" + time, 12, color, 5, 128);
                     showTakePhotoImg.setImageBitmap(textBitmap);
                     flCamera.setVisibility(View.VISIBLE);
                     try {
@@ -364,6 +364,8 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
                     }
                 }
                 break;
+                default:
+                    break;
         }
     }
 

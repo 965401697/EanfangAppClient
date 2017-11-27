@@ -30,7 +30,6 @@ import net.eanfang.client.ui.widget.WorkCheckCtrlView;
  * @email houzhongzhou@yeah.net
  * @desc 工作台
  */
-// TODO: 2017/11/22 检查管控
 public class WorkspaceFragment extends BaseFragment {
 
 

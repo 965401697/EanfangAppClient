@@ -16,7 +16,6 @@ import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.base.BaseEvent;
 import net.eanfang.client.ui.fragment.ContactsFragment;
-import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
 import net.eanfang.client.ui.model.User;
@@ -47,10 +46,13 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+        /*
+        二期添加
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
+        */
 
-        indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
+        View indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
@@ -93,6 +95,7 @@ public class MainActivity extends BaseActivity {
      * 点击两次返回键退出
      */
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
