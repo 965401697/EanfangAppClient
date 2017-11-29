@@ -1,23 +1,26 @@
 package net.eanfang.client.ui.activity.my;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.View;
 
+import com.eanfang.util.ViewFindUtils;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
+
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.FragmentAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.fragment.ReceiveEvaluateFragment;
-import net.eanfang.client.ui.fragment.SendoutEvaluateFragment;
+import net.eanfang.client.ui.fragment.EvaluateFragment;
+import net.eanfang.client.ui.fragment.GiveEvaluateFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,50 +31,89 @@ import butterknife.ButterKnife;
  * @desc 评价
  */
 
-public class EvaluateActivity extends BaseActivity {
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.sliding_tab)
-    TabLayout slidingTab;
-    @BindView(R.id.vp)
-    ViewPager vpEvaluate;
-
-    private ReceiveEvaluateFragment receiveEvaluateFragment;
-    private SendoutEvaluateFragment sendoutEvaluateFragment;
-    private List<Fragment> list_frag;
-    private List<String> list_title;
-    private String[] title = {"收到的评价", "给技师的评价"};
-    private FragmentAdapter adapter;
+public class EvaluateActivity extends BaseActivity implements OnTabSelectListener {
+    private Context mContext = this;
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private final String[] mTitlesClient = {
+            "收到的评价", "给技师的评价"
+    };
+    private final String[] mTitlesWorker = {
+            "收到的评价", "给客户的评价"
+    };
+    private MyPagerAdapter mAdapter;
+    private int id;
+    private String ordernum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_evaluate);
+        setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
-        setLeftBack();
+        getData();
+        mFragments.add(EvaluateFragment.getInstance(0));
+        mFragments.add(GiveEvaluateFragment.getInstance(1));
+        View decorView = getWindow().getDecorView();
+        ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        vp.setAdapter(mAdapter);
+        /**自定义部分属性*/
+        SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_4);
+        if (BuildConfig.APP_TYPE == 0) {
+            tabLayout_2.setViewPager(vp, mTitlesClient, this, mFragments);
+        } else {
+            tabLayout_2.setViewPager(vp, mTitlesWorker, this, mFragments);
+        }
+        tabLayout_2.setOnTabSelectListener(this);
+        vp.setCurrentItem(0);
+
         setTitle("评价");
-        receiveEvaluateFragment = new ReceiveEvaluateFragment();
-        sendoutEvaluateFragment = new SendoutEvaluateFragment();
-        list_frag = new ArrayList<>();
-        list_frag.add(receiveEvaluateFragment);
-        list_frag.add(sendoutEvaluateFragment);
-        slidingTab.setTabMode(TabLayout.MODE_FIXED);
-        list_title = new ArrayList<>();
-        Collections.addAll(list_title, title);
-        slidingTab.addTab(slidingTab.newTab().setText(list_title.get(0)));
-        slidingTab.addTab(slidingTab.newTab().setText(list_title.get(1)));
-        adapter = new FragmentAdapter(getSupportFragmentManager(), list_frag, list_title);
+        setLeftBack();
 
-        //viewpager加载adapter
-        vpEvaluate.setAdapter(adapter);
-        //tablayout加载viewpager
-        slidingTab.setupWithViewPager(vpEvaluate);
+    }
 
+    private void getData() {
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        ordernum = intent.getStringExtra("ordernum");
+    }
+
+    @Override
+    public void onTabSelect(int position) {
+
+    }
+
+    @Override
+    public void onTabReselect(int position) {
+
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (BuildConfig.APP_TYPE == 0) {
+                return mTitlesClient[position];
+            } else {
+                return mTitlesWorker[position];
+            }
+
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
     }
 }

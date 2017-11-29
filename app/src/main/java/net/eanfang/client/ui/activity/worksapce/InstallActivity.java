@@ -113,13 +113,15 @@ public class InstallActivity extends BaseActivity {
     private void initData() {
         User user = EanfangApplication.getApplication().getUser();
         String name = "";
-        if (StringUtils.isEmpty(user.getCompanyName()))
+        if (StringUtils.isEmpty(user.getCompanyName())) {
             name = user.getName();
-        else
+        } else {
             name = user.getCompanyName();
+        }
         //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(etCompany.getText()))
+        if (StringUtils.isEmpty(etCompany.getText())) {
             etCompany.setText(name);
+        }
         etContact.setText(user.getName());
         etPhone.setText(user.getAccount());
     }
@@ -218,7 +220,6 @@ public class InstallActivity extends BaseActivity {
         installOrderConfirmBean.setDescription(etDesc.getText().toString().trim());
         installOrderConfirmBean.setPredicttime(tvProjectTime.getText().toString().trim());
         installOrderConfirmBean.setClientcompanyname(company);
-//        installOrderConfirmBean.setWorkercompanyuid();
 
         Intent intent = new Intent(InstallActivity.this, SelectCompanyActivity.class);
         intent.putExtra("bean", installOrderConfirmBean);

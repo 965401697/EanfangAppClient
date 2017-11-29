@@ -11,6 +11,114 @@ import static net.eanfang.client.network.apiservice.BaseService.BASE_URL;
  */
 
 public interface ApiService {
+    /**
+     * 收藏技师列表
+     * get
+     */
+
+    String COLLECTION_WORKER_LIST = BASE_URL + "/search/collectworker";
+    /**
+     * 收藏过的公司列表
+     * get
+     */
+    String COLLECTION_COMPANY_LIST = BASE_URL + "/getCollectinstallcompany";
+
+    /**
+     * 客户端评价技师
+     * post
+     */
+    String EVALUATE_CLIENT = BASE_URL + "/reviewclient";
+    /**
+     * 客户端收到的评价的protocol
+     * get
+     */
+    String RECEVIED_EVALUATE = BASE_URL + "/myinfo/jtcreview";
+
+
+    /**
+     * 客户端给出的评价的protocol
+     * get
+     */
+    String GIVE_EVALUATE = BASE_URL + "/myinfo/ctjreview";
+
+    /**
+     * 获取推送消息
+     */
+
+    String GET_JPUSH_MESSAGE = BASE_URL + "/getmessage";
+    /**
+     * 添加工作检查
+     */
+
+    String ADD_CHECK_WORK_INSPECT = BASE_URL + "/addWorkInspect";
+    /**
+     * 添加工作任务 url
+     * 参数：工作任务 bean
+     */
+
+    String ADD_WORK_TASK = BASE_URL + "/addWorkTask";
+    /**
+     * 获得公司部门员工列表
+     * 参数：depId 部门id
+     */
+
+    String GET_COMPANY_STAFF = BASE_URL + " /getCompanyStaff";
+    /**
+     * 添加汇报工作
+     */
+
+    String ADD_WORK_REPORT = BASE_URL + "/addWorkReport";
+    /**
+     * 添加免费设计单
+     */
+    String ADD_DESIGN_ORDER = BASE_URL + "/addDesignOrder";
+    /**
+     * 报装单确认
+     * post
+     */
+    String INSTALL_ORDER_CONFIRM = BASE_URL + "/installorderconfirm";
+    /**
+     * 收藏公司
+     * post
+     */
+
+    String COLLECTION_COMPANY_WORK = BASE_URL + "/collectinstallcompany";
+    /**
+     * 公司详情
+     * get
+     */
+
+    String COMPANY_DETAIL = BASE_URL + "/getworkcompanydetail";
+    /**
+     * 选择公司的protocol
+     * get
+     */
+    String SELECT_COMPANY = BASE_URL + "/installselectcompany";
+    /**
+     * 收藏技师
+     * post
+     */
+    String COLLECTION_WORK = BASE_URL + "/collectworker";
+
+    /**
+     * 技师详情
+     * get
+     */
+    String WORKER_DETAIL = BASE_URL + "/search/workerdetail";
+    /**
+     * 报修订单确认
+     * post
+     */
+    String ORDER_CONFIRM = BASE_URL + "/orderconfirm";
+    /**
+     * 一键报修
+     * post
+     */
+    String ONE_BUTON_REPAIR = BASE_URL + "/onetouchrepairselectworker";
+    /**
+     * 报修选择技师
+     */
+    String REPAIR_SELECT_WORKER = BASE_URL + "/repairselectworker";
 
     /**
      * 添加工作检查明细的处理

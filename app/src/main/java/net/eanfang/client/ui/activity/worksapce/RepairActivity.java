@@ -234,13 +234,15 @@ public class RepairActivity extends BaseActivity {
             name = user.getCompanyName();
         }
         //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(et_company.getText()))
+        if (StringUtils.isEmpty(et_company.getText())) {
             et_company.setText(name);
+        }
 
         et_contact.setText(user.getName());
         et_phone.setText(user.getAccount());
-        if (StringUtils.isEmpty(et_phone.getText()))
+        if (StringUtils.isEmpty(et_phone.getText())) {
             et_phone.setText(user.getAccount());
+        }
 
         businessOneList = Config.getConfig().getBusinessOneList();
 
@@ -288,6 +290,8 @@ public class RepairActivity extends BaseActivity {
                 beanList.add(bean);
                 initData();
                 evaluateAdapter.notifyDataSetChanged();
+                break;
+            default:
                 break;
         }
     }

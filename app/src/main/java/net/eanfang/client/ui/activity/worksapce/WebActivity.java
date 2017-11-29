@@ -399,6 +399,7 @@ public class WebActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
     @SuppressLint("NewApi")
     public void onResume() {
         super.onResume();

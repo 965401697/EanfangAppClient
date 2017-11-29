@@ -1,23 +1,24 @@
 package net.eanfang.client.ui.activity.my;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.View;
+
+import com.eanfang.util.ViewFindUtils;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.FragmentAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.fragment.CollectCompanyListFragment;
-import net.eanfang.client.ui.fragment.CollectWorkerListFragment;
+import net.eanfang.client.ui.fragment.CollectionCompanyrFragment;
+import net.eanfang.client.ui.fragment.CollectionWorkerFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,26 +29,18 @@ import butterknife.ButterKnife;
  * @desc
  */
 
-public class CollectActivity extends BaseActivity {
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.sliding_tab)
-    TabLayout slidingTab;
-    @BindView(R.id.vp)
-    ViewPager vpEvaluate;
-    private CollectWorkerListFragment workerListFragment;
-    private CollectCompanyListFragment companyListFragment;
-    private List<Fragment> list_frag;
-    private List<String> list_title;
-    private String[] title = {"技师", "公司"};
-    private FragmentAdapter adapter;
+public class CollectActivity extends BaseActivity implements OnTabSelectListener {
+    private Context mContext = this;
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private final String[] mTitles = {
+            "技师", "公司"
+    };
+    private MyPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_evaluate);
+        setContentView(R.layout.activity_collect);
         ButterKnife.bind(this);
         initView();
     }
@@ -55,22 +48,51 @@ public class CollectActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("收藏");
-        workerListFragment = new CollectWorkerListFragment();
-        companyListFragment = new CollectCompanyListFragment();
-        list_frag = new ArrayList<>();
-        list_frag.add(workerListFragment);
-        list_frag.add(companyListFragment);
-        slidingTab.setTabMode(TabLayout.MODE_FIXED);
-        list_title = new ArrayList<>();
-        Collections.addAll(list_title, title);
-        slidingTab.addTab(slidingTab.newTab().setText(list_title.get(0)));
-        slidingTab.addTab(slidingTab.newTab().setText(list_title.get(1)));
-        adapter = new FragmentAdapter(getSupportFragmentManager(), list_frag, list_title);
-
-        //viewpager加载adapter
-        vpEvaluate.setAdapter(adapter);
-        //tablayout加载viewpager
-        slidingTab.setupWithViewPager(vpEvaluate);
-
+        mFragments.add(CollectionWorkerFragment.getInstance());
+        mFragments.add(CollectionCompanyrFragment.getInstance());
+        View decorView = getWindow().getDecorView();
+        ViewPager vp = ViewFindUtils.find(decorView, R.id.collection_vp);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        vp.setAdapter(mAdapter);
+        /**自定义部分属性*/
+        SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.collection_tl);
+        tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
+        tabLayout_2.setOnTabSelectListener(this);
+        vp.setCurrentItem(0);
+        setTitle("收藏");
+        setLeftBack();
     }
+
+    @Override
+    public void onTabSelect(int position) {
+//        Toast.makeText(mContext, "onTabSelect&position--->" + position, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTabReselect(int position) {
+//        Toast.makeText(mContext, "onTabReselect&position--->" + position, Toast.LENGTH_SHORT).show();
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
+
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+    }
+
 }

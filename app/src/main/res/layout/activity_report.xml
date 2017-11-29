@@ -24,10 +24,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="#fff"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,14 +47,17 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="#fff"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -77,14 +79,18 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <LinearLayout
+                android:id="@+id/ll_report_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="#fff"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -103,7 +109,6 @@
                     android:gravity="right"
                     android:textColor="@color/font_color"
                     android:textSize="16sp" />
-
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
@@ -112,14 +117,20 @@
                     android:src="@mipmap/arrow_right" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/textView"
@@ -144,21 +155,32 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/report_complete_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
+                android:layout_margin="10dp"
+                android:background="#fff" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
+                android:layout_height="match_parent"
+                android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="15dp"
-                android:layout_margin="5dp">
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -182,22 +204,32 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/report_find_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"/>
+                android:layout_margin="10dp"
+                android:background="#fff" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
+                android:layout_height="match_parent"
+                android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="15dp"
-                android:layout_margin="5dp">
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -221,13 +253,22 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/report_plan_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp" />
+                android:layout_margin="10dp"
+                android:background="#fff" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/background" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -245,15 +286,18 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/background" />
 
                 <LinearLayout
                     android:id="@+id/ll_depend_person"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_ll_selctor"
+                    android:background="#fff"
                     android:orientation="horizontal"
-                    android:padding="15dp"
-                    android:layout_margin="5dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -281,16 +325,18 @@
                         android:src="@mipmap/arrow_right" />
                 </LinearLayout>
 
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/background" />
 
                 <LinearLayout
                     android:id="@+id/ll_phone_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_ll_selctor"
+                    android:background="#fff"
                     android:orientation="horizontal"
-                    android:padding="15dp"
-                    android:layout_margin="5dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -312,6 +358,13 @@
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/background" />
+
+
             </LinearLayout>
 
             <Button
@@ -320,7 +373,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
                 android:background="@drawable/bg_ll_btn"
                 android:text="提交" />
         </LinearLayout>

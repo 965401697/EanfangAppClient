@@ -319,7 +319,9 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) return;//当回掉无数据时，保持app正常
+        if (data == null) {
+            return;//当回掉无数据时，保持app正常
+        }
         switch (requestCode) {
             case TakePhotoActivity.REQUEST_CAPTRUE_CODE:
                 //往图片绘制文字
@@ -364,8 +366,8 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
                     }
                 }
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
@@ -420,6 +422,8 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
                 break;
             case R.id.tv_care://保养
                 tvTypeSel.setText("保养");
+                break;
+            default:
                 break;
 
         }

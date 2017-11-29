@@ -178,6 +178,17 @@
         <activity android:name=".ui.activity.worksapce.PhoneLookTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.WorkCheckListActivity" />
         <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.OrderConfirmActivity" />
+        <activity android:name=".ui.activity.worksapce.WorkerDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.CompanyDetailActivity"/>
+        <activity android:name=".ui.activity.worksapce.CompanyCompareActivity"/>
+        <activity android:name=".ui.activity.worksapce.OrderConfirmActivitys"/>
+        <activity android:name=".ui.activity.worksapce.AddReportCompleteActivity"/>
+        <activity android:name=".ui.activity.worksapce.AddReportFindActivity"/>
+        <activity android:name=".ui.activity.worksapce.AddReportPlanActivity"/>
+        <activity android:name=".ui.activity.worksapce.AddWorkTaskDeitailActivity"/>
+        <activity android:name=".ui.activity.worksapce.AddWorkCheckDetailActivity"/>
+        <activity android:name=".ui.activity.worksapce.EvaluateClientActivity"/>
 
         <activity
             android:name=".ui.activity.worksapce.WebActivity"

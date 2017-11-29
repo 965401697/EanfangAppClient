@@ -3,7 +3,6 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
@@ -18,7 +17,7 @@ import net.eanfang.client.ui.base.BaseFragment;
  */
 
 public class ContactsFragment extends BaseFragment {
-    private TextView tv_safety;
+    private ImageView tv_safety;
     private ImageView iv_add;
 
     @Override
