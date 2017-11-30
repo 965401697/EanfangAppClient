@@ -16,6 +16,7 @@ import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.activity.LoginActivity;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.widget.AboutUsView;
+import net.eanfang.client.ui.widget.MessageStateView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +37,8 @@ public class SettingActivity extends BaseActivity {
     Button btn_logout;
     @BindView(R.id.tv_cache)
     TextView tv_cache;
+    @BindView(R.id.ll_msg_setting)
+    LinearLayout llMsgSetting;
 
 
     @Override
@@ -54,11 +57,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initView() {
-        ll_about_us.setOnClickListener((v) -> {
-            AboutUsView aboutUsView=new AboutUsView(this,true);
-            aboutUsView.show();
-        });
-
+        ll_about_us.setOnClickListener(v -> new AboutUsView(this, true).show());
         ll_cache.setOnClickListener((v) -> {
             ToastUtil.get().showToast(this, "缓存已成功清除");
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
@@ -68,9 +67,8 @@ public class SettingActivity extends BaseActivity {
                 e.printStackTrace();
             }
         });
-        btn_logout.setOnClickListener((v) -> {
-            logout();
-        });
+        btn_logout.setOnClickListener(v -> logout());
+        llMsgSetting.setOnClickListener(v -> new MessageStateView(SettingActivity.this).show());
     }
 
     /**

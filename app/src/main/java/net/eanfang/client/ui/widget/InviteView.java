@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.eanfang.base.BaseDialog;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 
 import butterknife.BindView;
@@ -69,19 +68,12 @@ public class InviteView extends BaseDialog {
 
     private Uri getImgUri(int curr) {
         int id = 0;
-        if (BuildConfig.APP_TYPE == 0) {
             if (curr == 2) {
                 id = R.mipmap.client_app_qr_500;
             } else {
                 id = R.mipmap.worker_app_qr_500;
             }
-        } else {
-            if (curr == 2) {
-                id = R.mipmap.worker_app_qr_500;
-            } else {
-                id = R.mipmap.client_app_qr_500;
-            }
-        }
+
         Uri uri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/" + id);
         return uri;
     }
