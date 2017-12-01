@@ -5,7 +5,7 @@ public class ErrorCodeConst {
 	/**
 	 * 请求成功
 	 */
-	public static final int REQUEST_SUCCESS = 200;
+	public static final int REQUEST_SUCCESS = 20000;
 	public static final String REQUEST_SUCCESS_STR = "请求成功";
 
 	/**

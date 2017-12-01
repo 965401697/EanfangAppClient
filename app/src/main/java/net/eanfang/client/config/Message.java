@@ -81,4 +81,9 @@ public class Message {
 	public static final int ERR_USER_MESSAGE_CODE = 50030;
 	public static final String ERR_USER_MESSAGE_STR = "获取登录人相关信息失败";
 
+	public final static int ERR_ENTITY_VALIDATE_CODE =50031; 
+	public final static String ERR_ENTITY_VALIDATE="录入校验错误"; 
+	
+	public final static int ERR_MASSAGE_NULL_CODE = 50032;
+	public final static String ERR_MASSAGE_NULL_STR = "获取订单信息失败";
 }

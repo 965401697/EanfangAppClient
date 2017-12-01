@@ -21,6 +21,7 @@ import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
 import net.eanfang.client.util.FrecsoImagePipelineUtil;
 import net.eanfang.client.util.LocationUtil;
 
@@ -110,7 +111,8 @@ public class EanfangApplication extends CustomeApplication {
         HttpHeaders headers = new HttpHeaders();
 
         if (EanfangApplication.get().getUser() != null) {
-            headers.put("token", EanfangApplication.get().getUser().getToken());
+            headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+            headers.put("Request-From", String.valueOf(Constant.RequestFrom.CLIENT));
 //            headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
 //            headers.put("SYS-Type", EanfangApplication.get().getUser().getToken());
         }
