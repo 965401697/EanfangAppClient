@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
@@ -23,7 +24,6 @@ import net.eanfang.client.ui.activity.SelectAddressActivity;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.InstallOrderConfirmBean;
 import net.eanfang.client.ui.model.SelectAddressItem;
-import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.PickerSelectUtil;
 import net.eanfang.client.util.StringUtils;
 
@@ -111,19 +111,19 @@ public class InstallActivity extends BaseActivity {
     }
 
     private void initData() {
-        User user = EanfangApplication.getApplication().getUser();
+        LoginBean user = EanfangApplication.getApplication().getUser();
         String name = "";
-        if (StringUtils.isEmpty(user.getCompanyName())) {
-            name = user.getName();
+        if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
+            name = user.getAccount().getRealName();
         } else {
-            name = user.getCompanyName();
+            name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         }
         //如果公司名称为空 则取当前登陆人的公司
         if (StringUtils.isEmpty(etCompany.getText())) {
             etCompany.setText(name);
         }
-        etContact.setText(user.getName());
-        etPhone.setText(user.getAccount());
+        etContact.setText(user.getAccount().getRealName());
+        etPhone.setText(user.getAccount().getMobile());
     }
 
     private void setListener() {

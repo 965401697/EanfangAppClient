@@ -10,16 +10,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
-import net.eanfang.client.network.apiservice.ApiService;
-import net.eanfang.client.network.request.EanfangCallback;
-import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.CollectionWorkerListAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.model.CollectionWorkerListBean;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,29 +42,29 @@ public class CollectionWorkerFragment extends BaseFragment {
     @Override
     protected void initData(Bundle arguments) {
 
-        JSONObject object = new JSONObject();
-        try {
-            object.put("personuid", EanfangApplication.get().getUser().getPersonId());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        EanfangHttp.get(ApiService.COLLECTION_WORKER_LIST)
-                .tag(this)
-                .params("json", object.toString())
-                .execute(new EanfangCallback<CollectionWorkerListBean>(getActivity(), false) {
-                    @Override
-                    public void onSuccess(CollectionWorkerListBean bean) {
-                        super.onSuccess(bean);
-                        mDataList = bean.getAll();
-                        initAdapter();
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        showToast(message);
-                    }
-                });
+//        JSONObject object = new JSONObject();
+//        try {
+//            object.put("personuid", EanfangApplication.get().getUser().getPersonId());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        EanfangHttp.get(ApiService.COLLECTION_WORKER_LIST)
+//                .tag(this)
+//                .params("json", object.toString())
+//                .execute(new EanfangCallback<CollectionWorkerListBean>(getActivity(), false) {
+//                    @Override
+//                    public void onSuccess(CollectionWorkerListBean bean) {
+//                        super.onSuccess(bean);
+//                        mDataList = bean.getAll();
+//                        initAdapter();
+//                    }
+//
+//                    @Override
+//                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+//                        super.onFail(code, message, jsonObject);
+//                        showToast(message);
+//                    }
+//                });
     }
 
     @Override

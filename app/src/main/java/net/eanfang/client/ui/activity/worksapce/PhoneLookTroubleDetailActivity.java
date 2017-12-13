@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -30,9 +32,6 @@ import net.eanfang.client.ui.model.FillRepairInfoBean;
 import net.eanfang.client.ui.model.WorkspaceDetailBean;
 import net.eanfang.client.ui.widget.MateraInfoView;
 import net.eanfang.client.util.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;

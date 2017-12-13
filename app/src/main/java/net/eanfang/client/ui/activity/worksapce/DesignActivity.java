@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.google.gson.Gson;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
@@ -27,8 +28,6 @@ import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.AddDesignOrderBean;
 import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.SelectAddressItem;
-import net.eanfang.client.ui.model.User;
-import net.eanfang.client.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,19 +118,19 @@ public class DesignActivity extends BaseActivity {
     }
 
     private void initData() {
-        User user = EanfangApplication.getApplication().getUser();
-        String name = "";
-        if (StringUtils.isEmpty(user.getCompanyName())) {
-            name = user.getName();
-        } else {
-            name = user.getCompanyName();
-        }
-        //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(et_user_name.getText())) {
-            et_user_name.setText(name);
-            et_receive_user_name.setText(user.getName());
-            et_receive_phone.setText(user.getAccount());
-        }
+        LoginBean user = EanfangApplication.getApplication().getUser();
+//        String name = "";
+//        if (StringUtils.isEmpty(user.getCompanyName())) {
+//            name = user.getName();
+//        } else {
+//            name = user.getCompanyName();
+//        }
+//        //如果公司名称为空 则取当前登陆人的公司
+//        if (StringUtils.isEmpty(et_user_name.getText())) {
+//            et_user_name.setText(name);
+//            et_receive_user_name.setText(user.getName());
+//            et_receive_phone.setText(user.getAccount());
+//        }
     }
 
     private void initView() {
@@ -239,15 +238,15 @@ public class DesignActivity extends BaseActivity {
             showToast("需求描述不能超过50个字");
             return;
         }
-        User user = EanfangApplication.getApplication().getUser();
+        LoginBean user = EanfangApplication.getApplication().getUser();
         AddDesignOrderBean bean = new AddDesignOrderBean();
         bean.setAddress(address);
         bean.setBudgetLimit(budgetLimit);
         bean.setBusinessOne(businessOne);
         bean.setCity(city);
         bean.setCounty(contry);
-        bean.setCreateCompanyUid(user.getCompanyId());
-        bean.setCreateUser(user.getPersonId());
+//        bean.setCreateCompanyUid(user.getCompanyId());
+//        bean.setCreateUser(user.getPersonId());
         bean.setLat(lat);
         bean.setLon(lon);
         bean.setPlanLimit(planLimit);

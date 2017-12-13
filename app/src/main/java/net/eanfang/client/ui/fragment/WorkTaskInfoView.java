@@ -14,7 +14,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.LookTaskDetailAdapter;
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/22  17:53
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 任务详情
  */
 
 public class WorkTaskInfoView extends BaseDialog {
@@ -42,7 +42,7 @@ public class WorkTaskInfoView extends BaseDialog {
     @BindView(R.id.textView)
     TextView textView;
     private Activity mContext;
-    private int id;
+    private Long id;
     @BindView(R.id.et_company_name)
     TextView etCompanyName;
     @BindView(R.id.et_department_name)
@@ -65,10 +65,10 @@ public class WorkTaskInfoView extends BaseDialog {
     LinearLayout llPhoneNum;
 
     private LookTaskDetailAdapter detailAdapter;
-    private List<WorkTaskInfoBean.BeanBean.DetailsBean> mDataList;
+    private List<WorkTaskInfoBean.WorkTaskDetailsBean> mDataList;
 
 
-    public WorkTaskInfoView(Activity context, boolean isfull, int id) {
+    public WorkTaskInfoView(Activity context, boolean isfull, Long id) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
@@ -83,7 +83,7 @@ public class WorkTaskInfoView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("任务详情");
+        tvTitle.setText("任务");
         getData();
     }
 
@@ -94,34 +94,24 @@ public class WorkTaskInfoView extends BaseDialog {
     }
 
     private void getData() {
-        EanfangHttp.get(ApiService.GET_WORK_TASK_INFO)
-                .tag(this)
+        EanfangHttp.get(NewApiService.GET_WORK_TASK_INFO)
                 .params("id", id)
-                .execute(new EanfangCallback<WorkTaskInfoBean>(mContext, true) {
-
-                    @Override
-                    public void onSuccess(final WorkTaskInfoBean bean) {
-                        etCompanyName.setText(bean.getBean().getCompanyName());
-                        etDepartmentName.setText(bean.getBean().getDepartmentName());
-                        etTaskName.setText(bean.getBean().getTitle());
-                        tvDependPerson.setText(bean.getBean().getReceiveUserName());
-                        etPhoneNum.setText(bean.getBean().getReceivePhone());
-                        etPubTime.setText(bean.getBean().getCreateDate());
-                        tvPubName.setText(bean.getBean().getCreateUserName());
-                        mDataList = bean.getBean().getDetails();
-                        initAdapter();
-                        taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
-                            @Override
-                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                new LookTaskInfoView(mContext, true, bean.getBean().getDetails().get(position)).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                .execute(new EanfangCallback<WorkTaskInfoBean>(mContext, true, WorkTaskInfoBean.class, (bean) -> {
+                    etCompanyName.setText(bean.getCreateCompany().getOrgName());
+                    etDepartmentName.setText(bean.getCreateOrg().getOrgName());
+                    etTaskName.setText(bean.getTitle());
+                    tvDependPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+                    etPhoneNum.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
+                    etPubTime.setText(bean.getCreateTime());
+                    tvPubName.setText(bean.getCreateUser().getAccountEntity().getRealName());
+                    mDataList = bean.getWorkTaskDetails();
+                    initAdapter();
+                    taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
+                        @Override
+                        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            new LookTaskInfoView(mContext, true, bean.getWorkTaskDetails().get(position)).show();
+                        }
+                    });
+                }));
     }
 }

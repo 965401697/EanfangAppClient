@@ -14,29 +14,23 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.eanfang.BuildConfig;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.IDCardUtil;
 import com.eanfang.util.PermissionCheckUtil;
-import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.oss.OSSCallBack;
 import net.eanfang.client.ui.activity.SelectAddressActivity;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.base.BaseActivityWithTakePhoto;
 import net.eanfang.client.ui.model.InfoBackBean;
 import net.eanfang.client.ui.model.SelectAddressItem;
-import net.eanfang.client.ui.model.User;
-import net.eanfang.client.util.OSSUtils;
 import net.eanfang.client.util.StringUtils;
 
 import java.text.ParseException;
@@ -189,25 +183,25 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     @Override
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
-        OSSCallBack callback = null;
-        String imgKey = UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            case HEAD_PHOTO:
-                ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
-                callback = new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-                        runOnUiThread(() -> {
-                            User user = EanfangApplication.get().getUser();
-                            user.setHeadpic(BuildConfig.OSS_SERVER + imgKey);
-                            path1 = user.getHeadpic();
-                        });
-
-                    }
-                };
-                break;
-        }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
+//        OSSCallBack callback = null;
+//        String imgKey = UuidUtil.getUUID() + ".png";
+//        switch (resultCode) {
+//            case HEAD_PHOTO:
+//                ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
+//                callback = new OSSCallBack(this, true) {
+//                    @Override
+//                    public void onOssSuccess() {
+//                        runOnUiThread(() -> {
+//                            User user = EanfangApplication.get().getUser();
+//                            user.setHeadpic(BuildConfig.OSS_SERVER + imgKey);
+//                            path1 = user.getHeadpic();
+//                        });
+//
+//                    }
+//                };
+//                break;
+//        }
+//        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
 
 
     }
@@ -281,22 +275,22 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         Gson gson = new Gson();
         String json = gson.toJson(bean);
         Log.e("json", json);
-        EanfangHttp.post(UserApi.INFO_HEAD_UPDATE)
-                .tag(this)
-                .params("json", json.toString())
-                .execute(new EanfangCallback(PersonInfoActivity.this, false) {
-                    @Override
-                    public void onSuccess(Object bean) {
-                        super.onSuccess(bean);
-                        showToast("保存成功");
-                        User user = EanfangApplication.get().getUser();
-                        user.setInfoGood("1");
-                        user.setName(etRealname.getText().toString().trim());
-                        user.setHeadpic(path1);
-                        EanfangApplication.get().saveUser(user);
-                        finish();
-                    }
-                });
+//        EanfangHttp.post(UserApi.INFO_HEAD_UPDATE)
+//                .tag(this)
+//                .params("json", json.toString())
+//                .execute(new EanfangCallback(PersonInfoActivity.this, false) {
+//                    @Override
+//                    public void onSuccess(Object bean) {
+//                        super.onSuccess(bean);
+//                        showToast("保存成功");
+//                        User user = EanfangApplication.get().getUser();
+//                        user.setInfoGood("1");
+//                        user.setName(etRealname.getText().toString().trim());
+//                        user.setHeadpic(path1);
+//                        EanfangApplication.get().saveUser(user);
+//                        finish();
+//                    }
+//                });
     }
 
 

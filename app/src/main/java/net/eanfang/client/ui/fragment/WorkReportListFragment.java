@@ -12,8 +12,6 @@ import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -108,11 +106,11 @@ public class WorkReportListFragment extends BaseFragment implements
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            if (mDataList.get(position).getStatus().equals(EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-                if (EanfangApplication.getApplication().getUser().getPersonId().equals(mDataList.get(position).getReceiveUser())) {
-                    getFirstLookData(((WorkReportListActivity) getActivity()).getWorkReportListBean(), position);
-                }
-            }
+//            if (mDataList.get(position).getStatus().equals(EanfangConst.WORK_TASK_STATUS_UNREAD)) {
+//                if (EanfangApplication.getApplication().getUser().getPersonId().equals(mDataList.get(position).getReceiveUser())) {
+//                    getFirstLookData(((WorkReportListActivity) getActivity()).getWorkReportListBean(), position);
+//                }
+//            }
             new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
         }
     };

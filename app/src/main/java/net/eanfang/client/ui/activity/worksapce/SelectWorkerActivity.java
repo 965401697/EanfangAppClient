@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.util.ConnectivityChangeReceiver;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
@@ -20,7 +21,6 @@ import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.WorkerListFragment;
 import net.eanfang.client.ui.model.SelectWorkerListBean;
 import net.eanfang.client.ui.model.ToRepairBean;
-import net.eanfang.client.ui.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,7 +86,7 @@ public class SelectWorkerActivity extends BaseActivity implements View.OnClickLi
     private void initData() {
         Intent intent = getIntent();
         toRepairBean = (ToRepairBean) intent.getSerializableExtra("bean");
-        User user = EanfangApplication.getApplication().getUser();
+        LoginBean user = EanfangApplication.getApplication().getUser();
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("bugOneUid", toRepairBean.getBugOneUid());

@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
@@ -18,9 +20,6 @@ import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.client.ui.model.WorkspaceInstallBean;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 

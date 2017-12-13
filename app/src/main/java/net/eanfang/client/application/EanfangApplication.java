@@ -20,8 +20,6 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import net.eanfang.client.config.Config;
-import net.eanfang.client.config.Constant;
 import net.eanfang.client.util.FrecsoImagePipelineUtil;
 import net.eanfang.client.util.LocationUtil;
 
@@ -47,18 +45,17 @@ public class EanfangApplication extends CustomeApplication {
     public void onCreate() {
         super.onCreate();
         mEanfangApplication = this;
-        initConfigs();
+        initConfig();
         initOkGo();
         CameraApplication.init(this, true);
     }
 
-    public void initConfigs() {
+    public void initConfig() {
         /**fresco加载图片*/
         Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
         SharePreferenceUtil.get().init(mEanfangApplication);
         LocationUtil.get().init(this);
-        Config.getConfig().init(getApplicationContext());
         //bugly初始化
         CrashReport.initCrashReport(getApplicationContext(), "6f03b7d57f", false);
         initXinGe();
@@ -112,19 +109,15 @@ public class EanfangApplication extends CustomeApplication {
 
         if (EanfangApplication.get().getUser() != null) {
             headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-            headers.put("Request-From", String.valueOf(Constant.RequestFrom.CLIENT));
-//            headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-//            headers.put("SYS-Type", EanfangApplication.get().getUser().getToken());
+            headers.put("Request-From", "CLIENT");
         }
-        //        HttpParams params = new HttpParams();
-        //        params.put("参数可以", "参数value");
+
         http = OkGo.getInstance().init(this)                       //必须调用初始化
                 .setOkHttpClient(builder.build())               //建议设置OkHttpClient，不设置将使用默认的
                 .setCacheMode(CacheMode.NO_CACHE)               //全局统一缓存模式，默认不使用缓存，可以不传
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
                 .setRetryCount(3)                               //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
                 .addCommonHeaders(headers);                    //全局公共头
-        // .addCommonParams(params);                       //全局公共参数
 
     }
 

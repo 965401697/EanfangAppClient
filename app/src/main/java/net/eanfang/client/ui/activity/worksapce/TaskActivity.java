@@ -12,19 +12,21 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.gson.Gson;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.AddTaskDetailAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.CompanyStaffBean;
 import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.WorkTaskBean;
 import net.eanfang.client.ui.widget.TaskInfoView;
@@ -45,10 +47,7 @@ import butterknife.ButterKnife;
 
 public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.et_company_name)
-    TextView etCompanyName;
-    @BindView(R.id.et_department_name)
-    EditText etDepartmentName;
+
     @BindView(R.id.btn_add_task)
     TextView btnAddTask;
     @BindView(R.id.task_detial_list)
@@ -65,14 +64,15 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
     EditText etTaskName;
     private OptionsPickerView pvOptions_NoLink;
 
-    private CompanyStaffBean staffBean;
     private int posistion;
-    private List<CompanyStaffBean.AllBean> userlist = new ArrayList<>();
+    private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
-    private List<WorkTaskBean.DetailsBean> beanList = new ArrayList<>();
+    private List<WorkTaskBean.WorkTaskDetailsBean> beanList = new ArrayList<>();
     private AddTaskDetailAdapter maintenanceDetailAdapter;
-    private WorkTaskBean bean = new WorkTaskBean();
-    private WorkTaskBean.DetailsBean detailsBean;
+    private WorkTaskBean workTaskBean = new WorkTaskBean();
+    private WorkTaskBean.WorkTaskDetailsBean detailsBean;
+    private Long assigneeUserId;
+    private String assigneeOrgCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
         taskDetialList.setLayoutManager(new LinearLayoutManager(this));
         taskDetialList.setAdapter(maintenanceDetailAdapter);
 
-        etCompanyName.setText(EanfangApplication.getApplication().getUser().getCompanyName());
+//        etCompanyName.setText(EanfangApplication.getApplication().getUser().getCompanyName());
         getData();
     }
 
@@ -104,7 +104,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_add_task:
                 Intent intent = new Intent(TaskActivity.this, AddWorkTaskDeitailActivity.class);
-                startActivityForResult(intent, 10016);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.ll_depend_person://责任人
                 showDependPerson();
@@ -122,24 +122,16 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
      */
     private void getData() {
 
-        EanfangHttp.get(ApiService.GET_COMPANY_STAFF)
+        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("depId", "5")
-                .execute(new EanfangCallback<CompanyStaffBean>(this, true) {
-                    @Override
-                    public void onSuccess(CompanyStaffBean bean) {
-                        staffBean = bean;
-                        userlist = staffBean.getAll();
-                        for (int i = 0; i < userlist.size(); i++) {
-                            userNameList.add(userlist.get(i).getName());
-                        }
-                    }
+                .params("id", EanfangApplication.getApplication().getUserId())
+                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .execute(new EanfangCallback<UserEntity>(TaskActivity.this, false, UserEntity.class, true, (list) -> {
+                    userlist = list;
 
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                    }
-                });
+                    userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
+
+                }));
 
 
     }
@@ -156,8 +148,10 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 posistion = options1;
-                etPhoneNum.setText(userlist.get(posistion).getPhone());
-                tvDependPerson.setText(userlist.get(posistion).getName());
+                etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
+                tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
+                assigneeUserId = userlist.get(posistion).getUserId();
+                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
 
             }
         }).build();
@@ -172,7 +166,7 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
             return;
         }
 
-        detailsBean = (WorkTaskBean.DetailsBean) data.getSerializableExtra("result");
+        detailsBean = (WorkTaskBean.WorkTaskDetailsBean) data.getSerializableExtra("result");
         beanList.add(detailsBean);
         taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -186,75 +180,49 @@ public class TaskActivity extends BaseActivity implements View.OnClickListener {
 
     private void submit() {
 
-        String company_name = etCompanyName.getText().toString().trim();
-        bean.setCompanyName(company_name);
-        bean.setCreateUser(EanfangApplication.get().getUser().getPersonId());
-        String department_name = etDepartmentName.getText().toString().trim();
-        if (TextUtils.isEmpty(department_name)) {
-            showToast("请输入部门名称");
-            return;
-        }
-        bean.setDepartmentName(department_name);
-
         String task_title = etTaskName.getText().toString().trim();
         if (TextUtils.isEmpty(task_title)) {
             showToast("请输入任务标题");
             return;
         }
-        bean.setTitle(task_title);
+        workTaskBean.setTitle(task_title);
 
         String receiveUser = tvDependPerson.getText().toString().trim();
         if (TextUtils.isEmpty(receiveUser)) {
             showToast("请选择联系人");
             return;
         }
+        workTaskBean.setAssigneeUserId(assigneeUserId);
+        workTaskBean.setAssigneeOrgCode(assigneeOrgCode);
+        workTaskBean.setWorkTaskDetails(beanList);
 
-        bean.setReceiveUser(staffBean.getAll().get(posistion).getUid());
-        bean.setCreateCompanyUid(EanfangApplication.get().getUser().getCompanyId());
-
-        String phone_num = etPhoneNum.getText().toString().trim();
-        bean.setReceivePhone(phone_num);
-
-        // TODO: 2017/8/31 跨公司时候需要改变
-        bean.setReceiveCompanyUid(EanfangApplication.get().getUser().getCompanyId());
-
-        bean.setDetails(beanList);
-        doHttp(new Gson().toJson(bean));
+        doHttp(new Gson().toJson(workTaskBean));
 
 
     }
 
     private void doHttp(String jsonString) {
-        EanfangHttp.post(ApiService.ADD_WORK_TASK)
+        EanfangHttp.post(NewApiService.ADD_WORK_TASK)
                 .upJson(jsonString)
-                .execute(new EanfangCallback(this, true) {
-                    @Override
-                    public void onSuccess(Object object) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(TaskActivity.this, StateChangeActivity.class);
-                                Bundle bundle = new Bundle();
-                                Message message = new Message();
-                                message.setTitle("任务指派成功");
-                                message.setMsgTitle("您的工作任务已指派成功");
-                                message.setMsgContent("您可以随时通过我的工作任务查看");
-                                message.setShowOkBtn(true);
-                                message.setShowLogo(true);
-                                message.setTip("");
-                                bundle.putSerializable("message", message);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                                finishSelf();
-                            }
-                        });
-                    }
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> {
+                        Intent intent = new Intent(TaskActivity.this, StateChangeActivity.class);
+                        Bundle bundle = new Bundle();
+                        Message message = new Message();
+                        message.setTitle("任务指派成功");
+                        message.setMsgTitle("您的工作任务已指派成功");
+                        message.setMsgContent("您可以随时通过我的工作任务查看");
+                        message.setShowOkBtn(true);
+                        message.setShowLogo(true);
+                        message.setTip("");
+                        bundle.putSerializable("message", message);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finishSelf();
+                    });
 
-                    @Override
-                    public void onError(String message) {
 
-                    }
-                });
+                }));
 
     }
 

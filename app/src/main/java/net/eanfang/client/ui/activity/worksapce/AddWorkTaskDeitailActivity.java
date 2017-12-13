@@ -8,7 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -17,13 +17,13 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
 import net.eanfang.client.oss.OSSCallBack;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.WorkTaskBean;
 import net.eanfang.client.util.OSSUtils;
 import net.eanfang.client.util.PickerSelectUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,10 +76,7 @@ public class AddWorkTaskDeitailActivity extends BaseActivity implements View.OnC
     TextView tvThirdFrequency;
     @BindView(R.id.ll_third_frequency)
     LinearLayout llThirdFrequency;
-
-    private OptionsPickerView pvOptions_NoLink;
-    private List<String> options = new ArrayList<>();
-    private WorkTaskBean.DetailsBean bean;
+    private WorkTaskBean.WorkTaskDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
 
     @Override
@@ -91,7 +88,7 @@ public class AddWorkTaskDeitailActivity extends BaseActivity implements View.OnC
     }
 
     private void initView() {
-        bean = new WorkTaskBean.DetailsBean();
+        bean = new WorkTaskBean.WorkTaskDetailsBean();
         llOrder.setOnClickListener(this);
         llEndTimes.setOnClickListener(this);
         llFirstFrequency.setOnClickListener(this);
@@ -111,19 +108,24 @@ public class AddWorkTaskDeitailActivity extends BaseActivity implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_order://优先级
-                PickerSelectUtil.singleTextPicker(this, "", tvOrders, Config.getConfig().getOrderList());
+            //优先级
+            case R.id.ll_order:
+                PickerSelectUtil.singleTextPicker(this, "", tvOrders, Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL));
                 break;
-            case R.id.ll_first_frequency://首次响应
-                PickerSelectUtil.singleTextPicker(this, "", tvFirstFrequency, Config.getConfig().getFistFre());
+            //首次响应
+            case R.id.ll_first_frequency:
+                PickerSelectUtil.singleTextPicker(this, "", tvFirstFrequency, Config.getConfig().getConstBean().getConst().get(Constant.FIRST_LOOK));
                 break;
-            case R.id.ll_second_frequency://首次汇报
-                PickerSelectUtil.singleTextPicker(this, "", tvSecondFrequency, Config.getConfig().getSecondFre());
+            //首次汇报
+            case R.id.ll_second_frequency:
+                PickerSelectUtil.singleTextPicker(this, "", tvSecondFrequency, Config.getConfig().getConstBean().getConst().get(Constant.FIRST_CALLBACK));
                 break;
-            case R.id.ll_third_frequency://跟踪汇报
-                PickerSelectUtil.singleTextPicker(this, "", tvThirdFrequency, Config.getConfig().getThirdFre());
+            //跟踪汇报
+            case R.id.ll_third_frequency:
+                PickerSelectUtil.singleTextPicker(this, "", tvThirdFrequency, Config.getConfig().getConstBean().getConst().get(Constant.THEN_CALLBACK));
                 break;
-            case R.id.ll_end_times://截至日期
+            //截至日期
+            case R.id.ll_end_times:
                 PickerSelectUtil.onUpYearMonthDayPicker(this, tvEndTimes);
                 break;
             default:
@@ -193,19 +195,19 @@ public class AddWorkTaskDeitailActivity extends BaseActivity implements View.OnC
         }
 
         bean.setTitle(title);
-        bean.setInstancyLevel(orders);
-        bean.setFirstLook(first);
-        bean.setFirstCallback(second);
-        bean.setThenCallback(third);
-        bean.setEndTime(endtime);
+        bean.setInstancyLevel(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).indexOf(orders));
+        bean.setFirst_look(Config.getConfig().getConstBean().getConst().get(Constant.FIRST_LOOK).indexOf(first));
+        bean.setFirst_callback(Config.getConfig().getConstBean().getConst().get(Constant.FIRST_CALLBACK).indexOf(second));
+        bean.setThen_callback(Config.getConfig().getConstBean().getConst().get(Constant.THEN_CALLBACK).indexOf(third));
+        bean.setEnd_time(endtime);
         bean.setInfo(conment);
         bean.setPurpose(goal);
         bean.setCriterion(standard);
         bean.setJoinPerson(worker);
+
         List<String> urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
-        bean.setPic1(urls.get(0));
-        bean.setPic2(urls.get(1));
-        bean.setPic3(urls.get(2));
+        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -220,7 +222,7 @@ public class AddWorkTaskDeitailActivity extends BaseActivity implements View.OnC
         } else {
             Intent intent = new Intent();
             intent.putExtra("result", bean);
-            setResult(10016, intent);
+            setResult(1, intent);
             finish();
         }
     }

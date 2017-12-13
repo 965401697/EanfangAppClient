@@ -13,49 +13,342 @@ import java.util.List;
 
 public class CompanyStaffBean implements Serializable {
 
-    private List<AllBean> all;
 
-    public List<AllBean> getAll() {
-        return all;
+    /**
+     * code : 20000
+     * data : [{"accId":1,"accountEntity":{"accId":1,"email":"jornlin@foxmail.com","mobile":"18500320187","nickName":"jornlin","realName":"jornlin","status":0,"subsystemAdmin":false,"superAdmin":false},"companyEntity":{"companyId":1100,"orgCode":"c.c1","orgName":"易安防北京运营公司"},"companyId":1100,"departmentEntity":{"companyId":1100,"isVerify":0,"orgCode":"c.c1.2","orgId":1102,"orgName":"财务部","orgType":2,"parentOrgId":1100,"sortNum":0,"topCompanyId":1100},"departmentId":1102,"status":0,"updateTime":"2017-11-18 13:48:29","userId":1},{"accId":"937871078913511425","accountEntity":{"accId":"937871078913511425","email":"123@qq.com","mobile":"15010263711","nickName":"侯","realName":"侯","status":0,"subsystemAdmin":false,"superAdmin":false},"companyEntity":{"companyId":1100,"orgCode":"c.c1","orgName":"易安防北京运营公司"},"companyId":1100,"departmentEntity":{"companyId":1100},"status":0,"userId":"937871079119032321"}]
+     */
+
+    private int code;
+    private List<DataBean> data;
+
+    public int getCode() {
+        return code;
     }
 
-    public void setAll(List<AllBean> all) {
-        this.all = all;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public static class AllBean {
+    public List<DataBean> getData() {
+        return data;
+    }
+
+    public void setData(List<DataBean> data) {
+        this.data = data;
+    }
+
+    public static class DataBean {
         /**
-         * name : 周双
-         * phone : 18810293070
-         * uid : 38cf051175d0465d9043245343af0c64
+         * accId : 1
+         * accountEntity : {"accId":1,"email":"jornlin@foxmail.com","mobile":"18500320187","nickName":"jornlin","realName":"jornlin","status":0,"subsystemAdmin":false,"superAdmin":false}
+         * companyEntity : {"companyId":1100,"orgCode":"c.c1","orgName":"易安防北京运营公司"}
+         * companyId : 1100
+         * departmentEntity : {"companyId":1100,"isVerify":0,"orgCode":"c.c1.2","orgId":1102,"orgName":"财务部","orgType":2,"parentOrgId":1100,"sortNum":0,"topCompanyId":1100}
+         * departmentId : 1102
+         * status : 0
+         * updateTime : 2017-11-18 13:48:29
+         * userId : 1
          */
 
-        private String name;
-        private String phone;
-        private String uid;
+        private int accId;
+        private AccountEntityBean accountEntity;
+        private CompanyEntityBean companyEntity;
+        private int companyId;
+        private DepartmentEntityBean departmentEntity;
+        private int departmentId;
+        private int status;
+        private String updateTime;
+        private int userId;
 
-        public String getName() {
-            return name;
+        public int getAccId() {
+            return accId;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setAccId(int accId) {
+            this.accId = accId;
         }
 
-        public String getPhone() {
-            return phone;
+        public AccountEntityBean getAccountEntity() {
+            return accountEntity;
         }
 
-        public void setPhone(String phone) {
-            this.phone = phone;
+        public void setAccountEntity(AccountEntityBean accountEntity) {
+            this.accountEntity = accountEntity;
         }
 
-        public String getUid() {
-            return uid;
+        public CompanyEntityBean getCompanyEntity() {
+            return companyEntity;
         }
 
-        public void setUid(String uid) {
-            this.uid = uid;
+        public void setCompanyEntity(CompanyEntityBean companyEntity) {
+            this.companyEntity = companyEntity;
+        }
+
+        public int getCompanyId() {
+            return companyId;
+        }
+
+        public void setCompanyId(int companyId) {
+            this.companyId = companyId;
+        }
+
+        public DepartmentEntityBean getDepartmentEntity() {
+            return departmentEntity;
+        }
+
+        public void setDepartmentEntity(DepartmentEntityBean departmentEntity) {
+            this.departmentEntity = departmentEntity;
+        }
+
+        public int getDepartmentId() {
+            return departmentId;
+        }
+
+        public void setDepartmentId(int departmentId) {
+            this.departmentId = departmentId;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public int getUserId() {
+            return userId;
+        }
+
+        public void setUserId(int userId) {
+            this.userId = userId;
+        }
+
+        public static class AccountEntityBean {
+            /**
+             * accId : 1
+             * email : jornlin@foxmail.com
+             * mobile : 18500320187
+             * nickName : jornlin
+             * realName : jornlin
+             * status : 0
+             * subsystemAdmin : false
+             * superAdmin : false
+             */
+
+            private int accId;
+            private String email;
+            private String mobile;
+            private String nickName;
+            private String realName;
+            private int status;
+            private boolean subsystemAdmin;
+            private boolean superAdmin;
+
+            public int getAccId() {
+                return accId;
+            }
+
+            public void setAccId(int accId) {
+                this.accId = accId;
+            }
+
+            public String getEmail() {
+                return email;
+            }
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public String getMobile() {
+                return mobile;
+            }
+
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
+            }
+
+            public String getNickName() {
+                return nickName;
+            }
+
+            public void setNickName(String nickName) {
+                this.nickName = nickName;
+            }
+
+            public String getRealName() {
+                return realName;
+            }
+
+            public void setRealName(String realName) {
+                this.realName = realName;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public boolean isSubsystemAdmin() {
+                return subsystemAdmin;
+            }
+
+            public void setSubsystemAdmin(boolean subsystemAdmin) {
+                this.subsystemAdmin = subsystemAdmin;
+            }
+
+            public boolean isSuperAdmin() {
+                return superAdmin;
+            }
+
+            public void setSuperAdmin(boolean superAdmin) {
+                this.superAdmin = superAdmin;
+            }
+        }
+
+        public static class CompanyEntityBean {
+            /**
+             * companyId : 1100
+             * orgCode : c.c1
+             * orgName : 易安防北京运营公司
+             */
+
+            private int companyId;
+            private String orgCode;
+            private String orgName;
+
+            public int getCompanyId() {
+                return companyId;
+            }
+
+            public void setCompanyId(int companyId) {
+                this.companyId = companyId;
+            }
+
+            public String getOrgCode() {
+                return orgCode;
+            }
+
+            public void setOrgCode(String orgCode) {
+                this.orgCode = orgCode;
+            }
+
+            public String getOrgName() {
+                return orgName;
+            }
+
+            public void setOrgName(String orgName) {
+                this.orgName = orgName;
+            }
+        }
+
+        public static class DepartmentEntityBean {
+            /**
+             * companyId : 1100
+             * isVerify : 0
+             * orgCode : c.c1.2
+             * orgId : 1102
+             * orgName : 财务部
+             * orgType : 2
+             * parentOrgId : 1100
+             * sortNum : 0
+             * topCompanyId : 1100
+             */
+
+            private int companyId;
+            private int isVerify;
+            private String orgCode;
+            private int orgId;
+            private String orgName;
+            private int orgType;
+            private int parentOrgId;
+            private int sortNum;
+            private int topCompanyId;
+
+            public int getCompanyId() {
+                return companyId;
+            }
+
+            public void setCompanyId(int companyId) {
+                this.companyId = companyId;
+            }
+
+            public int getIsVerify() {
+                return isVerify;
+            }
+
+            public void setIsVerify(int isVerify) {
+                this.isVerify = isVerify;
+            }
+
+            public String getOrgCode() {
+                return orgCode;
+            }
+
+            public void setOrgCode(String orgCode) {
+                this.orgCode = orgCode;
+            }
+
+            public int getOrgId() {
+                return orgId;
+            }
+
+            public void setOrgId(int orgId) {
+                this.orgId = orgId;
+            }
+
+            public String getOrgName() {
+                return orgName;
+            }
+
+            public void setOrgName(String orgName) {
+                this.orgName = orgName;
+            }
+
+            public int getOrgType() {
+                return orgType;
+            }
+
+            public void setOrgType(int orgType) {
+                this.orgType = orgType;
+            }
+
+            public int getParentOrgId() {
+                return parentOrgId;
+            }
+
+            public void setParentOrgId(int parentOrgId) {
+                this.parentOrgId = parentOrgId;
+            }
+
+            public int getSortNum() {
+                return sortNum;
+            }
+
+            public void setSortNum(int sortNum) {
+                this.sortNum = sortNum;
+            }
+
+            public int getTopCompanyId() {
+                return topCompanyId;
+            }
+
+            public void setTopCompanyId(int topCompanyId) {
+                this.topCompanyId = topCompanyId;
+            }
         }
     }
 }

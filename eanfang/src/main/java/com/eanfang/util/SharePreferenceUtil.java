@@ -21,10 +21,13 @@ public class SharePreferenceUtil {
     }
 
     public static SharePreferenceUtil get() {
-        if (util == null)
+        if (util == null) {
             synchronized (SharePreferenceUtil.class) {
-                if (util == null) util = new SharePreferenceUtil();
+                if (util == null) {
+                    util = new SharePreferenceUtil();
+                }
             }
+        }
         return util;
     }
 
@@ -35,32 +38,43 @@ public class SharePreferenceUtil {
     }
 
     public void set(String key, Object value) throws IOException {
-        if (value instanceof Boolean) sp.edit()
-                .putBoolean(key, (Boolean) value).commit();
-        else if (value instanceof String) sp.edit()
-                .putString(key, (String) value).commit();
-        else if (value instanceof Integer) sp.edit()
-                .putInt(key, (Integer) value).commit();
-        else if (value instanceof Float) sp.edit().putFloat(key, (Float) value)
-                .commit();
-        else if (value instanceof Long) sp.edit().putLong(key, (Long) value)
-                .commit();
-        else
-            sp.edit().putString(key, ObjectUtil.object2String(value)).commit();
+        if (value instanceof Boolean) {
+            sp.edit().putBoolean(key, (Boolean) value).apply();
+        } else if (value instanceof String) {
+            sp.edit().putString(key, (String) value).apply();
+        } else if (value instanceof Integer) {
+            sp.edit().putInt(key, (Integer) value).apply();
+        } else if (value instanceof Float) {
+            sp.edit().putFloat(key, (Float) value).apply();
+        } else if (value instanceof Long) {
+            sp.edit().putLong(key, (Long) value).apply();
+        } else {
+            sp.edit().putString(key, ObjectUtil.object2String(value)).apply();
+        }
     }
 
     public Object get(String key, Object object) throws Exception {
-        if (object instanceof Boolean) return getBoolean(key, (Boolean) object);
-        if (object instanceof String) return getString(key, (String) object);
-        if (object instanceof Integer) return getInt(key, (Integer) object);
-        if (object instanceof Float) return getFloat(key, (Float) object);
-        if (object instanceof Long) return getLong(key, (Long) object);
+        if (object instanceof Boolean) {
+            return getBoolean(key, (Boolean) object);
+        }
+        if (object instanceof String) {
+            return getString(key, (String) object);
+        }
+        if (object instanceof Integer) {
+            return getInt(key, (Integer) object);
+        }
+        if (object instanceof Float) {
+            return getFloat(key, (Float) object);
+        }
+        if (object instanceof Long) {
+            return getLong(key, (Long) object);
+        }
         String str = getString(key, "");
         return TextUtils.isEmpty(str) ? object : ObjectUtil.string2Object(str);
     }
 
     public void clear() {
-        sp.edit().clear().commit();
+        sp.edit().clear().apply();
     }
 
     public boolean remove(String key) {

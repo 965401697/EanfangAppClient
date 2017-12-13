@@ -7,21 +7,18 @@ import android.view.ViewGroup;
 
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.SharePreferenceUtil;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
-import net.eanfang.client.network.apiservice.UserApi;
-import net.eanfang.client.network.request.EanfangCallback;
-import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.ConfigUtils;
 import net.eanfang.client.util.LogUtils;
 import net.eanfang.client.util.PrefUtils;
 import net.eanfang.client.util.StringUtils;
 
-import org.json.JSONObject;
+
 
 /**
  * Created by MrHou
@@ -80,7 +77,9 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
 
     //跳转
     synchronized void go() {
-        if (!isFirst) return;
+        if (!isFirst) {
+            return;
+        }
         //登录成功且加载完成
         LogUtils.d(TAG, "isLoadReady = " + isLoadReady + "   isLoginReady = " + isLoginReady + "   isCheckReady = " + isCheckReady);
         if (isLoadReady && isLoginReady) {
@@ -120,7 +119,7 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
      */
     public void checkToken() {
         LogUtils.d(TAG, "checkToken();");
-        User user = EanfangApplication.getApplication().getUser();
+        LoginBean user = EanfangApplication.getApplication().getUser();
         LogUtils.d(TAG, "checkToken();" + user);
         isValid = (user == null) || (!StringUtils.isValid(user.getToken()));
         if (isValid) {
@@ -128,40 +127,40 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
             go();
             return;
         }
-        EanfangHttp.get(UserApi.CHECK_TOKEN)
-                .execute(new EanfangCallback<User>(SplashActivity.this, false) {
-                    @Override
-                    public void onSuccess(User bean) {
-                        super.onSuccess(bean);
-                        Object object = bean;
-                        EanfangApplication.get().set(User.class.getName(), object instanceof User);
-
-                        if (object instanceof User) {
-                            LogUtils.d(TAG, "user" + object.toString());
-                            User user = (User) object;
-                            EanfangApplication.get().set(User.class.getName(), user);
-                            isLoginReady = true;
-                            go();
-                        } else {
-                            isCheckReady = true;
-                            go();
-                        }
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        super.onError(message);
-                        isCheckReady = true;
-                        go();
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        isCheckReady = true;
-                        go();
-                    }
-                });
+//        EanfangHttp.get(UserApi.CHECK_TOKEN)
+//                .execute(new EanfangCallback<User>(SplashActivity.this, false) {
+//                    @Override
+//                    public void onSuccess(User bean) {
+//                        super.onSuccess(bean);
+//                        Object object = bean;
+//                        EanfangApplication.get().set(User.class.getName(), object instanceof User);
+//
+//                        if (object instanceof User) {
+//                            LogUtils.d(TAG, "user" + object.toString());
+//                            User user = (User) object;
+//                            EanfangApplication.get().set(User.class.getName(), user);
+//                            isLoginReady = true;
+//                            go();
+//                        } else {
+//                            isCheckReady = true;
+//                            go();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        super.onError(message);
+//                        isCheckReady = true;
+//                        go();
+//                    }
+//
+//                    @Override
+//                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+//                        super.onFail(code, message, jsonObject);
+//                        isCheckReady = true;
+//                        go();
+//                    }
+//                });
 
     }
 

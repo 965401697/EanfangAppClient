@@ -1,9 +1,7 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,11 +10,9 @@ import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
 import net.eanfang.client.ui.model.WorkTaskBean;
-import net.eanfang.client.util.ImagePerviewUtil;
-import net.eanfang.client.util.StringUtils;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,9 +57,9 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
     SimpleDraweeView ivPic3;
 
 
-    private WorkTaskBean.DetailsBean detailBean;
+    private WorkTaskBean.WorkTaskDetailsBean detailBean;
 
-    public TaskInfoView(Activity context, boolean isfull, WorkTaskBean.DetailsBean detailBean) {
+    public TaskInfoView(Activity context, boolean isfull, WorkTaskBean.WorkTaskDetailsBean detailBean) {
         super(context, isfull);
         this.mContext = context;
         this.detailBean = detailBean;
@@ -80,63 +76,65 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
         tvTitle.setText("任务明细");
         ivLeft.setOnClickListener(v -> dismiss());
 
-        ivPic1.setOnClickListener(this);
-        ivPic2.setOnClickListener(this);
-        ivPic3.setOnClickListener(this);
+//        ivPic1.setOnClickListener(this);
+//        ivPic2.setOnClickListener(this);
+//        ivPic3.setOnClickListener(this);
 
-        tvOrders.setText(detailBean.getInstancyLevel());
-        tvFirstFrequency.setText(detailBean.getFirstLook());
-        tvSecondFrequency.setText(detailBean.getFirstCallback());
-        tvThirdFrequency.setText(detailBean.getThenCallback());
-        tvEndTimes.setText(detailBean.getEndTime());
+        tvOrders.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getInstancyLevel()));
+        tvFirstFrequency.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getFirst_look()));
+        tvSecondFrequency.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getFirst_callback()));
+        tvThirdFrequency.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getThen_callback()));
+        tvEndTimes.setText(detailBean.getEnd_time());
         etComment.setText(detailBean.getInfo());
         etWorker.setText(detailBean.getJoinPerson());
         etStandard.setText(detailBean.getCriterion());
         etGoal.setText(detailBean.getPurpose());
-        if (!TextUtils.isEmpty(detailBean.getPic1())) {
-            ivPic1.setImageURI(Uri.parse(detailBean.getPic1()));
-            ivPic1.setVisibility(View.VISIBLE);
-        } else {
-            ivPic1.setVisibility(View.GONE);
-        }
+        // TODO: 2017/12/11 图片接口解析
 
-        if (!TextUtils.isEmpty(detailBean.getPic2())) {
-            ivPic2.setImageURI(Uri.parse(detailBean.getPic2()));
-            ivPic2.setVisibility(View.VISIBLE);
-        } else {
-            ivPic2.setVisibility(View.GONE);
-        }
-        if (!TextUtils.isEmpty(detailBean.getPic3())) {
-            ivPic3.setImageURI(Uri.parse(detailBean.getPic3()));
-            ivPic3.setVisibility(View.VISIBLE);
-        } else {
-            ivPic3.setVisibility(View.GONE);
-        }
+//        if (!TextUtils.isEmpty(detailBean.getPic1())) {
+//            ivPic1.setImageURI(Uri.parse(detailBean.getPic1()));
+//            ivPic1.setVisibility(View.VISIBLE);
+//        } else {
+//            ivPic1.setVisibility(View.GONE);
+//        }
+//
+//        if (!TextUtils.isEmpty(detailBean.getPic2())) {
+//            ivPic2.setImageURI(Uri.parse(detailBean.getPic2()));
+//            ivPic2.setVisibility(View.VISIBLE);
+//        } else {
+//            ivPic2.setVisibility(View.GONE);
+//        }
+//        if (!TextUtils.isEmpty(detailBean.getPic3())) {
+//            ivPic3.setImageURI(Uri.parse(detailBean.getPic3()));
+//            ivPic3.setVisibility(View.VISIBLE);
+//        } else {
+//            ivPic3.setVisibility(View.GONE);
+//        }
     }
 
     @Override
     public void onClick(View v) {
-        ArrayList<String> picList = new ArrayList<String>();
-        switch (v.getId()) {
-            case R.id.iv_pic1:
-                if (!StringUtils.isEmpty(detailBean.getPic1())) {
-                    picList.add(detailBean.getPic1());
-                }
-                break;
-            case R.id.iv_pic2:
-                if (!StringUtils.isEmpty(detailBean.getPic2())) {
-                    picList.add(detailBean.getPic2());
-                }
-                break;
-            case R.id.iv_pic3:
-                if (!StringUtils.isEmpty(detailBean.getPic3())) {
-                    picList.add(detailBean.getPic3());
-                }
-                break;
-            default:
-                break;
-        }
-        ImagePerviewUtil.perviewImage(mContext, picList);
+//        ArrayList<String> picList = new ArrayList<String>();
+//        switch (v.getId()) {
+//            case R.id.iv_pic1:
+//                if (!StringUtils.isEmpty(detailBean.getPic1())) {
+//                    picList.add(detailBean.getPic1());
+//                }
+//                break;
+//            case R.id.iv_pic2:
+//                if (!StringUtils.isEmpty(detailBean.getPic2())) {
+//                    picList.add(detailBean.getPic2());
+//                }
+//                break;
+//            case R.id.iv_pic3:
+//                if (!StringUtils.isEmpty(detailBean.getPic3())) {
+//                    picList.add(detailBean.getPic3());
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//        ImagePerviewUtil.perviewImage(mContext, picList);
 
     }
 }

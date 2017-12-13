@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'com.jakewharton.butterknife'
+
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -21,8 +23,8 @@ android {
 //         buildConfigField("String", "HOST", "\"http://192.168.0.220:8080/eanfang/\"")
 //         buildConfigField("String", "API_HOST", "\"http://192.168.0.220:8080/eanfang/app/\"")
 
-        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 
         ndk {
             // 设置支持的SO库架构
@@ -35,6 +37,7 @@ android {
                 XG_ACCESS_KEY: "ADCL916N8D7M",
                 AMAP_KEY     : "5c53bd9d6c8d249f637bf025d8f44977",
         ]
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
     //签名设置
@@ -162,6 +165,12 @@ dependencies {
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
 
-
+    // add library
+    compile 'com.alibaba:fastjson:1.2.41'
+    provided 'org.projectlombok:lombok:1.16.18'
+    implementation files('libs/validation-api-1.0.0.GA.jar')
+    implementation files('libs/hibernate-validator-4.2.0.Final.jar')
 }
+

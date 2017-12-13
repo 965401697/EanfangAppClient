@@ -19,7 +19,6 @@ import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.ui.activity.worksapce.AddDealwithInfoActivity;
 import net.eanfang.client.ui.adapter.AddCheckInfoDetailAdapter;
@@ -102,18 +101,18 @@ public class LookWorkCheckInfoView extends BaseDialog implements View.OnClickLis
         ivPic2.setOnClickListener(this);
         ivPic3.setOnClickListener(this);
 
-        String uid = EanfangApplication.getApplication().getUser().getPersonId();
-        if (uid.equals(recevieUser)) {
-            llAddDetail.setVisibility(View.VISIBLE);
-        } else {
-            llAddDetail.setVisibility(View.GONE);
-        }
-
-        if (uid.equals(detailsBeanX.getCreateUser())) {
-            llAddDetail.setVisibility(View.GONE);
-        } else {
-            llAddDetail.setVisibility(View.VISIBLE);
-        }
+//        String uid = EanfangApplication.getApplication().getUser().getPersonId();
+//        if (uid.equals(recevieUser)) {
+//            llAddDetail.setVisibility(View.VISIBLE);
+//        } else {
+//            llAddDetail.setVisibility(View.GONE);
+//        }
+//
+//        if (uid.equals(detailsBeanX.getCreateUser())) {
+//            llAddDetail.setVisibility(View.GONE);
+//        } else {
+//            llAddDetail.setVisibility(View.VISIBLE);
+//        }
         if (EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(detailsBeanX.getStatus())) {
             btnAddDetail.setVisibility(View.GONE);
         }

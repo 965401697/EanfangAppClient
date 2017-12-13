@@ -12,12 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -28,9 +29,6 @@ import net.eanfang.client.ui.model.WorkerDetailsBean;
 import net.eanfang.client.util.GetConstDataUtils;
 import net.eanfang.client.util.ImagePerviewUtil;
 import net.eanfang.client.util.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +84,7 @@ public class WorkerDetailActivity extends BaseActivity implements View.OnClickLi
     public static void jumpActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, WorkerDetailActivity.class);
-        intent.putExtra("id", EanfangApplication.get().getUser().getPersonId());
+//        intent.putExtra("id", EanfangApplication.get().getUser().getPersonId());
         ((BaseActivity) context).startAnimActivity(intent);
     }
 
@@ -195,14 +193,15 @@ public class WorkerDetailActivity extends BaseActivity implements View.OnClickLi
         ll_area = (LinearLayout) findViewById(R.id.ll_area);
         iv_down = (ImageView) findViewById(R.id.iv_down);
 
-        if (toRepairBean != null)
+        if (toRepairBean != null) {
             setRightImageResId(R.mipmap.heart);
+        }
         setRightImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JSONObject json = new JSONObject();
                 try {
-                    json.put("personuid", EanfangApplication.get().getUser().getPersonId());
+//                    json.put("personuid", EanfangApplication.get().getUser().getPersonId());
                     json.put("workeruid", id);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -34,6 +34,7 @@
             android:background="@drawable/select_worker"
             android:gravity="center"
             android:padding="5dp"
+            android:textColor="@color/black"
             android:text="已读" />
     </RelativeLayout>
 
@@ -70,6 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="部门："
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -77,6 +79,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="标题："
+                android:textColor="@color/black"
+
                 android:textSize="14sp" />
 
 
@@ -85,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="发布人："
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -92,6 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="接收人："
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -99,6 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="发布时间："
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -3,7 +3,6 @@ package net.eanfang.client.oss;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 
-import net.eanfang.client.network.apiservice.OssApi;
 import net.eanfang.client.network.request.EanfangHttp;
 
 import org.json.JSONException;
@@ -20,10 +19,13 @@ import okhttp3.Response;
 public class STSGetter extends OSSFederationCredentialProvider {
 
 
+    @Override
     public OSSFederationToken getFederationToken() {
         String stsJson;
+        // TODO: 2017/12/12 现在为临时
+        String ossapi = "http://192.168.0.220:8080/eanfang/app/stsgen";
         try {
-            Response response = EanfangHttp.get(OssApi.STS_URL).execute();
+            Response response = EanfangHttp.get(ossapi).headers("token", "6bf47d4694d2512262cbda2c9d0a0529YjUfwy").execute();
             if (response.isSuccessful()) {
                 stsJson = response.body().string();
 

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CheckActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignActivity;
@@ -15,10 +14,9 @@ import net.eanfang.client.ui.activity.worksapce.ReportActivity;
 import net.eanfang.client.ui.activity.worksapce.TaskActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.base.BaseFragment;
-import net.eanfang.client.ui.widget.CompanyQuoteView;
+import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
-import net.eanfang.client.ui.widget.PersonQuoteView;
 import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
 import net.eanfang.client.ui.widget.WorkCheckCtrlView;
@@ -47,6 +45,16 @@ public class WorkspaceFragment extends BaseFragment {
     protected void initView() {
         findViewById(R.id.iv_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
+        });
+        findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
+            new CompanyListView(getActivity()).show();
+//            CompanyListView companyListView = new CompanyListView(getActivity());
+//            Window window = companyListView.getWindow();
+//            //重新设置
+//            WindowManager.LayoutParams lp = window.getAttributes();
+//            window.setGravity(Gravity.LEFT | Gravity.TOP);
+//            window.setAttributes(lp);
+//            companyListView.show();
         });
         //快捷工作
         findViewById(R.id.ll_repair).setOnClickListener((v) -> {
@@ -80,11 +88,11 @@ public class WorkspaceFragment extends BaseFragment {
             new InstallCtrlView(getActivity(), true).show();
         });
         findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
-            if ("1".equals(EanfangApplication.get().getUser().getCompanyverify())) {
-                new CompanyQuoteView(getActivity(), true).show();
-            } else {
-                new PersonQuoteView(getActivity(), true).show();
-            }
+//            if ("1".equals(EanfangApplication.get().getUser().getCompanyverify())) {
+//                new CompanyQuoteView(getActivity(), true).show();
+//            } else {
+//                new PersonQuoteView(getActivity(), true).show();
+//            }
         });
         findViewById(R.id.ll_report_ctrl).setOnClickListener((v) -> {
             new ReportCtrlView(getActivity(), true).show();
@@ -102,4 +110,5 @@ public class WorkspaceFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url", "http://www.jianshu.com/u/0e0821e94979").putExtra("title", "数据统计"));
         });
     }
+
 }

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.eanfang.base.IBase;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.CustomeApplication;
@@ -179,10 +180,11 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     }
 
-    public User user() {
+    public LoginBean user() {
         Object obj = EanfangApplication.getApplication().getUser();
-        if (obj instanceof User)
-            return (User) obj;
+        if (obj instanceof User) {
+            return (LoginBean) obj;
+        }
         return null;
     }
 

@@ -175,8 +175,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     public User user() {
         Object obj = EanfangApplication.getApplication().getUser();
-        if (obj instanceof User)
+        if (obj instanceof User) {
             return (User) obj;
+        }
         return null;
     }
 

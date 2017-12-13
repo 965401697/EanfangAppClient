@@ -3,7 +3,6 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
-import net.eanfang.client.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,9 +54,9 @@ public class DesignCtrlView extends BaseDialog {
             jump("我的设计单", "1");
         });
         //如果是个人 隐藏公司
-        if (StringUtils.isEmpty(EanfangApplication.get().getUser().getCompanyId())) {
-            llMineCompany.setVisibility(View.GONE);
-        }
+//        if (StringUtils.isEmpty(EanfangApplication.get().getUser().getCompanyId())) {
+//            llMineCompany.setVisibility(View.GONE);
+//        }
         llMineCompany.setOnClickListener((v) -> {
             jump("公司的设计单", "0");
         });

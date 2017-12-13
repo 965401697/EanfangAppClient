@@ -7,14 +7,15 @@ package net.eanfang.client.application;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.ArrayMap;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.IBase;
 import com.eanfang.util.AssetUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.model.LoginBean;
 
-import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.FrecsoImagePipelineUtil;
 import net.eanfang.client.util.message.J_MessageVerify;
 
@@ -86,10 +87,15 @@ public abstract class CustomeApplication extends MultiDexApplication {
      * @param key
      * @throws IOException
      */
-    public Object get(String key) {
+    public JSONObject get(String key) {
         synchronized (this) {
             try {
-                return SharePreferenceUtil.get().get(key, new Object());
+                String jsonString = SharePreferenceUtil.get().get(key, "").toString();
+                if (jsonString.length() <= 0) {
+                    return new JSONObject();
+                }
+
+                return JSONObject.parseObject(jsonString);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -97,10 +103,15 @@ public abstract class CustomeApplication extends MultiDexApplication {
         return null;
     }
 
-    public Object get(String key, Object defaultValue) {
+    public JSONObject get(String key, Object defaultValue) {
         synchronized (this) {
             try {
-                return SharePreferenceUtil.get().get(key, defaultValue);
+                String jsonString = SharePreferenceUtil.get().get(key, defaultValue).toString();
+                if (jsonString.length() <= 0) {
+                    return new JSONObject();
+                }
+
+                return JSONObject.parseObject(jsonString);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -112,12 +123,21 @@ public abstract class CustomeApplication extends MultiDexApplication {
         SharePreferenceUtil.get().remove(key);
     }
 
-    public void saveUser(User user) {
-        set(User.class.getName(), user);
+    public void saveUser(LoginBean user) {
+        set(LoginBean.class.getName(), user);
     }
 
-    public User getUser() {
-        return (User) get(User.class.getName(), new User());
+    public LoginBean getUser() {
+        JSONObject jsonObject = get(LoginBean.class.getName(), "");
+        return (JSONObject.toJavaObject(jsonObject, LoginBean.class));
+    }
+
+    public Long getUserId() {
+        return getUser().getAccount().getDefaultUser().getUserId();
+    }
+
+    public Long getCompanyId() {
+        return getUser().getAccount().getDefaultUser().getCompanyId();
     }
 
     public void closeActivity(String... cls) {

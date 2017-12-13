@@ -113,11 +113,11 @@ public class EanfangConst {
     /**
      * 工作任务 状态 未读
      */
-    public static final String WORK_TASK_STATUS_UNREAD = "0";
+    public static final int WORK_TASK_STATUS_UNREAD = 0;
     /**
      * 工作任务 状态 已读
      */
-    public static final String WORK_TASK_STATUS_READ = "1";
+    public static final int WORK_TASK_STATUS_READ = 1;
     /**
      * 工作任务 状态 不可见（删除）
      */

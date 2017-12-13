@@ -3,22 +3,25 @@ package net.eanfang.client.network.request;
 import android.app.Activity;
 import android.app.Dialog;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
-import com.google.gson.Gson;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Response;
 import com.okgo.request.base.Request;
 
 import net.eanfang.client.config.ErrorCodeConst;
+import net.eanfang.client.util.JsonUtils;
 import net.eanfang.client.util.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,11 +48,14 @@ public class EanfangCallback<T> extends StringCallback {
 
     private ISuccess<T> iSuccess;
 
+    private ISuccessArray<T> iSuccessArray;
+
     /**
      * 实现接口 必须加泛型
      *
      * @param activity
      */
+    // TODO: 2017/12/7 废弃
     public EanfangCallback(Activity activity, boolean showDialog) {
         this.activity = activity;
         if (showDialog) {
@@ -57,10 +63,29 @@ public class EanfangCallback<T> extends StringCallback {
         }
     }
 
-    public EanfangCallback(Activity activity, boolean showDialog, Class<T> clazz, ISuccess<T> iSuccess) {
+    public EanfangCallback(Activity activity, boolean showDialog, Class clazz, ISuccess<T> iSuccess) {
         this.activity = activity;
         this.clazz = clazz;
         this.iSuccess = iSuccess;
+        if (showDialog) {
+            loadingDialog = DialogUtil.createLoadingDialog(activity);
+        }
+    }
+
+    // TODO: 2017/12/7 废弃 
+    public EanfangCallback(Activity activity, boolean showDialog, ISuccess<T> iSuccess) {
+        this.activity = activity;
+        // this.clazz = clazz;
+        this.iSuccess = iSuccess;
+        if (showDialog) {
+            loadingDialog = DialogUtil.createLoadingDialog(activity);
+        }
+    }
+
+    public EanfangCallback(Activity activity, boolean showDialog, Class clazz, boolean isArray, ISuccessArray<T> iSuccess) {
+        this.activity = activity;
+        this.clazz = clazz;
+        this.iSuccessArray = iSuccess;
         if (showDialog) {
             loadingDialog = DialogUtil.createLoadingDialog(activity);
         }
@@ -118,51 +143,56 @@ public class EanfangCallback<T> extends StringCallback {
         }
     }
 
+    /*** @param response
+     */
     @Override
     public final void onSuccess(Response<String> response) {
         //获得响应json
         JSONObject resultJson = null;
+        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";//指定date类型自动格式化
         try {
             if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
                 onServerError("服务器无响应");
                 return;
             }
 
-            resultJson = new JSONObject(response.body());
+            resultJson = JsonUtils.str2JSON(response.body());
             Integer code = -100;
             String message = "响应参数错误";
             JSONObject resultObject = null;
-            if (resultJson.has("code")) {
-                code = resultJson.getInt("code");
+            JSONArray resultArray = null;
+            if (resultJson.containsKey("code")) {
+                code = resultJson.getInteger("code");
             }
-            if (resultJson.has("message")) {
+            if (resultJson.containsKey("message")) {
                 message = resultJson.getString("message");
             }
-            if (resultJson.has("data")) {
-                resultObject = resultJson.getJSONObject("data");
+            if (resultJson.containsKey("data")) {
+                if (resultJson.get("data") instanceof JSONArray) {
+                    resultArray = resultJson.getJSONArray("data");
+                } else {
+                    resultObject = resultJson.getJSONObject("data");
+                }
             }
-            Gson gson = new Gson();
+
             switch (code) {
                 //请求成功 回调 success
                 case ErrorCodeConst.REQUEST_SUCCESS:
                     T result = null;
-                    //获取对象
-                    if (resultObject != null && resultObject.length() > 0) {
-                        if (type != null) {
-                            result = gson.fromJson(resultObject.toString(), type);
-                        } else if (clazz != null) {
-                            result = gson.fromJson(resultObject.toString(), clazz);
-                        } else {
-                            Type genType = getClass().getGenericSuperclass();
-                            Type type = ((ParameterizedType) genType).getActualTypeArguments()[0];
-                            if (((Class) type).getName().equals(JSONObject.class.getName())) {
-                                result = (T) resultObject;
-                            } else {
-                                result = gson.fromJson(resultObject.toString(), type);
-                            }
+                    List<T> list = new ArrayList();
+                    Class<T> clazz = getClazz();
+
+                    if (resultArray != null) {
+                        for (int i = 0; i < resultArray.size(); i++) {
+                            list.add(JSONObject.parseObject(resultArray.getString(i), clazz, Feature.DisableCircularReferenceDetect));
                         }
+                        onSuccessArray(list);
+                    } else if (resultObject != null) {
+                        result = JSONObject.parseObject(resultObject.toJSONString(), clazz, Feature.DisableCircularReferenceDetect);
+                        onSuccess(result);
+                    }else {
+                        onSuccess(result);
                     }
-                    onSuccess(result);
                     break;
                 //服务端无数据 回调
                 case ErrorCodeConst.REQUEST_NO_DATA:
@@ -204,6 +234,12 @@ public class EanfangCallback<T> extends StringCallback {
     public void onSuccess(T bean) {
         if (iSuccess != null) {
             iSuccess.success(bean);
+        }
+    }
+
+    public void onSuccessArray(List<T> bean) {
+        if (iSuccessArray != null) {
+            iSuccessArray.success(bean);
         }
     }
 
@@ -257,4 +293,26 @@ public class EanfangCallback<T> extends StringCallback {
     public interface ISuccess<T> {
         void success(T bean);
     }
+
+    public interface ISuccessArray<T> {
+        void success(List<T> bean);
+    }
+
+    private Class getClazz() {
+        if (type != null) {
+            return (Class<T>) type;
+        } else if (clazz != null) {
+            return clazz;
+        } else {
+            Type genType = getClass().getGenericSuperclass();
+            Type type = ((ParameterizedType) genType).getActualTypeArguments()[0];
+            if (((Class) type).getName().equals(JSONObject.class.getName())) {
+                return JSONObject.class;
+            } else {
+                return ((Class<T>) type);
+            }
+        }
+
+    }
+
 }

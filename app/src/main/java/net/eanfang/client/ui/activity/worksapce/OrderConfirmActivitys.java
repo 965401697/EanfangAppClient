@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 
 import net.eanfang.client.R;
@@ -17,7 +18,6 @@ import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.InstallOrderConfirmBean;
 import net.eanfang.client.ui.model.Message;
 
-import org.json.JSONObject;
 
 
 /**

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
@@ -18,8 +19,6 @@ import net.eanfang.client.ui.activity.worksapce.EvaluateClientActivity;
 import net.eanfang.client.ui.adapter.GivenEvaluateAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.model.GiveEvaluateBean;
-
-import org.json.JSONObject;
 
 import java.util.List;
 

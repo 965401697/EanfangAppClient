@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
@@ -16,7 +17,6 @@ import net.eanfang.client.ui.activity.my.MessageListActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
 import net.eanfang.client.ui.activity.my.SettingActivity;
 import net.eanfang.client.ui.base.BaseFragment;
-import net.eanfang.client.ui.model.User;
 import net.eanfang.client.ui.widget.InviteView;
 import net.eanfang.client.util.StringUtils;
 
@@ -84,11 +84,11 @@ public class MyFragment extends BaseFragment {
     }
 
     public void initData() {
-        User user = EanfangApplication.getApplication().getUser();
-        tv_user_name.setText(user.getName());
+        LoginBean user = EanfangApplication.getApplication().getUser();
+        tv_user_name.setText(user.getAccount().getNickName());
 
-        if (!StringUtils.isEmpty(user.getHeadpic())) {
-            iv_header.setImageURI(Uri.parse(user.getHeadpic()));
+        if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
+            iv_header.setImageURI(Uri.parse(user.getAccount().getAvatar()));
         }
 
     }

@@ -14,13 +14,13 @@ import java.util.List;
  * Created by wen on 2017/4/23.
  */
 
-public class LookTaskDetailAdapter extends BaseQuickAdapter<WorkTaskInfoBean.BeanBean.DetailsBean, BaseViewHolder> {
+public class LookTaskDetailAdapter extends BaseQuickAdapter<WorkTaskInfoBean.WorkTaskDetailsBean, BaseViewHolder> {
     public LookTaskDetailAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkTaskInfoBean.BeanBean.DetailsBean item) {
+    protected void convert(BaseViewHolder helper, WorkTaskInfoBean.WorkTaskDetailsBean item) {
         helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getTitle());
         helper.addOnClickListener(R.id.tv_delete);
     }

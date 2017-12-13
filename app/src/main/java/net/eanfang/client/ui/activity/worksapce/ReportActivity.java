@@ -19,9 +19,9 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.gson.Gson;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.AddReportDetailAdapter;
@@ -82,7 +82,7 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
     private OptionsPickerView pvOptions_NoLink;
     private List<String> userNameList = new ArrayList<>();
     private CompanyStaffBean staffBean;
-    private List<CompanyStaffBean.AllBean> userlist = new ArrayList<>();
+    private List<CompanyStaffBean.DataBean> userlist = new ArrayList<>();
     private int posistion;
     private WorkAddReportBean bean = new WorkAddReportBean();
     private List<WorkAddReportBean.DetailsBean> beanList = new ArrayList<>();
@@ -113,7 +113,7 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
         llComit.setOnClickListener(this);
         llDependPerson.setOnClickListener(this);
         llReportType.setOnClickListener(this);
-        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
+//        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
 
         addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, beanList);
         reportCompleteList.addItemDecoration(new DividerItemDecoration(this,
@@ -181,8 +181,8 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 posistion = options1;
-                etPhoneNum.setText(userlist.get(posistion).getPhone());
-                tvDependPerson.setText(userlist.get(posistion).getName());
+                etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
+                tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
 
             }
         }).build();
@@ -222,7 +222,7 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
         bean.setCompanyName(company_name);
 
         //用户id
-        bean.setCreateUser(EanfangApplication.get().getUser().getPersonId());
+//        bean.setCreateUser(EanfangApplication.get().getUser().getPersonId());
 
         //部门名称
         String department_name = etDepartmentName.getText().toString().trim();
@@ -247,12 +247,12 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
         }
 
         //接收者
-        bean.setReceiveUser(staffBean.getAll().get(posistion).getUid());
-        bean.setCreateCompanyUid(EanfangApplication.get().getUser().getCompanyId());
+        bean.setReceiveUser(staffBean.getData().get(posistion).getUserId()+"");
+//        bean.setCreateCompanyUid(EanfangApplication.get().getUser().getCompanyId());
         //手机号
         String phone_num = etPhoneNum.getText().toString().trim();
         bean.setReceivePhone(phone_num);
-        bean.setReceiveCompanyUid(EanfangApplication.get().getUser().getCompanyId());
+//        bean.setReceiveCompanyUid(EanfangApplication.get().getUser().getCompanyId());
 
         beanList.addAll(findList);
         beanList.addAll(planList);
@@ -303,16 +303,16 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
      */
     private void getData() {
 
-        EanfangHttp.get(ApiService.GET_COMPANY_STAFF)
+        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
                 .params("depId", "5")
                 .execute(new EanfangCallback<CompanyStaffBean>(this, true) {
                     @Override
                     public void onSuccess(CompanyStaffBean bean) {
                         staffBean = bean;
-                        userlist = staffBean.getAll();
+                        userlist = staffBean.getData();
                         for (int i = 0; i < userlist.size(); i++) {
-                            userNameList.add(userlist.get(i).getName());
+                            userNameList.add(userlist.get(i).getAccountEntity().getRealName());
                         }
                     }
 

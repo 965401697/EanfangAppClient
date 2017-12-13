@@ -50,7 +50,7 @@ public class TaskCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("汇报管控");
+        tvTitle.setText("任务管控");
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));

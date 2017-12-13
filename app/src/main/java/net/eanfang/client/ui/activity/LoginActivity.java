@@ -14,24 +14,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.okgo.OkGo;
 import com.okgo.model.HttpHeaders;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.FastjsonConfig;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,23 +93,23 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     private void registerListener() {
         btn_login.setOnClickListener(v -> {
-            String userPhone = et_phone.getText().toString().trim();
-            String userAulth = et_yanzheng.getText().toString().trim();
-            if (StringUtils.isEmpty(userPhone)) {
-                showToast("手机号不能为空");
-                return;
-            }
-
-            if (StringUtils.isEmpty(userAulth)) {
-                showToast("验证码不能为空");
-                return;
-            }
-            if (!cb.isChecked()) {
-                showToast("同意易安防会员章程和协议后才可以登陆使用");
-                return;
-
-            }
-            setLogin(userPhone, userAulth);
+//            String userPhone = et_phone.getText().toString().trim();
+//            String userAulth = et_yanzheng.getText().toString().trim();
+//            if (StringUtils.isEmpty(userPhone)) {
+//                showToast("手机号不能为空");
+//                return;
+//            }
+//
+//            if (StringUtils.isEmpty(userAulth)) {
+//                showToast("验证码不能为空");
+//                return;
+//            }
+//            if (!cb.isChecked()) {
+//                showToast("同意易安防会员章程和协议后才可以登陆使用");
+//                return;
+//
+//            }
+            setLogin("15010263711", "admin");
 
         });
 
@@ -155,39 +155,26 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
     private void setLogin(String phone, String pwd) {
         JSONObject object = new JSONObject();
         try {
-            object.put("account", phone);
+            object.put("username", phone);
             object.put("password", pwd);
-            object.put("type", BuildConfig.TYPE);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         EanfangHttp.post(UserApi.APP_LOGIN)
-                .upJson(object)
-                .execute(new EanfangCallback<User>(LoginActivity.this, false) {
-                    @Override
-                    public void onSuccess(User bean) {
-                        super.onSuccess(bean);
-                        goMain();
-                        Object obj = bean;
-                        if (obj instanceof User) {
-                            EanfangApplication.get().set(User.class.getName(), obj);
-
-                            //OkGo  head 写入 token
-                            OkGo http = EanfangApplication.get().getHttp();
-                            //清除 headers
-                            http.getCommonHeaders().clear();
-                            HttpHeaders headers = new HttpHeaders();
-                            headers.put("token", EanfangApplication.get().getUser().getToken());
-                            http.addCommonHeaders(headers);
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        showToast(message);
-                    }
-                });
+                .upJson(object.toJSONString())
+                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
+                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                    //EanfangApplication.get().set(LoginBean.class.getName(), bean.getToken());
+                    //OkGo  head 写入 token
+                    OkGo http = EanfangApplication.get().getHttp();
+                    //清除 headers
+                    // http.getCommonHeaders().clear();
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+                    headers.put("Request-From", "CLIENT");
+                    http.addCommonHeaders(headers);
+                    goMain();
+                }));
 
     }
 

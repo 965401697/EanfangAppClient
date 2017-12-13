@@ -11,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -26,9 +27,6 @@ import net.eanfang.client.ui.model.InstallOrderConfirmBean;
 import net.eanfang.client.util.GetConstDataUtils;
 import net.eanfang.client.util.PerviewUtil;
 import net.eanfang.client.util.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +78,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
     public static void jumpActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, CompanyDetailActivity.class);
-        intent.putExtra("id", EanfangApplication.get().getUser().getCompanyId());
+//        intent.putExtra("id", EanfangApplication.get().getUser().getCompanyId());
         ((BaseActivity) context).startAnimActivity(intent);
     }
 
@@ -298,8 +296,9 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
 
         //companyDetailBean.
 
-        if (!StringUtils.isEmpty(companyDetailBean.getLicencepic()))
+        if (!StringUtils.isEmpty(companyDetailBean.getLicencepic())) {
             iv_license.setImageURI(Uri.parse(companyDetailBean.getLicencepic()));
+        }
 
         if (!StringUtils.isEmpty(companyDetailBean.getZizhipic1())) {
             iv_zizhi1.setImageURI(Uri.parse(companyDetailBean.getZizhipic1()));

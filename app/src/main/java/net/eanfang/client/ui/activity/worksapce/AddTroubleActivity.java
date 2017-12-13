@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.apiservice.DeviceFailureService;
@@ -126,10 +124,10 @@ public class AddTroubleActivity extends BaseActivity {
         setTitle("新增故障");
         setLeftBack();
 
-        //个人客户 不显示设备库选择
-        if (EanfangApplication.getApplication().getUser().getCompanyId() == null) {
-            ll_deviceName.setVisibility(View.GONE);
-        }
+//        //个人客户 不显示设备库选择
+//        if (EanfangApplication.getApplication().getUser().getCompanyId() == null) {
+//            ll_deviceName.setVisibility(View.GONE);
+//        }
     }
 
     private void initData() {

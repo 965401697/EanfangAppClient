@@ -171,7 +171,7 @@ public class TroubleDetailActivity extends BaseActivity {
         EanfangHttp.get(ApiService.GET_REAIR_ORDER_DETAIL)
                 .tag(this)
                 .params("orderId", id)
-                .execute(new EanfangCallback<>(this, true, WorkspaceDetailBean.class, (bean) -> {
+                .execute(new EanfangCallback<WorkspaceDetailBean>(this, true, (bean) -> {
                     setData(bean);
                 }));
     }

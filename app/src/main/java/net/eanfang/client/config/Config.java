@@ -7,12 +7,16 @@ import com.eanfang.util.FileUtils;
 import com.eanfang.util.SharePreferenceUtil;
 
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.ui.model.BaseDataBean;
 import net.eanfang.client.ui.model.BusinessOne;
+import net.eanfang.client.ui.model.ConstAllBean;
 import net.eanfang.client.util.ConfigUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -22,6 +26,12 @@ import java.util.List;
  */
 public class Config {
     private static Config config = null;
+    @Getter
+    @Setter
+    private  ConstAllBean constBean;
+    @Getter
+    @Setter
+    private  List<BaseDataBean> baseDataBean;
     //Context mContext;
     //public String mSession = "";
     //String mCV = "1.0"; // 客户端版本号
@@ -189,6 +199,9 @@ public class Config {
         secondFre = ConfigUtils.getSecondFre();
         thirdFre = ConfigUtils.getThirdFre();
         orderList = ConfigUtils.getOrderList();
+
+//        constBean = JSONObject.toJavaObject(EanfangApplication.getApplication().get(ConstAllBean.class.getName()), ConstAllBean.class);
+//        baseDataBean = JSONArray.parseArray(EanfangApplication.getApplication().get(BaseDataBean.class.getName()).toJSONString(), BaseDataBean.class);
     }
 
     public List<String> getArriveTime() {

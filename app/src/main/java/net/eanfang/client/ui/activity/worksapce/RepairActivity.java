@@ -20,7 +20,6 @@ import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
@@ -33,7 +32,6 @@ import net.eanfang.client.ui.model.BusinessOne;
 import net.eanfang.client.ui.model.SelectAddressItem;
 import net.eanfang.client.ui.model.ToRepairBean;
 import net.eanfang.client.ui.model.ToRepairItem;
-import net.eanfang.client.ui.model.User;
 import net.eanfang.client.util.PickerSelectUtil;
 import net.eanfang.client.util.StringUtils;
 
@@ -92,13 +90,14 @@ public class RepairActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
         initView();
-        initData();
+//        initData();
         initAdapter();
         registerListener();
 
         setTitle("我要报修");
         setLeftBack();
     }
+
 
     private void registerListener() {
         setRightTitle("下一步");
@@ -219,35 +218,35 @@ public class RepairActivity extends BaseActivity {
 
     }
 
-    private void initData() {
-        mDataList.clear();
-        for (int i = 0; i < beanList.size(); i++) {
-            ToRepairItem item = new ToRepairItem();
-            item.setName(i + 1 + "." + beanList.get(i).getBugtwoname() + "-" + beanList.get(i).getBugthreename() + "(" + beanList.get(i).getBugposition() + ")");
-            mDataList.add(item);
-        }
-        User user = EanfangApplication.getApplication().getUser();
-        String name = "";
-        if (StringUtils.isEmpty(user.getCompanyName())) {
-            name = user.getName();
-        } else {
-            name = user.getCompanyName();
-        }
-        //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(et_company.getText())) {
-            et_company.setText(name);
-        }
-
-        et_contact.setText(user.getName());
-        et_phone.setText(user.getAccount());
-        if (StringUtils.isEmpty(et_phone.getText())) {
-            et_phone.setText(user.getAccount());
-        }
-
-        businessOneList = Config.getConfig().getBusinessOneList();
-
-
-    }
+//    private void initData() {
+//        mDataList.clear();
+//        for (int i = 0; i < beanList.size(); i++) {
+//            ToRepairItem item = new ToRepairItem();
+//            item.setName(i + 1 + "." + beanList.get(i).getBugtwoname() + "-" + beanList.get(i).getBugthreename() + "(" + beanList.get(i).getBugposition() + ")");
+//            mDataList.add(item);
+//        }
+//        User user = EanfangApplication.getApplication().getUser();
+//        String name = "";
+//        if (StringUtils.isEmpty(user.getCompanyName())) {
+//            name = user.getName();
+//        } else {
+//            name = user.getCompanyName();
+//        }
+//        //如果公司名称为空 则取当前登陆人的公司
+//        if (StringUtils.isEmpty(et_company.getText())) {
+//            et_company.setText(name);
+//        }
+//
+//        et_contact.setText(user.getName());
+//        et_phone.setText(user.getAccount());
+//        if (StringUtils.isEmpty(et_phone.getText())) {
+//            et_phone.setText(user.getAccount());
+//        }
+//
+//        businessOneList = Config.getConfig().getBusinessOneList();
+//
+//
+//    }
 
 
     private void initAdapter() {
@@ -257,7 +256,7 @@ public class RepairActivity extends BaseActivity {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 beanList.remove(position);
-                initData();
+//                initData();
                 evaluateAdapter.notifyDataSetChanged();
             }
         });
@@ -288,7 +287,7 @@ public class RepairActivity extends BaseActivity {
             case ADD_TROUBLE_CALLBACK_CODE:
                 AddTroubleBean bean = (AddTroubleBean) data.getSerializableExtra("bean");
                 beanList.add(bean);
-                initData();
+//                initData();
                 evaluateAdapter.notifyDataSetChanged();
                 break;
             default:
@@ -316,13 +315,13 @@ public class RepairActivity extends BaseActivity {
             ToastUtil.get().showToast(this, "请先选择故障分类");
             return;
         }
-
-        Intent intent = new Intent(this, AddTroubleActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("bugOneCode", bugOneCode);
-        bundle.putString("companyUid", user().getCompanyId());
-        intent.putExtras(bundle);
-        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
+//
+//        Intent intent = new Intent(this, AddTroubleActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("bugOneCode", bugOneCode);
+//        bundle.putString("companyUid", user().getCompanyId());
+//        intent.putExtras(bundle);
+//        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
     }
 
     /**

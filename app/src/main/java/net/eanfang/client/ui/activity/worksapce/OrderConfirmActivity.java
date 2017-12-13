@@ -19,11 +19,9 @@ import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.AddTroubleBean;
-import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.OrderReturnBean;
 import net.eanfang.client.ui.model.RepairOrderBean;
 import net.eanfang.client.ui.model.ToRepairBean;
@@ -100,8 +98,8 @@ public class OrderConfirmActivity extends BaseActivity {
 
     private RepairOrderBean fillData() {
         RepairOrderBean repairOrderBean = new RepairOrderBean();
-        repairOrderBean.setAccount(user().getAccount());
-        repairOrderBean.setClientcompanyuid(user().getCompanyId());
+//        repairOrderBean.setAccount(user().getAccount());
+//        repairOrderBean.setClientcompanyuid(user().getCompanyId());
         repairOrderBean.setCompanyname(bean.getCompany());
         repairOrderBean.setProvince(bean.getProvince());
         repairOrderBean.setCity(bean.getCity());
@@ -124,27 +122,27 @@ public class OrderConfirmActivity extends BaseActivity {
         status = bean.getStatus();
         doorfee = bean.getDoorfee();
         showToast("下单成功");
-
-        if (!StringUtils.isEmpty(user().getCompanyverify()) && "1".equals(user().getCompanyverify())) {
-            Intent intent = new Intent(OrderConfirmActivity.this, StateChangeActivity.class);
-            Bundle bundle = new Bundle();
-            Message message = new Message();
-            message.setTitle("下单成功");
-            message.setMsgTitle("您的报修单已下单成功");
-            message.setMsgContent("稍后技师会和您取得联系,请保持电话畅通。");
-            message.setTip("");
-            message.setShowOkBtn(true);
-            message.setShowLogo(true);
-            bundle.putSerializable("message", message);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
-            intent.putExtra("ordernum", ordernum);
-            intent.putExtra("doorfee", doorfee);
-            intent.putExtra("orderType", "报修");
-            startActivity(intent);
-        }
+//
+//        if (!StringUtils.isEmpty(user().getCompanyverify()) && "1".equals(user().getCompanyverify())) {
+//            Intent intent = new Intent(OrderConfirmActivity.this, StateChangeActivity.class);
+//            Bundle bundle = new Bundle();
+//            Message message = new Message();
+//            message.setTitle("下单成功");
+//            message.setMsgTitle("您的报修单已下单成功");
+//            message.setMsgContent("稍后技师会和您取得联系,请保持电话畅通。");
+//            message.setTip("");
+//            message.setShowOkBtn(true);
+//            message.setShowLogo(true);
+//            bundle.putSerializable("message", message);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//        } else {
+//            Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
+//            intent.putExtra("ordernum", ordernum);
+//            intent.putExtra("doorfee", doorfee);
+//            intent.putExtra("orderType", "报修");
+//            startActivity(intent);
+//        }
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());

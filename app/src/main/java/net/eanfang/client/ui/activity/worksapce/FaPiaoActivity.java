@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 
 import net.eanfang.client.R;
@@ -23,8 +25,6 @@ import net.eanfang.client.ui.model.SelectAddressItem;
 import net.eanfang.client.ui.model.ZhuanPiaoBean;
 import net.eanfang.client.util.StringUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 

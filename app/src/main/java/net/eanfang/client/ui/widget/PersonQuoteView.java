@@ -1,27 +1,17 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
-import com.eanfang.util.CallUtils;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.activity.pay.PayActivity;
-import net.eanfang.client.ui.adapter.PayOrderListAdapter;
 import net.eanfang.client.ui.model.PayOrderListBean;
-import net.eanfang.client.ui.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +52,11 @@ public class PersonQuoteView extends BaseDialog {
                         super.onSuccess(bean);
                         mDataList = bean.getAll();
 
-                        if (mDataList.size() <= 0)
+                        if (mDataList.size() <= 0) {
                             showToast("暂无数据");
+                        }
 
-                        initAdapter();
+//                        initAdapter();
                     }
 
                 });
@@ -76,63 +67,63 @@ public class PersonQuoteView extends BaseDialog {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
     }
-
-
-    private void initAdapter() {
-        BaseQuickAdapter evaluateAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CompanyQuoteItemView companyQuoteItemView = new CompanyQuoteItemView(mContext, true, mDataList.get(position).getSelfordernum());
-                companyQuoteItemView.show();
-            }
-        });
-        evaluateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                String confirm = mDataList.get(position).getConfirm();
-                User user = EanfangApplication.getApplication().getUser();
-                if ("0".equals(confirm)) {
-                    switch (view.getId()) {
-                        case R.id.tv_do_first:
-                            if (BuildConfig.APP_TYPE == 0)
-                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
-                                //如果汇报人等于当前登陆人 则取 提报人
-                            else if (user.getAccount().equals(mDataList.get(position).getClientphone()))
-                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
-                            else
-                                CallUtils.call(mContext, mDataList.get(position).getClientphone());
-                            break;
-                        case R.id.tv_do_second:
-                            Intent intent = new Intent(mContext, PayActivity.class);
-                            intent.putExtra("ordernum", mDataList.get(position).getSelfordernum());
-                            intent.putExtra("doorfee", mDataList.get(position).getSum() + "");
-                            intent.putExtra("orderType", "报价");
-                            mContext.startActivity(intent);
-                            break;
-                    }
-                } else {
-                    switch (view.getId()) {
-                        case R.id.tv_do_first:
-                            if (BuildConfig.APP_TYPE == 0)
-                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
-                                //如果汇报人等于当前登陆人 则取 提报人
-                            else if (user.getAccount().equals(mDataList.get(position).getClientphone()))
-                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
-                            else
-                                CallUtils.call(mContext, mDataList.get(position).getClientphone());
-                            break;
-                        case R.id.tv_do_second:
-                            break;
-                    }
-                }
-            }
-        });
-        if (mDataList.size() > 0) {
-            mRecyclerView.setAdapter(evaluateAdapter);
-        } else {
-            findViewById(R.id.tv_nodata).setVisibility(View.VISIBLE);
-        }
-
-    }
+//
+//
+//    private void initAdapter() {
+//        BaseQuickAdapter evaluateAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
+//        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+//            @Override
+//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                CompanyQuoteItemView companyQuoteItemView = new CompanyQuoteItemView(mContext, true, mDataList.get(position).getSelfordernum());
+//                companyQuoteItemView.show();
+//            }
+//        });
+//        evaluateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//                String confirm = mDataList.get(position).getConfirm();
+//                User user = EanfangApplication.getApplication().getUser();
+//                if ("0".equals(confirm)) {
+//                    switch (view.getId()) {
+//                        case R.id.tv_do_first:
+//                            if (BuildConfig.APP_TYPE == 0)
+//                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
+//                                //如果汇报人等于当前登陆人 则取 提报人
+//                            else if (user.getAccount().equals(mDataList.get(position).getClientphone()))
+//                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
+//                            else
+//                                CallUtils.call(mContext, mDataList.get(position).getClientphone());
+//                            break;
+//                        case R.id.tv_do_second:
+//                            Intent intent = new Intent(mContext, PayActivity.class);
+//                            intent.putExtra("ordernum", mDataList.get(position).getSelfordernum());
+//                            intent.putExtra("doorfee", mDataList.get(position).getSum() + "");
+//                            intent.putExtra("orderType", "报价");
+//                            mContext.startActivity(intent);
+//                            break;
+//                    }
+//                } else {
+//                    switch (view.getId()) {
+//                        case R.id.tv_do_first:
+//                            if (BuildConfig.APP_TYPE == 0)
+//                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
+//                                //如果汇报人等于当前登陆人 则取 提报人
+//                            else if (user.getAccount().equals(mDataList.get(position).getClientphone()))
+//                                CallUtils.call(mContext, mDataList.get(position).getWorkerphone());
+//                            else
+//                                CallUtils.call(mContext, mDataList.get(position).getClientphone());
+//                            break;
+//                        case R.id.tv_do_second:
+//                            break;
+//                    }
+//                }
+//            }
+//        });
+//        if (mDataList.size() > 0) {
+//            mRecyclerView.setAdapter(evaluateAdapter);
+//        } else {
+//            findViewById(R.id.tv_nodata).setVisibility(View.VISIBLE);
+//        }
+//
+//    }
 }

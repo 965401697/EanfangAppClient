@@ -16,7 +16,8 @@ public interface UserApi {
     /**
      * 登录
      */
-    String APP_LOGIN = BuildConfig.HOST + BuildConfig.TYPE + "/" + "applogin";
+    String APP_LOGIN = BuildConfig.HOST + "/yaf_sys/sys/login";
+    String APP_LOGOUT = BuildConfig.HOST + "/yaf_sys/sys/logout";
 
     /**
      * 获取验证码

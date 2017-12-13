@@ -12,6 +12,6 @@ import net.eanfang.client.BuildConfig;
  */
 
 public interface BaseService {
-    String BASE_URL = BuildConfig.API_HOST + BuildConfig.TYPE;
+    String BASE_URL = BuildConfig.API_HOST ;
 
 }

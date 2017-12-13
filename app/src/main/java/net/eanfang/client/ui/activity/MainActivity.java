@@ -7,28 +7,38 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.yaf.model.LoginBean;
+
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.Config;
 import net.eanfang.client.config.Local;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.base.BaseEvent;
 import net.eanfang.client.ui.fragment.ContactsFragment;
+import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
+import net.eanfang.client.ui.model.BaseDataBean;
+import net.eanfang.client.ui.model.ConstAllBean;
 import net.eanfang.client.ui.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 
+/**
+ *
+ */
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     View redPoint;
-    private User user;
+    private LoginBean user;
     private long mExitTime;
 
     @Override
@@ -38,6 +48,9 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
         initFragment();
+        getBaseData();
+        getConst();
+
 //        //更新
 //        UpdateManager manager = new UpdateManager(this);
 //        manager.checkUpdate();
@@ -46,13 +59,10 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        /*
-        二期添加
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
-        */
 
-        View indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
+        indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
@@ -66,7 +76,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getInfoBytoken();
+//        getInfoBytoken();
     }
 
     /**
@@ -111,6 +121,30 @@ public class MainActivity extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 请求基础数据
+     */
+    private void getBaseData() {
+        EanfangHttp.get(NewApiService.GET_BASE_DATA)
+                .tag(this)
+                .execute(new EanfangCallback<BaseDataBean>(this, false, BaseDataBean.class, true, (list) -> {
+//                    EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(list, FastjsonConfig.config));
+                    Config.getConfig().setBaseDataBean(list);
+                }));
+    }
+
+    /**
+     * 请求静态常量
+     */
+    private void getConst() {
+        EanfangHttp.get(NewApiService.GET_CONST)
+                .tag(this)
+                .execute(new EanfangCallback<ConstAllBean>(this, false, ConstAllBean.class, (bean) -> {
+//                    EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                    Config.getConfig().setConstBean(bean);
+                }));
     }
 }
 

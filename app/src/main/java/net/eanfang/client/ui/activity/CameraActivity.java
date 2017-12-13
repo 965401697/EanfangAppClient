@@ -35,7 +35,6 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.util.LogUtils;
 
@@ -214,7 +213,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
         project_type = tvTypeSel.getText().toString().trim();
 
         //创建者
-        creatUser = EanfangApplication.get().getUser().getName();
+//        creatUser = EanfangApplication.get().getUser().getName();
 
     }
 

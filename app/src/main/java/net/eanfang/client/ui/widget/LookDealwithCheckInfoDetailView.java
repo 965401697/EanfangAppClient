@@ -14,8 +14,6 @@ import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.application.EanfangApplication;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -90,22 +88,22 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog implements View.
         btnAdopt.setOnClickListener(v -> dealWith("2"));
         btnReject.setOnClickListener(v -> dealWith("3"));
 
-        String uid = EanfangApplication.getApplication().getUser().getPersonId();
-        if (uid.equals(revUser)) {
-            if (EanfangConst.WORK_INSPECT_STATUS_FAIL.equals(bean.getStatus()) ||
-                    EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(bean.getStatus()) ||
-                    EanfangConst.WORK_INSPECT_STATUS_REVIEW.equals(bean.getStatus())) {
-                llDealWith.setVisibility(View.GONE);
-            }
-
-        } else {
-            if (EanfangConst.WORK_INSPECT_STATUS_FAIL.equals(bean.getStatus()) ||
-                    EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(bean.getStatus())) {
-                llDealWith.setVisibility(View.GONE);
-            } else {
-                llDealWith.setVisibility(View.VISIBLE);
-            }
-        }
+//        String uid = EanfangApplication.getApplication().getUser().getPersonId();
+//        if (uid.equals(revUser)) {
+//            if (EanfangConst.WORK_INSPECT_STATUS_FAIL.equals(bean.getStatus()) ||
+//                    EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(bean.getStatus()) ||
+//                    EanfangConst.WORK_INSPECT_STATUS_REVIEW.equals(bean.getStatus())) {
+//                llDealWith.setVisibility(View.GONE);
+//            }
+//
+//        } else {
+//            if (EanfangConst.WORK_INSPECT_STATUS_FAIL.equals(bean.getStatus()) ||
+//                    EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(bean.getStatus())) {
+//                llDealWith.setVisibility(View.GONE);
+//            } else {
+//                llDealWith.setVisibility(View.VISIBLE);
+//            }
+//        }
 
 
         etTitle.setText(bean.getInspectDetailTitle());

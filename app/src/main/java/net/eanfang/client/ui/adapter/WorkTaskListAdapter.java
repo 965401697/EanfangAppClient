@@ -23,31 +23,33 @@ import java.util.List;
  * @desc
  */
 
-public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.AllBean, BaseViewHolder> {
+public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListBean, BaseViewHolder> {
 
-    public WorkTaskListAdapter(List<WorkTaskListBean.AllBean> data) {
+    public WorkTaskListAdapter(List<WorkTaskListBean.ListBean> data) {
         super(R.layout.item_work_list_layout, data);
 
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkTaskListBean.AllBean item) {
-        helper.setText(R.id.tv_company_name, item.getCompanyName());
-        helper.setText(R.id.tv_depart_name,"部门："+ item.getDepartmentName());
-        if (item.getStatus().equals(EanfangConst.WORK_TASK_STATUS_READ)) {
+    protected void convert(BaseViewHolder helper, WorkTaskListBean.ListBean item) {
+        helper.setText(R.id.tv_company_name, item.getCreateCompany().getOrgName());
+        helper.setText(R.id.tv_depart_name, "部门：" + item.getCreateOrg().getOrgName());
+        if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
             helper.setText(R.id.tv_read_ns, "已读");
         } else {
             helper.setText(R.id.tv_read_ns, "未读");
             helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#0000ff"));
         }
         helper.setText(R.id.tv_title_name, "标题：" + item.getTitle());
-        helper.setText(R.id.tv_pub_time, "发布时间：" + item.getCreateDate());
-        helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreatUserName());
-        helper.setText(R.id.tv_rev_person, "接收人：" + item.getReceiveUserName());
+        helper.setText(R.id.tv_pub_time, "发布时间：" + item.getCreateTime());
+        helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreateUser().getAccountEntity().getRealName());
+        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
 
-        SimpleDraweeView head_pic=helper.getView(R.id.img_head);
-        if (!StringUtils.isEmpty(item.getPic1()))
-            head_pic.setImageURI(Uri.parse(item.getPic1()));
+        SimpleDraweeView head_pic = helper.getView(R.id.img_head);
+        if (!StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
+            String[] urls = item.getWorkTaskDetail().getPictures().split(",");
+            head_pic.setImageURI(Uri.parse(urls[0]));
+        }
 
     }
 

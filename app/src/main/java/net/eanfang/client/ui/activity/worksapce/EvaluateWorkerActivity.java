@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 
 import net.eanfang.client.R;
@@ -13,8 +14,6 @@ import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.EvaluateWorkerBean;
-
-import org.json.JSONObject;
 
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 

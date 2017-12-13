@@ -7,17 +7,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.WorkTaskListFragment;
 import net.eanfang.client.ui.model.WorkTaskListBean;
 import net.eanfang.client.util.GetConstDataUtils;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ import butterknife.ButterKnife;
  * @desc
  */
 
-public class WorkTaskListActivity extends BaseActivity{
+public class WorkTaskListActivity extends BaseActivity {
 
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
@@ -104,50 +106,69 @@ public class WorkTaskListActivity extends BaseActivity{
     }
 
     private void initData(int page) {
-        String status = "";
+        String status = null;
         if (!currentFragment.getmTitle().equals("全部")) {
             status = GetConstDataUtils.getTaskReadStatusByStr(currentFragment.getmTitle());
         }
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", type);
-        params.put("status", status);
-        EanfangHttp.get(ApiService.GET_WORK_TASK_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<WorkTaskListBean>(this, true) {
-
-                    @Override
-                    public void onSuccess(final WorkTaskListBean bean) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(type)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(type)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        } else if ("2".equals(type)) {
+            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!currentFragment.getmTitle().equals("全部")){
+            queryEntry.getEquals().put("status", status);
+        }
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
+//        HttpParams params = new HttpParams();
+//        params.put("page", page);
+//        params.put("rows", 10);
+//        params.put("type", type);
+//        params.put("status", status);
+        EanfangHttp.post(NewApiService.GET_WORK_TASK_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<WorkTaskListBean>(this, true, WorkTaskListBean.class, (bean) -> {
+                            runOnUiThread(() -> {
                                 workTaskListBean = bean;
                                 currentFragment.onDataReceived();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        currentFragment.onDataReceived();
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        super.onNoData(message);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                WorkTaskListBean bean = new WorkTaskListBean();
-                                bean.setAll(new ArrayList<WorkTaskListBean.AllBean>());
-                                setWorkTaskListBean(bean);
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
-                });
+                            });
+                        })
+//                {
+//
+//                    @Override
+//                    public void onSuccess(final WorkTaskListBean bean) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                workTaskListBean = bean;
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        currentFragment.onDataReceived();
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        super.onNoData(message);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                WorkTaskListBean bean = new WorkTaskListBean();
+//                                bean.setAll(new ArrayList<WorkTaskListBean.AllBean>());
+//                                setWorkTaskListBean(bean);
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//                }
+                );
 
     }
 

@@ -6,15 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.EanfangConst;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.activity.worksapce.WorkTaskListActivity;
@@ -23,8 +23,9 @@ import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.WorkTaskListBean;
 import net.eanfang.client.util.GetConstDataUtils;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.eanfang.client.config.EanfangConst.BOTTOM_REFRESH;
@@ -44,7 +45,7 @@ public class WorkTaskListFragment extends BaseFragment
     TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
-    private List<WorkTaskListBean.AllBean> mDataList;
+    private List<WorkTaskListBean.ListBean> mDataList;
     private String mTitle;
     private String mType;
 
@@ -86,11 +87,29 @@ public class WorkTaskListFragment extends BaseFragment
     protected void setListener() {
     }
 
-    private void initAdapter() {
-        if (getActivity() == null) return;
-        if (!(getActivity() instanceof WorkTaskListActivity)) return;
-        if (((WorkTaskListActivity) getActivity()).getWorkTaskListBean() == null) return;
-        mDataList = ((WorkTaskListActivity) getActivity()).getWorkTaskListBean().getAll();
+    private void initAdapter(List<WorkTaskListBean.ListBean> mDataList) {
+        if (getActivity() == null) {
+            return;
+        }
+        if (!(getActivity() instanceof WorkTaskListActivity)) {
+            return;
+        }
+        if (((WorkTaskListActivity) getActivity()).getWorkTaskListBean() == null) {
+            return;
+        }
+//        mDataList = ((WorkTaskListActivity) getActivity()).getWorkTaskListBean().getList();
+        OnItemClickListener onItemClickListener = new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDataList.get(position).getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
+//                    if (EanfangApplication.getApplication().getUserId().equals(mDataList.get(position).getAssigneeUserId())) {
+                    getFirstLookData(((WorkTaskListActivity) getActivity()).getWorkTaskListBean(), position);
+//                    }
+                }
+                new WorkTaskInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+            }
+        };
+
         mAdapter = new WorkTaskListAdapter(mDataList);
         rvList.addOnItemTouchListener(onItemClickListener);
         if (mDataList.size() > 0) {
@@ -103,17 +122,6 @@ public class WorkTaskListFragment extends BaseFragment
         mAdapter.notifyDataSetChanged();
     }
 
-    OnItemClickListener onItemClickListener = new OnItemClickListener() {
-        @Override
-        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            if (mDataList.get(position).getStatus().equals(EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-                if (EanfangApplication.getApplication().getUser().getPersonId().equals(mDataList.get(position).getReceiveUser())) {
-                    getFirstLookData(((WorkTaskListActivity) getActivity()).getWorkTaskListBean(), position);
-                }
-            }
-            new WorkTaskInfoView(getActivity(), true, mDataList.get(position).getId()).show();
-        }
-    };
 
     @Override
     public void onResume() {
@@ -130,75 +138,79 @@ public class WorkTaskListFragment extends BaseFragment
             status = GetConstDataUtils.getTaskReadStatusByStr(getmTitle());
         }
 
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", mType);
-        params.put("status", status);
-        EanfangHttp.get(ApiService.GET_WORK_TASK_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<WorkTaskListBean>(getActivity(), true) {
-                    @Override
-                    public void onSuccess(final WorkTaskListBean bean) {
-                        ((WorkTaskListActivity) getActivity()).setWorkTaskListBean(bean);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(mType)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(mType)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        } else if ("2".equals(mType)) {
+            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!mTitle.equals("全部")) {
+            queryEntry.getEquals().put("status", status);
+        }
+
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
+
+        EanfangHttp.post(NewApiService.GET_WORK_TASK_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<WorkTaskListBean>(getActivity(), true, WorkTaskListBean.class, (bean) -> {
+                            getActivity().runOnUiThread(() -> {
+                                initAdapter(bean.getList());
                                 onDataReceived();
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        swiprefresh.setRefreshing(false);
-                        page--;
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //如果是第一页 没有数据了 则清空 bean
-                                if (page < 1) {
-                                    WorkTaskListBean bean = new WorkTaskListBean();
-                                    bean.setAll(new ArrayList<WorkTaskListBean.AllBean>());
-                                    ((WorkTaskListActivity) getActivity()).setWorkTaskListBean(bean);
-                                } else {
-                                    showToast("已经到底了");
-                                }
-                                onDataReceived();
-                            }
-                        });
-                    }
-                });
+                            });
+                        })
+//                {
+//                    @Override
+//                    public void onSuccess(final WorkTaskListBean bean) {
+//                        ((WorkTaskListActivity) getActivity()).setWorkTaskListBean(bean);
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                onDataReceived();
+//                            }
+//                        });
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        swiprefresh.setRefreshing(false);
+//                        page--;
+//
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //如果是第一页 没有数据了 则清空 bean
+//                                if (page < 1) {
+//                                    WorkTaskListBean bean = new WorkTaskListBean();
+//                                    bean.setAll(new ArrayList<WorkTaskListBean.AllBean>());
+//                                    ((WorkTaskListActivity) getActivity()).setWorkTaskListBean(bean);
+//                                } else {
+//                                    showToast("已经到底了");
+//                                }
+//                                onDataReceived();
+//                            }
+//                        });
+//                    }
+//                }
+                );
     }
 
     /**
      * 首次阅读，更新状态
      */
-    private void getFirstLookData(WorkTaskListBean bean, int position) {
-
-        EanfangHttp.get(ApiService.GET_FIRST_LOOK_TASK)
-                .tag(this)
-                .params("id", bean.getAll().get(position).getId())
-                .execute(new EanfangCallback(getActivity(), true) {
-
-
-                    @Override
-                    public void onSuccess(Object bean) {
-
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+    private void getFirstLookData(WorkTaskListBean beans, int position) {
+        EanfangHttp.get(NewApiService.WORK_TASK_FIRST_READ)
+                .params("id", beans.getList().get(position).getId())
+                .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
+                    showToast("走了吗？");
+                }));
     }
 
     /**
@@ -230,6 +242,8 @@ public class WorkTaskListFragment extends BaseFragment
                 page++;
                 getData();
                 break;
+            default:
+                break;
         }
     }
 
@@ -237,7 +251,7 @@ public class WorkTaskListFragment extends BaseFragment
     @Override
     public void onDataReceived() {
         initView();
-        initAdapter();
+//        initAdapter();
         swiprefresh.setRefreshing(false);
     }
 }
