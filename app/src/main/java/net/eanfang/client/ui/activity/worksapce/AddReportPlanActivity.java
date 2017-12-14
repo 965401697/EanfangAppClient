@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -15,7 +16,6 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.oss.OSSCallBack;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.WorkAddReportBean;
@@ -55,9 +55,7 @@ public class AddReportPlanActivity extends BaseActivity implements View.OnClickL
     BGASortableNinePhotoLayout snplMomentAddPhotos;
 
 
-    private WorkAddReportBean.DetailsBean bean;
-    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW = 2;
+    private WorkAddReportBean.WorkReportDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
 
     @Override
@@ -73,7 +71,7 @@ public class AddReportPlanActivity extends BaseActivity implements View.OnClickL
         setTitle("工作计划");
         setRightTitle("完成");
         llDependPerson.setOnClickListener(this);
-        bean = new WorkAddReportBean.DetailsBean();
+        bean = new WorkAddReportBean.WorkReportDetailsBean();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +82,7 @@ public class AddReportPlanActivity extends BaseActivity implements View.OnClickL
     }
 
     private void submit() {
-        bean.setType(EanfangConst.TYPE_REPORT_DETAIL_PLAN);
+        bean.setType(2);
 
         //工作内容
         String content = etInputContent.getText().toString().trim();
@@ -127,32 +125,30 @@ public class AddReportPlanActivity extends BaseActivity implements View.OnClickL
         }
         bean.setField5(handle);
         List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
-        bean.setPic1(urls.get(0));
-        bean.setPic2(urls.get(1));
-        bean.setPic3(urls.get(2));
-
+        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("result", bean);
-                        setResult(10083, intent);
-                        finish();
+                        submitSuccess();
                     });
 
                 }
             });
         } else {
-            Intent intent = new Intent();
-            intent.putExtra("result", bean);
-            setResult(10083, intent);
-            finish();
+            submitSuccess();
         }
 
     }
 
+    private void submitSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("result", bean);
+        setResult(3, intent);
+        finish();
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,6 +166,8 @@ public class AddReportPlanActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ll_depend_person:
                 PickerSelectUtil.onUpYearMonthDayPicker(this, tvDependPerson);
+                break;
+            default:
                 break;
         }
     }

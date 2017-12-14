@@ -3,17 +3,17 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 
+import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.oss.OSSCallBack;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.WorkAddReportBean;
@@ -45,7 +45,7 @@ public class AddReportFindActivity extends BaseActivity {
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
 
-    private WorkAddReportBean.DetailsBean bean;
+    private WorkAddReportBean.WorkReportDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
 
     @Override
@@ -60,14 +60,9 @@ public class AddReportFindActivity extends BaseActivity {
         setLeftBack();
         setTitle("发现问题");
         setRightTitle("完成");
-        bean = new WorkAddReportBean.DetailsBean();
+        bean = new WorkAddReportBean.WorkReportDetailsBean();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submit();
-            }
-        });
+        setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
 
     }
 
@@ -89,42 +84,38 @@ public class AddReportFindActivity extends BaseActivity {
     }
 
     private void submit() {
-        bean.setType(EanfangConst.TYPE_REPORT_DETAIL_FIND);
+        bean.setType(1);
         //工作内容
         bean.setField1(etInputContent.getText().toString().trim());
         //同事协同
         bean.setField2(etInputJion.getText().toString().trim());
         //处理
         bean.setField3(etInputHandle.getText().toString().trim());
-
-        List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap,true);
-        bean.setPic1(urls.get(0));
-        bean.setPic2(urls.get(1));
-        bean.setPic3(urls.get(2));
-
+        List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("result", bean);
-                        setResult(10081, intent);
-                        finish();
+                        submitSuccess();
                     });
 
                 }
             });
         } else {
-            Intent intent = new Intent();
-            intent.putExtra("result", bean);
-            setResult(10082, intent);
-            finish();
+            submitSuccess();
         }
     }
 
 
-
+    private void submitSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("result", bean);
+        setResult(2, intent);
+        finish();
+    }
 
 
     @Override

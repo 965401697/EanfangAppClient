@@ -6,32 +6,35 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.gson.Gson;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
 import net.eanfang.client.config.EanfangConst;
-import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.AddReportDetailAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.CompanyStaffBean;
 import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.WorkAddReportBean;
 import net.eanfang.client.ui.widget.CompleteWorkView;
 import net.eanfang.client.ui.widget.FindTroubleView;
 import net.eanfang.client.ui.widget.WorkPlanView;
+import net.eanfang.client.util.PickerSelectUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +51,7 @@ import butterknife.ButterKnife;
  */
 
 public class ReportActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.et_company_name)
-    TextView etCompanyName;
-    @BindView(R.id.et_department_name)
-    EditText etDepartmentName;
+
     @BindView(R.id.et_task_name)
     TextView etTaskName;
     @BindView(R.id.btn_add_complete)
@@ -80,20 +80,20 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
     LinearLayout llReportType;
 
     private OptionsPickerView pvOptions_NoLink;
+    private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
-    private CompanyStaffBean staffBean;
-    private List<CompanyStaffBean.DataBean> userlist = new ArrayList<>();
     private int posistion;
     private WorkAddReportBean bean = new WorkAddReportBean();
-    private List<WorkAddReportBean.DetailsBean> beanList = new ArrayList<>();
-    private List<WorkAddReportBean.DetailsBean> findList = new ArrayList<>();
-    private List<WorkAddReportBean.DetailsBean> planList = new ArrayList<>();
-    private WorkAddReportBean.DetailsBean detailsBean;
+    private List<WorkAddReportBean.WorkReportDetailsBean> beanList = new ArrayList<>();
+    private List<WorkAddReportBean.WorkReportDetailsBean> findList = new ArrayList<>();
+    private List<WorkAddReportBean.WorkReportDetailsBean> planList = new ArrayList<>();
+    private WorkAddReportBean.WorkReportDetailsBean detailsBean;
     private ArrayList<String> typeList = new ArrayList<>();
     private AddReportDetailAdapter addReportDetialAdapter;
     private AddReportDetailAdapter findAdapter;
     private AddReportDetailAdapter planAdapter;
-
+    private Long assigneeUserId;
+    private String assigneeOrgCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,22 +142,21 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.btn_add_complete://完成工作
                 Intent intent = new Intent(ReportActivity.this, AddReportCompleteActivity.class);
-                startActivityForResult(intent, 10081);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.btn_add_find://发现问题
                 intent = new Intent(ReportActivity.this, AddReportFindActivity.class);
-                startActivityForResult(intent, 10082);
+                startActivityForResult(intent, 2);
                 break;
             case R.id.btn_add_plan://后续计划
                 intent = new Intent(ReportActivity.this, AddReportPlanActivity.class);
-                startActivityForResult(intent, 10083);
+                startActivityForResult(intent, 3);
                 break;
             case R.id.ll_depend_person://联系人
                 showDependPerson();
                 break;
             case R.id.ll_report_type://类型
-                initType();
-                showType();
+                PickerSelectUtil.singleTextPicker(this, "", etTaskName, Config.getConfig().getConstBean().getWorkReportConstant().get(Constant.REPORTTYPE));
                 break;
 
             case R.id.ll_comit://提交
@@ -167,6 +166,65 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
                 break;
         }
 
+    }
+
+
+    private void submit() {
+        //类型
+        String task_title = etTaskName.getText().toString().trim();
+        if (TextUtils.isEmpty(task_title)) {
+            showToast("请选择类型");
+            return;
+        }
+        bean.setType(Config.getConfig().getConstBean().getWorkReportConstant().get(Constant.REPORTTYPE).indexOf(task_title));
+        bean.setAssigneeUserId(assigneeUserId);
+        bean.setAssigneeOrgCode(assigneeOrgCode);
+        beanList.addAll(findList);
+        beanList.addAll(planList);
+        bean.setWorkReportDetails(beanList);
+
+
+        doHttp(new Gson().toJson(bean));
+
+
+    }
+
+    private void doHttp(String jsonString) {
+        EanfangHttp.post(NewApiService.ADD_WORK_REPORT)
+                .upJson(jsonString)
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> {
+                        Intent intent = new Intent(ReportActivity.this, StateChangeActivity.class);
+                        Bundle bundle = new Bundle();
+                        Message message = new Message();
+                        message.setTitle("汇报发送成功");
+                        message.setMsgTitle("您的工作汇报已发送成功");
+                        message.setMsgContent("您可以随时通过我的汇报查看");
+                        message.setShowOkBtn(true);
+                        message.setShowLogo(true);
+                        message.setTip("");
+                        bundle.putSerializable("message", message);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finishSelf();
+                    });
+                }));
+
+    }
+
+    /**
+     * 获取公司部门员工信息
+     */
+    private void getData() {
+
+        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
+                .tag(this)
+                .params("id", EanfangApplication.getApplication().getUserId())
+                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .execute(new EanfangCallback<UserEntity>(ReportActivity.this, false, UserEntity.class, true, (list) -> {
+                    userlist = list;
+                    userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
+                }));
     }
 
     /**
@@ -183,6 +241,8 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
                 posistion = options1;
                 etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
                 tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
+                assigneeUserId = userlist.get(posistion).getUserId();
+                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
 
             }
         }).build();
@@ -190,140 +250,6 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
         pvOptions_NoLink.show();
     }
 
-    /**
-     * 类型
-     */
-    private void showType() {
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                etTaskName.setText(typeList.get(options1));
-            }
-        }).build();
-        pvOptions_NoLink.setPicker(typeList);
-        pvOptions_NoLink.show();
-    }
-
-    private void initType() {
-        typeList.clear();
-        typeList.add("日报");
-        typeList.add("周报");
-        typeList.add("月报");
-        typeList.add("季报");
-        typeList.add("年报");
-        typeList.add("事件汇报");
-
-    }
-
-    private void submit() {
-        //设置公司名
-        String company_name = etCompanyName.getText().toString().trim();
-        bean.setCompanyName(company_name);
-
-        //用户id
-//        bean.setCreateUser(EanfangApplication.get().getUser().getPersonId());
-
-        //部门名称
-        String department_name = etDepartmentName.getText().toString().trim();
-        if (TextUtils.isEmpty(department_name)) {
-            showToast("请输入部门名称");
-            return;
-        }
-        bean.setDepartmentName(department_name);
-
-        //类型
-        String task_title = etTaskName.getText().toString().trim();
-        if (TextUtils.isEmpty(task_title)) {
-            showToast("请选择类型");
-            return;
-        }
-        bean.setType(task_title);
-
-        String receiveUser = tvDependPerson.getText().toString().trim();
-        if (TextUtils.isEmpty(receiveUser)) {
-            showToast("请选择联系人");
-            return;
-        }
-
-        //接收者
-        bean.setReceiveUser(staffBean.getData().get(posistion).getUserId()+"");
-//        bean.setCreateCompanyUid(EanfangApplication.get().getUser().getCompanyId());
-        //手机号
-        String phone_num = etPhoneNum.getText().toString().trim();
-        bean.setReceivePhone(phone_num);
-//        bean.setReceiveCompanyUid(EanfangApplication.get().getUser().getCompanyId());
-
-        beanList.addAll(findList);
-        beanList.addAll(planList);
-        bean.setDetails(beanList);
-
-
-        doHttp(new Gson().toJson(bean));
-
-
-    }
-
-    private void doHttp(String jsonString) {
-        EanfangHttp.post(ApiService.ADD_WORK_REPORT)
-                .upJson(jsonString)
-                .execute(new EanfangCallback(this, true) {
-                    @Override
-                    public void onSuccess(Object object) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(ReportActivity.this, StateChangeActivity.class);
-                                Bundle bundle = new Bundle();
-                                Message message = new Message();
-                                message.setTitle("汇报发送成功");
-                                message.setMsgTitle("您的工作汇报已发送成功");
-                                message.setMsgContent("您可以随时通过我的汇报查看");
-                                message.setShowOkBtn(true);
-                                message.setShowLogo(true);
-                                message.setTip("");
-                                bundle.putSerializable("message", message);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                                finishSelf();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        Log.e("addworkReportActivity", message.toString());
-                    }
-                });
-
-    }
-
-    /**
-     * 获取公司部门员工信息
-     */
-    private void getData() {
-
-        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
-                .tag(this)
-                .params("depId", "5")
-                .execute(new EanfangCallback<CompanyStaffBean>(this, true) {
-                    @Override
-                    public void onSuccess(CompanyStaffBean bean) {
-                        staffBean = bean;
-                        userlist = staffBean.getData();
-                        for (int i = 0; i < userlist.size(); i++) {
-                            userNameList.add(userlist.get(i).getAccountEntity().getRealName());
-                        }
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                    }
-                });
-
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
@@ -332,8 +258,8 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
         if (data == null || data.getSerializableExtra("result") == null) {
             return;
         }
-        WorkAddReportBean.DetailsBean resultBean = (WorkAddReportBean.DetailsBean) data.getSerializableExtra("result");
-        if (EanfangConst.TYPE_REPORT_DETAIL_FINISH.equals(resultBean.getType())) {
+        WorkAddReportBean.WorkReportDetailsBean resultBean = (WorkAddReportBean.WorkReportDetailsBean) data.getSerializableExtra("result");
+        if (EanfangConst.TYPE_REPORT_DETAIL_FINISH == resultBean.getType()) {
             beanList.add(resultBean);
             reportCompleteList.addOnItemTouchListener(new OnItemClickListener() {
                 @Override
@@ -343,7 +269,7 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
                 }
             });
             addReportDetialAdapter.notifyDataSetChanged();
-        } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND.equals(resultBean.getType())) {
+        } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND == resultBean.getType()) {
             findList.add(resultBean);
             reportFindList.addOnItemTouchListener(new OnItemClickListener() {
                 @Override
@@ -353,7 +279,7 @@ public class ReportActivity extends BaseActivity implements View.OnClickListener
                 }
             });
             findAdapter.notifyDataSetChanged();
-        } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN.equals(resultBean.getType())) {
+        } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN == resultBean.getType()) {
             planList.add(resultBean);
             reportPlanList.addOnItemTouchListener(new OnItemClickListener() {
                 @Override

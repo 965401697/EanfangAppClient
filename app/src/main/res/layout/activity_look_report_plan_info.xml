@@ -21,22 +21,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:padding="12dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:text="内容"
                     android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_look_complete_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    android:textColor="@color/font_color"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -44,66 +47,75 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:padding="12dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:text="目的"
                     android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_look_complete_goal"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    android:textColor="@color/font_color"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:padding="12dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:text="标准"
                     android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_look_complete_pur"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    android:textColor="@color/font_color"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:padding="12dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
                     android:text="同事协同"
                     android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_look_complete_person"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    android:textColor="@color/font_color"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -111,34 +123,39 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:padding="12dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:text="期限"
                     android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_look_complete_endtime"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:background="@color/white"
-                    android:textColor="@color/font_color"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:background="@drawable/bg_ll_selctor"
+                android:layout_margin="5dp"
+                android:padding="12dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:text="附件"
                     android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />

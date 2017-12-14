@@ -10,16 +10,16 @@ import java.util.List;
 
 
 /**
- * Created by wen on 2017/4/23.
+ *万万没想到，啦啦啦啦啦啦
  */
 
-public class AddReportDetailAdapter extends BaseQuickAdapter<WorkAddReportBean.DetailsBean, BaseViewHolder> {
+public class AddReportDetailAdapter extends BaseQuickAdapter<WorkAddReportBean.WorkReportDetailsBean, BaseViewHolder> {
     public AddReportDetailAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkAddReportBean.DetailsBean item) {
+    protected void convert(BaseViewHolder helper, WorkAddReportBean.WorkReportDetailsBean item) {
         helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getField1());
         helper.addOnClickListener(R.id.tv_delete);
     }

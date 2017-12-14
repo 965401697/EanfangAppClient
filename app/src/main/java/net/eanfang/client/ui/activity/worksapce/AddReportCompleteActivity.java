@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 
+import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.util.PhotoUtils;
@@ -13,7 +14,6 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.oss.OSSCallBack;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.WorkAddReportBean;
@@ -49,7 +49,7 @@ public class AddReportCompleteActivity extends BaseActivity {
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
 
-    private WorkAddReportBean.DetailsBean bean;
+    private WorkAddReportBean.WorkReportDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
 
 
@@ -65,7 +65,7 @@ public class AddReportCompleteActivity extends BaseActivity {
     }
 
     private void initData() {
-        bean = new WorkAddReportBean.DetailsBean();
+        bean = new WorkAddReportBean.WorkReportDetailsBean();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
 
@@ -100,7 +100,7 @@ public class AddReportCompleteActivity extends BaseActivity {
 
     private void submit() {
 
-        bean.setType(EanfangConst.TYPE_REPORT_DETAIL_FINISH);
+        bean.setType(0);
 
         //工作内容
         bean.setField1(etInputContent.getText().toString().trim());
@@ -117,10 +117,9 @@ public class AddReportCompleteActivity extends BaseActivity {
         //处理
         bean.setField5(etInputHandle.getText().toString().trim());
 
-        List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap,true);
-        bean.setPic1(urls.get(0));
-        bean.setPic2(urls.get(1));
-        bean.setPic3(urls.get(2));
+        List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -137,7 +136,7 @@ public class AddReportCompleteActivity extends BaseActivity {
     private void submitSuccess() {
         Intent intent = new Intent();
         intent.putExtra("result", bean);
-        setResult(10081, intent);
+        setResult(1, intent);
         finish();
     }
 

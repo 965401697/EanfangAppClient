@@ -14,92 +14,25 @@ import java.util.List;
 public class WorkAddReportBean implements Serializable {
 
     /**
-     * bean : {"companyName":"北京修监控科技","createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-08-31 16:04:08","createUser":"98b22d8a875444f4b454e5a215584dbc","createUserName":"林技师","departmentName":"技术部","details":[{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-08-31 16:04:08","createUser":"98b22d8a875444f4b454e5a215584dbc","field1":"完成内容","field2":"同事协作","field3":"遗留问题","field4":"原因","field5":"处理","id":1,"pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/7de48a39702d44f79773aee3df055f4d.png","status":"0","type":"0","workReportUid":"c2b7de4ab37c41de88c2ff1889c5021e"},{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-08-31 16:04:08","createUser":"98b22d8a875444f4b454e5a215584dbc","field1":"发现内容","field2":"责任归属人","field3":"处理结果","id":2,"pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/7de48a39702d44f79773aee3df055f4d.png","status":"0","type":"1","workReportUid":"c2b7de4ab37c41de88c2ff1889c5021e"}],"firstLookTime":"2017-08-31 16:10:56","id":1,"receiveCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","receivePhone":"17600119928","receiveUser":"98b22d8a875444f4b454e5a215584dbc","receiveUserName":"林技师","status":"1","type":"周报","uid":"c2b7de4ab37c41de88c2ff1889c5021e"}
+     * type : 0
+     * firstLookTime : 2000-11-03
+     * assigneeUserId : 1L
+     * assigneeOrgCode : c.c1.2
+     * workReportDetails : [{"type":0,"field1":"1112L","field2":"2233L","field3":"2233L","field4":"2233L","field5":"2233L","pictures":"2233L"},{"type":0,"field1":"2223","field2":"4455","field3":"2233L","field4":"2233L","field5":"2233L","pictures":"2233L"}]
      */
 
-
-    /**
-     * companyName : 北京修监控科技
-     * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-     * createDate : 2017-08-31 16:04:08
-     * createUser : 98b22d8a875444f4b454e5a215584dbc
-     * createUserName : 林技师
-     * departmentName : 技术部
-     * details : [{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-08-31 16:04:08","createUser":"98b22d8a875444f4b454e5a215584dbc","field1":"完成内容","field2":"同事协作","field3":"遗留问题","field4":"原因","field5":"处理","id":1,"pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/7de48a39702d44f79773aee3df055f4d.png","status":"0","type":"0","workReportUid":"c2b7de4ab37c41de88c2ff1889c5021e"},{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-08-31 16:04:08","createUser":"98b22d8a875444f4b454e5a215584dbc","field1":"发现内容","field2":"责任归属人","field3":"处理结果","id":2,"pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/7de48a39702d44f79773aee3df055f4d.png","status":"0","type":"1","workReportUid":"c2b7de4ab37c41de88c2ff1889c5021e"}]
-     * firstLookTime : 2017-08-31 16:10:56
-     * id : 1
-     * receiveCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-     * receivePhone : 17600119928
-     * receiveUser : 98b22d8a875444f4b454e5a215584dbc
-     * receiveUserName : 林技师
-     * status : 1
-     * type : 周报
-     * uid : c2b7de4ab37c41de88c2ff1889c5021e
-     */
-
-    private String companyName;
-    private String createCompanyUid;
-    private String createDate;
-    private String createUser;
-    private String createUserName;
-    private String departmentName;
+    private int type;
     private String firstLookTime;
-    private int id;
-    private String receiveCompanyUid;
-    private String receivePhone;
-    private String receiveUser;
-    private String receiveUserName;
-    private String status;
-    private String type;
-    private String uid;
-    private List<DetailsBean> details;
+    private Long assigneeUserId;
+    private String assigneeOrgCode;
+    private List<WorkReportDetailsBean> workReportDetails;
 
-    public String getCompanyName() {
-        return companyName;
+    public int getType() {
+        return type;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getCreateCompanyUid() {
-        return createCompanyUid;
-    }
-
-    public void setCreateCompanyUid(String createCompanyUid) {
-        this.createCompanyUid = createCompanyUid;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public String getCreateUserName() {
-        return createUserName;
-    }
-
-    public void setCreateUserName(String createUserName) {
-        this.createUserName = createUserName;
-    }
-
-    public String getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getFirstLookTime() {
@@ -110,149 +43,55 @@ public class WorkAddReportBean implements Serializable {
         this.firstLookTime = firstLookTime;
     }
 
-    public int getId() {
-        return id;
+    public Long getAssigneeUserId() {
+        return assigneeUserId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAssigneeUserId(Long assigneeUserId) {
+        this.assigneeUserId = assigneeUserId;
     }
 
-    public String getReceiveCompanyUid() {
-        return receiveCompanyUid;
+    public String getAssigneeOrgCode() {
+        return assigneeOrgCode;
     }
 
-    public void setReceiveCompanyUid(String receiveCompanyUid) {
-        this.receiveCompanyUid = receiveCompanyUid;
+    public void setAssigneeOrgCode(String assigneeOrgCode) {
+        this.assigneeOrgCode = assigneeOrgCode;
     }
 
-    public String getReceivePhone() {
-        return receivePhone;
+    public List<WorkReportDetailsBean> getWorkReportDetails() {
+        return workReportDetails;
     }
 
-    public void setReceivePhone(String receivePhone) {
-        this.receivePhone = receivePhone;
+    public void setWorkReportDetails(List<WorkReportDetailsBean> workReportDetails) {
+        this.workReportDetails = workReportDetails;
     }
 
-    public String getReceiveUser() {
-        return receiveUser;
-    }
-
-    public void setReceiveUser(String receiveUser) {
-        this.receiveUser = receiveUser;
-    }
-
-    public String getReceiveUserName() {
-        return receiveUserName;
-    }
-
-    public void setReceiveUserName(String receiveUserName) {
-        this.receiveUserName = receiveUserName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public List<DetailsBean> getDetails() {
-        return details;
-    }
-
-    public void setDetails(List<DetailsBean> details) {
-        this.details = details;
-    }
-
-    public static class DetailsBean implements Serializable {
+    public static class WorkReportDetailsBean implements Serializable {
         /**
-         * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-         * createDate : 2017-08-31 16:04:08
-         * createUser : 98b22d8a875444f4b454e5a215584dbc
-         * field1 : 完成内容
-         * field2 : 同事协作
-         * field3 : 遗留问题
-         * field4 : 原因
-         * field5 : 处理
-         * id : 1
-         * pic1 : http://eanfangx.oss-cn-beijing.aliyuncs.com/7de48a39702d44f79773aee3df055f4d.png
-         * status : 0
          * type : 0
-         * workReportUid : c2b7de4ab37c41de88c2ff1889c5021e
+         * field1 : 1112L
+         * field2 : 2233L
+         * field3 : 2233L
+         * field4 : 2233L
+         * field5 : 2233L
+         * pictures : 2233L
          */
 
-        private String createCompanyUid;
-        private String createDate;
-        private String createUser;
+        private int type;
         private String field1;
         private String field2;
         private String field3;
         private String field4;
         private String field5;
-        private int id;
-        private String pic1;
-        private String pic2;
-        private String pic3;
-        private String status;
-        private String type;
-        private String workReportUid;
+        private String pictures;
 
-        public String getPic2() {
-            return pic2;
+        public int getType() {
+            return type;
         }
 
-        public void setPic2(String pic2) {
-            this.pic2 = pic2;
-        }
-
-        public String getPic3() {
-            return pic3;
-        }
-
-        public void setPic3(String pic3) {
-            this.pic3 = pic3;
-        }
-
-        public String getCreateCompanyUid() {
-            return createCompanyUid;
-        }
-
-        public void setCreateCompanyUid(String createCompanyUid) {
-            this.createCompanyUid = createCompanyUid;
-        }
-
-        public String getCreateDate() {
-            return createDate;
-        }
-
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
-        }
-
-        public String getCreateUser() {
-            return createUser;
-        }
-
-        public void setCreateUser(String createUser) {
-            this.createUser = createUser;
+        public void setType(int type) {
+            this.type = type;
         }
 
         public String getField1() {
@@ -295,44 +134,12 @@ public class WorkAddReportBean implements Serializable {
             this.field5 = field5;
         }
 
-        public int getId() {
-            return id;
+        public String getPictures() {
+            return pictures;
         }
 
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getPic1() {
-            return pic1;
-        }
-
-        public void setPic1(String pic1) {
-            this.pic1 = pic1;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getWorkReportUid() {
-            return workReportUid;
-        }
-
-        public void setWorkReportUid(String workReportUid) {
-            this.workReportUid = workReportUid;
+        public void setPictures(String pictures) {
+            this.pictures = pictures;
         }
     }
 }

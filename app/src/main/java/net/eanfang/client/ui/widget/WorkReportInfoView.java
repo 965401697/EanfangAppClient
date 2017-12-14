@@ -14,7 +14,6 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -130,16 +129,16 @@ public class WorkReportInfoView extends BaseDialog {
                         tvReportCommitPerson.setText(bean.getBean().getCreateUserName());
                         tvReportRevPerson.setText(bean.getBean().getReceiveUserName());
                         tvReportPhoneNumber.setText(bean.getBean().getReceivePhone());
-                        for (int i = 0; i < bean.getBean().getDetails().size(); i++) {
-                            WorkReportInfoBean.BeanBean.DetailsBean detialBean = bean.getBean().getDetails().get(i);
-                            if (EanfangConst.TYPE_REPORT_DETAIL_FINISH.equals(detialBean.getType())) {
-                                completeList.add(detialBean);
-                            } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND.equals(detialBean.getType())) {
-                                findList.add(detialBean);
-                            } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN.equals(detialBean.getType())) {
-                                planList.add(detialBean);
-                            }
-                        }
+//                        for (int i = 0; i < bean.getBean().getDetails().size(); i++) {
+//                            WorkReportInfoBean.BeanBean.DetailsBean detialBean = bean.getBean().getDetails().get(i);
+//                            if (EanfangConst.TYPE_REPORT_DETAIL_FINISH.equals(detialBean.getType())) {
+//                                completeList.add(detialBean);
+//                            } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND.equals(detialBean.getType())) {
+//                                findList.add(detialBean);
+//                            } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN.equals(detialBean.getType())) {
+//                                planList.add(detialBean);
+//                            }
+//                        }
                         initAdapter();
 
                         reportCompleteList.addOnItemTouchListener(new OnItemClickListener() {

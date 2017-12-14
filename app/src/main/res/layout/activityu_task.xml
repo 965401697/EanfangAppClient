@@ -21,14 +21,12 @@
             android:orientation="vertical">
 
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
                 android:padding="15dp">
 
                 <TextView
@@ -54,9 +52,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
                 android:padding="15dp">
 
                 <TextView
@@ -95,9 +93,9 @@
 
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -111,22 +109,21 @@
                     android:textSize="16sp" />
 
 
-
                 <LinearLayout
                     android:id="@+id/ll_depend_person"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
                     android:padding="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:text="责任人"
-                        android:layout_marginLeft="20dp"
                         android:textColor="@color/client_form_title_color"
                         android:textSize="16sp" />
 
@@ -151,16 +148,16 @@
                     android:id="@+id/ll_phone_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp"
                     android:padding="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="手机号码"
                         android:layout_marginLeft="20dp"
+                        android:text="手机号码"
                         android:textColor="@color/client_form_title_color"
                         android:textSize="16sp" />
 
@@ -171,8 +168,8 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text=""
                         android:inputType="phone"
+                        android:text=""
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -181,11 +178,10 @@
 
             <Button
                 android:id="@+id/ll_comit"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/bg_ll_btn"
                 android:text="提交" />
         </LinearLayout>

@@ -34,8 +34,9 @@
                     android:id="@+id/et_input_content"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:textColor="@color/black"
                     android:gravity="left"
                     android:hint="请输入工作内容" />
             </LinearLayout>
@@ -58,8 +59,9 @@
                     android:id="@+id/et_input_jion"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:textColor="@color/black"
                     android:gravity="left"
                     android:hint="请输入责任人" />
             </LinearLayout>
@@ -83,8 +85,9 @@
                     android:id="@+id/et_input_handle"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:textColor="@color/black"
                     android:gravity="left"
                     android:hint="请输入处理措施" />
             </LinearLayout>
@@ -92,9 +95,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal">
 
                 <TextView

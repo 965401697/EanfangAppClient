@@ -1,7 +1,9 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.config.Config;
 import net.eanfang.client.config.Constant;
 import net.eanfang.client.ui.model.WorkTaskBean;
+import net.eanfang.client.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,11 +78,6 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
     private void initView() {
         tvTitle.setText("任务明细");
         ivLeft.setOnClickListener(v -> dismiss());
-
-//        ivPic1.setOnClickListener(this);
-//        ivPic2.setOnClickListener(this);
-//        ivPic3.setOnClickListener(this);
-
         tvOrders.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getInstancyLevel()));
         tvFirstFrequency.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getFirst_look()));
         tvSecondFrequency.setText(Config.getConfig().getConstBean().getConst().get(Constant.INSTANCY_LEVEL).get(detailBean.getFirst_callback()));
@@ -89,27 +87,30 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
         etWorker.setText(detailBean.getJoinPerson());
         etStandard.setText(detailBean.getCriterion());
         etGoal.setText(detailBean.getPurpose());
-        // TODO: 2017/12/11 图片接口解析
 
-//        if (!TextUtils.isEmpty(detailBean.getPic1())) {
-//            ivPic1.setImageURI(Uri.parse(detailBean.getPic1()));
-//            ivPic1.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPic1.setVisibility(View.GONE);
-//        }
-//
-//        if (!TextUtils.isEmpty(detailBean.getPic2())) {
-//            ivPic2.setImageURI(Uri.parse(detailBean.getPic2()));
-//            ivPic2.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPic2.setVisibility(View.GONE);
-//        }
-//        if (!TextUtils.isEmpty(detailBean.getPic3())) {
-//            ivPic3.setImageURI(Uri.parse(detailBean.getPic3()));
-//            ivPic3.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPic3.setVisibility(View.GONE);
-//        }
+        if (!StringUtils.isEmpty(detailBean.getPictures())) {
+            String[] urls = detailBean.getPictures().split(",");
+
+            if (!TextUtils.isEmpty(urls[0])) {
+                ivPic1.setImageURI(Uri.parse(urls[0]));
+                ivPic1.setVisibility(View.VISIBLE);
+            } else {
+                ivPic1.setVisibility(View.GONE);
+            }
+
+            if (!TextUtils.isEmpty(urls[1])) {
+                ivPic2.setImageURI(Uri.parse(urls[1]));
+                ivPic2.setVisibility(View.VISIBLE);
+            } else {
+                ivPic2.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(urls[2])) {
+                ivPic3.setImageURI(Uri.parse(urls[2]));
+                ivPic3.setVisibility(View.VISIBLE);
+            } else {
+                ivPic3.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override

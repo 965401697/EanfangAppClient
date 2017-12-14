@@ -149,15 +149,15 @@ public class EanfangConst {
     /**
      * 任务汇报明细 完成工作
      */
-    public static final String TYPE_REPORT_DETAIL_FINISH = "0";
+    public static final int TYPE_REPORT_DETAIL_FINISH = 0;
     /**
      * 任务汇报明细 发现问题
      */
-    public static final String TYPE_REPORT_DETAIL_FIND = "1";
+    public static final int TYPE_REPORT_DETAIL_FIND = 1;
     /**
      * 任务汇报明细 后续计划
      */
-    public static final String TYPE_REPORT_DETAIL_PLAN = "2";
+    public static final int TYPE_REPORT_DETAIL_PLAN = 2;
 
     /**
      * 工作检查 已创建 待处理

@@ -108,7 +108,7 @@ public class LookTaskInfoView extends BaseDialog {
                 ivPic2.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(urls[2])) {
-                ivPic3.setImageURI(Uri.parse(urls[3]));
+                ivPic3.setImageURI(Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);

@@ -34,10 +34,11 @@
                     android:id="@+id/et_input_content"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
                     android:gravity="left"
-                    android:hint="请输入工作内容" />
+                    android:hint="请输入工作内容"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -58,10 +59,11 @@
                     android:id="@+id/et_input_jion"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
                     android:gravity="left"
-                    android:hint="请输入协同人员" />
+                    android:hint="请输入协同人员"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <LinearLayout
@@ -82,8 +84,9 @@
                     android:id="@+id/et_input_legacy"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:textColor="@color/black"
                     android:gravity="left"
                     android:hint="请输入遗留问题" />
             </LinearLayout>
@@ -106,8 +109,9 @@
                     android:id="@+id/et_input_reason"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:textColor="@color/black"
                     android:gravity="left"
                     android:hint="请输入原因" />
             </LinearLayout>
@@ -130,8 +134,9 @@
                     android:id="@+id/et_input_handle"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:textColor="@color/black"
                     android:gravity="left"
                     android:hint="请输入处理措施" />
             </LinearLayout>

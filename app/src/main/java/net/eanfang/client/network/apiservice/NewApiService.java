@@ -56,4 +56,9 @@ public interface NewApiService {
      * 工作任务首次阅读
      */
     String WORK_TASK_FIRST_READ = BuildConfig.API_HOST + "/yaf_oa/worktask/read";
+
+    /**
+     * 新增汇报
+     */
+    String ADD_WORK_REPORT = BuildConfig.API_HOST + "/yaf_oa/workreport/insert";
 }
