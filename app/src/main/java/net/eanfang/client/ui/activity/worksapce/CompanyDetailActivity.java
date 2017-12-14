@@ -24,7 +24,6 @@ import net.eanfang.client.ui.adapter.CompanyDetailAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.CompanyDetailBean;
 import net.eanfang.client.ui.model.InstallOrderConfirmBean;
-import net.eanfang.client.util.GetConstDataUtils;
 import net.eanfang.client.util.PerviewUtil;
 import net.eanfang.client.util.StringUtils;
 
@@ -342,7 +341,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         mDataList3.clear();
 
         for (int i = 0; i < businessCodeArray.length; i++) {
-            mDataList3.add(GetConstDataUtils.getBugOneNameByCode(businessCodeArray[i]));
+//            mDataList3.add(GetConstDataUtils.getBugOneNameByCode(businessCodeArray[i]));
         }
 
         if ("0".equals(companyDetailBean.getServicetypeinstall())) {

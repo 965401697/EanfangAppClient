@@ -139,8 +139,8 @@ public class InstallActivity extends BaseActivity {
         //业务类型一级
         llBusiness.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", Config.getConfig().getBudgetLimit(), (index, item) -> {
-                tvBusiness.setText(Config.getConfig().getBusinessOneList().get(index).getName());
-                bugOneUid = Config.getConfig().getBusinessOneList().get(index).getCode();
+//                tvBusiness.setText(Config.getConfig().getBusinessOneList().get(index).getName());
+//                bugOneUid = Config.getConfig().getBusinessOneList().get(index).getCode();
             });
         });
         //预计工期

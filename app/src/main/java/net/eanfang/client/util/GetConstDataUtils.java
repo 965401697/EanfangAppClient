@@ -1,12 +1,8 @@
 package net.eanfang.client.util;
 
 
-import com.annimon.stream.Optional;
-import com.annimon.stream.Stream;
-
 import net.eanfang.client.config.Config;
 import net.eanfang.client.config.EanfangConst;
-import net.eanfang.client.ui.model.BusinessOne;
 
 import java.util.List;
 
@@ -36,13 +32,13 @@ public class GetConstDataUtils {
      * @param code (A、B、C、I、P、V、)
      * @return
      */
-    public static String getBugOneNameByCode(String code) {
-        Optional<BusinessOne> one = Stream.of(Config.getConfig().getBusinessOneList()).filter(bus -> bus.getCode().equals(code)).findFirst();
-        if (one.isPresent()) {
-            return one.get().getName();
-        }
-        return "";
-    }
+//    public static String getBugOneNameByCode(String code) {
+////        Optional<BusinessOne> one = Stream.of(Config.getConfig().getBusinessOneList()).filter(bus -> bus.getCode().equals(code)).findFirst();
+////        if (one.isPresent()) {
+////            return one.get().getName();
+////        }
+////        return "";
+//    }
 
     /**
      * 根据业务类型的名称 获取业务类型的编码
@@ -50,13 +46,13 @@ public class GetConstDataUtils {
      * @param name (电视监控、防盗报警)
      * @return
      */
-    public static String getBugOneCodeByName(String name) {
-        Optional<BusinessOne> one = Stream.of(Config.getConfig().getBusinessOneList()).filter(bus -> bus.getName().equals(name)).findFirst();
-        if (one.isPresent()) {
-            return one.get().getName();
-        }
-        return "";
-    }
+//    public static String getBugOneCodeByName(String name) {
+//        Optional<BusinessOne> one = Stream.of(Config.getConfig().getBusinessOneList()).filter(bus -> bus.getName().equals(name)).findFirst();
+//        if (one.isPresent()) {
+//            return one.get().getName();
+//        }
+//        return "";
+//    }
 
     /**
      * 根据维修结论的编号 获取维修结论的名称

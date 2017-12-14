@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.google.gson.Gson;
@@ -20,7 +21,8 @@ import com.yaf.model.LoginBean;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.activity.SelectAddressActivity;
@@ -28,6 +30,8 @@ import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.AddDesignOrderBean;
 import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.SelectAddressItem;
+import net.eanfang.client.util.PickerSelectUtil;
+import net.eanfang.client.util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -119,18 +123,18 @@ public class DesignActivity extends BaseActivity {
 
     private void initData() {
         LoginBean user = EanfangApplication.getApplication().getUser();
-//        String name = "";
-//        if (StringUtils.isEmpty(user.getCompanyName())) {
-//            name = user.getName();
-//        } else {
-//            name = user.getCompanyName();
-//        }
-//        //如果公司名称为空 则取当前登陆人的公司
-//        if (StringUtils.isEmpty(et_user_name.getText())) {
-//            et_user_name.setText(name);
-//            et_receive_user_name.setText(user.getName());
-//            et_receive_phone.setText(user.getAccount());
-//        }
+        String name = "";
+        if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
+            name = user.getAccount().getRealName();
+        } else {
+            name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        }
+        //如果公司名称为空 则取当前登陆人的公司
+        if (StringUtils.isEmpty(et_user_name.getText())) {
+            et_user_name.setText(name);
+            et_receive_user_name.setText(user.getAccount().getRealName());
+            et_receive_phone.setText(user.getAccount().getMobile());
+        }
     }
 
     private void initView() {
@@ -148,35 +152,19 @@ public class DesignActivity extends BaseActivity {
         });
         //回复时限选择
         ll_reply_limit.setOnClickListener((v) -> {
-            optionsPicker = new OptionsPickerView.Builder(this, (options1, options2, options3, view) -> {
-                tv_reply_limit.setText(Config.getConfig().getReplyLimit().get(options1));
-            }).build();
-            optionsPicker.setPicker(Stream.of(Config.getConfig().getReplyLimit()).toList());
-            optionsPicker.show();
+            PickerSelectUtil.singleTextPicker(this, "", tv_reply_limit, Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.REVERT_TIME_LIMIT_TYPE));
         });
         //业务类型一级
         ll_business_one.setOnClickListener((v) -> {
-            optionsPicker = new OptionsPickerView.Builder(this, (options1, options2, options3, view) -> {
-                tv_business_one.setText(Config.getConfig().getBusinessOneList().get(options1).getName());
-            }).build();
-            optionsPicker.setPicker(Stream.of(Config.getConfig().getBusinessOneList()).map(bus -> bus.getName()).toList());
-            optionsPicker.show();
+            PickerSelectUtil.singleTextPicker(this, "", tv_business_one, Stream.of(Config.getConfig().getBusinessOneList()).map(bus -> bus.getDataName()).toList());
         });
         //预计工期
         ll_plan_limit.setOnClickListener((v) -> {
-            optionsPicker = new OptionsPickerView.Builder(this, (options1, options2, options3, view) -> {
-                tv_plan_limit.setText(Config.getConfig().getPlanLimit().get(options1));
-            }).build();
-            optionsPicker.setPicker(Config.getConfig().getPlanLimit());
-            optionsPicker.show();
+            PickerSelectUtil.singleTextPicker(this, "", tv_plan_limit, Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE));
         });
         //预算范围
         ll_budget_limit.setOnClickListener((v) -> {
-            optionsPicker = new OptionsPickerView.Builder(this, (options1, options2, options3, view) -> {
-                tv_budget_limit.setText(Config.getConfig().getBudgetLimit().get(options1));
-            }).build();
-            optionsPicker.setPicker(Config.getConfig().getBudgetLimit());
-            optionsPicker.show();
+            PickerSelectUtil.singleTextPicker(this, "", tv_budget_limit, Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE));
         });
     }
 
@@ -238,23 +226,20 @@ public class DesignActivity extends BaseActivity {
             showToast("需求描述不能超过50个字");
             return;
         }
-        LoginBean user = EanfangApplication.getApplication().getUser();
         AddDesignOrderBean bean = new AddDesignOrderBean();
-        bean.setAddress(address);
-        bean.setBudgetLimit(budgetLimit);
-        bean.setBusinessOne(businessOne);
-        bean.setCity(city);
-        bean.setCounty(contry);
+        bean.setDetailPlace(address);
+        bean.setBudgetLimit(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).indexOf(budgetLimit));
+        bean.setBusinessOneCode(businessOne);
+
+        bean.setZoneCode("");
 //        bean.setCreateCompanyUid(user.getCompanyId());
-//        bean.setCreateUser(user.getPersonId());
-        bean.setLat(lat);
-        bean.setLon(lon);
-        bean.setPlanLimit(planLimit);
-        bean.setProvince(province);
-        bean.setReceiveUserName(receiveUserName);
-        bean.setReceivePhone(receivePhone);
-        bean.setRemark(remark);
-        bean.setReplyLimit(replyLimit);
+        bean.setLatitude(lat);
+        bean.setLongitude(lon);
+        bean.setPredictTime(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).indexOf(planLimit));
+        bean.setContactUser(receiveUserName);
+        bean.setContact_phone(receivePhone);
+        bean.setRemarkInfo(remark);
+        bean.setRevertTimeLimit(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.REVERT_TIME_LIMIT_TYPE).indexOf(replyLimit));
         bean.setUserName(userName);
 
         doHttp(new Gson().toJson(bean));
@@ -281,19 +266,14 @@ public class DesignActivity extends BaseActivity {
     }
 
     public void doHttp(String json) {
-        EanfangHttp.post(ApiService.ADD_DESIGN_ORDER)
+        EanfangHttp.post(NewApiService.ADD_WORK_DESIGN)
                 .upJson(json)
-                .execute(new EanfangCallback(this, true) {
-                    @Override
-                    public void onSuccess(Object bean) {
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> {
                         submitSuccess();
-                    }
+                    });
 
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                }));
     }
 
     /**

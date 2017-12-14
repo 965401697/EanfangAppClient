@@ -31,7 +31,6 @@ import net.eanfang.client.ui.model.BusinessWorkBean;
 import net.eanfang.client.ui.model.FillRepairInfoBean;
 import net.eanfang.client.ui.model.device.GetDeviceFailureOptionBean;
 import net.eanfang.client.ui.model.device.GetDeviceOptionBean;
-import net.eanfang.client.util.GetConstDataUtils;
 import net.eanfang.client.util.OSSUtils;
 import net.eanfang.client.util.PickerSelectUtil;
 import net.eanfang.client.util.StringUtils;
@@ -167,7 +166,7 @@ public class AddTroubleActivity extends BaseActivity {
     private void doHttpDevice() {
         EanfangHttp.get(DeviceService.GET_OPTION)
                 .params("companyUid", companyUid)
-                .params("businessOne", GetConstDataUtils.getBugOneNameByCode(bugOneCode))
+//                .params("businessOne", GetConstDataUtils.getBugOneNameByCode(bugOneCode))
                 .execute(new EanfangCallback<GetDeviceOptionBean>(this, true) {
                     @Override
                     public void onSuccess(GetDeviceOptionBean bean) {

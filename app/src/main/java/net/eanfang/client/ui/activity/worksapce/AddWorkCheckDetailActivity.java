@@ -17,7 +17,6 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.config.Config;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -97,7 +96,7 @@ public class AddWorkCheckDetailActivity extends BaseActivity {
      * 获取系统类别
      */
     private void initData() {
-        businessOneList = Config.getConfig().getBusinessOneList();
+//        businessOneList = Config.getConfig().getBusinessOneList();
     }
 
     private void initAdapter() {

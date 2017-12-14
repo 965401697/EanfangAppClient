@@ -74,4 +74,16 @@ public interface NewApiService {
      * 获取汇报详情
      */
     String WORK_REPORT_FIRST_READ = BuildConfig.API_HOST + "/yaf_oa/workreport/read";
+
+    /**
+     * 新增设计
+     */
+
+    String ADD_WORK_DESIGN = BuildConfig.API_HOST + "/yaf_oa/designorder/insert";
+
+    /**
+     * 获取设计列表
+     */
+
+    String GET_WORK_DESIGN = BuildConfig.API_HOST + "/yaf_oa/designorder/list";
 }

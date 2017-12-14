@@ -18,4 +18,30 @@ public class Constant {
     public static final String THEN_CALLBACK = "thenCallbackType";
     /*5.汇报类型*/
     public static final String REPORTTYPE = "reportType";
+    /*6.回复时限*/
+    public static final String REVERT_TIME_LIMIT_TYPE = "RevertTimeLimitType";
+    /*7.预计工期*/
+    public static final String PREDICTTIME_TYPE = "PredicttimeType";
+    /*8.预算费用范围*/
+    public static final String BUDGET_LIMIT_TYPE = "BudgetLimitType";
+    /*9.基础数据*/
+    public static final String BASE_DATA_TYPE = "BaseDataType";
+
+    /*
+     * 未知类别
+     */
+    public static final int UNKNOWN_TYPE = 0;
+    /*
+     * 系统类别
+     */
+    public static final int SYS_TYPE = 1;
+    /*
+     * 业务类型
+     */
+    public static final int BIZ_TYPE = 2;
+    /*
+     * 地区
+     */
+    public static final int AREA = 3;
+
 }

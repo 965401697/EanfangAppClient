@@ -19,6 +19,15 @@ public class ConstAllBean implements Serializable {
     private Map<String, List<String>> ShopConstant;
     private Map<String, List<String>> DeviceConstan;
     private Map<String, List<String>> WorkInspectConstant;
+    private Map<String, List<String>> DesignOrderConstant;
+
+    public Map<String, List<String>> getDesignOrderConstant() {
+        return DesignOrderConstant;
+    }
+
+    public void setDesignOrderConstant(Map<String, List<String>> designOrderConstant) {
+        DesignOrderConstant = designOrderConstant;
+    }
 
     public Map<String, List<String>> getWorkReportConstant() {
         return WorkReportConstant;

@@ -26,7 +26,6 @@ import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.ToRepairBean;
 import net.eanfang.client.ui.model.WorkerDetailsBean;
-import net.eanfang.client.util.GetConstDataUtils;
 import net.eanfang.client.util.ImagePerviewUtil;
 import net.eanfang.client.util.StringUtils;
 
@@ -342,7 +341,7 @@ public class WorkerDetailActivity extends BaseActivity implements View.OnClickLi
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
         for (int i = 0; i < businessCodeArray.length; i++) {
-            mDataList3.add(GetConstDataUtils.getBugOneNameByCode(businessCodeArray[i]));
+//            mDataList3.add(GetConstDataUtils.getBugOneNameByCode(businessCodeArray[i]));
         }
 
         initAdapter();

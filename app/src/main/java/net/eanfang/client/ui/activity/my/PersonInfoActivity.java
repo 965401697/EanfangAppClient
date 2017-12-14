@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -139,18 +140,17 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void fillData(InfoBackBean infoBackBean) {
         llBirthday.setVisibility(View.VISIBLE);
-        if (!StringUtils.isEmpty(infoBackBean.getHeadpic())){
-            ivUpload.setImageURI(Uri.parse(infoBackBean.getHeadpic()));
+        if (!StringUtils.isEmpty(infoBackBean.getHeadpic())) {
+            ivUpload.setImageURI(Uri.parse(EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
         }
-        tvNickname.setText(infoBackBean.getNickname());
-        etRealname.setText(infoBackBean.getRealname());
+        tvNickname.setText(EanfangApplication.getApplication().getUser().getAccount().getNickName());
+        etRealname.setText(EanfangApplication.getApplication().getUser().getAccount().getRealName());
         etRealname.setEnabled(false);
         rbMan.setClickable(false);
         rbWoman.setClickable(false);
-        if (infoBackBean.getSex().equals("男")){
+        if (infoBackBean.getSex().equals("男")) {
             rbMan.setChecked(true);
-        }
-        else{
+        } else {
             rbWoman.setChecked(true);
         }
         tvDate.setText(GetDateUtils.dateToDateString(GetDateUtils.getDate(infoBackBean.getBirthday())));
@@ -175,6 +175,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                 zone = item.getAddress();
                 tvArea.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
                 etAddress.setText(item.getName());
+                break;
+            default:
                 break;
         }
     }
