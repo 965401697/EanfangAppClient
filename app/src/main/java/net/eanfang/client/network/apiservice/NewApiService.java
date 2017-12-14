@@ -61,4 +61,17 @@ public interface NewApiService {
      * 新增汇报
      */
     String ADD_WORK_REPORT = BuildConfig.API_HOST + "/yaf_oa/workreport/insert";
+
+    /**
+     * 获取汇报列表
+     */
+    String GET_WORK_REPORT_LIST = BuildConfig.API_HOST + "/yaf_oa/workreport/list";
+    /**
+     * 获取汇报详情
+     */
+    String GET_WORK_REPORT_INFO = BuildConfig.API_HOST + "/yaf_oa/workreport/detail";
+    /**
+     * 获取汇报详情
+     */
+    String WORK_REPORT_FIRST_READ = BuildConfig.API_HOST + "/yaf_oa/workreport/read";
 }

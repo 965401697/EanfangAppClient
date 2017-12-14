@@ -298,7 +298,7 @@ public class WorkTaskListBean implements Serializable {
                 this.userId = userId;
             }
 
-            public static class AccountEntityBean {
+            public static class AccountEntityBean implements Serializable{
                 /**
                  * accId : 1
                  * mobile : 18500320187

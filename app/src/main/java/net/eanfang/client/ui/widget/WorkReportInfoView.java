@@ -2,7 +2,6 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,7 +13,10 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.config.EanfangConst;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.LookReportDetailAdapter;
@@ -40,7 +42,7 @@ public class WorkReportInfoView extends BaseDialog {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     private Activity mContext;
-    private int id;
+    private Long id;
     @BindView(R.id.et_company_name)
     TextView etCompanyName;
     @BindView(R.id.et_department_name)
@@ -62,15 +64,15 @@ public class WorkReportInfoView extends BaseDialog {
     @BindView(R.id.plan_list)
     RecyclerView reportPlanList;
 
-    private List<WorkReportInfoBean.BeanBean.DetailsBean> completeList;
-    private List<WorkReportInfoBean.BeanBean.DetailsBean> findList;
-    private List<WorkReportInfoBean.BeanBean.DetailsBean> planList;
+    private List<WorkReportInfoBean.WorkReportDetailsBean> completeList;
+    private List<WorkReportInfoBean.WorkReportDetailsBean> findList;
+    private List<WorkReportInfoBean.WorkReportDetailsBean> planList;
     private LookReportDetailAdapter completeAdapter;
     private LookReportDetailAdapter findAdapter;
     private LookReportDetailAdapter planAdapter;
-    private WorkReportInfoBean.BeanBean.DetailsBean detailsBean;
+    private WorkReportInfoBean.WorkReportDetailsBean detailsBean;
 
-    public WorkReportInfoView(Activity context, boolean isfull, int id) {
+    public WorkReportInfoView(Activity context, boolean isfull, Long id) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
@@ -92,82 +94,123 @@ public class WorkReportInfoView extends BaseDialog {
 
     private void initAdapter() {
         completeAdapter = new LookReportDetailAdapter(R.layout.item_quotation_detail, completeList);
-        reportCompleteList.addItemDecoration(new DividerItemDecoration(mContext,
-                DividerItemDecoration.VERTICAL));
         reportCompleteList.setLayoutManager(new LinearLayoutManager(mContext));
         reportCompleteList.setAdapter(completeAdapter);
 
         findAdapter = new LookReportDetailAdapter(R.layout.item_quotation_detail, findList);
-        reportFindList.addItemDecoration(new DividerItemDecoration(mContext,
-                DividerItemDecoration.VERTICAL));
         reportFindList.setLayoutManager(new LinearLayoutManager(mContext));
         reportFindList.setAdapter(findAdapter);
 
         planAdapter = new LookReportDetailAdapter(R.layout.item_quotation_detail, planList);
-        reportPlanList.addItemDecoration(new DividerItemDecoration(mContext,
-                DividerItemDecoration.VERTICAL));
         reportPlanList.setLayoutManager(new LinearLayoutManager(mContext));
         reportPlanList.setAdapter(planAdapter);
     }
 
     private void getData() {
-        EanfangHttp.get(ApiService.GET_WORK_REPORT_INFO)
+        EanfangHttp.get(NewApiService.GET_WORK_REPORT_INFO)
                 .tag(this)
                 .params("id", id)
-                .execute(new EanfangCallback<WorkReportInfoBean>(mContext, true) {
+                .execute(new EanfangCallback<WorkReportInfoBean>(mContext, true, WorkReportInfoBean.class, (bean) -> {
+                            completeList = new ArrayList<>();
+                            findList = new ArrayList<>();
+                            planList = new ArrayList<>();
 
-                    @Override
-                    public void onSuccess(final WorkReportInfoBean bean) {
-                        completeList = new ArrayList<>();
-                        findList = new ArrayList<>();
-                        planList = new ArrayList<>();
+                            etCompanyName.setText(bean.getCreateCompany().getOrgName());
+                            etDepartmentName.setText(bean.getCreateOrg().getOrgName());
+                            tvReportType.setText(Config.getConfig().getConstBean().getWorkReportConstant().get(Constant.REPORTTYPE).get(bean.getType()));
+                            tvReportCommitTime.setText(bean.getCreateTime());
+                            tvReportCommitPerson.setText(bean.getCreateUser().getAccountEntity().getRealName());
+                            tvReportRevPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+                            tvReportPhoneNumber.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
+                            for (int i = 0; i < bean.getWorkReportDetails().size(); i++) {
+                                WorkReportInfoBean.WorkReportDetailsBean detialBean = bean.getWorkReportDetails().get(i);
+                                if (EanfangConst.TYPE_REPORT_DETAIL_FINISH == detialBean.getType()) {
+                                    completeList.add(detialBean);
+                                } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND == detialBean.getType()) {
+                                    findList.add(detialBean);
+                                } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN == detialBean.getType()) {
+                                    planList.add(detialBean);
+                                }
+                            }
+                            initAdapter();
 
-                        etCompanyName.setText(bean.getBean().getCompanyName());
-                        etDepartmentName.setText(bean.getBean().getDepartmentName());
-                        tvReportType.setText(bean.getBean().getType());
-                        tvReportCommitTime.setText(bean.getBean().getCreateDate());
-                        tvReportCommitPerson.setText(bean.getBean().getCreateUserName());
-                        tvReportRevPerson.setText(bean.getBean().getReceiveUserName());
-                        tvReportPhoneNumber.setText(bean.getBean().getReceivePhone());
-//                        for (int i = 0; i < bean.getBean().getDetails().size(); i++) {
-//                            WorkReportInfoBean.BeanBean.DetailsBean detialBean = bean.getBean().getDetails().get(i);
-//                            if (EanfangConst.TYPE_REPORT_DETAIL_FINISH.equals(detialBean.getType())) {
+                            reportCompleteList.addOnItemTouchListener(new OnItemClickListener() {
+                                @Override
+                                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    detailsBean = completeList.get(position);
+                                    new LookReportCompleteInfoView(mContext, true, detailsBean).show();
+                                }
+                            });
+                            reportFindList.addOnItemTouchListener(new OnItemClickListener() {
+                                @Override
+                                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    detailsBean = findList.get(position);
+                                    new LookReportFindInfoView(mContext, true, detailsBean).show();
+                                }
+                            });
+                            reportPlanList.addOnItemTouchListener(new OnItemClickListener() {
+                                @Override
+                                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    detailsBean = planList.get(position);
+                                    new LookReportPlanInfoView(mContext, true, detailsBean).show();
+                                }
+                            });
+                        })
+//                {
+//
+//                    @Override
+//                    public void onSuccess(final WorkReportInfoBean bean) {
+//                        completeList = new ArrayList<>();
+//                        findList = new ArrayList<>();
+//                        planList = new ArrayList<>();
+//
+//                        etCompanyName.setText(bean.getCreateCompany().getOrgName());
+//                        etDepartmentName.setText(bean.getCreateOrg().getOrgName());
+//                        tvReportType.setText(bean.getType());
+//                        tvReportCommitTime.setText(bean.getCreateTime());
+//                        tvReportCommitPerson.setText(bean.getCreateUser().getAccountEntity().getRealName());
+//                        tvReportRevPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+//                        tvReportPhoneNumber.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
+//                        for (int i = 0; i < bean.getWorkReportDetails().size(); i++) {
+//                            WorkReportInfoBean.WorkReportDetailsBean detialBean = bean.getWorkReportDetails().get(i);
+//                            if (EanfangConst.TYPE_REPORT_DETAIL_FINISH==detialBean.getType()) {
 //                                completeList.add(detialBean);
-//                            } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND.equals(detialBean.getType())) {
+//                            } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND==detialBean.getType()){
 //                                findList.add(detialBean);
-//                            } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN.equals(detialBean.getType())) {
+//                            } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN==detialBean.getType()) {
 //                                planList.add(detialBean);
 //                            }
 //                        }
-                        initAdapter();
-
-                        reportCompleteList.addOnItemTouchListener(new OnItemClickListener() {
-                            @Override
-                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                detailsBean = completeList.get(position);
-                                new LookReportCompleteInfoView(mContext, true, detailsBean).show();
-                            }
-                        });
-                        reportFindList.addOnItemTouchListener(new OnItemClickListener() {
-                            @Override
-                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                detailsBean = findList.get(position);
-                                new LookReportFindInfoView(mContext, true, detailsBean).show();
-                            }
-                        });
-                        reportPlanList.addOnItemTouchListener(new OnItemClickListener() {
-                            @Override
-                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                detailsBean = planList.get(position);
-                                new LookReportPlanInfoView(mContext, true, detailsBean).show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+//                        initAdapter();
+//
+//                        reportCompleteList.addOnItemTouchListener(new OnItemClickListener() {
+//                            @Override
+//                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                                detailsBean = completeList.get(position);
+//                                new LookReportCompleteInfoView(mContext, true, detailsBean).show();
+//                            }
+//                        });
+//                        reportFindList.addOnItemTouchListener(new OnItemClickListener() {
+//                            @Override
+//                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                                detailsBean = findList.get(position);
+//                                new LookReportFindInfoView(mContext, true, detailsBean).show();
+//                            }
+//                        });
+//                        reportPlanList.addOnItemTouchListener(new OnItemClickListener() {
+//                            @Override
+//                            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                                detailsBean = planList.get(position);
+//                                new LookReportPlanInfoView(mContext, true, detailsBean).show();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//
+//                    }
+//                }
+                );
     }
 }

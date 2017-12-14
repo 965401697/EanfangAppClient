@@ -6,13 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.EanfangConst;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.activity.worksapce.WorkReportListActivity;
@@ -22,8 +24,9 @@ import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.WorkReportListBean;
 import net.eanfang.client.ui.widget.WorkReportInfoView;
 import net.eanfang.client.util.GetConstDataUtils;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.eanfang.client.config.EanfangConst.BOTTOM_REFRESH;
@@ -43,7 +46,7 @@ public class WorkReportListFragment extends BaseFragment implements
     TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
-    private List<WorkReportListBean.AllBean> mDataList;
+    private List<WorkReportListBean.ListBean> mDataList;
     private String mTitle;
     private String mType;
     private WorkReportListAdapter mAdapter;
@@ -87,10 +90,16 @@ public class WorkReportListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-        if (getActivity() == null) return;
-        if (!(getActivity() instanceof WorkReportListActivity)) return;
-        if (((WorkReportListActivity) getActivity()).getWorkReportListBean() == null) return;
-        mDataList = ((WorkReportListActivity) getActivity()).getWorkReportListBean().getAll();
+        if (getActivity() == null) {
+            return;
+        }
+        if (!(getActivity() instanceof WorkReportListActivity)) {
+            return;
+        }
+        if (((WorkReportListActivity) getActivity()).getWorkReportListBean() == null) {
+            return;
+        }
+        mDataList = ((WorkReportListActivity) getActivity()).getWorkReportListBean().getList();
         mAdapter = new WorkReportListAdapter(mDataList);
         rvList.addOnItemTouchListener(onItemClickListener);
         if (mDataList.size() > 0) {
@@ -106,11 +115,11 @@ public class WorkReportListFragment extends BaseFragment implements
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//            if (mDataList.get(position).getStatus().equals(EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-//                if (EanfangApplication.getApplication().getUser().getPersonId().equals(mDataList.get(position).getReceiveUser())) {
-//                    getFirstLookData(((WorkReportListActivity) getActivity()).getWorkReportListBean(), position);
+            if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+//                if (EanfangApplication.getApplication().getUserId().equals(mDataList.get(position).getAssigneeUserId())) {
+                getFirstLookData(((WorkReportListActivity) getActivity()).getWorkReportListBean(), position);
 //                }
-//            }
+            }
             new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
         }
     };
@@ -124,25 +133,14 @@ public class WorkReportListFragment extends BaseFragment implements
     /**
      * 首次阅读，更新状态
      */
-    private void getFirstLookData(WorkReportListBean bean, int position) {
+    private void getFirstLookData(WorkReportListBean beans, int position) {
+        EanfangHttp.get(NewApiService.WORK_REPORT_FIRST_READ)
+                .params("id", beans.getList().get(position).getId())
+                .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
 
-        EanfangHttp.get(ApiService.GET_FIRST_REPORT_LOOK)
-                .tag(this)
-                .params("id", bean.getAll().get(position).getId())
-                .execute(new EanfangCallback(getActivity(), true) {
-
-
-                    @Override
-                    public void onSuccess(Object bean) {
-
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                }));
     }
+
 
     /**
      * 刷新
@@ -173,6 +171,8 @@ public class WorkReportListFragment extends BaseFragment implements
                 page++;
                 getData();
                 break;
+            default:
+                break;
         }
     }
 
@@ -180,57 +180,70 @@ public class WorkReportListFragment extends BaseFragment implements
      * 获取工作任务列表
      */
     private void getData() {
-        String status = "";
+        String status = null;
         if (!mTitle.equals("全部")) {
             status = GetConstDataUtils.getTaskReadStatusByStr(getmTitle());
         }
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(mType)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(mType)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        } else if ("2".equals(mType)) {
+            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!mTitle.equals("全部")) {
+            queryEntry.getEquals().put("status", status);
+        }
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
 
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", mType);
-        params.put("status", status);
-        EanfangHttp.get(ApiService.GET_WORK_REPORT_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true) {
-                    @Override
-                    public void onSuccess(final WorkReportListBean bean) {
-                        ((WorkReportListActivity) getActivity()).setWorkReportListBean(bean);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+        EanfangHttp.post(NewApiService.GET_WORK_REPORT_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true, WorkReportListBean.class, (bean) -> {
+                            getActivity().runOnUiThread(() -> {
                                 onDataReceived();
-                            }
-                        });
-
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        swiprefresh.setRefreshing(false);
-                        page--;
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //如果是第一页 没有数据了 则清空 bean
-                                if (page < 1) {
-                                    WorkReportListBean bean = new WorkReportListBean();
-                                    bean.setAll(new ArrayList<WorkReportListBean.AllBean>());
-                                    ((WorkReportListActivity) getActivity()).setWorkReportListBean(bean);
-                                } else {
-                                    showToast("已经到底了");
-                                }
-                                onDataReceived();
-                            }
-                        });
-                    }
-                });
+                            });
+                        })
+//                {
+//                    @Override
+//                    public void onSuccess(final WorkReportListBean bean) {
+//                        ((WorkReportListActivity) getActivity()).setWorkReportListBean(bean);
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                onDataReceived();
+//                            }
+//                        });
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        swiprefresh.setRefreshing(false);
+//                        page--;
+//
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //如果是第一页 没有数据了 则清空 bean
+//                                if (page < 1) {
+//                                    WorkReportListBean bean = new WorkReportListBean();
+//                                    bean.setAll(new ArrayList<WorkReportListBean.AllBean>());
+//                                    ((WorkReportListActivity) getActivity()).setWorkReportListBean(bean);
+//                                } else {
+//                                    showToast("已经到底了");
+//                                }
+//                                onDataReceived();
+//                            }
+//                        });
+//                    }
+//                }
+                );
     }
 
 

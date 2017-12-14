@@ -13,13 +13,13 @@ import java.util.List;
  * Created by wen on 2017/4/23.
  */
 
-public class LookReportDetailAdapter extends BaseQuickAdapter<WorkReportInfoBean.BeanBean.DetailsBean, BaseViewHolder> {
+public class LookReportDetailAdapter extends BaseQuickAdapter<WorkReportInfoBean.WorkReportDetailsBean, BaseViewHolder> {
     public LookReportDetailAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkReportInfoBean.BeanBean.DetailsBean item) {
+    protected void convert(BaseViewHolder helper, WorkReportInfoBean.WorkReportDetailsBean item) {
         helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getField1());
         helper.addOnClickListener(R.id.tv_delete);
     }

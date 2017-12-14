@@ -7,17 +7,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.WorkReportListFragment;
 import net.eanfang.client.ui.model.WorkReportListBean;
 import net.eanfang.client.util.GetConstDataUtils;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,7 @@ public class WorkReportListActivity extends BaseActivity {
     private static String titleBar;
     private WorkReportListBean workReportListBean;
     private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,7 @@ public class WorkReportListActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
     }
+
     private void initView() {
         titleBar = getIntent().getStringExtra("title");
         type = getIntent().getStringExtra("type");
@@ -95,50 +99,66 @@ public class WorkReportListActivity extends BaseActivity {
     }
 
     private void initData(int page) {
-        String status = "";
+        String status =null;
         if (!currentFragment.getmTitle().equals("全部")) {
             status = GetConstDataUtils.getTaskReadStatusByStr(currentFragment.getmTitle());
         }
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", type);
-        params.put("status", status);
-        EanfangHttp.get(ApiService.GET_WORK_REPORT_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<WorkReportListBean>(this, true) {
 
-                    @Override
-                    public void onSuccess(final WorkReportListBean bean) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                workReportListBean = bean;
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(type)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(type)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        } else if ("2".equals(type)) {
+            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!currentFragment.getmTitle().equals("全部")) {
+            queryEntry.getEquals().put("status", status);
+        }
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
 
-                    @Override
-                    public void onError(String message) {
+        EanfangHttp.post(NewApiService.GET_WORK_REPORT_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<WorkReportListBean>(this, true,WorkReportListBean.class,(bean)->{
+                    runOnUiThread(()->{
+                        workReportListBean = bean;
                         currentFragment.onDataReceived();
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        super.onNoData(message);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                WorkReportListBean bean = new WorkReportListBean();
-                                bean.setAll(new ArrayList<WorkReportListBean.AllBean>());
-                                setWorkReportListBean(bean);
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
-                });
+                    });
+                })
+//                {
+//
+//                    @Override
+//                    public void onSuccess(final WorkReportListBean bean) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                workReportListBean = bean;
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        currentFragment.onDataReceived();
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        super.onNoData(message);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                WorkReportListBean bean = new WorkReportListBean();
+//                                bean.setAll(new ArrayList<WorkReportListBean.AllBean>());
+//                                setWorkReportListBean(bean);
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//                }
+                );
 
     }
 

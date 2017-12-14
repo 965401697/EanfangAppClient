@@ -209,7 +209,7 @@ public class WorkTaskListFragment extends BaseFragment
         EanfangHttp.get(NewApiService.WORK_TASK_FIRST_READ)
                 .params("id", beans.getList().get(position).getId())
                 .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
-                    showToast("走了吗？");
+
                 }));
     }
 
