@@ -85,5 +85,10 @@ public interface NewApiService {
      * 获取设计列表
      */
 
-    String GET_WORK_DESIGN = BuildConfig.API_HOST + "/yaf_oa/designorder/list";
+    String GET_WORK_DESIGN_LIST= BuildConfig.API_HOST + "/yaf_oa/designorder/list";
+
+    /**
+     * 获取设计详情
+     */
+    String GET_WORK_DESIGN_INFO = BuildConfig.API_HOST + "/yaf_oa/designorder/detail";
 }

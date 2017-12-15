@@ -157,15 +157,18 @@ public class Config {
         return businessOneList = Stream.of(baseDataBean).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2).toList();
     }
 
-    public String getRegCode(String city, String county) {
+    /**
+     * 根据系统名称获取code
+     */
+    public String getBusinessCode(String name) {
 
-        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.AREA && bean.getLevel() == 4 && bean.getDataName().equals(county)).toList();
+        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataName().equals(name)).toList();
 
         if (countyList == null || countyList.isEmpty()) {
             return "";
         }
         if (countyList.size() > 1) {
-            List<BaseDataBean> cityList = Stream.of(countyList).filter(bean -> bean.getDataType() == Constant.AREA && bean.getLevel() == 3 && bean.getDataName().equals(city)).toList();
+            List<BaseDataBean> cityList = Stream.of(countyList).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataName().equals(name)).toList();
             if (countyList == null || countyList.isEmpty()) {
                 return "";
             }
@@ -178,7 +181,100 @@ public class Config {
         } else {
             return countyList.get(0).getDataCode();
         }
+    }
 
+    /**
+     * 根据系统code获取名称
+     */
+    public String getBusinessName(String code) {
+        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataCode().equals(code)).toList();
+
+        if (countyList == null || countyList.isEmpty()) {
+            return "";
+        }
+        if (countyList.size() > 1) {
+            List<BaseDataBean> cityList = Stream.of(countyList).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataCode().equals(code)).toList();
+            if (countyList == null || countyList.isEmpty()) {
+                return "";
+            }
+            //特殊情况 如果遇到再加代码
+            if (countyList.size() > 1) {
+                return "";
+            } else {
+                return Stream.of(countyList).filter(bean -> bean.getDataName().startsWith(cityList.get(0).getDataName())).toList().get(0).getDataName();
+            }
+        } else {
+            return countyList.get(0).getDataName();
+        }
+    }
+
+    /**
+     * 根据地址取code
+     */
+
+    public String getRegCode(String cityStr, String countyStr) {
+
+        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.AREA && bean.getLevel() == 4 && bean.getDataName().equals(countyStr)).toList();
+
+        if (countyList == null || countyList.isEmpty()) {
+            return "";
+        }
+        if (countyList.size() > 1) {
+            List<BaseDataBean> cityList = Stream.of(this.baseDataBean).filter(
+                    bean -> bean.getDataType() == Constant.AREA
+                            && bean.getLevel() == 3
+                            && bean.getDataName().startsWith(cityStr)
+            ).toList();
+            if (cityList == null || cityList.isEmpty()) {
+                return "";
+            }
+
+            for (int i = 0; i < cityList.size(); i++) {
+                String cityCode = cityList.get(i).getDataCode();
+                List<BaseDataBean> resultList = Stream.of(countyList).filter(county -> county.getDataCode().startsWith(cityCode)).toList();
+                if (resultList != null && !resultList.isEmpty()) {
+                    return resultList.get(0).getDataCode();
+                }
+            }
+            return "";
+        } else {
+            return countyList.get(0).getDataCode();
+        }
+
+    }
+
+    /**
+     * 根据code取地址
+     */
+    public String[] getAreaName(String code) {
+
+        if (code.split("\\.").length < 3) {
+            return new String[3];
+        }
+        String[] addr = new String[3];
+        //区县
+        BaseDataBean countyBean = Stream.of(this.baseDataBean).filter(county -> county.getDataCode().equals(code)).toList().get(0);
+        addr[0] = countyBean.getDataName();
+
+        BaseDataBean cityBean = Stream.of(this.baseDataBean).filter(county -> county.getDataCode().equals(code.substring(0, code.lastIndexOf(".")))).toList().get(0);
+        addr[1] = cityBean.getDataName();
+
+        BaseDataBean perBean = Stream.of(this.baseDataBean).filter(county -> county.getDataCode().equals(cityBean.getDataCode().substring(0, cityBean.getDataCode().lastIndexOf(".")))).toList().get(0);
+        addr[2] = perBean.getDataName();
+
+        return addr;
+    }
+
+    public String getAddress(String code) {
+        String[] area = getAreaName(code);
+        StringBuilder builder = new StringBuilder();
+        builder.append(area[2]).append("-");
+        if (!area[1].contains("市辖区")) {
+            builder.append(area[1]).append("-");
+        }
+        builder.append(area[0]);
+
+        return builder.toString();
     }
 
 

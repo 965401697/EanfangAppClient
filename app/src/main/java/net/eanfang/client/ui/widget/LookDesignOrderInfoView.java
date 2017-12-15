@@ -8,7 +8,9 @@ import android.widget.TextView;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.model.DesignOrderInfoBean;
@@ -30,7 +32,7 @@ public class LookDesignOrderInfoView extends BaseDialog {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     private Activity mContext;
-    private int id;
+    private Long id;
     @BindView(R.id.tv_user_name)
     TextView tv_user_name;
     @BindView(R.id.tv_address)
@@ -52,7 +54,7 @@ public class LookDesignOrderInfoView extends BaseDialog {
     @BindView(R.id.tv_remark)
     TextView tv_remark;
 
-    public LookDesignOrderInfoView(Activity context, boolean isfull, int id) {
+    public LookDesignOrderInfoView(Activity context, boolean isfull, Long id) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
@@ -76,34 +78,38 @@ public class LookDesignOrderInfoView extends BaseDialog {
     }
 
     private void fillData(DesignOrderInfoBean bean) {
-        tv_user_name.setText(bean.getBean().getUserName());
-        tv_address.setText(bean.getBean().getProvince() + bean.getBean().getCity() + bean.getBean().getCounty());
-        tv_detail_address.setText(bean.getBean().getAddress());
-        tv_receive_user_name.setText(bean.getBean().getReceiveUserName());
-        tv_receive_phone.setText(bean.getBean().getReceivePhone());
-        tv_reply_limit.setText(bean.getBean().getReplyLimit());
-        tv_business_one.setText(bean.getBean().getBusinessOne());
-        tv_plan_limit.setText(bean.getBean().getPlanLimit());
-        tv_budget_limit.setText(bean.getBean().getBudgetLimit());
-        tv_remark.setText(bean.getBean().getRemark());
+        tv_user_name.setText(bean.getUserName());
+        tv_address.setText(Config.getConfig().getAddress(bean.getZoneCode()));
+        tv_detail_address.setText(bean.getDetailPlace());
+        tv_receive_user_name.setText(bean.getContactUser());
+        tv_receive_phone.setText(bean.getContactPhone());
+        tv_reply_limit.setText(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.REVERT_TIME_LIMIT_TYPE).get(bean.getRevertTimeLimit()));
+        tv_business_one.setText(Config.getConfig().getBusinessName(bean.getBusinessOneCode()));
+        tv_plan_limit.setText(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).get(bean.getPredictTime()));
+        tv_budget_limit.setText(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).get(bean.getBudgetLimit()));
+        tv_remark.setText(bean.getRemarkInfo());
 
 
     }
 
-    private void doHttp(int id) {
-        EanfangHttp.get(ApiService.GET_DESIGN_ORDER_INF)
+    private void doHttp(Long id) {
+        EanfangHttp.get(NewApiService.GET_WORK_DESIGN_INFO)
                 .tag(this)
                 .params("id", id)
-                .execute(new EanfangCallback<DesignOrderInfoBean>(mContext, true) {
-                    @Override
-                    public void onSuccess(DesignOrderInfoBean bean) {
-                        fillData(bean);
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                .execute(new EanfangCallback<DesignOrderInfoBean>(mContext, true, DesignOrderInfoBean.class, (bean) -> {
+                            fillData(bean);
+                        })
+//                {
+//                    @Override
+//                    public void onSuccess(DesignOrderInfoBean bean) {
+//                        fillData(bean);
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//
+//                    }
+//                }
+                );
     }
 }

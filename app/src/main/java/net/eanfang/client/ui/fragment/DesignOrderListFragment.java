@@ -9,20 +9,21 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
+import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 import net.eanfang.client.ui.adapter.DesignOrderAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.DesignOrderListBean;
-import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 import net.eanfang.client.ui.widget.LookDesignOrderInfoView;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.eanfang.client.config.EanfangConst.BOTTOM_REFRESH;
@@ -44,7 +45,7 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
 
     SwipyRefreshLayout swiprefresh;
 
-    private List<DesignOrderListBean.AllBean> mDataList;
+    private List<DesignOrderListBean.ListBean> mDataList;
     private String mTitle;
     private String mType;
     private DesignOrderAdapter mAdapter;
@@ -115,7 +116,7 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
         if (((DesignOrderListActivity) getActivity()).getDesignOrderListBean() == null) {
             return;
         }
-        mDataList = ((DesignOrderListActivity) getActivity()).getDesignOrderListBean().getAll();
+        mDataList = ((DesignOrderListActivity) getActivity()).getDesignOrderListBean().getList();
         mAdapter = new DesignOrderAdapter(mDataList);
 
         if (mDataList.size() > 0) {
@@ -142,6 +143,8 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
                 page++;
                 getData();
                 break;
+            default:
+                break;
         }
     }
 
@@ -161,50 +164,59 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
         if (!mTitle.equals("全部")) {
             status = ((DesignOrderListActivity) getActivity()).allmTitles.indexOf(this.getmTitle()) + "";
         }
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(mType)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(mType)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!mTitle.equals("全部")) {
+            queryEntry.getEquals().put("status", status);
+        }
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
 
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", mType);
-        params.put("status", status);
-
-        doHttp(params);
+        EanfangHttp.post(NewApiService.GET_WORK_DESIGN_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<DesignOrderListBean>(getActivity(), true, DesignOrderListBean.class, (bean) -> {
+                            ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
+                            getActivity().runOnUiThread(() -> {
+                                onDataReceived();
+                            });
+                        })
+//                {
+//                    @Override
+//                    public void onSuccess(DesignOrderListBean bean) {
+//                        ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
+//                        getActivity().runOnUiThread(() -> {
+//                            onDataReceived();
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        swiprefresh.setRefreshing(false);
+//                        page--;
+//                        getActivity().runOnUiThread(() -> {
+//                            //如果是第一页 没有数据了 则清空 bean
+//                            if (page < 1) {
+//                                DesignOrderListBean bean = new DesignOrderListBean();
+//                                bean.setList(new ArrayList<DesignOrderListBean.ListBean>());
+//                                ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
+//                            } else {
+//                                showToast("已经到底了");
+//                            }
+//                            onDataReceived();
+//                        });
+//                    }
+//                }
+                );
     }
 
-    private void doHttp(HttpParams params) {
-        EanfangHttp.get(ApiService.GET_DESIGN_ORDER_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<DesignOrderListBean>(getActivity(), true) {
-                    @Override
-                    public void onSuccess(DesignOrderListBean bean) {
-                        ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
-                        getActivity().runOnUiThread(() -> {
-                            onDataReceived();
-                        });
-                    }
 
-                    @Override
-                    public void onError(String message) {
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        swiprefresh.setRefreshing(false);
-                        page--;
-                        getActivity().runOnUiThread(() -> {
-                            //如果是第一页 没有数据了 则清空 bean
-                            if (page < 1) {
-                                DesignOrderListBean bean = new DesignOrderListBean();
-                                bean.setAll(new ArrayList<DesignOrderListBean.AllBean>());
-                                ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
-                            } else {
-                                showToast("已经到底了");
-                            }
-                            onDataReceived();
-                        });
-                    }
-                });
-    }
 }
 

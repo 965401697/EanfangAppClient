@@ -6,16 +6,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.DesignOrderListFragment;
 import net.eanfang.client.ui.model.DesignOrderListBean;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,50 +113,59 @@ public class DesignOrderListActivity extends BaseActivity {
     }
 
     private void initData(int page) {
+        /*我创建的   createUserId=(当前登录人userID)
+        已提交status=0     已处理
+        status=1  已完成status=2
+        本公司的 createCompanyId=(当前登录人公司ID)  */
         String status = "";
         if (!currentFragment.getmTitle().equals("全部")) {
             status = allmTitles.indexOf(currentFragment.getmTitle()) + "";
-            //  status =  GetConstDataUtils.getCheckReadStatusByStr(currentFragment.getmTitle());
         }
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", type);
-        params.put("status", status);
-
-        doHttp(params);
-    }
-
-    private void doHttp(HttpParams params) {
-        EanfangHttp.get(ApiService.GET_DESIGN_ORDER_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<DesignOrderListBean>(this, true) {
-                    @Override
-                    public void onSuccess(final DesignOrderListBean bean) {
-                        runOnUiThread(() -> {
-                            setDesignOrderListBean(bean);
-                            currentFragment.onDataReceived();
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(type)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(type)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!currentFragment.getmTitle().equals("全部")) {
+            queryEntry.getEquals().put("status", status);
+        }
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
+        EanfangHttp.post(NewApiService.GET_WORK_DESIGN_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<DesignOrderListBean>(this, true,DesignOrderListBean.class,(bean)->{
+                    runOnUiThread(() -> {
+                        setDesignOrderListBean(bean);
                         currentFragment.onDataReceived();
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        super.onNoData(message);
-                        runOnUiThread(() -> {
-                            DesignOrderListBean bean = new DesignOrderListBean();
-                            bean.setAll(new ArrayList<DesignOrderListBean.AllBean>());
-                            setDesignOrderListBean(bean);
-                            currentFragment.onDataReceived();
-                        });
-                    }
-                });
-
+                    });
+                })
+//                {
+//                    @Override
+//                    public void onSuccess(final DesignOrderListBean bean) {
+//                        runOnUiThread(() -> {
+//                            setDesignOrderListBean(bean);
+//                            currentFragment.onDataReceived();
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        currentFragment.onDataReceived();
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        super.onNoData(message);
+//                        runOnUiThread(() -> {
+//                            DesignOrderListBean bean = new DesignOrderListBean();
+//                            bean.setAll(new ArrayList<DesignOrderListBean.AllBean>());
+//                            setDesignOrderListBean(bean);
+//                            currentFragment.onDataReceived();
+//                        });
+//                    }
+//                }
+                );
     }
 
 

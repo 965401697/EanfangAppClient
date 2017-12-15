@@ -106,6 +106,7 @@ public class DesignActivity extends BaseActivity {
      * 城市
      */
     private String city;
+    private String zone;
 
     /**
      * 区县
@@ -229,9 +230,9 @@ public class DesignActivity extends BaseActivity {
         AddDesignOrderBean bean = new AddDesignOrderBean();
         bean.setDetailPlace(address);
         bean.setBudgetLimit(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).indexOf(budgetLimit));
-        bean.setBusinessOneCode(businessOne);
+        bean.setBusinessOneCode(Config.getConfig().getBusinessCode(businessOne));
 
-        bean.setZoneCode("");
+        bean.setZoneCode(Config.getConfig().getRegCode(city, contry));
 //        bean.setCreateCompanyUid(user.getCompanyId());
         bean.setLatitude(lat);
         bean.setLongitude(lon);
@@ -320,6 +321,7 @@ public class DesignActivity extends BaseActivity {
             lon = item.getLongitude().toString();
             province = item.getProvince();
             city = item.getCity();
+            zone = item.getZone();
             contry = item.getAddress();
             tv_address.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
             //地图选址 取 显示值

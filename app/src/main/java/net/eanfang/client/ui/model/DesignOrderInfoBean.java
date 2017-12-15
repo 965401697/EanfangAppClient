@@ -1,258 +1,214 @@
 package net.eanfang.client.ui.model;
 
+import java.io.Serializable;
+
 /**
  * Created by jornl on 2017/9/8.
  */
 
-public class DesignOrderInfoBean {
+public class DesignOrderInfoBean implements Serializable {
 
     /**
-     * bean : {"address":"定福家园南里2号院","budgetLimit":"1万以内","businessOne":"电视监控","city":"北京市","county":"朝阳区","createCompanyUid":"c4ebee06605247eba9ee60a08515bc67","createDate":"2017-09-06 19:05:46","createUser":"fea84c4e0f1648b2adfe4a2a02bde730","createUserName":"林客户","id":1,"lat":39.928948,"lon":116.57546,"managerUser":"98b22d8a875444f4b454e5a215584dbc","orderNum":"DO17090619055106","planLimit":"一个月内","province":"北京","receivePhone":"18500320187","receiveUserName":"林客户","remark":"备注信息","replyLimit":"四小时内","status":"0","uid":"e426997cf78543e890942e24464b187d","userName":"定福家园超市"}
+     * budgetLimit : 0
+     * businessOneCode : 1.1
+     * contactPhone : 15940525612
+     * contactUser : 李旭
+     * createCompanyId : 1100
+     * createOrgCode : c.c1.2
+     * createTime : 2017-12-14 16:12:49
+     * createTopCompanyId : 1000
+     * createUserId : 937871079119032321
+     * detailPlace : 北京朝阳区褡裢坡
+     * id : 1
+     * latitude : 758465.01
+     * longitude : 542156.01
+     * orderNum : TUO45864
+     * predictTime : 0
+     * remarkInfo : 好好干
+     * revertTimeLimit : 0
+     * status : 0
+     * userName : 旭神
+     * zoneCode : 3.10.2
      */
 
-    private BeanBean bean;
+    private int budgetLimit;
+    private String businessOneCode;
+    private String contactPhone;
+    private String contactUser;
+    private int createCompanyId;
+    private String createOrgCode;
+    private String createTime;
+    private Long createTopCompanyId;
+    private Long createUserId;
+    private String detailPlace;
+    private Long id;
+    private String latitude;
+    private String longitude;
+    private String orderNum;
+    private int predictTime;
+    private String remarkInfo;
+    private int revertTimeLimit;
+    private int status;
+    private String userName;
+    private String zoneCode;
 
-    public BeanBean getBean() {
-        return bean;
+    public int getBudgetLimit() {
+        return budgetLimit;
     }
 
-    public void setBean(BeanBean bean) {
-        this.bean = bean;
+    public void setBudgetLimit(int budgetLimit) {
+        this.budgetLimit = budgetLimit;
     }
 
-    public static class BeanBean {
-        /**
-         * address : 定福家园南里2号院
-         * budgetLimit : 1万以内
-         * businessOne : 电视监控
-         * city : 北京市
-         * county : 朝阳区
-         * createCompanyUid : c4ebee06605247eba9ee60a08515bc67
-         * createDate : 2017-09-06 19:05:46
-         * createUser : fea84c4e0f1648b2adfe4a2a02bde730
-         * createUserName : 林客户
-         * id : 1
-         * lat : 39.928948
-         * lon : 116.57546
-         * managerUser : 98b22d8a875444f4b454e5a215584dbc
-         * orderNum : DO17090619055106
-         * planLimit : 一个月内
-         * province : 北京
-         * receivePhone : 18500320187
-         * receiveUserName : 林客户
-         * remark : 备注信息
-         * replyLimit : 四小时内
-         * status : 0
-         * uid : e426997cf78543e890942e24464b187d
-         * userName : 定福家园超市
-         */
+    public String getBusinessOneCode() {
+        return businessOneCode;
+    }
 
-        private String address;
-        private String budgetLimit;
-        private String businessOne;
-        private String city;
-        private String county;
-        private String createCompanyUid;
-        private String createDate;
-        private String createUser;
-        private String createUserName;
-        private int id;
-        private double lat;
-        private double lon;
-        private String managerUser;
-        private String orderNum;
-        private String planLimit;
-        private String province;
-        private String receivePhone;
-        private String receiveUserName;
-        private String remark;
-        private String replyLimit;
-        private String status;
-        private String uid;
-        private String userName;
+    public void setBusinessOneCode(String businessOneCode) {
+        this.businessOneCode = businessOneCode;
+    }
 
-        public String getAddress() {
-            return address;
-        }
+    public String getContactPhone() {
+        return contactPhone;
+    }
 
-        public void setAddress(String address) {
-            this.address = address;
-        }
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
 
-        public String getBudgetLimit() {
-            return budgetLimit;
-        }
+    public String getContactUser() {
+        return contactUser;
+    }
 
-        public void setBudgetLimit(String budgetLimit) {
-            this.budgetLimit = budgetLimit;
-        }
+    public void setContactUser(String contactUser) {
+        this.contactUser = contactUser;
+    }
 
-        public String getBusinessOne() {
-            return businessOne;
-        }
+    public int getCreateCompanyId() {
+        return createCompanyId;
+    }
 
-        public void setBusinessOne(String businessOne) {
-            this.businessOne = businessOne;
-        }
+    public void setCreateCompanyId(int createCompanyId) {
+        this.createCompanyId = createCompanyId;
+    }
 
-        public String getCity() {
-            return city;
-        }
+    public String getCreateOrgCode() {
+        return createOrgCode;
+    }
 
-        public void setCity(String city) {
-            this.city = city;
-        }
+    public void setCreateOrgCode(String createOrgCode) {
+        this.createOrgCode = createOrgCode;
+    }
 
-        public String getCounty() {
-            return county;
-        }
+    public String getCreateTime() {
+        return createTime;
+    }
 
-        public void setCounty(String county) {
-            this.county = county;
-        }
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
-        public String getCreateCompanyUid() {
-            return createCompanyUid;
-        }
+    public Long getCreateTopCompanyId() {
+        return createTopCompanyId;
+    }
 
-        public void setCreateCompanyUid(String createCompanyUid) {
-            this.createCompanyUid = createCompanyUid;
-        }
+    public void setCreateTopCompanyId(Long createTopCompanyId) {
+        this.createTopCompanyId = createTopCompanyId;
+    }
 
-        public String getCreateDate() {
-            return createDate;
-        }
+    public Long getCreateUserId() {
+        return createUserId;
+    }
 
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
-        }
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
 
-        public String getCreateUser() {
-            return createUser;
-        }
+    public String getDetailPlace() {
+        return detailPlace;
+    }
 
-        public void setCreateUser(String createUser) {
-            this.createUser = createUser;
-        }
+    public void setDetailPlace(String detailPlace) {
+        this.detailPlace = detailPlace;
+    }
 
-        public String getCreateUserName() {
-            return createUserName;
-        }
+    public Long getId() {
+        return id;
+    }
 
-        public void setCreateUserName(String createUserName) {
-            this.createUserName = createUserName;
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public String getLatitude() {
+        return latitude;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
-        public double getLat() {
-            return lat;
-        }
+    public String getLongitude() {
+        return longitude;
+    }
 
-        public void setLat(double lat) {
-            this.lat = lat;
-        }
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
-        public double getLon() {
-            return lon;
-        }
+    public String getOrderNum() {
+        return orderNum;
+    }
 
-        public void setLon(double lon) {
-            this.lon = lon;
-        }
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
 
-        public String getManagerUser() {
-            return managerUser;
-        }
+    public int getPredictTime() {
+        return predictTime;
+    }
 
-        public void setManagerUser(String managerUser) {
-            this.managerUser = managerUser;
-        }
+    public void setPredictTime(int predictTime) {
+        this.predictTime = predictTime;
+    }
 
-        public String getOrderNum() {
-            return orderNum;
-        }
+    public String getRemarkInfo() {
+        return remarkInfo;
+    }
 
-        public void setOrderNum(String orderNum) {
-            this.orderNum = orderNum;
-        }
+    public void setRemarkInfo(String remarkInfo) {
+        this.remarkInfo = remarkInfo;
+    }
 
-        public String getPlanLimit() {
-            return planLimit;
-        }
+    public int getRevertTimeLimit() {
+        return revertTimeLimit;
+    }
 
-        public void setPlanLimit(String planLimit) {
-            this.planLimit = planLimit;
-        }
+    public void setRevertTimeLimit(int revertTimeLimit) {
+        this.revertTimeLimit = revertTimeLimit;
+    }
 
-        public String getProvince() {
-            return province;
-        }
+    public int getStatus() {
+        return status;
+    }
 
-        public void setProvince(String province) {
-            this.province = province;
-        }
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-        public String getReceivePhone() {
-            return receivePhone;
-        }
+    public String getUserName() {
+        return userName;
+    }
 
-        public void setReceivePhone(String receivePhone) {
-            this.receivePhone = receivePhone;
-        }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-        public String getReceiveUserName() {
-            return receiveUserName;
-        }
+    public String getZoneCode() {
+        return zoneCode;
+    }
 
-        public void setReceiveUserName(String receiveUserName) {
-            this.receiveUserName = receiveUserName;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark = remark;
-        }
-
-        public String getReplyLimit() {
-            return replyLimit;
-        }
-
-        public void setReplyLimit(String replyLimit) {
-            this.replyLimit = replyLimit;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getUid() {
-            return uid;
-        }
-
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
-
-        public String getUserName() {
-            return userName;
-        }
-
-        public void setUserName(String userName) {
-            this.userName = userName;
-        }
+    public void setZoneCode(String zoneCode) {
+        this.zoneCode = zoneCode;
     }
 }

@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,78 +10,102 @@ import java.util.List;
 public class DesignOrderListBean {
 
 
-    private List<AllBean> all;
+    /**
+     * currPage : 1
+     * list : [{"budgetLimit":"0","businessOneCode":"1.1","contactPhone":"15940525612","contactUser":"李旭","createOrgCode":"c.c1.2","createTime":"2017-12-14 16:12","createTopCompanyId":1000,"createUserId":"937871079119032321","detailPlace":"北京朝阳区褡裢坡","id":1,"latitude":"758465.01","longitude":"542156.01","orderNum":"TUO45864","predictTime":"0","remarkInfo":"好好干","revertTimeLimit":0,"status":0,"userName":"旭神","zoneCode":"3.10.2"}]
+     * pageSize : 2147483647
+     * totalCount : 1
+     * totalPage : 1
+     */
 
-    public List<AllBean> getAll() {
-        return all;
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
+
+    public int getCurrPage() {
+        return currPage;
     }
 
-    public void setAll(List<AllBean> all) {
-        this.all = all;
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
     }
 
-    public static class AllBean {
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean implements Serializable{
         /**
-         * address : 定福家园南里2号院
-         * budgetLimit : 1万以内
-         * businessOne : 电视监控
-         * city : 北京市
-         * county : 朝阳区
-         * creatUserName : 林客户
-         * createCompanyUid : c4ebee06605247eba9ee60a08515bc67
-         * createDate : 2017-09-06 19:05:46
-         * createUser : fea84c4e0f1648b2adfe4a2a02bde730
+         * budgetLimit : 0
+         * businessOneCode : 1.1
+         * contactPhone : 15940525612
+         * contactUser : 李旭
+         * createOrgCode : c.c1.2
+         * createTime : 2017-12-14 16:12
+         * createTopCompanyId : 1000
+         * createUserId : 937871079119032321
+         * detailPlace : 北京朝阳区褡裢坡
          * id : 1
-         * lat : 39.928948
-         * lon : 116.57546
-         * managerUser : 98b22d8a875444f4b454e5a215584dbc
-         * orderNum : DO17090619055106
-         * planLimit : 一个月内
-         * province : 北京
-         * receivePhone : 18500320187
-         * receiveUserName : 林客户
-         * remark : 备注信息
-         * replyLimit : 四小时内
+         * latitude : 758465.01
+         * longitude : 542156.01
+         * orderNum : TUO45864
+         * predictTime : 0
+         * remarkInfo : 好好干
+         * revertTimeLimit : 0
          * status : 0
-         * uid : e426997cf78543e890942e24464b187d
-         * userName : 定福家园超市
+         * userName : 旭神
+         * zoneCode : 3.10.2
          */
 
-        private String address;
         private String budgetLimit;
-        private String businessOne;
-        private String city;
-        private String county;
-        private String creatUserName;
-        private String createCompanyUid;
-        private String createDate;
-        private String createUser;
-        private int id;
-        private double lat;
-        private double lon;
-        private String managerUser;
+        private String businessOneCode;
+        private String contactPhone;
+        private String contactUser;
+        private String createOrgCode;
+        private String createTime;
+        private Long createTopCompanyId;
+        private Long createUserId;
+        private String detailPlace;
+        private Long id;
+        private String latitude;
+        private String longitude;
         private String orderNum;
-        private String planLimit;
-        private String province;
-        private String receivePhone;
-        private String receiveUserName;
-        private String remark;
-        private String replyLimit;
-        private String status;
-        private String uid;
+        private int predictTime;
+        private String remarkInfo;
+        private int revertTimeLimit;
+        private int status;
         private String userName;
-        /**
-         * 业务类型图
-         */
-        private String pic1;
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
+        private String zoneCode;
 
         public String getBudgetLimit() {
             return budgetLimit;
@@ -90,92 +115,92 @@ public class DesignOrderListBean {
             this.budgetLimit = budgetLimit;
         }
 
-        public String getBusinessOne() {
-            return businessOne;
+        public String getBusinessOneCode() {
+            return businessOneCode;
         }
 
-        public void setBusinessOne(String businessOne) {
-            this.businessOne = businessOne;
+        public void setBusinessOneCode(String businessOneCode) {
+            this.businessOneCode = businessOneCode;
         }
 
-        public String getCity() {
-            return city;
+        public String getContactPhone() {
+            return contactPhone;
         }
 
-        public void setCity(String city) {
-            this.city = city;
+        public void setContactPhone(String contactPhone) {
+            this.contactPhone = contactPhone;
         }
 
-        public String getCounty() {
-            return county;
+        public String getContactUser() {
+            return contactUser;
         }
 
-        public void setCounty(String county) {
-            this.county = county;
+        public void setContactUser(String contactUser) {
+            this.contactUser = contactUser;
         }
 
-        public String getCreatUserName() {
-            return creatUserName;
+        public String getCreateOrgCode() {
+            return createOrgCode;
         }
 
-        public void setCreatUserName(String creatUserName) {
-            this.creatUserName = creatUserName;
+        public void setCreateOrgCode(String createOrgCode) {
+            this.createOrgCode = createOrgCode;
         }
 
-        public String getCreateCompanyUid() {
-            return createCompanyUid;
+        public String getCreateTime() {
+            return createTime;
         }
 
-        public void setCreateCompanyUid(String createCompanyUid) {
-            this.createCompanyUid = createCompanyUid;
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
         }
 
-        public String getCreateDate() {
-            return createDate;
+        public Long getCreateTopCompanyId() {
+            return createTopCompanyId;
         }
 
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
+        public void setCreateTopCompanyId(Long createTopCompanyId) {
+            this.createTopCompanyId = createTopCompanyId;
         }
 
-        public String getCreateUser() {
-            return createUser;
+        public Long getCreateUserId() {
+            return createUserId;
         }
 
-        public void setCreateUser(String createUser) {
-            this.createUser = createUser;
+        public void setCreateUserId(Long createUserId) {
+            this.createUserId = createUserId;
         }
 
-        public int getId() {
+        public String getDetailPlace() {
+            return detailPlace;
+        }
+
+        public void setDetailPlace(String detailPlace) {
+            this.detailPlace = detailPlace;
+        }
+
+        public Long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
-        public double getLat() {
-            return lat;
+        public String getLatitude() {
+            return latitude;
         }
 
-        public void setLat(double lat) {
-            this.lat = lat;
+        public void setLatitude(String latitude) {
+            this.latitude = latitude;
         }
 
-        public double getLon() {
-            return lon;
+        public String getLongitude() {
+            return longitude;
         }
 
-        public void setLon(double lon) {
-            this.lon = lon;
-        }
-
-        public String getManagerUser() {
-            return managerUser;
-        }
-
-        public void setManagerUser(String managerUser) {
-            this.managerUser = managerUser;
+        public void setLongitude(String longitude) {
+            this.longitude = longitude;
         }
 
         public String getOrderNum() {
@@ -186,68 +211,36 @@ public class DesignOrderListBean {
             this.orderNum = orderNum;
         }
 
-        public String getPlanLimit() {
-            return planLimit;
+        public int getPredictTime() {
+            return predictTime;
         }
 
-        public void setPlanLimit(String planLimit) {
-            this.planLimit = planLimit;
+        public void setPredictTime(int predictTime) {
+            this.predictTime = predictTime;
         }
 
-        public String getProvince() {
-            return province;
+        public String getRemarkInfo() {
+            return remarkInfo;
         }
 
-        public void setProvince(String province) {
-            this.province = province;
+        public void setRemarkInfo(String remarkInfo) {
+            this.remarkInfo = remarkInfo;
         }
 
-        public String getReceivePhone() {
-            return receivePhone;
+        public int getRevertTimeLimit() {
+            return revertTimeLimit;
         }
 
-        public void setReceivePhone(String receivePhone) {
-            this.receivePhone = receivePhone;
+        public void setRevertTimeLimit(int revertTimeLimit) {
+            this.revertTimeLimit = revertTimeLimit;
         }
 
-        public String getReceiveUserName() {
-            return receiveUserName;
-        }
-
-        public void setReceiveUserName(String receiveUserName) {
-            this.receiveUserName = receiveUserName;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark = remark;
-        }
-
-        public String getReplyLimit() {
-            return replyLimit;
-        }
-
-        public void setReplyLimit(String replyLimit) {
-            this.replyLimit = replyLimit;
-        }
-
-        public String getStatus() {
+        public int getStatus() {
             return status;
         }
 
-        public void setStatus(String status) {
+        public void setStatus(int status) {
             this.status = status;
-        }
-
-        public String getUid() {
-            return uid;
-        }
-
-        public void setUid(String uid) {
-            this.uid = uid;
         }
 
         public String getUserName() {
@@ -258,15 +251,16 @@ public class DesignOrderListBean {
             this.userName = userName;
         }
 
-        /**
-         * 业务类型图
-         */
-        public String getPic1() {
-            return pic1;
+        public String getZoneCode() {
+            return zoneCode;
         }
 
-        public void setPic1(String pic1) {
-            this.pic1 = pic1;
+        public void setZoneCode(String zoneCode) {
+            this.zoneCode = zoneCode;
         }
     }
 }
+
+
+
+
