@@ -24,6 +24,7 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageListBean.ListBea
     protected void convert(BaseViewHolder helper, MessageListBean.ListBean item) {
 
         helper.setText(R.id.tv_title, item.getTitle());
+
         if (item.getStaus()==0){
             helper.setText(R.id.tv_status,"未读");
         }else {

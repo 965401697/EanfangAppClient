@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:text="我相信我是最帅的"
+        android:text=""
         android:textSize="18sp" />
 
     <TextView

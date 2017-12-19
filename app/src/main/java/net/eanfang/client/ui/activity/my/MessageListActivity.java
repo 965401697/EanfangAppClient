@@ -92,7 +92,7 @@ public class MessageListActivity extends BaseActivity implements
                                 mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
                                     @Override
                                     public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        unReadOrRead(bean,position);
+                                        unReadOrRead(bean, position);
                                     }
                                 });
                                 onDataReceived();
@@ -200,11 +200,12 @@ public class MessageListActivity extends BaseActivity implements
 
     }
 
-    private void unReadOrRead(MessageListBean listBean,int postion){
-        EanfangHttp.get(NewApiService.GET_PUSH_READ_OR_UNREAD)
-                .tag(this)
-                .params("id",listBean.getList().get(postion).getId())
-                .execute(new EanfangCallback(this,true, JSONObject.class,(bean)->{
+    private void unReadOrRead(MessageListBean listBean, int postion) {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("id", listBean.getList().get(postion).getId() + "");
+        EanfangHttp.post(NewApiService.GET_PUSH_READ_OR_UNREAD)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
 
                 }));
     }
