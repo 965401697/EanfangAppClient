@@ -6,24 +6,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.MessageListAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.MessageListBean;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.eanfang.client.config.EanfangConst.BOTTOM_REFRESH;
@@ -41,7 +40,7 @@ public class MessageListActivity extends BaseActivity implements
         SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
 
     private RecyclerView mRecyclerView;
-    private List<MessageListBean.RowsBean> mDataList;
+    private List<MessageListBean.ListBean> mDataList;
     private SwipyRefreshLayout refreshLayout;
     private int page = 1;
     private MessageListBean messageListBean;
@@ -75,51 +74,62 @@ public class MessageListActivity extends BaseActivity implements
     @Override
     public void onDataReceived() {
         initView();
-        initAdapter();
+
         refreshLayout.setRefreshing(false);
     }
 
     private void getJPushMessage() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("account", EanfangApplication.getApplication().getUser().getAccount().getMobile());
+        queryEntry.setPage(1);
+        queryEntry.setSize(10);
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("page", page);
-            jsonObject.put("rows", 20);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        EanfangHttp.post(ApiService.GET_JPUSH_MESSAGE)
-                .params("json", jsonObject.toString())
-                .execute(new EanfangCallback<MessageListBean>(this, true) {
-
-
-                    @Override
-                    public void onSuccess(MessageListBean bean) {
-                        mDataList = bean.getRows();
-                        initAdapter();
-                        refreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                        refreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        super.onNoData(message);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                MessageListBean bean = new MessageListBean();
-                                bean.setRows(new ArrayList<MessageListBean.RowsBean>());
-                                setMessageListBean(bean);
+        EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<MessageListBean>(this, true, MessageListBean.class, (bean) -> {
+                            runOnUiThread(() -> {
+                                initAdapter(bean.getList());
+                                mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+                                    @Override
+                                    public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                        unReadOrRead(bean,position);
+                                    }
+                                });
                                 onDataReceived();
-                            }
-                        });
-                    }
-                });
+                                refreshLayout.setRefreshing(false);
+                            });
+                        })
+//                {
+//
+//
+//                    @Override
+//                    public void onSuccess(MessageListBean bean) {
+//                        mDataList = bean.getList();
+//                        initAdapter();
+//                        refreshLayout.setRefreshing(false);
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        showToast(message);
+//                        refreshLayout.setRefreshing(false);
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        super.onNoData(message);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                MessageListBean bean = new MessageListBean();
+//                                bean.setList(new ArrayList<MessageListBean.ListBean>());
+//                                setMessageListBean(bean);
+//                                onDataReceived();
+//                            }
+//                        });
+//                    }
+//                }
+                );
     }
 
     /**
@@ -155,36 +165,32 @@ public class MessageListActivity extends BaseActivity implements
                 break;
         }
     }
-    private void initAdapter() {
-        String currDate = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
-        for (int i = 0; i < mDataList.size(); i++) {
-            String thisDate = GetDateUtils.dateToDateString(GetDateUtils.getDate(mDataList.get(i).getCreatetime()));
-            //如果时间相等 则跳过
-            if (currDate.equals(thisDate)) {
-                continue;
-            }
-            //时间不等 插入
-            MessageListBean.RowsBean rowsBean = new MessageListBean.RowsBean();
-            rowsBean.setTitle(thisDate);
-            rowsBean.setContent("title");
-            mDataList.add(i, rowsBean);
-            i++;
-            currDate = thisDate;
-        }
+
+    private void initAdapter(List<MessageListBean.ListBean> mDataList) {
+//        String currDate = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
+//        for (int i = 0; i < mDataList.size(); i++) {
+//            String thisDate = mDataList.get(i).getCreateTime();
+//            //如果时间相等 则跳过
+//            if (currDate.equals(thisDate)) {
+//                continue;
+//            }
+//            //时间不等 插入
+//            MessageListBean.ListBean rowsBean = new MessageListBean.ListBean();
+//            rowsBean.setTitle(thisDate);
+//            rowsBean.setContent("title");
+//            mDataList.add(i, rowsBean);
+//            i++;
+//            currDate = thisDate;
+//        }
 
 
         BaseQuickAdapter evaluateAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-            }
-        });
-        evaluateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-            }
-        });
+//        evaluateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+//            @Override
+//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+//            }
+//        });
         if (mDataList.size() != 0) {
             mRecyclerView.setAdapter(evaluateAdapter);
         } else {
@@ -192,6 +198,15 @@ public class MessageListActivity extends BaseActivity implements
             findViewById(R.id.tv_no_data).setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void unReadOrRead(MessageListBean listBean,int postion){
+        EanfangHttp.get(NewApiService.GET_PUSH_READ_OR_UNREAD)
+                .tag(this)
+                .params("id",listBean.getList().get(postion).getId())
+                .execute(new EanfangCallback(this,true, JSONObject.class,(bean)->{
+
+                }));
     }
 
 

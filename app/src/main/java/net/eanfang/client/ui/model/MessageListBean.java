@@ -10,86 +10,125 @@ import java.util.List;
 public class MessageListBean implements Serializable {
 
     /**
-     * pages : 13
-     * rows : [{"content":"【林】您好：您收到【姓名】的【电视监控】维修申请，请及时处理。推送时间：2017-06-26 22:25:42","createtime":1498487142000,"id":138,"phonenum":"176001199280","title":"报修成功","type":1},{"content":"【林】您好：您收到【姓名】的【电视监控】维修申请，请及时处理。推送时间：2017-06-26 13:21:57","createtime":1498454517000,"id":128,"phonenum":"176001199280","title":"报修成功","type":1},{"content":"【林】您好：您收到【姓名】的【电视监控】维修申请，请及时处理。推送时间：2017-06-26 13:16:01","createtime":1498454161000,"id":126,"phonenum":"176001199280","title":"报修成功","type":1}]
-     * total : 39
+     * currPage : 1
+     * list : [{"account":"18500320187","contentInfo":"jornlin 您好： 您收到客户家乐福双井公司 (jornlin) 的维修申请，请及时处理 通知时间：2017-11-28 09:45:02","createTime":"2017-11-28 09:45","id":1,"orderId":"935323612758446081","title":"报修成功","type":1},{"account":"18500320187","contentInfo":"jornlin 您好： 您收到客户家乐福北京公司 (jornlin) 的维修申请，请及时处理。 通知时间：2017-11-30 10:31:07","createTime":"2017-11-30 10:31","id":2,"orderId":"936059987556352001","title":"报修成功","type":1},{"account":"18500320187","contentInfo":"jornlin 您好： 您收到客户易安防北京运营公司 (jornlin) 的维修申请，请及时处理。 通知时间：2017-12-07 16:56:18","createTime":"2017-12-07 16:56","id":10,"orderId":"938693640002256897","title":"报修成功","type":1},{"account":"18500320187","contentInfo":"jornlin 您好： 您提交的报修单，技师张三 已确认，预约时间：2017-12-11 14:09:00。请做好相关准备。 通知时间：2017-12-11 14:11:14","createTime":"2017-12-11 14:11","id":16,"orderId":"938693640002256897","title":"预约成功","type":2},{"account":"18500320187","contentInfo":"jornlin 您好： 您提交的报修单，技师张三 已经改约，预约时间：2017-12-11 15:09:45。请做好相关准备。 通知时间：2017-12-11 15:09:46","createTime":"2017-12-11 15:09","id":17,"orderId":"938693640002256897","title":"改约提醒","type":4},{"account":"18500320187","contentInfo":"jornlin 您好： 您收到客户易安防北京运营公司 (jornlin) 的维修申请，请及时处理。 通知时间：2017-12-12 10:28:06","createTime":"2017-12-12 10:28","id":19,"orderId":"940407881491148802","title":"报修成功","type":1},{"account":"18500320187","contentInfo":"jornlin 您好： 您提交的报修单，技师张三 已确认，预约时间：2017-12-12 10:40:01。请做好相关准备。 通知时间：2017-12-12 10:40:47","createTime":"2017-12-12 10:40","id":20,"orderId":"940407881491148802","title":"预约成功","type":2},{"account":"18500320187","contentInfo":"jornlin 您好： 您提交的报修单，技师张三 已经改约，预约时间：2017-12-12 10:49:02。请做好相关准备。 通知时间：2017-12-12 10:44:00","createTime":"2017-12-12 10:44","id":21,"orderId":"940407881491148802","title":"改约提醒","type":4},{"account":"18500320187","contentInfo":"jornlin 您好： 您提交的报修单，技师张三 已于2017-12-12 10:55:03上门签到，请及时处理。 通知时间：2017-12-12 10:45:24","createTime":"2017-12-12 10:45","id":22,"orderId":"940407881491148802","title":"签到提醒","type":5},{"account":"18500320187","contentInfo":"jornlin 您好： 您收到易安防北京运营公司 (jornlin) 的工作检查，请及时处理 ","createTime":"2017-12-15 11:54","id":23,"orderId":"941516749743337474","title":"工作检查提交成功","type":16}]
+     * pageSize : 10
+     * totalCount : 29
+     * totalPage : 3
      */
 
-    private int pages;
-    private int total;
-    private List<RowsBean> rows;
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
 
-    public int getPages() {
-        return pages;
+    public int getCurrPage() {
+        return currPage;
     }
 
-    public void setPages(int pages) {
-        this.pages = pages;
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
     }
 
-    public int getTotal() {
-        return total;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setTotal(int total) {
-        this.total = total;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
-    public List<RowsBean> getRows() {
-        return rows;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public void setRows(List<RowsBean> rows) {
-        this.rows = rows;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
     }
 
-    public static class RowsBean {
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean {
         /**
-         * content : 【林】您好：您收到【姓名】的【电视监控】维修申请，请及时处理。推送时间：2017-06-26 22:25:42
-         * createtime : 1498487142000
-         * id : 138
-         * phonenum : 176001199280
+         * account : 18500320187
+         * contentInfo : jornlin 您好： 您收到客户家乐福双井公司 (jornlin) 的维修申请，请及时处理 通知时间：2017-11-28 09:45:02
+         * createTime : 2017-11-28 09:45
+         * id : 1
+         * orderId : 935323612758446081
          * title : 报修成功
          * type : 1
          */
 
-        private String content;
-        private long createtime;
-        private int id;
-        private String phonenum;
+        private String account;
+        private String contentInfo;
+        private String createTime;
+        private Long id;
+        private String orderId;
         private String title;
         private int type;
+        private int status;
 
-        public String getContent() {
-            return content;
+        public int getStaus() {
+            return status;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setStaus(int status) {
+            this.status = status;
         }
 
-        public long getCreatetime() {
-            return createtime;
+        public String getAccount() {
+            return account;
         }
 
-        public void setCreatetime(long createtime) {
-            this.createtime = createtime;
+        public void setAccount(String account) {
+            this.account = account;
         }
 
-        public int getId() {
+        public String getContentInfo() {
+            return contentInfo;
+        }
+
+        public void setContentInfo(String contentInfo) {
+            this.contentInfo = contentInfo;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public Long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
-        public String getPhonenum() {
-            return phonenum;
+        public String getOrderId() {
+            return orderId;
         }
 
-        public void setPhonenum(String phonenum) {
-            this.phonenum = phonenum;
+        public void setOrderId(String orderId) {
+            this.orderId = orderId;
         }
 
         public String getTitle() {
@@ -109,3 +148,4 @@ public class MessageListBean implements Serializable {
         }
     }
 }
+

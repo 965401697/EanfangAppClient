@@ -114,4 +114,14 @@ public interface NewApiService {
      * 工作检查审核
      */
     String GET_WORK_CHCEK_ADUIT = BuildConfig.API_HOST + "/yaf_oa/workinspect/audit";
+
+    /**
+     * 推送
+     */
+    String GET_PUSH_MSG_LIST = BuildConfig.API_HOST + "/yaf_oa/pushMessage/list";
+
+    /**
+     * 推送已读Or未读
+     */
+    String GET_PUSH_READ_OR_UNREAD = BuildConfig.API_HOST + "/yaf_oa/pushMessage/detail";
 }
