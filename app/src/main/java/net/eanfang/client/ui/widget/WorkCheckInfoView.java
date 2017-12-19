@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.LookCheckDetailAdapter;
@@ -57,14 +57,19 @@ public class WorkCheckInfoView extends BaseDialog {
     TextView etPhoneNum;
 
 
-    private int id;
+    private Long id;
     private LookCheckDetailAdapter detailAdapter;
-    private List<WorkCheckInfoBean.BeanBean.DetailsBeanX> mDataList;
+    private List<WorkCheckInfoBean.WorkInspectDetailsBean> mDataList;
 
-    public WorkCheckInfoView(Activity context, boolean isfull, int id) {
+    public WorkCheckInfoView(Activity context, boolean isfull, Long id) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -94,53 +99,38 @@ public class WorkCheckInfoView extends BaseDialog {
      * 加载数据
      */
     private void getData() {
-        EanfangHttp.get(ApiService.GET_WORK_INSPECT_INFO)
+        EanfangHttp.get(NewApiService.GET_WORK_CHECK_INFO)
                 .tag(this)
                 .params("id", id)
-                .execute(new EanfangCallback<WorkCheckInfoBean>(mContext, true) {
-
-                    @Override
-                    public void onSuccess(final WorkCheckInfoBean bean) {
-                        fillDta(bean);
-                        initAdapter();
-                        onItemClick(bean);
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                .execute(new EanfangCallback<WorkCheckInfoBean>(mContext, true, WorkCheckInfoBean.class, (bean) -> {
+                    fillDta(bean);
+                    initAdapter();
+                    taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
+                        @Override
+                        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                            new LookWorkCheckInfoView(mContext, true,
+                                    bean,
+                                    bean.getWorkInspectDetails().get(position),
+                                    bean.getWorkInspectDetails().get(position).getId()
+                            ).show();
+                        }
+                    });
+                }));
     }
 
     /**
      * 填充数据数据
      */
     private void fillDta(WorkCheckInfoBean bean) {
-        etCompanyName.setText(bean.getBean().getCompanyName());
-        etCheckTime.setText(bean.getBean().getCreateDate());
-        etCheckPerson.setText(bean.getBean().getCreateUserName());
-        etDeadlineTime.setText(bean.getBean().getChangeDeadline());
-        etTaskRequset.setText(bean.getBean().getChangeRequire());
-        tvDependPerson.setText(bean.getBean().getReceiveUserName());
-        etPhoneNum.setText(bean.getBean().getReceivePhone());
-        mDataList = bean.getBean().getDetails();
+        etCompanyName.setText(bean.getCompanyName());
+        etCheckTime.setText(bean.getCreateTime());
+        etCheckPerson.setText(bean.getCreateUser().getAccountEntity().getRealName());
+        etDeadlineTime.setText(bean.getChangeDeadlineTime());
+        etTaskRequset.setText(bean.getChangeInfo());
+        tvDependPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+        etPhoneNum.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
+        mDataList = bean.getWorkInspectDetails();
 
     }
 
-    /**
-     * recyclerView item点击事件
-     */
-    private void onItemClick(WorkCheckInfoBean bean) {
-        taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new LookWorkCheckInfoView(mContext, true,
-                        bean.getBean().getDetails().get(position),
-                        bean.getBean().getReceiveUser(),
-                        bean.getBean().getId()
-                ).show();
-            }
-        });
-    }
 }

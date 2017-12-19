@@ -10,18 +10,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.EanfangConst;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.model.WorkCheckInfoBean;
-import net.eanfang.client.util.ImagePerviewUtil;
 import net.eanfang.client.util.StringUtils;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,15 +35,14 @@ import butterknife.ButterKnife;
  * @desc
  */
 
-public class LookDealwithCheckInfoDetailView extends BaseDialog implements View.OnClickListener {
+public class LookDealwithCheckInfoDetailView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     private Activity mContext;
-    private WorkCheckInfoBean.BeanBean.DetailsBeanX.DetailsBean bean;
-    private String revUser;
-    private int id;
+    private WorkCheckInfoBean.WorkInspectDetailsBean.WorkInspectDetailDisposesBean bean;
+    private WorkCheckInfoBean workCheckInfoBean;
     @BindView(R.id.et_title)
     TextView etTitle;
     @BindView(R.id.et_input_check_content)
@@ -62,13 +62,12 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog implements View.
     @BindView(R.id.ll_deal_with)
     LinearLayout llDealWith;
 
-    public LookDealwithCheckInfoDetailView(Activity context, boolean isfull, WorkCheckInfoBean.BeanBean.DetailsBeanX.DetailsBean bean,
-                                           String revUser, int id) {
+    public LookDealwithCheckInfoDetailView(Activity context, boolean isfull, WorkCheckInfoBean.WorkInspectDetailsBean.WorkInspectDetailDisposesBean bean,
+                                           WorkCheckInfoBean workCheckInfoBean) {
         super(context, isfull);
         this.mContext = context;
         this.bean = bean;
-        this.revUser = revUser;
-        this.id = id;
+        this.workCheckInfoBean = workCheckInfoBean;
     }
 
     @Override
@@ -82,100 +81,63 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog implements View.
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("处理结果");
 
-        ivPic1.setOnClickListener(this);
-        ivPic2.setOnClickListener(this);
-        ivPic3.setOnClickListener(this);
-        btnAdopt.setOnClickListener(v -> dealWith("2"));
-        btnReject.setOnClickListener(v -> dealWith("3"));
+        btnAdopt.setOnClickListener(v -> dealWith(1));
+        btnReject.setOnClickListener(v -> dealWith(2));
 
-//        String uid = EanfangApplication.getApplication().getUser().getPersonId();
-//        if (uid.equals(revUser)) {
-//            if (EanfangConst.WORK_INSPECT_STATUS_FAIL.equals(bean.getStatus()) ||
-//                    EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(bean.getStatus()) ||
-//                    EanfangConst.WORK_INSPECT_STATUS_REVIEW.equals(bean.getStatus())) {
-//                llDealWith.setVisibility(View.GONE);
-//            }
-//
-//        } else {
-//            if (EanfangConst.WORK_INSPECT_STATUS_FAIL.equals(bean.getStatus()) ||
-//                    EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(bean.getStatus())) {
-//                llDealWith.setVisibility(View.GONE);
-//            } else {
-//                llDealWith.setVisibility(View.VISIBLE);
-//            }
-//        }
+        Long uid = EanfangApplication.getApplication().getUserId();
+        if (uid.equals(workCheckInfoBean.getAssigneeUserId())) {
+            if (EanfangConst.WORK_INSPECT_STATUS_FAIL == bean.getStatus() ||
+                    EanfangConst.WORK_INSPECT_STATUS_FINISH == bean.getStatus() ||
+                    EanfangConst.WORK_INSPECT_STATUS_REVIEW == bean.getStatus()) {
+                llDealWith.setVisibility(View.GONE);
+            }
+
+        } else {
+            if (EanfangConst.WORK_INSPECT_STATUS_FAIL == bean.getStatus() ||
+                    EanfangConst.WORK_INSPECT_STATUS_FINISH == bean.getStatus()) {
+                llDealWith.setVisibility(View.GONE);
+            } else {
+                llDealWith.setVisibility(View.VISIBLE);
+            }
+        }
 
 
-        etTitle.setText(bean.getInspectDetailTitle());
+//        etTitle.setText(bean.getInspectDetailTitle());
         etInputCheckContent.setText(bean.getDisposeInfo());
-        etRemark.setText(bean.getRemark());
+        etRemark.setText(bean.getRemarkInfo());
+//
+        if (!StringUtils.isEmpty(bean.getPictures())) {
+            String[] urls = bean.getPictures().split(",");
 
-        if (!TextUtils.isEmpty(bean.getPic1())) {
-            ivPic1.setImageURI(Uri.parse(bean.getPic1()));
-            ivPic1.setVisibility(View.VISIBLE);
-        } else {
-            ivPic1.setVisibility(View.GONE);
-        }
+            if (!TextUtils.isEmpty(urls[0])) {
+                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                ivPic1.setVisibility(View.VISIBLE);
+            } else {
+                ivPic1.setVisibility(View.GONE);
+            }
 
-        if (!TextUtils.isEmpty(bean.getPic2())) {
-            ivPic2.setImageURI(Uri.parse(bean.getPic2()));
-            ivPic2.setVisibility(View.VISIBLE);
-        } else {
-            ivPic2.setVisibility(View.GONE);
-        }
-        if (!TextUtils.isEmpty(bean.getPic3())) {
-            ivPic3.setImageURI(Uri.parse(bean.getPic3()));
-            ivPic3.setVisibility(View.VISIBLE);
-        } else {
-            ivPic3.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(urls[1])) {
+                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                ivPic2.setVisibility(View.VISIBLE);
+            } else {
+                ivPic2.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(urls[2])) {
+                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                ivPic3.setVisibility(View.VISIBLE);
+            } else {
+                ivPic3.setVisibility(View.GONE);
+            }
         }
     }
 
 
-    @Override
-    public void onClick(View v) {
-        ArrayList<String> picList = new ArrayList<String>();
-        switch (v.getId()) {
-            case R.id.iv_pic1:
-                if (!StringUtils.isEmpty(bean.getPic1())) {
-                    picList.add(bean.getPic1());
-                }
-                break;
-            case R.id.iv_pic2:
-                if (!StringUtils.isEmpty(bean.getPic2())) {
-                    picList.add(bean.getPic2());
-                }
-                break;
-            case R.id.iv_pic3:
-                if (!StringUtils.isEmpty(bean.getPic3())) {
-                    picList.add(bean.getPic3());
-                }
-                break;
-            default:
-                break;
-
-        }
-        ImagePerviewUtil.perviewImage(mContext, picList);
-
-    }
-
-    private void dealWith(String status) {
-        EanfangHttp.get(ApiService.GET_REVIEW_WORK_DETAIL_DISPOSE)
-                .tag(this)
+    private void dealWith(int status) {
+        EanfangHttp.post(NewApiService.GET_WORK_CHCEK_ADUIT)
                 .params("status", status)
                 .params("id", bean.getId())
-                .execute(new EanfangCallback(mContext, true) {
-
-
-                    @Override
-                    public void onSuccess(Object bean) {
-                        new WorkCheckInfoView(mContext, true, id).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                    }
-                });
+                .execute(new EanfangCallback(mContext, true, JSONObject.class, (bean) -> {
+                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId()).show();
+                }));
     }
 }

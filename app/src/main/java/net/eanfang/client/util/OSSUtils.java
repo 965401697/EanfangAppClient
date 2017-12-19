@@ -23,10 +23,14 @@ public class OSSUtils {
                 if (instance == null) {
                     OSSCredentialProvider credentialProvider = new STSGetter();
                     ClientConfiguration conf = new ClientConfiguration();
-                    conf.setConnectionTimeout(60 * 1000); // 连接超时，默认15秒
-                    conf.setSocketTimeout(60 * 1000); // socket超时，默认15秒
-                    conf.setMaxConcurrentRequest(5); // 最大并发请求书，默认5个
-                    conf.setMaxErrorRetry(5); // 失败后最大重试次数，默认2次
+                    // 连接超时，默认15秒
+                    conf.setConnectionTimeout(60 * 1000);
+                    // socket超时，默认15秒
+                    conf.setSocketTimeout(60 * 1000);
+                    // 最大并发请求书，默认5个
+                    conf.setMaxConcurrentRequest(5);
+                    // 失败后最大重试次数，默认2次
+                    conf.setMaxErrorRetry(5);
                     OSS oss = new OSSClient(context, BuildConfig.OSS_ENDPOINT, credentialProvider, conf);
                     instance = new OssService(oss, BuildConfig.OSS_BUCKET);
                 }

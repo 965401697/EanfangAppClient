@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -25,7 +24,6 @@ import net.eanfang.client.util.OSSUtils;
 import net.eanfang.client.util.PickerSelectUtil;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -205,8 +203,7 @@ public class AddWorkTaskDeitailActivity extends BaseActivity implements View.OnC
         bean.setCriterion(standard);
         bean.setJoinPerson(worker);
 
-        List<String> urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
-        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

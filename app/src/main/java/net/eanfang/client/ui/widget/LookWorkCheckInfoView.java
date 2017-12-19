@@ -15,15 +15,17 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.Config;
 import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.ui.activity.worksapce.AddDealwithInfoActivity;
 import net.eanfang.client.ui.adapter.AddCheckInfoDetailAdapter;
 import net.eanfang.client.ui.model.WorkCheckInfoBean;
-import net.eanfang.client.util.ImagePerviewUtil;
 import net.eanfang.client.util.StringUtils;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ import butterknife.ButterKnife;
  * @desc
  */
 
-public class LookWorkCheckInfoView extends BaseDialog implements View.OnClickListener {
+public class LookWorkCheckInfoView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)
@@ -73,18 +75,20 @@ public class LookWorkCheckInfoView extends BaseDialog implements View.OnClickLis
     @BindView(R.id.ll_add_deal)
     LinearLayout llAddDeal;
 
-    private WorkCheckInfoBean.BeanBean.DetailsBeanX detailsBeanX;
-    private List<WorkCheckInfoBean.BeanBean.DetailsBeanX.DetailsBean> beanList = new ArrayList<>();
-    private AddCheckInfoDetailAdapter maintenanceDetailAdapter;
-    private String recevieUser;
-    private int id;
+    private WorkCheckInfoBean infoBean;
+    private WorkCheckInfoBean.WorkInspectDetailsBean detailsBean;
 
-    public LookWorkCheckInfoView(Activity context, boolean isfull, WorkCheckInfoBean.BeanBean.DetailsBeanX data, String recevieUser, int id) {
+    private List<WorkCheckInfoBean.WorkInspectDetailsBean.WorkInspectDetailDisposesBean> beanList = new ArrayList<>();
+    private AddCheckInfoDetailAdapter maintenanceDetailAdapter;
+    private Long detailId;
+
+    public LookWorkCheckInfoView(Activity context, boolean isfull, WorkCheckInfoBean data, WorkCheckInfoBean.WorkInspectDetailsBean detailsBean,
+                                 Long id) {
         super(context, isfull);
         this.mContext = context;
-        this.detailsBeanX = data;
-        this.recevieUser = recevieUser;
-        this.id = id;
+        this.infoBean = data;
+        this.detailsBean = detailsBean;
+        this.detailId = id;
     }
 
     @Override
@@ -97,97 +101,79 @@ public class LookWorkCheckInfoView extends BaseDialog implements View.OnClickLis
     private void initView() {
         tvTitle.setText("检查明细");
         ivLeft.setOnClickListener(v -> dismiss());
-        ivPic1.setOnClickListener(this);
-        ivPic2.setOnClickListener(this);
-        ivPic3.setOnClickListener(this);
 
-//        String uid = EanfangApplication.getApplication().getUser().getPersonId();
-//        if (uid.equals(recevieUser)) {
-//            llAddDetail.setVisibility(View.VISIBLE);
-//        } else {
-//            llAddDetail.setVisibility(View.GONE);
-//        }
-//
-//        if (uid.equals(detailsBeanX.getCreateUser())) {
-//            llAddDetail.setVisibility(View.GONE);
-//        } else {
-//            llAddDetail.setVisibility(View.VISIBLE);
-//        }
-        if (EanfangConst.WORK_INSPECT_STATUS_FINISH.equals(detailsBeanX.getStatus())) {
+        Long uid = EanfangApplication.getApplication().getUserId();
+        if (uid.equals(infoBean.getAssigneeUserId())) {
+            llAddDetail.setVisibility(View.VISIBLE);
+        } else {
+            llAddDetail.setVisibility(View.GONE);
+        }
+
+        if (uid.equals(infoBean.getCreateUserId())) {
+            llAddDetail.setVisibility(View.GONE);
+        } else {
+            llAddDetail.setVisibility(View.VISIBLE);
+        }
+        if (EanfangConst.WORK_INSPECT_STATUS_FINISH == infoBean.getStatus()) {
             btnAddDetail.setVisibility(View.GONE);
         }
 
-        etTitle.setText(detailsBeanX.getTitle());
-        etPosition.setText(detailsBeanX.getRegion());
-        tvOneName.setText(detailsBeanX.getBusinessOne());
-        tvTwoName.setText(detailsBeanX.getBusinessTwo());
-        tvThreeName.setText(detailsBeanX.getBusinessThree());
+        etTitle.setText(detailsBean.getTitle());
+        etPosition.setText(detailsBean.getRegion());
+        tvOneName.setText(Config.getConfig().getBusinessName(detailsBean.getBusinessThreeCode()));
+        // TODO: 2017/12/18 二级，三级
+//        tvTwoName.setText(detailsBeanX.getBusinessTwo());
+//        tvThreeName.setText(detailsBeanX.getBusinessThree());
 
-        etInputCheckContent.setText(detailsBeanX.getInfo());
-        if (!TextUtils.isEmpty(detailsBeanX.getPic1())) {
-            ivPic1.setImageURI(Uri.parse(detailsBeanX.getPic1()));
-            ivPic1.setVisibility(View.VISIBLE);
-        } else {
-            ivPic1.setVisibility(View.GONE);
-        }
+        etInputCheckContent.setText(detailsBean.getInfo());
 
-        if (!TextUtils.isEmpty(detailsBeanX.getPic2())) {
-            ivPic2.setImageURI(Uri.parse(detailsBeanX.getPic2()));
-            ivPic2.setVisibility(View.VISIBLE);
-        } else {
-            ivPic2.setVisibility(View.GONE);
-        }
-        if (!TextUtils.isEmpty(detailsBeanX.getPic3())) {
-            ivPic3.setImageURI(Uri.parse(detailsBeanX.getPic3()));
-            ivPic3.setVisibility(View.VISIBLE);
-        } else {
-            ivPic3.setVisibility(View.GONE);
-        }
-        btnAddDetail.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, AddDealwithInfoActivity.class)
-                .putExtra("data", detailsBeanX)
-                .putExtra("id", id)));
+        if (!StringUtils.isEmpty(detailsBean.getPictures())) {
+            String[] urls = detailsBean.getPictures().split(",");
 
-        beanList.addAll(detailsBeanX.getDetails());
-        maintenanceDetailAdapter = new AddCheckInfoDetailAdapter(R.layout.item_quotation_detail, beanList);
-
-        dealListAdd.setLayoutManager(new LinearLayoutManager(mContext));
-        dealListAdd.setAdapter(maintenanceDetailAdapter);
-
-        dealListAdd.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new LookDealwithCheckInfoDetailView(mContext, true, beanList.get(position), recevieUser, id).show();
+            if (!TextUtils.isEmpty(urls[0])) {
+                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                ivPic1.setVisibility(View.VISIBLE);
+            } else {
+                ivPic1.setVisibility(View.GONE);
             }
+
+            if (!TextUtils.isEmpty(urls[1])) {
+                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                ivPic2.setVisibility(View.VISIBLE);
+            } else {
+                ivPic2.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(urls[2])) {
+                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                ivPic3.setVisibility(View.VISIBLE);
+            } else {
+                ivPic3.setVisibility(View.GONE);
+            }
+        }
+
+        btnAddDetail.setOnClickListener((v) -> {
+            Intent intent = new Intent(mContext, AddDealwithInfoActivity.class);
+            intent.putExtra("data", detailsBean);
+            intent.putExtra("id", infoBean.getId());
+            intent.putExtra("detailId", detailId);
+            mContext.startActivity(intent);
         });
-        maintenanceDetailAdapter.notifyDataSetChanged();
 
-    }
+        if (detailsBean.getWorkInspectDetailDisposes() != null) {
+            beanList.addAll(detailsBean.getWorkInspectDetailDisposes());
+            maintenanceDetailAdapter = new AddCheckInfoDetailAdapter(R.layout.item_quotation_detail, beanList);
 
-    @Override
-    public void onClick(View v) {
-        ArrayList<String> picList = new ArrayList<String>();
-        switch (v.getId()) {
-            case R.id.iv_pic1:
-                if (!StringUtils.isEmpty(detailsBeanX.getPic1())) {
-                    picList.add(detailsBeanX.getPic1());
+            dealListAdd.setLayoutManager(new LinearLayoutManager(mContext));
+            dealListAdd.setAdapter(maintenanceDetailAdapter);
+            dealListAdd.addOnItemTouchListener(new OnItemClickListener() {
+                @Override
+                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    new LookDealwithCheckInfoDetailView(mContext, true, beanList.get(position), infoBean).show();
                 }
-                break;
-            case R.id.iv_pic2:
-                if (!StringUtils.isEmpty(detailsBeanX.getPic2())) {
-                    picList.add(detailsBeanX.getPic2());
-                }
-                break;
-            case R.id.iv_pic3:
-                if (!StringUtils.isEmpty(detailsBeanX.getPic3())) {
-                    picList.add(detailsBeanX.getPic3());
-                }
-                break;
-            default:
-                break;
+            });
+            maintenanceDetailAdapter.notifyDataSetChanged();
 
         }
-        ImagePerviewUtil.perviewImage(mContext, picList);
 
     }
-
 }

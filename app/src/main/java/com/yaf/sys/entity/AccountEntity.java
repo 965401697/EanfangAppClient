@@ -1,16 +1,17 @@
 package com.yaf.sys.entity;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.mobsandgeeks.saripaar.annotation.Digits;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
@@ -34,11 +35,6 @@ public class AccountEntity implements Serializable {
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER，普通自增长使用IdType.ID_AUTO
     @TableId(value = "acc_id", type = IdType.ID_WORKER)
     private Long accId;
-
-    //账号类别0超级管理员1总平台管理员2城市平台管理员4公司管理员5公司员工
-    //@TableField(value = "acc_type")
-    @Digits(integer = 3, fraction = 0)
-    private Integer accType;
 
     //手机
     //@TableField(value = "mobile")
@@ -91,7 +87,41 @@ public class AccountEntity implements Serializable {
     //@TableField(value = "last_login_time")
     private Date lastLoginTime;
 
-
+	//性别0女1男
+	//@TableField(value = "gender")
+	@Digits(integer=3,fraction=0)
+	@Getter
+	@Setter
+	private Integer gender;
+	
+	//证件号码
+	//@TableField(value = "id_card")
+	@Size(min = 0, max = 18)
+	@Getter
+	@Setter
+	private String idCard;
+	
+	//所在城市ID
+	//@TableField(value = "area_id")
+	@Digits(integer=19,fraction=0)
+	@Getter
+	@Setter
+	private Long areaId;
+	
+	//所在城市编号
+	//@TableField(value = "area_code")
+	@Size(min = 0, max = 20)
+	@Getter
+	@Setter
+	private String areaCode;
+	
+	//详细地址
+	//@TableField(value = "adress")
+	@Size(min = 0, max = 200)
+	@Getter
+	@Setter
+	private String adress;
+	
     /**
      * 设置：账号
      */
@@ -104,20 +134,6 @@ public class AccountEntity implements Serializable {
      */
     public Long getAccId() {
         return accId;
-    }
-
-    /**
-     * 设置：账号类别0超级管理员1总平台管理员2城市平台管理员4公司管理员5公司员工
-     */
-    public void setAccType(Integer accType) {
-        this.accType = accType;
-    }
-
-    /**
-     * 获取：账号类别0超级管理员1总平台管理员2城市平台管理员4公司管理员5公司员工
-     */
-    public Integer getAccType() {
-        return accType;
     }
 
     /**
@@ -280,6 +296,29 @@ public class AccountEntity implements Serializable {
         this.defaultUser = defaultUser;
     }
 
-
-
-}
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accId == null) ? 0 : accId.hashCode());
+		return result;
+	}
+	@Override
+    public boolean equals(Object other) {
+    	if (other instanceof AccountEntity) {
+    		if(this.accId == null || other== null)
+    			return false;
+    		
+            return this.accId.equals(((AccountEntity) other).accId);   
+        }   
+        return false; 
+    }
+	public final static String STATUS = "status";
+	public final static String MOBILE = "mobile";
+	public final static String EMAIL = "email";
+	
+	}

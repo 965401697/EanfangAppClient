@@ -1,11 +1,8 @@
 package com.eanfang.util;
 
-import com.eanfang.BuildConfig;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,14 +20,15 @@ public class PhotoUtils {
      * @param clean       是否清除map 重新计算
      * @return
      */
-    public static List<String> getPhotoUrl(BGASortableNinePhotoLayout mPhotosSnpl, Map<String, String> uploadMap, boolean clean) {
+    public static String getPhotoUrl(BGASortableNinePhotoLayout mPhotosSnpl, Map<String, String> uploadMap, boolean clean) {
         if (uploadMap == null) {
             uploadMap = new HashMap<>();
         }
         if (clean) {
             uploadMap.clear();
         }
-        List<String> urls = new ArrayList<>();
+//        List<String> urls = new ArrayList<>();
+        StringBuilder urls = new StringBuilder();
 
         for (int i = 0; i < mPhotosSnpl.getData().size(); i++) {
             String path = mPhotosSnpl.getData().get(i);
@@ -38,15 +36,16 @@ public class PhotoUtils {
             if (path == null || path.length() <= 0) {
                 continue;
             } else if (path.startsWith("http")) {
-                urls.add(path);
+                urls.append(path);
                 continue;
             }
             uploadMap.put(object, path);
-            urls.add(BuildConfig.OSS_SERVER + object);
+            urls.append(object);
+            if (i < mPhotosSnpl.getData().size() - 1) {
+                urls.append(",");
+            }
+//            urls.add(BuildConfig.OSS_SERVER + object);
         }
-        for (int i = 0; i < 4 - mPhotosSnpl.getData().size(); i++) {
-            urls.add("");
-        }
-        return urls;
+        return urls.toString();
     }
 }

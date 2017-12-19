@@ -402,10 +402,11 @@ public class AddTroubleActivity extends BaseActivity {
         }
 
         //图片处理
-        List<String> urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap,true);
-        bean.setBugpic1(urls.get(0));
-        bean.setBugpic2(urls.get(1));
-        bean.setBugpic3(urls.get(2));
+        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+
+//        bean.setBugpic1(urls.get(0));
+//        bean.setBugpic2(urls.get(1));
+//        bean.setBugpic3(urls.get(2));
 
         if (mPhotosSnpl.getData().size() <= 0) {
             submitSuccess(bean, CLIENT_ADD_TROUBLE);
@@ -442,10 +443,11 @@ public class AddTroubleActivity extends BaseActivity {
         bughandledetaillistBean.setDescription(et_desc.getText().toString().trim());
 
         //图片处理
-        List<String> urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap,true);
-        bughandledetaillistBean.setPic1(urls.get(0));
-        bughandledetaillistBean.setPic2(urls.get(1));
-        bughandledetaillistBean.setPic3(urls.get(2));
+//        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+//
+//        bughandledetaillistBean.setPic1(urls.get(0));
+//        bughandledetaillistBean.setPic2(urls.get(1));
+//        bughandledetaillistBean.setPic3(urls.get(2));
 
         if (mPhotosSnpl.getData().size() <= 0) {
             submitSuccess(bughandledetaillistBean, WORKER_ADD_TROUBLE);

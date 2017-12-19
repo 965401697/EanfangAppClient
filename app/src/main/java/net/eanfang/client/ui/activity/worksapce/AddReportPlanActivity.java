@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -23,7 +22,6 @@ import net.eanfang.client.util.OSSUtils;
 import net.eanfang.client.util.PickerSelectUtil;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -124,8 +122,7 @@ public class AddReportPlanActivity extends BaseActivity implements View.OnClickL
             return;
         }
         bean.setField5(handle);
-        List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
-        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {

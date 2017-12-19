@@ -13,486 +13,527 @@ import java.util.List;
 
 public class WorkCheckInfoBean implements Serializable {
 
+    /**
+     * assigneeOrgCode : c.c1.2
+     * assigneeUser : {"accId":1,"accountEntity":{"accId":1,"mobile":"18500320187","realName":"jornlin"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1}
+     * assigneeUserId : 1
+     * changeDeadlineTime : 2020-11-03 00:00:00
+     * changeInfo : 设备移位
+     * companyName : 北京法案视
+     * createCompanyId : 1100
+     * createOrgCode : c.c1.2
+     * createTime : 2017-12-15 10:19:53
+     * createTopCompanyId : 1100
+     * createUser : {"accId":2,"accountEntity":{"accId":2,"realName":"李旭"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":2}
+     * createUserId : 2
+     * id : 941492977858588673
+     * status : 0
+     * title : 检查设备
+     * workInspectDetails : [{"businessThreeCode":"1.11.13","id":"941492980165455874","info":"检查设备是否摆放成功","pictures":"这里有多张图片地址","region":"超市门口","status":0,"sysWorkInspectId":"941492977858588673","title":"整改设备摆放","workInspectDetailDisposes":[{"disposeInfo":"处理信息","id":6846544,"pictures":"这里有很多的图片地址","remarkInfo":"备注一下","status":0,"sysWorkInspectDetailId":"941492980165455874"}]},{"businessThreeCode":"1.11.13","id":"941492980958179329","info":"检查设备是否运行正常","pictures":"这里有多张图片地址","region":"厂库内","status":0,"sysWorkInspectId":"941492977858588673","title":"设备是否运行"}]
+     */
+
+    private String assigneeOrgCode;
+    private AssigneeUserBean assigneeUser;
+    private Long assigneeUserId;
+    private String changeDeadlineTime;
+    private String changeInfo;
+    private String companyName;
+    private Long createCompanyId;
+    private String createOrgCode;
+    private String createTime;
+    private int createTopCompanyId;
+    private CreateUserBean createUser;
+    private Long createUserId;
+    private Long id;
+    private int status;
+    private String title;
+    private List<WorkInspectDetailsBean> workInspectDetails;
+
+    public String getAssigneeOrgCode() {
+        return assigneeOrgCode;
+    }
+
+    public void setAssigneeOrgCode(String assigneeOrgCode) {
+        this.assigneeOrgCode = assigneeOrgCode;
+    }
+
+    public AssigneeUserBean getAssigneeUser() {
+        return assigneeUser;
+    }
+
+    public void setAssigneeUser(AssigneeUserBean assigneeUser) {
+        this.assigneeUser = assigneeUser;
+    }
+
+    public Long getAssigneeUserId() {
+        return assigneeUserId;
+    }
+
+    public void setAssigneeUserId(Long assigneeUserId) {
+        this.assigneeUserId = assigneeUserId;
+    }
+
+    public String getChangeDeadlineTime() {
+        return changeDeadlineTime;
+    }
+
+    public void setChangeDeadlineTime(String changeDeadlineTime) {
+        this.changeDeadlineTime = changeDeadlineTime;
+    }
+
+    public String getChangeInfo() {
+        return changeInfo;
+    }
+
+    public void setChangeInfo(String changeInfo) {
+        this.changeInfo = changeInfo;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public Long getCreateCompanyId() {
+        return createCompanyId;
+    }
+
+    public void setCreateCompanyId(Long createCompanyId) {
+        this.createCompanyId = createCompanyId;
+    }
+
+    public String getCreateOrgCode() {
+        return createOrgCode;
+    }
+
+    public void setCreateOrgCode(String createOrgCode) {
+        this.createOrgCode = createOrgCode;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public int getCreateTopCompanyId() {
+        return createTopCompanyId;
+    }
+
+    public void setCreateTopCompanyId(int createTopCompanyId) {
+        this.createTopCompanyId = createTopCompanyId;
+    }
+
+    public CreateUserBean getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(CreateUserBean createUser) {
+        this.createUser = createUser;
+    }
+
+    public Long getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<WorkInspectDetailsBean> getWorkInspectDetails() {
+        return workInspectDetails;
+    }
+
+    public void setWorkInspectDetails(List<WorkInspectDetailsBean> workInspectDetails) {
+        this.workInspectDetails = workInspectDetails;
+    }
+
+    public static class AssigneeUserBean implements Serializable{
         /**
-         * bean : {"changeDeadline":"2017-09-05 13:29:19","changeRequire":"整改需求","companyName":"北京家乐福双井","createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:19","createUser":"98b22d8a875444f4b454e5a215584dbc","createUserName":"林技师","details":[{"businessOne":"电视监控","businessThree":"模拟枪型摄象机","businessTwo":"摄像采集","createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:20","createUser":"98b22d8a875444f4b454e5a215584dbc","details":[{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:20","createUser":"98b22d8a875444f4b454e5a215584dbc","disposeInfo":"处理明细","id":1,"inspectDetailTitle":"工作检查明细标题2","inspectDetailUid":"9db976d5f92249508ad1a236a5b0dc03","pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic2":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic3":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","remark":"处理备注","status":"0"}],"id":1,"info":"工作检查内容1","pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic2":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic3":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","region":"电视监控区域","status":"0","title":"工作检查明细标题2","uid":"9db976d5f92249508ad1a236a5b0dc03","workInspectUid":"457aa731896a40659e0570180f580be9"}],"id":1,"receiveCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","receivePhone":"17600119928","receiveUser":"98b22d8a875444f4b454e5a215584dbc","receiveUserName":"林技师","status":"0","title":"工作检查标题","uid":"457aa731896a40659e0570180f580be9"}
+         * accId : 1
+         * accountEntity : {"accId":1,"mobile":"18500320187","realName":"jornlin"}
+         * companyAdmin : false
+         * superAdmin : false
+         * sysAdmin : false
+         * userId : 1
          */
 
-        private BeanBean bean;
+        private Long accId;
+        private AccountEntityBean accountEntity;
+        private boolean companyAdmin;
+        private boolean superAdmin;
+        private boolean sysAdmin;
+        private Long userId;
 
-        public BeanBean getBean() {
-            return bean;
+        public Long getAccId() {
+            return accId;
         }
 
-        public void setBean(BeanBean bean) {
-            this.bean = bean;
+        public void setAccId(Long accId) {
+            this.accId = accId;
         }
 
-        public static class BeanBean implements Serializable {
+        public AccountEntityBean getAccountEntity() {
+            return accountEntity;
+        }
+
+        public void setAccountEntity(AccountEntityBean accountEntity) {
+            this.accountEntity = accountEntity;
+        }
+
+        public boolean isCompanyAdmin() {
+            return companyAdmin;
+        }
+
+        public void setCompanyAdmin(boolean companyAdmin) {
+            this.companyAdmin = companyAdmin;
+        }
+
+        public boolean isSuperAdmin() {
+            return superAdmin;
+        }
+
+        public void setSuperAdmin(boolean superAdmin) {
+            this.superAdmin = superAdmin;
+        }
+
+        public boolean isSysAdmin() {
+            return sysAdmin;
+        }
+
+        public void setSysAdmin(boolean sysAdmin) {
+            this.sysAdmin = sysAdmin;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public static class AccountEntityBean implements Serializable{
             /**
-             * changeDeadline : 2017-09-05 13:29:19
-             * changeRequire : 整改需求
-             * companyName : 北京家乐福双井
-             * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-             * createDate : 2017-09-05 13:29:19
-             * createUser : 98b22d8a875444f4b454e5a215584dbc
-             * createUserName : 林技师
-             * details : [{"businessOne":"电视监控","businessThree":"模拟枪型摄象机","businessTwo":"摄像采集","createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:20","createUser":"98b22d8a875444f4b454e5a215584dbc","details":[{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:20","createUser":"98b22d8a875444f4b454e5a215584dbc","disposeInfo":"处理明细","id":1,"inspectDetailTitle":"工作检查明细标题2","inspectDetailUid":"9db976d5f92249508ad1a236a5b0dc03","pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic2":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic3":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","remark":"处理备注","status":"0"}],"id":1,"info":"工作检查内容1","pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic2":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic3":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","region":"电视监控区域","status":"0","title":"工作检查明细标题2","uid":"9db976d5f92249508ad1a236a5b0dc03","workInspectUid":"457aa731896a40659e0570180f580be9"}]
-             * id : 1
-             * receiveCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-             * receivePhone : 17600119928
-             * receiveUser : 98b22d8a875444f4b454e5a215584dbc
-             * receiveUserName : 林技师
-             * status : 0
-             * title : 工作检查标题
-             * uid : 457aa731896a40659e0570180f580be9
+             * accId : 1
+             * mobile : 18500320187
+             * realName : jornlin
              */
 
-            private String changeDeadline;
-            private String changeRequire;
-            private String companyName;
-            private String createCompanyUid;
-            private String createDate;
-            private String createUser;
-            private String createUserName;
-            private int id;
-            private String receiveCompanyUid;
-            private String receivePhone;
-            private String receiveUser;
-            private String receiveUserName;
-            private String status;
-            private String title;
-            private String uid;
-            private List<DetailsBeanX> details;
+            private Long accId;
+            private String mobile;
+            private String realName;
 
-            public String getChangeDeadline() {
-                return changeDeadline;
+            public Long getAccId() {
+                return accId;
             }
 
-            public void setChangeDeadline(String changeDeadline) {
-                this.changeDeadline = changeDeadline;
+            public void setAccId(Long accId) {
+                this.accId = accId;
             }
 
-            public String getChangeRequire() {
-                return changeRequire;
+            public String getMobile() {
+                return mobile;
             }
 
-            public void setChangeRequire(String changeRequire) {
-                this.changeRequire = changeRequire;
+            public void setMobile(String mobile) {
+                this.mobile = mobile;
             }
 
-            public String getCompanyName() {
-                return companyName;
+            public String getRealName() {
+                return realName;
             }
 
-            public void setCompanyName(String companyName) {
-                this.companyName = companyName;
-            }
-
-            public String getCreateCompanyUid() {
-                return createCompanyUid;
-            }
-
-            public void setCreateCompanyUid(String createCompanyUid) {
-                this.createCompanyUid = createCompanyUid;
-            }
-
-            public String getCreateDate() {
-                return createDate;
-            }
-
-            public void setCreateDate(String createDate) {
-                this.createDate = createDate;
-            }
-
-            public String getCreateUser() {
-                return createUser;
-            }
-
-            public void setCreateUser(String createUser) {
-                this.createUser = createUser;
-            }
-
-            public String getCreateUserName() {
-                return createUserName;
-            }
-
-            public void setCreateUserName(String createUserName) {
-                this.createUserName = createUserName;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public String getReceiveCompanyUid() {
-                return receiveCompanyUid;
-            }
-
-            public void setReceiveCompanyUid(String receiveCompanyUid) {
-                this.receiveCompanyUid = receiveCompanyUid;
-            }
-
-            public String getReceivePhone() {
-                return receivePhone;
-            }
-
-            public void setReceivePhone(String receivePhone) {
-                this.receivePhone = receivePhone;
-            }
-
-            public String getReceiveUser() {
-                return receiveUser;
-            }
-
-            public void setReceiveUser(String receiveUser) {
-                this.receiveUser = receiveUser;
-            }
-
-            public String getReceiveUserName() {
-                return receiveUserName;
-            }
-
-            public void setReceiveUserName(String receiveUserName) {
-                this.receiveUserName = receiveUserName;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public String getUid() {
-                return uid;
-            }
-
-            public void setUid(String uid) {
-                this.uid = uid;
-            }
-
-            public List<DetailsBeanX> getDetails() {
-                return details;
-            }
-
-            public void setDetails(List<DetailsBeanX> details) {
-                this.details = details;
-            }
-
-            public static class DetailsBeanX implements Serializable {
-                /**
-                 * businessOne : 电视监控
-                 * businessThree : 模拟枪型摄象机
-                 * businessTwo : 摄像采集
-                 * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-                 * createDate : 2017-09-05 13:29:20
-                 * createUser : 98b22d8a875444f4b454e5a215584dbc
-                 * details : [{"createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:20","createUser":"98b22d8a875444f4b454e5a215584dbc","disposeInfo":"处理明细","id":1,"inspectDetailTitle":"工作检查明细标题2","inspectDetailUid":"9db976d5f92249508ad1a236a5b0dc03","pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic2":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic3":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","remark":"处理备注","status":"0"}]
-                 * id : 1
-                 * info : 工作检查内容1
-                 * pic1 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-                 * pic2 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-                 * pic3 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-                 * region : 电视监控区域
-                 * status : 0
-                 * title : 工作检查明细标题2
-                 * uid : 9db976d5f92249508ad1a236a5b0dc03
-                 * workInspectUid : 457aa731896a40659e0570180f580be9
-                 */
-
-                private String businessOne;
-                private String businessThree;
-                private String businessTwo;
-                private String createCompanyUid;
-                private String createDate;
-                private String createUser;
-                private int id;
-                private String info;
-                private String pic1;
-                private String pic2;
-                private String pic3;
-                private String region;
-                private String status;
-                private String title;
-                private String uid;
-                private String workInspectUid;
-                private List<DetailsBean> details;
-
-                public String getBusinessOne() {
-                    return businessOne;
-                }
-
-                public void setBusinessOne(String businessOne) {
-                    this.businessOne = businessOne;
-                }
-
-                public String getBusinessThree() {
-                    return businessThree;
-                }
-
-                public void setBusinessThree(String businessThree) {
-                    this.businessThree = businessThree;
-                }
-
-                public String getBusinessTwo() {
-                    return businessTwo;
-                }
-
-                public void setBusinessTwo(String businessTwo) {
-                    this.businessTwo = businessTwo;
-                }
-
-                public String getCreateCompanyUid() {
-                    return createCompanyUid;
-                }
-
-                public void setCreateCompanyUid(String createCompanyUid) {
-                    this.createCompanyUid = createCompanyUid;
-                }
-
-                public String getCreateDate() {
-                    return createDate;
-                }
-
-                public void setCreateDate(String createDate) {
-                    this.createDate = createDate;
-                }
-
-                public String getCreateUser() {
-                    return createUser;
-                }
-
-                public void setCreateUser(String createUser) {
-                    this.createUser = createUser;
-                }
-
-                public int getId() {
-                    return id;
-                }
-
-                public void setId(int id) {
-                    this.id = id;
-                }
-
-                public String getInfo() {
-                    return info;
-                }
-
-                public void setInfo(String info) {
-                    this.info = info;
-                }
-
-                public String getPic1() {
-                    return pic1;
-                }
-
-                public void setPic1(String pic1) {
-                    this.pic1 = pic1;
-                }
-
-                public String getPic2() {
-                    return pic2;
-                }
-
-                public void setPic2(String pic2) {
-                    this.pic2 = pic2;
-                }
-
-                public String getPic3() {
-                    return pic3;
-                }
-
-                public void setPic3(String pic3) {
-                    this.pic3 = pic3;
-                }
-
-                public String getRegion() {
-                    return region;
-                }
-
-                public void setRegion(String region) {
-                    this.region = region;
-                }
-
-                public String getStatus() {
-                    return status;
-                }
-
-                public void setStatus(String status) {
-                    this.status = status;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-
-                public void setTitle(String title) {
-                    this.title = title;
-                }
-
-                public String getUid() {
-                    return uid;
-                }
-
-                public void setUid(String uid) {
-                    this.uid = uid;
-                }
-
-                public String getWorkInspectUid() {
-                    return workInspectUid;
-                }
-
-                public void setWorkInspectUid(String workInspectUid) {
-                    this.workInspectUid = workInspectUid;
-                }
-
-                public List<DetailsBean> getDetails() {
-                    return details;
-                }
-
-                public void setDetails(List<DetailsBean> details) {
-                    this.details = details;
-                }
-
-                public static class DetailsBean implements Serializable {
-                    /**
-                     * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-                     * createDate : 2017-09-05 13:29:20
-                     * createUser : 98b22d8a875444f4b454e5a215584dbc
-                     * disposeInfo : 处理明细
-                     * id : 1
-                     * inspectDetailTitle : 工作检查明细标题2
-                     * inspectDetailUid : 9db976d5f92249508ad1a236a5b0dc03
-                     * pic1 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-                     * pic2 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-                     * pic3 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-                     * remark : 处理备注
-                     * status : 0
-                     */
-
-                    private String createCompanyUid;
-                    private String createDate;
-                    private String createUser;
-                    private String disposeInfo;
-                    private int id;
-                    private String inspectDetailTitle;
-                    private String inspectDetailUid;
-                    private String pic1;
-                    private String pic2;
-                    private String pic3;
-                    private String remark;
-                    private String status;
-
-                    public String getCreateCompanyUid() {
-                        return createCompanyUid;
-                    }
-
-                    public void setCreateCompanyUid(String createCompanyUid) {
-                        this.createCompanyUid = createCompanyUid;
-                    }
-
-                    public String getCreateDate() {
-                        return createDate;
-                    }
-
-                    public void setCreateDate(String createDate) {
-                        this.createDate = createDate;
-                    }
-
-                    public String getCreateUser() {
-                        return createUser;
-                    }
-
-                    public void setCreateUser(String createUser) {
-                        this.createUser = createUser;
-                    }
-
-                    public String getDisposeInfo() {
-                        return disposeInfo;
-                    }
-
-                    public void setDisposeInfo(String disposeInfo) {
-                        this.disposeInfo = disposeInfo;
-                    }
-
-                    public int getId() {
-                        return id;
-                    }
-
-                    public void setId(int id) {
-                        this.id = id;
-                    }
-
-                    public String getInspectDetailTitle() {
-                        return inspectDetailTitle;
-                    }
-
-                    public void setInspectDetailTitle(String inspectDetailTitle) {
-                        this.inspectDetailTitle = inspectDetailTitle;
-                    }
-
-                    public String getInspectDetailUid() {
-                        return inspectDetailUid;
-                    }
-
-                    public void setInspectDetailUid(String inspectDetailUid) {
-                        this.inspectDetailUid = inspectDetailUid;
-                    }
-
-                    public String getPic1() {
-                        return pic1;
-                    }
-
-                    public void setPic1(String pic1) {
-                        this.pic1 = pic1;
-                    }
-
-                    public String getPic2() {
-                        return pic2;
-                    }
-
-                    public void setPic2(String pic2) {
-                        this.pic2 = pic2;
-                    }
-
-                    public String getPic3() {
-                        return pic3;
-                    }
-
-                    public void setPic3(String pic3) {
-                        this.pic3 = pic3;
-                    }
-
-                    public String getRemark() {
-                        return remark;
-                    }
-
-                    public void setRemark(String remark) {
-                        this.remark = remark;
-                    }
-
-                    public String getStatus() {
-                        return status;
-                    }
-
-                    public void setStatus(String status) {
-                        this.status = status;
-                    }
-                }
+            public void setRealName(String realName) {
+                this.realName = realName;
             }
         }
     }
+
+    public static class CreateUserBean implements Serializable{
+        /**
+         * accId : 2
+         * accountEntity : {"accId":2,"realName":"李旭"}
+         * companyAdmin : false
+         * superAdmin : false
+         * sysAdmin : false
+         * userId : 2
+         */
+
+        private Long accId;
+        private AccountEntityBeanX accountEntity;
+        private boolean companyAdmin;
+        private boolean superAdmin;
+        private boolean sysAdmin;
+        private Long userId;
+
+        public Long getAccId() {
+            return accId;
+        }
+
+        public void setAccId(Long accId) {
+            this.accId = accId;
+        }
+
+        public AccountEntityBeanX getAccountEntity() {
+            return accountEntity;
+        }
+
+        public void setAccountEntity(AccountEntityBeanX accountEntity) {
+            this.accountEntity = accountEntity;
+        }
+
+        public boolean isCompanyAdmin() {
+            return companyAdmin;
+        }
+
+        public void setCompanyAdmin(boolean companyAdmin) {
+            this.companyAdmin = companyAdmin;
+        }
+
+        public boolean isSuperAdmin() {
+            return superAdmin;
+        }
+
+        public void setSuperAdmin(boolean superAdmin) {
+            this.superAdmin = superAdmin;
+        }
+
+        public boolean isSysAdmin() {
+            return sysAdmin;
+        }
+
+        public void setSysAdmin(boolean sysAdmin) {
+            this.sysAdmin = sysAdmin;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public static class AccountEntityBeanX implements Serializable{
+            /**
+             * accId : 2
+             * realName : 李旭
+             */
+
+            private Long accId;
+            private String realName;
+
+            public Long getAccId() {
+                return accId;
+            }
+
+            public void setAccId(Long accId) {
+                this.accId = accId;
+            }
+
+            public String getRealName() {
+                return realName;
+            }
+
+            public void setRealName(String realName) {
+                this.realName = realName;
+            }
+        }
+    }
+
+    public static class WorkInspectDetailsBean implements Serializable{
+        /**
+         * businessThreeCode : 1.11.13
+         * id : 941492980165455874
+         * info : 检查设备是否摆放成功
+         * pictures : 这里有多张图片地址
+         * region : 超市门口
+         * status : 0
+         * sysWorkInspectId : 941492977858588673
+         * title : 整改设备摆放
+         * workInspectDetailDisposes : [{"disposeInfo":"处理信息","id":6846544,"pictures":"这里有很多的图片地址","remarkInfo":"备注一下","status":0,"sysWorkInspectDetailId":"941492980165455874"}]
+         */
+
+        private String businessThreeCode;
+        private Long id;
+        private String info;
+        private String pictures;
+        private String region;
+        private int status;
+        private Long sysWorkInspectId;
+        private String title;
+        private List<WorkInspectDetailDisposesBean> workInspectDetailDisposes;
+
+        public String getBusinessThreeCode() {
+            return businessThreeCode;
+        }
+
+        public void setBusinessThreeCode(String businessThreeCode) {
+            this.businessThreeCode = businessThreeCode;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getInfo() {
+            return info;
+        }
+
+        public void setInfo(String info) {
+            this.info = info;
+        }
+
+        public String getPictures() {
+            return pictures;
+        }
+
+        public void setPictures(String pictures) {
+            this.pictures = pictures;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public Long getSysWorkInspectId() {
+            return sysWorkInspectId;
+        }
+
+        public void setSysWorkInspectId(Long sysWorkInspectId) {
+            this.sysWorkInspectId = sysWorkInspectId;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public List<WorkInspectDetailDisposesBean> getWorkInspectDetailDisposes() {
+            return workInspectDetailDisposes;
+        }
+
+        public void setWorkInspectDetailDisposes(List<WorkInspectDetailDisposesBean> workInspectDetailDisposes) {
+            this.workInspectDetailDisposes = workInspectDetailDisposes;
+        }
+
+        public static class WorkInspectDetailDisposesBean implements Serializable{
+            /**
+             * disposeInfo : 处理信息
+             * id : 6846544
+             * pictures : 这里有很多的图片地址
+             * remarkInfo : 备注一下
+             * status : 0
+             * sysWorkInspectDetailId : 941492980165455874
+             */
+
+            private String disposeInfo;
+            private Long id;
+            private String pictures;
+            private String remarkInfo;
+            private int status;
+            private Long sysWorkInspectDetailId;
+
+            public String getDisposeInfo() {
+                return disposeInfo;
+            }
+
+            public void setDisposeInfo(String disposeInfo) {
+                this.disposeInfo = disposeInfo;
+            }
+
+            public Long getId() {
+                return id;
+            }
+
+            public void setId(Long id) {
+                this.id = id;
+            }
+
+            public String getPictures() {
+                return pictures;
+            }
+
+            public void setPictures(String pictures) {
+                this.pictures = pictures;
+            }
+
+            public String getRemarkInfo() {
+                return remarkInfo;
+            }
+
+            public void setRemarkInfo(String remarkInfo) {
+                this.remarkInfo = remarkInfo;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public Long getSysWorkInspectDetailId() {
+                return sysWorkInspectDetailId;
+            }
+
+            public void setSysWorkInspectDetailId(Long sysWorkInspectDetailId) {
+                this.sysWorkInspectDetailId = sysWorkInspectDetailId;
+            }
+        }
+    }
+
+}
+
+
 

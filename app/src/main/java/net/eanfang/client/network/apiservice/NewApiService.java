@@ -85,10 +85,33 @@ public interface NewApiService {
      * 获取设计列表
      */
 
-    String GET_WORK_DESIGN_LIST= BuildConfig.API_HOST + "/yaf_oa/designorder/list";
+    String GET_WORK_DESIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/designorder/list";
 
     /**
      * 获取设计详情
      */
     String GET_WORK_DESIGN_INFO = BuildConfig.API_HOST + "/yaf_oa/designorder/detail";
+
+    /**
+     * 新增工作检查
+     */
+    String ADD_WORK_CHECK = BuildConfig.API_HOST + "/yaf_oa/workinspect/insert";
+
+    /**
+     * 获取检查列表
+     */
+    String GET_WORK_CHECK_LIST = BuildConfig.API_HOST + "/yaf_oa/workinspect/list";
+    /**
+     * 获取检查详情
+     */
+    String GET_WORK_CHECK_INFO = BuildConfig.API_HOST + "/yaf_oa/workinspect/detail";
+    /**
+     * 新增工作检查处理信息
+     */
+    String ADD_WORK_CHECK_DETAIL = BuildConfig.API_HOST + "/yaf_oa/workinspect/insert/dispose";
+
+    /**
+     * 工作检查审核
+     */
+    String GET_WORK_CHCEK_ADUIT = BuildConfig.API_HOST + "/yaf_oa/workinspect/audit";
 }

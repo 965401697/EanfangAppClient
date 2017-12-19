@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -79,20 +80,20 @@ public class LookReportCompleteInfoView extends BaseDialog {
             String[] urls = detailsBean.getPictures().split(",");
 
             if (!TextUtils.isEmpty(urls[0])) {
-                ivPic1.setImageURI(Uri.parse(urls[0]));
+                ivPic1.setImageURI(BuildConfig.OSS_SERVER +Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
             if (!TextUtils.isEmpty(urls[1])) {
-                ivPic2.setImageURI(Uri.parse(urls[1]));
+                ivPic2.setImageURI(BuildConfig.OSS_SERVER +Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(urls[2])) {
-                ivPic3.setImageURI(Uri.parse(urls[2]));
+                ivPic3.setImageURI(BuildConfig.OSS_SERVER +Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);

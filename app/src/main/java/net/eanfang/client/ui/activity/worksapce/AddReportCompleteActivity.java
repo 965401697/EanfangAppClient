@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 
-import com.annimon.stream.Stream;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.util.PhotoUtils;
@@ -20,7 +19,6 @@ import net.eanfang.client.ui.model.WorkAddReportBean;
 import net.eanfang.client.util.OSSUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -116,9 +114,7 @@ public class AddReportCompleteActivity extends BaseActivity {
 
         //处理
         bean.setField5(etInputHandle.getText().toString().trim());
-
-        List<String> urls = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
-        String ursStr = Stream.of(urls).collect(com.annimon.stream.Collectors.joining(","));
+        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

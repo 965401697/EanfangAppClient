@@ -13,8 +13,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField("String", "OSS_SERVER", "\"http://eanfangx.oss-cn-beijing.aliyuncs.com/\"")
-        buildConfigField("String", "OSS_BUCKET", "\"eanfangx\"")
+        buildConfigField("String", "OSS_SERVER", "\"http://eanfang.oss-cn-beijing.aliyuncs.com/\"")
+        buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"http://img-cn-beijing.aliyuncs.com\"")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

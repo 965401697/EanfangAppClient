@@ -8,15 +8,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.config.Config;
 import net.eanfang.client.ui.model.WorkAddCheckBean;
-import net.eanfang.client.util.ImagePerviewUtil;
 import net.eanfang.client.util.StringUtils;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
  * @desc
  */
 
-public class CheckInfoView extends BaseDialog implements View.OnClickListener {
+public class CheckInfoView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)
@@ -56,9 +55,9 @@ public class CheckInfoView extends BaseDialog implements View.OnClickListener {
     SimpleDraweeView ivPic2;
     @BindView(R.id.iv_pic3)
     SimpleDraweeView ivPic3;
-    private WorkAddCheckBean.DetailsBean bean;
+    private WorkAddCheckBean.WorkInspectDetailsBean bean;
 
-    public CheckInfoView(Activity context, boolean isfull, WorkAddCheckBean.DetailsBean bean) {
+    public CheckInfoView(Activity context, boolean isfull, WorkAddCheckBean.WorkInspectDetailsBean bean) {
         super(context, isfull);
         this.mContext = context;
         this.bean = bean;
@@ -76,58 +75,33 @@ public class CheckInfoView extends BaseDialog implements View.OnClickListener {
         tvTitle.setText("检查明细");
         etTitle.setText(bean.getTitle());
         etPosition.setText(bean.getRegion());
-        tvOneName.setText(bean.getBusinessOne());
-        tvTwoName.setText(bean.getBusinessTwo());
-        tvThreeName.setText(bean.getBusinessThree());
+        tvOneName.setText(Config.getConfig().getBusinessName(bean.getBusinessThreeCode()));
+//        tvTwoName.setText(bean.getBusinessTwo());
+//        tvThreeName.setText(bean.getBusinessThree());
         etInputCheckContent.setText(bean.getInfo());
-        ivPic1.setOnClickListener(this);
-        ivPic2.setOnClickListener(this);
-        ivPic3.setOnClickListener(this);
+        if (!StringUtils.isEmpty(bean.getPictures())) {
+            String[] urls = bean.getPictures().split(",");
 
-        if (!TextUtils.isEmpty(bean.getPic1())) {
-            ivPic1.setImageURI(Uri.parse(bean.getPic1()));
-            ivPic1.setVisibility(View.VISIBLE);
-        } else {
-            ivPic1.setVisibility(View.GONE);
-        }
+            if (!TextUtils.isEmpty(urls[0])) {
+                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                ivPic1.setVisibility(View.VISIBLE);
+            } else {
+                ivPic1.setVisibility(View.GONE);
+            }
 
-        if (!TextUtils.isEmpty(bean.getPic2())) {
-            ivPic2.setImageURI(Uri.parse(bean.getPic2()));
-            ivPic2.setVisibility(View.VISIBLE);
-        } else {
-            ivPic2.setVisibility(View.GONE);
-        }
-        if (!TextUtils.isEmpty(bean.getPic3())) {
-            ivPic3.setImageURI(Uri.parse(bean.getPic3()));
-            ivPic3.setVisibility(View.VISIBLE);
-        } else {
-            ivPic3.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(urls[1])) {
+                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                ivPic2.setVisibility(View.VISIBLE);
+            } else {
+                ivPic2.setVisibility(View.GONE);
+            }
+            if (!TextUtils.isEmpty(urls[2])) {
+                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                ivPic3.setVisibility(View.VISIBLE);
+            } else {
+                ivPic3.setVisibility(View.GONE);
+            }
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        ArrayList<String> picList = new ArrayList<String>();
-        switch (v.getId()) {
-            case R.id.iv_pic1:
-                if (!StringUtils.isEmpty(bean.getPic1())) {
-                    picList.add(bean.getPic1());
-                }
-                break;
-            case R.id.iv_pic2:
-                if (!StringUtils.isEmpty(bean.getPic2())) {
-                    picList.add(bean.getPic2());
-                }
-                break;
-            case R.id.iv_pic3:
-                if (!StringUtils.isEmpty(bean.getPic3())) {
-                    picList.add(bean.getPic3());
-                }
-                break;
-            default:
-                break;
-        }
-        ImagePerviewUtil.perviewImage(mContext, picList);
-
-    }
 }

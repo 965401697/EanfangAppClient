@@ -6,26 +6,27 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.google.gson.Gson;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.AddCheckDetailAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.CompanyStaffBean;
 import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.WorkAddCheckBean;
 import net.eanfang.client.ui.widget.CheckInfoView;
@@ -74,12 +75,13 @@ public class CheckActivity extends BaseActivity {
     private OptionsPickerView pvOptions_NoLink;
     private int posistion;
     private List<String> userNameList = new ArrayList<>();
-    private CompanyStaffBean staffBean;
-    private List<CompanyStaffBean.DataBean> userlist = new ArrayList<>();
+    private List<UserEntity> userlist = new ArrayList<>();
     private WorkAddCheckBean bean = new WorkAddCheckBean();
-    private WorkAddCheckBean.DetailsBean detailBean;
-    private List<WorkAddCheckBean.DetailsBean> beanList = new ArrayList<>();
+    private WorkAddCheckBean.WorkInspectDetailsBean detailBean;
+    private List<WorkAddCheckBean.WorkInspectDetailsBean> beanList = new ArrayList<>();
     private AddCheckDetailAdapter maintenanceDetailAdapter;
+    private Long assigneeUserId;
+    private String assigneeOrgCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,22 +136,19 @@ public class CheckActivity extends BaseActivity {
         }
         bean.setTitle(title);
 
-        //用户id
-//        bean.setCreateUser(EanfangApplication.get().getUser().getPersonId());
-
         String endtime = tvEndTime.getText().toString().trim();
         if (TextUtils.isEmpty(endtime)) {
             showToast("请选择截至期限");
             return;
         }
-        bean.setChangeDeadline(endtime);
+        bean.setChangeDeadlineTime(endtime);
 
         String changeContent = etInputChangeWorkContent.getText().toString().trim();
         if (TextUtils.isEmpty(changeContent)) {
             showToast("请填写整改要求");
             return;
         }
-        bean.setChangeRequire(changeContent);
+        bean.setChangeInfo(changeContent);
 
         String receiveUser = tvDependPerson.getText().toString().trim();
         if (TextUtils.isEmpty(receiveUser)) {
@@ -158,18 +157,33 @@ public class CheckActivity extends BaseActivity {
         }
 
         //接收者
-        bean.setReceiveUser(staffBean.getData().get(posistion).getUserId()+"");
-//        bean.setCreateCompanyUid(EanfangApplication.get().getUser().getCompanyId());
+        bean.setAssigneeUserId(assigneeUserId);
+        bean.setAssigneeOrgCode(assigneeOrgCode);
         //手机号
         String phone_num = etPhoneNum.getText().toString().trim();
-        bean.setReceivePhone(phone_num);
-//        bean.setReceiveCompanyUid(EanfangApplication.get().getUser().getCompanyId());
-        bean.setDetails(beanList);
+        // TODO: 2017/12/18 手机号
+//        bean.setReceivePhone(phone_num);
+        bean.setWorkInspectDetails(beanList);
 
         doHttp(new Gson().toJson(bean));
 
     }
 
+
+    /**
+     * 获取公司部门员工信息
+     */
+    private void getData() {
+
+        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
+                .tag(this)
+                .params("id", EanfangApplication.getApplication().getUserId())
+                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .execute(new EanfangCallback<UserEntity>(CheckActivity.this, false, UserEntity.class, true, (list) -> {
+                    userlist = list;
+                    userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
+                }));
+    }
 
     /**
      * 责任人
@@ -185,6 +199,8 @@ public class CheckActivity extends BaseActivity {
                 posistion = options1;
                 etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
                 tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
+                assigneeUserId = userlist.get(posistion).getUserId();
+                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
 
             }
         }).build();
@@ -192,64 +208,56 @@ public class CheckActivity extends BaseActivity {
         pvOptions_NoLink.show();
     }
 
-    /**
-     * 获取公司部门员工信息
-     */
-    private void getData() {
-
-        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
-                .tag(this)
-                .params("depId", "5")
-                .execute(new EanfangCallback<CompanyStaffBean>(this, true) {
-                    @Override
-                    public void onSuccess(CompanyStaffBean bean) {
-                        staffBean = bean;
-                        userlist = staffBean.getData();
-                        for (int i = 0; i < userlist.size(); i++) {
-                            userNameList.add(userlist.get(i).getAccountEntity().getRealName());
-                        }
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                    }
-                });
-
-
-    }
 
     private void doHttp(String jsonString) {
-        EanfangHttp.post(ApiService.ADD_CHECK_WORK_INSPECT)
+        EanfangHttp.post(NewApiService.ADD_WORK_CHECK)
                 .upJson(jsonString)
-                .execute(new EanfangCallback(this, true) {
-                    @Override
-                    public void onSuccess(Object object) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
-                                Bundle bundle = new Bundle();
-                                Message message = new Message();
-                                message.setTitle("检查发送成功");
-                                message.setMsgTitle("您的工作检查已发送成功");
-                                message.setMsgContent("您可以随时通过我的检查查看");
-                                message.setShowOkBtn(true);
-                                message.setShowLogo(true);
-                                message.setTip("");
-                                bundle.putSerializable("message", message);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                                finishSelf();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        Log.e("addworkReportActivity", message.toString());
-                    }
-                });
+                .execute(new EanfangCallback(this, true, JSONObject.class,(bean)->{
+                    runOnUiThread(()->{
+                        Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
+                        Bundle bundle = new Bundle();
+                        Message message = new Message();
+                        message.setTitle("检查发送成功");
+                        message.setMsgTitle("您的工作检查已发送成功");
+                        message.setMsgContent("您可以随时通过我的检查查看");
+                        message.setShowOkBtn(true);
+                        message.setShowLogo(true);
+                        message.setTip("");
+                        bundle.putSerializable("message", message);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finishSelf();
+                    });
+                })
+//                {
+//                    @Override
+//                    public void onSuccess(Object object) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
+//                                Bundle bundle = new Bundle();
+//                                Message message = new Message();
+//                                message.setTitle("检查发送成功");
+//                                message.setMsgTitle("您的工作检查已发送成功");
+//                                message.setMsgContent("您可以随时通过我的检查查看");
+//                                message.setShowOkBtn(true);
+//                                message.setShowLogo(true);
+//                                message.setTip("");
+//                                bundle.putSerializable("message", message);
+//                                intent.putExtras(bundle);
+//                                startActivity(intent);
+//                                finishSelf();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        Log.e("addworkReportActivity", message.toString());
+//                    }
+//                }
+                );
 
     }
 
@@ -260,7 +268,7 @@ public class CheckActivity extends BaseActivity {
             return;
         }
 
-        detailBean = (WorkAddCheckBean.DetailsBean) data.getSerializableExtra("result");
+        detailBean = (WorkAddCheckBean.WorkInspectDetailsBean) data.getSerializableExtra("result");
         beanList.add(detailBean);
         checkDetailList.addOnItemTouchListener(new OnItemClickListener() {
             @Override

@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.google.gson.Gson;
 import com.yaf.model.LoginBean;
 
@@ -85,11 +84,7 @@ public class DesignActivity extends BaseActivity {
     @BindView(R.id.et_remark)
     EditText et_remark;
 
-    /**
-     * s
-     * 选择器
-     */
-    private OptionsPickerView optionsPicker;
+
     /**
      * 经度
      */

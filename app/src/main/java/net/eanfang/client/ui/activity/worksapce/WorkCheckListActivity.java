@@ -7,17 +7,19 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.okgo.model.HttpParams;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.WorkCheckListFragment;
 import net.eanfang.client.ui.model.WorkCheckListBean;
 import net.eanfang.client.util.GetConstDataUtils;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,46 +110,60 @@ public class WorkCheckListActivity extends BaseActivity {
         if (!currentFragment.getmTitle().equals("全部")) {
             status = GetConstDataUtils.getCheckReadStatusByStr(currentFragment.getmTitle());
         }
-        HttpParams params = new HttpParams();
-        params.put("page", page);
-        params.put("rows", 10);
-        params.put("type", type);
-        params.put("status", status);
-        EanfangHttp.get(ApiService.GET_WORK_INSPECT_LIST)
-                .tag(this)
-                .params(params)
-                .execute(new EanfangCallback<WorkCheckListBean>(this, true) {
-
-                    @Override
-                    public void onSuccess(final WorkCheckListBean bean) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                workChenkBean = bean;
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
+        QueryEntry queryEntry = new QueryEntry();
+        if ("0".equals(type)) {
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        } else if ("1".equals(type)) {
+            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        } else if ("2".equals(type)) {
+            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
+        if (!currentFragment.getmTitle().equals("全部")) {
+            queryEntry.getEquals().put("status", status);
+        }
+        queryEntry.setPage(page);
+        queryEntry.setSize(5);
+        EanfangHttp.post(NewApiService.GET_WORK_CHECK_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<WorkCheckListBean>(this, true,WorkCheckListBean.class,(bean)->{
+                    runOnUiThread(()->{
+                        workChenkBean = bean;
                         currentFragment.onDataReceived();
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        super.onNoData(message);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                WorkCheckListBean bean = new WorkCheckListBean();
-                                bean.setAll(new ArrayList<WorkCheckListBean.AllBean>());
-                                setWorkChenkBean(bean);
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
-                });
+                    });
+                })
+//                {
+//
+//                    @Override
+//                    public void onSuccess(final WorkCheckListBean bean) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                workChenkBean = bean;
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        currentFragment.onDataReceived();
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        super.onNoData(message);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                WorkCheckListBean bean = new WorkCheckListBean();
+//                                bean.setList(new ArrayList<WorkCheckListBean.ListBean>());
+//                                setWorkChenkBean(bean);
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//                }
+                );
 
     }
 

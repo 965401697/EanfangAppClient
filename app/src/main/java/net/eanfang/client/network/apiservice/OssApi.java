@@ -14,5 +14,5 @@ public interface OssApi {
     /**
      * oss 的sts生成器url
      */
-    String STS_URL = BuildConfig.API_HOST + "/stsgen";
+    String STS_URL = BuildConfig.API_HOST + "/yaf_sys/oss/sts";
 }

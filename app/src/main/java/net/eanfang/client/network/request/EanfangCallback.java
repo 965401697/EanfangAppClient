@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.okgo.callback.StringCallback;
@@ -184,11 +183,11 @@ public class EanfangCallback<T> extends StringCallback {
 
                     if (resultArray != null) {
                         for (int i = 0; i < resultArray.size(); i++) {
-                            list.add(JSONObject.parseObject(resultArray.getString(i), clazz, Feature.DisableCircularReferenceDetect));
+                            list.add(JSONObject.parseObject(resultArray.getString(i), clazz));
                         }
                         onSuccessArray(list);
                     } else if (resultObject != null) {
-                        result = JSONObject.parseObject(resultObject.toJSONString(), clazz, Feature.DisableCircularReferenceDetect);
+                        result = JSONObject.parseObject(resultObject.toJSONString(), clazz);
                         onSuccess(result);
                     }else {
                         onSuccess(result);

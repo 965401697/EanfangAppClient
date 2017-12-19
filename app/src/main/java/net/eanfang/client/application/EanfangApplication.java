@@ -66,7 +66,7 @@ public class EanfangApplication extends CustomeApplication {
         XGPushConfig.enableDebug(this, true);
         //信鸽注册代码
         // TODO: 2017/11/8 更换手机号
-        XGPushManager.registerPush(this, "654321", new XGIOperateCallback() {
+        XGPushManager.registerPush(this, getUser().getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
                 Log.d("TPush", "注册成功，设备token为：" + data);

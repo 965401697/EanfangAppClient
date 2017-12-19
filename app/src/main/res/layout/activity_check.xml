@@ -157,7 +157,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical"
                 android:padding="15dp">
 
@@ -202,7 +201,7 @@
                     android:layout_height="wrap_content"
 
                     android:text="工作协同"
-                    android:textColor="@color/black"
+                    android:textColor="@color/client_form_title_color"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -228,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/client"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -267,7 +266,7 @@
                         android:gravity="right"
                         android:inputType="phone"
                         android:text=""
-                        android:textColor="@color/font_color"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -277,11 +276,10 @@
 
             <Button
                 android:id="@+id/ll_comit"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="30dp"
                 android:background="@drawable/bg_ll_btn"
                 android:text="提交" />
         </LinearLayout>

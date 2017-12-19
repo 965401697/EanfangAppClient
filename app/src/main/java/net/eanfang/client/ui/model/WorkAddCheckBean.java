@@ -13,53 +13,24 @@ import java.util.List;
 
 public class WorkAddCheckBean implements Serializable {
 
+
     /**
-     * changeDeadline : 2017-09-05 13:29:19
-     * changeRequire : 整改需求
-     * companyName : 北京家乐福双井
-     * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-     * createDate : 2017-09-05 13:29:19
-     * createUser : 98b22d8a875444f4b454e5a215584dbc
-     * details : [{"businessOne":"电视监控","businessThree":"模拟枪型摄象机","businessTwo":"摄像采集","createCompanyUid":"8c0f3a462d95410b81e20ee63fd63c41","createDate":"2017-09-05 13:29:20","createUser":"98b22d8a875444f4b454e5a215584dbc","id":1,"info":"工作检查内容1","pic1":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic2":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","pic3":"http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png","region":"电视监控区域","status":"0","title":"工作检查明细标题2","uid":"9db976d5f92249508ad1a236a5b0dc03","workInspectUid":"457aa731896a40659e0570180f580be9"}]
-     * id : 1
-     * receiveCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-     * receivePhone : 17600119928
-     * receiveUser : 98b22d8a875444f4b454e5a215584dbc
-     * status : 0
-     * title : 工作检查标题
-     * uid : 457aa731896a40659e0570180f580be9
+     * companyName : 北京法案视
+     * title : 检查设备
+     * changeDeadlineTime : 2020-11-03
+     * changeInfo : 设备移位
+     * assigneeUserId : 1
+     * assigneeOrgCode : c.c1.2
+     * workInspectDetails : [{"title":"整改设备摆放","region":"超市门口","businessThreeCode":"1.11.13","info":"检查设备是否摆放成功","pictures":"这里有多张图片地址"},{"title":"设备是否运行","region":"厂库内","businessThreeCode":"1.11.13","info":"检查设备是否运行正常","pictures":"这里有多张图片地址"}]
      */
 
-    private String changeDeadline;
-    private String changeRequire;
     private String companyName;
-    private String createCompanyUid;
-    private String createDate;
-    private String createUser;
-    private int id;
-    private String receiveCompanyUid;
-    private String receivePhone;
-    private String receiveUser;
-    private String status;
     private String title;
-    private String uid;
-    private List<DetailsBean> details;
-
-    public String getChangeDeadline() {
-        return changeDeadline;
-    }
-
-    public void setChangeDeadline(String changeDeadline) {
-        this.changeDeadline = changeDeadline;
-    }
-
-    public String getChangeRequire() {
-        return changeRequire;
-    }
-
-    public void setChangeRequire(String changeRequire) {
-        this.changeRequire = changeRequire;
-    }
+    private String changeDeadlineTime;
+    private String changeInfo;
+    private Long assigneeUserId;
+    private String assigneeOrgCode;
+    private List<WorkInspectDetailsBean> workInspectDetails;
 
     public String getCompanyName() {
         return companyName;
@@ -67,70 +38,6 @@ public class WorkAddCheckBean implements Serializable {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
-    }
-
-    public String getCreateCompanyUid() {
-        return createCompanyUid;
-    }
-
-    public void setCreateCompanyUid(String createCompanyUid) {
-        this.createCompanyUid = createCompanyUid;
-    }
-
-    public String getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getReceiveCompanyUid() {
-        return receiveCompanyUid;
-    }
-
-    public void setReceiveCompanyUid(String receiveCompanyUid) {
-        this.receiveCompanyUid = receiveCompanyUid;
-    }
-
-    public String getReceivePhone() {
-        return receivePhone;
-    }
-
-    public void setReceivePhone(String receivePhone) {
-        this.receivePhone = receivePhone;
-    }
-
-    public String getReceiveUser() {
-        return receiveUser;
-    }
-
-    public void setReceiveUser(String receiveUser) {
-        this.receiveUser = receiveUser;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getTitle() {
@@ -141,145 +48,67 @@ public class WorkAddCheckBean implements Serializable {
         this.title = title;
     }
 
-    public String getUid() {
-        return uid;
+    public String getChangeDeadlineTime() {
+        return changeDeadlineTime;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setChangeDeadlineTime(String changeDeadlineTime) {
+        this.changeDeadlineTime = changeDeadlineTime;
     }
 
-    public List<DetailsBean> getDetails() {
-        return details;
+    public String getChangeInfo() {
+        return changeInfo;
     }
 
-    public void setDetails(List<DetailsBean> details) {
-        this.details = details;
+    public void setChangeInfo(String changeInfo) {
+        this.changeInfo = changeInfo;
     }
 
-    public static class DetailsBean implements Serializable {
+    public Long getAssigneeUserId() {
+        return assigneeUserId;
+    }
+
+    public void setAssigneeUserId(Long assigneeUserId) {
+        this.assigneeUserId = assigneeUserId;
+    }
+
+    public String getAssigneeOrgCode() {
+        return assigneeOrgCode;
+    }
+
+    public void setAssigneeOrgCode(String assigneeOrgCode) {
+        this.assigneeOrgCode = assigneeOrgCode;
+    }
+
+    public List<WorkInspectDetailsBean> getWorkInspectDetails() {
+        return workInspectDetails;
+    }
+
+    public void setWorkInspectDetails(List<WorkInspectDetailsBean> workInspectDetails) {
+        this.workInspectDetails = workInspectDetails;
+    }
+
+    public static class WorkInspectDetailsBean implements Serializable{
         /**
-         * businessOne : 电视监控
-         * businessThree : 模拟枪型摄象机
-         * businessTwo : 摄像采集
-         * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-         * createDate : 2017-09-05 13:29:20
-         * createUser : 98b22d8a875444f4b454e5a215584dbc
-         * id : 1
-         * info : 工作检查内容1
-         * pic1 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-         * pic2 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-         * pic3 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-         * region : 电视监控区域
-         * status : 0
-         * title : 工作检查明细标题2
-         * uid : 9db976d5f92249508ad1a236a5b0dc03
-         * workInspectUid : 457aa731896a40659e0570180f580be9
+         * title : 整改设备摆放
+         * region : 超市门口
+         * businessThreeCode : 1.11.13
+         * info : 检查设备是否摆放成功
+         * pictures : 这里有多张图片地址
          */
 
-        private String businessOne;
-        private String businessThree;
-        private String businessTwo;
-        private String createCompanyUid;
-        private String createDate;
-        private String createUser;
-        private int id;
-        private String info;
-        private String pic1;
-        private String pic2;
-        private String pic3;
-        private String region;
-        private String status;
         private String title;
-        private String uid;
-        private String workInspectUid;
+        private String region;
+        private String businessThreeCode;
+        private String info;
+        private String pictures;
 
-        public String getBusinessOne() {
-            return businessOne;
+        public String getTitle() {
+            return title;
         }
 
-        public void setBusinessOne(String businessOne) {
-            this.businessOne = businessOne;
-        }
-
-        public String getBusinessThree() {
-            return businessThree;
-        }
-
-        public void setBusinessThree(String businessThree) {
-            this.businessThree = businessThree;
-        }
-
-        public String getBusinessTwo() {
-            return businessTwo;
-        }
-
-        public void setBusinessTwo(String businessTwo) {
-            this.businessTwo = businessTwo;
-        }
-
-        public String getCreateCompanyUid() {
-            return createCompanyUid;
-        }
-
-        public void setCreateCompanyUid(String createCompanyUid) {
-            this.createCompanyUid = createCompanyUid;
-        }
-
-        public String getCreateDate() {
-            return createDate;
-        }
-
-        public void setCreateDate(String createDate) {
-            this.createDate = createDate;
-        }
-
-        public String getCreateUser() {
-            return createUser;
-        }
-
-        public void setCreateUser(String createUser) {
-            this.createUser = createUser;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getInfo() {
-            return info;
-        }
-
-        public void setInfo(String info) {
-            this.info = info;
-        }
-
-        public String getPic1() {
-            return pic1;
-        }
-
-        public void setPic1(String pic1) {
-            this.pic1 = pic1;
-        }
-
-        public String getPic2() {
-            return pic2;
-        }
-
-        public void setPic2(String pic2) {
-            this.pic2 = pic2;
-        }
-
-        public String getPic3() {
-            return pic3;
-        }
-
-        public void setPic3(String pic3) {
-            this.pic3 = pic3;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
         public String getRegion() {
@@ -290,36 +119,28 @@ public class WorkAddCheckBean implements Serializable {
             this.region = region;
         }
 
-        public String getStatus() {
-            return status;
+        public String getBusinessThreeCode() {
+            return businessThreeCode;
         }
 
-        public void setStatus(String status) {
-            this.status = status;
+        public void setBusinessThreeCode(String businessThreeCode) {
+            this.businessThreeCode = businessThreeCode;
         }
 
-        public String getTitle() {
-            return title;
+        public String getInfo() {
+            return info;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setInfo(String info) {
+            this.info = info;
         }
 
-        public String getUid() {
-            return uid;
+        public String getPictures() {
+            return pictures;
         }
 
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
-
-        public String getWorkInspectUid() {
-            return workInspectUid;
-        }
-
-        public void setWorkInspectUid(String workInspectUid) {
-            this.workInspectUid = workInspectUid;
+        public void setPictures(String pictures) {
+            this.pictures = pictures;
         }
     }
 }

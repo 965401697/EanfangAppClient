@@ -13,180 +13,518 @@ import java.util.List;
 
 public class WorkCheckListBean implements Serializable {
 
-        private List<AllBean> all;
 
-        public List<AllBean> getAll() {
-            return all;
+    /**
+     * currPage : 1
+     * list : [{"assigneeOrg":{"orgCode":"c.c1.2","orgName":"维修部"},"assigneeOrgCode":"c.c1.2","assigneeUser":{"accId":1,"accountEntity":{"accId":1,"mobile":"18500320187","realName":"jornlin"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1},"assigneeUserId":1,"changeDeadlineTime":"2020-11-03 00:00","changeInfo":"设备移位","companyName":"北京法案视","createCompany":{"orgId":1100,"orgName":"易安防北京运营公司"},"createCompanyId":1100,"createOrg":{"orgCode":"c.c1.2","orgName":"维修部"},"createOrgCode":"c.c1.2","createTime":"2017-12-15 10:19","createTopCompanyId":1000,"createUser":{"accId":2,"accountEntity":{"accId":2,"realName":"李旭"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":2},"createUserId":2,"id":"941492977858588673","status":0,"title":"检查设备"}]
+     * pageSize : 2147483647
+     * totalCount : 1
+     * totalPage : 1
+     */
+
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
+
+    public int getCurrPage() {
+        return currPage;
+    }
+
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean implements Serializable{
+        /**
+         * assigneeOrg : {"orgCode":"c.c1.2","orgName":"维修部"}
+         * assigneeOrgCode : c.c1.2
+         * assigneeUser : {"accId":1,"accountEntity":{"accId":1,"mobile":"18500320187","realName":"jornlin"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1}
+         * assigneeUserId : 1
+         * changeDeadlineTime : 2020-11-03 00:00
+         * changeInfo : 设备移位
+         * companyName : 北京法案视
+         * createCompany : {"orgId":1100,"orgName":"易安防北京运营公司"}
+         * createCompanyId : 1100
+         * createOrg : {"orgCode":"c.c1.2","orgName":"维修部"}
+         * createOrgCode : c.c1.2
+         * createTime : 2017-12-15 10:19
+         * createTopCompanyId : 1000
+         * createUser : {"accId":2,"accountEntity":{"accId":2,"realName":"李旭"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":2}
+         * createUserId : 2
+         * id : 941492977858588673
+         * status : 0
+         * title : 检查设备
+         */
+
+        private AssigneeOrgBean assigneeOrg;
+        private String assigneeOrgCode;
+        private AssigneeUserBean assigneeUser;
+        private Long assigneeUserId;
+        private String changeDeadlineTime;
+        private String changeInfo;
+        private String companyName;
+        private CreateCompanyBean createCompany;
+        private Long createCompanyId;
+        private CreateOrgBean createOrg;
+        private String createOrgCode;
+        private String createTime;
+        private Long createTopCompanyId;
+        private CreateUserBean createUser;
+        private Long createUserId;
+        private Long id;
+        private int status;
+        private String title;
+
+        public AssigneeOrgBean getAssigneeOrg() {
+            return assigneeOrg;
         }
 
-        public void setAll(List<AllBean> all) {
-            this.all = all;
+        public void setAssigneeOrg(AssigneeOrgBean assigneeOrg) {
+            this.assigneeOrg = assigneeOrg;
         }
 
-        public static class AllBean implements Serializable {
+        public String getAssigneeOrgCode() {
+            return assigneeOrgCode;
+        }
+
+        public void setAssigneeOrgCode(String assigneeOrgCode) {
+            this.assigneeOrgCode = assigneeOrgCode;
+        }
+
+        public AssigneeUserBean getAssigneeUser() {
+            return assigneeUser;
+        }
+
+        public void setAssigneeUser(AssigneeUserBean assigneeUser) {
+            this.assigneeUser = assigneeUser;
+        }
+
+        public Long getAssigneeUserId() {
+            return assigneeUserId;
+        }
+
+        public void setAssigneeUserId(Long assigneeUserId) {
+            this.assigneeUserId = assigneeUserId;
+        }
+
+        public String getChangeDeadlineTime() {
+            return changeDeadlineTime;
+        }
+
+        public void setChangeDeadlineTime(String changeDeadlineTime) {
+            this.changeDeadlineTime = changeDeadlineTime;
+        }
+
+        public String getChangeInfo() {
+            return changeInfo;
+        }
+
+        public void setChangeInfo(String changeInfo) {
+            this.changeInfo = changeInfo;
+        }
+
+        public String getCompanyName() {
+            return companyName;
+        }
+
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
+        }
+
+        public CreateCompanyBean getCreateCompany() {
+            return createCompany;
+        }
+
+        public void setCreateCompany(CreateCompanyBean createCompany) {
+            this.createCompany = createCompany;
+        }
+
+        public Long getCreateCompanyId() {
+            return createCompanyId;
+        }
+
+        public void setCreateCompanyId(Long createCompanyId) {
+            this.createCompanyId = createCompanyId;
+        }
+
+        public CreateOrgBean getCreateOrg() {
+            return createOrg;
+        }
+
+        public void setCreateOrg(CreateOrgBean createOrg) {
+            this.createOrg = createOrg;
+        }
+
+        public String getCreateOrgCode() {
+            return createOrgCode;
+        }
+
+        public void setCreateOrgCode(String createOrgCode) {
+            this.createOrgCode = createOrgCode;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public Long getCreateTopCompanyId() {
+            return createTopCompanyId;
+        }
+
+        public void setCreateTopCompanyId(Long createTopCompanyId) {
+            this.createTopCompanyId = createTopCompanyId;
+        }
+
+        public CreateUserBean getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(CreateUserBean createUser) {
+            this.createUser = createUser;
+        }
+
+        public Long getCreateUserId() {
+            return createUserId;
+        }
+
+        public void setCreateUserId(Long createUserId) {
+            this.createUserId = createUserId;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public static class AssigneeOrgBean implements Serializable{
             /**
-             * changeDeadline : 2017-09-05 13:29:19
-             * changeRequire : 整改需求
-             * companyName : 北京家乐福双井
-             * creatUserName : 林技师
-             * createCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-             * createDate : 2017-09-05 13:29:19
-             * createUser : 98b22d8a875444f4b454e5a215584dbc
-             * id : 1
-             * pic1 : http://eanfangx.oss-cn-beijing.aliyuncs.com/5ee82a9a99b041d9b8edae4a340b8215.png
-             * receiveCompanyUid : 8c0f3a462d95410b81e20ee63fd63c41
-             * receivePhone : 17600119928
-             * receiveUser : 98b22d8a875444f4b454e5a215584dbc
-             * receiveUserName : 林技师
-             * status : 0
-             * title : 工作检查标题
-             * uid : 457aa731896a40659e0570180f580be9
+             * orgCode : c.c1.2
+             * orgName : 维修部
              */
 
-            private String changeDeadline;
-            private String changeRequire;
-            private String companyName;
-            private String creatUserName;
-            private String createCompanyUid;
-            private String createDate;
-            private String createUser;
-            private int id;
-            private String pic1;
-            private String receiveCompanyUid;
-            private String receivePhone;
-            private String receiveUser;
-            private String receiveUserName;
-            private String status;
-            private String title;
-            private String uid;
+            private String orgCode;
+            private String orgName;
 
-            public String getChangeDeadline() {
-                return changeDeadline;
+            public String getOrgCode() {
+                return orgCode;
             }
 
-            public void setChangeDeadline(String changeDeadline) {
-                this.changeDeadline = changeDeadline;
+            public void setOrgCode(String orgCode) {
+                this.orgCode = orgCode;
             }
 
-            public String getChangeRequire() {
-                return changeRequire;
+            public String getOrgName() {
+                return orgName;
             }
 
-            public void setChangeRequire(String changeRequire) {
-                this.changeRequire = changeRequire;
+            public void setOrgName(String orgName) {
+                this.orgName = orgName;
+            }
+        }
+
+        public static class AssigneeUserBean implements Serializable{
+            /**
+             * accId : 1
+             * accountEntity : {"accId":1,"mobile":"18500320187","realName":"jornlin"}
+             * companyAdmin : false
+             * superAdmin : false
+             * sysAdmin : false
+             * userId : 1
+             */
+
+            private Long accId;
+            private AccountEntityBean accountEntity;
+            private boolean companyAdmin;
+            private boolean superAdmin;
+            private boolean sysAdmin;
+            private Long userId;
+
+            public Long getAccId() {
+                return accId;
             }
 
-            public String getCompanyName() {
-                return companyName;
+            public void setAccId(Long accId) {
+                this.accId = accId;
             }
 
-            public void setCompanyName(String companyName) {
-                this.companyName = companyName;
+            public AccountEntityBean getAccountEntity() {
+                return accountEntity;
             }
 
-            public String getCreatUserName() {
-                return creatUserName;
+            public void setAccountEntity(AccountEntityBean accountEntity) {
+                this.accountEntity = accountEntity;
             }
 
-            public void setCreatUserName(String creatUserName) {
-                this.creatUserName = creatUserName;
+            public boolean isCompanyAdmin() {
+                return companyAdmin;
             }
 
-            public String getCreateCompanyUid() {
-                return createCompanyUid;
+            public void setCompanyAdmin(boolean companyAdmin) {
+                this.companyAdmin = companyAdmin;
             }
 
-            public void setCreateCompanyUid(String createCompanyUid) {
-                this.createCompanyUid = createCompanyUid;
+            public boolean isSuperAdmin() {
+                return superAdmin;
             }
 
-            public String getCreateDate() {
-                return createDate;
+            public void setSuperAdmin(boolean superAdmin) {
+                this.superAdmin = superAdmin;
             }
 
-            public void setCreateDate(String createDate) {
-                this.createDate = createDate;
+            public boolean isSysAdmin() {
+                return sysAdmin;
             }
 
-            public String getCreateUser() {
-                return createUser;
+            public void setSysAdmin(boolean sysAdmin) {
+                this.sysAdmin = sysAdmin;
             }
 
-            public void setCreateUser(String createUser) {
-                this.createUser = createUser;
+            public Long getUserId() {
+                return userId;
             }
 
-            public int getId() {
-                return id;
+            public void setUserId(Long userId) {
+                this.userId = userId;
             }
 
-            public void setId(int id) {
-                this.id = id;
+            public static class AccountEntityBean implements Serializable{
+                /**
+                 * accId : 1
+                 * mobile : 18500320187
+                 * realName : jornlin
+                 */
+
+                private Long accId;
+                private String mobile;
+                private String realName;
+
+                public Long getAccId() {
+                    return accId;
+                }
+
+                public void setAccId(Long accId) {
+                    this.accId = accId;
+                }
+
+                public String getMobile() {
+                    return mobile;
+                }
+
+                public void setMobile(String mobile) {
+                    this.mobile = mobile;
+                }
+
+                public String getRealName() {
+                    return realName;
+                }
+
+                public void setRealName(String realName) {
+                    this.realName = realName;
+                }
+            }
+        }
+
+        public static class CreateCompanyBean implements Serializable{
+            /**
+             * orgId : 1100
+             * orgName : 易安防北京运营公司
+             */
+
+            private Long orgId;
+            private String orgName;
+
+            public Long getOrgId() {
+                return orgId;
             }
 
-            public String getPic1() {
-                return pic1;
+            public void setOrgId(Long orgId) {
+                this.orgId = orgId;
             }
 
-            public void setPic1(String pic1) {
-                this.pic1 = pic1;
+            public String getOrgName() {
+                return orgName;
             }
 
-            public String getReceiveCompanyUid() {
-                return receiveCompanyUid;
+            public void setOrgName(String orgName) {
+                this.orgName = orgName;
+            }
+        }
+
+        public static class CreateOrgBean implements Serializable{
+            /**
+             * orgCode : c.c1.2
+             * orgName : 维修部
+             */
+
+            private String orgCode;
+            private String orgName;
+
+            public String getOrgCode() {
+                return orgCode;
             }
 
-            public void setReceiveCompanyUid(String receiveCompanyUid) {
-                this.receiveCompanyUid = receiveCompanyUid;
+            public void setOrgCode(String orgCode) {
+                this.orgCode = orgCode;
             }
 
-            public String getReceivePhone() {
-                return receivePhone;
+            public String getOrgName() {
+                return orgName;
             }
 
-            public void setReceivePhone(String receivePhone) {
-                this.receivePhone = receivePhone;
+            public void setOrgName(String orgName) {
+                this.orgName = orgName;
+            }
+        }
+
+        public static class CreateUserBean implements Serializable{
+            /**
+             * accId : 2
+             * accountEntity : {"accId":2,"realName":"李旭"}
+             * companyAdmin : false
+             * superAdmin : false
+             * sysAdmin : false
+             * userId : 2
+             */
+
+            private Long accId;
+            private AccountEntityBeanX accountEntity;
+            private boolean companyAdmin;
+            private boolean superAdmin;
+            private boolean sysAdmin;
+            private Long userId;
+
+            public Long getAccId() {
+                return accId;
             }
 
-            public String getReceiveUser() {
-                return receiveUser;
+            public void setAccId(Long accId) {
+                this.accId = accId;
             }
 
-            public void setReceiveUser(String receiveUser) {
-                this.receiveUser = receiveUser;
+            public AccountEntityBeanX getAccountEntity() {
+                return accountEntity;
             }
 
-            public String getReceiveUserName() {
-                return receiveUserName;
+            public void setAccountEntity(AccountEntityBeanX accountEntity) {
+                this.accountEntity = accountEntity;
             }
 
-            public void setReceiveUserName(String receiveUserName) {
-                this.receiveUserName = receiveUserName;
+            public boolean isCompanyAdmin() {
+                return companyAdmin;
             }
 
-            public String getStatus() {
-                return status;
+            public void setCompanyAdmin(boolean companyAdmin) {
+                this.companyAdmin = companyAdmin;
             }
 
-            public void setStatus(String status) {
-                this.status = status;
+            public boolean isSuperAdmin() {
+                return superAdmin;
             }
 
-            public String getTitle() {
-                return title;
+            public void setSuperAdmin(boolean superAdmin) {
+                this.superAdmin = superAdmin;
             }
 
-            public void setTitle(String title) {
-                this.title = title;
+            public boolean isSysAdmin() {
+                return sysAdmin;
             }
 
-            public String getUid() {
-                return uid;
+            public void setSysAdmin(boolean sysAdmin) {
+                this.sysAdmin = sysAdmin;
             }
 
-            public void setUid(String uid) {
-                this.uid = uid;
+            public Long getUserId() {
+                return userId;
+            }
+
+            public void setUserId(Long userId) {
+                this.userId = userId;
+            }
+
+            public static class AccountEntityBeanX implements Serializable{
+                /**
+                 * accId : 2
+                 * realName : 李旭
+                 */
+
+                private Long accId;
+                private String realName;
+
+                public Long getAccId() {
+                    return accId;
+                }
+
+                public void setAccId(Long accId) {
+                    this.accId = accId;
+                }
+
+                public String getRealName() {
+                    return realName;
+                }
+
+                public void setRealName(String realName) {
+                    this.realName = realName;
+                }
             }
         }
     }
+}
+
 
