@@ -17,6 +17,9 @@ android {
         buildConfigField("String", "TYPE", "\"client\"")
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
+        buildConfigField("String", "OSS_SERVER", "\"http://eanfang.oss-cn-beijing.aliyuncs.com/\"")
+        buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
+        buildConfigField("String", "OSS_ENDPOINT", "\"http://img-cn-beijing.aliyuncs.com\"")
 
 //        buildConfigField("String", "HOST", "\"http://106.14.44.213:8080/eanfang/\"")
 //        buildConfigField("String", "API_HOST", "\"http://106.14.44.213:8080/eanfang/app/\"")

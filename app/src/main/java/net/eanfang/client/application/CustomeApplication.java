@@ -16,6 +16,7 @@ import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupp
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.model.LoginBean;
 
+import net.eanfang.client.config.FastjsonConfig;
 import net.eanfang.client.util.FrecsoImagePipelineUtil;
 import net.eanfang.client.util.message.J_MessageVerify;
 
@@ -124,7 +125,7 @@ public abstract class CustomeApplication extends MultiDexApplication {
     }
 
     public void saveUser(LoginBean user) {
-        set(LoginBean.class.getName(), user);
+        set(LoginBean.class.getName(), JSONObject.toJSONString(user, FastjsonConfig.config));
     }
 
     public LoginBean getUser() {

@@ -80,10 +80,10 @@ public class MyFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        initDatas();
     }
 
-    public void initData() {
+    public void initDatas() {
         LoginBean user = EanfangApplication.getApplication().getUser();
         tv_user_name.setText(user.getAccount().getNickName());
 

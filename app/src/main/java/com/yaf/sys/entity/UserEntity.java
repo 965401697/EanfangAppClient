@@ -5,13 +5,13 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.mobsandgeeks.saripaar.annotation.Digits;
-
-import org.greenrobot.greendao.annotation.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,20 +32,17 @@ public class UserEntity implements Serializable {
     //用户ID
     //@TableField(value = "user_id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER，普通自增长使用IdType.ID_AUTO
-
     @TableId(value = "user_id", type = IdType.ID_WORKER)
     private Long userId;
 
     //账号ID
     //@TableField(value = "acc_id")
-
     @NotNull
     @Digits(integer = 19, fraction = 0)
     private Long accId;
 
     //状态 0：正常  1：禁用  2：删除 3:禁用且删除
     //@TableField(value = "status")
-
     @Digits(integer = 3, fraction = 0)
     private Integer status;
 
@@ -66,10 +63,19 @@ public class UserEntity implements Serializable {
     @Digits(integer = 19, fraction = 0)
     private Long departmentId;
 
-    //注册类别0系统用户,1个人用户,2技师用户
-    //@TableField(value = "reg_type")
+    //归属类型
+    @Getter
+    @Setter
+    //@TableField(value = "belong_type")
     @Digits(integer = 3, fraction = 0)
-    private Integer regType;
+    private Integer belongType;
+
+    //账号类别Const.UserType
+    //@TableField(value = "user_type")
+    @Digits(integer = 3, fraction = 0)
+    @Getter
+    @Setter
+    private Integer userType;
 
     //创建人
     //@TableField(value = "create_user")
@@ -173,20 +179,6 @@ public class UserEntity implements Serializable {
      */
     public Long getDepartmentId() {
         return departmentId;
-    }
-
-    /**
-     * 设置：注册类别0系统用户,1个人用户,2技师用户
-     */
-    public void setRegType(Integer regType) {
-        this.regType = regType;
-    }
-
-    /**
-     * 获取：注册类别0系统用户,1个人用户,2技师用户
-     */
-    public Integer getRegType() {
-        return regType;
     }
 
     /**
@@ -302,9 +294,36 @@ public class UserEntity implements Serializable {
     @TableField(exist = false)
     private OrgEntity departmentEntity;
 
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof UserEntity) {
+            if (this.userId == null || other == null)
+                return false;
+
+            return this.userId.equals(((UserEntity) other).userId);
+        }
+        return false;
+    }
+
+    public final static String TOP_COMPANY_ID = "top_company_id";
+    public final static String COMPANY_ID = "company_id";
+    public final static String DEPARTMENT_ID = "department_id";
+    public final static String USER_ID = "user_id";
+    public final static String BELONG_TYPE = "belong_type";
+    public final static String ACC_ID = "acc_id";
 
 }

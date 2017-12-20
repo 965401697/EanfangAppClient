@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
@@ -296,6 +297,11 @@ public class AccountEntity implements Serializable {
         this.defaultUser = defaultUser;
     }
 
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    List<OrgEntity> havingCompanys;
+    
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);

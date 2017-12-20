@@ -1,7 +1,5 @@
 package net.eanfang.client.application;
 
-import android.util.Log;
-
 import com.camera.CameraApplication;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -15,9 +13,6 @@ import com.okgo.cookie.store.DBCookieStore;
 import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.client.util.FrecsoImagePipelineUtil;
@@ -47,6 +42,8 @@ public class EanfangApplication extends CustomeApplication {
         mEanfangApplication = this;
         initConfig();
         initOkGo();
+//        initXinGe();
+
         CameraApplication.init(this, true);
     }
 
@@ -58,27 +55,8 @@ public class EanfangApplication extends CustomeApplication {
         LocationUtil.get().init(this);
         //bugly初始化
         CrashReport.initCrashReport(getApplicationContext(), "6f03b7d57f", false);
-        initXinGe();
     }
 
-    private void initXinGe() {
-        //开启信鸽日志输出
-        XGPushConfig.enableDebug(this, true);
-        //信鸽注册代码
-        // TODO: 2017/11/8 更换手机号
-        XGPushManager.registerPush(this, getUser().getAccount().getMobile(), new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                Log.d("TPush", "注册成功，设备token为：" + data);
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-            }
-        });
-
-    }
 
     public void initOkGo() {
 

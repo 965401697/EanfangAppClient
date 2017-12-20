@@ -3,10 +3,14 @@ package net.eanfang.client.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
@@ -47,6 +51,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
+        initXinGe();
         initFragment();
         getBaseData();
         getConst();
@@ -146,5 +151,25 @@ public class MainActivity extends BaseActivity {
                     Config.getConfig().setConstBean(bean);
                 }));
     }
+
+    private void initXinGe() {
+        //开启信鸽日志输出
+        XGPushConfig.enableDebug(this, true);
+        //信鸽注册代码
+        // TODO: 2017/11/8 更换手机号
+        XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+
+    }
+
 }
 

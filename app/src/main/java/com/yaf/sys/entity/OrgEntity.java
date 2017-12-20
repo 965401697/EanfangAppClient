@@ -1,13 +1,12 @@
 package com.yaf.sys.entity;
 
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-import com.mobsandgeeks.saripaar.annotation.Digits;
 
-import org.greenrobot.greendao.annotation.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -15,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
@@ -274,8 +275,33 @@ public class OrgEntity implements Serializable {
     	if(!children.contains(child))
     		children.add(child);
     }
-    
+	@Override
     public String toString() {
     	return JSON.toJSONString(this);
     }
+    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((orgId == null) ? 0 : orgId.hashCode());
+		return result;
+	}   
+	@Override
+    public boolean equals(Object other) {
+    	if (other instanceof OrgEntity) {
+    		if(this.orgId == null || other== null)
+    			return false;
+    		
+            return this.orgId.equals(((OrgEntity) other).orgId);   
+        }   
+        return false; 
+    }
+    public final static String ORG_ID = "org_id";
+	public final static String TOP_COMPANY_ID = "top_company_id";
+	public final static String COMPANY_ID = "company_id";
+	public final static String ORG_CODE = "org_code";
+	public final static String LEVEL = "level";
+	public final static String ORG_TYPE = "org_type";
+	public final static String PARENT_ORG_ID = "parent_org_id";
 }

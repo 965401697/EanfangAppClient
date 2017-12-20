@@ -23,8 +23,6 @@ public interface UserApi {
     String APP_LOGOUT = BuildConfig.HOST + "/yaf_sys/sys/logout";
 
 
-
-
     /**
      * 获取验证码
      */
@@ -37,15 +35,16 @@ public interface UserApi {
     String CHECK_TOKEN = BASE_URL + "/getInfoBytoken";
 
     /**
-     * 个人资料
+     * 个人资料修改
      * get
      */
-    String INFO_BACK = BASE_URL + "/myinfo/getinfo";
+    String USER_INFO_UPDATE = BASE_URL + "/yaf_sys/account/profile";
+
     /**
-     * 个人头像上传
-     * post
+     * 查看修改后信息
      */
-    String INFO_HEAD_UPDATE = BASE_URL + "/myinfo/updateinfo";
+    String GET_USER_INFO = BASE_URL + "/yaf_sys/sys/userinfo";
+
 
     /**
      * 检测是否开通服务区域
