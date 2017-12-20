@@ -20,44 +20,41 @@
         android:id="@+id/tv_titles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:text=""
+        android:layout_marginLeft="20dp"
+        android:text="标题"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_titles"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxEms="10"
+        android:singleLine="true"
+        android:text="内容" />
 
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:background="@drawable/select_worker"
         android:padding="3dp"
         android:text="已读" />
 
-    <LinearLayout
-        android:id="@+id/ll_item"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_status"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/select_worker"
+        android:padding="2dp"
+        android:text="查看详情"
+        android:textColor="@color/work_logo_color" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="收到确认上门提示"
-            android:textColor="#393939"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="收到确认上门提示"
-            android:textColor="@color/font_color"
-            android:textSize="14sp" />
-    </LinearLayout>
 
 </RelativeLayout>

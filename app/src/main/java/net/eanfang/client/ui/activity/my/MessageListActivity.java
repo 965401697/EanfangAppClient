@@ -20,6 +20,7 @@ import net.eanfang.client.ui.adapter.MessageListAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.MessageListBean;
+import net.eanfang.client.ui.widget.MessageDetailView;
 import net.eanfang.client.util.JsonUtils;
 import net.eanfang.client.util.QueryEntry;
 
@@ -45,10 +46,10 @@ public class MessageListActivity extends BaseActivity implements
     private int page = 1;
     private MessageListBean messageListBean;
 
-
-    public void setMessageListBean(MessageListBean messageListBean) {
-        this.messageListBean = messageListBean;
+    public MessageListBean getMessageListBean() {
+        return messageListBean;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,47 +89,12 @@ public class MessageListActivity extends BaseActivity implements
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<MessageListBean>(this, true, MessageListBean.class, (bean) -> {
                             runOnUiThread(() -> {
+                                messageListBean = bean;
                                 initAdapter(bean.getList());
-                                mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
-                                    @Override
-                                    public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                        unReadOrRead(bean, position);
-                                    }
-                                });
                                 onDataReceived();
                                 refreshLayout.setRefreshing(false);
                             });
                         })
-//                {
-//
-//
-//                    @Override
-//                    public void onSuccess(MessageListBean bean) {
-//                        mDataList = bean.getList();
-//                        initAdapter();
-//                        refreshLayout.setRefreshing(false);
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        showToast(message);
-//                        refreshLayout.setRefreshing(false);
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        super.onNoData(message);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                MessageListBean bean = new MessageListBean();
-//                                bean.setList(new ArrayList<MessageListBean.ListBean>());
-//                                setMessageListBean(bean);
-//                                onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
                 );
     }
 
@@ -167,30 +133,16 @@ public class MessageListActivity extends BaseActivity implements
     }
 
     private void initAdapter(List<MessageListBean.ListBean> mDataList) {
-//        String currDate = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
-//        for (int i = 0; i < mDataList.size(); i++) {
-//            String thisDate = mDataList.get(i).getCreateTime();
-//            //如果时间相等 则跳过
-//            if (currDate.equals(thisDate)) {
-//                continue;
-//            }
-//            //时间不等 插入
-//            MessageListBean.ListBean rowsBean = new MessageListBean.ListBean();
-//            rowsBean.setTitle(thisDate);
-//            rowsBean.setContent("title");
-//            mDataList.add(i, rowsBean);
-//            i++;
-//            currDate = thisDate;
-//        }
-
-
         BaseQuickAdapter evaluateAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
-
-//        evaluateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//            }
-//        });
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDataList.get(position).getStatus() == 0) {
+                    unReadOrRead(messageListBean, position);
+                }
+                new MessageDetailView(MessageListActivity.this, mDataList.get(position)).show();
+            }
+        });
         if (mDataList.size() != 0) {
             mRecyclerView.setAdapter(evaluateAdapter);
         } else {
@@ -205,8 +157,7 @@ public class MessageListActivity extends BaseActivity implements
         queryEntry.getEquals().put("id", listBean.getList().get(postion).getId() + "");
         EanfangHttp.post(NewApiService.GET_PUSH_READ_OR_UNREAD)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-
+                .execute(new EanfangCallback<>(this, false, JSONObject.class, (bean) -> {
                 }));
     }
 
