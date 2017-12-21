@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.model;
 
+import com.yaf.sys.entity.UserEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,169 +11,183 @@ import java.util.List;
 
 public class ReceivedEvaluateBean implements Serializable {
 
-    private List<AllBean> all;
+    /**
+     * currPage : 1
+     * list : [{"createTime":"2017-12-20 17:53","createUserId":1,"id":6,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148801","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 17:55","createUserId":1,"id":7,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148800","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 18:06","createUserId":1,"id":8,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148803","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:43","createUserId":1,"id":9,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148804","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:50","createUserId":1,"id":10,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148805","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:54","createUserId":1,"id":11,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148806","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:57","createUserId":1,"id":12,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148802","orderNum":"MO1712121028320","ownerId":"936487014465806338"}]
+     * pageSize : 10
+     * totalCount : 7
+     * totalPage : 1
+     */
 
-    public List<AllBean> getAll() {
-        return all;
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
+
+    public int getCurrPage() {
+        return currPage;
     }
 
-    public void setAll(List<AllBean> all) {
-        this.all = all;
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
     }
 
-    public static class AllBean {
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean implements Serializable{
         /**
-         * companyname : 先发
-         * createtime : 2017-05-03 14:28:13
-         * gzxzzc : 5
-         * headpic : http://eanfangx.oss-cn-beijing.aliyuncs.com/bnmmk
-         * id : 1
-         * jsjs : 5
-         * ordernum : 12313132
-         * personclientuid : de1d14c618934394a6cf680ae84ab616
-         * personworkeruid : b556ee600d47491aa49174fc1b323b76
-         * realname : 刘龙2
-         * tdrqyh : 5
-         * totalreview : 5
-         * uid : de1d14c618934394a6cf680ae84ab616
-         * xchj : 5
-         * zysbsxcd : 5
+         * createTime : 2017-12-20 17:53
+         * createUserId : 1
+         * id : 6
+         * item1 : 5
+         * item2 : 5
+         * item3 : 5
+         * item4 : 5
+         * item5 : 5
+         * orderId : 940407881491148801
+         * orderNum : MO1712121028320
+         * ownerId : 936487014465806338
          */
 
-        private String companyname;
-        private String createtime;
-        private String gzxzzc;
-        private String headpic;
-        private int id;
-        private String jsjs;
-        private String ordernum;
-        private String personclientuid;
-        private String personworkeruid;
-        private String realname;
-        private String tdrqyh;
-        private String totalreview;
-        private String uid;
-        private String xchj;
-        private String zysbsxcd;
+        private String createTime;
+        private int createUserId;
+        private Long id;
+        private int item1;
+        private int item2;
+        private int item3;
+        private int item4;
+        private int item5;
+        private Long orderId;
+        private String orderNum;
+        private Long ownerId;
+        private UserEntity creatUser;
 
-        public String getCompanyname() {
-            return companyname;
+        public UserEntity getCreatUser() {
+            return creatUser;
         }
 
-        public void setCompanyname(String companyname) {
-            this.companyname = companyname;
+        public void setCreatUser(UserEntity creatUser) {
+            this.creatUser = creatUser;
         }
 
-        public String getCreatetime() {
-            return createtime;
+        public String getCreateTime() {
+            return createTime;
         }
 
-        public void setCreatetime(String createtime) {
-            this.createtime = createtime;
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
         }
 
-        public String getGzxzzc() {
-            return gzxzzc;
+        public int getCreateUserId() {
+            return createUserId;
         }
 
-        public void setGzxzzc(String gzxzzc) {
-            this.gzxzzc = gzxzzc;
+        public void setCreateUserId(int createUserId) {
+            this.createUserId = createUserId;
         }
 
-        public String getHeadpic() {
-            return headpic;
-        }
-
-        public void setHeadpic(String headpic) {
-            this.headpic = headpic;
-        }
-
-        public int getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
-        public String getJsjs() {
-            return jsjs;
+        public int getItem1() {
+            return item1;
         }
 
-        public void setJsjs(String jsjs) {
-            this.jsjs = jsjs;
+        public void setItem1(int item1) {
+            this.item1 = item1;
         }
 
-        public String getOrdernum() {
-            return ordernum;
+        public int getItem2() {
+            return item2;
         }
 
-        public void setOrdernum(String ordernum) {
-            this.ordernum = ordernum;
+        public void setItem2(int item2) {
+            this.item2 = item2;
         }
 
-        public String getPersonclientuid() {
-            return personclientuid;
+        public int getItem3() {
+            return item3;
         }
 
-        public void setPersonclientuid(String personclientuid) {
-            this.personclientuid = personclientuid;
+        public void setItem3(int item3) {
+            this.item3 = item3;
         }
 
-        public String getPersonworkeruid() {
-            return personworkeruid;
+        public int getItem4() {
+            return item4;
         }
 
-        public void setPersonworkeruid(String personworkeruid) {
-            this.personworkeruid = personworkeruid;
+        public void setItem4(int item4) {
+            this.item4 = item4;
         }
 
-        public String getRealname() {
-            return realname;
+        public int getItem5() {
+            return item5;
         }
 
-        public void setRealname(String realname) {
-            this.realname = realname;
+        public void setItem5(int item5) {
+            this.item5 = item5;
         }
 
-        public String getTdrqyh() {
-            return tdrqyh;
+        public Long getOrderId() {
+            return orderId;
         }
 
-        public void setTdrqyh(String tdrqyh) {
-            this.tdrqyh = tdrqyh;
+        public void setOrderId(Long orderId) {
+            this.orderId = orderId;
         }
 
-        public String getTotalreview() {
-            return totalreview;
+        public String getOrderNum() {
+            return orderNum;
         }
 
-        public void setTotalreview(String totalreview) {
-            this.totalreview = totalreview;
+        public void setOrderNum(String orderNum) {
+            this.orderNum = orderNum;
         }
 
-        public String getUid() {
-            return uid;
+        public Long getOwnerId() {
+            return ownerId;
         }
 
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
-
-        public String getXchj() {
-            return xchj;
-        }
-
-        public void setXchj(String xchj) {
-            this.xchj = xchj;
-        }
-
-        public String getZysbsxcd() {
-            return zysbsxcd;
-        }
-
-        public void setZysbsxcd(String zysbsxcd) {
-            this.zysbsxcd = zysbsxcd;
+        public void setOwnerId(Long ownerId) {
+            this.ownerId = ownerId;
         }
     }
 }
+

@@ -15,7 +15,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.activity.worksapce.EvaluateClientActivity;
+import net.eanfang.client.ui.widget.EvaluateClientDialog;
 import net.eanfang.client.ui.adapter.GivenEvaluateAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.model.GiveEvaluateBean;
@@ -32,11 +32,9 @@ public class GiveEvaluateFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private List<GiveEvaluateBean.AllBean> mDataList;
 
-    private int id;
 
-    public static GiveEvaluateFragment getInstance(int id) {
+    public static GiveEvaluateFragment getInstance() {
         GiveEvaluateFragment sf = new GiveEvaluateFragment();
-        sf.id = id;
         return sf;
     }
 
@@ -80,7 +78,7 @@ public class GiveEvaluateFragment extends BaseFragment {
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), EvaluateClientActivity.class);
+                Intent intent = new Intent(getActivity(), EvaluateClientDialog.class);
                 intent.putExtra("flag", 2);
                 intent.putExtra("gzxzzc", mDataList.get(position).getServiceattitude());
                 intent.putExtra("jsjs", mDataList.get(position).getTechlevel());

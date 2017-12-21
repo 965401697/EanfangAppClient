@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.my;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,8 +40,6 @@ public class EvaluateActivity extends BaseActivity implements OnTabSelectListene
             "收到的评价", "给客户的评价"
     };
     private MyPagerAdapter mAdapter;
-    private int id;
-    private String ordernum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +50,8 @@ public class EvaluateActivity extends BaseActivity implements OnTabSelectListene
     }
 
     private void initView() {
-        getData();
-        mFragments.add(EvaluateFragment.getInstance(0));
-        mFragments.add(GiveEvaluateFragment.getInstance(1));
+        mFragments.add(EvaluateFragment.getInstance());
+        mFragments.add(GiveEvaluateFragment.getInstance());
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -75,11 +71,6 @@ public class EvaluateActivity extends BaseActivity implements OnTabSelectListene
 
     }
 
-    private void getData() {
-        Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
-        ordernum = intent.getStringExtra("ordernum");
-    }
 
     @Override
     public void onTabSelect(int position) {

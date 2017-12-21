@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +9,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.activity.worksapce.EvaluateClientActivity;
 import net.eanfang.client.ui.adapter.EvaluateAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.model.ReceivedEvaluateBean;
+import net.eanfang.client.ui.widget.EvaluateClientDialog;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.List;
 
@@ -28,13 +30,9 @@ import java.util.List;
 
 public class EvaluateFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
-    private List<ReceivedEvaluateBean.AllBean> mDataList;
 
-    private int id;
-
-    public static EvaluateFragment getInstance(int id) {
+    public static EvaluateFragment getInstance() {
         EvaluateFragment sf = new EvaluateFragment();
-        sf.id = id;
         return sf;
     }
 
@@ -45,16 +43,15 @@ public class EvaluateFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-        EanfangHttp.get(ApiService.RECEVIED_EVALUATE)
-                .tag(this)
-                .execute(new EanfangCallback<ReceivedEvaluateBean>(getActivity(), false) {
-                    @Override
-                    public void onSuccess(ReceivedEvaluateBean bean) {
-                        super.onSuccess(bean);
-                        mDataList = bean.getAll();
-                        initAdapter();
-                    }
-                });
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.setPage(1);
+        queryEntry.setSize(5);
+        EanfangHttp.post(UserApi.GET_CILENT_EVALUATE_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<ReceivedEvaluateBean>(getActivity(), false, ReceivedEvaluateBean.class, (bean) -> {
+                    initAdapter(bean.getList());
+                }));
 
     }
 
@@ -64,21 +61,13 @@ public class EvaluateFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initAdapter() {
+    private void initAdapter(List<ReceivedEvaluateBean.ListBean> mDataList) {
         BaseQuickAdapter evaluateAdapter = new EvaluateAdapter(R.layout.item_evaluate, mDataList);
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), EvaluateClientActivity.class);
-                intent.putExtra("flag", 1);
-                intent.putExtra("gzxzzc", mDataList.get(position).getGzxzzc());
-                intent.putExtra("jsjs", mDataList.get(position).getJsjs());
-                intent.putExtra("tdrqyh", mDataList.get(position).getTdrqyh());
-                intent.putExtra("xchj", mDataList.get(position).getXchj());
-                intent.putExtra("zysbsxcd", mDataList.get(position).getZysbsxcd());
-                intent.putExtra("title", "收到的评价");
-                startActivity(intent);
+                new EvaluateClientDialog(getActivity(), mDataList.get(position)).show();
             }
         });
         mRecyclerView.setAdapter(evaluateAdapter);

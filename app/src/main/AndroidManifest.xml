@@ -188,7 +188,6 @@
         <activity android:name=".ui.activity.worksapce.AddReportPlanActivity" />
         <activity android:name=".ui.activity.worksapce.AddWorkTaskDeitailActivity" />
         <activity android:name=".ui.activity.worksapce.AddWorkCheckDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.EvaluateClientActivity" />
         <activity android:name=".ui.activity.worksapce.InstallOrderActivity"/>
 
         <activity

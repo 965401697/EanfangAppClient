@@ -22,6 +22,15 @@ public interface UserApi {
      */
     String APP_LOGOUT = BuildConfig.HOST + "/yaf_sys/sys/logout";
 
+    /**
+     * 客户端收到的评价
+     */
+    String GET_CILENT_EVALUATE_LIST = BuildConfig.API_HOST + "/yaf_ent/clientEvaluate/list";
+
+    /**
+     * 技师端收到的评价
+     */
+    String GET_WORKER_EVALUATE_LIST = BuildConfig.API_HOST + "/yaf_shop/workerEvaluate/list";
 
     /**
      * 获取验证码
