@@ -102,13 +102,6 @@ public class AccountEntity implements Serializable {
 	@Setter
 	private String idCard;
 	
-	//所在城市ID
-	//@TableField(value = "area_id")
-	@Digits(integer=19,fraction=0)
-	@Getter
-	@Setter
-	private Long areaId;
-	
 	//所在城市编号
 	//@TableField(value = "area_code")
 	@Size(min = 0, max = 20)
@@ -121,7 +114,7 @@ public class AccountEntity implements Serializable {
 	@Size(min = 0, max = 200)
 	@Getter
 	@Setter
-	private String adress;
+	private String address;
 	
     /**
      * 设置：账号
@@ -297,10 +290,11 @@ public class AccountEntity implements Serializable {
         this.defaultUser = defaultUser;
     }
 
+    /*归属的公司列表*/
     @Getter
     @Setter
     @TableField(exist = false)
-    List<OrgEntity> havingCompanys;
+    List<OrgEntity> belongCompanys;
     
 	@Override
 	public String toString() {

@@ -71,7 +71,8 @@ public class CompanyListFragment extends BaseFragment {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), CompanyDetailActivity.class);
                 InstallOrderConfirmBean installOrderConfirmBean = ((SelectCompanyActivity)getActivity()).getInstallOrderConfirmBean();
-                installOrderConfirmBean.setWorkercompanyuid(mDataList.get(position).getCompanyuid());
+                /**防报错注释*/
+//                installOrderConfirmBean.setWorkercompanyuid(mDataList.get(position).getCompanyuid());
                 intent.putExtra("bean",installOrderConfirmBean);
                 intent.putExtra("id",mDataList.get(position).getCompanyuid());
 
@@ -84,7 +85,8 @@ public class CompanyListFragment extends BaseFragment {
                 if (view.getId() == R.id.tv_select){
                     Intent intent = new Intent(getActivity(), OrderConfirmActivitys.class);
                     InstallOrderConfirmBean installOrderConfirmBean = ((SelectCompanyActivity)getActivity()).getInstallOrderConfirmBean();
-                    installOrderConfirmBean.setWorkercompanyuid(mDataList.get(position).getCompanyuid());
+                    /**防报错注释*/
+//                    installOrderConfirmBean.setWorkercompanyuid(mDataList.get(position).getCompanyuid());
                     intent.putExtra("bean",installOrderConfirmBean);
                     intent.putExtra("id",mDataList.get(position).getCompanyuid());
                     startActivity(intent);

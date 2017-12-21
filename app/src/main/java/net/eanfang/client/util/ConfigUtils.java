@@ -133,6 +133,15 @@ public class ConfigUtils {
     }
 
     /**
+     * 工作任务 已读/未读
+     *
+     * @return
+     */
+    public static List<String> getInstallStatus() {
+        return getValueList("installStatus");
+    }
+
+    /**
      * 工作检查状态
      *
      * @return

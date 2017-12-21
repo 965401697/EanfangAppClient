@@ -3,20 +3,19 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.base.BaseDialog;
 import com.eanfang.util.CallUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.google.gson.Gson;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.NewApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.model.InstallDetailRequestBean;
 import net.eanfang.client.ui.model.WorkspaceInstallDetailBean;
 
 import butterknife.BindView;
@@ -61,13 +60,13 @@ public class InstallCtrlItemView extends BaseDialog {
     TextView tvNumber;
     @BindView(R.id.tv_feature_time)
     TextView tvFeatureTime;
-    private String ordernum;
+    private Long id;
     private Activity mContext;
 
-    public InstallCtrlItemView(Activity context, String ordernum) {
+    public InstallCtrlItemView(Activity context, Long id) {
         super(context);
         this.mContext = context;
-        this.ordernum = ordernum;
+        this.id = id;
 
     }
 
@@ -80,42 +79,35 @@ public class InstallCtrlItemView extends BaseDialog {
 
 
     private void initData() {
-
-        InstallDetailRequestBean installDetailRequestBean = new InstallDetailRequestBean();
-        installDetailRequestBean.setOrdernum(ordernum);
-        Gson gson = new Gson();
-        String json = gson.toJson(installDetailRequestBean);
-        Log.e("json", json);
-        EanfangHttp.get(ApiService.WORKSPACE_INSTALL_DETAIL)
+        EanfangHttp.get(NewApiService.GET_WORK_INSTALL_INFO)
                 .tag(this)
-                .params("json", json.toString())
-                .execute(new EanfangCallback<WorkspaceInstallDetailBean>(context, false) {
-                    @Override
-                    public void onSuccess(WorkspaceInstallDetailBean bean) {
-                        super.onSuccess(bean);
-                        setData(bean);
-                    }
-                });
+                .params("id", id)
+                .execute(new EanfangCallback<WorkspaceInstallDetailBean>(context, false, WorkspaceInstallDetailBean.class, (bean) -> {
+                    setData(bean);
+                }));
     }
 
     private void setData(WorkspaceInstallDetailBean bean) {
-        WorkspaceInstallDetailBean workspaceInstallDetailBean = bean;
-        WorkspaceInstallDetailBean.InstallorderBean installorderBean = workspaceInstallDetailBean.getInstallorder();
-        tvCompanyName.setText(installorderBean.getClientcompanyname());
-        tvContract.setText(installorderBean.getClientconnector());
-        tvContractPhone.setText(installorderBean.getClientphone());
-        tvTime.setText(installorderBean.getArrivetime());
-        tvAddress.setText(installorderBean.getCity() + installorderBean.getZone() + installorderBean.getDetailplace());
-        tvBusiness.setText(installorderBean.getBugonename());
-        tvLimit.setText(installorderBean.getPredicttime());
-        tvMoney.setText(installorderBean.getBudget());
-        tvDesc.setText(installorderBean.getDescription());
-        tvNumber.setText(installorderBean.getOrdernum());
-        tvFeatureTime.setText(installorderBean.getCreatetime());
-        tvWorkerName.setText(workspaceInstallDetailBean.getWorkerCompanyAdminname());
-        tvWorkerCompany.setText(workspaceInstallDetailBean.getWorkerCompanyname());
-        ivPic.setImageURI(Uri.parse(workspaceInstallDetailBean.getWorkerCompanyPic()));
-        tvContractPhone.setTag(workspaceInstallDetailBean.getWorkerPhone());
+
+        tvCompanyName.setText(bean.getClientCompanyName());
+        tvContract.setText(bean.getConnector());
+        tvContractPhone.setText(bean.getConnectorPhone());
+        tvTime.setText(Config.getConfig().getConstBean().getDesignOrderConstant().
+                get(Constant.REVERT_TIME_LIMIT_TYPE).get(bean.getRevertTimeLimit()));
+        String area = Config.getConfig().getAddress(bean.getZone());
+        tvAddress.setText(area + bean.getDetailPlace());
+        tvBusiness.setText(Config.getConfig().getBusinessName(bean.getBusinessOneCode()));
+        tvLimit.setText(Config.getConfig().getConstBean().getDesignOrderConstant().
+                get(Constant.PREDICTTIME_TYPE).get(bean.getPredictTime()));
+        tvMoney.setText(Config.getConfig().getConstBean().getDesignOrderConstant().
+                get(Constant.BUDGET_LIMIT_TYPE).get(bean.getBudget()));
+        tvDesc.setText(bean.getDescription());
+        tvNumber.setText(bean.getOrderNo());
+        tvFeatureTime.setText(bean.getCreateTime());
+        tvWorkerName.setText(bean.getAssignessUser().getAccountEntity().getRealName());
+        tvWorkerCompany.setText(bean.getCompanyEntity().getName());
+        ivPic.setImageURI(Uri.parse(bean.getCompanyEntity().getLogoPic()));
+        tvContractPhone.setTag(bean.getAssignessUser().getAccountEntity().getMobile());
         ivPhone.setOnClickListener(v -> CallUtils.call(mContext, tvContractPhone.getTag().toString()));
     }
 

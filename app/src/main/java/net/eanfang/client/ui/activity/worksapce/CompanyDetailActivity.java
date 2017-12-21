@@ -104,7 +104,8 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         tv_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                installOrderConfirmBean.setWorkercompanyuid(id);
+                /**防报错注释*/
+//                installOrderConfirmBean.setWorkercompanyuid(id);
                 Intent intent = new Intent(CompanyDetailActivity.this, OrderConfirmActivity.class);
                 intent.putExtra("bean", installOrderConfirmBean);
                 intent.putExtra("id", id);

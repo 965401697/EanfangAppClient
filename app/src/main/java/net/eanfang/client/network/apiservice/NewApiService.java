@@ -124,4 +124,19 @@ public interface NewApiService {
      * 推送已读Or未读
      */
     String GET_PUSH_READ_OR_UNREAD = BuildConfig.API_HOST + "/yaf_oa/pushMessage/detail";
+
+    /**
+     * 新增报装
+     */
+    String ADD_WORK_INSTALL = BuildConfig.API_HOST + "/yaf_install_order/install/insert";
+
+    /**
+     * 报装列表
+     */
+    String GET_WORK_INSTALL_LIST = BuildConfig.API_HOST + "/yaf_install_order/install/list";
+
+    /**
+     * 报装详情
+     */
+    String GET_WORK_INSTALL_INFO = BuildConfig.API_HOST + "/yaf_install_order/install/detail";
 }

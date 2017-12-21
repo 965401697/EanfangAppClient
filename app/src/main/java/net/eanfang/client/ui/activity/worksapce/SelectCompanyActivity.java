@@ -31,8 +31,8 @@ import java.util.List;
  * @email houzhongzhou@yeah.net
  * @desc 公司列表
  */
-
-public class SelectCompanyActivity extends BaseActivity implements View.OnClickListener{
+// TODO: 2017/12/21 使用待定
+public class SelectCompanyActivity extends BaseActivity implements View.OnClickListener {
     private CompanyListFragment AllFragment;
     private CompanyListFragment ServicedFragment;
     private CompanyListFragment CollectionFragment;
@@ -94,8 +94,8 @@ public class SelectCompanyActivity extends BaseActivity implements View.OnClickL
 
     private void initData() {
         SelectWorkerBean bean = new SelectWorkerBean();
-        bean.setBugOneUid(installOrderConfirmBean.getBugone());
-        bean.setCity(installOrderConfirmBean.getCity());
+//        bean.setBugOneUid(installOrderConfirmBean.getBugone());
+//        bean.setCity(installOrderConfirmBean.getCity());
         bean.setZone(installOrderConfirmBean.getZone());
         Gson gson = new Gson();
         String json = gson.toJson(bean);

@@ -14,15 +14,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
+import com.google.gson.Gson;
 import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.NewApiService;
+import net.eanfang.client.network.request.EanfangCallback;
+import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.activity.SelectAddressActivity;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.InstallOrderConfirmBean;
+import net.eanfang.client.ui.model.Message;
 import net.eanfang.client.ui.model.SelectAddressItem;
 import net.eanfang.client.util.PickerSelectUtil;
 import net.eanfang.client.util.StringUtils;
@@ -134,26 +141,19 @@ public class InstallActivity extends BaseActivity {
         });
         //回复时限选择
         llTime.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "回复时限", tvTime, Stream.of(Config.getConfig().getReplyLimit()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", tvTime, Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.REVERT_TIME_LIMIT_TYPE));
         });
         //业务类型一级
         llBusiness.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Config.getConfig().getBudgetLimit(), (index, item) -> {
-//                tvBusiness.setText(Config.getConfig().getBusinessOneList().get(index).getName());
-//                bugOneUid = Config.getConfig().getBusinessOneList().get(index).getCode();
-            });
+            PickerSelectUtil.singleTextPicker(this, "", tvBusiness, Stream.of(Config.getConfig().getBusinessOneList()).map(bus -> bus.getDataName()).toList());
         });
         //预计工期
         LLProjectTime.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Config.getConfig().getPlanLimit(), (index, item) -> {
-                tvProjectTime.setText(item);
-            });
+            PickerSelectUtil.singleTextPicker(this, "", tvProjectTime, Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE));
         });
         //预算范围
         llBudget.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Config.getConfig().getBudgetLimit(), (index, item) -> {
-                tvBudget.setText(item);
-            });
+            PickerSelectUtil.singleTextPicker(this, "", tvBudget, Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE));
         });
 
     }
@@ -204,27 +204,56 @@ public class InstallActivity extends BaseActivity {
             showToast("需求描述不能超过50个字");
             return;
         }
+        String budget = tvBudget.getText().toString().trim();
+        String revertime = tvTime.getText().toString().trim();
+        String predictTime = tvProjectTime.getText().toString().trim();
 
         InstallOrderConfirmBean installOrderConfirmBean = new InstallOrderConfirmBean();
         installOrderConfirmBean.setLatitude(latitude);
         installOrderConfirmBean.setLongitude(longitude);
-        installOrderConfirmBean.setCity(city);
-        installOrderConfirmBean.setZone(zone);
-        installOrderConfirmBean.setArrivetime(tvTime.getText().toString().trim());
-        installOrderConfirmBean.setBudget(tvBudget.getText().toString().trim());
-        installOrderConfirmBean.setBugone(bugOneUid);
-        installOrderConfirmBean.setBugonename(business);
-        installOrderConfirmBean.setClientconnector(etContact.getText().toString().trim());
-        installOrderConfirmBean.setClientphone(etPhone.getText().toString().trim());
-        installOrderConfirmBean.setDetailplace(etDetailAddress.getText().toString().trim());
-        installOrderConfirmBean.setDescription(etDesc.getText().toString().trim());
-        installOrderConfirmBean.setPredicttime(tvProjectTime.getText().toString().trim());
-        installOrderConfirmBean.setClientcompanyname(company);
+        installOrderConfirmBean.setClientCompanyName(company);
+        installOrderConfirmBean.setZone(Config.getConfig().getRegCode(city, zone));
+        installOrderConfirmBean.setConnector(contact);
+        installOrderConfirmBean.setConnectorPhone(phone);
+        installOrderConfirmBean.setDetailPlace(etDetailAddress.getText().toString().trim());
+        installOrderConfirmBean.setDescription(desc);
+        installOrderConfirmBean.setPredictTime(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).indexOf(predictTime));
+        installOrderConfirmBean.setRevertTimeLimit(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.REVERT_TIME_LIMIT_TYPE).indexOf(revertime));
+        installOrderConfirmBean.setBudget(Config.getConfig().getConstBean().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).indexOf(budget));
+        installOrderConfirmBean.setBusinessOneCode(Config.getConfig().getBusinessCode(business));
 
-        Intent intent = new Intent(InstallActivity.this, SelectCompanyActivity.class);
-        intent.putExtra("bean", installOrderConfirmBean);
-        startActivity(intent);
+        doHttp(new Gson().toJson(installOrderConfirmBean));
 
+    }
+
+    public void doHttp(String json) {
+        EanfangHttp.post(NewApiService.ADD_WORK_INSTALL)
+                .upJson(json)
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> {
+                        submitSuccess();
+                    });
+
+                }));
+    }
+
+    private void submitSuccess() {
+        runOnUiThread(() -> {
+            Intent intent = new Intent(InstallActivity.this, StateChangeActivity.class);
+            Bundle bundle = new Bundle();
+            Message message = new Message();
+            message.setTitle("报装申请提交成功");
+            message.setMsgTitle("您的报装申请已提交成功");
+            message.setMsgContent("稍后客服会与您取得联系，请保持电话畅通");
+            message.setShowOkBtn(true);
+            message.setShowLogo(true);
+            message.setTip("");
+            bundle.putSerializable("message", message);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finishSelf();
+
+        });
     }
 
     /**

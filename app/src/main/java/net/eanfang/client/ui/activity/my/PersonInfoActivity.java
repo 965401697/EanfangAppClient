@@ -27,6 +27,7 @@ import com.yaf.sys.entity.AccountEntity;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
+import net.eanfang.client.config.Config;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -86,6 +87,11 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     private String path1;
     private boolean isUploadHead = false;
     private final int HEAD_PHOTO = 100;
+    /**
+     * 城市
+     */
+    private String city;
+    private String contry;
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -161,14 +167,14 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             etIdcard.setEnabled(false);
         }
 
-        String address = infoBackBean.getAccount().getAdress();
-        if (address != null) {
-            String area = address.substring(0, 11);
-            String streetAddress = address.substring(12, address.length());
-            tvArea.setText(area);
-            etAddress.setText(streetAddress);
-        }
+        String address = infoBackBean.getAccount().getAddress();
 
+        if (address != null) {
+            etAddress.setText(address);
+        }
+        if (infoBackBean.getAccount().getAreaCode()!=null){
+            tvArea.setText(Config.getConfig().getAddress(infoBackBean.getAccount().getAreaCode()));
+        }
 
 
     }
@@ -259,8 +265,9 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             accountEntity.setGender(0);
         }
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
-        String address = tvArea.getText().toString().trim() + etAddress.getText().toString().trim();
-        accountEntity.setAdress(address);
+        String address = etAddress.getText().toString().trim();
+        accountEntity.setAddress(address);
+        accountEntity.setAreaCode(Config.getConfig().getRegCode(city, contry));
         Gson gson = new Gson();
         String json = gson.toJson(accountEntity);
         Log.e("json", json);
@@ -292,6 +299,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             case 23221:
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
                 Log.e("address", item.toString());
+                city = item.getCity();
+                contry = item.getAddress();
                 tvArea.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
                 etAddress.setText(item.getName());
                 break;

@@ -43,9 +43,11 @@ public class WorkspaceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        //相机
         findViewById(R.id.iv_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
         });
+        //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
             new CompanyListView(getActivity()).show();
 //            CompanyListView companyListView = new CompanyListView(getActivity());
@@ -60,18 +62,24 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.ll_repair).setOnClickListener((v) -> {
             RepairActivity.jumpToActivity(getActivity());
         });
+
+        //报装
         findViewById(R.id.ll_install).setOnClickListener((v) -> {
             InstallActivity.jumpActivity(getActivity());
         });
+        //设计
         findViewById(R.id.ll_design).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), DesignActivity.class));
         });
+        //汇报
         findViewById(R.id.ll_report).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), ReportActivity.class));
         });
+        //任务
         findViewById(R.id.ll_task).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), TaskActivity.class));
         });
+        //检查
         findViewById(R.id.ll_check).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CheckActivity.class));
         });
@@ -80,13 +88,15 @@ public class WorkspaceFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        //工作管控
+        //维修
         findViewById(R.id.ll_repair_ctrl).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
         });
+        //报装
         findViewById(R.id.ll_install_ctrl).setOnClickListener((v) -> {
             new InstallCtrlView(getActivity(), true).show();
         });
+        //报价
         findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
 //            if ("1".equals(EanfangApplication.get().getUser().getCompanyverify())) {
 //                new CompanyQuoteView(getActivity(), true).show();
@@ -94,18 +104,23 @@ public class WorkspaceFragment extends BaseFragment {
 //                new PersonQuoteView(getActivity(), true).show();
 //            }
         });
+        //汇报
         findViewById(R.id.ll_report_ctrl).setOnClickListener((v) -> {
             new ReportCtrlView(getActivity(), true).show();
         });
+        //检查
         findViewById(R.id.ll_check_ctrl).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
         });
+        //任务
         findViewById(R.id.ll_task_ctrl).setOnClickListener((v) -> {
             new TaskCtrlView(getActivity(), true).show();
         });
+        //设计
         findViewById(R.id.ll_design_ctrl).setOnClickListener((v) -> {
             new DesignCtrlView(getActivity(), true).show();
         });
+        //统计
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url", "http://www.jianshu.com/u/0e0821e94979").putExtra("title", "数据统计"));
         });

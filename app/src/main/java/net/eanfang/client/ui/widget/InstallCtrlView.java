@@ -1,27 +1,16 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
-import net.eanfang.client.network.request.EanfangCallback;
-import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
-import net.eanfang.client.ui.model.WorkspaceInstallBean;
-
-import java.util.List;
+import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,13 +28,18 @@ public class InstallCtrlView extends BaseDialog {
     ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.rv_list)
-    RecyclerView mRecyclerView;
-    private List<WorkspaceInstallBean.AllBean> mDataList;
+    @BindView(R.id.ll_mine_assignment)
+    RelativeLayout llMineAssignment;
+    @BindView(R.id.ll_mine_accept)
+    RelativeLayout llMineAccept;
+    @BindView(R.id.ll_mine_company)
+    RelativeLayout llMineCompany;
+    private Activity mContext;
 
 
     public InstallCtrlView(Activity context, boolean isfull) {
         super(context, isfull);
+        this.mContext = context;
     }
 
     @Override
@@ -53,55 +47,21 @@ public class InstallCtrlView extends BaseDialog {
         setContentView(R.layout.view_istall_ctrl);
         ButterKnife.bind(this);
         initView();
-        initData();
-        setTitle("报装管控");
-    }
-
-
-    private void initData() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("page", 1);
-            jsonObject.put("rows", 10);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        EanfangHttp.get(ApiService.WORKSPACE_INSTALL)
-                .tag(this)
-                .params("json", jsonObject.toString())
-                .execute(new EanfangCallback<WorkspaceInstallBean>(context, false) {
-                    @Override
-                    public void onSuccess(WorkspaceInstallBean bean) {
-                        super.onSuccess(bean);
-                        mDataList = bean.getAll();
-                        initAdapter();
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        showToast("暂时没有查询到订单信息");
-                    }
-                });
     }
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("报装管控");
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        setTitle("报装管控");
+        llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
+        llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
+        llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));
     }
 
-    private void initAdapter() {
-        BaseQuickAdapter evaluateAdapter = new WorkspaceInstallAdapter(R.layout.item_workspace_install_list, mDataList);
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                InstallCtrlItemView ctrlItemView = new InstallCtrlItemView(context, mDataList.get(position).getOrdernum());
-                ctrlItemView.show();
-            }
-        });
-        mRecyclerView.setAdapter(evaluateAdapter);
+    private void jump(String title, String type) {
+        Intent intent = new Intent(mContext, InstallOrderActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("type", type);
+        mContext.startActivity(intent);
     }
 
 }

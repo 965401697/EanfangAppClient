@@ -24,6 +24,7 @@ import net.eanfang.client.ui.model.Message;
  * 报装订单确认
  * Created by yaosheng on 2017/4/23.
  */
+// TODO: 2017/12/21 待修改
 
 public class OrderConfirmActivitys extends BaseActivity {
     private TextView tv_number;
@@ -53,13 +54,14 @@ public class OrderConfirmActivitys extends BaseActivity {
     }
 
     private void initData() {
-        tv_company_name.setText(installOrderConfirmBean.getClientcompanyname());
-        tv_contract.setText(installOrderConfirmBean.getClientconnector());
-        tv_contract_phone.setText(installOrderConfirmBean.getClientphone());
-        tv_time.setText(installOrderConfirmBean.getArrivetime());
-        tv_address.setText(installOrderConfirmBean.getCity() + installOrderConfirmBean.getZone() + installOrderConfirmBean.getDetailplace());
-        tv_business.setText(installOrderConfirmBean.getBugonename());
-        tv_limit.setText(installOrderConfirmBean.getPredicttime());
+        /**防报错注释*/
+//        tv_company_name.setText(installOrderConfirmBean.getClientcompanyname());
+//        tv_contract.setText(installOrderConfirmBean.getClientconnector());
+//        tv_contract_phone.setText(installOrderConfirmBean.getClientphone());
+//        tv_time.setText(installOrderConfirmBean.getArrivetime());
+//        tv_address.setText(installOrderConfirmBean.getCity() + installOrderConfirmBean.getZone() + installOrderConfirmBean.getDetailplace());
+//        tv_business.setText(installOrderConfirmBean.getBugonename());
+//        tv_limit.setText(installOrderConfirmBean.getPredicttime());
         tv_money.setText(installOrderConfirmBean.getBudget());
         tv_desc.setText(installOrderConfirmBean.getDescription());
     }

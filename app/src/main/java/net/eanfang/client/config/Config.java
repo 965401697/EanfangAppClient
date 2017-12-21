@@ -32,66 +32,45 @@ public class Config {
     @Getter
     @Setter
     private List<BaseDataBean> baseDataBean;
-    //Context mContext;
-    //public String mSession = "";
-    //String mCV = "1.0"; // 客户端版本号
-    //int mCS = 1;        // 客户端型号
-    //int mScreenHight, mScreenWidth;    // 屏幕宽高
-    //float mDensity;                      // 屏幕密度
-    // String mImei = "";
-    //String mUa = "";        // 手机ua
-    //String mVersion = "";        //配置版本号
-    //  String mServer = "";
-    // boolean mDebug = false;
-    //boolean mPrint = false;
-    // int mMode;
-    //String appId;
-    /**
-     * 业务类型
-     */
+
+
     private List<BaseDataBean> businessOneList = new ArrayList<>();
-    /**
-     * 保养周期
-     */
-    private List<String> circleList = new ArrayList<>();
-    /**
-     * 报修状态
-     */
     private List<String> repairStatus = new ArrayList<>();
     private List<String> repairStatusClient = new ArrayList<>();
     private List<String> repairStatusWorker = new ArrayList<>();
-    /**
-     * 工作任务 已读/未读
-     */
     private List<String> taskReadStatus = new ArrayList<>();
-    /**
-     * 工作检查 订单状态
-     */
     private List<String> checkReadStatus = new ArrayList<>();
-
-    /**
-     * 预算范围 选择器
-     */
-    private List<String> budgetLimit = new ArrayList<>();
-    /**
-     * 预计工期 选择器
-     */
-    private List<String> planLimit = new ArrayList<>();
-    /**
-     * 回复时限 选择器
-     */
-    private List<String> replyLimit = new ArrayList<>();
-    /**
-     * 免费设计 订单状态
-     */
     private List<String> designOrderStatus = new ArrayList<>();
-
-
-    /**
-     * 到达实现
-     */
     private List<String> arriveTime = new ArrayList<>();
+    private List<String> installStatus = new ArrayList<>();
 
+    public List<String> getInstallStatus() {
+        return installStatus;
+    }
+
+    public List<String> getRepairStatus() {
+        return repairStatus;
+    }
+
+    public List<String> getRepairStatusClient() {
+        return repairStatusClient;
+    }
+
+    public List<String> getRepairStatusWorker() {
+        return repairStatusWorker;
+    }
+
+    public List<String> getTaskReadStatus() {
+        return taskReadStatus;
+    }
+
+    public List<String> getCheckReadStatus() {
+        return checkReadStatus;
+    }
+
+    public List<String> getDesignOrderStatus() {
+        return designOrderStatus;
+    }
 
     /**
      * 获取实例
@@ -129,13 +108,10 @@ public class Config {
         repairStatusClient = ConfigUtils.getRepairStatus();
         //报修单列表 技师的状态
         repairStatusWorker = ConfigUtils.getRepairStatus();
+        //报装单
+        installStatus = ConfigUtils.getInstallStatus();
         getRepairStatusWorker().remove("预付费");
-        //预算范围
-        budgetLimit = ConfigUtils.getBudgetLimit();
-        //预计工期
-        planLimit = ConfigUtils.getPlanLimit();
-        //回复时限
-        replyLimit = ConfigUtils.getReplyLimit();
+
         //免费设计
         designOrderStatus = ConfigUtils.getDesignOrderStatus();
 
@@ -277,63 +253,5 @@ public class Config {
         return builder.toString();
     }
 
-
-    /**
-     * 报修状态
-     */
-    public List<String> getRepairStatus() {
-        return repairStatus;
-    }
-
-    public List<String> getRepairStatusClient() {
-        return repairStatusClient;
-    }
-
-    public List<String> getRepairStatusWorker() {
-        return repairStatusWorker;
-    }
-
-
-    /**
-     * 工作任务 已读/未读
-     */
-    public List<String> getTaskReadStatus() {
-        return taskReadStatus;
-    }
-
-    /**
-     * 工作检查 订单状态
-     */
-    public List<String> getCheckReadStatus() {
-        return checkReadStatus;
-    }
-
-    /**
-     * 预算范围 选择性
-     */
-    public List<String> getBudgetLimit() {
-        return budgetLimit;
-    }
-
-    /**
-     * 预计工期 选择性
-     */
-    public List<String> getPlanLimit() {
-        return planLimit;
-    }
-
-    /**
-     * 回复时限 选择器
-     */
-    public List<String> getReplyLimit() {
-        return replyLimit;
-    }
-
-    /**
-     * 免费设计 订单状态
-     */
-    public List<String> getDesignOrderStatus() {
-        return designOrderStatus;
-    }
 
 }

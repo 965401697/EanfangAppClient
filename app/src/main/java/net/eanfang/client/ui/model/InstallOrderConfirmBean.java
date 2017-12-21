@@ -8,45 +8,41 @@ import java.io.Serializable;
 
 public class InstallOrderConfirmBean implements Serializable {
 
+
     /**
-     * longitude : 经度
-     * latitude : 纬度
-     * city : 报装地址市
-     * zone : 报装区
-     * detailplace : 报装详细地址
-     * clientconnector : 报装联系人姓名
-     * clientphone : 报装联系人电话
-     * arrivetime : 回复时限，文字描述
-     * bugone : 业务类型bugone的uid
-     * bugonename : 业务类型名称
-     * predicttime : 预计工期，文字描述
-     * budget : 预算金额，文字描述
-     * description : 需求描述
-     * workercompanyuid : 安防公司的uid
+     * clientCompanyName : 安防公司
+     * longitude : 3243
+     * latitude : 12313
+     * zone : 3.11.1.5
+     * detailPlace : 褡裢坡地铁站
+     * connector : 张天赐
+     * connectorPhone : 154823364853
+     * revertTimeLimit : 2
+     * businessOneCode : 1.1
+     * predictTime : 1
+     * budget : 1
+     * description : 需要安装10个防盗报警
      */
 
+    private String clientCompanyName;
     private String longitude;
     private String latitude;
-    private String city;
     private String zone;
-    private String detailplace;
-    private String clientconnector;
-    private String clientphone;
-    private String arrivetime;
-    private String bugone;
-    private String bugonename;
-    private String predicttime;
-    private String budget;
+    private String detailPlace;
+    private String connector;
+    private String connectorPhone;
+    private int revertTimeLimit;
+    private String businessOneCode;
+    private int predictTime;
+    private int budget;
     private String description;
-    private String workercompanyuid;
-    private String clientcompanyname;
 
-    public String getClientcompanyname() {
-        return clientcompanyname;
+    public String getClientCompanyName() {
+        return clientCompanyName;
     }
 
-    public void setClientcompanyname(String clientcompanyname) {
-        this.clientcompanyname = clientcompanyname;
+    public void setClientCompanyName(String clientCompanyName) {
+        this.clientCompanyName = clientCompanyName;
     }
 
     public String getLongitude() {
@@ -65,14 +61,6 @@ public class InstallOrderConfirmBean implements Serializable {
         this.latitude = latitude;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getZone() {
         return zone;
     }
@@ -81,67 +69,59 @@ public class InstallOrderConfirmBean implements Serializable {
         this.zone = zone;
     }
 
-    public String getDetailplace() {
-        return detailplace;
+    public String getDetailPlace() {
+        return detailPlace;
     }
 
-    public void setDetailplace(String detailplace) {
-        this.detailplace = detailplace;
+    public void setDetailPlace(String detailPlace) {
+        this.detailPlace = detailPlace;
     }
 
-    public String getClientconnector() {
-        return clientconnector;
+    public String getConnector() {
+        return connector;
     }
 
-    public void setClientconnector(String clientconnector) {
-        this.clientconnector = clientconnector;
+    public void setConnector(String connector) {
+        this.connector = connector;
     }
 
-    public String getClientphone() {
-        return clientphone;
+    public String getConnectorPhone() {
+        return connectorPhone;
     }
 
-    public void setClientphone(String clientphone) {
-        this.clientphone = clientphone;
+    public void setConnectorPhone(String connectorPhone) {
+        this.connectorPhone = connectorPhone;
     }
 
-    public String getArrivetime() {
-        return arrivetime;
+    public int getRevertTimeLimit() {
+        return revertTimeLimit;
     }
 
-    public void setArrivetime(String arrivetime) {
-        this.arrivetime = arrivetime;
+    public void setRevertTimeLimit(int revertTimeLimit) {
+        this.revertTimeLimit = revertTimeLimit;
     }
 
-    public String getBugone() {
-        return bugone;
+    public String getBusinessOneCode() {
+        return businessOneCode;
     }
 
-    public void setBugone(String bugone) {
-        this.bugone = bugone;
+    public void setBusinessOneCode(String businessOneCode) {
+        this.businessOneCode = businessOneCode;
     }
 
-    public String getBugonename() {
-        return bugonename;
+    public int getPredictTime() {
+        return predictTime;
     }
 
-    public void setBugonename(String bugonename) {
-        this.bugonename = bugonename;
+    public void setPredictTime(int predictTime) {
+        this.predictTime = predictTime;
     }
 
-    public String getPredicttime() {
-        return predicttime;
-    }
-
-    public void setPredicttime(String predicttime) {
-        this.predicttime = predicttime;
-    }
-
-    public String getBudget() {
+    public int getBudget() {
         return budget;
     }
 
-    public void setBudget(String budget) {
+    public void setBudget(int budget) {
         this.budget = budget;
     }
 
@@ -152,12 +132,6 @@ public class InstallOrderConfirmBean implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getWorkercompanyuid() {
-        return workercompanyuid;
-    }
-
-    public void setWorkercompanyuid(String workercompanyuid) {
-        this.workercompanyuid = workercompanyuid;
-    }
 }
+
+

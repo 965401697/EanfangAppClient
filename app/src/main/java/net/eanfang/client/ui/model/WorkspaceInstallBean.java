@@ -1,162 +1,170 @@
 package net.eanfang.client.ui.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by yaosheng on 2017/5/17.
  */
 
-public class WorkspaceInstallBean {
+public class WorkspaceInstallBean implements Serializable{
 
-    private List<AllBean> all;
 
-    public List<AllBean> getAll() {
-        return all;
+    /**
+     * currPage : 1
+     * list : [{"budget":4,"businessOneCode":"1.1","clientCompanyName":"易安防北京运营公司","connector":"锅子","connectorPhone":"18500320187","createTime":"2017-12-21 11:52","createUserId":1,"description":"啦啦啦","detailPlace":"北京金襄陵为民诊所","id":"943690495967100929","latitude":"39.923586","longitude":"116.567866","orderNo":"EO1712211152146","ownerCompanyId":1100,"ownerOrgCode":"c.c1.2","ownerTopCompanyId":1100,"ownerUserId":1,"predictTime":7,"revertTimeLimit":0,"status":0,"zone":"3.11.1.5"}]
+     * pageSize : 5
+     * totalCount : 1
+     * totalPage : 1
+     */
+
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
+
+    public int getCurrPage() {
+        return currPage;
     }
 
-    public void setAll(List<AllBean> all) {
-        this.all = all;
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
     }
 
-    public static class AllBean {
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean implements Serializable{
         /**
-         * arrivetime : 2小时内
-         * budget : 1万元以内
-         * bugone : 1
-         * bugonename : 电视监控
-         * city : 北京
-         * clientcompanyuid : 1ac77e2c643444f2ac1966d8ec868157
-         * clientcompanyname : 李晨星二逼公司
-         * clientconnector : 李晨星
-         * clientpersonuid : abcdefg
-         * clientphone : 123456789
-         * createtime : 2017-04-11 17:25:21
-         * description : 详情描述
-         * detailplace : 回龙观东大街
-         * endtime : 2017-04-12 17:25:25
-         * id : 1
-         * latitude : 12
-         * longitude : 12
-         * ordernum : 123213
-         * predicttime : 3天内
-         * uid : 121321
-         * workercompanyuid : 1ac77e2c643444f2ac1966d8ec868157
-         * zone : 昌平
+         * budget : 4
+         * businessOneCode : 1.1
+         * clientCompanyName : 易安防北京运营公司
+         * connector : 锅子
+         * connectorPhone : 18500320187
+         * createTime : 2017-12-21 11:52
+         * createUserId : 1
+         * description : 啦啦啦
+         * detailPlace : 北京金襄陵为民诊所
+         * id : 943690495967100929
+         * latitude : 39.923586
+         * longitude : 116.567866
+         * orderNo : EO1712211152146
+         * ownerCompanyId : 1100
+         * ownerOrgCode : c.c1.2
+         * ownerTopCompanyId : 1100
+         * ownerUserId : 1
+         * predictTime : 7
+         * revertTimeLimit : 0
+         * status : 0
+         * zone : 3.11.1.5
          */
 
-        private String arrivetime;
-        private String budget;
-        private String bugone;
-        private String bugonename;
-        private String city;
-        private String clientcompanyuid;
-        private String clientcompanyname;
-        private String clientconnector;
-        private String clientpersonuid;
-        private String clientphone;
-        private String createtime;
+        private int budget;
+        private String businessOneCode;
+        private String clientCompanyName;
+        private String connector;
+        private String connectorPhone;
+        private String createTime;
+        private Long createUserId;
         private String description;
-        private String detailplace;
-        private String endtime;
-        private int id;
+        private String detailPlace;
+        private Long id;
         private String latitude;
         private String longitude;
-        private String ordernum;
-        private String predicttime;
-        private String uid;
-        private String workercompanyuid;
+        private String orderNo;
+        private Long ownerCompanyId;
+        private String ownerOrgCode;
+        private int ownerTopCompanyId;
+        private Long ownerUserId;
+        private int predictTime;
+        private int revertTimeLimit;
+        private int status;
         private String zone;
 
-        private String pic1;
-
-
-
-        public String getArrivetime() {
-            return arrivetime;
-        }
-
-        public void setArrivetime(String arrivetime) {
-            this.arrivetime = arrivetime;
-        }
-
-        public String getBudget() {
+        public int getBudget() {
             return budget;
         }
 
-        public void setBudget(String budget) {
+        public void setBudget(int budget) {
             this.budget = budget;
         }
 
-        public String getBugone() {
-            return bugone;
+        public String getBusinessOneCode() {
+            return businessOneCode;
         }
 
-        public void setBugone(String bugone) {
-            this.bugone = bugone;
+        public void setBusinessOneCode(String businessOneCode) {
+            this.businessOneCode = businessOneCode;
         }
 
-        public String getBugonename() {
-            return bugonename;
+        public String getClientCompanyName() {
+            return clientCompanyName;
         }
 
-        public void setBugonename(String bugonename) {
-            this.bugonename = bugonename;
+        public void setClientCompanyName(String clientCompanyName) {
+            this.clientCompanyName = clientCompanyName;
         }
 
-        public String getCity() {
-            return city;
+        public String getConnector() {
+            return connector;
         }
 
-        public void setCity(String city) {
-            this.city = city;
+        public void setConnector(String connector) {
+            this.connector = connector;
         }
 
-        public String getClientcompanyuid() {
-            return clientcompanyuid;
+        public String getConnectorPhone() {
+            return connectorPhone;
         }
 
-        public void setClientcompanyuid(String clientcompanyuid) {
-            this.clientcompanyuid = clientcompanyuid;
+        public void setConnectorPhone(String connectorPhone) {
+            this.connectorPhone = connectorPhone;
         }
 
-        public String getClientcompanyname() {
-            return clientcompanyname;
+        public String getCreateTime() {
+            return createTime;
         }
 
-        public void setClientcompanyname(String clientcompanyname) {
-            this.clientcompanyname = clientcompanyname;
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
         }
 
-        public String getClientconnector() {
-            return clientconnector;
+        public Long getCreateUserId() {
+            return createUserId;
         }
 
-        public void setClientconnector(String clientconnector) {
-            this.clientconnector = clientconnector;
-        }
-
-        public String getClientpersonuid() {
-            return clientpersonuid;
-        }
-
-        public void setClientpersonuid(String clientpersonuid) {
-            this.clientpersonuid = clientpersonuid;
-        }
-
-        public String getClientphone() {
-            return clientphone;
-        }
-
-        public void setClientphone(String clientphone) {
-            this.clientphone = clientphone;
-        }
-
-        public String getCreatetime() {
-            return createtime;
-        }
-
-        public void setCreatetime(String createtime) {
-            this.createtime = createtime;
+        public void setCreateUserId(Long createUserId) {
+            this.createUserId = createUserId;
         }
 
         public String getDescription() {
@@ -167,27 +175,19 @@ public class WorkspaceInstallBean {
             this.description = description;
         }
 
-        public String getDetailplace() {
-            return detailplace;
+        public String getDetailPlace() {
+            return detailPlace;
         }
 
-        public void setDetailplace(String detailplace) {
-            this.detailplace = detailplace;
+        public void setDetailPlace(String detailPlace) {
+            this.detailPlace = detailPlace;
         }
 
-        public String getEndtime() {
-            return endtime;
-        }
-
-        public void setEndtime(String endtime) {
-            this.endtime = endtime;
-        }
-
-        public int getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
@@ -207,36 +207,68 @@ public class WorkspaceInstallBean {
             this.longitude = longitude;
         }
 
-        public String getOrdernum() {
-            return ordernum;
+        public String getOrderNo() {
+            return orderNo;
         }
 
-        public void setOrdernum(String ordernum) {
-            this.ordernum = ordernum;
+        public void setOrderNo(String orderNo) {
+            this.orderNo = orderNo;
         }
 
-        public String getPredicttime() {
-            return predicttime;
+        public Long getOwnerCompanyId() {
+            return ownerCompanyId;
         }
 
-        public void setPredicttime(String predicttime) {
-            this.predicttime = predicttime;
+        public void setOwnerCompanyId(Long ownerCompanyId) {
+            this.ownerCompanyId = ownerCompanyId;
         }
 
-        public String getUid() {
-            return uid;
+        public String getOwnerOrgCode() {
+            return ownerOrgCode;
         }
 
-        public void setUid(String uid) {
-            this.uid = uid;
+        public void setOwnerOrgCode(String ownerOrgCode) {
+            this.ownerOrgCode = ownerOrgCode;
         }
 
-        public String getWorkercompanyuid() {
-            return workercompanyuid;
+        public int getOwnerTopCompanyId() {
+            return ownerTopCompanyId;
         }
 
-        public void setWorkercompanyuid(String workercompanyuid) {
-            this.workercompanyuid = workercompanyuid;
+        public void setOwnerTopCompanyId(int ownerTopCompanyId) {
+            this.ownerTopCompanyId = ownerTopCompanyId;
+        }
+
+        public Long getOwnerUserId() {
+            return ownerUserId;
+        }
+
+        public void setOwnerUserId(Long ownerUserId) {
+            this.ownerUserId = ownerUserId;
+        }
+
+        public int getPredictTime() {
+            return predictTime;
+        }
+
+        public void setPredictTime(int predictTime) {
+            this.predictTime = predictTime;
+        }
+
+        public int getRevertTimeLimit() {
+            return revertTimeLimit;
+        }
+
+        public void setRevertTimeLimit(int revertTimeLimit) {
+            this.revertTimeLimit = revertTimeLimit;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
 
         public String getZone() {
@@ -246,13 +278,7 @@ public class WorkspaceInstallBean {
         public void setZone(String zone) {
             this.zone = zone;
         }
-
-        public String getPic1() {
-            return pic1;
-        }
-
-        public void setPic1(String pic1) {
-            this.pic1 = pic1;
-        }
     }
 }
+
+
