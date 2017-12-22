@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:background="#fff"
-    android:padding="10dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/bg_ll_selctor"
+    android:orientation="horizontal"
+    android:padding="5dp">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_header"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_vertical"
-        fresco:placeholderImage="@mipmap/camera"
-        fresco:roundAsCircle="true"/>
+        fresco:placeholderImage="@mipmap/header"
+        fresco:roundAsCircle="true" />
 
 
-        <RelativeLayout
-            android:layout_marginLeft="20dp"
-            android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="李小宇"
-                android:textSize="16sp"
-                android:textColor="#000"/>
+            android:text="李小宇"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
 
-            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/rb_star"
-                style="@style/Widget.MaterialRatingBar.RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/rb_star"
+            style="@style/Widget.MaterialRatingBar.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
 
-                android:maxHeight="20dp"
-                android:minHeight="20dp"
-                android:progressBackgroundTint="@color/font_color"
-                android:progressTint="#FFA53A"
-                android:rating="5"
-                android:secondaryProgressTint="@color/font_color"
-                android:stepSize="0.1" />
+            android:maxHeight="20dp"
+            android:minHeight="20dp"
+            android:progressBackgroundTint="@color/font_color"
+            android:progressTint="#FFA53A"
+            android:rating="5"
+            android:secondaryProgressTint="@color/font_color"
+            android:stepSize="0.1" />
 
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_name"
-                android:layout_marginTop="10dp"
-                android:text="2016-12-12 12:00"
-                android:textSize="16sp"
-                android:textColor="@color/font_color"/>
-        </RelativeLayout>
-
-
-
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="10dp"
+            android:text="2016-12-12 12:00"
+            android:textColor="@color/font_color"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
 
 </LinearLayout>

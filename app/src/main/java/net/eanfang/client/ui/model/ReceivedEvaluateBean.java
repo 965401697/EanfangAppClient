@@ -65,7 +65,7 @@ public class ReceivedEvaluateBean implements Serializable {
         this.list = list;
     }
 
-    public static class ListBean implements Serializable{
+    public static class ListBean implements Serializable {
         /**
          * createTime : 2017-12-20 17:53
          * createUserId : 1
@@ -91,14 +91,23 @@ public class ReceivedEvaluateBean implements Serializable {
         private Long orderId;
         private String orderNum;
         private Long ownerId;
-        private UserEntity creatUser;
+        private UserEntity createUser;
+        private UserEntity ownerUser;
 
-        public UserEntity getCreatUser() {
-            return creatUser;
+        public UserEntity getCreateUser() {
+            return createUser;
         }
 
-        public void setCreatUser(UserEntity creatUser) {
-            this.creatUser = creatUser;
+        public void setCreateUser(UserEntity createUser) {
+            this.createUser = createUser;
+        }
+
+        public UserEntity getOwnerUser() {
+            return ownerUser;
+        }
+
+        public void setOwnerUser(UserEntity ownerUser) {
+            this.ownerUser = ownerUser;
         }
 
         public String getCreateTime() {

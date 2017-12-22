@@ -62,6 +62,11 @@ public class EvaluateClientDialog extends BaseDialog {
         rbStar3.setNumStars(bean.getItem3());
         rbStar4.setNumStars(bean.getItem4());
         rbStar5.setNumStars(bean.getItem5());
+        rbStar1.setIsIndicator(true);
+        rbStar2.setIsIndicator(true);
+        rbStar3.setIsIndicator(true);
+        rbStar4.setIsIndicator(true);
+        rbStar5.setIsIndicator(true);
 
     }
 
