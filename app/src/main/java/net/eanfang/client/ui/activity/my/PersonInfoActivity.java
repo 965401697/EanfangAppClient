@@ -24,7 +24,6 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.model.LoginBean;
 import com.yaf.sys.entity.AccountEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
@@ -193,7 +192,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     public void onOssSuccess() {
                         runOnUiThread(() -> {
                             LoginBean entity = EanfangApplication.getApplication().getUser();
-                            entity.getAccount().setAvatar(BuildConfig.OSS_SERVER + imgKey);
+                            entity.getAccount().setAvatar(imgKey);
                             path1 = entity.getAccount().getAvatar();
                         });
 

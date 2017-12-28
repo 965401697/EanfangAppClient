@@ -19,7 +19,7 @@ android {
         buildConfigField("int", "APP_TYPE", "0")
         buildConfigField("String", "OSS_SERVER", "\"http://eanfang.oss-cn-beijing.aliyuncs.com/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
-        buildConfigField("String", "OSS_ENDPOINT", "\"http://img-cn-beijing.aliyuncs.com\"")
+        buildConfigField("String", "OSS_ENDPOINT", "\"http://oss-cn-beijing.aliyuncs.com\"")
 
 //        buildConfigField("String", "HOST", "\"http://106.14.44.213:8080/eanfang/\"")
 //        buildConfigField("String", "API_HOST", "\"http://106.14.44.213:8080/eanfang/app/\"")
@@ -28,6 +28,8 @@ android {
 
         buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
         buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
         ndk {
             // 设置支持的SO库架构

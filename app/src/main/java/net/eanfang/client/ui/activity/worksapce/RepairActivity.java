@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -17,26 +18,25 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.util.ConnectivityChangeReceiver;
-import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.UserApi;
-import net.eanfang.client.network.request.EanfangCallback;
-import net.eanfang.client.network.request.EanfangHttp;
+import net.eanfang.client.config.Constant;
 import net.eanfang.client.ui.activity.SelectAddressActivity;
 import net.eanfang.client.ui.adapter.ToRepairAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.AddTroubleBean;
-import net.eanfang.client.ui.model.BusinessOne;
 import net.eanfang.client.ui.model.SelectAddressItem;
-import net.eanfang.client.ui.model.ToRepairBean;
-import net.eanfang.client.ui.model.ToRepairItem;
+import net.eanfang.client.ui.model.repair.RepairBugEntity;
+import net.eanfang.client.ui.model.repair.RepairOrderEntity;
 import net.eanfang.client.util.PickerSelectUtil;
 import net.eanfang.client.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by MrHou
@@ -52,25 +52,31 @@ public class RepairActivity extends BaseActivity {
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
     //添加故障明细回调
     private final int ADD_TROUBLE_CALLBACK_CODE = 2;
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.ll_address)
+    LinearLayout llAddress;
+    @BindView(R.id.et_detail_address)
+    EditText etDetailAddress;
+    @BindView(R.id.et_contact)
+    EditText etContact;
+    @BindView(R.id.et_phone)
+    EditText etPhone;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.ll_time)
+    LinearLayout llTime;
+    @BindView(R.id.btn_add_trouble)
+    TextView btnAddTrouble;
+    @BindView(R.id.rv_list)
+    RecyclerView rvList;
 
-    private EditText et_company;
-    private TextView tv_address;
-    private EditText et_detail_address;
-    private EditText et_contact;
-    private EditText et_phone;
-    private TextView tv_time;
-    private ImageView iv_address;
-    private TextView tv_business;
-    private RecyclerView mRecyclerView;
-    private ArrayList<ToRepairItem> mDataList = new ArrayList<>();
 
-    private String bugOneCode;
-    private List<BusinessOne> businessOneList = new ArrayList<>();
-
-    private BaseQuickAdapter evaluateAdapter;
     //选中的业务大类的位置
     private int position;
-    private List<AddTroubleBean> beanList = new ArrayList<>();
+    private List<RepairBugEntity> beanList = new ArrayList<>();
 
     private String latitude;
     private String longitude;
@@ -89,26 +95,22 @@ public class RepairActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
-        initView();
+        ButterKnife.bind(this);
 //        initData();
-        initAdapter();
-        registerListener();
-
         setTitle("我要报修");
-        setLeftBack();
+        registerListener();
+//        initAdapter();
     }
 
 
     private void registerListener() {
-        setRightTitle("下一步");
+        setRightTitle("选择技师");
         setRightTitleOnClickListener(v -> {
-            if (checkInfo()) {
-                doHttpCheckServiceRegion(province, city, county);
-            }
+            goSelectWorker();
         });
-        ImageView iv_left = (ImageView) findViewById(R.id.iv_left);
-        iv_left.setVisibility(View.VISIBLE);
-        iv_left.setOnClickListener(v -> giveUp());
+        ivLeft.setVisibility(View.VISIBLE);
+        ivLeft.setOnClickListener(v -> giveUp());
+        btnAddTrouble.setOnClickListener(v -> addTouble());
     }
 
 
@@ -119,74 +121,51 @@ public class RepairActivity extends BaseActivity {
     }
 
     private boolean checkInfo() {
-        if (StringUtils.isEmpty(et_company.getText().toString().trim())) {
-            showToast("请输入用户名称");
-            return false;
-        }
-        if (StringUtils.isEmpty(tv_address.getText().toString().trim())) {
+
+        if (StringUtils.isEmpty(tvAddress.getText().toString().trim())) {
             showToast("请选择地址");
             return false;
         }
-        if (StringUtils.isEmpty(et_detail_address.getText().toString().trim())) {
+        if (StringUtils.isEmpty(etDetailAddress.getText().toString().trim())) {
             showToast("请输入详细地址");
             return false;
         }
-        if (StringUtils.isEmpty(et_contact.getText())) {
+        if (StringUtils.isEmpty(etContact.getText())) {
             showToast("请输入联系人姓名");
             return false;
         }
-        if (StringUtils.isEmpty(et_phone.getText())) {
+        if (StringUtils.isEmpty(etPhone.getText())) {
             showToast("请输入联系人手机号");
             return false;
         }
         //电话号码是否符合格式
-        if (!StringUtils.isMobileString(et_phone.getText().toString().trim())) {
+        if (!StringUtils.isMobileString(etPhone.getText().toString().trim())) {
             showToast("请输入正确手机号");
             return false;
         }
-        if (StringUtils.isEmpty(tv_time.getText())) {
+        if (StringUtils.isEmpty(tvTime.getText())) {
             showToast("请选择到达时限");
             return false;
         }
-        if (StringUtils.isEmpty(tv_business.getText()) || StringUtils.isEmpty(bugOneCode)) {
-            showToast("请选择故障分类");
-            return false;
-        }
+
         return true;
     }
 
-    private void doHttpCheckServiceRegion(String province, String city, String county) {
-        EanfangHttp.get(UserApi.CHECK_SERVICE_REGION)
-                .tag(this)
-                .params("province", province)
-                .params("city", city)
-                .params("county", county)
-                .execute(new EanfangCallback(this, true) {
-                    @Override
-                    public void onSuccess(Object bean) {
-                        //去选技师
-                        goSelectWorker();
-                    }
-                });
 
-    }
-
-    private ToRepairBean fillBean() {
-        ToRepairBean bean = new ToRepairBean();
-        bean.setCompany(et_company.getText().toString().trim());
-        bean.setProvince(province);
-        bean.setCity(city);
-        bean.setArea(county);
-        bean.setDetailAddress(et_detail_address.getText().toString().trim());
-        bean.setPhone(et_phone.getText().toString().trim());
-        bean.setName(et_contact.getText().toString().trim());
-        bean.setTime(tv_time.getText().toString().trim());
-        bean.setBusiness(tv_business.getText().toString().trim());
-        bean.setBugOneUid(bugOneCode);
-        bean.setBeanList(beanList);
+    private RepairOrderEntity fillBean() {
+        RepairOrderEntity bean = new RepairOrderEntity();
+        bean.setBugEntityList(beanList);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
-
+        bean.setAddress(etDetailAddress.getText().toString().trim());
+        bean.setPlaceCode(Config.getConfig().getRegCode(city, county));
+        bean.setRepairContactPhone(EanfangApplication.getApplication().getUser().getAccount().getMobile());
+        bean.setRepairContacts(EanfangApplication.getApplication().getUser().getAccount().getRealName());
+        bean.setArriveTimeLimit(Config.getConfig().getConstBean().getConst().get(Constant.ARRIVE_LIMIT).indexOf(tvTime.getText().toString().trim()));
+        bean.setOwnerUserId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getUserId());
+        bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        bean.setOwnerOrgCode(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgCode());
+        bean.setRepairWay(0);
         return bean;
     }
 
@@ -204,19 +183,6 @@ public class RepairActivity extends BaseActivity {
         return false;
     }
 
-    private void initView() {
-        et_company = (EditText) findViewById(R.id.et_company);
-        tv_address = (TextView) findViewById(R.id.tv_address);
-        et_detail_address = (EditText) findViewById(R.id.et_detail_address);
-        et_contact = (EditText) findViewById(R.id.et_contact);
-        et_phone = (EditText) findViewById(R.id.et_phone);
-        tv_time = (TextView) findViewById(R.id.tv_time);
-        iv_address = (ImageView) findViewById(R.id.iv_address);
-        tv_business = (TextView) findViewById(R.id.tv_business);
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-    }
 
 //    private void initData() {
 //        mDataList.clear();
@@ -250,17 +216,17 @@ public class RepairActivity extends BaseActivity {
 
 
     private void initAdapter() {
-        evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, mDataList);
+        ToRepairAdapter evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+        rvList.setLayoutManager(new LinearLayoutManager(this));
+        rvList.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 beanList.remove(position);
-//                initData();
                 evaluateAdapter.notifyDataSetChanged();
             }
         });
-        mRecyclerView.setAdapter(evaluateAdapter);
+        rvList.setAdapter(evaluateAdapter);
     }
 
 
@@ -280,18 +246,20 @@ public class RepairActivity extends BaseActivity {
                 city = item.getCity();
                 county = item.getAddress();
                 address = item.getName();
-                tv_address.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
+                tvAddress.setText(province + "-" + city + "-" + county);
                 //将选择的地址 取 显示值
-                et_detail_address.setText(item.getName());
+                etDetailAddress.setText(address);
                 break;
             case ADD_TROUBLE_CALLBACK_CODE:
-                AddTroubleBean bean = (AddTroubleBean) data.getSerializableExtra("bean");
+                RepairBugEntity bean = (RepairBugEntity) data.getSerializableExtra("bean");
                 beanList.add(bean);
+
+                initAdapter();
 //                initData();
-                evaluateAdapter.notifyDataSetChanged();
                 break;
             default:
                 break;
+
         }
     }
 
@@ -310,37 +278,17 @@ public class RepairActivity extends BaseActivity {
     /**
      * 故障明细
      */
-    public void addTouble(View view) {
-        if (tv_business.getText().toString().isEmpty()) {
-            ToastUtil.get().showToast(this, "请先选择故障分类");
-            return;
-        }
-//
-//        Intent intent = new Intent(this, AddTroubleActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("bugOneCode", bugOneCode);
-//        bundle.putString("companyUid", user().getCompanyId());
-//        intent.putExtras(bundle);
-//        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
+    public void addTouble() {
+        Intent intent = new Intent(this, AddTroubleActivity.class);
+        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
     }
 
     /**
      * 到达时限
      */
     public void onArriveTimeOptionPicker(View view) {
-        PickerSelectUtil.singleTextPicker(this, "到达时限", tv_time, Stream.of(Config.getConfig().getArriveTime()).toList());
+        PickerSelectUtil.singleTextPicker(this, "到达时限", tvTime, Stream.of(Config.getConfig().getConstBean().getConst().get(Constant.ARRIVE_LIMIT)).toList());
     }
 
-    /**
-     * 故障分类
-     */
-    public void showBusinessOne(View view) {
-
-        PickerSelectUtil.singleTextPicker(this, "系统类别", Stream.of(businessOneList).map(bus -> bus.getName()).toList(), (index, item) -> {
-            position = index;
-            bugOneCode = businessOneList.get(position).getCode();
-            tv_business.setText(businessOneList.get(position).getName());
-        });
-    }
 
 }

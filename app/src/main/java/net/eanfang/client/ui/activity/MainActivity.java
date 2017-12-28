@@ -35,9 +35,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 
-/**
- *
- */
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
@@ -156,7 +153,6 @@ public class MainActivity extends BaseActivity {
         //开启信鸽日志输出
         XGPushConfig.enableDebug(this, true);
         //信鸽注册代码
-        // TODO: 2017/11/8 更换手机号
         XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {

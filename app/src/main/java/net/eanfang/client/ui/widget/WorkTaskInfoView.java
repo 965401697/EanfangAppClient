@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.fragment;
+package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.LookTaskDetailAdapter;
 import net.eanfang.client.ui.model.WorkTaskInfoBean;
-import net.eanfang.client.ui.widget.LookTaskInfoView;
 
 import java.util.List;
 

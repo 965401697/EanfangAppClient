@@ -62,7 +62,7 @@ public class SelectWorkerActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_worker);
         initViews();
-        initData();
+//        initData();
         fragmentManager = getSupportFragmentManager();
 //        setTabSelection(0);
     }

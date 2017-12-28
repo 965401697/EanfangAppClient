@@ -293,7 +293,7 @@ public class OrgEntity implements Serializable {
     		if(this.orgId == null || other== null)
     			return false;
     		
-            return this.orgId.equals(((OrgEntity) other).orgId);   
+            return this.orgId.equals(((OrgEntity) other).orgId);
         }   
         return false; 
     }

@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-
 /**
  * 用户
  *
@@ -277,6 +276,45 @@ public class UserEntity implements Serializable {
     @TableField(exist = false)
     private OrgEntity departmentEntity;
 
+//    /**
+//	 *
+//	 * @Title: isSuperAdmin
+//	 * @Description: 是超级管理员
+//	 * @return
+//	 * @return: boolean
+//	 */
+//    public boolean isSuperAdmin() {
+//        return userType != null && userType == Const.UserType.SYS_ADMIN.val() && accId == 1;
+//    }
+//
+//	/**
+//	 *
+//	 * @Title: isAdmin
+//	 * @Description: 是超级管理员或者系统管理员
+//	 * @return
+//	 * @return: boolean
+//	 */
+//    public boolean isSysAdmin() {
+//
+//		return userType != null && userType== Const.UserType.SYS_ADMIN.val();
+//	}
+//
+//	/**
+//	 *
+//	 * @Title: isCompanyAdmin
+//	 * @Description: 是公司管理员
+//	 * @return
+//	 * @return: boolean
+//	 */
+//    public boolean isCompanyAdmin() {
+//
+//		return userType != null && (userType == Const.UserType.TOP_ADMIN.val() ||		//总平台管理员列出本公司的直接下级公司
+//				userType == Const.UserType.CITY_ADMIN.val() ||		//城市平台管理员列出本公司的直接下级公司
+//				userType == Const.UserType.ENT_ADMIN.val() ||		//企业平台管理员列出本公司的直接下级公司
+//				userType == Const.UserType.SHOP_ADMIN.val() 		//安防公司管理员列出本公司的直接下级公司
+//				);
+//	}
+    
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
@@ -294,7 +332,7 @@ public class UserEntity implements Serializable {
     		if(this.userId == null || other== null)
     			return false;
     		
-            return this.userId.equals(((UserEntity) other).userId);   
+            return this.userId.equals(((UserEntity) other).userId);
         }   
         return false; 
     }
@@ -304,5 +342,5 @@ public class UserEntity implements Serializable {
 	public final static String USER_ID = "user_id";
 	public final static String BELONG_TYPE = "belong_type";
 	public final static String ACC_ID = "acc_id";
-	
+	public final static String USER_TYPE="user_type";	
 }

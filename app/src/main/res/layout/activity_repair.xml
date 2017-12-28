@@ -20,33 +20,6 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="用户名称"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_company"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="用户名称"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
 
             <LinearLayout
@@ -197,39 +170,6 @@
                     android:src="@mipmap/arrow_right" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_business"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:onClick="showBusinessOne"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="故障分类"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_business"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/client"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,7 +196,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_btn"
-                    android:onClick="addTouble"
                     android:paddingBottom="4dp"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"

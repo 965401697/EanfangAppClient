@@ -52,7 +52,9 @@ public class UploadDialogUtil {
 
 
     public void cancleProgressDialog() {
-        if (uploadDialog != null) uploadDialog.dismiss();
+        if (uploadDialog != null) {
+            uploadDialog.dismiss();
+        }
     }
 
 

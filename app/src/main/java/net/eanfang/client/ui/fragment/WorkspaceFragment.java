@@ -58,7 +58,7 @@ public class WorkspaceFragment extends BaseFragment {
 //            window.setAttributes(lp);
 //            companyListView.show();
         });
-        //快捷工作
+        //报修
         findViewById(R.id.ll_repair).setOnClickListener((v) -> {
             RepairActivity.jumpToActivity(getActivity());
         });

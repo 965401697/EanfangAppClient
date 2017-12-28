@@ -13,7 +13,7 @@ import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.adapter.EvaluateAdapter;
+import net.eanfang.client.ui.adapter.GiveEvaluateAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.model.ReceivedEvaluateBean;
 import net.eanfang.client.ui.widget.EvaluateClientDialog;
@@ -56,7 +56,7 @@ public class GiveEvaluateFragment extends BaseFragment {
     }
 
     private void initAdapter(List<ReceivedEvaluateBean.ListBean> mDataList) {
-        BaseQuickAdapter evaluateAdapter = new EvaluateAdapter(R.layout.item_evaluate, mDataList);
+        BaseQuickAdapter evaluateAdapter = new GiveEvaluateAdapter(R.layout.item_evaluate, mDataList);
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override

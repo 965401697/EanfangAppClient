@@ -313,7 +313,7 @@ public class AccountEntity implements Serializable {
     		if(this.accId == null || other== null)
     			return false;
     		
-            return this.accId.equals(((AccountEntity) other).accId);   
+            return this.accId.equals(((AccountEntity) other).accId);
         }   
         return false; 
     }

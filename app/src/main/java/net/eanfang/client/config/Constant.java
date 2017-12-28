@@ -26,6 +26,9 @@ public class Constant {
     public static final String BUDGET_LIMIT_TYPE = "BudgetLimitType";
     /*9.基础数据*/
     public static final String BASE_DATA_TYPE = "BaseDataType";
+    /*10.到达时限*/
+    public static final String ARRIVE_LIMIT = "ArriveLimit";
+
 
     /*
      * 未知类别

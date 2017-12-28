@@ -22,6 +22,7 @@ import net.eanfang.client.ui.adapter.WorkTaskListAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.WorkTaskListBean;
+import net.eanfang.client.ui.widget.WorkTaskInfoView;
 import net.eanfang.client.util.GetConstDataUtils;
 import net.eanfang.client.util.JsonUtils;
 import net.eanfang.client.util.QueryEntry;
