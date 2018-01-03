@@ -155,7 +155,7 @@ public class Config {
      * 根据系统编码获得id
      */
     public List<String> getBusinessId(List<String> list) {
-        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && Stream.of(list).map(bus -> bus.equals(bean.getDataCode())) != null).map(bean -> bean.getDataId() + "").toList();
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && list.contains(bean.getDataCode())).map(bean -> bean.getDataId() + "").toList();
 
     }
 
@@ -164,8 +164,8 @@ public class Config {
 
     }
 
-    public String getServName(int id,int type) {
-        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && bean.getDataId()==id).toList().get(0).getDataName() + "";
+    public String getServName(int id, int type) {
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && bean.getDataId() == id).toList().get(0).getDataName() + "";
 
     }
 
@@ -268,7 +268,7 @@ public class Config {
      * 根据id获得code
      */
     public List<String> getCode(List<Integer> list, int type) {
-        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && Stream.of(list).map(bus -> bus.equals(bean.getDataId())) != null).map(bean -> bean.getDataCode() + "").toList();
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && list.contains(bean.getDataId())).map(bean -> bean.getDataCode() + "").toList();
     }
 
 

@@ -11,17 +11,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.eanfang.BuildConfig;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
 import net.eanfang.client.config.Constant;
-import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
@@ -30,6 +29,8 @@ import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.model.SelectWorkerBean;
 import net.eanfang.client.ui.model.WorkerDetailsBean;
 import net.eanfang.client.ui.model.repair.RepairOrderEntity;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 import net.eanfang.client.util.StringUtils;
 
 import java.util.ArrayList;
@@ -73,7 +74,8 @@ public class WorkerDetailActivity extends BaseActivity {
     LinearLayout llArea;
     @BindView(R.id.rv_list1)
     RecyclerView rvList1;
-
+    @BindView(R.id.rv_list2)
+    RecyclerView rvList2;
     @BindView(R.id.rv_list3)
     RecyclerView rvList3;
     @BindView(R.id.iv_pic1)
@@ -100,20 +102,14 @@ public class WorkerDetailActivity extends BaseActivity {
     MaterialRatingBar rbStar5;
     @BindView(R.id.tv_select)
     TextView tvSelect;
-    @BindView(R.id.rv_list2)
-    RecyclerView rvList2;
     private String id;
 
     private ArrayList<String> mDataList1;
     private ArrayList<String> mDataList2;
     private ArrayList<String> mDataList3;
 
-    private WorkerDetailsBean workerDetailsBean;
-    private LinearLayout ll_repair;
-    private LinearLayout ll_install;
     private RepairOrderEntity toRepairBean;
     private SelectWorkerBean selectWorkerBean;
-    private ArrayList<String> picList = new ArrayList<>();
 
 
     @Override
@@ -167,99 +163,117 @@ public class WorkerDetailActivity extends BaseActivity {
 
     private void initView() {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
+        rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
 
-        if (toRepairBean != null) {
-            setRightImageResId(R.mipmap.heart);
-        }
-        setRightTitleOnClickListener((v) -> {
-            setRightTitleClick();
+        setRightImageOnClickListener((v) -> {
+            isCollected();
         });
 
     }
 
-    private void setRightTitleClick() {
-        JSONObject json = new JSONObject();
-        try {
-//                    json.put("personuid", EanfangApplication.get().getUser().getPersonId());
-            json.put("workeruid", id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        EanfangHttp.post(ApiService.COLLECTION_WORK)
-                .tag(this)
-                .params("json", json.toString())
-                .execute(new EanfangCallback(WorkerDetailActivity.this, false) {
-                    @Override
-                    public void onSuccess(Object bean) {
-                        super.onSuccess(bean);
-                        showToast("收藏成功");
-                        setRightImageResId(R.mipmap.hearted);
-                        setRightImageOnClickListener((v) -> {
-                            showToast("已经收藏过该技师");
-                        });
-                    }
+    private void collected() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("assigneeId", selectWorkerBean.getVerifyEntity().getUserId());
+        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
+        jsonObject.put("type", 0);
+        EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
+                .upJson(jsonObject.toJSONString())
+                .execute(new EanfangCallback(this, false, JSONObject.class, (bean) -> {
+                    setRightImageResId(R.mipmap.hearted);
+                    showToast("收藏成功");
+                }));
+    }
 
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        showToast(message);
-                    }
-                });
+    /**
+     * 是否收藏过
+     */
+    private void isCollected() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("assigneeId", selectWorkerBean.getVerifyEntity().getUserId());
+        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
+        jsonObject.put("type", 0);
+
+        EanfangHttp.post(RepairApi.GET_COLLECT_EXISTS)
+                .upJson(jsonObject.toJSONString())
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
+                    boolean isCollect = bean.getBoolean("exists");
+                    runOnUiThread(() -> {
+                        if (isCollect == false) {
+                            setRightImageResId(R.mipmap.heart);
+                            collected();
+                        } else {
+                            setRightImageResId(R.mipmap.heart);
+                            cancelCollected();
+                        }
+                    });
+                }));
+    }
+
+    /**
+     * 取消收藏
+     */
+    private void cancelCollected() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("assigneeId", selectWorkerBean.getVerifyEntity().getUserId() + "");
+        queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("type", "0");
+        EanfangHttp.post(RepairApi.GET_COLLECT_CANCEL)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback(this, false, JSONObject.class, (bean) -> {
+                    setRightImageResId(R.mipmap.heart);
+                    showToast("取消收藏");
+                }));
     }
 
 
     private void setData(WorkerDetailsBean bean) {
-        workerDetailsBean = bean;
+        ivHeader.setImageURI(Uri.parse(bean.getVerifyEntity().getHeadPic()));
+        tvRealname.setText(bean.getVerifyEntity().getRealName());
+        tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
+        tvNumber.setText(bean.getRepairCount() + "单");
+        tvKoubei.setText(bean.getPublicPraise() / 100 + "分");
+        tvLevel.setText(Config.getConfig().getConstBean().getShopConstant().get(Constant.WORKING_LEVEL).get(bean.getVerifyEntity().getWorkingLevel()));
+        tvYear.setText(Config.getConfig().getConstBean().getShopConstant().get(Constant.WORKING_YEAR).get(bean.getVerifyEntity().getWorkingYear()));
 
-        ivHeader.setImageURI(Uri.parse(workerDetailsBean.getVerifyEntity().getHeadPic()));
-        tvRealname.setText(workerDetailsBean.getVerifyEntity().getRealName());
-        tvCompanyName.setText(workerDetailsBean.getCompanyEntity().getOrgName());
-        tvNumber.setText(workerDetailsBean.getRepairCount() + "单");
-        tvKoubei.setText(workerDetailsBean.getPublicPraise() / 100 + "分");
-        tvLevel.setText(Config.getConfig().getConstBean().getShopConstant().get(Constant.WORKING_LEVEL).get(workerDetailsBean.getVerifyEntity().getWorkingLevel()));
-        tvYear.setText(Config.getConfig().getConstBean().getShopConstant().get(Constant.WORKING_YEAR).get(workerDetailsBean.getVerifyEntity().getWorkingYear()));
+        tvCode.setText(bean.getId() + "");
+        String region = Config.getConfig().getAddress(bean.getPlaceCode());
+        tvAddress.setText(region + "--" + bean.getVerifyEntity().getPlaceAddress());
+        if (bean.getGoodRate() != 0) {
+            tvHaopinglv.setText(bean.getGoodRate() + "%");
+            ivHaopinglv.setProgress(bean.getGoodRate());
+        }
+        rbStar1.setRating(bean.getItem1());
+        rbStar2.setRating(bean.getItem2());
+        rbStar3.setRating(bean.getItem3());
+        rbStar4.setRating(bean.getItem4());
+        rbStar5.setRating(bean.getItem5());
 
-        tvCode.setText(workerDetailsBean.getId() + "");
-        String region = Config.getConfig().getAddress(workerDetailsBean.getPlaceCode());
-        tvAddress.setText(region + "--" + workerDetailsBean.getVerifyEntity().getPlaceAddress());
+        mDataList1 = new ArrayList<>();
+        mDataList1.clear();
+        List<Integer> address = bean.getRegionList();
+        List<String> addressCode = Config.getConfig().getCode(address, Constant.AREA);
+        for (int i = 0; i < address.size(); i++) {
+            mDataList1.add(Config.getConfig().getAddress(addressCode.get(i)));
+        }
 
-        tvHaopinglv.setText(workerDetailsBean.getGoodRate() / 100 + "%");
-        ivHaopinglv.setProgress(workerDetailsBean.getGoodRate() / 100);
-
-        rbStar1.setRating(workerDetailsBean.getItem1());
-        rbStar2.setRating(workerDetailsBean.getItem2());
-        rbStar3.setRating(workerDetailsBean.getItem3());
-        rbStar4.setRating(workerDetailsBean.getItem4());
-        rbStar5.setRating(workerDetailsBean.getItem5());
-
-//        mDataList1 = new ArrayList<>();
-//        mDataList1.clear();
-//        List<Integer> address = workerDetailsBean.getRegionList();
-//        List<String> addressCode = Config.getConfig().getCode(address, Constant.AREA);
-//        for (int i = 0; i < address.size(); i++) {
-//            mDataList1.add(Config.getConfig().getAddress(addressCode.get(i)));
-//        }
-
-        mDataList2=new ArrayList<>();
+        List<Integer> serviceList = bean.getServiceList();
+        mDataList2 = new ArrayList<>();
         mDataList2.clear();
-        List<Integer> serviceList = workerDetailsBean.getServiceList();
-        for (int i=0;i<serviceList.size();i++){
-            mDataList2.add(Config.getConfig().getServName(serviceList.get(i),Constant.BIZ_TYPE));
+        for (int i = 0; i < serviceList.size(); i++) {
+            mDataList2.add(Config.getConfig().getServName(serviceList.get(i), Constant.BIZ_TYPE));
         }
 
 
-        List<Integer> businessType = workerDetailsBean.getBusinessList();
-        List<String> businessCode = Config.getConfig().getCode(businessType, Constant.SYS_TYPE);
+        List<Integer> businessType = bean.getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
         for (int i = 0; i < businessType.size(); i++) {
-//            mDataList3.add(Config.getConfig().getBusinessName(businessCode.get(i)));
-            mDataList3.add(Config.getConfig().getServName(businessType.get(i),Constant.SYS_TYPE));
+            mDataList3.add(Config.getConfig().getServName(businessType.get(i), Constant.SYS_TYPE));
         }
 
         initAdapter();
-//        initHonor();
+//        initHonor(bean);
     }
 
     private void initAdapter() {
@@ -282,9 +296,9 @@ public class WorkerDetailActivity extends BaseActivity {
     }
 
 
-    private void initHonor() {
-        if (!StringUtils.isEmpty(workerDetailsBean.getVerifyEntity().getHonorPics())) {
-            String[] urls = workerDetailsBean.getVerifyEntity().getHonorPics().split(",");
+    private void initHonor(WorkerDetailsBean bean) {
+        if (!StringUtils.isEmpty(bean.getVerifyEntity().getHonorPics())) {
+            String[] urls = bean.getVerifyEntity().getHonorPics().split(",");
 
             if (!TextUtils.isEmpty(urls[0])) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));

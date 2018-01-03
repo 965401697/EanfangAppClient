@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/header"/>
+    <include layout="@layout/header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,19 +20,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-              >
+                android:padding="5dp">
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_vertical"
-                    fresco:roundAsCircle="true"
-                    fresco:placeholderImage="@mipmap/ic_launcher" />
+                    fresco:placeholderImage="@mipmap/ic_launcher"
+                    fresco:roundAsCircle="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -78,9 +78,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_ll_selctor"
-                android:layout_margin="5dp"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -187,8 +187,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
                 android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -279,8 +279,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
                 android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -305,8 +305,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
                 android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -332,25 +332,22 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical"
-                android:layout_margin="5dp"
-                android:paddingLeft="10dp"
-                >
+                android:padding="10dp">
 
                 <LinearLayout
                     android:id="@+id/ll_area"
-                    android:background="@drawable/bg_ll_selctor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
                         android:text="服务区域"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -365,24 +362,23 @@
                 </LinearLayout>
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_list1"
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:visibility="gone" />
             </LinearLayout>
 
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical"
-                android:layout_margin="5dp"
-                android:paddingLeft="10dp"
-                >
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -392,24 +388,21 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_list2"
-                    android:layout_width="300dp"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"/>
-
             </LinearLayout>
 
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical"
-                android:layout_margin="5dp"
-                android:paddingLeft="10dp"
-                >
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -418,31 +411,30 @@
                     android:text="业务类型"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_list3"
-                    android:layout_width="300dp"
-                    android:layout_gravity="center"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
+                android:padding="10dp"
+                android:text="荣誉证书"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="vertical"
                 android:layout_margin="5dp"
-                android:paddingLeft="10dp"
-                >
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="荣誉证书"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -487,21 +479,22 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_ll_selctor"
+                android:padding="10dp"
+                android:text="客户评价"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
                 android:layout_margin="5dp"
-                android:paddingLeft="10dp"
                 android:orientation="vertical"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="客户评价"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                android:paddingLeft="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -547,11 +540,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
-                android:paddingLeft="10dp"
-                >
+                android:paddingLeft="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -580,11 +572,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
-                android:paddingLeft="10dp"
-                >
+                android:paddingLeft="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -613,9 +604,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
                 android:paddingLeft="10dp">
 
                 <TextView
@@ -645,9 +636,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
                 android:paddingLeft="10dp">
 
                 <TextView
@@ -677,9 +668,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
                 android:paddingLeft="10dp">
 
                 <TextView
@@ -709,8 +700,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#fff"
                 android:layout_margin="5dp"
+                android:background="#fff"
                 android:padding="20dp">
 
                 <TextView

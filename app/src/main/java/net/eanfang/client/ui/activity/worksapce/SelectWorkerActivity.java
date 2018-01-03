@@ -29,6 +29,7 @@ import net.eanfang.client.util.JsonUtils;
 import net.eanfang.client.util.QueryEntry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,7 +63,7 @@ public class SelectWorkerActivity extends BaseActivity {
     boolean isDestroy = false;
 
     private List<String> businessId;
-    private Long workerId,userId;
+    private Long workerId, userId;
 
 
     @Override
@@ -71,19 +72,19 @@ public class SelectWorkerActivity extends BaseActivity {
         setContentView(R.layout.activity_select_worker);
         ButterKnife.bind(this);
         initView(savedInstanceState);
-        initWorker("");
+        initWorker(0, 0);
 
     }
 
 
     //加载技师
-    private void initWorker(String serOrcolId) {
+    private void initWorker(int serviceId, int collectId) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
-        queryEntry.getEquals().put("serviceId", Config.getConfig().getServId("2.1"));
+        queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.getConfig().getServId("2.1")));
         queryEntry.getIsIn().put("businessId", businessId);
-        queryEntry.getEquals().put("served", serOrcolId);
-        queryEntry.getEquals().put("collect", serOrcolId);
+        queryEntry.getEquals().put("served", serviceId+"");
+        queryEntry.getEquals().put("collect", collectId+"");
         queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -126,19 +127,19 @@ public class SelectWorkerActivity extends BaseActivity {
         showProgressDialog();
         List<MultiPointItem> list = new ArrayList<MultiPointItem>();
 
-        for (int i = 0; i <selectWorkerList.size();i++ ){
-                selectWorkerBean=selectWorkerList.get(i);
-                //保证经纬度没有问题的时候可以填false
-                Double lat = Double.parseDouble(selectWorkerList.get(i).getLat());
-                Double lon = Double.parseDouble(selectWorkerList.get(i).getLon());
-                workerId=selectWorkerList.get(i).getId();
-                userId=selectWorkerList.get(i).getVerifyEntity().getUserId();
-                LatLng latLng = new LatLng(lat, lon, false);
-                //创建MultiPointItem存放，海量点中某单个点的位置及其他信息
-                MultiPointItem multiPointItem = new MultiPointItem(latLng);
-                list.add(multiPointItem);
-                dissmissProgressDialog();
-            }
+        for (int i = 0; i < selectWorkerList.size(); i++) {
+            selectWorkerBean = selectWorkerList.get(i);
+            //保证经纬度没有问题的时候可以填false
+            Double lat = Double.parseDouble(selectWorkerList.get(i).getLat());
+            Double lon = Double.parseDouble(selectWorkerList.get(i).getLon());
+            workerId = selectWorkerList.get(i).getId();
+            userId = selectWorkerList.get(i).getVerifyEntity().getUserId();
+            LatLng latLng = new LatLng(lat, lon, false);
+            //创建MultiPointItem存放，海量点中某单个点的位置及其他信息
+            MultiPointItem multiPointItem = new MultiPointItem(latLng);
+            list.add(multiPointItem);
+            dissmissProgressDialog();
+        }
         //将规范化的点集交给海量点管理对象设置，待加载完毕即可看到海量点信息
         multiPointOverlay.setItems(list);
 
@@ -214,12 +215,12 @@ public class SelectWorkerActivity extends BaseActivity {
 //            }
 //        }).start();
     }
+
     //查看技师详情
     private void lookWorkerDetail() {
-        // TODO: 2018/1/2 报修的
-        Intent intent=new Intent(SelectWorkerActivity.this,WorkerDetailActivity.class);
-        intent.putExtra("toRepairBean",toRepairBean);
-        intent.putExtra("selectBean",selectWorkerBean);
+        Intent intent = new Intent(SelectWorkerActivity.this, WorkerDetailActivity.class);
+        intent.putExtra("toRepairBean", toRepairBean);
+        intent.putExtra("selectBean", selectWorkerBean);
         startActivity(intent);
     }
 

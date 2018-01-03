@@ -59,6 +59,12 @@ public interface RepairApi {
     /**16.根据客户绑定的关系，查询是否存在记录并返回对象*/
     String GET_COOPERATION_EXISTS=BuildConfig.API_HOST+"/yaf_shop/cooperation/exists";
 
+    /**17.是否已经收藏过技师*/
+    String GET_COLLECT_EXISTS=BuildConfig.API_HOST+"/yaf_shop/collect/worker/exists";
 
+    /**18.取消收藏过技师*/
+    String GET_COLLECT_CANCEL=BuildConfig.API_HOST+"/yaf_shop/collect/worker/cancel";
 
+    /**19.收藏技师*/
+    String GET_COLLECT_ADD=BuildConfig.API_HOST+"/yaf_shop/collect/worker/create";
 }
