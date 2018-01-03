@@ -78,6 +78,7 @@ public class RepairActivity extends BaseActivity {
     private int position;
     private List<RepairBugEntity> beanList = new ArrayList<>();
 
+
     private String latitude;
     private String longitude;
     private String province;
@@ -117,6 +118,7 @@ public class RepairActivity extends BaseActivity {
     private void goSelectWorker() {
         Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
         intent.putExtra("bean", fillBean());
+        intent.putStringArrayListExtra("businessId", (ArrayList<String>) Config.getConfig().getBusinessId(Stream.of(beanList).map(bean -> bean.getBusinessThreeCode()).toList()));
         startActivity(intent);
     }
 
@@ -251,8 +253,8 @@ public class RepairActivity extends BaseActivity {
                 etDetailAddress.setText(address);
                 break;
             case ADD_TROUBLE_CALLBACK_CODE:
-                RepairBugEntity bean = (RepairBugEntity) data.getSerializableExtra("bean");
-                beanList.add(bean);
+                RepairBugEntity repairBugEntity = (RepairBugEntity) data.getSerializableExtra("bean");
+                beanList.add(repairBugEntity);
 
                 initAdapter();
 //                initData();

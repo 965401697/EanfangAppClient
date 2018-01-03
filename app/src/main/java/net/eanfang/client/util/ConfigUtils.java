@@ -150,32 +150,6 @@ public class ConfigUtils {
         return getValueList("checkReanStatus");
     }
 
-    /**
-     * 预算范围
-     *
-     * @return
-     */
-    public static List<String> getBudgetLimit() {
-        return getValueList("budgetLimit");
-    }
-
-    /**
-     * 预计工期
-     *
-     * @return
-     */
-    public static List<String> getPlanLimit() {
-        return getValueList("planLimit");
-    }
-
-    /**
-     * 回复时限
-     *
-     * @return
-     */
-    public static List<String> getReplyLimit() {
-        return getValueList("replyLimit");
-    }
 
     /**
      * 免费设计 订单状态
@@ -187,100 +161,6 @@ public class ConfigUtils {
     }
 
     /**
-     * 技师认证 能力等级
-     */
-    public static List<String> getWorkLevel() {
-        return getValueList("workLevel");
-    }
-
-    /**
-     * 技师认证 工作年限
-     *
-     * @return
-     */
-    public static List<String> getWorkYear() {
-        return getValueList("workYear");
-    }
-
-    /**
-     * 企业规模
-     *
-     * @return
-     */
-    public static List<String> getCompanyScale() {
-        return getValueList("companyScale");
-    }
-
-    /**
-     * 维保等级
-     *
-     * @return
-     */
-    public static List<String> getMaintLevel() {
-        return getValueList("maintLevel");
-    }
-
-    /**
-     * 维保结果
-     *
-     * @return
-     */
-    public static List<String> getMaintResult() {
-        return getValueList("maintResult");
-    }
-
-    /**
-     * 到达时限
-     */
-    public static List<String> getArriveTime() {
-        return getValueList("arriveTime");
-    }
-
-    /**
-     * 到达时限
-     */
-    public static List<String> getCircle() {
-        return getValueList("circleList");
-    }
-
-    /**
-     * 到达时限
-     */
-    public static List<String> getPhotoType() {
-        return getValueList("photoType");
-    }
-
-    /**
-     * 设备参数类型
-     *
-     * @return
-     */
-    public static List<String> getParameterType() {
-        return getValueList("parameterType");
-    }
-
-    /**
-     * 支付方式
-     *
-     * @return
-     */
-    public static List<String> getPayType() {
-        return getValueList("payType");
-    }
-    public static List<String> getFirstFre() {
-        return getValueList("firstFrequency");
-    }
-    public static List<String> getSecondFre() {
-        return getValueList("secondFrequency");
-    }
-
-    public static List<String> getThirdFre() {
-        return getValueList("thirdFrequency");
-    }
-    public static List<String> getOrderList() {
-        return getValueList("orderList");
-    }
-    /**
      * 设备参数类型
      *
      * @return
@@ -288,4 +168,9 @@ public class ConfigUtils {
     public static List<String> getRepairConslusion() {
         return getValueList("repairConslusion");
     }
+
+    public static List<String>getRepairSelectWorkers(){
+        return getValueList("repairSelectWorkers");
+    }
+
 }

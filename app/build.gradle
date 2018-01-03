@@ -17,7 +17,7 @@ android {
         buildConfigField("String", "TYPE", "\"client\"")
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
-        buildConfigField("String", "OSS_SERVER", "\"http://eanfang.oss-cn-beijing.aliyuncs.com/\"")
+        buildConfigField("String", "OSS_SERVER", "\"  http://oss.eanfang.net/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"http://oss-cn-beijing.aliyuncs.com\"")
 

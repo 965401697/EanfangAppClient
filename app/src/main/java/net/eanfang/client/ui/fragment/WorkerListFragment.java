@@ -16,7 +16,6 @@ import net.eanfang.client.network.apiservice.ApiService;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
-import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.adapter.WorkerListAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
@@ -35,8 +34,6 @@ import java.util.List;
 
 public class WorkerListFragment extends BaseFragment {
 
-    private View v;
-    private String mTitle;
     private RecyclerView mRecyclerView;
     private List<SelectWorkerListBean.All1Bean> mDataList;
     private TextView btn_one_button;
@@ -77,16 +74,16 @@ public class WorkerListFragment extends BaseFragment {
         btn_one_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bugOneUid = ((SelectWorkerActivity) getActivity()).getToRepairBean().getBugOneUid();
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("bugOneUid", bugOneUid);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                String bugOneUid = ((SelectWorkerActivity) getActivity()).getToRepairBean().getBugOneUid();
+//                JSONObject json = new JSONObject();
+//                try {
+//                    json.put("bugOneUid", bugOneUid);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
                 EanfangHttp.post(ApiService.ONE_BUTON_REPAIR)
                         .tag(this)
-                        .params("json", json.toString())
+//                        .params("json", json.toString())
                         .execute(new EanfangCallback<JSONObject>(getActivity(), false) {
                             @Override
                             public void onSuccess(JSONObject bean) {
@@ -98,7 +95,7 @@ public class WorkerListFragment extends BaseFragment {
                                     e.printStackTrace();
                                 }
                                 Intent intent = new Intent(getActivity(), OrderConfirmActivity.class);
-                                intent.putExtra("bean", ((SelectWorkerActivity) getActivity()).getToRepairBean());
+//                                intent.putExtra("bean", ((SelectWorkerActivity) getActivity()).getToRepairBean());
                                 intent.putExtra("id", workeruid);
                                 startActivity(intent);
                             }
@@ -116,7 +113,7 @@ public class WorkerListFragment extends BaseFragment {
                 if (ConnectivityChangeReceiver.isNetConnected(getContext()) == true) {
                     Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
                     intent.putExtra("id", mDataList.get(position).getPersonuid());
-                    intent.putExtra("bean", ((SelectWorkerActivity) getActivity()).getToRepairBean());
+//                    intent.putExtra("bean", ((SelectWorkerActivity) getActivity()).getToRepairBean());
                     startActivity(intent);
                 } else {
                     showToast("网络异常，请检查网络");
@@ -130,7 +127,7 @@ public class WorkerListFragment extends BaseFragment {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (ConnectivityChangeReceiver.isNetConnected(getContext()) == true) {
                     Intent intent = new Intent(getActivity(), OrderConfirmActivity.class);
-                    intent.putExtra("bean", ((SelectWorkerActivity) getActivity()).getToRepairBean());
+//                    intent.putExtra("bean", ((SelectWorkerActivity) getActivity()).getToRepairBean());
                     intent.putExtra("id", mDataList.get(position).getPersonuid());
                     startActivity(intent);
                 } else {

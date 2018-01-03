@@ -12,10 +12,10 @@ import net.eanfang.client.BuildConfig;
 
 public interface RepairApi {
     /**1.新增报修*/
-    String ADD_CLIENT_REPAIR = BuildConfig.API_HOST + "/repair/order/create";
+    String ADD_CLIENT_REPAIR = BuildConfig.API_HOST + "/yaf_repair/order/create";
 
     /**2.查看报修列表*/
-    String GET_REPAIR_LIST = BuildConfig.API_HOST + "/repair/order/list";
+    String GET_REPAIR_LIST = BuildConfig.API_HOST + "/yaf_repair/order/list";
 
     /**3.查看报修详情*/
     String GET_REPAIR_DETAIL = BuildConfig.API_HOST + "/repair/order/detail";
@@ -24,22 +24,22 @@ public interface RepairApi {
     String GET_REPAIR_FLOW=BuildConfig.API_HOST+"/yaf_repair/order/flow";
 
     /**5.报修筛选技师*/
-    String GET_REPAIR_SEARCH=BuildConfig.API_HOST+"/shop/worker/search";
+    String GET_REPAIR_SEARCH=BuildConfig.API_HOST+"/yaf_shop/worker/search";
 
     /**6.查看技师详情*/
-    String GET_REPAIR_WORKER_DETAIL=BuildConfig.API_HOST+"/shop/worker/detail";
+    String GET_REPAIR_WORKER_DETAIL=BuildConfig.API_HOST+"/yaf_shop/worker/detail";
 
     /**7.技师电话筛查*/
-    String GET_REPAIR_SCREENING=BuildConfig.API_HOST+"/repair/flow/screening";
+    String GET_REPAIR_SCREENING=BuildConfig.API_HOST+"/yaf_repair/flow/screening";
 
     /**8.报修单更改预约时间*/
-    String GET_REPAIR_RESCHEDULE=BuildConfig.API_HOST+"/repair/flow/rebook";
+    String GET_REPAIR_RESCHEDULE=BuildConfig.API_HOST+"/yaf_repair/flow/rebook";
 
     /**9.技师上门签到*/
-    String GET_REPAIR_WORKER_SIGNIN=BuildConfig.API_HOST+"/repair/flow/signIn";
+    String GET_REPAIR_WORKER_SIGNIN=BuildConfig.API_HOST+"/yaf_repair/flow/signIn";
 
     /**10.【去完工】技师端点击去完工，查询真实故障列表*/
-    String GET_REPAIR_WORKER_PREPARE=BuildConfig.API_HOST+"/repair/bughandle/prepare";
+    String GET_REPAIR_WORKER_PREPARE=BuildConfig.API_HOST+"/yaf_repair/bughandle/prepare";
 
     /**11.【创建】创建真实故障*/
     String GET_REPAIR_WORKER_CREATE_REAL_TROUBLE=BuildConfig.API_HOST+"/yaf_repair/failure/create";
@@ -55,6 +55,9 @@ public interface RepairApi {
 
     /**15.【转单】报修单 转单流程*/
     String GET_REPAIR_TRANFER=BuildConfig.API_HOST+"/yaf_repair/flow/transfer";
+
+    /**16.根据客户绑定的关系，查询是否存在记录并返回对象*/
+    String GET_COOPERATION_EXISTS=BuildConfig.API_HOST+"/yaf_shop/cooperation/exists";
 
 
 

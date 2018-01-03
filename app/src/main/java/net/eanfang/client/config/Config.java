@@ -43,6 +43,11 @@ public class Config {
     private List<String> designOrderStatus = new ArrayList<>();
     private List<String> arriveTime = new ArrayList<>();
     private List<String> installStatus = new ArrayList<>();
+    private List<String> repairSelectWorker = new ArrayList<>();
+
+    public List<String> getRepairSelectWorker() {
+        return repairSelectWorker;
+    }
 
     public List<String> getInstallStatus() {
         return installStatus;
@@ -114,13 +119,12 @@ public class Config {
 
         //免费设计
         designOrderStatus = ConfigUtils.getDesignOrderStatus();
+        //选择技师
+        repairSelectWorker = ConfigUtils.getRepairSelectWorkers();
 
 
     }
 
-    public List<String> getArriveTime() {
-        return arriveTime;
-    }
 
     /**
      * 业务类型
@@ -142,22 +146,29 @@ public class Config {
 
         if (countyList == null || countyList.isEmpty()) {
             return "";
-        }
-        if (countyList.size() > 1) {
-            List<BaseDataBean> cityList = Stream.of(countyList).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataName().equals(name)).toList();
-            if (countyList == null || countyList.isEmpty()) {
-                return "";
-            }
-            //特殊情况 如果遇到再加代码
-            if (countyList.size() > 1) {
-                return "";
-            } else {
-                return Stream.of(countyList).filter(bean -> bean.getDataCode().startsWith(cityList.get(0).getDataCode())).toList().get(0).getDataCode();
-            }
         } else {
             return countyList.get(0).getDataCode();
         }
     }
+
+    /**
+     * 根据系统编码获得id
+     */
+    public List<String> getBusinessId(List<String> list) {
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && Stream.of(list).map(bus -> bus.equals(bean.getDataCode())) != null).map(bean -> bean.getDataId() + "").toList();
+
+    }
+
+    public String getServId(String code) {
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == Constant.BIZ_TYPE && bean.getDataCode().equals(code)).toList().get(0).getDataId() + "";
+
+    }
+
+    public String getServName(int id,int type) {
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && bean.getDataId()==id).toList().get(0).getDataName() + "";
+
+    }
+
 
     /**
      * 根据系统code获取名称
@@ -251,6 +262,13 @@ public class Config {
         builder.append(area[0]);
 
         return builder.toString();
+    }
+
+    /**
+     * 根据id获得code
+     */
+    public List<String> getCode(List<Integer> list, int type) {
+        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && Stream.of(list).map(bus -> bus.equals(bean.getDataId())) != null).map(bean -> bean.getDataCode() + "").toList();
     }
 
 

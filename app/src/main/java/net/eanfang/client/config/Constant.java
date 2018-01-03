@@ -28,6 +28,10 @@ public class Constant {
     public static final String BASE_DATA_TYPE = "BaseDataType";
     /*10.到达时限*/
     public static final String ARRIVE_LIMIT = "ArriveLimit";
+    /*11.从业等级*/
+    public static final String WORKING_LEVEL = "WorkingLevel";
+    /*12.从业年限*/
+    public static final String WORKING_YEAR ="WorkingYear";
 
 
     /*
@@ -39,7 +43,7 @@ public class Constant {
      */
     public static final int SYS_TYPE = 1;
     /*
-     * 业务类型
+     * 服务类型
      */
     public static final int BIZ_TYPE = 2;
     /*

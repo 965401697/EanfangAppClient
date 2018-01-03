@@ -155,7 +155,7 @@ public class EanfangCallback<T> extends StringCallback {
                 return;
             }
 
-            resultJson = JsonUtils.str2JSON(response.body());
+             resultJson = JsonUtils.str2JSON(response.body());
             Integer code = -100;
             String message = "响应参数错误";
             JSONObject resultObject = null;

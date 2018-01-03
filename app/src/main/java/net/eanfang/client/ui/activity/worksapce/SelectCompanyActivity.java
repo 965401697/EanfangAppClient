@@ -96,7 +96,7 @@ public class SelectCompanyActivity extends BaseActivity implements View.OnClickL
         SelectWorkerBean bean = new SelectWorkerBean();
 //        bean.setBugOneUid(installOrderConfirmBean.getBugone());
 //        bean.setCity(installOrderConfirmBean.getCity());
-        bean.setZone(installOrderConfirmBean.getZone());
+//        bean.setZone(installOrderConfirmBean.getZone());
         Gson gson = new Gson();
         String json = gson.toJson(bean);
         EanfangHttp.get(ApiService.SELECT_COMPANY)
