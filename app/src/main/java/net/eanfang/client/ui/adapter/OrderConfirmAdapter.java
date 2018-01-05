@@ -3,14 +3,14 @@ package net.eanfang.client.ui.adapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.model.WorkspaceDetailBean;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.ui.model.repair.RepairBugEntity;
 import net.eanfang.client.util.StringUtils;
 
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ import java.util.List;
  * Created by Administrator on 2017/3/26.
  */
 
-public class OrderConfirmAdapter extends BaseQuickAdapter<WorkspaceDetailBean.BugsBean, BaseViewHolder> {
+public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewHolder> {
 
     private String business;
 
@@ -32,20 +32,20 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<WorkspaceDetailBean.Bu
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkspaceDetailBean.BugsBean item) {
+    protected void convert(BaseViewHolder helper, RepairBugEntity item) {
 //        helper.setText(R.id.tv_name, item.getName());
 
         //解决故障明细左上方的一级业务类型读取不出来的问题
-       // helper.setText(R.id.tv_name,business+"-"+item.getBugtwoname()+"-"+item.getBugthreename())
-        helper.setText(R.id.tv_name,item.getBugonename()+"-"+item.getBugtwoname()+"-"+item.getBugthreename())
-                .setText(R.id.tv_model,"品牌型号:"+item.getBugfourname())
-                .setText(R.id.tv_location,"故障位置:"+item.getBugposition())
-                .setText(R.id.tv_number,"设备编号:"+item.getEquipnum())
-                .setText(R.id.tv_desc,"故障描述:"+item.getBugdesc());
+        // helper.setText(R.id.tv_name,business+"-"+item.getBugtwoname()+"-"+item.getBugthreename())
+        helper.setText(R.id.tv_name, Config.getConfig().getBusinessName(item.getBusinessThreeCode()))
+//                .setText(R.id.tv_model,"品牌型号:"+item.getBugfourname())
+                .setText(R.id.tv_location, "故障位置:" + item.getBugPosition());
+//                .setText(R.id.tv_number,"设备编号:"+item.getEquipnum())
+//                .setText(R.id.tv_desc,"故障描述:"+item.getBugdesc());
         SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
-        if (!StringUtils.isEmpty(item.getBugpic1())){
-            Log.e("fresco",item.getBugpic1());
-            draweeView.setImageURI(Uri.parse(item.getBugpic1()));
+        if (!StringUtils.isEmpty(item.getPictures())) {
+            String[] urls = item.getPictures().split(",");
+            draweeView.setImageURI(Uri.parse(urls[0]));
             helper.addOnClickListener(R.id.ll_item);
         }
         helper.addOnClickListener(R.id.iv_pic);
@@ -56,6 +56,7 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<WorkspaceDetailBean.Bu
 
     /**
      * 加载本地图片
+     *
      * @param url
      * @return
      */

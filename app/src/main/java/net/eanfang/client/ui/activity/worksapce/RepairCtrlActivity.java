@@ -10,19 +10,17 @@ import android.view.View;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.OrderListFragment;
 import net.eanfang.client.ui.model.RepairedOrderBean;
 import net.eanfang.client.util.GetConstDataUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,6 @@ import java.util.List;
 public class RepairCtrlActivity extends BaseActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
-    private final List<String> mTitlesWorker = Config.getConfig().getRepairStatusWorker();
     private final List<String> mTitlesClient = Config.getConfig().getRepairStatusClient();
 
     private MyPagerAdapter mAdapter;
@@ -52,15 +49,8 @@ public class RepairCtrlActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
 
-        if (BuildConfig.APP_TYPE == 0) {
-            mTitles = new String[mTitlesClient.size()];
-            mTitlesClient.toArray(mTitles);
-
-        } else {
-            mTitles = new String[mTitlesWorker.size()];
-            mTitlesWorker.toArray(mTitles);
-        }
-
+        mTitles = new String[mTitlesClient.size()];
+        mTitlesClient.toArray(mTitles);
         for (String title : mTitles) {
             mFragments.add(OrderListFragment.getInstance(title));
         }
@@ -85,7 +75,7 @@ public class RepairCtrlActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 currentFragment = (OrderListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+                initData();
             }
 
             @Override
@@ -96,61 +86,60 @@ public class RepairCtrlActivity extends BaseActivity {
         setTitle("报修管控");
         setLeftBack();
         currentFragment = (OrderListFragment) mFragments.get(0);
-        initData(1);
+        initData();
 
     }
 
 
-    public void initData(int page) {
-        //2017年8月3日 lin
-        JSONObject jsonObject = new JSONObject();
-        try {
-            if (!currentFragment.getTitle().equals("全部")) {
-                String status = GetConstDataUtils.getRepairStatusByStr(currentFragment.getTitle());
-                jsonObject.put("status", status);
-            }
-            if (!jsonObject.has("status")) {
-                jsonObject.put("status", "");
-            }
-            jsonObject.put("page", page);
-            jsonObject.put("rows", 10);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public void initData() {
+        String status = null;
+        QueryEntry queryEntry = new QueryEntry();
+        if (!currentFragment.getTitle().equals("全部")) {
+            status = GetConstDataUtils.getRepairStatusByStr(currentFragment.getTitle());
+            queryEntry.getEquals().put("status", status);
         }
-        EanfangHttp.post(ApiService.REPAIR_LIST)
-                .params("json", jsonObject.toString())
-                .execute(new EanfangCallback<RepairedOrderBean>(this, true) {
-                    @Override
-                    public void onSuccess(final RepairedOrderBean bean) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                repairedOrderBean = bean;
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
+        queryEntry.setPage(1);
+        queryEntry.setSize(10);
 
-                    @Override
-                    public void onNoData(String message) {
-                        super.onNoData(message);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                RepairedOrderBean bean = new RepairedOrderBean();
-                                bean.setAll(new ArrayList<RepairedOrderBean.AllBean>());
-                                setBean(bean);
-                                currentFragment.onDataReceived();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        //重新加载 页面
-                        currentFragment.onDataReceived();
-                    }
-                });
+        EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<RepairedOrderBean>(this, true,RepairedOrderBean.class,(bean)->{
+                    repairedOrderBean = bean;
+                    currentFragment.onDataReceived();
+                })
+//                {
+//                    @Override
+//                    public void onSuccess(final RepairedOrderBean bean) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                repairedOrderBean = bean;
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        super.onNoData(message);
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                RepairedOrderBean bean = new RepairedOrderBean();
+//                                bean.setAll(new ArrayList<RepairedOrderBean.AllBean>());
+//                                setBean(bean);
+//                                currentFragment.onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        //重新加载 页面
+//                        currentFragment.onDataReceived();
+//                    }
+//                }
+                );
 
     }
 
@@ -189,6 +178,6 @@ public class RepairCtrlActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+        initData();
     }
 }

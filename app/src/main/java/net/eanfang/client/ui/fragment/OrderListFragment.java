@@ -13,10 +13,9 @@ import com.eanfang.util.CallUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.config.EanfangConst;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
-import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.PsTroubleDetailActivity;
@@ -26,12 +25,11 @@ import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.model.RepairedOrderBean;
+import net.eanfang.client.ui.model.repair.RepairOrderEntity;
 import net.eanfang.client.util.GetConstDataUtils;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.eanfang.client.config.EanfangConst.BOTTOM_REFRESH;
@@ -51,7 +49,7 @@ public class OrderListFragment extends BaseFragment implements
     private String Msg;
     private SwipyRefreshLayout refreshLayout;
     private RecyclerView mRecyclerView;
-    private List<RepairedOrderBean.AllBean> mDataList;
+    private List<RepairOrderEntity> mDataList;
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -71,10 +69,10 @@ public class OrderListFragment extends BaseFragment implements
         if (((RepairCtrlActivity) getActivity()).getBean() == null) {
             return;
         }
-        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getAll();
+        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getList();
         RepairedManageOrderAdapter adapter = new RepairedManageOrderAdapter(mDataList);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            RepairedOrderBean.AllBean item = mDataList.get(position);
+            RepairOrderEntity item = mDataList.get(position);
             switchCase(item, view);
         });
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
@@ -89,44 +87,47 @@ public class OrderListFragment extends BaseFragment implements
         adapter.notifyDataSetChanged();
     }
 
-    private void switchCase(RepairedOrderBean.AllBean item, View view) {
+    private void switchCase(RepairOrderEntity item, View view) {
+        // TODO: 2018/1/5 待处理 
         switch (item.getStatus()) {
             case 0:
+                //待付款
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        startActivity(new Intent(getActivity(), PayActivity.class)
-                                .putExtra("ordernum", item.getOrdernum())
-                                .putExtra("doorfee", item.getDoorfee() + "")
-                                .putExtra("orderType", "报修"));
+//                        startActivity(new Intent(getActivity(), PayActivity.class)
+//                                .putExtra("ordernum", item.getOrderNum())
+//                                .putExtra("doorfee", item.getDoorfee() + "")
+//                                .putExtra("orderType", "报修"));
                         break;
                     default:
                         break;
                 }
                 break;
+            //待回电
             case 1:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        CallUtils.call(getActivity(), item.getWorkerPhone());
+                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         break;
                     default:
                         break;
                 }
                 break;
+            //待上门
             case 2:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        CallUtils.call(getActivity(), item.getWorkerPhone());
+                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         break;
                     default:
                         break;
                 }
                 break;
-
+            //客户端 待完工  联系技师
             case 3:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        //客户端 待完工  联系技师
-                        CallUtils.call(getActivity(), item.getWorkerPhone());
+                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         break;
                     default:
                         break;
@@ -136,69 +137,51 @@ public class OrderListFragment extends BaseFragment implements
             case 4:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-                        CallUtils.call(getActivity(), item.getClientphone());
+                        CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         break;
                     case R.id.tv_do_second:
                         Intent intent;
-                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getPhonesolve())) {
+                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getIsPhoneSolve())) {
                             intent = new Intent(getActivity(), TroubleDetailActivity.class);
                         } else {
                             intent = new Intent(getActivity(), PsTroubleDetailActivity.class);
                         }
                         intent.putExtra("orderId", item.getId());
                         intent.putExtra("status", "待确认");
-                        intent.putExtra("phoneSolve", item.getPhonesolve());
+                        intent.putExtra("phoneSolve", item.getIsPhoneSolve());
                         startActivity(intent);
                         break;
                     default:
                         break;
                 }
                 break;
-            //待评价
+            //完成
             case 5:
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
                         Intent intent;
-                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getPhonesolve())) {
+                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getIsPhoneSolve())) {
                             intent = new Intent(getActivity(), TroubleDetailActivity.class);
                         } else {
                             intent = new Intent(getActivity(), PsTroubleDetailActivity.class);
                         }
                         intent.putExtra("orderId", item.getId());
                         intent.putExtra("status", "待评价");
-                        intent.putExtra("phoneSolve", item.getPhonesolve());
+                        intent.putExtra("phoneSolve", item.getIsPhoneSolve());
                         startActivity(intent);
                         break;
                     case R.id.tv_do_second:
                         startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                                 .putExtra("flag", 0)
-                                .putExtra("ordernum", item.getOrdernum())
+                                .putExtra("ordernum", item.getOrderNum())
                         );
                         break;
                     default:
                         break;
                 }
                 break;
-            //已完成
-            case 6:
-                switch (view.getId()) {
-                    case R.id.tv_do_second:
-                        Intent intent;
-                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getPhonesolve())) {
-                            intent = new Intent(getActivity(), TroubleDetailActivity.class);
-                        } else {
-                            intent = new Intent(getActivity(), PsTroubleDetailActivity.class);
-                        }
-                        intent.putExtra("orderId", item.getId());
-                        intent.putExtra("status", "已完成");
-                        intent.putExtra("phoneSolve", item.getPhonesolve());
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-                break;
+
             default:
                 break;
 
@@ -216,61 +199,59 @@ public class OrderListFragment extends BaseFragment implements
     }
 
     protected void getData() {
-
-        //2017年8月3日 lin
-        JSONObject jsonObject = new JSONObject();
-        try {
-            if (!getTitle().equals("全部")) {
-                String status = GetConstDataUtils.getRepairStatusByStr(getTitle());
-                jsonObject.put("status", status);
-            }
-            if (!jsonObject.has("status")) {
-                jsonObject.put("status", "");
-            }
-            jsonObject.put("page", page);
-            jsonObject.put("rows", 10);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        QueryEntry queryEntry = new QueryEntry();
+        String status = null;
+        if (!getTitle().equals("全部")) {
+            status = GetConstDataUtils.getRepairStatusByStr(getTitle());
+            queryEntry.getEquals().put("status", status);
         }
-        EanfangHttp.post(ApiService.REPAIR_LIST)
-                .params("json", jsonObject.toString())
-                .execute(new EanfangCallback<RepairedOrderBean>(((RepairCtrlActivity) getActivity()), true) {
-                    @Override
-                    public void onSuccess(final RepairedOrderBean bean) {
-                        ((RepairCtrlActivity) getActivity()).setBean(bean);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                onDataReceived();
-                            }
-                        });
-                    }
+        queryEntry.setSize(10);
+        queryEntry.setPage(1);
 
-                    @Override
-                    public void onNoData(String message) {
-                        page--;
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //如果是第一页 没有数据了 则清空 bean
-                                if (page < 1) {
-                                    RepairedOrderBean bean = new RepairedOrderBean();
-                                    bean.setAll(new ArrayList<RepairedOrderBean.AllBean>());
-                                    ((RepairCtrlActivity) getActivity()).setBean(bean);
-                                } else {
-                                    showToast("已经到底了");
-                                }
-                                onDataReceived();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        //重新加载 页面
-
-                    }
-                });
+        EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<RepairedOrderBean>(getActivity(), true, RepairedOrderBean.class, (bean) -> {
+                            ((RepairCtrlActivity) getActivity()).setBean(bean);
+                            getActivity().runOnUiThread(this::onDataReceived);
+                        })
+//                {
+//                    @Override
+//                    public void onSuccess(final RepairedOrderBean bean) {
+//                        ((RepairCtrlActivity) getActivity()).setBean(bean);
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onNoData(String message) {
+//                        page--;
+//                        getActivity().runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //如果是第一页 没有数据了 则清空 bean
+//                                if (page < 1) {
+//                                    RepairedOrderBean bean = new RepairedOrderBean();
+//                                    bean.setAll(new ArrayList<RepairedOrderBean.AllBean>());
+//                                    ((RepairCtrlActivity) getActivity()).setBean(bean);
+//                                } else {
+//                                    showToast("已经到底了");
+//                                }
+//                                onDataReceived();
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        //重新加载 页面
+//
+//                    }
+//                }
+                );
 
     }
 
@@ -312,7 +293,6 @@ public class OrderListFragment extends BaseFragment implements
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra("id", mDataList.get(position).getId());
-            intent.putExtra("ordernum", mDataList.get(position).getOrdernum());
             startActivity(intent);
         }
     };
@@ -358,6 +338,8 @@ public class OrderListFragment extends BaseFragment implements
                 getData();
                 // ((RepairedManageActivity) getActivity()).initData(page);
                 //initAdapter();
+                break;
+            default:
                 break;
         }
     }

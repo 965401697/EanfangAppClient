@@ -18,7 +18,7 @@ public interface RepairApi {
     String GET_REPAIR_LIST = BuildConfig.API_HOST + "/yaf_repair/order/list";
 
     /**3.查看报修详情*/
-    String GET_REPAIR_DETAIL = BuildConfig.API_HOST + "/repair/order/detail";
+    String GET_REPAIR_DETAIL = BuildConfig.API_HOST + "/yaf_repair/order/detail";
 
     /**4.查看订单流程节点*/
     String GET_REPAIR_FLOW=BuildConfig.API_HOST+"/yaf_repair/order/flow";

@@ -1,76 +1,96 @@
 package net.eanfang.client.ui.model;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by yaosheng on 2017/5/15.
  */
 
-public class OrderProgressBean {
+public class OrderProgressBean implements Serializable {
 
-    private List<AllBean> all;
 
-    public List<AllBean> getAll() {
-        return all;
+    /**
+     * createTime : 2017-12-12 10:28
+     * createUserId : 1
+     * id : 20
+     * nodeCode : 1
+     * nodeInfo :
+     * nodeName :
+     * orderId : 940407881491148802
+     * orderType : 0
+     */
+
+    private String createTime;
+    private Long createUserId;
+    private Long id;
+    private int nodeCode;
+    private String nodeInfo;
+    private String nodeName;
+    private Long orderId;
+    private int orderType;
+
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setAll(List<AllBean> all) {
-        this.all = all;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public static class AllBean {
-        /**
-         * id : 1
-         * ordernum : 23423424435433
-         * status : 0
-         * time : 2017-03-13 23:21:57
-         * uid : dgyer7yyy879th98487593ht984t98u
-         */
+    public Long getCreateUserId() {
+        return createUserId;
+    }
 
-        private int id;
-        private String ordernum;
-        private String status;
-        private String time;
-        private String uid;
+    public void setCreateUserId(Long createUserId) {
+        this.createUserId = createUserId;
+    }
 
-        public int getId() {
-            return id;
-        }
+    public Long getId() {
+        return id;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        public String getOrdernum() {
-            return ordernum;
-        }
+    public int getNodeCode() {
+        return nodeCode;
+    }
 
-        public void setOrdernum(String ordernum) {
-            this.ordernum = ordernum;
-        }
+    public void setNodeCode(int nodeCode) {
+        this.nodeCode = nodeCode;
+    }
 
-        public String getStatus() {
-            return status;
-        }
+    public String getNodeInfo() {
+        return nodeInfo;
+    }
 
-        public void setStatus(String status) {
-            this.status = status;
-        }
+    public void setNodeInfo(String nodeInfo) {
+        this.nodeInfo = nodeInfo;
+    }
 
-        public String getTime() {
-            return time;
-        }
+    public String getNodeName() {
+        return nodeName;
+    }
 
-        public void setTime(String time) {
-            this.time = time;
-        }
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
 
-        public String getUid() {
-            return uid;
-        }
+    public Long getOrderId() {
+        return orderId;
+    }
 
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
     }
 }
+

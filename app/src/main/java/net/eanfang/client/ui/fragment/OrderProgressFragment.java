@@ -7,12 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.OrderProgressAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.model.OrderProgressBean;
+import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.QueryEntry;
 
 import java.util.List;
 
@@ -27,10 +29,10 @@ import java.util.List;
 public class OrderProgressFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
-    private List<OrderProgressBean.AllBean> mDataList;
-    private String ordernum;
+    private List<OrderProgressBean> mDataList;
+    private Long ordernum;
 
-    public static OrderProgressFragment getInstance(String ordernum) {
+    public static OrderProgressFragment getInstance(Long ordernum) {
         OrderProgressFragment sf = new OrderProgressFragment();
         sf.ordernum = ordernum;
         return sf;
@@ -43,18 +45,14 @@ public class OrderProgressFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-
-        EanfangHttp.get(ApiService.ORDER_PROGRESS)
-                .tag(this)
-                .params("orderNum",ordernum)
-                .execute(new EanfangCallback<OrderProgressBean>(getActivity(),false){
-                    @Override
-                    public void onSuccess(OrderProgressBean bean) {
-                        super.onSuccess(bean);
-                        mDataList = bean.getAll();
-                        initAdapter();
-                    }
-                });
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("orderId", ordernum+"");
+        EanfangHttp.post(RepairApi.GET_REPAIR_FLOW)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<OrderProgressBean>(getActivity(), false, OrderProgressBean.class, true, (list) -> {
+                    mDataList = list;
+                    initAdapter();
+                }));
     }
 
     @Override

@@ -41,13 +41,9 @@ public class Config {
     private List<String> taskReadStatus = new ArrayList<>();
     private List<String> checkReadStatus = new ArrayList<>();
     private List<String> designOrderStatus = new ArrayList<>();
-    private List<String> arriveTime = new ArrayList<>();
     private List<String> installStatus = new ArrayList<>();
     private List<String> repairSelectWorker = new ArrayList<>();
 
-    public List<String> getRepairSelectWorker() {
-        return repairSelectWorker;
-    }
 
     public List<String> getInstallStatus() {
         return installStatus;

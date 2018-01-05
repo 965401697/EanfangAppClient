@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,15 +11,18 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetDateUtils;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
-import net.eanfang.client.ui.model.WorkspaceDetailBean;
+import net.eanfang.client.ui.model.repair.RepairBugEntity;
+import net.eanfang.client.ui.model.repair.RepairOrderEntity;
 import net.eanfang.client.util.ImagePerviewUtil;
 import net.eanfang.client.util.StringUtils;
 
@@ -39,7 +41,7 @@ public class OrderDetailFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager llm;
-    private List<WorkspaceDetailBean.BugsBean> mDataList = new ArrayList<>();
+    private List<RepairBugEntity> mDataList = new ArrayList<>();
     private TextView tv_company_name;
     private TextView tv_contract_name;
     private TextView tv_contract_phone;
@@ -55,14 +57,14 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_feature_time;
     private TextView tv_money;
     private TextView tv_alipay;
-    private int id;
+    private Long id;
     //2017年7月26日
     /**
      * 是否电话解决
      */
     private TextView tv_phone_solve;
 
-    public static OrderDetailFragment getInstance(int id) {
+    public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
         sf.id = id;
         return sf;
@@ -113,9 +115,7 @@ public class OrderDetailFragment extends BaseFragment {
         if (mDataList.size() == 0) {
             return;
         }
-        if (TextUtils.isEmpty(mDataList.get(0).getBugonename())) {
 
-        }
         BaseQuickAdapter evaluateAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -123,14 +123,15 @@ public class OrderDetailFragment extends BaseFragment {
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.iv_pic) {
                     ArrayList<String> picList = new ArrayList<String>();
-                    if (!StringUtils.isEmpty(mDataList.get(position).getBugpic1())) {
-                        picList.add(mDataList.get(position).getBugpic1());
+                    String[] urls = mDataList.get(position).getPictures().split(",");
+                    if (!StringUtils.isEmpty(urls[0])) {
+                        picList.add(urls[0]);
                     }
-                    if (!StringUtils.isEmpty(mDataList.get(position).getBugpic2())) {
-                        picList.add(mDataList.get(position).getBugpic2());
+                    if (!StringUtils.isEmpty(urls[1])) {
+                        picList.add(urls[1]);
                     }
-                    if (!StringUtils.isEmpty(mDataList.get(position).getBugpic3())) {
-                        picList.add(mDataList.get(position).getBugpic3());
+                    if (!StringUtils.isEmpty(urls[2])) {
+                        picList.add(urls[2]);
                     }
                     if (picList.size() == 0) {
                         showToast("当前没有图片");
@@ -150,56 +151,41 @@ public class OrderDetailFragment extends BaseFragment {
         });
         mRecyclerView.setAdapter(evaluateAdapter);
 
-        iv_phone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CallUtils.call(getActivity(), iv_phone.getTag().toString());
-            }
-        });
+        iv_phone.setOnClickListener(v ->
+                CallUtils.call(getActivity(), iv_phone.getTag().toString())
+        );
     }
 
     private void getData() {
-        EanfangHttp.get(ApiService.GET_REAIR_ORDER_DETAIL)
+        EanfangHttp.get(RepairApi.GET_REPAIR_DETAIL)
                 .tag(this)
-                .params("orderId", id)
-                .execute(new EanfangCallback<WorkspaceDetailBean>(getActivity(), true) {
-
-                    @Override
-                    public void onSuccess(WorkspaceDetailBean bean) {
-                        tv_company_name.setText(bean.getOrder().getCompanyname());
-                        tv_contract_name.setText(bean.getOrder().getClientconnector());
-                        tv_contract_phone.setText(bean.getOrder().getClientphone());
-                        tv_time_limit.setText(bean.getOrder().getArrivetime());
-                        tv_address.setText(bean.getOrder().getDetailplace());
-                        tv_time.setText(bean.getOrder().getPretime());
-                        tv_number.setText(bean.getOrder().getOrdernum());
-                        tv_feature_time.setText(bean.getOrder().getCreatetime());
-                        tv_money.setText(bean.getOrder().getTotalfee() + "");
-                        tv_alipay.setText(bean.getOrder().getPaytype());
-                        tv_phone_solve.setText(bean.getOrder().getPhonesolve());
-
-                        //客户端
-                        if (BuildConfig.APP_TYPE == 0) {
-                            iv_pic.setImageURI(Uri.parse(bean.getWorkerHeadPic()));
-                            tv_worker_name.setText(bean.getWorkerRealName());
-                            tv_worker_company.setText(bean.getWorkerCompanyName());
-                            iv_phone.setTag(bean.getWorkerPhone());
-                        } else {//技师端
-                            iv_pic.setImageURI(Uri.parse(bean.getClientHeadPic()));
-                            tv_worker_name.setText(bean.getClientRealName());
-                            tv_worker_company.setText(bean.getClientCompanyName());
-                            iv_phone.setTag(bean.getClientPhone());
-                        }
-
-                        mDataList = bean.getBugs();
-                        initAdapter();
+                .params("id", id)
+                .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
+                    tv_company_name.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
+                    tv_contract_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
+                    tv_contract_phone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
+                    tv_time_limit.setText(Config.getConfig().getConstBean().getConst().get(Constant.ARRIVE_LIMIT).get(bean.getArriveTimeLimit()));
+                    tv_address.setText(bean.getAddress());
+                    if (bean.getBookTime() != null) {
+                        tv_time.setText(GetDateUtils.dateToDateString(bean.getBookTime()));
                     }
 
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                    }
-                });
+                    tv_number.setText(bean.getOrderNum());
+                    tv_feature_time.setText(GetDateUtils.dateToDateString(bean.getCreateTime()));
+//                    tv_money.setText(bean.getTotalfee() + "");
+//                    tv_alipay.setText(bean.getPaytype());
+                    tv_phone_solve.setText(bean.getIsPhoneSolve());
+
+                    //客户端
+                    iv_pic.setImageURI(Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
+                    tv_worker_name.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+                    tv_worker_company.setText(bean.getAssigneeUser().getCompanyEntity().getOrgName());
+                    iv_phone.setTag(bean.getAssigneeUser().getAccountEntity().getMobile());
+
+
+                    mDataList = bean.getBugEntityList();
+                    initAdapter();
+                }));
     }
 
 }

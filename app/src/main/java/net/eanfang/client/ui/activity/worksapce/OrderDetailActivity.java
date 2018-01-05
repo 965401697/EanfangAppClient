@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,8 +37,7 @@ public class OrderDetailActivity extends BaseActivity implements OnTabSelectList
             "订单详情", "订单状态"
     };
     private MyPagerAdapter mAdapter;
-    private int id;
-    private String ordernum;
+    private Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +45,10 @@ public class OrderDetailActivity extends BaseActivity implements OnTabSelectList
         setContentView(R.layout.activity_order_detail);
         //loading加载动画
         loadingDialog.show();
+        id = getIntent().getLongExtra("id", 0);
 
-        getData();
         mFragments.add(OrderDetailFragment.getInstance(id));
-        mFragments.add(OrderProgressFragment.getInstance(ordernum));
+        mFragments.add(OrderProgressFragment.getInstance(id));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -66,11 +64,6 @@ public class OrderDetailActivity extends BaseActivity implements OnTabSelectList
         loadingDialog.dismiss();
     }
 
-    private void getData() {
-        Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
-        ordernum = intent.getStringExtra("ordernum");
-    }
 
     @Override
     public void onTabSelect(int position) {
