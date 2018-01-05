@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.my;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +11,6 @@ import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseActivity;
 import net.eanfang.client.ui.fragment.EvaluateFragment;
@@ -31,14 +29,11 @@ import butterknife.ButterKnife;
  */
 
 public class EvaluateActivity extends BaseActivity implements OnTabSelectListener {
-    private Context mContext = this;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private final String[] mTitlesClient = {
             "收到的评价", "给技师的评价"
     };
-    private final String[] mTitlesWorker = {
-            "收到的评价", "给客户的评价"
-    };
+
     private MyPagerAdapter mAdapter;
 
     @Override
@@ -58,11 +53,7 @@ public class EvaluateActivity extends BaseActivity implements OnTabSelectListene
         vp.setAdapter(mAdapter);
         /**自定义部分属性*/
         SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_4);
-        if (BuildConfig.APP_TYPE == 0) {
-            tabLayout_2.setViewPager(vp, mTitlesClient, this, mFragments);
-        } else {
-            tabLayout_2.setViewPager(vp, mTitlesWorker, this, mFragments);
-        }
+        tabLayout_2.setViewPager(vp, mTitlesClient, this, mFragments);
         tabLayout_2.setOnTabSelectListener(this);
         vp.setCurrentItem(0);
 
@@ -94,12 +85,7 @@ public class EvaluateActivity extends BaseActivity implements OnTabSelectListene
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (BuildConfig.APP_TYPE == 0) {
-                return mTitlesClient[position];
-            } else {
-                return mTitlesWorker[position];
-            }
-
+            return mTitlesClient[position];
         }
 
         @Override

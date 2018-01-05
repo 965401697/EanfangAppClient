@@ -148,7 +148,8 @@ public class EanfangCallback<T> extends StringCallback {
     public final void onSuccess(Response<String> response) {
         //获得响应json
         JSONObject resultJson = null;
-        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";//指定date类型自动格式化
+        //指定date类型自动格式化
+        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
         try {
             if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
                 onServerError("服务器无响应");

@@ -15,8 +15,8 @@ import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.GiveEvaluateAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
-import net.eanfang.client.ui.model.ReceivedEvaluateBean;
-import net.eanfang.client.ui.widget.EvaluateClientDialog;
+import net.eanfang.client.ui.model.GiveEvaluateBean;
+import net.eanfang.client.ui.widget.EvaluateRevDialog;
 import net.eanfang.client.util.JsonUtils;
 import net.eanfang.client.util.QueryEntry;
 
@@ -39,29 +39,29 @@ public class GiveEvaluateFragment extends BaseFragment {
     @Override
     protected void initData(Bundle arguments) {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("createId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.setPage(1);
         queryEntry.setSize(5);
         EanfangHttp.post(UserApi.GET_WORKER_EVALUATE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<ReceivedEvaluateBean>(getActivity(), false, ReceivedEvaluateBean.class, (bean) -> {
-                    initAdapter(bean.getList());
+                .execute(new EanfangCallback<GiveEvaluateBean>(getActivity(), false, GiveEvaluateBean.class, (bean) -> {
+                        initAdapter(bean.getList());
                 }));
     }
 
     @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initAdapter(List<ReceivedEvaluateBean.ListBean> mDataList) {
-        BaseQuickAdapter evaluateAdapter = new GiveEvaluateAdapter(R.layout.item_evaluate, mDataList);
+    private void initAdapter(List<GiveEvaluateBean.ListBean> mDataList) {
+        GiveEvaluateAdapter evaluateAdapter = new GiveEvaluateAdapter(R.layout.item_evaluate, mDataList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new EvaluateClientDialog(getActivity(), mDataList.get(position)).show();
+                new EvaluateRevDialog(getActivity(), mDataList.get(position)).show();
             }
         });
         mRecyclerView.setAdapter(evaluateAdapter);

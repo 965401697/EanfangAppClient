@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.model;
 
+import com.yaf.sys.entity.UserEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,89 +11,139 @@ import java.util.List;
 
 public class CollectionWorkerListBean implements Serializable {
 
-    private List<AllBean> all;
-
-    public List<AllBean> getAll() {
-        return all;
-    }
-
-    public void setAll(List<AllBean> all) {
-        this.all = all;
-    }
-
-    public static class AllBean {
         /**
-         * companyname : 全能快修
-         * goodpercent : 0.90
-         * headpic : http://note.youdao.com/favicon.ico
-         * personuid : e99d1acc503d40b2a964cc4a83fa27a2
-         * praise : 5
-         * realname : 范师傅
-         * workexp : 10年以上
+         * currPage : 1
+         * list : [{"assigneeId":"936487014465806338","assigneeUserEntity":{"accId":"936487014348365825","accountEntity":{"accId":"936487014348365825","accType":0,"avatar":"0","realName":"张三"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806338"},"createTime":"2018-01-04 14:39","id":18,"ownerId":"936487014465806337","ownerUserEntity":{"accId":"936487014348365825","accountEntity":{"$ref":"$.data.list[0].assigneeUserEntity.accountEntity"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806337"},"type":0}]
+         * pageSize : 10
+         * totalCount : 1
+         * totalPage : 1
          */
 
-        private String companyname;
-        private String goodpercent;
-        private String headpic;
-        private String personuid;
-        private String praise;
-        private String realname;
-        private String workexp;
+        private int currPage;
+        private int pageSize;
+        private int totalCount;
+        private int totalPage;
+        private List<ListBean> list;
 
-        public String getCompanyname() {
-            return companyname;
+        public int getCurrPage() {
+            return currPage;
         }
 
-        public void setCompanyname(String companyname) {
-            this.companyname = companyname;
+        public void setCurrPage(int currPage) {
+            this.currPage = currPage;
         }
 
-        public String getGoodpercent() {
-            return goodpercent;
+        public int getPageSize() {
+            return pageSize;
         }
 
-        public void setGoodpercent(String goodpercent) {
-            this.goodpercent = goodpercent;
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
         }
 
-        public String getHeadpic() {
-            return headpic;
+        public int getTotalCount() {
+            return totalCount;
         }
 
-        public void setHeadpic(String headpic) {
-            this.headpic = headpic;
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
         }
 
-        public String getPersonuid() {
-            return personuid;
+        public int getTotalPage() {
+            return totalPage;
         }
 
-        public void setPersonuid(String personuid) {
-            this.personuid = personuid;
+        public void setTotalPage(int totalPage) {
+            this.totalPage = totalPage;
         }
 
-        public String getPraise() {
-            return praise;
+        public List<ListBean> getList() {
+            return list;
         }
 
-        public void setPraise(String praise) {
-            this.praise = praise;
+        public void setList(List<ListBean> list) {
+            this.list = list;
         }
 
-        public String getRealname() {
-            return realname;
-        }
+        public static class ListBean implements Serializable{
+            /**
+             * assigneeId : 936487014465806338
+             * assigneeUserEntity : {"accId":"936487014348365825","accountEntity":{"accId":"936487014348365825","accType":0,"avatar":"0","realName":"张三"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806338"}
+             * createTime : 2018-01-04 14:39
+             * id : 18
+             * ownerId : 936487014465806337
+             * ownerUserEntity : {"accId":"936487014348365825","accountEntity":{"$ref":"$.data.list[0].assigneeUserEntity.accountEntity"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806337"}
+             * type : 0
+             */
 
-        public void setRealname(String realname) {
-            this.realname = realname;
-        }
+            private Long assigneeId;
+            private String createTime;
+            private Long id;
+            private Long ownerId;
+            private int type;
+            private UserEntity assigneeUserEntity;
+            private WorkerDetailsBean workerEntity;
 
-        public String getWorkexp() {
-            return workexp;
-        }
+            public WorkerDetailsBean getWorkerEntity() {
+                return workerEntity;
+            }
 
-        public void setWorkexp(String workexp) {
-            this.workexp = workexp;
+            public void setWorkerEntity(WorkerDetailsBean workerEntity) {
+                this.workerEntity = workerEntity;
+            }
+
+            public UserEntity getAssigneeUserEntity() {
+                return assigneeUserEntity;
+            }
+
+            public void setAssigneeUserEntity(UserEntity assigneeUserEntity) {
+                this.assigneeUserEntity = assigneeUserEntity;
+            }
+
+            public Long getAssigneeId() {
+                return assigneeId;
+            }
+
+            public void setAssigneeId(Long assigneeId) {
+                this.assigneeId = assigneeId;
+            }
+
+
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public Long getId() {
+                return id;
+            }
+
+            public void setId(Long id) {
+                this.id = id;
+            }
+
+            public Long getOwnerId() {
+                return ownerId;
+            }
+
+            public void setOwnerId(Long ownerId) {
+                this.ownerId = ownerId;
+            }
+
+
+            public int getType() {
+                return type;
+            }
+
+            public void setType(int type) {
+                this.type = type;
+            }
+
+
         }
     }
-}
+

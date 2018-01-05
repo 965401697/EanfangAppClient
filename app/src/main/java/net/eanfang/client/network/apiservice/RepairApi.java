@@ -67,4 +67,7 @@ public interface RepairApi {
 
     /**19.收藏技师*/
     String GET_COLLECT_ADD=BuildConfig.API_HOST+"/yaf_shop/collect/worker/create";
+
+    /**20.收藏技师列表*/
+    String GET_COLLECT_List=BuildConfig.API_HOST+"/yaf_shop/collect/worker/list";
 }

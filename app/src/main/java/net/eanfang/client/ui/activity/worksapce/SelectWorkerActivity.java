@@ -73,7 +73,16 @@ public class SelectWorkerActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView(savedInstanceState);
         initWorker(0, 0);
+        setonClieck();
 
+    }
+
+    private void setonClieck() {
+        tv_all.setOnClickListener(v -> initWorker(0, 0));
+        tv_serviced.setOnClickListener((v) -> {
+            initWorker(1, 0);
+        });
+        tv_collection.setOnClickListener(v -> initWorker(0, 1));
     }
 
 
@@ -83,8 +92,8 @@ public class SelectWorkerActivity extends BaseActivity {
         queryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
         queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.getConfig().getServId("2.1")));
         queryEntry.getIsIn().put("businessId", businessId);
-        queryEntry.getEquals().put("served", serviceId+"");
-        queryEntry.getEquals().put("collect", collectId+"");
+        queryEntry.getEquals().put("served", serviceId + "");
+        queryEntry.getEquals().put("collect", collectId + "");
         queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -111,6 +120,7 @@ public class SelectWorkerActivity extends BaseActivity {
 
     //绘制海量点
     private void initMarker() {
+
         //添加一个Marker用来展示海量点点击效果
         final Marker marker = aMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
@@ -133,7 +143,7 @@ public class SelectWorkerActivity extends BaseActivity {
             Double lat = Double.parseDouble(selectWorkerList.get(i).getLat());
             Double lon = Double.parseDouble(selectWorkerList.get(i).getLon());
             workerId = selectWorkerList.get(i).getId();
-            userId = selectWorkerList.get(i).getVerifyEntity().getUserId();
+            userId = selectWorkerList.get(i).getCompanyUserId();
             LatLng latLng = new LatLng(lat, lon, false);
             //创建MultiPointItem存放，海量点中某单个点的位置及其他信息
             MultiPointItem multiPointItem = new MultiPointItem(latLng);
@@ -147,8 +157,8 @@ public class SelectWorkerActivity extends BaseActivity {
             @Override
             public boolean onPointClick(MultiPointItem pointItem) {
                 //添加一个Marker用来展示海量点点击效果
-                marker.setPosition(pointItem.getLatLng());
-                marker.setToTop();
+//                marker.setPosition(pointItem.getLatLng());
+//                marker.setToTop();
                 //点击头像的事件
                 lookWorkerDetail();
                 return false;
@@ -276,4 +286,5 @@ public class SelectWorkerActivity extends BaseActivity {
             progDialog.dismiss();
         }
     }
+
 }

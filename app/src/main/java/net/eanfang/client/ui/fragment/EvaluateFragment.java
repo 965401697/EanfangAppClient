@@ -58,11 +58,11 @@ public class EvaluateFragment extends BaseFragment {
     @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void initAdapter(List<ReceivedEvaluateBean.ListBean> mDataList) {
-        BaseQuickAdapter evaluateAdapter = new EvaluateAdapter(R.layout.item_evaluate, mDataList);
+        EvaluateAdapter evaluateAdapter = new EvaluateAdapter(R.layout.item_evaluate, mDataList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override

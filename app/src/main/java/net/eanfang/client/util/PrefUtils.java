@@ -13,9 +13,7 @@ import net.eanfang.client.application.EanfangApplication;
 public class PrefUtils {
     //是否显示引导界面，true为显示，false为不显示
     public static final String SHOWGUIDE = "showguid";
-    public static final String PERSON_REPAIR_SWITCH_CHECK = "person_repair_switch_check";
-    public static final String COMPANY_REPAIR_SWITCH_CHECK = "company_repair_switch_check";
-    public static final String COMPANY_INSTALL_SWITCH_CHECK = "company_install_switch_check";
+    public static final String ISCOLLECTED = "is_collected";
     public static final String RECEIVE_MSG_SWITCH_CHECK = "receive_msg_switch_check";
 
     public static Context getContext() {

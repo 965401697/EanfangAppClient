@@ -30,6 +30,7 @@ import net.eanfang.client.ui.model.SelectWorkerBean;
 import net.eanfang.client.ui.model.WorkerDetailsBean;
 import net.eanfang.client.ui.model.repair.RepairOrderEntity;
 import net.eanfang.client.util.JsonUtils;
+import net.eanfang.client.util.PrefUtils;
 import net.eanfang.client.util.QueryEntry;
 import net.eanfang.client.util.StringUtils;
 
@@ -110,6 +111,7 @@ public class WorkerDetailActivity extends BaseActivity {
 
     private RepairOrderEntity toRepairBean;
     private SelectWorkerBean selectWorkerBean;
+    private WorkerDetailsBean detailsBean;
 
 
     @Override
@@ -119,8 +121,8 @@ public class WorkerDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         getData();
         initView();
-        setListener();
         getWorkerDetailData();
+        setListener();
         initAdapter();
 
         setTitle("技师详情");
@@ -131,8 +133,9 @@ public class WorkerDetailActivity extends BaseActivity {
     private void getWorkerDetailData() {
         EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
                 .params("workerId", selectWorkerBean.getId())
-                .params("userId", selectWorkerBean.getVerifyEntity().getUserId())
+                .params("userId", selectWorkerBean.getCompanyUserId())
                 .execute(new EanfangCallback<WorkerDetailsBean>(this, true, WorkerDetailsBean.class, (bean) -> {
+                    detailsBean = bean;
                     setData(bean);
                 }));
     }
@@ -144,9 +147,12 @@ public class WorkerDetailActivity extends BaseActivity {
         }
 
         tvSelect.setOnClickListener((v) -> {
+            toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
+            toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
+            toRepairBean.setStatus(1);
+            toRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
             Intent intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
             intent.putExtra("bean", toRepairBean);
-            intent.putExtra("id", id);
             startActivity(intent);
         });
         llArea.setOnClickListener((v) -> {
@@ -166,6 +172,11 @@ public class WorkerDetailActivity extends BaseActivity {
         rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
 
+        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
+            setRightImageResId(R.mipmap.heart);
+        } else {
+            setRightImageResId(R.mipmap.hearted);
+        }
         setRightImageOnClickListener((v) -> {
             isCollected();
         });
@@ -174,13 +185,14 @@ public class WorkerDetailActivity extends BaseActivity {
 
     private void collected() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("assigneeId", selectWorkerBean.getVerifyEntity().getUserId());
+        jsonObject.put("assigneeId", selectWorkerBean.getCompanyUserId());
         jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
         jsonObject.put("type", 0);
         EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
                 .upJson(jsonObject.toJSONString())
                 .execute(new EanfangCallback(this, false, JSONObject.class, (bean) -> {
                     setRightImageResId(R.mipmap.hearted);
+                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
                     showToast("收藏成功");
                 }));
     }
@@ -190,7 +202,7 @@ public class WorkerDetailActivity extends BaseActivity {
      */
     private void isCollected() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("assigneeId", selectWorkerBean.getVerifyEntity().getUserId());
+        jsonObject.put("assigneeId", selectWorkerBean.getCompanyUserId());
         jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
         jsonObject.put("type", 0);
 
@@ -200,10 +212,8 @@ public class WorkerDetailActivity extends BaseActivity {
                     boolean isCollect = bean.getBoolean("exists");
                     runOnUiThread(() -> {
                         if (isCollect == false) {
-                            setRightImageResId(R.mipmap.heart);
                             collected();
                         } else {
-                            setRightImageResId(R.mipmap.heart);
                             cancelCollected();
                         }
                     });
@@ -215,13 +225,14 @@ public class WorkerDetailActivity extends BaseActivity {
      */
     private void cancelCollected() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("assigneeId", selectWorkerBean.getVerifyEntity().getUserId() + "");
+        queryEntry.getEquals().put("assigneeId", selectWorkerBean.getCompanyUserId() + "");
         queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(RepairApi.GET_COLLECT_CANCEL)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback(this, false, JSONObject.class, (bean) -> {
                     setRightImageResId(R.mipmap.heart);
+                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, false);
                     showToast("取消收藏");
                 }));
     }

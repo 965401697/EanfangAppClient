@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.model;
 
+import com.yaf.sys.entity.UserEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,169 +11,201 @@ import java.util.List;
 
 public class GiveEvaluateBean implements Serializable {
 
-    private List<AllBean> all;
 
-    public List<AllBean> getAll() {
-        return all;
-    }
-
-    public void setAll(List<AllBean> all) {
-        this.all = all;
-    }
-
-    public static class AllBean {
         /**
-         * companyname : 先发
-         * createtime : 2017-05-24 14:28:06
-         * headpic : http://eanfangx.oss-cn-beijing.aliyuncs.com/bnmmk
-         * id : 2
-         * ordernum : 123131313131
-         * personclientuid : de1d14c618934394a6cf680ae84ab616
-         * personworkeruid : b556ee600d47491aa49174fc1b323b76
-         * prostandard : 5
-         * realname : 刘龙2
-         * resptime : 5
-         * serviceattitude : 5
-         * techlevel : 5
-         * totalreview : 5
-         * uid : b556ee600d47491aa49174fc1b323b761
-         * workefficient : 5
+         * currPage : 1
+         * list : [{"createTime":"2017-12-20 17:53","createUser":{"accId":1,"accountEntity":{"accId":1,"avatar":"4","realName":"锅子"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1},"createUserId":1,"id":6,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148801","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"accId":"936487014348365825","accountEntity":{"accId":"936487014348365825","avatar":"0","realName":"张三"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806338"}},{"createTime":"2017-12-20 17:55","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":7,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148800","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 18:06","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":8,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148803","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:43","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":9,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148804","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:50","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":10,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148805","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:54","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":11,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148806","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:57","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":12,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148802","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}}]
+         * pageSize : 10
+         * totalCount : 7
+         * totalPage : 1
          */
 
-        private String companyname;
-        private String createtime;
-        private String headpic;
-        private int id;
-        private String ordernum;
-        private String personclientuid;
-        private String personworkeruid;
-        private String prostandard;
-        private String realname;
-        private String resptime;
-        private String serviceattitude;
-        private String techlevel;
-        private String totalreview;
-        private String uid;
-        private String workefficient;
+        private int currPage;
+        private int pageSize;
+        private int totalCount;
+        private int totalPage;
+        private List<ListBean> list;
 
-        public String getCompanyname() {
-            return companyname;
+        public int getCurrPage() {
+            return currPage;
         }
 
-        public void setCompanyname(String companyname) {
-            this.companyname = companyname;
+        public void setCurrPage(int currPage) {
+            this.currPage = currPage;
         }
 
-        public String getCreatetime() {
-            return createtime;
+        public int getPageSize() {
+            return pageSize;
         }
 
-        public void setCreatetime(String createtime) {
-            this.createtime = createtime;
+        public void setPageSize(int pageSize) {
+            this.pageSize = pageSize;
         }
 
-        public String getHeadpic() {
-            return headpic;
+        public int getTotalCount() {
+            return totalCount;
         }
 
-        public void setHeadpic(String headpic) {
-            this.headpic = headpic;
+        public void setTotalCount(int totalCount) {
+            this.totalCount = totalCount;
         }
 
-        public int getId() {
-            return id;
+        public int getTotalPage() {
+            return totalPage;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setTotalPage(int totalPage) {
+            this.totalPage = totalPage;
         }
 
-        public String getOrdernum() {
-            return ordernum;
+        public List<ListBean> getList() {
+            return list;
         }
 
-        public void setOrdernum(String ordernum) {
-            this.ordernum = ordernum;
+        public void setList(List<ListBean> list) {
+            this.list = list;
         }
 
-        public String getPersonclientuid() {
-            return personclientuid;
-        }
+        public static class ListBean implements Serializable{
+            /**
+             * createTime : 2017-12-20 17:53
+             * createUser : {"accId":1,"accountEntity":{"accId":1,"avatar":"4","realName":"锅子"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1}
+             * createUserId : 1
+             * id : 6
+             * item1 : 5
+             * item2 : 5
+             * item3 : 5
+             * item4 : 5
+             * item5 : 5
+             * orderId : 940407881491148801
+             * orderNum : MO1712121028320
+             * ownerId : 936487014465806338
+             * ownerUser : {"accId":"936487014348365825","accountEntity":{"accId":"936487014348365825","avatar":"0","realName":"张三"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806338"}
+             */
 
-        public void setPersonclientuid(String personclientuid) {
-            this.personclientuid = personclientuid;
-        }
+            private String createTime;
+            private UserEntity createUser;
+            private Long createUserId;
+            private Long id;
+            private int item1;
+            private int item2;
+            private int item3;
+            private int item4;
+            private int item5;
+            private Long orderId;
+            private String orderNum;
+            private Long ownerId;
+            private UserEntity ownerUser;
 
-        public String getPersonworkeruid() {
-            return personworkeruid;
-        }
+            public UserEntity getCreateUser() {
+                return createUser;
+            }
 
-        public void setPersonworkeruid(String personworkeruid) {
-            this.personworkeruid = personworkeruid;
-        }
+            public void setCreateUser(UserEntity createUser) {
+                this.createUser = createUser;
+            }
 
-        public String getProstandard() {
-            return prostandard;
-        }
+            public UserEntity getOwnerUser() {
+                return ownerUser;
+            }
 
-        public void setProstandard(String prostandard) {
-            this.prostandard = prostandard;
-        }
+            public void setOwnerUser(UserEntity ownerUser) {
+                this.ownerUser = ownerUser;
+            }
 
-        public String getRealname() {
-            return realname;
-        }
+            public String getCreateTime() {
+                return createTime;
+            }
 
-        public void setRealname(String realname) {
-            this.realname = realname;
-        }
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
 
-        public String getResptime() {
-            return resptime;
-        }
 
-        public void setResptime(String resptime) {
-            this.resptime = resptime;
-        }
 
-        public String getServiceattitude() {
-            return serviceattitude;
-        }
+            public Long getCreateUserId() {
+                return createUserId;
+            }
 
-        public void setServiceattitude(String serviceattitude) {
-            this.serviceattitude = serviceattitude;
-        }
+            public void setCreateUserId(Long createUserId) {
+                this.createUserId = createUserId;
+            }
 
-        public String getTechlevel() {
-            return techlevel;
-        }
+            public Long getId() {
+                return id;
+            }
 
-        public void setTechlevel(String techlevel) {
-            this.techlevel = techlevel;
-        }
+            public void setId(Long id) {
+                this.id = id;
+            }
 
-        public String getTotalreview() {
-            return totalreview;
-        }
+            public int getItem1() {
+                return item1;
+            }
 
-        public void setTotalreview(String totalreview) {
-            this.totalreview = totalreview;
-        }
+            public void setItem1(int item1) {
+                this.item1 = item1;
+            }
 
-        public String getUid() {
-            return uid;
-        }
+            public int getItem2() {
+                return item2;
+            }
 
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
+            public void setItem2(int item2) {
+                this.item2 = item2;
+            }
 
-        public String getWorkefficient() {
-            return workefficient;
-        }
+            public int getItem3() {
+                return item3;
+            }
 
-        public void setWorkefficient(String workefficient) {
-            this.workefficient = workefficient;
+            public void setItem3(int item3) {
+                this.item3 = item3;
+            }
+
+            public int getItem4() {
+                return item4;
+            }
+
+            public void setItem4(int item4) {
+                this.item4 = item4;
+            }
+
+            public int getItem5() {
+                return item5;
+            }
+
+            public void setItem5(int item5) {
+                this.item5 = item5;
+            }
+
+            public Long getOrderId() {
+                return orderId;
+            }
+
+            public void setOrderId(Long orderId) {
+                this.orderId = orderId;
+            }
+
+            public String getOrderNum() {
+                return orderNum;
+            }
+
+            public void setOrderNum(String orderNum) {
+                this.orderNum = orderNum;
+            }
+
+            public Long getOwnerId() {
+                return ownerId;
+            }
+
+            public void setOwnerId(Long ownerId) {
+                this.ownerId = ownerId;
+            }
+
+
+
+
         }
     }
-}
+

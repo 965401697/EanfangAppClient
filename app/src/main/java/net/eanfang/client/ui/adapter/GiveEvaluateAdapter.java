@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.model.ReceivedEvaluateBean;
+import net.eanfang.client.ui.model.GiveEvaluateBean;
 import net.eanfang.client.util.StringUtils;
 
 import java.util.List;
@@ -18,13 +18,13 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * 我的-评价的adapter
  * Created by Administrator on 2017/3/15.
  */
-public class GiveEvaluateAdapter extends BaseQuickAdapter<ReceivedEvaluateBean.ListBean, BaseViewHolder> {
+public class GiveEvaluateAdapter extends BaseQuickAdapter<GiveEvaluateBean.ListBean, BaseViewHolder> {
     public GiveEvaluateAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ReceivedEvaluateBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, GiveEvaluateBean.ListBean item) {
         SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
 
         if (!StringUtils.isEmpty(item.getCreateUser().getAccountEntity().getAvatar())) {
