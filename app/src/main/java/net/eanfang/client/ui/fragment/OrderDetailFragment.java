@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetDateUtils;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.config.Config;
 import net.eanfang.client.config.Constant;
@@ -174,14 +175,20 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_feature_time.setText(GetDateUtils.dateToDateString(bean.getCreateTime()));
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
-                    tv_phone_solve.setText(bean.getIsPhoneSolve());
+                    //      获取：是否电话解决（0：未解决，1：已解决）
+                    if (bean.getIsPhoneSolve() == 0) {
+                        tv_phone_solve.setText("否");
+                    } else {
+                        tv_phone_solve.setText("是");
+                    }
 
                     //客户端
-                    iv_pic.setImageURI(Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
-                    tv_worker_name.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
-                    tv_worker_company.setText(bean.getAssigneeUser().getCompanyEntity().getOrgName());
-                    iv_phone.setTag(bean.getAssigneeUser().getAccountEntity().getMobile());
-
+                    if (bean.getAssigneeUser() != null) {
+                        iv_pic.setImageURI(BuildConfig.OSS_SERVER+Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
+                        tv_worker_name.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+                        tv_worker_company.setText(bean.getAssigneeOrg().getBelongCompany().getOrgName());
+                        iv_phone.setTag(bean.getAssigneeUser().getAccountEntity().getMobile());
+                    }
 
                     mDataList = bean.getBugEntityList();
                     initAdapter();
