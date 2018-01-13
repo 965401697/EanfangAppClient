@@ -206,6 +206,8 @@ public class EanfangCallback<T> extends StringCallback {
                 case ErrorCodeConst.SERVICE_ERROR:
                     onServerError(message);
                     break;
+                case ErrorCodeConst.REQUEST_COMMIT_AGAIN:
+                    break;
                 default:
                     onFail(code, message, resultObject);
                     break;

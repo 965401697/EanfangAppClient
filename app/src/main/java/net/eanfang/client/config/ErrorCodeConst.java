@@ -44,5 +44,8 @@ public class ErrorCodeConst {
 	public static final int REQUEST_NO_DATA = 0;
 	public static final String REQUEST_NO_DATA_STR = "暂无数据";
 
+	public static final int REQUEST_COMMIT_AGAIN=10000;
+	public static final String REQUEST_COMMIT_AGAIN_STR = "重复提交太快";
+
 
 }

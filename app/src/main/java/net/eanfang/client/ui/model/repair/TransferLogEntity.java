@@ -1,9 +1,11 @@
 package net.eanfang.client.ui.model.repair;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -175,4 +177,25 @@ public class TransferLogEntity implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+
+
+    /*
+     *===================================================================================================================================================
+     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
+     *===================================================================================================================================================
+     */
+
+    /**
+     * 接收人
+     */
+    @TableField(exist = false)
+    private UserEntity receiveUserEntity;
+
+    /**
+     * 转单人/原始处理人
+     */
+    @TableField(exist = false)
+    private UserEntity originalUserEntity;
+
+
 }

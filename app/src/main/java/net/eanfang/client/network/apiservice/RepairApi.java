@@ -70,4 +70,36 @@ public interface RepairApi {
 
     /**20.收藏技师列表*/
     String GET_COLLECT_List=BuildConfig.API_HOST+"/yaf_shop/collect/worker/list";
+
+    /**21.客户端评价技师*/
+    String POST_CLIENT_EVALUATE_CREATE=BuildConfig.API_HOST+"/yaf_shop/workerEvaluate/create";
+
+    /**22.技师端电话筛查*/
+    String POST_FLOW_SCREENING=BuildConfig.API_HOST+"/yaf_repair/flow/screening";
+
+    /**23.技师端改约上门时间*/
+    String POST_FLOW_REBOOK=BuildConfig.API_HOST+"/yaf_repair/flow/rebook";
+
+    /**24.技师端上门签到*/
+    String POST_FLOW_SIGNIN=BuildConfig.API_HOST+"/yaf_repair/flow/signIn";
+
+    /**25.技师端完工*/
+    String POST_BUGHANDLE_PREPARE=BuildConfig.API_HOST+"/yaf_repair/bughandle/prepare";
+
+    /**26.查看真实故障详情（包括对应的故障处理明细）*/
+    String GET_FAILURE_DETAIL=BuildConfig.API_HOST+"/yaf_repair/failure/detail";
+
+    /**27.创建真实故障*/
+    String POST_FAILURE_CREATE=BuildConfig.API_HOST+"/yaf_repair/failure/create";
+
+    /**28.查看报修单的故障处理*/
+    String POST_BUGHANDLE_LIST=BuildConfig.API_HOST+"/yaf_repair/bughandle/list";
+
+    /**29.查看报修单的故障处理详情*/
+    String GET_BUGHANDLE_DETAIL=BuildConfig.API_HOST+"/yaf_repair/bughandle/detail";
+
+    /**30查看报修单的故障处理详情的详情*/
+    String GET_BUGHANDLE_DETAIL_INFO=BuildConfig.API_HOST+"/yaf_repair/bughandle/detail/detail";
+    /**客户确认完工*/
+    String GET_FLOW_CONFIRE=BuildConfig.API_HOST+"/yaf_repair/flow/confirm";
 }

@@ -32,7 +32,16 @@ public class Constant {
     public static final String WORKING_LEVEL = "WorkingLevel";
     /*12.从业年限*/
     public static final String WORKING_YEAR ="WorkingYear";
-
+    /*13.维修结果*/
+    public static final String BUGHANDLE_DETAIL_STATUS = "BughandleDetailStatus";
+    /*14.正常/不正常*/
+    public static final String IS_NORMAL = "IsNormal";
+    /*15.录制天数*/
+    public static final String STORE_DAYS = "StoreDays";
+    /*16.参数*/
+    public static final String PARAM = "Param";
+    /*17.挂单原因*/
+    public static final String TRANSFER_CAUSE = "TransferCause";
 
     /*
      * 未知类别

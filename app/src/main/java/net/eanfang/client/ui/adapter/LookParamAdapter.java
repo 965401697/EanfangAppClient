@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.model.WorkspaceDetailBean;
+import net.eanfang.client.ui.model.repair.BughandleParamEntity;
 import net.eanfang.client.util.StringUtils;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * Created by Administrator on 2017/3/15.
  */
 
-public class LookParamAdapter extends BaseQuickAdapter<WorkspaceDetailBean.BughandledetaillistBean.BughandledetailparamBean, BaseViewHolder> {
+public class LookParamAdapter extends BaseQuickAdapter<BughandleParamEntity, BaseViewHolder> {
 
     public LookParamAdapter(int layoutResId, ArrayList data) {
         super(layoutResId, data);
@@ -25,9 +25,10 @@ public class LookParamAdapter extends BaseQuickAdapter<WorkspaceDetailBean.Bugha
 
 
     @Override
-    protected void convert(BaseViewHolder helper, final WorkspaceDetailBean.BughandledetaillistBean.BughandledetailparamBean item) {
-        helper.setText(R.id.tv_param,item.getName());
-        if (StringUtils.isValid(item.getValue()))
-            helper.setText(R.id.et_param,item.getValue());
+    protected void convert(BaseViewHolder helper, final BughandleParamEntity item) {
+        helper.setText(R.id.tv_param,item.getParamName());
+        if (StringUtils.isValid(item.getParamValue())) {
+            helper.setText(R.id.et_param, item.getParamValue());
+        }
     }
 }

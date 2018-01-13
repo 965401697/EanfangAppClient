@@ -30,7 +30,7 @@ public class BughandleDetailEntity implements Serializable {
     //主键
     //@TableField(value = "id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
     //故障处理确认信息表ID
     //@TableField(value = "bus_bughandle_confirm_id")
@@ -74,16 +74,10 @@ public class BughandleDetailEntity implements Serializable {
     //修改时间
     //@TableField(value = "edit_time")
     private Date editTime;
-    /**
-     * 故障处理明细 参数
-     */
-    @TableField(exist = false)
-    private List<BughandleParamEntity> paramEntityList;
-    /**
-     * 故障处理明细 设备
-     */
-    @TableField(exist = false)
-    private List<BughandleUseDeviceEntity> useDeviceEntityList;
+    //故障表象照片
+    private String presentationPictures;
+    //工具及蓝布照片
+    private String toolPictures;
 
     /**
      * 获取：主键
@@ -281,16 +275,12 @@ public class BughandleDetailEntity implements Serializable {
         this.editTime = editTime;
     }
 
+    
     @Override
     public String toString() {
         return JSON.toJSONString(this);
     }
 
-    /*
-     *===================================================================================================================================================
-     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
-     *===================================================================================================================================================
-     */
 
     @Override
     public boolean equals(Object other) {
@@ -311,5 +301,29 @@ public class BughandleDetailEntity implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+
+    /*
+     *===================================================================================================================================================
+     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
+     *===================================================================================================================================================
+     */
+
+
+    /**
+     * 当前故障处理明细对应的 真实故障
+     */
+    @TableField(exist = false)
+    private RepairFailureEntity failureEntity;
+
+    /**
+     * 故障处理明细 参数
+     */
+    @TableField(exist = false)
+    private List<BughandleParamEntity> paramEntityList;
+    /**
+     * 故障处理明细 设备
+     */
+    @TableField(exist = false)
+    private List<BughandleUseDeviceEntity> useDeviceEntityList;
 
 }

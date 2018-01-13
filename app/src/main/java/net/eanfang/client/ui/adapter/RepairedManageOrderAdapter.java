@@ -68,6 +68,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "查看故障处理");
             if (item.getWorkerEvaluateId() == null || item.getWorkerEvaluateId().longValue() <= 0) {
+                helper.setVisible(R.id.tv_do_second, true);
+            }else {
                 helper.setVisible(R.id.tv_do_second, false);
             }
         }

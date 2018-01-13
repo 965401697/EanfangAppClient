@@ -53,7 +53,7 @@ public class RepairOrderEntity implements Serializable {
     private String repairContactPhone;
     //到达时限
     //@TableField(value = "arrive_time_limit_id")
-    private int arriveTimeLimit;
+    private Integer arriveTimeLimit;
     //经度
     //@TableField(value = "longitude")
     private String longitude;
@@ -118,46 +118,7 @@ public class RepairOrderEntity implements Serializable {
     //订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
     //@TableField(value = "status")
     private Integer status;
-    /**
-     * 归属人
-     */
-    @TableField(exist = false)
-    private UserEntity ownerUser;
-    /**
-     * 归属组织
-     */
-    @TableField(exist = false)
-    private OrgEntity ownerOrg;
-    /**
-     * 受理人
-     */
-    @TableField(exist = false)
-    private UserEntity assigneeUser;
-    /**
-     * 受理组织
-     */
-    @TableField(exist = false)
-    private OrgEntity assigneeOrg;
-    /**
-     * 报修明细
-     */
-    @TableField(exist = false)
-    private List<RepairBugEntity> bugEntityList;
-    /**
-     * 真实故障
-     */
-    @TableField(exist = false)
-    private List<RepairFailureEntity> failureEntityList;
-    /**
-     * 技师收到的评价id
-     */
-    @TableField(exist = false)
-    private Long workerEvaluateId;
-    /**
-     * 客户收到的评价id
-     */
-    @TableField(exist = false)
-    private Long clientEvaluateId;
+
 
     /**
      * 获取：主键
@@ -260,14 +221,14 @@ public class RepairOrderEntity implements Serializable {
     /**
      * 获取：到达时限（基础数据表）
      */
-    public int getArriveTimeLimit() {
+    public Integer getArriveTimeLimit() {
         return arriveTimeLimit;
     }
 
     /**
      * 设置：到达时限（基础数据表）
      */
-    public void setArriveTimeLimit(int arriveTimeLimit) {
+    public void setArriveTimeLimit(Integer arriveTimeLimit) {
         this.arriveTimeLimit = arriveTimeLimit;
     }
 
@@ -509,12 +470,6 @@ public class RepairOrderEntity implements Serializable {
         this.ownerOrgCode = ownerOrgCode;
     }
 
-    /*
-     *===================================================================================================================================================
-     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
-     *===================================================================================================================================================
-     *第一次修改： 2017年11月27日 16点22分
-     */
 
     /**
      * 获取：当前报修 最新的受理人
@@ -572,4 +527,57 @@ public class RepairOrderEntity implements Serializable {
         this.status = status;
     }
 
+
+    /*
+     *===================================================================================================================================================
+     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
+     *===================================================================================================================================================
+     */
+
+    /**
+     * 归属人
+     */
+    @TableField(exist = false)
+    private UserEntity ownerUser;
+    /**
+     * 归属组织
+     */
+    @TableField(exist = false)
+    private OrgEntity ownerOrg;
+    /**
+     * 受理人
+     */
+    @TableField(exist = false)
+    private UserEntity assigneeUser;
+    /**
+     * 受理组织
+     */
+    @TableField(exist = false)
+    private OrgEntity assigneeOrg;
+    /**
+     * 报修明细
+     */
+    @TableField(exist = false)
+    private List<RepairBugEntity> bugEntityList;
+    /**
+     * 真实故障
+     */
+    @TableField(exist = false)
+    private List<RepairFailureEntity> failureEntityList;
+    /**
+     * 技师收到的评价id
+     */
+    @TableField(exist = false)
+    private Long workerEvaluateId;
+    /**
+     * 客户收到的评价id
+     */
+    @TableField(exist = false)
+    private Long clientEvaluateId;
+
+    /**
+     * 订单的审核信息
+     */
+    @TableField(exist = false)
+    private RepairAuditEntity auditEntity;
 }

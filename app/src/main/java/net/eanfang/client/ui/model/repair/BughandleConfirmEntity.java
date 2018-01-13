@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -26,16 +27,7 @@ import lombok.Setter;
 @TableName(value = "bus_bughandle_confirm")
 public class BughandleConfirmEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-    /**
-     * 报修真实故障
-     */
-    @TableField(exist = false)
-    List<RepairFailureEntity> failureEntityList;
-    /**
-     * 转单记录
-     */
-    @TableField(exist = false)
-    TransferLogEntity transferLogEntity;
+
     //主键
     //@TableField(value = "id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER
@@ -73,7 +65,7 @@ public class BughandleConfirmEntity implements Serializable {
     private String invoicesPictures;
     //录像机天数
     //@TableField(value = "store_days")
-    private String storeDays;
+    private int storeDays;
     //报警打印机是否正常（0：否，1：是）
     //@TableField(value = "is_alarm_printer")
     private Integer isAlarmPrinter;
@@ -283,14 +275,14 @@ public class BughandleConfirmEntity implements Serializable {
     /**
      * 获取：录像机天数
      */
-    public String getStoreDays() {
+    public int getStoreDays() {
         return storeDays;
     }
 
     /**
      * 设置：录像机天数
      */
-    public void setStoreDays(String storeDays) {
+    public void setStoreDays(int storeDays) {
         this.storeDays = storeDays;
     }
 
@@ -510,14 +502,6 @@ public class BughandleConfirmEntity implements Serializable {
     }
 
 
-
-    /*
-     *===================================================================================================================================================
-     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
-     *===================================================================================================================================================
-     *第一次修改： 2017年11月30日 11点14分
-     */
-
     @Override
     public boolean equals(Object other) {
         if (other instanceof BughandleConfirmEntity) {
@@ -537,5 +521,39 @@ public class BughandleConfirmEntity implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+
+
+
+
+    /*
+     *===================================================================================================================================================
+     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
+     *===================================================================================================================================================
+     *
+     */
+
+//    /**
+//     * 报修真实故障
+//     */
+//    @TableField(exist = false)
+//    List<RepairFailureEntity> failureEntityList;
+
+    /**
+     * 当前故障处理的处理明细
+     */
+    @TableField(exist = false)
+    List<BughandleDetailEntity> detailEntityList;
+
+    /**
+     * 转单记录
+     */
+    @TableField(exist = false)
+    List<TransferLogEntity> transferLogEntityList;
+
+    /**
+     * 当前故障处理人
+     */
+    @TableField(exist = false)
+    UserEntity createUserEntity;
 
 }

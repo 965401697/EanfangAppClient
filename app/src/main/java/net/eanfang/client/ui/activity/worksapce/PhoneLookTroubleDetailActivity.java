@@ -7,13 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -22,18 +18,22 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.LookMaterialAdapter;
 import net.eanfang.client.ui.adapter.LookParamAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.FillRepairInfoBean;
-import net.eanfang.client.ui.model.WorkspaceDetailBean;
+import net.eanfang.client.ui.model.repair.BughandleDetailEntity;
+import net.eanfang.client.ui.model.repair.BughandleParamEntity;
+import net.eanfang.client.ui.model.repair.BughandleUseDeviceEntity;
 import net.eanfang.client.ui.widget.MateraInfoView;
 import net.eanfang.client.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,9 +45,8 @@ import java.util.List;
  * @desc
  */
 
-public class PhoneLookTroubleDetailActivity extends BaseActivity implements View.OnClickListener {
-    public static final String TAG = PhoneLookTroubleDetailActivity.class.getSimpleName();
-
+public class PhoneLookTroubleDetailActivity extends BaseActivity /*implements View.OnClickListener */{
+    //    public static final String TAG = PhoneLookTroubleDetailActivity.class.getSimpleName();
     private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
     private static final int REQUEST_CODE_CHOOSE_PHOTO_2 = 2;
     private static final int REQUEST_CODE_CHOOSE_PHOTO_3 = 3;
@@ -55,31 +54,23 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
     private static final int REQUEST_CODE_CHOOSE_PHOTO_5 = 5;
     private static final int REQUEST_CODE_CHOOSE_PHOTO_6 = 6;
 
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = -1;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = -2;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = -3;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = -4;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_5 = -5;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_6 = -6;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 7;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 8;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 9;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 10;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_5 = 11;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_6 = 12;
 
     private TextView tv_trouble_device;
-    private RelativeLayout rl_trouble_device;
     private TextView tv_brand_model;
-    private RelativeLayout rl_brand_model;
     private TextView tv_device_no;
-    private RelativeLayout rl_device_no;
     private TextView tv_device_location;
-    private RelativeLayout rl_device_location;
     private TextView tv_add;
     private RecyclerView rcy_parameter;
     private TextView et_trouble_desc;
-    private LinearLayout ll_trouble_desc;
     private TextView et_trouble_point;
-    private LinearLayout ll_trouble_point;
     private TextView et_trouble_reason;
-    private LinearLayout ll_trouble_reason;
     private TextView et_trouble_deal;
-    private LinearLayout ll_trouble_deal, ll_gone_c;
     private TextView tv_use_goods;//耗用材料
     /**
      * 故障表象 （3张）
@@ -110,10 +101,8 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
     private RecyclerView rcy_consumable;
     private Button btn_add_trouble;
     private TextView tv_trouble_title;
-    private OptionsPickerView pvOptions;
-    private List<String> options = new ArrayList<>();
-    private List<WorkspaceDetailBean.BughandledetaillistBean.BughandledetailparamBean> mDataList;
-    private List<WorkspaceDetailBean.BughandledetaillistBean.BughandledetailmaterialBean> mDataList_2;
+    private List<BughandleParamEntity> mDataList;
+    private List<BughandleUseDeviceEntity> mDataList_2;
     private LookParamAdapter paramAdapter;
     private HashMap<String, String> uploadMap;
     //2017年7月21日
@@ -148,13 +137,14 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
     private ArrayList<String> picList6;
     private int position;
     private LookMaterialAdapter materialAdapter;
-    private WorkspaceDetailBean.BughandledetaillistBean.DetailBean bean;
-    private RelativeLayout rel_parame, rel_result;
+    private BughandleDetailEntity bughandleDetailEntity;
+    private RelativeLayout rel_parame;
     /**
      * 2017年8月1日
      * 故障明细的id
      */
     private Integer detailId;
+    private Long id;
 
 
     @Override
@@ -162,17 +152,13 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_look_trouble_detail);
         initView();
-        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
-        rcy_parameter.setAdapter(paramAdapter);
         getData();
     }
 
     /**
      * 初始化存储图片用的List集合
      */
-    private void initImgUrlList(WorkspaceDetailBean.BughandledetaillistBean.DetailBean bean) {
+    private void initImgUrlList() {
         uploadMap = new HashMap<>();
         picList1 = new ArrayList<>();
         picList2 = new ArrayList<>();
@@ -182,106 +168,48 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
         picList5 = new ArrayList<>();
         picList6 = new ArrayList<>();
         //修改小bug 图片读取问题
-        if (StringUtils.isValid(bean.getPic1())) {
-            picList1.add(bean.getPic1());
+        if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
+            String[] prePic = bughandleDetailEntity.getPresentationPictures().split(",");
+            Collections.addAll(picList1, prePic);
         }
-        if (StringUtils.isValid(bean.getPic2())) {
-            picList1.add(bean.getPic2());
+        if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
+            String[] toolPic = bughandleDetailEntity.getToolPictures().split(",");
+            Collections.addAll(picList2, toolPic);
         }
-        if (StringUtils.isValid(bean.getPic3())) {
-            picList1.add(bean.getPic3());
+        if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
+            String[] ponitPic = bughandleDetailEntity.getPointPictures().split(",");
+            Collections.addAll(picList3, ponitPic);
         }
-        if (StringUtils.isValid(bean.getPic4())) {
-            picList2.add(bean.getPic4());
+        if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
+            String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(",");
+            Collections.addAll(picList4, afterHandlePic);
         }
-        if (StringUtils.isValid(bean.getPic5())) {
-            picList2.add(bean.getPic5());
+        if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
+            String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(",");
+            Collections.addAll(picList5, returnInstallPic);
         }
-        if (StringUtils.isValid(bean.getPic6())) {
-            picList2.add(bean.getPic6());
+        if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
+            String[] restorePic = bughandleDetailEntity.getRestorePictures().split(",");
+            Collections.addAll(picList6, restorePic);
         }
-        if (StringUtils.isValid(bean.getPic7())) {
-            picList3.add(bean.getPic7());
-        }
-        if (StringUtils.isValid(bean.getPic8())) {
-            picList3.add(bean.getPic8());
-        }
-        if (StringUtils.isValid(bean.getPic9())) {
-            picList3.add(bean.getPic9());
-        }
-        //2017年7月21日
-        if (StringUtils.isValid(bean.getPic10())) {
-            picList4.add(bean.getPic10());
-        }
-        if (StringUtils.isValid(bean.getPic11())) {
-            picList4.add(bean.getPic11());
-        }
-        if (StringUtils.isValid(bean.getPic12())) {
-            picList4.add(bean.getPic12());
-        }
-        if (StringUtils.isValid(bean.getPic13())) {
-            picList5.add(bean.getPic13());
-        }
-        if (StringUtils.isValid(bean.getPic14())) {
-            picList5.add(bean.getPic14());
-        }
-        if (StringUtils.isValid(bean.getPic15())) {
-            picList5.add(bean.getPic15());
-        }
-        if (StringUtils.isValid(bean.getPic16())) {
-            picList6.add(bean.getPic16());
-        }
-        if (StringUtils.isValid(bean.getPic17())) {
-            picList6.add(bean.getPic17());
-        }
-        if (StringUtils.isValid(bean.getPic18())) {
-            picList6.add(bean.getPic18());
-        }
+
     }
 
     private void getData() {
-        WorkspaceDetailBean.BughandledetaillistBean detail = null;
-        Intent intent = getIntent();
-        detailId = intent.getIntExtra("detailId", 0);
-        if (detailId == 0) {
-            detail = (WorkspaceDetailBean.BughandledetaillistBean) intent.getSerializableExtra("bean");
-            initData(detail);
+        EanfangHttp.get(RepairApi.GET_BUGHANDLE_DETAIL_INFO)
+                .params("id", id)
+                .execute(new EanfangCallback<BughandleDetailEntity>(this, true, BughandleDetailEntity.class, (bean) -> {
+                    bughandleDetailEntity = bean;
+                    initData(bean);
+                }));
 
-        } else {
-            JSONObject object = new JSONObject();
-            try {
-                object.put("id", detailId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            EanfangHttp.get(ApiService.BUG_DETAIL_INFO)
-                    .tag(this)
-                    .params("json", object.toString())
-                    .execute(new EanfangCallback<WorkspaceDetailBean>(this, true) {
-                        @Override
-                        public void onSuccess(WorkspaceDetailBean bean) {
-                            super.onSuccess(bean);
-                            WorkspaceDetailBean.BughandledetaillistBean detail = (WorkspaceDetailBean.BughandledetaillistBean) bean.getBughandledetaillist();
-                            initData(detail);
-                        }
-
-                        @Override
-                        public void onFail(Integer code, String message, JSONObject jsonObject) {
-                            super.onFail(code, message, jsonObject);
-                            showToast(message);
-                        }
-                    });
-        }
     }
 
 
-    public void initData(WorkspaceDetailBean.BughandledetaillistBean detail) {
-        bean = detail.getDetail();
-        position = getIntent().getIntExtra("position", 0);
-        mDataList = detail.getBughandledetailparam();
-        paramAdapter = new LookParamAdapter(R.layout.item_look_parm, (ArrayList) mDataList);
-        mDataList_2 = detail.getBughandledetailmaterial();
-        initImgUrlList(bean);
+    public void initData(BughandleDetailEntity bughandleDetailEntity) {
+        mDataList = bughandleDetailEntity.getParamEntityList();
+        mDataList_2 = bughandleDetailEntity.getUseDeviceEntityList();
+        initImgUrlList();
         initNinePhoto();
         initAdapter();
 
@@ -300,74 +228,64 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
         }
 
 
-        if (bean.getTitle() != null) {
-            tv_trouble_title.setText(bean.getTitle());
+        if (bughandleDetailEntity.getFailureEntity().getBusinessThreeCode() != null) {
+            tv_trouble_title.setText(Config.getConfig().getBusinessName(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode()));
         }
-        //故障设备
-        if (StringUtils.isValid(bean.getInstrument())) {
-            tv_trouble_device.setText(bean.getInstrument());
-        }
-        //品牌型号
-        if (StringUtils.isValid(bean.getModelnum())) {
-            tv_brand_model.setText(bean.getModelnum());
-        }
-        //设备编号
-        if (StringUtils.isValid(bean.getEquipmentcode())) {
-            tv_device_no.setText(bean.getEquipmentcode());
-        }
+//        //故障设备
+//        if (StringUtils.isValid(bughandleDetailEntity.getInstrument())) {
+//            tv_trouble_device.setText(bean.getInstrument());
+//        }
+//        //品牌型号
+//        if (StringUtils.isValid(bean.getModelnum())) {
+//            tv_brand_model.setText(bean.getModelnum());
+//        }
+//        //设备编号
+//        if (StringUtils.isValid(bean.getEquipmentcode())) {
+//            tv_device_no.setText(bean.getEquipmentcode());
+//        }
         //故障位置
-        if (StringUtils.isValid(bean.getEquipmentposition())) {
-            tv_device_location.setText(bean.getEquipmentposition());
+        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
+            tv_device_location.setText(bughandleDetailEntity.getFailureEntity().getBugPosition());
         }
         //故障描述
-        if (StringUtils.isValid(bean.getDescription())) {
-            et_trouble_desc.setText(bean.getDescription());
+        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugDescription())) {
+            et_trouble_desc.setText(bughandleDetailEntity.getFailureEntity().getBugDescription());
         }
         //检查方法
-        if (StringUtils.isValid(bean.getCheckprocess())) {
-            et_trouble_point.setText(bean.getCheckprocess());
+        if (StringUtils.isValid(bughandleDetailEntity.getCheckProcess())) {
+            et_trouble_point.setText(bughandleDetailEntity.getCheckProcess());
         }
         //故障原因
-        if (StringUtils.isValid(bean.getCause())) {
-            et_trouble_reason.setText(bean.getCause());
+        if (StringUtils.isValid(bughandleDetailEntity.getCause())) {
+            et_trouble_reason.setText(bughandleDetailEntity.getCause());
         }
         //故障处理
-        if (StringUtils.isValid(bean.getHandle())) {
-            et_trouble_deal.setText(bean.getHandle());
+        if (StringUtils.isValid(bughandleDetailEntity.getHandle())) {
+            et_trouble_deal.setText(bughandleDetailEntity.getHandle());
         }
         //维修结论
-        if (StringUtils.isValid(bean.getRepairconclusion())) {
-            tv_repair_conclusion.setText(bean.getRepairconclusion());
+        if (bughandleDetailEntity.getStatus() != null) {
+            tv_repair_conclusion.setText(Config.getConfig().getConstBean().getRepairConstant()
+                    .get(Constant.BUGHANDLE_DETAIL_STATUS).get(bughandleDetailEntity.getStatus()));
         }
     }
 
 
     private void initView() {
-        ll_gone_c = (LinearLayout) findViewById(R.id.ll_gone_c);
-        ll_gone_c.setVisibility(View.GONE);
+        id = getIntent().getLongExtra("id", 0);
         rel_parame = (RelativeLayout) findViewById(R.id.rel_parame);
         //add by hou on 2017.8.2
         tv_use_goods = (TextView) findViewById(R.id.tv_use_goods);
-
-        rel_result = (RelativeLayout) findViewById(R.id.rel_result);
         tv_trouble_device = (TextView) findViewById(R.id.tv_trouble_device);
-        rl_trouble_device = (RelativeLayout) findViewById(R.id.rl_trouble_device);
         tv_brand_model = (TextView) findViewById(R.id.tv_brand_model);
-        rl_brand_model = (RelativeLayout) findViewById(R.id.rl_brand_model);
         tv_device_no = (TextView) findViewById(R.id.tv_device_no);
-        rl_device_no = (RelativeLayout) findViewById(R.id.rl_device_no);
         tv_device_location = (TextView) findViewById(R.id.tv_device_location);
-        rl_device_location = (RelativeLayout) findViewById(R.id.rl_device_location);
         tv_add = (TextView) findViewById(R.id.tv_add);
         rcy_parameter = (RecyclerView) findViewById(R.id.rcy_parameter);
         et_trouble_desc = (TextView) findViewById(R.id.et_trouble_desc);
-        ll_trouble_desc = (LinearLayout) findViewById(R.id.ll_trouble_desc);
         et_trouble_point = (TextView) findViewById(R.id.et_trouble_point);
-        ll_trouble_point = (LinearLayout) findViewById(R.id.ll_trouble_point);
         et_trouble_reason = (TextView) findViewById(R.id.et_trouble_reason);
-        ll_trouble_reason = (LinearLayout) findViewById(R.id.ll_trouble_reason);
         et_trouble_deal = (TextView) findViewById(R.id.et_trouble_deal);
-        ll_trouble_deal = (LinearLayout) findViewById(R.id.ll_trouble_deal);
         //2017年7月20日
         //维修结论
         tv_repair_conclusion = (TextView) findViewById(R.id.tv_repair_conclusion);
@@ -378,17 +296,10 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
         snpl_after_processing_locale = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_after_processing_locale);
         snpl_machine_fit_back = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_machine_fit_back);
         snpl_failure_recover_phenomena = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_failure_recover_phenomena);
-
         tv_add_consumable = (TextView) findViewById(R.id.tv_add_consumable);
         rcy_consumable = (RecyclerView) findViewById(R.id.rcy_consumable);
-
-
         btn_add_trouble = (Button) findViewById(R.id.btn_add_trouble);
-
-        btn_add_trouble.setOnClickListener(this);
         tv_trouble_title = (TextView) findViewById(R.id.tv_trouble_title);
-        tv_trouble_title.setOnClickListener(this);
-
         tv_add.setVisibility(View.INVISIBLE);
         tv_add_consumable.setVisibility(View.INVISIBLE);
         btn_add_trouble.setVisibility(View.INVISIBLE);
@@ -401,25 +312,20 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
         rcy_consumable.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rcy_consumable.setLayoutManager(new LinearLayoutManager(this));
-
-
         rcy_consumable.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 new MateraInfoView(PhoneLookTroubleDetailActivity.this, true,
-                        mDataList_2.get(position).getEquipmenttype(),
-                        mDataList_2.get(position).getEquipmentname()
-                        , mDataList_2.get(position).getEquipmentmodel(),
-                        mDataList_2.get(position).getNum()
-                        , mDataList_2.get(position).getMemo()
-                ).show();
+                        mDataList_2.get(position)).show();
             }
         });
 
-    }
 
-    @Override
-    public void onClick(View v) {
+        paramAdapter = new LookParamAdapter(R.layout.item_look_parm, (ArrayList) mDataList);
+        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
+        rcy_parameter.setAdapter(paramAdapter);
     }
 
     private void initNinePhoto() {
@@ -493,11 +399,11 @@ public class PhoneLookTroubleDetailActivity extends BaseActivity implements View
             case REQUEST_CODE_PHOTO_PREVIEW_6:
                 snpl_failure_recover_phenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
-            case 10009:
-                FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean bugBean = (FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean) data.getSerializableExtra("bean");
-//                bean.getBughandledetailmateriallist().add(bugBean);
-                materialAdapter.notifyDataSetChanged();
-                break;
+//            case 10009:
+//                FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean bugBean = (FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean) data.getSerializableExtra("bean");
+////                bean.getBughandledetailmateriallist().add(bugBean);
+//                materialAdapter.notifyDataSetChanged();
+//                break;
             default:
                 break;
         }

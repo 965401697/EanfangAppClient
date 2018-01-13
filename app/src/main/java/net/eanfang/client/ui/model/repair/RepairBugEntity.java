@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.model.repair;
 
+
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;

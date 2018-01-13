@@ -9,66 +9,86 @@ import java.io.Serializable;
 public class EvaluateWorkerBean implements Serializable {
 
     /**
-     * ordernum : 32020170325224954787062
-     * workefficient : 5
-     * serviceattitude : 4
-     * techlevel : 3
-     * resptime : 2
-     * prostandard : 1
+     * item1 : 5
+     * item2 : 5
+     * item3 : 5
+     * item4 : 5
+     * item5 : 5
+     * orderId : 940407881491148802
+     * orderNum : MO1712121028320
+     * ownerId : 936487014465806338
      */
 
-    private String ordernum;
-    private int workefficient;
-    private int serviceattitude;
-    private int techlevel;
-    private int resptime;
-    private int prostandard;
+    private int item1;
+    private int item2;
+    private int item3;
+    private int item4;
+    private int item5;
+    private Long orderId;
+    private String orderNum;
+    private Long ownerId;
 
-    public String getOrdernum() {
-        return ordernum;
+    public int getItem1() {
+        return item1;
     }
 
-    public void setOrdernum(String ordernum) {
-        this.ordernum = ordernum;
+    public void setItem1(int item1) {
+        this.item1 = item1;
     }
 
-    public int getWorkefficient() {
-        return workefficient;
+    public int getItem2() {
+        return item2;
     }
 
-    public void setWorkefficient(int workefficient) {
-        this.workefficient = workefficient;
+    public void setItem2(int item2) {
+        this.item2 = item2;
     }
 
-    public int getServiceattitude() {
-        return serviceattitude;
+    public int getItem3() {
+        return item3;
     }
 
-    public void setServiceattitude(int serviceattitude) {
-        this.serviceattitude = serviceattitude;
+    public void setItem3(int item3) {
+        this.item3 = item3;
     }
 
-    public int getTechlevel() {
-        return techlevel;
+    public int getItem4() {
+        return item4;
     }
 
-    public void setTechlevel(int techlevel) {
-        this.techlevel = techlevel;
+    public void setItem4(int item4) {
+        this.item4 = item4;
     }
 
-    public int getResptime() {
-        return resptime;
+    public int getItem5() {
+        return item5;
     }
 
-    public void setResptime(int resptime) {
-        this.resptime = resptime;
+    public void setItem5(int item5) {
+        this.item5 = item5;
     }
 
-    public int getProstandard() {
-        return prostandard;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setProstandard(int prostandard) {
-        this.prostandard = prostandard;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
     }
 }

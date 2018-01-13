@@ -2,15 +2,14 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.base.BaseDialog;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.model.repair.BughandleUseDeviceEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +23,12 @@ import butterknife.ButterKnife;
  */
 
 public class MateraInfoView extends BaseDialog {
+
+
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.tv_business)
     TextView tvBusiness;
     @BindView(R.id.tv_equipment)
@@ -31,36 +36,23 @@ public class MateraInfoView extends BaseDialog {
     @BindView(R.id.tv_model)
     TextView tvModel;
     @BindView(R.id.et_location)
-    EditText etLocation;
+    TextView etLocation;
     @BindView(R.id.et_code)
-    EditText etCode;
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.ll_add)
-    LinearLayout llAdd;
-
+    TextView etCode;
+    @BindView(R.id.btn_add)
+    Button btnAdd;
     private Activity mContext;
-    private String type;
-    private String name;
-    private String model;
-    private String number;
-    private String mark;
+    private BughandleUseDeviceEntity bughandleUseDeviceEntity;
 
-    public MateraInfoView(Activity context, boolean isfull, String type, String name, String model, String number, String mark) {
+    public MateraInfoView(Activity context, boolean isfull, BughandleUseDeviceEntity bughandleUseDeviceEntity) {
         super(context, isfull);
         this.mContext = context;
-        this.type = type;
-        this.name = name;
-        this.model = model;
-        this.number = number;
-        this.mark = mark;
+        this.bughandleUseDeviceEntity = bughandleUseDeviceEntity;
     }
 
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_add_material);
+        setContentView(R.layout.activity_look_material);
         ButterKnife.bind(this);
         initData();
     }
@@ -68,12 +60,10 @@ public class MateraInfoView extends BaseDialog {
     private void initData() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("耗用材料");
-        tvBusiness.setText(type);
-        tvEquipment.setText(name);
-        tvModel.setText(model);
-        etLocation.setText(number);
-        etCode.setText(mark);
-        llAdd.setVisibility(View.GONE);
+        tvBusiness.setText(bughandleUseDeviceEntity.getModelCode());
+        tvEquipment.setText(bughandleUseDeviceEntity.getDeviceName());
+//        etLocation.setText(bughandleUseDeviceEntity.getCount());
+        etCode.setText(bughandleUseDeviceEntity.getRemarkInfo());
         etLocation.setEnabled(false);
         etCode.setEnabled(false);
     }

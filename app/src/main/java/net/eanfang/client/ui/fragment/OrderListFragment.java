@@ -12,15 +12,13 @@ import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.CallUtils;
 
 import net.eanfang.client.R;
-import net.eanfang.client.config.EanfangConst;
 import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.PsTroubleDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
-import net.eanfang.client.ui.activity.worksapce.TroubleDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.base.BaseFragment;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
@@ -140,16 +138,7 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         break;
                     case R.id.tv_do_second:
-                        Intent intent;
-                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getIsPhoneSolve())) {
-                            intent = new Intent(getActivity(), TroubleDetailActivity.class);
-                        } else {
-                            intent = new Intent(getActivity(), PsTroubleDetailActivity.class);
-                        }
-                        intent.putExtra("orderId", item.getId());
-                        intent.putExtra("status", "待确认");
-                        intent.putExtra("phoneSolve", item.getIsPhoneSolve());
-                        startActivity(intent);
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(),"待确认").show();
                         break;
                     default:
                         break;
@@ -160,21 +149,15 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
-                        Intent intent;
-                        if (EanfangConst.EANFANG_FALSE_STR.equals(item.getIsPhoneSolve())) {
-                            intent = new Intent(getActivity(), TroubleDetailActivity.class);
-                        } else {
-                            intent = new Intent(getActivity(), PsTroubleDetailActivity.class);
-                        }
-                        intent.putExtra("orderId", item.getId());
-                        intent.putExtra("status", "待评价");
-                        intent.putExtra("phoneSolve", item.getIsPhoneSolve());
-                        startActivity(intent);
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(),"完成").show();
+
                         break;
                     case R.id.tv_do_second:
                         startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                                 .putExtra("flag", 0)
                                 .putExtra("ordernum", item.getOrderNum())
+                                .putExtra("workerUid",item.getAssigneeUserId())
+                                .putExtra("orderId",item.getId())
                         );
                         break;
                     default:

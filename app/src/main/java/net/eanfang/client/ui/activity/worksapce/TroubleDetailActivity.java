@@ -8,25 +8,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetDateUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.network.apiservice.ApiService;
+import net.eanfang.client.config.Config;
+import net.eanfang.client.config.Constant;
+import net.eanfang.client.network.apiservice.RepairApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.adapter.TroubleDetailAdapter;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.model.WorkspaceDetailBean;
-import net.eanfang.client.util.StringUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import net.eanfang.client.ui.model.repair.BughandleConfirmEntity;
+import net.eanfang.client.ui.model.repair.BughandleDetailEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -77,10 +79,10 @@ public class TroubleDetailActivity extends BaseActivity {
     private TextView tv_team_worker;
 
 
-    private List<WorkspaceDetailBean.BughandledetaillistBean> mDataList;
+    private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
-    private WorkspaceDetailBean workspaceDetailBean;
-    private int id;
+    private BughandleConfirmEntity bughandleConfirmEntity;
+    private Long id,repairOrderId;
     private String status;
     /**
      * 电视墙/操作台正面全貌 (3张)
@@ -98,19 +100,28 @@ public class TroubleDetailActivity extends BaseActivity {
      * 单据照片 (3张)
      */
     private ArrayList<String> picList4;
+    private int isPhonesolve;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_fill_repair_info);
 
-        id = getIntent().getIntExtra("orderId", 0);
+        id = getIntent().getLongExtra("orderId", 0);
+        repairOrderId=getIntent().getLongExtra("repairOrderId",0);
         status = getIntent().getStringExtra("status");
         initView();
-        getData(id);
-        supprotToolbar();
         setTitle("故障处理");
+        initData();
+    }
 
+    private void initData() {
+        EanfangHttp.get(RepairApi.GET_BUGHANDLE_DETAIL)
+                .params("id", id)
+                .execute(new EanfangCallback<BughandleConfirmEntity>(this, true, BughandleConfirmEntity.class, (bean) -> {
+                    bughandleConfirmEntity = bean;
+                    setData();
+                }));
     }
 
     private void initView() {
@@ -142,116 +153,73 @@ public class TroubleDetailActivity extends BaseActivity {
         //非单确认状态 隐藏确认按钮
         if (!status.equals("待确认")) {
             findViewById(R.id.rl_client_option).setVisibility(View.GONE);
-            tv_complete.setVisibility(View.INVISIBLE);
-            tv_complaint.setVisibility(View.INVISIBLE);
         }
-        tv_complete.setOnClickListener((v) -> {
-            JSONObject object = new JSONObject();
-            try {
-                object.put("ordernum", workspaceDetailBean.getOrder().getOrdernum());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            EanfangHttp.post(ApiService.TO_CONFIRM)
-                    .tag(this)
-                    .params("json", object.toString())
-                    .execute(new EanfangCallback(TroubleDetailActivity.this, false, JSONObject.class, (bean) -> {
-
-                                showToast("确认成功");
-                                finish();
-                            })
-                    );
-        });
+        tv_complete.setOnClickListener(v -> flowConfirm());
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "010-5877-8731");
         });
     }
 
-    private void getData(int id) {
-        EanfangHttp.get(ApiService.GET_REAIR_ORDER_DETAIL)
-                .tag(this)
-                .params("orderId", id)
-                .execute(new EanfangCallback<WorkspaceDetailBean>(this, true, (bean) -> {
-                    setData(bean);
+    private void flowConfirm() {
+        EanfangHttp.post(RepairApi.GET_FLOW_CONFIRE)
+                .params("id", repairOrderId)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    showToast("确认成功");
+                    finish();
                 }));
     }
 
-    private void setData(WorkspaceDetailBean detailBean) {
-        workspaceDetailBean = detailBean;
+    private void setData() {
+        tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
+        tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
+        //录像机天数
+        tv_store_time.setText(Config.getConfig().getConstBean().getRepairConstant().
+                get(Constant.STORE_DAYS).get(bughandleConfirmEntity.getStoreDays()));
+        //报警打印功能
+        tv_print_on_alarm.setText(Config.getConfig().getConstBean().getRepairConstant().
+                get(Constant.IS_NORMAL).get(bughandleConfirmEntity.getIsAlarmPrinter()));
+        //所有设备时间同步
+        tv_time_right.setText(Config.getConfig().getConstBean().getRepairConstant().
+                get(Constant.IS_NORMAL).get(bughandleConfirmEntity.getIsTimeRight()));
+        //各类设备数据远传功能
+        tv_machine_data_remote.setText(Config.getConfig().getConstBean().getRepairConstant().
+                get(Constant.IS_NORMAL).get(bughandleConfirmEntity.getIsMachineDataRemote()));
+        //遗留问题
+        tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
+        //协作人员
+        tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
+        initAdapter();
+        initNinePhoto();
         picList1 = new ArrayList<>();
         picList2 = new ArrayList<>();
         picList3 = new ArrayList<>();
         picList4 = new ArrayList<>();
-        if (detailBean.getBughandleconfirm() != null) {
-            WorkspaceDetailBean.BughandleconfirmBean detailzBean = detailBean.getBughandleconfirm();
-            mDataList = detailBean.getBughandledetaillist();
-
-            if (StringUtils.isValid(detailzBean.getPic1())) {
-                picList1.add(detailzBean.getPic1());
-            }
-            if (StringUtils.isValid(detailzBean.getPic2())) {
-                picList1.add(detailzBean.getPic2());
-            }
-            if (StringUtils.isValid(detailzBean.getPic3())) {
-                picList1.add(detailzBean.getPic3());
-            }
-            if (StringUtils.isValid(detailzBean.getPic4())) {
-                picList2.add(detailzBean.getPic4());
-            }
-            if (StringUtils.isValid(detailzBean.getPic5())) {
-                picList2.add(detailzBean.getPic5());
-            }
-            if (StringUtils.isValid(detailzBean.getPic6())) {
-                picList2.add(detailzBean.getPic6());
-            }
-            if (StringUtils.isValid(detailzBean.getPic7())) {
-                picList3.add(detailzBean.getPic7());
-            }
-            if (StringUtils.isValid(detailzBean.getPic8())) {
-                picList3.add(detailzBean.getPic8());
-            }
-            if (StringUtils.isValid(detailzBean.getPic9())) {
-                picList3.add(detailzBean.getPic9());
-            }
-
-            if (StringUtils.isValid(detailzBean.getPic10())) {
-                picList4.add(detailzBean.getPic10());
-            }
-            if (StringUtils.isValid(detailzBean.getPic11())) {
-                picList4.add(detailzBean.getPic11());
-            }
-            if (StringUtils.isValid(detailzBean.getPic12())) {
-                picList4.add(detailzBean.getPic12());
-            }
-            initAdapter();
-            fillData(detailBean);
-            initNinePhoto();
-        } else {
-            showToast("当前订单暂时没有完工记录。");
-            return;
-
+        if (bughandleConfirmEntity.getFrontPictures() != null) {
+            String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
+            Collections.addAll(picList1, friontPic);
         }
-    }
 
-    private void fillData(WorkspaceDetailBean bean) {
-        tv_over_time.setText(bean.getBughandleconfirm().getOvertime());
-        tv_repair_time.setText(bean.getBughandleconfirm().getWorktime());
-        //录像机天数
-        tv_store_time.setText(bean.getBughandleconfirm().getStoretime());
-        //报警打印功能
-        tv_print_on_alarm.setText(bean.getBughandleconfirm().getPrintonalarm());
-        //所有设备时间同步
-        tv_time_right.setText(bean.getBughandleconfirm().getTimeright());
-        //各类设备数据远传功能
-        tv_machine_data_remote.setText(bean.getBughandleconfirm().getMachinedataremote());
-        //遗留问题
-        tv_remain_question.setText(bean.getBughandleconfirm().getRemainquestion());
-        //协作人员
-        tv_team_worker.setText(bean.getBughandleconfirm().getTeamworker());
+        if (bughandleConfirmEntity.getReverseSidePictures() != null) {
+            String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
+            Collections.addAll(picList2, reversePic);
+        }
+
+        if (bughandleConfirmEntity.getEquipmentCabinetPictures() != null) {
+            String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
+            Collections.addAll(picList3, equipmentPic);
+        }
+
+        if (bughandleConfirmEntity.getInvoicesPictures() != null) {
+            String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
+            Collections.addAll(picList4, invoicesPic);
+        }
+
+
     }
 
 
     private void initAdapter() {
+        mDataList = bughandleConfirmEntity.getDetailEntityList();
         quotationDetailAdapter = new TroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -264,7 +232,7 @@ public class TroubleDetailActivity extends BaseActivity {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Intent intent = new Intent(TroubleDetailActivity.this, LookTroubleDetailActivity.class);
-            intent.putExtra("bean", workspaceDetailBean.getBughandledetaillist().get(position));
+            intent.putExtra("id", bughandleConfirmEntity.getDetailEntityList().get(position).getId());
             startActivity(intent);
         }
     };
