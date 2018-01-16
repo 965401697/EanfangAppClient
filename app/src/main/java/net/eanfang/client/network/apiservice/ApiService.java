@@ -41,31 +41,13 @@ public interface ApiService {
      * get
      */
     String SELECT_COMPANY = BASE_URL + "/installselectcompany";
-    /**
-     * 收藏技师
-     * post
-     */
-    String COLLECTION_WORK = BASE_URL + "/collectworker";
 
-    /**
-     * 技师详情
-     * get
-     */
-    String WORKER_DETAIL = BASE_URL + "/search/workerdetail";
-    /**
-     * 报修订单确认
-     * post
-     */
-    String ORDER_CONFIRM = BASE_URL + "/orderconfirm";
     /**
      * 一键报修
      * post
      */
     String ONE_BUTON_REPAIR = BASE_URL + "/onetouchrepairselectworker";
-    /**
-     * 报修选择技师
-     */
-    String REPAIR_SELECT_WORKER = BASE_URL + "/repairselectworker";
+
 
 
     /**
@@ -104,43 +86,7 @@ public interface ApiService {
      */
     String FA_PIAO = BASE_URL + "/addinvoice";
 
-    /**
-     * 报修管控-报修单列表
-     *
-     * @parms page
-     * @parms rows
-     * @parms status
-     */
-    String REPAIR_LIST = BASE_URL + "/repairlist";
 
-    /**
-     * 工作台-已报修-订单详情  reairorderdetail
-     */
-    String GET_REAIR_ORDER_DETAIL = BASE_URL + "/reairorderdetail";
 
-    /**
-     * 订单进度的protocol
-     * get
-     */
-
-    String ORDER_PROGRESS = BASE_URL + "/reairorderstatus";
-
-    /**
-     * 客户端评价技师
-     * post
-     */
-    String EVALUATE_WORKER = BASE_URL + "/reviewworker";
-    /**
-     * 电话解决确认
-     * get
-     */
-    String TO_CONFIRM = BASE_URL + "/confirm";
-
-    /**
-     * 维修统计
-     * get
-     */
-
-    String BUG_DETAIL_INFO = BASE_URL + "/bugDetailInfo";
 
 }
