@@ -139,4 +139,12 @@ public interface NewApiService {
      * 报装详情
      */
     String GET_WORK_INSTALL_INFO = BuildConfig.API_HOST + "/yaf_install_order/install/detail";
+
+    /**
+     * 报价
+     */
+    String QUOTE_ORDER_INSERT = BuildConfig.API_HOST + "/yaf_quote_order/quote/insert";
+    String QUOTE_ORDER_LIST = BuildConfig.API_HOST + "/yaf_quote_order/quote/list";
+    String QUOTE_ORDER_UPDATE = BuildConfig.API_HOST + "/yaf_quote_order/quote/update";
+    String QUOTE_ORDER_DETAIL = BuildConfig.API_HOST + "/yaf_quote_order/quote/detail";
 }

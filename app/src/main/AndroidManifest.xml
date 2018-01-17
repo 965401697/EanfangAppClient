@@ -189,6 +189,9 @@
         <activity android:name=".ui.activity.worksapce.AddWorkTaskDeitailActivity" />
         <activity android:name=".ui.activity.worksapce.AddWorkCheckDetailActivity" />
         <activity android:name=".ui.activity.worksapce.InstallOrderActivity" />
+        <activity android:name=".ui.activity.worksapce.OfferAndPayOrderActivity" />
+        <activity android:name=".ui.activity.worksapce.PayOrderDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.PersonOfferAndPayOrderActivity" />
 
         <activity
             android:name=".ui.activity.worksapce.WebActivity"

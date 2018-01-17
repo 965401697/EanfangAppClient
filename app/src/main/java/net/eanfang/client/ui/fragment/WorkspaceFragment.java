@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import net.eanfang.client.R;
+import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CheckActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignActivity;
 import net.eanfang.client.ui.activity.worksapce.InstallActivity;
+import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.ReportActivity;
@@ -98,11 +101,12 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //报价
         findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
-//            if ("1".equals(EanfangApplication.get().getUser().getCompanyverify())) {
-//                new CompanyQuoteView(getActivity(), true).show();
-//            } else {
-//                new PersonQuoteView(getActivity(), true).show();
-//            }
+            if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getIsVerify() == 1) {
+                startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
+            } else {
+                startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
+            }
+
         });
         //汇报
         findViewById(R.id.ll_report_ctrl).setOnClickListener((v) -> {

@@ -1,5 +1,8 @@
 package net.eanfang.client.ui.model;
 
+import com.yaf.sys.entity.OrgEntity;
+import com.yaf.sys.entity.UserEntity;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -8,158 +11,289 @@ import java.util.List;
  */
 
 public class PayOrderListBean implements Serializable {
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
 
-    private List<AllBean> all;
-
-    public List<AllBean> getAll() {
-        return all;
+    public int getCurrPage() {
+        return currPage;
     }
 
-    public void setAll(List<AllBean> all) {
-        this.all = all;
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
     }
 
-    public static class AllBean {
-        /**
-         * confirm : 0
-         * createtime : 2017-03-29 22:51:32
-         * itemname : 报价1
-         * selfordernum : 32020170329223343951356
-         * sum : 70
-         * workercompanyname : 全能快修
-         * workername : 小兰
-         * workerphone : 15038147687
-         */
+    public int getPageSize() {
+        return pageSize;
+    }
 
-        private String confirm;
-        private String createtime;
-        private String itemname;
-        private String selfordernum;
-        private double sum;
-        private String workercompanyname;
-        private String workername;
-        private String workerphone;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
-        //业务图片
-        private String pic;
+    public int getTotalCount() {
+        return totalCount;
+    }
 
-        private String clientcompanyname;
-        private String clientname;
-        private String clientphone;
-        private String clientcompanynamewr;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
 
-        private double quotefee;
+    public int getTotalPage() {
+        return totalPage;
+    }
 
-        public String getConfirm() {
-            return confirm;
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean {
+
+        private String assigneeOrgCode;
+        private int assigneeTopCompanyId;
+        private Long assigneeUserId;
+        private String createTime;
+        private Long createUserId;
+        private String editTime;
+        private Long editUserId;
+        private Long id;
+        private int invoiceCost;
+        private UserEntity offerer;
+        private int orderId;
+        private String orderNum;
+        private String ownerOrgCode;
+        private Long ownerTopCompanyId;
+        private Long ownerUserId;
+        private String projectName;
+        private int quoteCost;
+        private String repairOrderNum;
+        private int reportType;
+        private UserEntity reportUser;
+        private String reporter;
+        private String reporterPhone;
+        private int status;
+        private int totalCost;
+        private OrgEntity assigneeCompanyOrg;
+        private OrgEntity ownerCompanyOrg;
+
+        public UserEntity getOfferer() {
+            return offerer;
         }
 
-        public void setConfirm(String confirm) {
-            this.confirm = confirm;
+        public void setOfferer(UserEntity offerer) {
+            this.offerer = offerer;
         }
 
-        public String getCreatetime() {
-            return createtime;
+        public UserEntity getReportUser() {
+            return reportUser;
         }
 
-        public void setCreatetime(String createtime) {
-            this.createtime = createtime;
+        public void setReportUser(UserEntity reportUser) {
+            this.reportUser = reportUser;
         }
 
-        public String getItemname() {
-            return itemname;
+        public OrgEntity getAssigneeCompanyOrg() {
+            return assigneeCompanyOrg;
         }
 
-        public void setItemname(String itemname) {
-            this.itemname = itemname;
+        public void setAssigneeCompanyOrg(OrgEntity assigneeCompanyOrg) {
+            this.assigneeCompanyOrg = assigneeCompanyOrg;
         }
 
-        public String getSelfordernum() {
-            return selfordernum;
+        public OrgEntity getOwnerCompanyOrg() {
+            return ownerCompanyOrg;
         }
 
-        public void setSelfordernum(String selfordernum) {
-            this.selfordernum = selfordernum;
+        public void setOwnerCompanyOrg(OrgEntity ownerCompanyOrg) {
+            this.ownerCompanyOrg = ownerCompanyOrg;
         }
 
-        public double getSum() {
-            return sum;
+        public String getAssigneeOrgCode() {
+            return assigneeOrgCode;
         }
 
-        public void setSum(double sum) {
-            this.sum = sum;
+        public void setAssigneeOrgCode(String assigneeOrgCode) {
+            this.assigneeOrgCode = assigneeOrgCode;
         }
 
-        public String getWorkercompanyname() {
-            return workercompanyname;
+        public int getAssigneeTopCompanyId() {
+            return assigneeTopCompanyId;
         }
 
-        public void setWorkercompanyname(String workercompanyname) {
-            this.workercompanyname = workercompanyname;
+        public void setAssigneeTopCompanyId(int assigneeTopCompanyId) {
+            this.assigneeTopCompanyId = assigneeTopCompanyId;
         }
 
-        public String getWorkername() {
-            return workername;
+        public Long getAssigneeUserId() {
+            return assigneeUserId;
         }
 
-        public void setWorkername(String workername) {
-            this.workername = workername;
+        public void setAssigneeUserId(Long assigneeUserId) {
+            this.assigneeUserId = assigneeUserId;
         }
 
-        public String getWorkerphone() {
-            return workerphone;
+        public String getCreateTime() {
+            return createTime;
         }
 
-        public void setWorkerphone(String workerphone) {
-            this.workerphone = workerphone;
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
         }
 
-        public String getClientcompanyname() {
-            return clientcompanyname;
+        public Long getCreateUserId() {
+            return createUserId;
         }
 
-        public void setClientcompanyname(String clientcompanyname) {
-            this.clientcompanyname = clientcompanyname;
+        public void setCreateUserId(Long createUserId) {
+            this.createUserId = createUserId;
         }
 
-        public String getClientname() {
-            return clientname;
+        public String getEditTime() {
+            return editTime;
         }
 
-        public void setClientname(String clientname) {
-            this.clientname = clientname;
+        public void setEditTime(String editTime) {
+            this.editTime = editTime;
         }
 
-        public String getClientphone() {
-            return clientphone;
+        public Long getEditUserId() {
+            return editUserId;
         }
 
-        public void setClientphone(String clientphone) {
-            this.clientphone = clientphone;
+        public void setEditUserId(Long editUserId) {
+            this.editUserId = editUserId;
         }
 
-        public String getPic() {
-            return pic;
+        public Long getId() {
+            return id;
         }
 
-        public void setPic(String pic) {
-            this.pic = pic;
+        public void setId(Long id) {
+            this.id = id;
         }
 
-        public double getQuotefee() {
-            return quotefee;
+        public int getInvoiceCost() {
+            return invoiceCost;
         }
 
-        public void setQuotefee(double quotefee) {
-            this.quotefee = quotefee;
+        public void setInvoiceCost(int invoiceCost) {
+            this.invoiceCost = invoiceCost;
         }
 
-        public String getClientcompanynamewr() {
-            return clientcompanynamewr;
+
+        public int getOrderId() {
+            return orderId;
         }
 
-        public void setClientcompanynamewr(String clientcompanynamewr) {
-            this.clientcompanynamewr = clientcompanynamewr;
+        public void setOrderId(int orderId) {
+            this.orderId = orderId;
+        }
+
+        public String getOrderNum() {
+            return orderNum;
+        }
+
+        public void setOrderNum(String orderNum) {
+            this.orderNum = orderNum;
+        }
+
+        public String getOwnerOrgCode() {
+            return ownerOrgCode;
+        }
+
+        public void setOwnerOrgCode(String ownerOrgCode) {
+            this.ownerOrgCode = ownerOrgCode;
+        }
+
+        public Long getOwnerTopCompanyId() {
+            return ownerTopCompanyId;
+        }
+
+        public void setOwnerTopCompanyId(Long ownerTopCompanyId) {
+            this.ownerTopCompanyId = ownerTopCompanyId;
+        }
+
+        public Long getOwnerUserId() {
+            return ownerUserId;
+        }
+
+        public void setOwnerUserId(Long ownerUserId) {
+            this.ownerUserId = ownerUserId;
+        }
+
+        public String getProjectName() {
+            return projectName;
+        }
+
+        public void setProjectName(String projectName) {
+            this.projectName = projectName;
+        }
+
+        public int getQuoteCost() {
+            return quoteCost;
+        }
+
+        public void setQuoteCost(int quoteCost) {
+            this.quoteCost = quoteCost;
+        }
+
+        public String getRepairOrderNum() {
+            return repairOrderNum;
+        }
+
+        public void setRepairOrderNum(String repairOrderNum) {
+            this.repairOrderNum = repairOrderNum;
+        }
+
+        public int getReportType() {
+            return reportType;
+        }
+
+        public void setReportType(int reportType) {
+            this.reportType = reportType;
+        }
+
+
+        public String getReporter() {
+            return reporter;
+        }
+
+        public void setReporter(String reporter) {
+            this.reporter = reporter;
+        }
+
+        public String getReporterPhone() {
+            return reporterPhone;
+        }
+
+        public void setReporterPhone(String reporterPhone) {
+            this.reporterPhone = reporterPhone;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int getTotalCost() {
+            return totalCost;
+        }
+
+        public void setTotalCost(int totalCost) {
+            this.totalCost = totalCost;
         }
     }
 }

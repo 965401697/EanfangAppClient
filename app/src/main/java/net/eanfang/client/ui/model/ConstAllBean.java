@@ -20,6 +20,33 @@ public class ConstAllBean implements Serializable {
     private Map<String, List<String>> DeviceConstan;
     private Map<String, List<String>> WorkInspectConstant;
     private Map<String, List<String>> DesignOrderConstant;
+    private Map<String, List<String>> MainTainConstant;
+    private Map<String, List<String>> DeviceConstant;
+    private Map<String, List<String>> QuoteOrderConstant;
+
+    public Map<String, List<String>> getQuoteOrderConstant() {
+        return QuoteOrderConstant;
+    }
+
+    public void setQuoteOrderConstant(Map<String, List<String>> quoteOrderConstant) {
+        QuoteOrderConstant = quoteOrderConstant;
+    }
+
+    public Map<String, List<String>> getDeviceConstant() {
+        return DeviceConstant;
+    }
+
+    public void setDeviceConstant(Map<String, List<String>> deviceConstant) {
+        DeviceConstant = deviceConstant;
+    }
+
+    public Map<String, List<String>> getMainTainConstant() {
+        return MainTainConstant;
+    }
+
+    public void setMainTainConstant(Map<String, List<String>> mainTainConstant) {
+        MainTainConstant = mainTainConstant;
+    }
 
     public Map<String, List<String>> getDesignOrderConstant() {
         return DesignOrderConstant;

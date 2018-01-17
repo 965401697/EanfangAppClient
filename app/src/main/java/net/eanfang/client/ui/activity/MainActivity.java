@@ -132,7 +132,6 @@ public class MainActivity extends BaseActivity {
         EanfangHttp.get(NewApiService.GET_BASE_DATA)
                 .tag(this)
                 .execute(new EanfangCallback<BaseDataBean>(this, false, BaseDataBean.class, true, (list) -> {
-//                    EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(list, FastjsonConfig.config));
                     Config.getConfig().setBaseDataBean(list);
                 }));
     }
@@ -144,7 +143,6 @@ public class MainActivity extends BaseActivity {
         EanfangHttp.get(NewApiService.GET_CONST)
                 .tag(this)
                 .execute(new EanfangCallback<ConstAllBean>(this, false, ConstAllBean.class, (bean) -> {
-//                    EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     Config.getConfig().setConstBean(bean);
                 }));
     }

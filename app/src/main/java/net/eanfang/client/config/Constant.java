@@ -31,7 +31,7 @@ public class Constant {
     /*11.从业等级*/
     public static final String WORKING_LEVEL = "WorkingLevel";
     /*12.从业年限*/
-    public static final String WORKING_YEAR ="WorkingYear";
+    public static final String WORKING_YEAR = "WorkingYear";
     /*13.维修结果*/
     public static final String BUGHANDLE_DETAIL_STATUS = "BughandleDetailStatus";
     /*14.正常/不正常*/
@@ -42,6 +42,23 @@ public class Constant {
     public static final String PARAM = "Param";
     /*17.挂单原因*/
     public static final String TRANSFER_CAUSE = "TransferCause";
+    /*18.检查结果*/
+    public static final String CHECK_RESULT = "CheckResult";
+    /*19.保养周期*/
+    public static final String CYCLE = "Cycle";
+    /*20.维保标准*/
+    public static final String MAINTAIN_LEVEL = "MaintainLevel";
+    /*21.单位*/
+    public static final String UNIT = "Unit";
+    /*22.汇报给谁*/
+    public static final String REPORT_TYPE = "ReportType";
+    /*23.处理状态*/
+    public static final String STATUS = "Status";
+    public static final String CUST_STATUS = "CustStatus";
+
+
+
+
 
     /*
      * 未知类别
@@ -59,5 +76,6 @@ public class Constant {
      * 地区
      */
     public static final int AREA = 3;
+
 
 }
