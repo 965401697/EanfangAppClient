@@ -21,7 +21,7 @@ public class Constant {
     /*6.回复时限*/
     public static final String REVERT_TIME_LIMIT_TYPE = "RevertTimeLimitType";
     /*7.预计工期*/
-    public static final String PREDICTTIME_TYPE = "PredicttimeType";
+    public static final String PREDICTTIME_TYPE = "PredictTimeType";
     /*8.预算费用范围*/
     public static final String BUDGET_LIMIT_TYPE = "BudgetLimitType";
     /*9.基础数据*/
