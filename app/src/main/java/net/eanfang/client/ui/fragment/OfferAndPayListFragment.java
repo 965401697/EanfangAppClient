@@ -190,6 +190,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<PayOrderListBean>(getActivity(), true, PayOrderListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
+                                ((OfferAndPayOrderActivity) getActivity()).setWorkReportListBean(bean);
                                 onDataReceived();
                             });
                         })

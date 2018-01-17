@@ -113,7 +113,6 @@ public class OfferAndPayOrderActivity extends BaseActivity {
                 .execute(new EanfangCallback<PayOrderListBean>(this, true, PayOrderListBean.class, (bean) -> {
                     runOnUiThread(() -> {
                         workReportListBean = bean;
-                        setWorkReportListBean(bean);
                         currentFragment.onDataReceived();
                     });
                 }));

@@ -179,6 +179,7 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<PayOrderListBean>(getActivity(), true, PayOrderListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
+                                ((PersonOfferAndPayOrderActivity) getActivity()).setWorkReportListBean(bean);
                                 onDataReceived();
                             });
                         })
