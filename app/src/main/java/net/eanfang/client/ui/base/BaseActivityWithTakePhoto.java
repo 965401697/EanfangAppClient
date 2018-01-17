@@ -28,10 +28,10 @@ import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
+import com.yaf.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.application.CustomeApplication;
-import net.eanfang.client.ui.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -163,10 +163,11 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
 
     }
 
-    public User user() {
-        Object obj = CustomeApplication.get().get(User.class.getName());
-        if (obj instanceof User)
-            return (User) obj;
+    public LoginBean user() {
+        Object obj = CustomeApplication.get().get(LoginBean.class.getName());
+        if (obj instanceof LoginBean) {
+            return (LoginBean) obj;
+        }
         return null;
     }
 

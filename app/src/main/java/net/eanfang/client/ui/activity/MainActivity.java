@@ -16,22 +16,16 @@ import com.yaf.model.LoginBean;
 import net.eanfang.client.R;
 import net.eanfang.client.application.EanfangApplication;
 import net.eanfang.client.config.Config;
-import net.eanfang.client.config.Local;
 import net.eanfang.client.network.apiservice.NewApiService;
-import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
 import net.eanfang.client.ui.base.BaseActivity;
-import net.eanfang.client.ui.base.BaseEvent;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
 import net.eanfang.client.ui.model.BaseDataBean;
 import net.eanfang.client.ui.model.ConstAllBean;
-import net.eanfang.client.ui.model.User;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 
@@ -81,27 +75,27 @@ public class MainActivity extends BaseActivity {
 //        getInfoBytoken();
     }
 
-    /**
-     * 检查token
-     */
-    public void getInfoBytoken() {
-        EanfangHttp.get(UserApi.CHECK_TOKEN)
-                .execute(new EanfangCallback<User>(this, false) {
-                    @Override
-                    public void onSuccess(User bean) {
-                        EanfangApplication.get().set(User.class.getName(), bean);
-                        BaseEvent baseEvent = new BaseEvent();
-                        baseEvent.setObject(bean);
-                        baseEvent.setEventId(Local.CHECK_TOKEN_HOME_SUCCESS);
-                        EventBus.getDefault().post(baseEvent);
-                    }
-
-                    @Override
-                    public void onError(String message) {
-                        showToast(message);
-                    }
-                });
-    }
+//    /**
+//     * 检查token
+//     */
+//    public void getInfoBytoken() {
+//        EanfangHttp.get(UserApi.CHECK_TOKEN)
+//                .execute(new EanfangCallback<LoginBean>(this, false) {
+//                    @Override
+//                    public void onSuccess(LoginBean bean) {
+//                        EanfangApplication.get().set(LoginBean.class.getName(), bean);
+//                        BaseEvent baseEvent = new BaseEvent();
+//                        baseEvent.setObject(bean);
+//                        baseEvent.setEventId(Local.CHECK_TOKEN_HOME_SUCCESS);
+//                        EventBus.getDefault().post(baseEvent);
+//                    }
+//
+//                    @Override
+//                    public void onError(String message) {
+//                        showToast(message);
+//                    }
+//                });
+//    }
 
     /**
      * 点击两次返回键退出

@@ -32,7 +32,6 @@ import com.yaf.model.LoginBean;
 import net.eanfang.client.R;
 import net.eanfang.client.application.CustomeApplication;
 import net.eanfang.client.application.EanfangApplication;
-import net.eanfang.client.ui.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -182,7 +181,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     public LoginBean user() {
         Object obj = EanfangApplication.getApplication().getUser();
-        if (obj instanceof User) {
+        if (obj instanceof LoginBean) {
             return (LoginBean) obj;
         }
         return null;

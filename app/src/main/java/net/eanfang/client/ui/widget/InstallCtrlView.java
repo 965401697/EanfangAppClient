@@ -51,7 +51,7 @@ public class InstallCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        setTitle("报装管控");
+        tvTitle.setText("报装管控");
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));

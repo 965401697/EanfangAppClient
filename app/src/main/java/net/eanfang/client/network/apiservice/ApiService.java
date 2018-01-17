@@ -57,16 +57,6 @@ public interface ApiService {
 
 
 
-    /**
-     * 工作台-报价与支付-同意报价的protocol
-     */
-    String AGREE_PAY = BASE_URL + "/agreequote";
-
-    /**
-     * 工作台--报价与支付(企业客户)
-     * get
-     */
-    String COMPANY_PAY_ORDER_LIST = BASE_URL + "/quoteshow";
 
     /**
      * 工作台-报价与支付-订单详情的protocol
