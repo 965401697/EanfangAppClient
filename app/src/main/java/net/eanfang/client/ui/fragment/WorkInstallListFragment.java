@@ -123,9 +123,7 @@ public class WorkInstallListFragment extends BaseFragment
         getData();
     }
 
-    /**
-     * 获取工作任务列表
-     */
+
     private void getData() {
         String status = null;
         if (!mTitle.equals("全部")) {

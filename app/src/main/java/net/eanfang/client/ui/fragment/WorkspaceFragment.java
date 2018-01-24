@@ -10,6 +10,7 @@ import net.eanfang.client.ui.activity.worksapce.CheckActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignActivity;
 import net.eanfang.client.ui.activity.worksapce.InstallActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
@@ -129,6 +130,10 @@ public class WorkspaceFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), WebActivity.class)
                     .putExtra("url", "http://www.jianshu.com/u/0e0821e94979")
                     .putExtra("title", "数据统计"));
+        });
+        //合作公司
+        findViewById(R.id.ll_partner_ctrl).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), PartnerActivity.class));
         });
     }
 

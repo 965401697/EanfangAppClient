@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.enums.IdType;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.validation.constraints.Digits;
@@ -66,18 +66,17 @@ public class OrgEntity implements Serializable {
     @Size(min = 1, max = 30)
     private String orgCode;
 
-	//层级
-	@Getter
-	@Setter
-	//@TableField(value = "level")
-	@NotNull
-	@Digits(integer=10,fraction=0)
-	private Integer Level;
-	
+    //层级
+    @Setter
+    //@TableField(value = "level")
+    @NotNull
+    @Digits(integer = 10, fraction = 0)
+    private Integer level;
+
     //机构名称
     //@TableField(value = "org_name")
-    @NotBlank
-    @Size(min = 1, max = 30)
+    //@NotBlank
+    @Size(min = 0, max = 30)
     private String orgName;
 
     //机构类型  0总公司,1分子公司,2部门
@@ -91,24 +90,24 @@ public class OrgEntity implements Serializable {
     @Digits(integer = 5, fraction = 0)
     private Integer sortNum;
 
-	//是否认证0未认证号1已认证
-	//@TableField(value = "is_verify")
-	@Digits(integer=3,fraction=0)
-	private Integer isVerify;
+    //是否认证0未认证号1已认证
+    //@TableField(value = "is_verify")
+    @Digits(integer = 3, fraction = 0)
+    private Integer isVerify;
 
-	//更新人
-	@Getter
-	@Setter
-	//@TableField(value = "update_user")
-	@Digits(integer=19,fraction=0)
-	private Long updateUser;
+    //更新人
+    @Getter
+    @Setter
+    //@TableField(value = "update_user")
+    @Digits(integer = 19, fraction = 0)
+    private Long updateUser;
 
-	@Getter
-	@Setter
-	//更新时间
-	//@TableField(value = "update_time")
-	private Date updateTime;
-	
+    @Getter
+    @Setter
+    //更新时间
+    //@TableField(value = "update_time")
+    private Date updateTime;
+
     /**
      * 设置：组织机构ID
      */
@@ -221,19 +220,20 @@ public class OrgEntity implements Serializable {
         return sortNum;
     }
 
-	/**
-	 * 设置：是否认证0未认证号1已认证
-	 */
-	public void setIsVerify(Integer isVerify) {
-		this.isVerify = isVerify;
-	}
-	/**
-	 * 获取：是否认证0未认证号1已认证
-	 */
-	public Integer getIsVerify() {
-		return isVerify;
-	}
-	
+    /**
+     * 设置：是否认证0未认证号1已认证
+     */
+    public void setIsVerify(Integer isVerify) {
+        this.isVerify = isVerify;
+    }
+
+    /**
+     * 获取：是否认证0未认证号1已认证
+     */
+    public Integer getIsVerify() {
+        return isVerify;
+    }
+
     /*
      *===================================================================================================================================================
      *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
@@ -253,55 +253,88 @@ public class OrgEntity implements Serializable {
     @TableField(exist = false)
     private OrgEntity belongTopCompany;
 
-	@Getter
-	@Setter
+    @Getter
+    @Setter
     @TableField(exist = false)
     private OrgEntity parentEntity;
 
-	@Getter
-	@Setter
+    @Getter
+    @Setter
     @TableField(exist = false)
-	private UserEntity updateUserEntity;
+    private UserEntity updateUserEntity;
 
-	
-	@Getter
-	@Setter
+
+    @Getter
+    @Setter
     @TableField(exist = false)
     private List<OrgEntity> children;
 
-    public void addChild(OrgEntity child) {
-    	if(children==null)
-    		children=new ArrayList<>();
-    	if(!children.contains(child))
-    		children.add(child);
-    }
-	@Override
-    public String toString() {
-    	return JSON.toJSONString(this);
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private List<UserEntity> staff;
+    
+    public void addStaff(UserEntity user){
+    	if(staff == null) {
+    		staff = new LinkedList<UserEntity>();
+    	}
+    	if (!staff.contains(user)) {
+    		staff.add(user);
+        }
     }
     
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((orgId == null) ? 0 : orgId.hashCode());
-		return result;
-	}   
-	@Override
-    public boolean equals(Object other) {
-    	if (other instanceof OrgEntity) {
-    		if(this.orgId == null || other== null)
-    			return false;
-    		
-            return this.orgId.equals(((OrgEntity) other).orgId);
-        }   
-        return false; 
+    public void addChild(OrgEntity child) {
+        if (children == null) {
+            children = new LinkedList<>();
+        }
+        if (!children.contains(child)) {
+            children.add(child);
+        }
     }
-    public final static String ORG_ID = "org_id";
-	public final static String TOP_COMPANY_ID = "top_company_id";
-	public final static String COMPANY_ID = "company_id";
-	public final static String ORG_CODE = "org_code";
-	public final static String LEVEL = "level";
-	public final static String ORG_TYPE = "org_type";
-	public final static String PARENT_ORG_ID = "parent_org_id";
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((orgId == null) ? 0 : orgId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof OrgEntity) {
+            if (this.orgId == null || other == null) {
+                return false;
+            }
+
+            return this.orgId.equals(((OrgEntity) other).orgId);
+        }
+        return false;
+    }
+
+    public int calculateLevel() {
+        if (orgCode == null) {
+            return 0;
+        }
+        int lv = 1;
+        for (int i = 0; i < orgCode.length(); i++) {
+            if (orgCode.charAt(i) == '.') {
+                lv++;
+            }
+        }
+        return lv;
+    }
+
+    public Integer getLevel() {
+        if (level != null && level > 0) {
+            return level;
+        }
+        level = calculateLevel();
+        return level;
+    }
 }

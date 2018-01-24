@@ -1,0 +1,60 @@
+package net.eanfang.client.ui.activity.worksapce;
+
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import com.yaf.sys.entity.OrgEntity;
+
+import net.eanfang.client.R;
+import net.eanfang.client.network.apiservice.UserApi;
+import net.eanfang.client.network.request.EanfangCallback;
+import net.eanfang.client.network.request.EanfangHttp;
+import net.eanfang.client.ui.adapter.ConstactsAdapter;
+import net.eanfang.client.ui.base.BaseActivity;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * Created by MrHou
+ *
+ * @on 2018/1/22  14:20
+ * @email houzhongzhou@yeah.net
+ * @desc 分公司
+ */
+
+public class SubcompanyActivity extends BaseActivity {
+
+    @BindView(R.id.rev_list)
+    RecyclerView revList;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_comment_list);
+        ButterKnife.bind(this);
+        initView();
+        initData();
+    }
+
+    private void initView() {
+        setTitle("分公司");
+        setLeftBack();
+    }
+
+    private void initData() {
+        EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST)
+                .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
+                    initAdapter(list);
+                }));
+    }
+
+    private void initAdapter(List<OrgEntity> mDatas) {
+        revList.setLayoutManager(new LinearLayoutManager(this));
+        ConstactsAdapter adapter = new ConstactsAdapter(mDatas);
+        revList.setAdapter(adapter);
+    }
+}

@@ -192,6 +192,10 @@
         <activity android:name=".ui.activity.worksapce.OfferAndPayOrderActivity" />
         <activity android:name=".ui.activity.worksapce.PayOrderDetailActivity" />
         <activity android:name=".ui.activity.worksapce.PersonOfferAndPayOrderActivity" />
+        <activity android:name=".ui.activity.worksapce.PartnerActivity"/>
+        <activity android:name=".ui.activity.worksapce.SubcompanyActivity"/>
+        <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity"/>
+        <activity android:name=".ui.activity.worksapce.ConstansActivity"/>
 
         <activity
             android:name=".ui.activity.worksapce.WebActivity"

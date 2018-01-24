@@ -9,15 +9,6 @@
         android:layout_height="50dp"
         android:background="@color/client">
 
-        <ImageView
-            android:id="@+id/tv_safety"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:gravity="center"
-            android:src="@mipmap/ic_blog"
-            android:textColor="@color/white" />
-
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
@@ -41,13 +32,10 @@
     </RelativeLayout>
 
 
-    <!--<include layout="@layout/layout_contacts_header" />-->
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rev_company_list"
+        android:id="@+id/rev_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>

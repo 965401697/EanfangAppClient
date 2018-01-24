@@ -55,7 +55,16 @@ public class Constant {
     /*23.处理状态*/
     public static final String STATUS = "Status";
     public static final String CUST_STATUS = "CustStatus";
-
+    /*24.ApplyStatus*/
+    public static final String APPLY_STATUS = "ApplyStatus";
+    /*25.PublishStatus*/
+    public static final String PUBLISH_STATUS = "PublishStatus";
+    /*26.status*/
+    public static final String TASK_PUB_STATUS = "status";
+    /*27.项目类型*/
+    public static final String COOPERATION_TYPE = "CooperationType";
+    /*28.绑定结果*/
+    public static final String COOPERATION_STATUS = "CooperationStatus";
 
 
 

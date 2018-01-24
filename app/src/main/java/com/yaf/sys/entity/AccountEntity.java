@@ -1,5 +1,6 @@
 package com.yaf.sys.entity;
 
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -30,13 +31,18 @@ import lombok.Setter;
 @TableName(value = "sys_account")
 public class AccountEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
     //账号
     //@TableField(value = "acc_id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER，普通自增长使用IdType.ID_AUTO
     @TableId(value = "acc_id", type = IdType.ID_WORKER)
     private Long accId;
 
+    //账号类型0普通用户1内置用户2技师用户
+    //@TableField(value = "acc_type")
+    @Getter
+    @Setter
+    private Long accType;
+    
     //手机
     //@TableField(value = "mobile")
     @NotBlank
@@ -94,6 +100,12 @@ public class AccountEntity implements Serializable {
 	@Getter
 	@Setter
 	private Integer gender;
+	
+	//生日
+	//@TableField(value = "birthday")
+	@Getter
+	@Setter
+	private Date birthday;
 	
 	//证件号码
 	//@TableField(value = "id_card")
@@ -295,7 +307,7 @@ public class AccountEntity implements Serializable {
     @Setter
     @TableField(exist = false)
     List<OrgEntity> belongCompanys;
-    
+
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
@@ -317,8 +329,6 @@ public class AccountEntity implements Serializable {
         }   
         return false; 
     }
-	public final static String STATUS = "status";
-	public final static String MOBILE = "mobile";
-	public final static String EMAIL = "email";
 	
+
 	}
