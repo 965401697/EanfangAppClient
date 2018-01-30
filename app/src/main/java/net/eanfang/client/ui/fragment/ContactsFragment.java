@@ -6,12 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 
+import com.annimon.stream.Stream;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.network.apiservice.UserApi;
 import net.eanfang.client.network.request.EanfangCallback;
 import net.eanfang.client.network.request.EanfangHttp;
+import net.eanfang.client.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
@@ -51,6 +53,7 @@ public class ContactsFragment extends BaseFragment {
 
     private void initAdapter() {
         rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity().getUnitType() == 2).toList();
         parentAdapter = new ParentAdapter(mDatas);
         rev_list.setAdapter(parentAdapter);
         parentAdapter.notifyDataSetChanged();
@@ -58,7 +61,9 @@ public class ContactsFragment extends BaseFragment {
             switch (view.getId()) {
                 //组织结构
                 case R.id.tv_org:
-                    startActivity(new Intent(getActivity(), ConstansActivity.class).putExtra("data", mDatas.get(position)));
+                    if (mDatas.get(position) != null) {
+                        startActivity(new Intent(getActivity(), ConstansActivity.class).putExtra("data", mDatas.get(position)));
+                    }
                     break;
                 //子公司
                 case R.id.tv_child_company:
@@ -67,6 +72,12 @@ public class ContactsFragment extends BaseFragment {
                 //外协单位
                 case R.id.tv_outside_company:
                     startActivity(new Intent(getActivity(), ExternalCompanyActivity.class));
+                    break;
+                case R.id.tv_auth_status:
+                    startActivity(new Intent(getActivity(), AuthCompanyActivity.class)
+                            .putExtra("orgid", mDatas.get(position).getOrgId())
+                            .putExtra("orgName", mDatas.get(position).getOrgName())
+                    );
                     break;
                 default:
                     break;

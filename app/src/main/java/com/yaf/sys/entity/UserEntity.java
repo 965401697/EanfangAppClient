@@ -62,13 +62,6 @@ public class UserEntity implements Serializable {
 	@Digits(integer=19,fraction=0)
 	private Long departmentId;
 
-	//归属类型
-	@Getter
-	@Setter
-	//@TableField(value = "belong_type")
-	@Digits(integer=3,fraction=0)
-	private Integer belongType;
-	
     //账号类别Const.UserType
     //@TableField(value = "user_type")
     @Digits(integer = 3, fraction = 0)
@@ -289,5 +282,4 @@ public class UserEntity implements Serializable {
         }   
         return false; 
     }
-
 }

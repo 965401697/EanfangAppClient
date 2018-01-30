@@ -141,6 +141,10 @@ public abstract class CustomeApplication extends MultiDexApplication {
         return getUser().getAccount().getDefaultUser().getCompanyId();
     }
 
+    public Long getAccId() {
+        return getUser().getAccount().getDefaultUser().getAccId();
+    }
+
     public void closeActivity(String... cls) {
         for (String str : cls) {
             if (mJIBaseArrayMap.containsKey(str)) {

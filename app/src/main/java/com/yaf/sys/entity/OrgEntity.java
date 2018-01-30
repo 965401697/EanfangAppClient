@@ -1,6 +1,5 @@
 package com.yaf.sys.entity;
 
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -107,6 +106,10 @@ public class OrgEntity implements Serializable {
     //更新时间
     //@TableField(value = "update_time")
     private Date updateTime;
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private OrgUnitEntity orgUnitEntity;
 
     /**
      * 设置：组织机构ID
@@ -256,11 +259,6 @@ public class OrgEntity implements Serializable {
     @Getter
     @Setter
     @TableField(exist = false)
-    private OrgEntity parentEntity;
-
-    @Getter
-    @Setter
-    @TableField(exist = false)
     private UserEntity updateUserEntity;
 
 
@@ -273,16 +271,16 @@ public class OrgEntity implements Serializable {
     @Setter
     @TableField(exist = false)
     private List<UserEntity> staff;
-    
-    public void addStaff(UserEntity user){
-    	if(staff == null) {
-    		staff = new LinkedList<UserEntity>();
-    	}
-    	if (!staff.contains(user)) {
-    		staff.add(user);
+
+    public void addStaff(UserEntity user) {
+        if (staff == null) {
+            staff = new LinkedList<UserEntity>();
+        }
+        if (!staff.contains(user)) {
+            staff.add(user);
         }
     }
-    
+
     public void addChild(OrgEntity child) {
         if (children == null) {
             children = new LinkedList<>();
@@ -337,4 +335,5 @@ public class OrgEntity implements Serializable {
         level = calculateLevel();
         return level;
     }
+
 }

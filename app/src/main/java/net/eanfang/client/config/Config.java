@@ -126,11 +126,23 @@ public class Config {
      * 业务类型
      */
     public List<BaseDataBean> getBusinessOneList() {
-
-        if (businessOneList != null && !businessOneList.isEmpty()) {
-            return businessOneList;
-        }
         return businessOneList = Stream.of(baseDataBean).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2).toList();
+    }
+    public String getTradeCodeByName(String name) {
+
+        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.TRADE_TYPE && bean.getDataName().equals(name)).toList();
+
+        if (countyList == null || countyList.isEmpty()) {
+            return "";
+        } else {
+            return countyList.get(0).getDataCode();
+        }
+    }
+    /**
+     * 行业类型
+     */
+    public List<BaseDataBean> getTradeTypeList() {
+        return businessOneList = Stream.of(baseDataBean).filter(bean -> bean.getDataType() == Constant.TRADE_TYPE).toList();
     }
 
     /**
@@ -165,6 +177,15 @@ public class Config {
 
     }
 
+    public String getTradeNameByCode(String code) {
+        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.TRADE_TYPE && bean.getDataName().equals(code)).toList();
+
+        if (countyList == null || countyList.isEmpty()) {
+            return "";
+        } else {
+            return countyList.get(0).getDataCode();
+        }
+    }
 
     /**
      * 根据系统code获取名称

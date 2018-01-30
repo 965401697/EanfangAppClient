@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
@@ -127,7 +127,10 @@ public class AccountEntity implements Serializable {
 	@Getter
 	@Setter
 	private String address;
-	
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    Set<Long> allowCurDomainCompanys;
     /**
      * 设置：账号
      */
@@ -306,7 +309,13 @@ public class AccountEntity implements Serializable {
     @Getter
     @Setter
     @TableField(exist = false)
-    List<OrgEntity> belongCompanys;
+    Set<OrgEntity> belongCompanys;
+    
+    /*归属的部门列表*/
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    Set<Long> belongDepartments;
 
 	@Override
 	public String toString() {

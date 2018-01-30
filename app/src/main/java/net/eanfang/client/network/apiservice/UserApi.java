@@ -73,4 +73,24 @@ public interface UserApi {
      * 外部联系人
      */
     String GET_STAFFTEMP_LIST = BuildConfig.API_HOST + "/yaf_sys/stafftemp/list";
+
+    /**
+     * 新增企业
+     */
+    String GET_ORGUNIT_SHOP_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/add";
+
+    /**
+     * 加载企业信息
+     */
+    String GET_COMPANY_ORG_INFO = BuildConfig.API_HOST + "/yaf_sys/orgunit/infobyorgid/";
+
+    /**
+     * 填写企业资料
+     */
+    String GET_ORGUNIT_SHOP_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/insert";
+
+    /**
+     * 企业安防公司认证
+     */
+    String GET_ORGUNIT_SEND_VERIFY = BuildConfig.API_HOST + "/yaf_sys/orgunit/sendverify/";
 }

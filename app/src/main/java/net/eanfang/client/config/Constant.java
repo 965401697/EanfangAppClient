@@ -65,7 +65,8 @@ public class Constant {
     public static final String COOPERATION_TYPE = "CooperationType";
     /*28.绑定结果*/
     public static final String COOPERATION_STATUS = "CooperationStatus";
-
+    /*29.公司规模*/
+    public static final String ORG_UNIT_SCALE = "OrgUnitScale";
 
 
 
@@ -85,6 +86,7 @@ public class Constant {
      * 地区
      */
     public static final int AREA = 3;
-
+    /*行业类型*/
+    public static final int TRADE_TYPE = 4;
 
 }

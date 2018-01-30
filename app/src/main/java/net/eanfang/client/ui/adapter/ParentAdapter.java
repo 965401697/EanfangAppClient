@@ -3,7 +3,7 @@ package net.eanfang.client.ui.adapter;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -21,7 +21,6 @@ import java.util.List;
 
 public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
-
     public ParentAdapter(List data) {
         super(R.layout.item_group_adapter, data);
     }
@@ -30,13 +29,19 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, OrgEntity item) {
         ImageView imageView = helper.getView(R.id.iv_img);
         LinearLayout ll_show = helper.getView(R.id.ll_show);
-        RelativeLayout rel = helper.getView(R.id.rel_company);
+        TextView rel = helper.getView(R.id.tv_company_name);
         helper.addOnClickListener(R.id.tv_org);
         helper.addOnClickListener(R.id.tv_child_company);
         helper.addOnClickListener(R.id.tv_outside_company);
         helper.setText(R.id.tv_company_name, item.getOrgName());
         imageView.setImageResource(R.drawable.ic_down);
         imageView.setTag(false);
+        helper.addOnClickListener(R.id.tv_auth_status);
+        if (item.getIsVerify() == 0) {
+            helper.setText(R.id.tv_auth_status, "待认证");
+        } else {
+            helper.setText(R.id.tv_auth_status, "查看");
+        }
         //当点击时先进行判断
 
         rel.setOnClickListener(v -> {

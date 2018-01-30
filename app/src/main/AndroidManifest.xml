@@ -196,6 +196,7 @@
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity"/>
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity"/>
         <activity android:name=".ui.activity.worksapce.ConstansActivity"/>
+        <activity android:name=".ui.activity.worksapce.AuthCompanyActivity"/>
 
         <activity
             android:name=".ui.activity.worksapce.WebActivity"
