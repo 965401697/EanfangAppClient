@@ -29,11 +29,11 @@ import com.photopicker.photoview.PhotoViewAttacher;
  */
 public class BGABrowserPhotoViewAttacher extends PhotoViewAttacher {
 
+    private boolean isSetTopCrop = false;
+
     public BGABrowserPhotoViewAttacher(ImageView imageView) {
         super(imageView);
     }
-
-    private boolean isSetTopCrop = false;
 
     /**
      * 必须重写此方法，防止其他函数覆盖，导致setTopCrop不成功

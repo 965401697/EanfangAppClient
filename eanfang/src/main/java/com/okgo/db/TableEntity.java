@@ -42,7 +42,9 @@ public class TableEntity {
         return this;
     }
 
-    /** 建表语句 */
+    /**
+     * 建表语句
+     */
     public String buildTableString() {
         StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
         sb.append(tableName).append('(');
@@ -85,7 +87,9 @@ public class TableEntity {
         return list.get(columnIndex).columnName;
     }
 
-    /** 获取数据库表中列的个数 */
+    /**
+     * 获取数据库表中列的个数
+     */
     public int getColumnCount() {
         return list.size();
     }

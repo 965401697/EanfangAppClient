@@ -9,7 +9,6 @@ import java.util.List;
  * Author:李玉江[QQ:1032694760]
  * DateTime:2017/04/17 00:40
  * Builder:Android Studio
- *
  */
 public class CarNumberProvince implements LinkageFirst<CarNumberCity> {
     private String name;

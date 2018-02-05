@@ -24,6 +24,10 @@ import com.camera.util.ScreenSizeUtil;
  */
 
 public class CameraFocusView extends View {
+    private final int GREEN_RADIUS = 87;//变绿半径
+    private final int DURATION_TIME = 1000;
+    private final int TOP_CONTROL_HEIGHT = ScreenSizeUtil.dp2px(50);//顶部控制栏高度（包括状态栏）
+    private final int BETTOM_CONTROL_HEIGHT = ScreenSizeUtil.dp2px(105);//底部控制区域高度
     private int mScreenWidth;
     private int mScreenHeight;
     private Paint mPaint;
@@ -32,23 +36,7 @@ public class CameraFocusView extends View {
     private int lastValue;
     private ValueAnimator lineAnimator;
     private boolean isShow = false;
-    private final int GREEN_RADIUS = 87;//变绿半径
-    private final int DURATION_TIME = 1000;
-    private final int TOP_CONTROL_HEIGHT = ScreenSizeUtil.dp2px(50);//顶部控制栏高度（包括状态栏）
-    private final int BETTOM_CONTROL_HEIGHT = ScreenSizeUtil.dp2px(105);//底部控制区域高度
-
     private IAutoFocus mIAutoFocus;
-
-    /**
-     * 聚焦的回调接口
-     */
-    public interface IAutoFocus {
-        void autoFocus(float x, float y);
-    }
-
-    public void setmIAutoFocus(IAutoFocus mIAutoFocus) {
-        this.mIAutoFocus = mIAutoFocus;
-    }
 
     public CameraFocusView(Context context) {
         this(context, null);
@@ -63,6 +51,10 @@ public class CameraFocusView extends View {
         init();
     }
 
+    public void setmIAutoFocus(IAutoFocus mIAutoFocus) {
+        this.mIAutoFocus = mIAutoFocus;
+    }
+
     private void init() {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);// 抗锯齿
@@ -70,7 +62,7 @@ public class CameraFocusView extends View {
         mPaint.setColor(Color.RED);
         mPaint.setStrokeWidth(5);
         mScreenWidth = ScreenSizeUtil.getScreenWidth();
-        mScreenHeight =ScreenSizeUtil.getScreenHeight();
+        mScreenHeight = ScreenSizeUtil.getScreenHeight();
         mPaint.setStyle(Paint.Style.STROKE);// 空心
         centerPoint = new Point(mScreenWidth / 2, mScreenHeight / 2);
         radius = (int) (mScreenWidth * 0.1);
@@ -80,11 +72,11 @@ public class CameraFocusView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if(isShow){
-            if(radius == GREEN_RADIUS){
+        if (isShow) {
+            if (radius == GREEN_RADIUS) {
                 mPaint.setColor(Color.GREEN);
             }
-            if(centerPoint!=null){
+            if (centerPoint != null) {
                 canvas.drawCircle(centerPoint.x, centerPoint.y, radius, mPaint);
             }
         }
@@ -100,19 +92,18 @@ public class CameraFocusView extends View {
                 mPaint.setColor(Color.WHITE);
                 radius = (int) (mScreenWidth * 0.1);
                 centerPoint = null;
-                if(y>TOP_CONTROL_HEIGHT&&y<ScreenSizeUtil.getScreenHeight()-BETTOM_CONTROL_HEIGHT){//状态栏和底部禁止点击获取焦点（显示体验不好）
+                if (y > TOP_CONTROL_HEIGHT && y < ScreenSizeUtil.getScreenHeight() - BETTOM_CONTROL_HEIGHT) {//状态栏和底部禁止点击获取焦点（显示体验不好）
                     centerPoint = new Point(x, y);
                     showAnimView();
                     //开始对焦
                     if (mIAutoFocus != null) {
-                        mIAutoFocus.autoFocus(event.getX(),event.getY());
+                        mIAutoFocus.autoFocus(event.getX(), event.getY());
                     }
                 }
                 break;
         }
         return true;
     }
-
 
     private void showAnimView() {
         isShow = true;
@@ -124,7 +115,7 @@ public class CameraFocusView extends View {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     int animationValue = (Integer) animation
                             .getAnimatedValue();
-                    if(lastValue!=animationValue&&radius>=(int) ((mScreenWidth * 0.1)-20)){
+                    if (lastValue != animationValue && radius >= (int) ((mScreenWidth * 0.1) - 20)) {
                         radius = radius - animationValue;
                         lastValue = animationValue;
                     }
@@ -143,11 +134,19 @@ public class CameraFocusView extends View {
                     invalidate();
                 }
             });
-        }else{
+        } else {
             lineAnimator.end();
             lineAnimator.cancel();
             lineAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
             lineAnimator.start();
         }
+    }
+
+
+    /**
+     * 聚焦的回调接口
+     */
+    public interface IAutoFocus {
+        void autoFocus(float x, float y);
     }
 }

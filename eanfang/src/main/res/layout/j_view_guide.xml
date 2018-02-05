@@ -5,24 +5,22 @@
     android:layout_height="match_parent"
     android:background="@mipmap/j_guide2"
     android:gravity="bottom|center_horizontal"
-    android:orientation="horizontal"
-    >
+    android:orientation="horizontal">
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/button_bg_green"
         android:paddingBottom="10dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="50dp"
         android:text="立即体验"
         android:textColor="#ffffff"
-        android:background="@drawable/button_bg_green"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 
 </LinearLayout>

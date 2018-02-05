@@ -144,6 +144,14 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
         }
     }
 
+    public void setDelegate(Delegate delegate) {
+        mDelegate = delegate;
+    }
+
+    public ArrayList<String> getData() {
+        return (ArrayList<String>) mPhotoAdapter.getData();
+    }
+
     /**
      * 设置图片路径数据集合
      *
@@ -200,14 +208,6 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
         }
     }
 
-    public void setDelegate(Delegate delegate) {
-        mDelegate = delegate;
-    }
-
-    public ArrayList<String> getData() {
-        return (ArrayList<String>) mPhotoAdapter.getData();
-    }
-
     public int getItemCount() {
         return mPhotoAdapter.getCount();
     }
@@ -218,6 +218,10 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
 
     public int getCurrentClickItemPosition() {
         return mCurrentClickItemPosition;
+    }
+
+    public interface Delegate {
+        void onClickNinePhotoItem(BGANinePhotoLayout ninePhotoLayout, View view, int position, String model, List<String> models);
     }
 
     private class PhotoAdapter extends BGAAdapterViewAdapter<String> {
@@ -237,9 +241,5 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
 
             BGAImage.display(helper.getImageView(R.id.iv_item_nine_photo_photo), mPlaceholderDrawableResId, model, mImageSize);
         }
-    }
-
-    public interface Delegate {
-        void onClickNinePhotoItem(BGANinePhotoLayout ninePhotoLayout, View view, int position, String model, List<String> models);
     }
 }

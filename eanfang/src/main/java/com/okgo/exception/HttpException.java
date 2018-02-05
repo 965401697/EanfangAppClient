@@ -51,6 +51,14 @@ public class HttpException extends RuntimeException {
         return "HTTP " + response.code() + " " + response.message();
     }
 
+    public static HttpException NET_ERROR() {
+        return new HttpException("network error! http response code is 404 or 5xx!");
+    }
+
+    public static HttpException COMMON(String message) {
+        return new HttpException(message);
+    }
+
     public int code() {
         return code;
     }
@@ -61,13 +69,5 @@ public class HttpException extends RuntimeException {
 
     public Response<?> response() {
         return response;
-    }
-
-    public static HttpException NET_ERROR() {
-        return new HttpException("network error! http response code is 404 or 5xx!");
-    }
-
-    public static HttpException COMMON(String message) {
-        return new HttpException(message);
     }
 }

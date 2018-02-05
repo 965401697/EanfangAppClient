@@ -13,11 +13,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
- *@author hou
- *      Created at 2017/3/2
- *@desc
+ * @author hou
+ *         Created at 2017/3/2
+ * @desc
  */
-public class  FileUtils {
+public class FileUtils {
     public static final String PATH = Environment
             .getExternalStorageDirectory()
             .getAbsolutePath(); // 保存文件的路径

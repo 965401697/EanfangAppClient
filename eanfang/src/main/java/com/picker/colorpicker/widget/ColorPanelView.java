@@ -49,10 +49,6 @@ public class ColorPanelView extends View {
 
     private OnColorChangedListener mOnColorChangedListener;
 
-    public interface OnColorChangedListener {
-        void onColorChanged(ColorPanelView view, int color);
-    }
-
     public ColorPanelView(Context context) {
         super(context);
         init();
@@ -326,12 +322,12 @@ public class ColorPanelView extends View {
         mOnColorChangedListener = onColorChangedListener;
     }
 
-    //region HSL math
-
     private float pointToHue(float x) {
         x = x - mGradientRect.left;
         return x * 360f / mGradientRect.width();
     }
+
+    //region HSL math
 
     private int hueToPoint(float hue) {
         return (int) (mGradientRect.left + ((hue * mGradientRect.width()) / 360));
@@ -356,7 +352,6 @@ public class ColorPanelView extends View {
         val = 1 - val;
         return (int) (mGradientRect.left + (mGradientRect.width() * val));
     }
-    //endregion HSL math
 
     public void setPointerDrawable(Drawable pointerDrawable) {
         if (mPointerDrawable != pointerDrawable) {
@@ -364,6 +359,7 @@ public class ColorPanelView extends View {
             requestLayout();
         }
     }
+    //endregion HSL math
 
     public void recycle() {
         mPaint = null;
@@ -406,7 +402,21 @@ public class ColorPanelView extends View {
         setColor(ss.color, true);
     }
 
+    public interface OnColorChangedListener {
+        void onColorChanged(ColorPanelView view, int color);
+    }
+
     private static class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR =
+                new Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
         int color;
         boolean isBrightnessGradient;
 
@@ -426,17 +436,6 @@ public class ColorPanelView extends View {
             out.writeInt(color);
             out.writeInt(isBrightnessGradient ? 1 : 0);
         }
-
-        public static final Creator<SavedState> CREATOR =
-                new Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
     }
 
 }

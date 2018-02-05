@@ -48,7 +48,9 @@ import okhttp3.Response;
  * ================================================
  */
 public class HttpUtils {
-    /** 将传递进来的参数拼接成 url */
+    /**
+     * 将传递进来的参数拼接成 url
+     */
     public static String createUrlFromParams(String url, Map<String, List<String>> params) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -71,7 +73,9 @@ public class HttpUtils {
         return url;
     }
 
-    /** 通用的拼接请求头 */
+    /**
+     * 通用的拼接请求头
+     */
     public static Request.Builder appendHeaders(Request.Builder builder, HttpHeaders headers) {
         if (headers.headersMap.isEmpty()) return builder;
         Headers.Builder headerBuilder = new Headers.Builder();
@@ -88,7 +92,9 @@ public class HttpUtils {
         return builder;
     }
 
-    /** 生成类似表单的请求体 */
+    /**
+     * 生成类似表单的请求体
+     */
     public static RequestBody generateMultipartRequestBody(HttpParams params, boolean isMultipart) {
         if (params.fileParamsMap.isEmpty() && !isMultipart) {
             //表单提交，没有文件
@@ -124,7 +130,9 @@ public class HttpUtils {
         }
     }
 
-    /** 根据响应头或者url获取文件名 */
+    /**
+     * 根据响应头或者url获取文件名
+     */
     public static String getNetFileName(Response response, String url) {
         String fileName = getHeaderFileName(response);
         if (TextUtils.isEmpty(fileName)) fileName = getUrlFileName(url);
@@ -188,7 +196,9 @@ public class HttpUtils {
         return filename;
     }
 
-    /** 根据路径删除文件 */
+    /**
+     * 根据路径删除文件
+     */
     public static boolean deleteFile(String path) {
         if (TextUtils.isEmpty(path)) return true;
         File file = new File(path);
@@ -201,7 +211,9 @@ public class HttpUtils {
         return false;
     }
 
-    /** 根据文件名获取MIME类型 */
+    /**
+     * 根据文件名获取MIME类型
+     */
     public static MediaType guessMimeType(String fileName) {
         FileNameMap fileNameMap = URLConnection.getFileNameMap();
         fileName = fileName.replace("#", "");   //解决文件名中含有#号异常的问题

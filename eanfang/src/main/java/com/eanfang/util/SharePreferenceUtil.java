@@ -12,10 +12,10 @@ import java.io.IOException;
  * @desc
  */
 public class SharePreferenceUtil {
+    static String NAME = "config";
     private static volatile SharePreferenceUtil util = new SharePreferenceUtil();
     Context mContext;
     SharedPreferences sp;
-    static String NAME = "config";
 
     private SharePreferenceUtil() {
     }
@@ -33,7 +33,7 @@ public class SharePreferenceUtil {
 
     public SharedPreferences init(Context context) {
         mContext = context;
-        sp = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        sp = context.getSharedPreferences(NAME, Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
         return sp;
     }
 
@@ -51,6 +51,8 @@ public class SharePreferenceUtil {
         } else {
             sp.edit().putString(key, ObjectUtil.object2String(value)).apply();
         }
+        //提交缓存
+        sp.edit().commit();
     }
 
     public Object get(String key, Object object) throws Exception {

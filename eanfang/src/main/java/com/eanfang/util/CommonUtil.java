@@ -18,9 +18,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *@author hou
- *      Created at 2017/3/2
- *@desc
+ * @author hou
+ *         Created at 2017/3/2
+ * @desc
  */
 public class CommonUtil {
     public static int dip2px(Context context, int dp) {
@@ -140,10 +140,8 @@ public class CommonUtil {
         return info != null && info.isAvailable();
     }
 
-    public static boolean isUrl(String pInput)
-    {
-        if (pInput == null)
-        {
+    public static boolean isUrl(String pInput) {
+        if (pInput == null) {
             return false;
         }
         String regEx = "^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-"

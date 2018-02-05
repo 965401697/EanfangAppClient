@@ -41,7 +41,9 @@ import java.util.zip.ZipFile;
  */
 public class ApkUtils {
 
-    /** 安装一个apk文件 */
+    /**
+     * 安装一个apk文件
+     */
     public static void install(Context context, File uriFile) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(Uri.fromFile(uriFile), "application/vnd.android.package-archive");
@@ -49,7 +51,9 @@ public class ApkUtils {
         context.startActivity(intent);
     }
 
-    /** 卸载一个app */
+    /**
+     * 卸载一个app
+     */
     public static void uninstall(Context context, String packageName) {
         //通过程序的包名创建URI
         Uri packageURI = Uri.parse("package:" + packageName);
@@ -59,7 +63,9 @@ public class ApkUtils {
         context.startActivity(intent);
     }
 
-    /** 检查手机上是否安装了指定的软件 */
+    /**
+     * 检查手机上是否安装了指定的软件
+     */
     public static boolean isAvailable(Context context, String packageName) {
         // 获取packagemanager
         final PackageManager packageManager = context.getPackageManager();
@@ -78,12 +84,16 @@ public class ApkUtils {
         return packageNames.contains(packageName);
     }
 
-    /** 检查手机上是否安装了指定的软件 */
+    /**
+     * 检查手机上是否安装了指定的软件
+     */
     public static boolean isAvailable(Context context, File file) {
         return isAvailable(context, getPackageName(context, file.getAbsolutePath()));
     }
 
-    /** 根据文件路径获取包名 */
+    /**
+     * 根据文件路径获取包名
+     */
     public static String getPackageName(Context context, String filePath) {
         PackageManager packageManager = context.getPackageManager();
         PackageInfo info = packageManager.getPackageArchiveInfo(filePath, PackageManager.GET_ACTIVITIES);
@@ -94,7 +104,9 @@ public class ApkUtils {
         return null;
     }
 
-    /** 从apk中获取版本信息 */
+    /**
+     * 从apk中获取版本信息
+     */
     public static String getChannelFromApk(Context context, String channelPrefix) {
         //从apk包中获取
         ApplicationInfo appinfo = context.getApplicationInfo();

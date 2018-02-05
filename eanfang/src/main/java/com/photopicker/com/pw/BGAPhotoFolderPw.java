@@ -37,7 +37,6 @@ import cn.bingoogolapple.androidcommon.adapter.BGARecyclerViewAdapter;
 import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
 
 
-
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
  * 创建时间:16/6/24 下午6:19
@@ -134,6 +133,12 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
         dismiss();
     }
 
+    public interface Delegate {
+        void onSelectedFolder(int position);
+
+        void executeDismissAnim();
+    }
+
     private class FolderAdapter extends BGARecyclerViewAdapter<BGAImageFolderModel> {
         private int mImageSize;
 
@@ -150,11 +155,5 @@ public class BGAPhotoFolderPw extends BGABasePopupWindow implements BGAOnRVItemC
             helper.setText(R.id.tv_item_photo_folder_count, String.valueOf(model.getCount()));
             BGAImage.display(helper.getImageView(R.id.iv_item_photo_folder_photo), R.mipmap.bga_pp_ic_holder_light, model.coverPath, mImageSize);
         }
-    }
-
-    public interface Delegate {
-        void onSelectedFolder(int position);
-
-        void executeDismissAnim();
     }
 }

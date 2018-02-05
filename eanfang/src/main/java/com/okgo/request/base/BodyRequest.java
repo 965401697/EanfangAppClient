@@ -46,13 +46,24 @@ import okhttp3.RequestBody;
 public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R> implements HasBody<R> {
     private static final long serialVersionUID = -6459175248476927501L;
 
-    protected transient MediaType mediaType;        //上传的MIME类型
-    protected String content;                       //上传的文本内容
-    protected byte[] bs;                            //上传的字节数据
-    protected transient File file;                  //单纯的上传一个文件
+    //上传的MIME类型
 
-    protected boolean isMultipart = false;  //是否强制使用 multipart/form-data 表单上传
-    protected boolean isSpliceUrl = false;  //是否拼接url参数
+    protected transient MediaType mediaType;
+    //上传的文本内容
+
+    protected String content;
+    //上传的字节数据
+
+    protected byte[] bs;
+    //单纯的上传一个文件
+
+    protected transient File file;
+    //是否强制使用 multipart/form-data 表单上传
+
+    protected boolean isMultipart = false;
+    //是否拼接url参数
+
+    protected boolean isSpliceUrl = false;
     protected RequestBody requestBody;
 
     public BodyRequest(String url) {
@@ -115,7 +126,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upString(String string) {
@@ -136,7 +149,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upJson(String json) {
@@ -145,7 +160,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upJson(JSONObject jsonObject) {
@@ -154,7 +171,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upJson(JSONArray jsonArray) {
@@ -163,7 +182,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upBytes(byte[] bs) {
@@ -172,7 +193,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upBytes(byte[] bs, MediaType mediaType) {
@@ -181,7 +204,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upFile(File file) {
@@ -190,7 +215,9 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
         return (R) this;
     }
 
-    /** 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除 */
+    /**
+     * 注意使用该方法上传字符串会清空实体中其他所有的参数，头信息不清除
+     */
     @SuppressWarnings("unchecked")
     @Override
     public R upFile(File file, MediaType mediaType) {
@@ -201,12 +228,25 @@ public abstract class BodyRequest<T, R extends BodyRequest> extends Request<T, R
 
     @Override
     public RequestBody generateRequestBody() {
-        if (isSpliceUrl) url = HttpUtils.createUrlFromParams(baseUrl, params.urlParamsMap);
-
-        if (requestBody != null) return requestBody;                                                //自定义的请求体
-        if (content != null && mediaType != null) return RequestBody.create(mediaType, content);    //上传字符串数据
-        if (bs != null && mediaType != null) return RequestBody.create(mediaType, bs);              //上传字节数组
-        if (file != null && mediaType != null) return RequestBody.create(mediaType, file);          //上传一个文件
+        if (isSpliceUrl) {
+            url = HttpUtils.createUrlFromParams(baseUrl, params.urlParamsMap);
+        }
+        //自定义的请求体
+        if (requestBody != null) {
+            return requestBody;
+        }
+        //上传字符串数据
+        if (content != null && mediaType != null) {
+            return RequestBody.create(mediaType, content);
+        }
+        //上传字节数组
+        if (bs != null && mediaType != null) {
+            return RequestBody.create(mediaType, bs);
+        }
+        //上传一个文件
+        if (file != null && mediaType != null) {
+            return RequestBody.create(mediaType, file);
+        }
         return HttpUtils.generateMultipartRequestBody(params, isMultipart);
     }
 

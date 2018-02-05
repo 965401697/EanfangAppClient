@@ -12,9 +12,8 @@ import android.content.Context;
  */
 
 public class CameraApplication extends Application {
-    private static Application application;
-
     public static boolean DEBUG = true;
+    private static Application application;
 
     /**
      * Camera初始化（主要用于工具类）debug:是否打印日志 true：打印 false：不打印

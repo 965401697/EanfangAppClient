@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<!--BGAImageView-->
+    <!--BGAImageView-->
     <com.photopicker.com.widget.BGAImageView
         android:id="@+id/iv_item_nine_photo_photo"
         android:layout_width="match_parent"

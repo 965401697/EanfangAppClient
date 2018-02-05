@@ -33,7 +33,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 
-
 /**
  * 3D滚轮控件，参阅：http://blog.csdn.net/qq_22393017/article/details/59488906
  * <p/>
@@ -836,6 +835,35 @@ public class WheelView extends View {
         return iRet;
     }
 
+    public interface OnItemSelectListener {
+        /**
+         * 滑动选择回调
+         *
+         * @param index 当前选择项的索引
+         */
+        void onSelected(int index);
+
+    }
+
+    /**
+     * 兼容旧版本API
+     *
+     * @deprecated use {@link OnItemSelectListener} instead
+     */
+    @Deprecated
+    public interface OnWheelListener {
+
+        void onSelected(boolean isUserScroll, int index, String item);
+
+    }
+
+    /**
+     * @deprecated use {@link OnItemSelectListener} instead
+     */
+    @Deprecated
+    public interface OnWheelViewListener extends OnWheelListener {
+    }
+
     /**
      * 选中项的分割线
      */
@@ -959,35 +987,6 @@ public class WheelView extends View {
 
     }
 
-    public interface OnItemSelectListener {
-        /**
-         * 滑动选择回调
-         *
-         * @param index 当前选择项的索引
-         */
-        void onSelected(int index);
-
-    }
-
-    /**
-     * 兼容旧版本API
-     *
-     * @deprecated use {@link OnItemSelectListener} instead
-     */
-    @Deprecated
-    public interface OnWheelListener {
-
-        void onSelected(boolean isUserScroll, int index, String item);
-
-    }
-
-    /**
-     * @deprecated use {@link OnItemSelectListener} instead
-     */
-    @Deprecated
-    public interface OnWheelViewListener extends OnWheelListener {
-    }
-
     private static class MessageHandler extends Handler {
         static final int WHAT_INVALIDATE = 1000;
         static final int WHAT_SMOOTH_SCROLL = 2000;
@@ -1016,10 +1015,10 @@ public class WheelView extends View {
     }
 
     private static class SmoothScrollTimerTask extends TimerTask {
+        final WheelView view;
         int realTotalOffset = Integer.MAX_VALUE;
         int realOffset = 0;
         int offset;
-        final WheelView view;
 
         SmoothScrollTimerTask(WheelView view, int offset) {
             this.view = view;
@@ -1064,9 +1063,9 @@ public class WheelView extends View {
     }
 
     private static class InertiaTimerTask extends TimerTask {
-        float a = Integer.MAX_VALUE;
         final float velocityY;
         final WheelView view;
+        float a = Integer.MAX_VALUE;
 
         InertiaTimerTask(WheelView view, float velocityY) {
             this.view = view;

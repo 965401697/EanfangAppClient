@@ -34,8 +34,6 @@ public class DialogUtil {
     }
 
 
-
-
     public static Dialog createTipDialog(final Context context, String title, String msgContent, View.OnClickListener listener) {
         View view = LayoutInflater.from(context).inflate(R.layout.tip_dialog, null);
         TextView tvMsg = (TextView) view.findViewById(R.id.tv_msg_title);

@@ -53,42 +53,6 @@ public class BitmapConvert implements Converter<Bitmap> {
         this.scaleType = scaleType;
     }
 
-    @Override
-    public Bitmap convertResponse(Response response) throws Throwable {
-        ResponseBody body = response.body();
-        if (body == null) return null;
-        return parse(body.bytes());
-    }
-
-    private Bitmap parse(byte[] byteArray) throws OutOfMemoryError {
-        BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
-        Bitmap bitmap;
-        if (maxWidth == 0 && maxHeight == 0) {
-            decodeOptions.inPreferredConfig = decodeConfig;
-            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, decodeOptions);
-        } else {
-            decodeOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, decodeOptions);
-            int actualWidth = decodeOptions.outWidth;
-            int actualHeight = decodeOptions.outHeight;
-
-            int desiredWidth = getResizedDimension(maxWidth, maxHeight, actualWidth, actualHeight, scaleType);
-            int desiredHeight = getResizedDimension(maxHeight, maxWidth, actualHeight, actualWidth, scaleType);
-
-            decodeOptions.inJustDecodeBounds = false;
-            decodeOptions.inSampleSize = findBestSampleSize(actualWidth, actualHeight, desiredWidth, desiredHeight);
-            Bitmap tempBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, decodeOptions);
-
-            if (tempBitmap != null && (tempBitmap.getWidth() > desiredWidth || tempBitmap.getHeight() > desiredHeight)) {
-                bitmap = Bitmap.createScaledBitmap(tempBitmap, desiredWidth, desiredHeight, true);
-                tempBitmap.recycle();
-            } else {
-                bitmap = tempBitmap;
-            }
-        }
-        return bitmap;
-    }
-
     private static int getResizedDimension(int maxPrimary, int maxSecondary, int actualPrimary, int actualSecondary, ImageView.ScaleType scaleType) {
 
         // If no dominant value at all, just return the actual.
@@ -141,5 +105,41 @@ public class BitmapConvert implements Converter<Bitmap> {
             n *= 2;
         }
         return (int) n;
+    }
+
+    @Override
+    public Bitmap convertResponse(Response response) throws Throwable {
+        ResponseBody body = response.body();
+        if (body == null) return null;
+        return parse(body.bytes());
+    }
+
+    private Bitmap parse(byte[] byteArray) throws OutOfMemoryError {
+        BitmapFactory.Options decodeOptions = new BitmapFactory.Options();
+        Bitmap bitmap;
+        if (maxWidth == 0 && maxHeight == 0) {
+            decodeOptions.inPreferredConfig = decodeConfig;
+            bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, decodeOptions);
+        } else {
+            decodeOptions.inJustDecodeBounds = true;
+            BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, decodeOptions);
+            int actualWidth = decodeOptions.outWidth;
+            int actualHeight = decodeOptions.outHeight;
+
+            int desiredWidth = getResizedDimension(maxWidth, maxHeight, actualWidth, actualHeight, scaleType);
+            int desiredHeight = getResizedDimension(maxHeight, maxWidth, actualHeight, actualWidth, scaleType);
+
+            decodeOptions.inJustDecodeBounds = false;
+            decodeOptions.inSampleSize = findBestSampleSize(actualWidth, actualHeight, desiredWidth, desiredHeight);
+            Bitmap tempBitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length, decodeOptions);
+
+            if (tempBitmap != null && (tempBitmap.getWidth() > desiredWidth || tempBitmap.getHeight() > desiredHeight)) {
+                bitmap = Bitmap.createScaledBitmap(tempBitmap, desiredWidth, desiredHeight, true);
+                tempBitmap.recycle();
+            } else {
+                bitmap = tempBitmap;
+            }
+        }
+        return bitmap;
     }
 }

@@ -6,9 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *@author hou
- *      Created at 2017/3/2
- *@desc
+ * @author hou
+ *         Created at 2017/3/2
+ * @desc
  */
 public class FormatUtil {
     public static boolean isMobileNO(String mobiles) {

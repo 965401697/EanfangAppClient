@@ -45,11 +45,8 @@ import java.util.TimeZone;
  * ================================================
  */
 public class HttpHeaders implements Serializable {
-    private static final long serialVersionUID = 8458647755751403873L;
-
     public static final String FORMAT_HTTP_DATA = "EEE, dd MMM y HH:mm:ss 'GMT'";
     public static final TimeZone GMT_TIME_ZONE = TimeZone.getTimeZone("GMT");
-
     public static final String HEAD_KEY_RESPONSE_CODE = "ResponseCode";
     public static final String HEAD_KEY_RESPONSE_MESSAGE = "ResponseMessage";
     public static final String HEAD_KEY_ACCEPT = "Accept";
@@ -79,14 +76,10 @@ public class HttpHeaders implements Serializable {
     public static final String HEAD_KEY_COOKIE2 = "Cookie2";
     public static final String HEAD_KEY_SET_COOKIE = "Set-Cookie";
     public static final String HEAD_KEY_SET_COOKIE2 = "Set-Cookie2";
-
-    public LinkedHashMap<String, String> headersMap;
+    private static final long serialVersionUID = 8458647755751403873L;
     private static String acceptLanguage;
     private static String userAgent;
-
-    private void init() {
-        headersMap = new LinkedHashMap<>();
-    }
+    public LinkedHashMap<String, String> headersMap;
 
     public HttpHeaders() {
         init();
@@ -95,46 +88,6 @@ public class HttpHeaders implements Serializable {
     public HttpHeaders(String key, String value) {
         init();
         put(key, value);
-    }
-
-    public void put(String key, String value) {
-        if (key != null && value != null) {
-            headersMap.put(key, value);
-        }
-    }
-
-    public void put(HttpHeaders headers) {
-        if (headers != null) {
-            if (headers.headersMap != null && !headers.headersMap.isEmpty()) headersMap.putAll(headers.headersMap);
-        }
-    }
-
-    public String get(String key) {
-        return headersMap.get(key);
-    }
-
-    public String remove(String key) {
-        return headersMap.remove(key);
-    }
-
-    public void clear() {
-        headersMap.clear();
-    }
-
-    public Set<String> getNames() {
-        return headersMap.keySet();
-    }
-
-    public final String toJSONString() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            for (Map.Entry<String, String> entry : headersMap.entrySet()) {
-                jsonObject.put(entry.getKey(), entry.getValue());
-            }
-        } catch (JSONException e) {
-            OkLogger.printStackTrace(e);
-        }
-        return jsonObject.toString();
     }
 
     public static long getDate(String gmtTime) {
@@ -167,13 +120,13 @@ public class HttpHeaders implements Serializable {
 
     public static String getCacheControl(String cacheControl, String pragma) {
         // first http1.1, second http1.0
-        if (cacheControl != null) return cacheControl;
-        else if (pragma != null) return pragma;
-        else return null;
-    }
-
-    public static void setAcceptLanguage(String language) {
-        acceptLanguage = language;
+        if (cacheControl != null) {
+            return cacheControl;
+        } else if (pragma != null) {
+            return pragma;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -185,15 +138,17 @@ public class HttpHeaders implements Serializable {
             String language = locale.getLanguage();
             String country = locale.getCountry();
             StringBuilder acceptLanguageBuilder = new StringBuilder(language);
-            if (!TextUtils.isEmpty(country)) acceptLanguageBuilder.append('-').append(country).append(',').append(language).append(";q=0.8");
+            if (!TextUtils.isEmpty(country)) {
+                acceptLanguageBuilder.append('-').append(country).append(',').append(language).append(";q=0.8");
+            }
             acceptLanguage = acceptLanguageBuilder.toString();
             return acceptLanguage;
         }
         return acceptLanguage;
     }
 
-    public static void setUserAgent(String agent) {
-        userAgent = agent;
+    public static void setAcceptLanguage(String language) {
+        acceptLanguage = language;
     }
 
     /**
@@ -256,8 +211,14 @@ public class HttpHeaders implements Serializable {
         return userAgent;
     }
 
+    public static void setUserAgent(String agent) {
+        userAgent = agent;
+    }
+
     public static long parseGMTToMillis(String gmtTime) throws ParseException {
-        if (TextUtils.isEmpty(gmtTime)) return 0;
+        if (TextUtils.isEmpty(gmtTime)) {
+            return 0;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_HTTP_DATA, Locale.US);
         formatter.setTimeZone(GMT_TIME_ZONE);
         Date date = formatter.parse(gmtTime);
@@ -269,6 +230,52 @@ public class HttpHeaders implements Serializable {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(FORMAT_HTTP_DATA, Locale.US);
         simpleDateFormat.setTimeZone(GMT_TIME_ZONE);
         return simpleDateFormat.format(date);
+    }
+
+    private void init() {
+        headersMap = new LinkedHashMap<>();
+    }
+
+    public void put(String key, String value) {
+        if (key != null && value != null) {
+            headersMap.put(key, value);
+        }
+    }
+
+    public void put(HttpHeaders headers) {
+        if (headers != null) {
+            if (headers.headersMap != null && !headers.headersMap.isEmpty()) {
+                headersMap.putAll(headers.headersMap);
+            }
+        }
+    }
+
+    public String get(String key) {
+        return headersMap.get(key);
+    }
+
+    public String remove(String key) {
+        return headersMap.remove(key);
+    }
+
+    public void clear() {
+        headersMap.clear();
+    }
+
+    public Set<String> getNames() {
+        return headersMap.keySet();
+    }
+
+    public final String toJSONString() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            for (Map.Entry<String, String> entry : headersMap.entrySet()) {
+                jsonObject.put(entry.getKey(), entry.getValue());
+            }
+        } catch (JSONException e) {
+            OkLogger.printStackTrace(e);
+        }
+        return jsonObject.toString();
     }
 
     @Override

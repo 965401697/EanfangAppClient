@@ -12,9 +12,9 @@ import com.eanfang.R;
 
 
 /**
- *@author wen
- *      Created at 2017/3/2
- *@desc
+ * @author wen
+ *         Created at 2017/3/2
+ * @desc
  */
 public class ToastUtil {
     static volatile ToastUtil toastUtil = new ToastUtil();
@@ -26,7 +26,9 @@ public class ToastUtil {
     public static ToastUtil get() {
         if (toastUtil == null) {
             synchronized (ToastUtil.class) {
-                if (toastUtil == null) toastUtil = new ToastUtil();
+                if (toastUtil == null) {
+                    toastUtil = new ToastUtil();
+                }
             }
         }
         return toastUtil;
@@ -34,7 +36,6 @@ public class ToastUtil {
 
     public void showToast(Context context, String str) {
         dimissToast();
-
         toast = new Toast(context instanceof Activity ? context.getApplicationContext() : context);
         View view = LayoutInflater.from(context).inflate(R.layout.j_toast, null);
         toast.setView(view);
@@ -46,15 +47,20 @@ public class ToastUtil {
 
 
     public void dimissToast() {
-        if (toast != null)
+        if (toast != null) {
             toast.cancel();
+        }
         toast = null;
     }
 
     public void showToast(Context context, int id) {
-        if (id == -1) return;
+        if (id == -1) {
+            return;
+        }
         String str = context.getString(id);
-        if (str != null) this.showToast(context, str);
+        if (str != null) {
+            this.showToast(context, str);
+        }
     }
 
 

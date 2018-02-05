@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/tab_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="2dp"
+    android:paddingTop="4dp">
+
+    <ImageView
+        android:id="@+id/tabImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:contentDescription="@null"
+        android:src="@drawable/workspace_tab_sign_selector" />
+
+    <View
+        android:id="@+id/redPoint"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignRight="@+id/tabImg"
+        android:background="@drawable/red_point"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tabText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tabImg"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="我的"
+        android:textColor="@drawable/tab_item_txt_sel"
+        android:textSize="12sp" />
+</RelativeLayout>

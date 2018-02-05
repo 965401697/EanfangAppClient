@@ -6,7 +6,6 @@ package com.picker.wheelpicker.entity;
  * Author:李玉江[QQ:1032694760]
  * DateTime:2017/04/17 00:31
  * Builder:Android Studio
- *
  */
 interface LinkageItem extends WheelItem {
 

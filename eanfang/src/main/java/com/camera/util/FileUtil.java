@@ -31,20 +31,21 @@ public class FileUtil {
     private static String filePath;
 
 
-    public static String getSaveFileDir(String childDriName){
-        return getAppFileSaveRootDri()+"/"+childDriName;
+    public static String getSaveFileDir(String childDriName) {
+        return getAppFileSaveRootDri() + "/" + childDriName;
     }
 
     /**
      * 获取或创建，APP的子文件夹
+     *
      * @return
      */
-    public static File getOrCreateAppDir(String childDriName){
+    public static File getOrCreateAppDir(String childDriName) {
         String root_path = getAppFileSaveRootDri();
-        if(root_path == null)
+        if (root_path == null)
             return null;
 
-        File dir = new File(root_path +"/" + childDriName);
+        File dir = new File(root_path + "/" + childDriName);
         if (!dir.exists())
             dir.mkdirs();
 
@@ -53,19 +54,22 @@ public class FileUtil {
 
     /**
      * 获取APP 的根文件夹路径
+     *
      * @return
      */
-    public static String getAppFileSaveRootDri(){
-        if(TextUtils.isEmpty(filePath)){	// 如果无外置 SD卡， 优先获取内置SD卡
+    public static String getAppFileSaveRootDri() {
+        if (TextUtils.isEmpty(filePath)) {    // 如果无外置 SD卡， 优先获取内置SD卡
             filePath = getExternalStorageDirectory(CameraApplication.getCommonLibContext());
         }
 
-        if(TextUtils.isEmpty(filePath)){	// 如果都没有，才使用机身内存
+        if (TextUtils.isEmpty(filePath)) {    // 如果都没有，才使用机身内存
             filePath = getInternalFileDirectory(CameraApplication.getCommonLibContext());
         }
 
         return filePath;
-    };
+    }
+
+    ;
 
     /**
      * 获取机身储存
@@ -84,6 +88,7 @@ public class FileUtil {
 
     /**
      * 获取内置SD卡
+     *
      * @param context
      * @return 没有外部sd卡，则返回null
      */
@@ -105,16 +110,15 @@ public class FileUtil {
     }
 
 
-
     /**
      * 根据文件路径删除文件
      */
-    public static void deleterFile(String filePath){
+    public static void deleterFile(String filePath) {
         File file = new File(filePath);
-        if(file != null && file.exists()){
+        if (file != null && file.exists()) {
             try {
                 file.delete();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -123,11 +127,11 @@ public class FileUtil {
     /**
      * 删除文件
      */
-    public static void deleterFile(File file){
-        if(file != null && file.exists()){
+    public static void deleterFile(File file) {
+        if (file != null && file.exists()) {
             try {
                 file.delete();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -135,6 +139,7 @@ public class FileUtil {
 
     /**
      * 删除指定目录下文件及目录
+     *
      * @param deleteThisPath
      * @param deleteThisPath
      * @return
@@ -166,6 +171,7 @@ public class FileUtil {
 
     /**
      * 获取文件夹大小
+     *
      * @param file File实例
      * @return long
      */
@@ -188,23 +194,22 @@ public class FileUtil {
 
     /**
      * 获取指定文件大小
+     *
      * @param
      * @return
      * @throws Exception
      */
-    public static long getFileSize(File file)
-    {
+    public static long getFileSize(File file) {
         long size = 0;
-        try{
-            if (file.exists()){
+        try {
+            if (file.exists()) {
                 FileInputStream fis = null;
                 fis = new FileInputStream(file);
                 size = fis.available();
-            }
-            else{
+            } else {
                 file.createNewFile();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -213,26 +218,27 @@ public class FileUtil {
 
     /**
      * 格式化单位
+     *
      * @param size
      * @return
      */
     public static String getFormatSize(double size) {
-        double kiloByte = size/1024;
-        if(kiloByte < 1) {
+        double kiloByte = size / 1024;
+        if (kiloByte < 1) {
             return size + "B";
         }
-        double megaByte = kiloByte/1024;
-        if(megaByte < 1) {
+        double megaByte = kiloByte / 1024;
+        if (megaByte < 1) {
             BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
             return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";
         }
-        double gigaByte = megaByte/1024;
-        if(gigaByte < 1) {
-            BigDecimal result2  = new BigDecimal(Double.toString(megaByte));
+        double gigaByte = megaByte / 1024;
+        if (gigaByte < 1) {
+            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
             return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";
         }
-        double teraBytes = gigaByte/1024;
-        if(teraBytes < 1) {
+        double teraBytes = gigaByte / 1024;
+        if (teraBytes < 1) {
             BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
             return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";
         }
@@ -245,7 +251,7 @@ public class FileUtil {
      */
     public static File getSavePicPath(String name) {
         File dir = FileUtil.getOrCreateAppDir(name);
-        File file = new File(dir, MD5Util.hashKeyForDisk(UUID.randomUUID()+"") + ".jpg");
+        File file = new File(dir, MD5Util.hashKeyForDisk(UUID.randomUUID() + "") + ".jpg");
         try {
             if (!file.exists())
                 file.createNewFile();
@@ -255,6 +261,7 @@ public class FileUtil {
 
         return file;
     }
+
     /**
      * @param fileData
      * @Description: (存储文件)

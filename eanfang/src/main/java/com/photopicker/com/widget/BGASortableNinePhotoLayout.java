@@ -166,6 +166,15 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     /**
+     * 获取是否可拖拽排序
+     *
+     * @return
+     */
+    public boolean isSortable() {
+        return mSortable;
+    }
+
+    /**
      * 设置是否可拖拽排序，默认值为 true
      *
      * @param sortable
@@ -175,12 +184,12 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     /**
-     * 获取是否可拖拽排序
+     * 获取是否可编辑
      *
      * @return
      */
-    public boolean isSortable() {
-        return mSortable;
+    public boolean isEditable() {
+        return mEditable;
     }
 
     /**
@@ -191,15 +200,6 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     public void setEditable(boolean editable) {
         mEditable = editable;
         mPhotoAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 获取是否可编辑
-     *
-     * @return
-     */
-    public boolean isEditable() {
-        return mEditable;
     }
 
     /**
@@ -236,21 +236,21 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     /**
-     * 设置可选择图片的总张数,默认值为 9
-     *
-     * @param maxItemCount
-     */
-    public void setMaxItemCount(int maxItemCount) {
-        mMaxItemCount = maxItemCount;
-    }
-
-    /**
      * 获取选择的图片的最大张数
      *
      * @return
      */
     public int getMaxItemCount() {
         return mMaxItemCount;
+    }
+
+    /**
+     * 设置可选择图片的总张数,默认值为 9
+     *
+     * @param maxItemCount
+     */
+    public void setMaxItemCount(int maxItemCount) {
+        mMaxItemCount = maxItemCount;
     }
 
     /**
@@ -279,15 +279,6 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
      */
     public void setItemCornerRadius(int itemCornerRadius) {
         mItemCornerRadius = itemCornerRadius;
-    }
-
-    /**
-     * 设置图片路径数据集合
-     *
-     * @param photos
-     */
-    public void setData(ArrayList<String> photos) {
-        mPhotoAdapter.setData(photos);
     }
 
     /**
@@ -348,6 +339,15 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     /**
+     * 设置图片路径数据集合
+     *
+     * @param photos
+     */
+    public void setData(ArrayList<String> photos) {
+        mPhotoAdapter.setData(photos);
+    }
+
+    /**
      * 删除指定索引位置的图片
      *
      * @param position
@@ -386,6 +386,15 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     }
 
     /**
+     * 是否显示加号按钮
+     *
+     * @return
+     */
+    public boolean isPlusEnable() {
+        return mPlusEnable;
+    }
+
+    /**
      * 设置是否显示加号
      *
      * @param plusEnable
@@ -395,17 +404,16 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         mPhotoAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 是否显示加号按钮
-     *
-     * @return
-     */
-    public boolean isPlusEnable() {
-        return mPlusEnable;
-    }
-
     public void setDelegate(Delegate delegate) {
         mDelegate = delegate;
+    }
+
+    public interface Delegate {
+        void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models);
+
+        void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models);
+
+        void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models);
     }
 
     private class PhotoAdapter extends BGARecyclerViewAdapter<String> {
@@ -525,13 +533,5 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             ((BGARecyclerViewHolder) viewHolder).getViewHolderHelper().getImageView(R.id.iv_item_nine_photo_photo).setColorFilter(null);
             super.clearView(recyclerView, viewHolder);
         }
-    }
-
-    public interface Delegate {
-        void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models);
-
-        void onClickDeleteNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models);
-
-        void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models);
     }
 }

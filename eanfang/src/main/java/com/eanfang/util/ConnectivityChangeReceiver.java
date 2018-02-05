@@ -14,14 +14,6 @@ import android.net.NetworkInfo;
  */
 
 public class ConnectivityChangeReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(final Context context, final Intent intent) {
-        if (isNetConnected(context)) {
-            //网络正常,不执行任何操作.
-            return;
-        }
-    }
-
     /**
      * @return 判断是否有网络
      */
@@ -37,5 +29,13 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onReceive(final Context context, final Intent intent) {
+        if (isNetConnected(context)) {
+            //网络正常,不执行任何操作.
+            return;
+        }
     }
 }

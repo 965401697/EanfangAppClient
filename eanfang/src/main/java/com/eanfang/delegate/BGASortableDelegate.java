@@ -1,12 +1,9 @@
 package com.eanfang.delegate;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Environment;
 import android.view.View;
 
-import com.eanfang.BuildConfig;
-import com.eanfang.util.UuidUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -14,12 +11,12 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by jornl on 2017/10/11.
+ *
+ * @author jornl
+ * @date 2017/10/11
  */
 
 public class BGASortableDelegate implements

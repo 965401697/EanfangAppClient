@@ -43,6 +43,14 @@ public class CameraModel {
     }
 
     /**
+     * Receiver扫描更新图库图片
+     **/
+    private static void ScannerByReceiver(Context context, String path) {
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                Uri.parse("file://" + path)));
+    }
+
+    /**
      * 设置闪光灯
      *
      * @param isOpen
@@ -78,7 +86,7 @@ public class CameraModel {
             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
             Bitmap tBitmap = null;
             try {
-                Log.i(TAG, "保存图片大小："+"width = " + bitmap.getWidth() + "   ------ height = " + bitmap.getHeight());
+                Log.i(TAG, "保存图片大小：" + "width = " + bitmap.getWidth() + "   ------ height = " + bitmap.getHeight());
                 if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
                     switch (degree) {
                         case 0:
@@ -139,14 +147,6 @@ public class CameraModel {
             return filePath;
         }
         return null;
-    }
-
-    /**
-     * Receiver扫描更新图库图片
-     **/
-    private static void ScannerByReceiver(Context context, String path) {
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.parse("file://" + path)));
     }
 
 }

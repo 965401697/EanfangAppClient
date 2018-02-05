@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.jakewharton.butterknife'
 //lambda
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -12,12 +12,25 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+        buildConfigField("boolean", "LOG_DEBUG", "true")
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+
+//        buildConfigField("String", "HOST", "\"http://eanfang.net:8280\"")
+//        buildConfigField("String", "API_HOST", "\"http://eanfang.net:8280\"")
+
+        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+
+
+        buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
+        buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
     }
 
     compileOptions {
@@ -37,6 +50,7 @@ android {
 }
 
 dependencies {
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.0.2'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
@@ -52,8 +66,74 @@ dependencies {
 
     //Stram API
     compile 'com.annimon:stream:1.1.8'
-//    lambda
+
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
+
+    compile "com.android.support:multidex:1.0.2"
+
+    // add library
+    compile 'com.alibaba:fastjson:1.2.41'
+
+    //takephoto
+    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+
+    provided 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor "org.projectlombok:lombok:1.16.18"
+
+    //OSS
+    compile 'com.aliyun.dpa:oss-android-sdk:2.4.4'
+
+    //fresco
+    implementation 'com.facebook.fresco:fresco:1.5.0'
+
+    //takephoto
+    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    //eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //recyclerview adapter
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.9'
+
+    //fresco
+//    implementation 'com.facebook.fresco:fresco:1.5.0'
+
+    //takephoto
+    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+
+    //bugly
+    compile 'com.tencent.bugly:crashreport:latest.release'
+
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+    //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
+
+    //信鸽3.2.0 稳定版本
+    //信鸽jar
+    compile 'com.tencent.xinge:xinge:3.2.0-release'
+    //wup包
+    compile 'com.tencent.wup:wup:1.0.0.E-release'
+    //mid包
+    compile 'com.tencent.mid:mid:4.0.0-release'
+
+    //微信
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+
+    //butterknife
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    //高德
+    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
+    implementation files('libs/AMap_Location_V3.6.0_20170918.jar')
+    implementation files('libs/Android_Map3D_SDK_V5.4.0_20170928.jar')
+    implementation files('libs/Volley.jar')
+    implementation files('libs/AMap_Search_V5.3.1_20170817.jar')
+    implementation files('libs/alipaySdk-20170922.jar')
+
+    implementation files('libs/validation-api-1.0.0.GA.jar')
+    implementation files('libs/hibernate-validator-4.2.0.Final.jar')
 }
 
 

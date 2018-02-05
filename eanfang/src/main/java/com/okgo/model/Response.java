@@ -35,6 +35,9 @@ public final class Response<T> {
     private Call rawCall;
     private okhttp3.Response rawResponse;
 
+    public Response() {
+    }
+
     public static <T> Response<T> success(boolean isFromCache, T body, Call rawCall, okhttp3.Response rawResponse) {
         Response<T> response = new Response<>();
         response.setFromCache(isFromCache);
@@ -51,9 +54,6 @@ public final class Response<T> {
         response.setRawResponse(rawResponse);
         response.setException(throwable);
         return response;
-    }
-
-    public Response() {
     }
 
     public int code() {

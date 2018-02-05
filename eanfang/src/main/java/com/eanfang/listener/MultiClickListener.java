@@ -4,8 +4,6 @@ package com.eanfang.listener;
 import android.app.Activity;
 import android.view.View;
 
-import com.annimon.stream.function.Consumer;
-import com.annimon.stream.function.Supplier;
 import com.eanfang.util.ToastUtil;
 
 /**

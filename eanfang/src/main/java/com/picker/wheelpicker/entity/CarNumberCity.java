@@ -8,7 +8,6 @@ import java.util.List;
  * Author:李玉江[QQ:1032694760]
  * DateTime:2017/04/17 00:42
  * Builder:Android Studio
- *
  */
 public class CarNumberCity implements LinkageSecond<Void> {
     private String name;

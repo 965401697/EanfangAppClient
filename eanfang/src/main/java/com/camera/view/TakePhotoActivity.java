@@ -34,6 +34,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class TakePhotoActivity extends Activity implements CameraFocusView.IAutoFocus {
+    public final static String RESULT_PHOTO_PATH = "photoPath";
+    public static final int REQUEST_CAPTRUE_CODE = 100;
     private CameraSurfaceView cameraSurfaceView;
     private CameraFocusView cameraFocusView;
     private ImageView openFlashImg;
@@ -47,8 +49,6 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
     private PermissionsModel mPermissionsModel;
     private byte[] photoData;
     private int mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
-    public final static String RESULT_PHOTO_PATH = "photoPath";
-    public static final int REQUEST_CAPTRUE_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -53,15 +53,32 @@ public class HttpLoggingInterceptor implements Interceptor {
     private java.util.logging.Level colorLevel;
     private Logger logger;
 
-    public enum Level {
-        NONE,       //不打印log
-        BASIC,      //只打印 请求首行 和 响应首行
-        HEADERS,    //打印请求和响应的所有 Header
-        BODY        //所有数据全部打印
-    }
-
     public HttpLoggingInterceptor(String tag) {
         logger = Logger.getLogger(tag);
+    }
+
+    private static Charset getCharset(MediaType contentType) {
+        Charset charset = contentType != null ? contentType.charset(UTF8) : UTF8;
+        if (charset == null) charset = UTF8;
+        return charset;
+    }
+
+    /**
+     * Returns true if the body in question probably contains human readable text. Uses a small sample
+     * of code points to detect unicode control characters commonly used in binary file signatures.
+     */
+    private static boolean isPlaintext(MediaType mediaType) {
+        if (mediaType == null) return false;
+        if (mediaType.type() != null && mediaType.type().equals("text")) {
+            return true;
+        }
+        String subtype = mediaType.subtype();
+        if (subtype != null) {
+            subtype = subtype.toLowerCase();
+            if (subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains("xml") || subtype.contains("html")) //
+                return true;
+        }
+        return false;
     }
 
     public void setPrintLevel(Level level) {
@@ -187,30 +204,6 @@ public class HttpLoggingInterceptor implements Interceptor {
         return response;
     }
 
-    private static Charset getCharset(MediaType contentType) {
-        Charset charset = contentType != null ? contentType.charset(UTF8) : UTF8;
-        if (charset == null) charset = UTF8;
-        return charset;
-    }
-
-    /**
-     * Returns true if the body in question probably contains human readable text. Uses a small sample
-     * of code points to detect unicode control characters commonly used in binary file signatures.
-     */
-    private static boolean isPlaintext(MediaType mediaType) {
-        if (mediaType == null) return false;
-        if (mediaType.type() != null && mediaType.type().equals("text")) {
-            return true;
-        }
-        String subtype = mediaType.subtype();
-        if (subtype != null) {
-            subtype = subtype.toLowerCase();
-            if (subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains("xml") || subtype.contains("html")) //
-                return true;
-        }
-        return false;
-    }
-
     private void bodyToString(Request request) {
         try {
             Request copy = request.newBuilder().build();
@@ -223,5 +216,12 @@ public class HttpLoggingInterceptor implements Interceptor {
         } catch (Exception e) {
             OkLogger.printStackTrace(e);
         }
+    }
+
+    public enum Level {
+        NONE,       //不打印log
+        BASIC,      //只打印 请求首行 和 响应首行
+        HEADERS,    //打印请求和响应的所有 Header
+        BODY        //所有数据全部打印
     }
 }

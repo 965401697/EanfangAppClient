@@ -18,13 +18,12 @@ import java.util.Arrays;
 import java.util.List;
 
 
-
 /**
  * 单项选择器
  *
+ * @param 需要重写泛型T的toString方法作为显示的名称
  * @author 李玉江[QQ:1032694760]
  * @since 2015/9/29
- * @param 需要重写泛型T的toString方法作为显示的名称
  */
 public class SinglePicker<T> extends WheelPicker {
     private static final int ITEM_WIDTH_UNKNOWN = -99;
@@ -91,22 +90,6 @@ public class SinglePicker<T> extends WheelPicker {
      */
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    /**
-     * 设置默认选中的项的索引
-     */
-    public void setSelectedIndex(int index) {
-        if (index >= 0 && index < items.size()) {
-            selectedItemIndex = index;
-        }
-    }
-
-    /**
-     * 设置默认选中的项
-     */
-    public void setSelectedItem(@NonNull T item) {
-        setSelectedIndex(itemStrings.indexOf(formatToString(item)));
     }
 
     /**
@@ -195,8 +178,24 @@ public class SinglePicker<T> extends WheelPicker {
         return items.get(selectedItemIndex);
     }
 
+    /**
+     * 设置默认选中的项
+     */
+    public void setSelectedItem(@NonNull T item) {
+        setSelectedIndex(itemStrings.indexOf(formatToString(item)));
+    }
+
     public int getSelectedIndex() {
         return selectedItemIndex;
+    }
+
+    /**
+     * 设置默认选中的项的索引
+     */
+    public void setSelectedIndex(int index) {
+        if (index >= 0 && index < items.size()) {
+            selectedItemIndex = index;
+        }
     }
 
     public WheelView getWheelView() {

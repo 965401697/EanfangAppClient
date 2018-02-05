@@ -24,17 +24,11 @@ public class PermissionsModel {
     private String packageName = "";
     private Context mContext;
 
-    public interface PermissionListener {
-        void onPermission(boolean isPermission);
-    }
-
-
     public PermissionsModel(Context context) {
         mContext = context;
         rxPermissions = new RxPermissions((Activity) mContext);
         packageName = mContext.getPackageName();
     }
-
 
     public void checkCameraPermission(final PermissionListener listener) {
         rxPermissions.request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
@@ -49,7 +43,6 @@ public class PermissionsModel {
             }
         });
     }
-
 
     public void checkWriteSDCardPermission(final PermissionListener listener) {
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
@@ -80,6 +73,10 @@ public class PermissionsModel {
             intent.putExtra("com.android.settings.ApplicationPkgName", mContext.getPackageName());
         }
         mContext.startActivity(intent);
+    }
+
+    public interface PermissionListener {
+        void onPermission(boolean isPermission);
     }
 
 

@@ -19,22 +19,22 @@
         android:id="@+id/cameraBottomLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:paddingTop="20dp"
+        android:animateLayoutChanges="true"
         android:paddingBottom="20dp"
-        android:layout_alignParentBottom="true">
+        android:paddingTop="20dp">
 
         <ImageView
             android:id="@+id/cancelBtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:textSize="18sp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="65dp"
-            android:background="@drawable/camera_cancle" />
+            android:background="@drawable/camera_cancle"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/takePhotoBtn"
@@ -47,11 +47,11 @@
             android:id="@+id/okBtn"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="65dp"
+            android:background="@drawable/camera_ok"
             android:gravity="center"
             android:textSize="18sp"
-            android:visibility="gone"
-            android:layout_marginRight="65dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/camera_ok" />
+            android:visibility="gone" />
     </RelativeLayout>
 </FrameLayout>

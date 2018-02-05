@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cameraTopLayout"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-   >
+    android:layout_height="50dp">
     <!-- 闪光灯开关-->
     <ImageView
         android:id="@+id/openFlashImg"
@@ -19,9 +18,9 @@
         android:layout_width="24dp"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="36.3dp"
         android:layout_toRightOf="@+id/openFlashImg"
         android:background="@color/color_00"
-        android:layout_marginLeft="36.3dp"
         android:src="@drawable/button_icon_camera" />
 
     <!-- 关闭按钮-->
@@ -29,9 +28,9 @@
         android:id="@+id/closeBtn"
         android:layout_width="17.3dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="30dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
         android:background="@color/color_00"
         android:src="@drawable/button_icon_photo_close" />
 

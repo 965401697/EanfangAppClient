@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/tv_call_service_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff0d4"
+        android:gravity="center_horizontal"
+        android:padding="5dp"
+        android:text="您需要加入安防公司才能接单，联系客服：010-5877-8732"
+        android:textColor="@color/font_color"
+        android:textSize="12sp" />
+
+    <RelativeLayout
+        android:id="@+id/ll_person_repair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_ll_selctor"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="个人报修接单状态"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <com.eanfang.witget.SwitchButton
+            android:id="@+id/sb_person_repair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:sb_background="@color/background"
+            app:sb_button_color="@color/color_white"
+            app:sb_checked_color="#32cd32"
+            app:sb_checkline_color="@color/white"
+            app:sb_uncheckcircle_color="#32cd32" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_company_repair"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_ll_selctor"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="公司报修接单状态"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <com.eanfang.witget.SwitchButton
+            android:id="@+id/sb_company_repair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:sb_background="@color/background"
+            app:sb_button_color="@color/color_white"
+            app:sb_checked_color="#32cd32"
+            app:sb_checkline_color="@color/white"
+            app:sb_uncheckcircle_color="#32cd32" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_company_install"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/bg_ll_selctor"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="公司报装接单状态"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <com.eanfang.witget.SwitchButton
+            android:id="@+id/sb_company_install"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            app:sb_background="@color/background"
+            app:sb_button_color="@color/color_white"
+            app:sb_checked_color="#32cd32"
+            app:sb_checkline_color="@color/white"
+            app:sb_uncheckcircle_color="#32cd32" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

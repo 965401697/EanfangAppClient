@@ -28,11 +28,6 @@ import com.okgo.model.Response;
 import com.okgo.request.base.Request;
 import com.okgo.utils.HttpUtils;
 
-import static com.okgo.cache.CacheMode.FIRST_CACHE_THEN_REQUEST;
-import static com.okgo.cache.CacheMode.IF_NONE_CACHE_REQUEST;
-import static com.okgo.cache.CacheMode.NO_CACHE;
-import static com.okgo.cache.CacheMode.REQUEST_FAILED_READ_CACHE;
-
 /**
  * ================================================
  * 作    者：jeasonlzy（廖子尧）Github地址：https://github.com/jeasonlzy

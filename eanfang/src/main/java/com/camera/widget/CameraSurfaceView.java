@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 /**
  * Created by Mr.hou
  *
@@ -30,25 +31,22 @@ import java.util.List;
 
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Camera.AutoFocusCallback {
     private static final String TAG = CameraSurfaceView.class.getName();
-
+    /**
+     * 默认照片高
+     */
+    public final int DEFAULT_PHOTO_HEIGHT = ScreenSizeUtil.getScreenWidth();
+    /**
+     * 默认照片的宽
+     */
+    public int DEFAULT_PHOTO_WIDTH = ScreenSizeUtil.getScreenHeight();
     private Context mContext;
     private SurfaceHolder holder;
     private Camera mCamera;
-
     private CameraOrientationDetector mCameraOrientation;
     /**
      * 当前摄像头id
      */
     private int cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
-
-    /**
-     * 默认照片的宽
-     */
-    public int DEFAULT_PHOTO_WIDTH = ScreenSizeUtil.getScreenHeight();
-    /**
-     * 默认照片高
-     */
-    public  final int DEFAULT_PHOTO_HEIGHT = ScreenSizeUtil.getScreenWidth();
 
     public CameraSurfaceView(Context context) {
         this(context, null);
@@ -163,7 +161,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
 
         /*************************** 对焦模式的选择 ********************/
-        if(cameraId == Camera.CameraInfo.CAMERA_FACING_BACK){//前置摄像头
+        if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {//前置摄像头
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);//手动区域自动对焦
         }
         //图片质量
@@ -334,7 +332,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private void camerFocus(Rect rect) {
         if (mCamera != null) {
             Camera.Parameters parameters = mCamera.getParameters();
-            if(cameraId == Camera.CameraInfo.CAMERA_FACING_BACK){
+            if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);//手动区域自动对焦
             }
             if (parameters.getMaxNumFocusAreas() > 0) {

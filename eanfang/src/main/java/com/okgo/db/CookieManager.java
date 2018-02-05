@@ -36,6 +36,10 @@ public class CookieManager extends BaseDao<SerializableCookie> {
     private static Context context;
     private volatile static CookieManager instance;
 
+    private CookieManager() {
+        super(new DBHelper(context));
+    }
+
     public static CookieManager getInstance() {
         if (instance == null) {
             synchronized (CookieManager.class) {
@@ -45,10 +49,6 @@ public class CookieManager extends BaseDao<SerializableCookie> {
             }
         }
         return instance;
-    }
-
-    private CookieManager() {
-        super(new DBHelper(context));
     }
 
     public static void init(Context ctx) {

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:text="个人信息"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名"
+                    android:textColor="@color/worker_form_title_color"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_contactName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical|right"
+                    android:hint="请输入姓名"
+                    android:singleLine="true"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系电话"
+                    android:textColor="@color/worker_form_title_color"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_contactPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:hint="联系电话"
+                    android:inputType="phone"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_workingLevel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:text="能力等级"
+                    android:textColor="@color/worker_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_workingLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_work_leave"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/arrow_right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_workingYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:text="从业年限"
+                    android:textColor="@color/worker_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_workingYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_work_year"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/arrow_right" />
+            </LinearLayout>
+            <!--添加支付类型和支付账户-->
+            <LinearLayout
+                android:id="@+id/ll_payType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:text="支付类型"
+                    android:textColor="@color/worker_form_title_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_payType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_pay_type"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/arrow_right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="1dp"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="支付账户"
+                    android:textColor="@color/worker_form_title_color"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/et_payAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入支付账户"
+                    android:inputType="none"
+                    android:singleLine="true"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="上传身份证正反面"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_idCardFront"
+                            android:layout_width="150dp"
+                            android:layout_height="90dp"
+                            fresco:placeholderImage="@drawable/ic_addpic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="身份证正面" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_idCardSide"
+                            android:layout_width="150dp"
+                            android:layout_height="90dp"
+                            fresco:placeholderImage="@drawable/ic_addpic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="身份证反面" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_idCardHand"
+                            android:layout_width="150dp"
+                            android:layout_height="90dp"
+                            fresco:placeholderImage="@drawable/ic_addpic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="手持正面" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="意外保险"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:weightSum="2">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_accidentPics"
+                        android:layout_width="150dp"
+                        android:layout_height="90dp"
+                        android:layout_weight="1"
+                        fresco:placeholderImage="@drawable/ic_addpic" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="荣誉证书（可选）"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#fff"
+                    android:orientation="vertical">
+
+                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:id="@+id/snpl_moment_add_photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                        app:bga_snpl_editable="true"
+                        app:bga_snpl_itemCornerRadius="0dp"
+                        app:bga_snpl_itemSpanCount="4"
+                        app:bga_snpl_itemWhiteSpacing="4dp"
+                        app:bga_snpl_itemWidth="0dp"
+                        app:bga_snpl_maxItemCount="4"
+                        app:bga_snpl_otherWhiteSpacing="100dp"
+                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                        app:bga_snpl_plusEnable="true"
+                        app:bga_snpl_sortable="true" />
+
+                </LinearLayout>
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="无犯罪记录证明（可选）"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:weightSum="2">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_crimePic"
+                        android:layout_width="150dp"
+                        android:layout_height="90dp"
+                        android:layout_weight="1"
+                        fresco:placeholderImage="@drawable/ic_addpic" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:text="个人宣言"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/et_intro"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:gravity="top"
+                    android:hint="个人宣言"
+                    android:textColorHint="@color/gray" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

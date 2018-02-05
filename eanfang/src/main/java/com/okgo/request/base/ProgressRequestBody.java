@@ -51,13 +51,17 @@ public class ProgressRequestBody<T> extends RequestBody {
         this.callback = callback;
     }
 
-    /** 重写调用实际的响应体的contentType */
+    /**
+     * 重写调用实际的响应体的contentType
+     */
     @Override
     public MediaType contentType() {
         return requestBody.contentType();
     }
 
-    /** 重写调用实际的响应体的contentLength */
+    /**
+     * 重写调用实际的响应体的contentLength
+     */
     @Override
     public long contentLength() {
         try {
@@ -68,7 +72,9 @@ public class ProgressRequestBody<T> extends RequestBody {
         }
     }
 
-    /** 重写进行写入 */
+    /**
+     * 重写进行写入
+     */
     @Override
     public void writeTo(BufferedSink sink) throws IOException {
         CountingSink countingSink = new CountingSink(sink);
@@ -77,7 +83,28 @@ public class ProgressRequestBody<T> extends RequestBody {
         bufferedSink.flush();
     }
 
-    /** 包装 */
+    private void onProgress(final Progress progress) {
+        HttpUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (callback != null) {
+                    callback.uploadProgress(progress);
+                }
+            }
+        });
+    }
+
+    public void setInterceptor(UploadInterceptor interceptor) {
+        this.interceptor = interceptor;
+    }
+
+    public interface UploadInterceptor {
+        void uploadProgress(Progress progress);
+    }
+
+    /**
+     * 包装
+     */
     private final class CountingSink extends ForwardingSink {
 
         private Progress progress;
@@ -103,24 +130,5 @@ public class ProgressRequestBody<T> extends RequestBody {
                 }
             });
         }
-    }
-
-    private void onProgress(final Progress progress) {
-        HttpUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (callback != null) {
-                    callback.uploadProgress(progress);
-                }
-            }
-        });
-    }
-
-    public void setInterceptor(UploadInterceptor interceptor) {
-        this.interceptor = interceptor;
-    }
-
-    public interface UploadInterceptor {
-        void uploadProgress(Progress progress);
     }
 }

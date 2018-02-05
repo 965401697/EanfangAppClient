@@ -20,7 +20,6 @@ import com.picker.common.util.ConvertUtils;
 import java.util.Locale;
 
 
-
 /**
  * 颜色选择器。
  *

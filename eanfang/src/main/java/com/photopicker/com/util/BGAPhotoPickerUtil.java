@@ -166,7 +166,7 @@ public class BGAPhotoPickerUtil {
      *
      * @param resId
      */
-    public static void showSafe( @StringRes int resId) {
+    public static void showSafe(@StringRes int resId) {
         showSafe(sApp.getString(resId));
     }
 }

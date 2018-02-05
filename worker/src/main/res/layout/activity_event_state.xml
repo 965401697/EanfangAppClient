@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/ll_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/tip_dialog_bg"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <include layout="@layout/view_title_bar" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:background="@mipmap/ic_agree"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_msg_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="您的认证资料我们已经收到"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_msg_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:text="我们将在24小时内进行审核"
+            android:textColor="#7d7d7d"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_msg_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="6dp"
+            android:text=""
+            android:textColor="#7d7d7d"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:background="#e5e5e5" />
+
+        <LinearLayout
+            android:id="@+id/ll_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="right"
+                android:text="更简单，更透明，更可靠。"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="right"
+                android:paddingRight="60dp"
+                android:text="——易安防"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_msg_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:text="如有疑问请随时拨打客服热线"
+            android:textAlignment="center"
+            android:textColor="@color/font_color"
+            android:textScaleX="1.2"
+            android:textSize="7sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="010-5877-8731"
+                android:textColor="@color/font_color"
+                android:textScaleX="1.2"
+                android:textSize="7sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_phone"
+                android:background="@mipmap/ic_phone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_message"
+        android:padding="15dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:text="根据规定，您需要加入安防公司才能接单，如果您已有安防公司，请及时联系\n管理员处理，如果您没有安防公司，请联系客服"
+        android:textSize="10sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_ok"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_bg_orange"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

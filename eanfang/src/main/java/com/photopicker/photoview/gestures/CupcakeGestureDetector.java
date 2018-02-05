@@ -25,17 +25,14 @@ import com.photopicker.photoview.log.LogManager;
 
 public class CupcakeGestureDetector implements GestureDetector {
 
-    protected OnGestureListener mListener;
     private static final String LOG_TAG = "CupcakeGestureDetector";
-    float mLastTouchX;
-    float mLastTouchY;
     final float mTouchSlop;
     final float mMinimumVelocity;
-
-    @Override
-    public void setOnGestureListener(OnGestureListener listener) {
-        this.mListener = listener;
-    }
+    protected OnGestureListener mListener;
+    float mLastTouchX;
+    float mLastTouchY;
+    private VelocityTracker mVelocityTracker;
+    private boolean mIsDragging;
 
     public CupcakeGestureDetector(Context context) {
         final ViewConfiguration configuration = ViewConfiguration
@@ -44,8 +41,10 @@ public class CupcakeGestureDetector implements GestureDetector {
         mTouchSlop = configuration.getScaledTouchSlop();
     }
 
-    private VelocityTracker mVelocityTracker;
-    private boolean mIsDragging;
+    @Override
+    public void setOnGestureListener(OnGestureListener listener) {
+        this.mListener = listener;
+    }
 
     float getActiveX(MotionEvent ev) {
         return ev.getX();

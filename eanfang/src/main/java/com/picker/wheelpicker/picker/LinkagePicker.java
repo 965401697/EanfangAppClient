@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /**
  * 两级、三级联动选择器。默认只初始化第一级数据，第二三级数据由联动获得。
  * <p/>
@@ -426,53 +425,11 @@ public class LinkagePicker<Fst extends LinkageFirst<Snd>, Snd extends LinkageSec
     }
 
     /**
-     * 数据选择完成监听器
-     */
-    public static abstract class OnStringPickListener implements OnPickListener<StringLinkageFirst, StringLinkageSecond, String> {
-
-        public abstract void onPicked(String first, String second, String third);
-
-        @Override
-        public void onPicked(StringLinkageFirst first, StringLinkageSecond second, String third) {
-            onPicked(first.getName(), second.getName(), third);
-        }
-
-    }
-
-    /**
-     * 兼容旧版API
-     *
-     * @deprecated use {@link OnStringPickListener} instead
-     */
-    @Deprecated
-    public static abstract class OnLinkageListener extends OnStringPickListener {
-
-    }
-
-    /**
      * 滑动过程数据联动监听器
      */
     public interface OnWheelLinkageListener {
 
         void onLinkage(int firstIndex, int secondIndex, int thirdIndex);
-
-    }
-
-    /**
-     * 兼容旧版API
-     *
-     * @deprecated use {@link OnWheelLinkageListener} instead
-     */
-    @Deprecated
-    public static abstract class OnWheelListener {
-
-        public abstract void onFirstWheeled(int index, String item);
-
-        public abstract void onSecondWheeled(int index, String item);
-
-        public void onThirdWheeled(int index, String item) {
-
-        }
 
     }
 
@@ -503,6 +460,48 @@ public class LinkagePicker<Fst extends LinkageFirst<Snd>, Snd extends LinkageSec
          */
         @NonNull
         List<Trd> linkageThirdData(int firstIndex, int secondIndex);
+
+    }
+
+    /**
+     * 数据选择完成监听器
+     */
+    public static abstract class OnStringPickListener implements OnPickListener<StringLinkageFirst, StringLinkageSecond, String> {
+
+        public abstract void onPicked(String first, String second, String third);
+
+        @Override
+        public void onPicked(StringLinkageFirst first, StringLinkageSecond second, String third) {
+            onPicked(first.getName(), second.getName(), third);
+        }
+
+    }
+
+    /**
+     * 兼容旧版API
+     *
+     * @deprecated use {@link OnStringPickListener} instead
+     */
+    @Deprecated
+    public static abstract class OnLinkageListener extends OnStringPickListener {
+
+    }
+
+    /**
+     * 兼容旧版API
+     *
+     * @deprecated use {@link OnWheelLinkageListener} instead
+     */
+    @Deprecated
+    public static abstract class OnWheelListener {
+
+        public abstract void onFirstWheeled(int index, String item);
+
+        public abstract void onSecondWheeled(int index, String item);
+
+        public void onThirdWheeled(int index, String item) {
+
+        }
 
     }
 

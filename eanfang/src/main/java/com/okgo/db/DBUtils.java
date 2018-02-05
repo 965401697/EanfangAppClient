@@ -32,7 +32,9 @@ import com.okgo.utils.OkLogger;
  */
 public class DBUtils {
 
-    /** 是否需要升级表 */
+    /**
+     * 是否需要升级表
+     */
     public static boolean isNeedUpgradeTable(SQLiteDatabase db, TableEntity table) {
         if (!isTableExists(db, table.tableName)) return true;
 

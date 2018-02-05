@@ -77,15 +77,15 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
         }
     }
 
+    public ArrayList<String> getSelectedImages() {
+        return mSelectedImages;
+    }
+
     public void setSelectedImages(ArrayList<String> selectedImages) {
         if (selectedImages != null) {
             mSelectedImages = selectedImages;
         }
         notifyDataSetChanged();
-    }
-
-    public ArrayList<String> getSelectedImages() {
-        return mSelectedImages;
     }
 
     public int getSelectedCount() {

@@ -228,7 +228,7 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
 
         return true;
     }
-    
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent();

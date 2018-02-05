@@ -13,9 +13,9 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- *@author wen
- *      Created at 2017/3/2
- *@desc 
+ * @author wen
+ *         Created at 2017/3/2
+ * @desc
  */
 public class NumberUtil {
 
@@ -72,6 +72,7 @@ public class NumberUtil {
         BigDecimal bigDecimal = new BigDecimal(sourceNum);
         return bigDecimal.setScale(0, BigDecimal.ROUND_HALF_UP).floatValue();
     }
+
     /**
      * 保留float类型后1位小数
      */
@@ -81,14 +82,16 @@ public class NumberUtil {
         return format.format(number).toString();
     }
 
-    public static double DoubleFormat(double sourceNum){
+    public static double DoubleFormat(double sourceNum) {
         DecimalFormat decimalFormat = new DecimalFormat(".#");
         double c = Double.parseDouble(decimalFormat.format(sourceNum));
         return c;
     }
+
     public static int parseInt(String str, int def) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.length() == 0) {
             return def;
+        }
 
         try {
             return Integer.parseInt(str);
@@ -99,8 +102,9 @@ public class NumberUtil {
     }
 
     public static long parseLong(String str, long def) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.length() == 0) {
             return def;
+        }
 
         try {
             return Long.parseLong(str);
@@ -111,8 +115,9 @@ public class NumberUtil {
     }
 
     public static float parseFloat(String str, float def) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.length() == 0) {
             return def;
+        }
 
         try {
             return Float.parseFloat(str);
@@ -123,8 +128,9 @@ public class NumberUtil {
     }
 
     public static Double parseDouble(String str, double def) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.length() == 0) {
             return def;
+        }
 
         try {
             return Double.parseDouble(str);
@@ -242,8 +248,8 @@ public class NumberUtil {
 
 
     public static void main(String[] args) {
-        System.out.println(getFloatFromDoubletRoundHalfUp(12.3456789f,2));
-        System.out.println(getDoubleFromDoubletRoundHalfUp(12.3456789f,2));
+        System.out.println(getFloatFromDoubletRoundHalfUp(12.3456789f, 2));
+        System.out.println(getDoubleFromDoubletRoundHalfUp(12.3456789f, 2));
 
 //        System.out.println(getMoneyYuanStr(0));
 //        System.out.println(getMoneyYuanStr(10));
@@ -255,10 +261,10 @@ public class NumberUtil {
 
 
     public static float getDistance(String start, String end) {
-        float[] results=new float[1];
+        float[] results = new float[1];
 
-        Location.distanceBetween(getLat(start)[0],getLat(start)[1], getLat(end)[0], getLat(end)[1],results);
-        float distance = NumberUtil.getFloatFromFloatRoundHalfUp(results[0]/1000f, 2);
+        Location.distanceBetween(getLat(start)[0], getLat(start)[1], getLat(end)[0], getLat(end)[1], results);
+        float distance = NumberUtil.getFloatFromFloatRoundHalfUp(results[0] / 1000f, 2);
         return distance;
     }
 
@@ -266,11 +272,11 @@ public class NumberUtil {
 
         String[] latStr = gps.split(",");
         double lat = 0, lng = 0;
-        if(null != latStr && latStr.length >=2) {
+        if (null != latStr && latStr.length >= 2) {
             lat = Double.parseDouble(latStr[0]);
             lng = Double.parseDouble(latStr[1]);
         }
-        double[] lang = {lat,lng};
+        double[] lang = {lat, lng};
 
         return lang;
     }

@@ -31,11 +31,11 @@ import java.util.List;
  * Created by YOLO on 2016/6/27.
  */
 public class GuideUtil {
+    static OnCallback mOnCallback;
     final float PARALLAX_COEFFICIENT = 1.2f;
     final float DISTANCE_COEFFICIENT = 0.5f;
     Activity mContext;
     TextSwitcher mTextSwitcher;
-    static OnCallback mOnCallback;
     ViewPager mPager;
 
     SparseArray<int[]> mLayoutViewIdsMap = new SparseArray<>();
@@ -63,33 +63,8 @@ public class GuideUtil {
 
     }
 
-    class ParallaxTransformer implements ViewPager.PageTransformer {
-
-        float parallaxCoefficient;
-        float distanceCoefficient;
-
-        public ParallaxTransformer(float parallaxCoefficient, float distanceCoefficient) {
-            this.parallaxCoefficient = parallaxCoefficient;
-            this.distanceCoefficient = distanceCoefficient;
-        }
-
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-        @Override
-        public void transformPage(View page, float position) {
-            float scrollXOffset = page.getWidth() * parallaxCoefficient;
-
-            ViewGroup pageViewWrapper = (ViewGroup) page;
-            @SuppressWarnings("SuspiciousMethodCalls")
-            int[] layer = mLayoutViewIdsMap.get(pageViewWrapper.getChildAt(0).getId());
-            if (layer == null) return;
-            for (int id : layer) {
-                View view = page.findViewById(id);
-                if (view != null) {
-                    view.setTranslationX(scrollXOffset * position);
-                }
-                scrollXOffset *= distanceCoefficient;
-            }
-        }
+    public interface OnCallback {
+        void goLogin();
     }
 
     public static class MyFragment extends Fragment {
@@ -128,10 +103,39 @@ public class GuideUtil {
 
             if (last) {
                 view.findViewById(R.id.button1).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.button1).setOnClickListener((v)->{
-                        if (mOnCallback != null) mOnCallback.goLogin();
+                view.findViewById(R.id.button1).setOnClickListener((v) -> {
+                    if (mOnCallback != null) mOnCallback.goLogin();
                 });
 
+            }
+        }
+    }
+
+    class ParallaxTransformer implements ViewPager.PageTransformer {
+
+        float parallaxCoefficient;
+        float distanceCoefficient;
+
+        public ParallaxTransformer(float parallaxCoefficient, float distanceCoefficient) {
+            this.parallaxCoefficient = parallaxCoefficient;
+            this.distanceCoefficient = distanceCoefficient;
+        }
+
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+        @Override
+        public void transformPage(View page, float position) {
+            float scrollXOffset = page.getWidth() * parallaxCoefficient;
+
+            ViewGroup pageViewWrapper = (ViewGroup) page;
+            @SuppressWarnings("SuspiciousMethodCalls")
+            int[] layer = mLayoutViewIdsMap.get(pageViewWrapper.getChildAt(0).getId());
+            if (layer == null) return;
+            for (int id : layer) {
+                View view = page.findViewById(id);
+                if (view != null) {
+                    view.setTranslationX(scrollXOffset * position);
+                }
+                scrollXOffset *= distanceCoefficient;
             }
         }
     }
@@ -195,10 +199,6 @@ public class GuideUtil {
         @Override
         public void onPageScrollStateChanged(int state) {
         }
-    }
-
-    public interface OnCallback {
-        void goLogin();
     }
 
 }

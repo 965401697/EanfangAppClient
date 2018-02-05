@@ -68,6 +68,27 @@ public class BGAImageView extends AppCompatImageView {
         setDefaultImage();
     }
 
+    public static RoundedBitmapDrawable getCircleDrawable(Context context, Bitmap src) {
+        Bitmap dst;
+        if (src.getWidth() >= src.getHeight()) {
+            dst = Bitmap.createBitmap(src, src.getWidth() / 2 - src.getHeight() / 2, 0, src.getHeight(), src.getHeight());
+        } else {
+            dst = Bitmap.createBitmap(src, 0, src.getHeight() / 2 - src.getWidth() / 2, src.getWidth(), src.getWidth());
+        }
+
+        RoundedBitmapDrawable circleDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), dst);
+        circleDrawable.setAntiAlias(true);
+        circleDrawable.setCircular(true);
+        return circleDrawable;
+    }
+
+    public static RoundedBitmapDrawable getRoundedDrawable(Context context, Bitmap bitmap, float cornerRadius) {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
+        roundedBitmapDrawable.setAntiAlias(true);
+        roundedBitmapDrawable.setCornerRadius(cornerRadius);
+        return roundedBitmapDrawable;
+    }
+
     private void initBorderPaint() {
         mBorderPaint = new Paint();
         mBorderPaint.setAntiAlias(true);
@@ -169,26 +190,5 @@ public class BGAImageView extends AppCompatImageView {
 
     public interface Delegate {
         void onDrawableChanged(Drawable drawable);
-    }
-
-    public static RoundedBitmapDrawable getCircleDrawable(Context context, Bitmap src) {
-        Bitmap dst;
-        if (src.getWidth() >= src.getHeight()) {
-            dst = Bitmap.createBitmap(src, src.getWidth() / 2 - src.getHeight() / 2, 0, src.getHeight(), src.getHeight());
-        } else {
-            dst = Bitmap.createBitmap(src, 0, src.getHeight() / 2 - src.getWidth() / 2, src.getWidth(), src.getWidth());
-        }
-
-        RoundedBitmapDrawable circleDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), dst);
-        circleDrawable.setAntiAlias(true);
-        circleDrawable.setCircular(true);
-        return circleDrawable;
-    }
-
-    public static RoundedBitmapDrawable getRoundedDrawable(Context context, Bitmap bitmap, float cornerRadius) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), bitmap);
-        roundedBitmapDrawable.setAntiAlias(true);
-        roundedBitmapDrawable.setCornerRadius(cornerRadius);
-        return roundedBitmapDrawable;
     }
 }

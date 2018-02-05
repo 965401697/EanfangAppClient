@@ -33,16 +33,12 @@ import java.util.List;
  */
 public class CacheManager extends BaseDao<CacheEntity<?>> {
 
-    public static CacheManager getInstance() {
-        return CacheManagerHolder.instance;
-    }
-
-    private static class CacheManagerHolder {
-        private static final CacheManager instance = new CacheManager();
-    }
-
     private CacheManager() {
         super(new DBHelper());
+    }
+
+    public static CacheManager getInstance() {
+        return CacheManagerHolder.instance;
     }
 
     @Override
@@ -64,26 +60,34 @@ public class CacheManager extends BaseDao<CacheEntity<?>> {
     public void unInit() {
     }
 
-    /** 根据key获取缓存 */
+    /**
+     * 根据key获取缓存
+     */
     public CacheEntity<?> get(String key) {
         if (key == null) return null;
         List<CacheEntity<?>> cacheEntities = query(CacheEntity.KEY + "=?", new String[]{key});
         return cacheEntities.size() > 0 ? cacheEntities.get(0) : null;
     }
 
-    /** 移除一个缓存 */
+    /**
+     * 移除一个缓存
+     */
     public boolean remove(String key) {
         if (key == null) return false;
         return delete(CacheEntity.KEY + "=?", new String[]{key});
     }
 
-    /** 返回带泛型的对象,注意必须确保泛型和对象对应才不会发生类型转换异常 */
+    /**
+     * 返回带泛型的对象,注意必须确保泛型和对象对应才不会发生类型转换异常
+     */
     @SuppressWarnings("unchecked")
     public <T> CacheEntity<T> get(String key, Class<T> clazz) {
         return (CacheEntity<T>) get(key);
     }
 
-    /** 获取所有缓存 */
+    /**
+     * 获取所有缓存
+     */
     public List<CacheEntity<?>> getAll() {
         return queryAll();
     }
@@ -101,8 +105,14 @@ public class CacheManager extends BaseDao<CacheEntity<?>> {
         return entity;
     }
 
-    /** 清空缓存 */
+    /**
+     * 清空缓存
+     */
     public boolean clear() {
         return deleteAll();
+    }
+
+    private static class CacheManagerHolder {
+        private static final CacheManager instance = new CacheManager();
     }
 }

@@ -16,9 +16,8 @@ import com.camera.CameraApplication;
 
 public class ToastUtil {
 
-    private Toast toast;
-
     private static ToastUtil instance;
+    private Toast toast;
 
     public static ToastUtil getInstance() {
         if (instance == null) {

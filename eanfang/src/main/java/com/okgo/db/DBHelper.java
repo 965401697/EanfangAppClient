@@ -38,15 +38,13 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 class DBHelper extends SQLiteOpenHelper {
 
-    private static final String DB_CACHE_NAME = "okgo.db";
-    private static final int DB_CACHE_VERSION = 1;
     static final String TABLE_CACHE = "cache";
     static final String TABLE_COOKIE = "cookie";
     static final String TABLE_DOWNLOAD = "download";
     static final String TABLE_UPLOAD = "upload";
-
     static final Lock lock = new ReentrantLock();
-
+    private static final String DB_CACHE_NAME = "okgo.db";
+    private static final int DB_CACHE_VERSION = 1;
     private TableEntity cacheTableEntity = new TableEntity(TABLE_CACHE);
     private TableEntity cookieTableEntity = new TableEntity(TABLE_COOKIE);
     private TableEntity downloadTableEntity = new TableEntity(TABLE_DOWNLOAD);
@@ -113,10 +111,14 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (DBUtils.isNeedUpgradeTable(db, cacheTableEntity)) db.execSQL("DROP TABLE IF EXISTS " + TABLE_CACHE);
-        if (DBUtils.isNeedUpgradeTable(db, cookieTableEntity)) db.execSQL("DROP TABLE IF EXISTS " + TABLE_COOKIE);
-        if (DBUtils.isNeedUpgradeTable(db, downloadTableEntity)) db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOWNLOAD);
-        if (DBUtils.isNeedUpgradeTable(db, uploadTableEntity)) db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPLOAD);
+        if (DBUtils.isNeedUpgradeTable(db, cacheTableEntity))
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CACHE);
+        if (DBUtils.isNeedUpgradeTable(db, cookieTableEntity))
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_COOKIE);
+        if (DBUtils.isNeedUpgradeTable(db, downloadTableEntity))
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOWNLOAD);
+        if (DBUtils.isNeedUpgradeTable(db, uploadTableEntity))
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPLOAD);
         onCreate(db);
     }
 

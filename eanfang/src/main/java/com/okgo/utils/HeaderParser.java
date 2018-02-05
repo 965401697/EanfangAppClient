@@ -142,7 +142,8 @@ public class HeaderParser {
                 String eTag = responseHeaders.get(HttpHeaders.HEAD_KEY_E_TAG);
                 if (eTag != null) request.headers(HttpHeaders.HEAD_KEY_IF_NONE_MATCH, eTag);
                 long lastModified = HttpHeaders.getLastModified(responseHeaders.get(HttpHeaders.HEAD_KEY_LAST_MODIFIED));
-                if (lastModified > 0) request.headers(HttpHeaders.HEAD_KEY_IF_MODIFIED_SINCE, HttpHeaders.formatMillisToGMT(lastModified));
+                if (lastModified > 0)
+                    request.headers(HttpHeaders.HEAD_KEY_IF_MODIFIED_SINCE, HttpHeaders.formatMillisToGMT(lastModified));
             }
         }
     }

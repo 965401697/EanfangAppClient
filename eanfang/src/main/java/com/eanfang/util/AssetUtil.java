@@ -1,4 +1,3 @@
-
 package com.eanfang.util;
 
 import android.content.Context;
@@ -9,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- *@author hou
- *      Created at 2017/3/2
- *@desc
+ * @author hou
+ *         Created at 2017/3/2
+ * @desc
  */
 public class AssetUtil {
 
@@ -22,7 +21,9 @@ public class AssetUtil {
     }
 
     public static AssetUtil get() {
-        if (util == null) util = new AssetUtil();
+        if (util == null) {
+            util = new AssetUtil();
+        }
         return util;
     }
 

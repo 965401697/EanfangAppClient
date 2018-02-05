@@ -40,13 +40,11 @@ import okhttp3.Cookie;
  * ================================================
  */
 public class SerializableCookie implements Serializable {
-    private static final long serialVersionUID = 6374381323722046732L;
-
     public static final String HOST = "host";
     public static final String NAME = "name";
     public static final String DOMAIN = "domain";
     public static final String COOKIE = "cookie";
-
+    private static final long serialVersionUID = 6374381323722046732L;
     public String host;
     public String name;
     public String domain;
@@ -58,49 +56,6 @@ public class SerializableCookie implements Serializable {
         this.host = host;
         this.name = cookie.name();
         this.domain = cookie.domain();
-    }
-
-    public Cookie getCookie() {
-        Cookie bestCookie = cookie;
-        if (clientCookie != null) {
-            bestCookie = clientCookie;
-        }
-        return bestCookie;
-    }
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(cookie.name());
-        out.writeObject(cookie.value());
-        out.writeLong(cookie.expiresAt());
-        out.writeObject(cookie.domain());
-        out.writeObject(cookie.path());
-        out.writeBoolean(cookie.secure());
-        out.writeBoolean(cookie.httpOnly());
-        out.writeBoolean(cookie.hostOnly());
-        out.writeBoolean(cookie.persistent());
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        String name = (String) in.readObject();
-        String value = (String) in.readObject();
-        long expiresAt = in.readLong();
-        String domain = (String) in.readObject();
-        String path = (String) in.readObject();
-        boolean secure = in.readBoolean();
-        boolean httpOnly = in.readBoolean();
-        boolean hostOnly = in.readBoolean();
-        boolean persistent = in.readBoolean();
-        Cookie.Builder builder = new Cookie.Builder();
-        builder = builder.name(name);
-        builder = builder.value(value);
-        builder = builder.expiresAt(expiresAt);
-        builder = hostOnly ? builder.hostOnlyDomain(domain) : builder.domain(domain);
-        builder = builder.path(path);
-        builder = secure ? builder.secure() : builder;
-        builder = httpOnly ? builder.httpOnly() : builder;
-        clientCookie = builder.build();
     }
 
     public static SerializableCookie parseCursorToBean(Cursor cursor) {
@@ -200,7 +155,52 @@ public class SerializableCookie implements Serializable {
         return data;
     }
 
-    /** host, name, domain 标识一个cookie是否唯一 */
+    public Cookie getCookie() {
+        Cookie bestCookie = cookie;
+        if (clientCookie != null) {
+            bestCookie = clientCookie;
+        }
+        return bestCookie;
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(cookie.name());
+        out.writeObject(cookie.value());
+        out.writeLong(cookie.expiresAt());
+        out.writeObject(cookie.domain());
+        out.writeObject(cookie.path());
+        out.writeBoolean(cookie.secure());
+        out.writeBoolean(cookie.httpOnly());
+        out.writeBoolean(cookie.hostOnly());
+        out.writeBoolean(cookie.persistent());
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        String name = (String) in.readObject();
+        String value = (String) in.readObject();
+        long expiresAt = in.readLong();
+        String domain = (String) in.readObject();
+        String path = (String) in.readObject();
+        boolean secure = in.readBoolean();
+        boolean httpOnly = in.readBoolean();
+        boolean hostOnly = in.readBoolean();
+        boolean persistent = in.readBoolean();
+        Cookie.Builder builder = new Cookie.Builder();
+        builder = builder.name(name);
+        builder = builder.value(value);
+        builder = builder.expiresAt(expiresAt);
+        builder = hostOnly ? builder.hostOnlyDomain(domain) : builder.domain(domain);
+        builder = builder.path(path);
+        builder = secure ? builder.secure() : builder;
+        builder = httpOnly ? builder.httpOnly() : builder;
+        clientCookie = builder.build();
+    }
+
+    /**
+     * host, name, domain 标识一个cookie是否唯一
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

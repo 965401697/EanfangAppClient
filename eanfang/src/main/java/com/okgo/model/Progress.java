@@ -37,15 +37,12 @@ import java.util.List;
  * ================================================
  */
 public class Progress implements Serializable {
-    private static final long serialVersionUID = 6353658567594109891L;
-
     public static final int NONE = 0;         //无状态
     public static final int WAITING = 1;      //等待
     public static final int LOADING = 2;      //下载中
     public static final int PAUSE = 3;        //暂停
     public static final int ERROR = 4;        //错误
     public static final int FINISH = 5;       //完成
-
     public static final String TAG = "tag";
     public static final String URL = "url";
     public static final String FOLDER = "folder";
@@ -61,7 +58,7 @@ public class Progress implements Serializable {
     public static final String EXTRA1 = "extra1";
     public static final String EXTRA2 = "extra2";
     public static final String EXTRA3 = "extra3";
-
+    private static final long serialVersionUID = 6353658567594109891L;
     public String tag;                              //下载的标识键
     public String url;                              //网址
     public String folder;                           //保存文件夹
@@ -117,33 +114,6 @@ public class Progress implements Serializable {
         return progress;
     }
 
-    /** 平滑网速，避免抖动过大 */
-    private long bufferSpeed(long speed) {
-        speedBuffer.add(speed);
-        if (speedBuffer.size() > 10) {
-            speedBuffer.remove(0);
-        }
-        long sum = 0;
-        for (float speedTemp : speedBuffer) {
-            sum += speedTemp;
-        }
-        return sum / speedBuffer.size();
-    }
-
-    /** 转换进度信息 */
-    public void from(Progress progress) {
-        totalSize = progress.totalSize;
-        currentSize = progress.currentSize;
-        fraction = progress.fraction;
-        speed = progress.speed;
-        lastRefreshTime = progress.lastRefreshTime;
-        tempSize = progress.tempSize;
-    }
-
-    public interface Action {
-        void call(Progress progress);
-    }
-
     public static ContentValues buildContentValues(Progress progress) {
         ContentValues values = new ContentValues();
         values.put(TAG, progress.tag);
@@ -195,6 +165,33 @@ public class Progress implements Serializable {
         return progress;
     }
 
+    /**
+     * 平滑网速，避免抖动过大
+     */
+    private long bufferSpeed(long speed) {
+        speedBuffer.add(speed);
+        if (speedBuffer.size() > 10) {
+            speedBuffer.remove(0);
+        }
+        long sum = 0;
+        for (float speedTemp : speedBuffer) {
+            sum += speedTemp;
+        }
+        return sum / speedBuffer.size();
+    }
+
+    /**
+     * 转换进度信息
+     */
+    public void from(Progress progress) {
+        totalSize = progress.totalSize;
+        currentSize = progress.currentSize;
+        fraction = progress.fraction;
+        speed = progress.speed;
+        lastRefreshTime = progress.lastRefreshTime;
+        tempSize = progress.tempSize;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -213,17 +210,21 @@ public class Progress implements Serializable {
     @Override
     public String toString() {
         return "Progress{" +//
-               "fraction=" + fraction +//
-               ", totalSize=" + totalSize +//
-               ", currentSize=" + currentSize +//
-               ", speed=" + speed +//
-               ", status=" + status +//
-               ", priority=" + priority +//
-               ", folder=" + folder +//
-               ", filePath=" + filePath +//
-               ", fileName=" + fileName +//
-               ", tag=" + tag +//
-               ", url=" + url +//
-               '}';
+                "fraction=" + fraction +//
+                ", totalSize=" + totalSize +//
+                ", currentSize=" + currentSize +//
+                ", speed=" + speed +//
+                ", status=" + status +//
+                ", priority=" + priority +//
+                ", folder=" + folder +//
+                ", filePath=" + filePath +//
+                ", fileName=" + fileName +//
+                ", tag=" + tag +//
+                ", url=" + url +//
+                '}';
+    }
+
+    public interface Action {
+        void call(Progress progress);
     }
 }

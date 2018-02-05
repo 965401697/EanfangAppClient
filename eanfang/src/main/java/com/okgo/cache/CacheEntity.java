@@ -33,21 +33,37 @@ import java.io.Serializable;
  * ================================================
  */
 public class CacheEntity<T> implements Serializable {
-    private static final long serialVersionUID = -4337711009801627866L;
-
     public static final long CACHE_NEVER_EXPIRE = -1;        //缓存永不过期
-
     //表中的字段
     public static final String KEY = "key";
     public static final String LOCAL_EXPIRE = "localExpire";
     public static final String HEAD = "head";
     public static final String DATA = "data";
-
+    private static final long serialVersionUID = -4337711009801627866L;
     private String key;                    // 缓存key
     private long localExpire;              // 缓存过期时间
     private HttpHeaders responseHeaders;   // 缓存的响应头
     private T data;                        // 缓存的实体数据
     private boolean isExpire;   //缓存是否过期该变量不必保存到数据库，程序运行起来后会动态计算
+
+    public static <T> ContentValues getContentValues(CacheEntity<T> cacheEntity) {
+        ContentValues values = new ContentValues();
+        values.put(KEY, cacheEntity.getKey());
+        values.put(LOCAL_EXPIRE, cacheEntity.getLocalExpire());
+        values.put(HEAD, IOUtils.toByteArray(cacheEntity.getResponseHeaders()));
+        values.put(DATA, IOUtils.toByteArray(cacheEntity.getData()));
+        return values;
+    }
+
+    public static <T> CacheEntity<T> parseCursorToBean(Cursor cursor) {
+        CacheEntity<T> cacheEntity = new CacheEntity<>();
+        cacheEntity.setKey(cursor.getString(cursor.getColumnIndex(KEY)));
+        cacheEntity.setLocalExpire(cursor.getLong(cursor.getColumnIndex(LOCAL_EXPIRE)));
+        cacheEntity.setResponseHeaders((HttpHeaders) IOUtils.toObject(cursor.getBlob(cursor.getColumnIndex(HEAD))));
+        //noinspection unchecked
+        cacheEntity.setData((T) IOUtils.toObject(cursor.getBlob(cursor.getColumnIndex(DATA))));
+        return cacheEntity;
+    }
 
     public String getKey() {
         return key;
@@ -101,31 +117,12 @@ public class CacheEntity<T> implements Serializable {
         return getLocalExpire() + cacheTime < baseTime;
     }
 
-    public static <T> ContentValues getContentValues(CacheEntity<T> cacheEntity) {
-        ContentValues values = new ContentValues();
-        values.put(KEY, cacheEntity.getKey());
-        values.put(LOCAL_EXPIRE, cacheEntity.getLocalExpire());
-        values.put(HEAD, IOUtils.toByteArray(cacheEntity.getResponseHeaders()));
-        values.put(DATA, IOUtils.toByteArray(cacheEntity.getData()));
-        return values;
-    }
-
-    public static <T> CacheEntity<T> parseCursorToBean(Cursor cursor) {
-        CacheEntity<T> cacheEntity = new CacheEntity<>();
-        cacheEntity.setKey(cursor.getString(cursor.getColumnIndex(KEY)));
-        cacheEntity.setLocalExpire(cursor.getLong(cursor.getColumnIndex(LOCAL_EXPIRE)));
-        cacheEntity.setResponseHeaders((HttpHeaders) IOUtils.toObject(cursor.getBlob(cursor.getColumnIndex(HEAD))));
-        //noinspection unchecked
-        cacheEntity.setData((T) IOUtils.toObject(cursor.getBlob(cursor.getColumnIndex(DATA))));
-        return cacheEntity;
-    }
-
     @Override
     public String toString() {
         return "CacheEntity{key='" + key + '\'' + //
-               ", responseHeaders=" + responseHeaders + //
-               ", data=" + data + //
-               ", localExpire=" + localExpire + //
-               '}';
+                ", responseHeaders=" + responseHeaders + //
+                ", data=" + data + //
+                ", localExpire=" + localExpire + //
+                '}';
     }
 }
