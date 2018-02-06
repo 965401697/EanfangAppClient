@@ -52,7 +52,7 @@ public class CreateTeamView extends BaseDialog {
     }
 
     private void createCompany() {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD)
+        EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_ADD)
                 .params("name", etInputCompany.getText().toString().trim())
                 .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
                     dismiss();

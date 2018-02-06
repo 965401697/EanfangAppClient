@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.LoginBean;
+import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.eanfang.model.LoginBean;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.my.AuthWorkerInfoActivity;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
@@ -29,7 +34,7 @@ import net.eanfang.worker.ui.widget.InviteView;
  */
 
 public class MyFragment extends BaseFragment {
-    private TextView tv_user_name;
+    private TextView tv_user_name,tvVerfiy;
     private SimpleDraweeView iv_header;
 
 
@@ -43,10 +48,37 @@ public class MyFragment extends BaseFragment {
 
     }
 
+    private void getWorkInfo() {
+        EanfangHttp.get(UserApi.GET_WORKER_INFO)
+                .execute(new EanfangCallback<WorkerInfoBean>(getActivity(), true, WorkerInfoBean.class, (bean) -> {
+                    setOnClick(bean);
+                }));
+    }
+    private void setOnClick(WorkerInfoBean bean) {
+
+        //status 0草稿1认证中2认证通过3认证拒绝
+        if (bean.getStatus() == 0) {
+            tvVerfiy.setText("技师未认证，待认证");
+        } else if (bean.getStatus() == 1) {
+            tvVerfiy.setText("认证中");
+        } else if (bean.getStatus() == 2) {
+            tvVerfiy.setText("已认证");
+        } else if (bean.getStatus() == 3) {
+            tvVerfiy.setText("认证失败，请重新认证");
+        }
+        tvVerfiy.setOnClickListener((v) -> {
+            Intent intent = new Intent(getActivity(), AuthWorkerInfoActivity.class);
+            intent.putExtra("bean", bean);
+            startActivity(intent);
+        });
+    }
+
+
     @Override
     protected void initView() {
         setTitle("我的");
         setLeftVisible(View.GONE);
+        tvVerfiy = (TextView) findViewById(R.id.tv_verfiy);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {

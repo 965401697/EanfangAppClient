@@ -39,12 +39,6 @@ public interface UserApi {
     String GET_VERIFY_CODE = BuildConfig.HOST + "appverifycode";
 
     /**
-     * 检查token
-     */
-
-    String CHECK_TOKEN = BASE_URL + "/getInfoBytoken";
-
-    /**
      * 个人资料修改
      * get
      */
@@ -56,10 +50,6 @@ public interface UserApi {
     String GET_USER_INFO = BASE_URL + "/yaf_sys/sys/userinfo";
 
 
-    /**
-     * 检测是否开通服务区域
-     */
-    String CHECK_SERVICE_REGION = BASE_URL + "/checkServiceRegion";
 
     /**
      * 合作公司
@@ -169,4 +159,10 @@ public interface UserApi {
      * 加载系统类别
      */
     String GET_COMPANY_ORG_SYS_INFO = BuildConfig.API_HOST + "/yaf_sys/company2basedata/list/";
+    /**
+     * 技师接单状态
+     */
+    String GET_WORKER_CHANGE = BuildConfig.API_HOST + "/yaf_shop/worker/change";
+
+
 }

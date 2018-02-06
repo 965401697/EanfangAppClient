@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EanfangApp.iml" filepath="$PROJECT_DIR$/EanfangApp.iml" />
+      <module fileurl="file://F:\eanfangApp\EanfangAppClient\EanfangApp.iml" filepath="F:\eanfangApp\EanfangAppClient\EanfangApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EanfangAppClient.iml" filepath="$PROJECT_DIR$/EanfangAppClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
+      <module fileurl="file://F:\eanfangApp\EanfangAppClient\client\client.iml" filepath="F:\eanfangApp\EanfangAppClient\client\client.iml" />
       <module fileurl="file://$PROJECT_DIR$/eanfang/eanfang.iml" filepath="$PROJECT_DIR$/eanfang/eanfang.iml" />
+      <module fileurl="file://F:\eanfangApp\EanfangAppClient\eanfang\eanfang.iml" filepath="F:\eanfangApp\EanfangAppClient\eanfang\eanfang.iml" />
       <module fileurl="file://$PROJECT_DIR$/worker/worker.iml" filepath="$PROJECT_DIR$/worker/worker.iml" />
+      <module fileurl="file://F:\eanfangApp\EanfangAppClient\worker\worker.iml" filepath="F:\eanfangApp\EanfangAppClient\worker\worker.iml" />
     </modules>
   </component>
 </project>

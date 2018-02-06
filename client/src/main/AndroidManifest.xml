@@ -204,7 +204,7 @@
         <activity android:name=".ui.activity.worksapce.PartnerActivity" />
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.ConstansActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.ConstansActivity"/>
         <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
 
 
@@ -215,6 +215,17 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </activity>
+
+
+        <!--ease Start-->
+        <activity android:name="com.im.controller.activity.addContactActivity" />
+        <activity android:name="com.im.controller.activity.ChatActivity" />
+        <activity android:name="com.im.controller.activity.GroupDetailActivity" />
+        <activity android:name="com.im.controller.activity.GroupListActivity" />
+        <activity android:name="com.im.controller.activity.InviteActivity" />
+        <activity android:name="com.im.controller.activity.NewGroupActivity" />
+        <activity android:name="com.im.controller.activity.PickContactActivity" />
+
     </application>
 
 </manifest>

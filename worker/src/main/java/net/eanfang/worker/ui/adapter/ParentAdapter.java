@@ -37,13 +37,11 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         helper.setText(R.id.tv_company_name, item.getOrgName());
         imageView.setImageResource(R.drawable.ic_down);
         imageView.setTag(false);
-
+        helper.addOnClickListener(R.id.tv_auth_status);
         if (item.getIsVerify() == 0) {
-            helper.setVisible(R.id.tv_auth_status, true);
             helper.setText(R.id.tv_auth_status, "待认证");
-            helper.addOnClickListener(R.id.tv_auth_status);
         } else {
-            helper.setVisible(R.id.tv_auth_status, false);
+            helper.setText(R.id.tv_auth_status, "查看");
         }
         //当点击时先进行判断
 
@@ -63,3 +61,4 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
     }
 }
+
