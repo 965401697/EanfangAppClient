@@ -13,7 +13,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/client">
+                android:background="@color/worker">
 
                 <LinearLayout
                     android:id="@+id/ll_switch_company"

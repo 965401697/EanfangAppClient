@@ -125,7 +125,7 @@ public abstract class CustomeApplication extends MultiDexApplication {
     }
 
     public <T> Object get(String key, Class<T> clazz) {
-        String json = get(clazz.getCanonicalName(), "");
+        String json = get(key, "");
         if (StringUtils.isEmpty(json)) {
             return null;
         }

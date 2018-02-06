@@ -5,7 +5,7 @@
     android:orientation="vertical"
     >
     <RelativeLayout
-        android:background="@color/client"
+        android:background="@color/worker"
         android:layout_width="match_parent"
         android:layout_height="45dp">
 

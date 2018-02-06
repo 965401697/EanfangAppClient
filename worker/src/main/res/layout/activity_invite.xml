@@ -7,7 +7,7 @@
 
     <easeui.widget.EaseTitleBar
         app:titleBarTitle="@string/invite_massage"
-        app:titleBarBackground="@color/client"
+        app:titleBarBackground="@color/worker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </easeui.widget.EaseTitleBar>

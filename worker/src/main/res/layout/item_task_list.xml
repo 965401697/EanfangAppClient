@@ -213,7 +213,7 @@
             android:background="@drawable/select_worker"
             android:padding="6dp"
             android:text="联系负责人"
-            android:textColor="@color/client"
+            android:textColor="@color/worker"
             android:textSize="16sp" />
 
         <TextView

@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -148,7 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -176,7 +176,7 @@
                     android:background="@drawable/bg_ll_selctor"
                     android:gravity="left"
                     android:padding="15dp"
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -202,7 +202,7 @@
                     android:background="@drawable/bg_ll_selctor"
                     android:gravity="left"
                     android:padding="15dp"
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -229,7 +229,7 @@
                     android:gravity="left"
                     android:hint="请输入任务标准"
                     android:padding="15dp"
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -255,7 +255,7 @@
                     android:background="@drawable/bg_ll_selctor"
                     android:gravity="left"
                     android:padding="15dp"
-                    android:textColor="@color/client"
+                    android:textColor="@color/worker"
                     android:textSize="16sp" />
             </LinearLayout>
 

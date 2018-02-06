@@ -16,7 +16,7 @@
         android:paddingRight="20dp"
         android:paddingTop="4dp"
         android:text="全部"
-        android:textColor="@color/client"
+        android:textColor="@color/worker"
         android:textSize="14sp" />
 
     <TextView
