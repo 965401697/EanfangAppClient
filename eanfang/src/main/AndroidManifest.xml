@@ -100,6 +100,17 @@
 
         <!--环信end-->
 
+        <!--信鸽-->
+        <meta-data
+            android:name="XG_V2_ACCESS_ID"
+            android:value="2100270001"
+            tools:replace="android:value" />
+        <meta-data
+            android:name="XG_V2_ACCESS_KEY"
+            android:value="ADCL916N8D7M"
+            tools:replace="android:value" />
+        <!--信鸽 end-->
+
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation"

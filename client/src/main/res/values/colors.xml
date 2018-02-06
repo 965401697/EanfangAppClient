@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--应用颜色-->
-    <color name="color_main">#01b1c9</color>
-    <color name="color_white">#FFFFFF</color>
-    <color name="color_main_gray">#b0b0b0</color>
-    <color name="color_00">#00000000</color>
-    <color name="color_gray">#cccccc</color>
-    <color name="white">#ffffff</color>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="transparent_gray">#f8f8f8</color>
-    <color name="transparent">#00000000</color>
-
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimary_client">#3F51B5</color>
@@ -25,7 +14,10 @@
     <color name="tab_selected">#2297e8</color>
     <color name="background">#F5F5F5</color>
     <color name="background20">#00F5F5F5</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
     <color name="black">#000</color>
+    <color name="transparent_gray">#f8f8f8</color>
     <color name="preson_leave_admin">#00d08e</color>
     <color name="preson_leave_manager">#ffa53a</color>
     <color name="preson_leave_employee">#cccccc</color>
@@ -41,21 +33,4 @@
     <color name="config_black_color">#323333</color>
     <color name="camera_color">#ff0000</color>
     <color name="work_logo_color">#2196f3</color>
-
-    <color name="color_text_selected">#00ff00</color>
-    <color name="color_text_normal">#e6e6e6</color>
-
-
-    <!--
-    十进制转十六进制
-    0.10 = 0.19 ,   0.15 = 0.26
-    0.20 = 0.33 ,   0.25 = 0.40 ,
-    0.30 = 0.1e ,   0.35 = 0.60 ,
-    0.40 = 0.66 ,   0.45 = 0.73 ,
-    0.50 = 0.80 ,   0.55 = 0.8c ,
-    0.60 = 0.aa ,   0.65 = 0.ac ,
-    0.70 = 0.b3 ,   0.75 = 0.c0 ,
-    0.80 = 0.cc ,   0.85 = 0.da
-    0.90 = 0.e6 ,   0.95 = 0.f3
-    -->
 </resources>

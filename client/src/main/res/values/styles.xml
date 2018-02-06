@@ -37,7 +37,6 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -66,29 +65,15 @@
         <!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-
     <style name="Translucent_NoTitle" parent="@android:style/Theme">
         <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
-        <item name="android:windowBackground">@android:color/transparent
-        </item> <!-- 设置window背景透明，也就是去边框 -->
+        <item name="android:windowBackground">@android:color/transparent</item> <!-- 设置window背景透明，也就是去边框 -->
     </style>
 
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
         <item name="tabBackground">@drawable/tab_background</item>
-        <item name="tabIndicatorColor">@color/worker</item>
+        <item name="tabIndicatorColor">@color/client</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabSelectedTextColor">@color/client</item>
     </style>
-
-    <style name="MainButtonStyle">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/main_bottom_bg_selector</item>
-        <item name="android:button">@null</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/main_bottom_textcolor_selector</item>
-        <item name="android:textSize">20sp</item>
-    </style>
 </resources>
-

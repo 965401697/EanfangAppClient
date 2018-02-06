@@ -73,12 +73,14 @@
             android:value="${AMAP_KEY}" />
         <service android:name="com.amap.api.location.APSService" />
 
-        <meta-data
-            android:name="XG_V2_ACCESS_ID"
-            android:value="2100270002" />
-        <meta-data
-            android:name="XG_V2_ACCESS_KEY"
-            android:value="A72E1ECQX57G" />
+        <!--<meta-data-->
+        <!--android:name="XG_V2_ACCESS_ID"-->
+        <!--tools:replace="android:value"-->
+        <!--android:value="2100270002" />-->
+        <!--<meta-data-->
+        <!--android:name="XG_V2_ACCESS_KEY"-->
+        <!--tools:replace="android:value"-->
+        <!--android:value="A72E1ECQX57G" />-->
 
         <receiver
             android:name="net.eanfang.worker.ui.receiver.MessageReceiver"
@@ -90,8 +92,6 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
-
-
 
 
         <!--&lt;!&ndash;信鸽&ndash;&gt;-->

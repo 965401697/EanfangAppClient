@@ -81,12 +81,12 @@
         </item> <!-- 设置window背景透明，也就是去边框 -->
     </style>
 
-    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
-        <item name="tabBackground">@drawable/tab_background</item>
-        <item name="tabIndicatorColor">@color/client</item>
-        <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabSelectedTextColor">@color/client</item>
-    </style>
+    <!--<style name="Base.Widget.Design.TabLayout" parent="android:Widget">-->
+    <!--<item name="tabBackground">@drawable/tab_background</item>-->
+    <!--<item name="tabIndicatorColor">@color/client</item>-->
+    <!--<item name="tabIndicatorHeight">2dp</item>-->
+    <!--<item name="tabSelectedTextColor">@color/client</item>-->
+    <!--</style>-->
 
 
 </resources>

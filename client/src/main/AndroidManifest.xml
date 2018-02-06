@@ -71,12 +71,14 @@
             android:value="${AMAP_KEY}" />
         <service android:name="com.amap.api.location.APSService" />
 
-        <meta-data
-            android:name="XG_V2_ACCESS_ID"
-            android:value="2100270001" />
-        <meta-data
-            android:name="XG_V2_ACCESS_KEY"
-            android:value="ADCL916N8D7M" />
+        <!--<meta-data-->
+        <!--android:name="XG_V2_ACCESS_ID"-->
+        <!--android:value="2100270001"-->
+        <!--tools:replace="android:value" />-->
+        <!--<meta-data-->
+        <!--android:name="XG_V2_ACCESS_KEY"-->
+        <!--android:value="ADCL916N8D7M"-->
+        <!--tools:replace="android:value" />-->
 
         <!--信鸽-->
         <receiver
