@@ -35,9 +35,8 @@ import easeui.domain.EaseUser;
 import easeui.ui.EaseContactListFragment;
 
 /**
- * Created by YQ950209 on 2017/4/24.
+ * 通讯录
  */
-//联系人列表界面
 public class ContactListFragment extends EaseContactListFragment {
 
     private ImageView iv_contact_red;

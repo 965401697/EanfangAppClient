@@ -8,9 +8,9 @@
 
     <easeui.widget.EaseTitleBar
         android:id="@+id/title_bar"
-        hyphenate:titleBarBackground="#F8602F"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        hyphenate:titleBarBackground="@color/client"
         hyphenate:titleBarTitle="@string/address_book" />
 
     <include
@@ -20,7 +20,7 @@
     <FrameLayout
         android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <easeui.widget.EaseContactList
             android:id="@+id/contact_list"
