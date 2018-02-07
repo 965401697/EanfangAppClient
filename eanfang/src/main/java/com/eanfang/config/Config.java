@@ -29,18 +29,18 @@ public class Config {
      * 解析地址的长度
      */
     private static final int ADDRESS_COUNT = 3;
-    /**
-     * 三级业务类型 分隔长度
-     */
-    private static final int BUSINESS_CODE_SIZE = 4;
-    /**
-     * 区域 分隔长度
-     */
-    private static final int AREA_CODE_SIZE = 4;
-    /**
-     * 品牌型号 分隔长度
-     */
-    private static final int MODEL_CODE_SIZE = 4;
+//    /**
+//     * 三级业务类型 分隔长度
+//     */
+//    private static final int BUSINESS_CODE_SIZE = 4;
+//    /**
+//     * 区域 分隔长度
+//     */
+//    private static final int AREA_CODE_SIZE = 4;
+//    /**
+//     * 品牌型号 分隔长度
+//     */
+//    private static final int MODEL_CODE_SIZE = 4;
 
 
     private ConstAllBean constBean;
@@ -177,7 +177,7 @@ public class Config {
      * @return
      */
     public String getModelNameByCode(String code, int level) {
-        return getBaseNameByCode(MODEL_CODE_SIZE, Constant.MODEL, code, level);
+        return getBaseNameByCode( Constant.MODEL, code, level);
     }
 
     /**
@@ -208,7 +208,7 @@ public class Config {
      * @return
      */
     public String getBusinessNameByCode(String code, int level) {
-        return getBaseNameByCode(BUSINESS_CODE_SIZE, Constant.SYS_TYPE, code, level);
+        return getBaseNameByCode( Constant.SYS_TYPE, code, level);
     }
 
     /**
@@ -344,9 +344,9 @@ public class Config {
 
         List<String> addressList = new ArrayList<>(ADDRESS_COUNT);
 
-        addressList.add(getBaseNameByCode(AREA_CODE_SIZE, Constant.AREA, code, 1));
-        addressList.add(getBaseNameByCode(AREA_CODE_SIZE, Constant.AREA, code, 2));
-        addressList.add(getBaseNameByCode(AREA_CODE_SIZE, Constant.AREA, code, 3));
+        addressList.add(getBaseNameByCode( Constant.AREA, code, 1));
+        addressList.add(getBaseNameByCode( Constant.AREA, code, 2));
+        addressList.add(getBaseNameByCode(Constant.AREA, code, 3));
         //如果省份和城市同名，则移除
 //        if (addressList.get(0).equals(addressList.get(1))) {
 //            addressList.remove(0);
@@ -395,15 +395,15 @@ public class Config {
     /**
      * 根据 指定的code 获取 指定层级数据
      *
-     * @param splitCount code被 . 分割后长度 (数据校验用)
+
      * @param type       类型
      * @param code       code编码
      * @param level      想要获取的层级（从0开始）
      * @return
      */
-    public String getBaseNameByCode(int splitCount, int type, String code, int level) {
+    public String getBaseNameByCode(int type, String code, int level) {
         //code 长度验证
-        if (StringUtils.isEmpty(code) || code.split(BASE_CODE_SPLIT_STR).length != splitCount) {
+        if (StringUtils.isEmpty(code) || code.split(BASE_CODE_SPLIT_STR).length <=level) {
             return null;
         }
         List codeList = Arrays.asList(code.split(BASE_CODE_SPLIT_STR));
