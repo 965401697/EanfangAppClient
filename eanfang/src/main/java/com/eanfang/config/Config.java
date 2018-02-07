@@ -90,7 +90,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getBusinessList(int level) {
-        return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level)).toList();
+        return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
     }
 
     public List<BaseDataEntity> getServiceList() {
@@ -105,7 +105,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getServiceList(int level) {
-        return Stream.of(getServiceList()).filter(bean -> bean.getLevel().equals(level)).toList();
+        return Stream.of(getServiceList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
     }
 
     public List<BaseDataEntity> getRegionList() {
@@ -120,7 +120,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getRegionList(int level) {
-        return Stream.of(getRegionList()).filter(bean -> bean.getLevel().equals(level)).toList();
+        return Stream.of(getRegionList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
     }
 
     public List<BaseDataEntity> getIndustryList() {
@@ -135,7 +135,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getIndustryList(int level) {
-        return Stream.of(getIndustryList()).filter(bean -> bean.getLevel().equals(level)).toList();
+        return Stream.of(getIndustryList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
     }
 
     public List<BaseDataEntity> getModelList() {
@@ -150,7 +150,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getModelList(int level) {
-        return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level)).toList();
+        return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
     }
 
     /**

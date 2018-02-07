@@ -118,7 +118,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         });
         //故障设备名称
         llEquipmentName.setOnClickListener((v) -> {
-            String busTwoCode = Config.get().getBusinessCodeByName(tvSystemCategory.getText().toString().trim(), 2);
+            String busTwoCode = Config.get().getBusinessCodeByName(tvEquipmentCategory.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
                 showToast("请先选择设备类别");
             }
@@ -133,7 +133,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             if (StringUtils.isEmpty(busOneCode)) {
                 showToast("请先选择系统类别");
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(1)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvModel.setText(item);
             }));
 
@@ -194,6 +194,9 @@ public class AddTroubleActivity extends BaseClientActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
         if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
             snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
