@@ -21,6 +21,7 @@ import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 import net.eanfang.client.ui.widget.CreateTeamView;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,7 +57,12 @@ public class ContactsFragment extends BaseFragment {
     private void getData() {
         EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), true, OrgEntity.class, true, (list) -> {
-                    mDatas = list;
+                    if (list != null && !list.isEmpty()) {
+                        //排除默认公司
+                        mDatas = Stream.of(list).filter(bean -> bean.getCompanyId() != 0).toList();
+                    } else {
+                        mDatas = Collections.EMPTY_LIST;
+                    }
                     initAdapter();
                 }));
     }

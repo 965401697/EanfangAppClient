@@ -97,31 +97,38 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
     private void registerListener() {
         btn_login.setOnClickListener(v -> {
-//            String userPhone = et_phone.getText().toString().trim();
-//            String userAulth = et_yanzheng.getText().toString().trim();
-//            if (StringUtils.isEmpty(userPhone)) {
-//                showToast("手机号不能为空");
-//                return;
-//            }
-//
-//            if (StringUtils.isEmpty(userAulth)) {
-//                showToast("验证码不能为空");
-//                return;
-//            }
-//            if (!cb.isChecked()) {
-//                showToast("同意易安防会员章程和协议后才可以登陆使用");
-//                return;
-//
-//            }
+            String userPhone = et_phone.getText().toString().trim();
+            String userAulth = et_yanzheng.getText().toString().trim();
+            if (!BuildConfig.LOG_DEBUG) {
+
+                if (StringUtils.isEmpty(userPhone)) {
+                    showToast("手机号不能为空");
+                    return;
+                }
+
+                if (StringUtils.isEmpty(userAulth)) {
+                    showToast("验证码不能为空");
+                    return;
+                }
+                if (!cb.isChecked()) {
+                    showToast("同意易安防会员章程和协议后才可以登陆使用");
+                    return;
+                }
+            }
 //            setLogin("15010263711", "admin");
 //            setLogin("13800138000", "admin");
 //            setLogin("15940525612", "admin");
 
-
-            registerEase("18500320187", "admin");
-            loginEase("18500320187", "admin");
-
-            setLogin("18500320187", "admin");
+            //调试阶段
+            if (BuildConfig.LOG_DEBUG) {
+                if (StringUtils.isEmpty(userPhone)) {
+                    userPhone = "18500320187";
+                }
+                if (StringUtils.isEmpty(userAulth)) {
+                    userAulth = "admin";
+                }
+            }
+            setLogin(userPhone, userAulth);
 
 
         });
@@ -186,6 +193,9 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
                     headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
                     headers.put("Request-From", "CLIENT");
                     http.addCommonHeaders(headers);
+
+                    registerEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
+                    loginEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
                     goMain();
                 }));
 
@@ -287,7 +297,8 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {//处理返回按钮被按下
+        //处理返回按钮被按下
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             //退出登录
             Intent intent = new Intent(context.getPackageName() + ".ExitListenerReceiver");
             context.sendBroadcast(intent);
@@ -297,6 +308,9 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     }
 
     private void registerEase(String phone, String pwd) {
+        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
+            return;
+        }
 
         //3、去服务器注册账号
         Model.getInstance().getGlobalThreadPool().execute(() -> {
@@ -312,7 +326,13 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         });
     }
 
+
+
+
     private void loginEase(String phone, String pwd) {
+        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
+            return;
+        }
 
         //3、登录逻辑处理
         Model.getInstance().getGlobalThreadPool().execute(() -> {
