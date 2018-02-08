@@ -29,6 +29,7 @@ import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
 import net.eanfang.worker.ui.widget.InviteView;
+import net.eanfang.worker.util.PrefUtils;
 
 
 /**
@@ -91,6 +92,7 @@ public class MyFragment extends BaseFragment {
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
         tvWorkerStatus = (TextView) findViewById(R.id.tv_worker_status);
         rlWorkingStatus = (RelativeLayout) findViewById(R.id.rel_working);
+        tvWorkerStatus.setText(PrefUtils.getString("status",""));
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
@@ -117,6 +119,7 @@ public class MyFragment extends BaseFragment {
             PickerSelectUtil.singleTextPicker(getActivity(), "", GetConstDataUtils.getWorkerStatus(), (index, item) -> {
                 tvWorkerStatus.setText(item);
                 setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(item));
+                PrefUtils.setString("status", item);
             });
 
         });
