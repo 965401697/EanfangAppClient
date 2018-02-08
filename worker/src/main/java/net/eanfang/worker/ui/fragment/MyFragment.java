@@ -4,15 +4,21 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -34,7 +40,8 @@ import net.eanfang.worker.ui.widget.InviteView;
  */
 
 public class MyFragment extends BaseFragment {
-    private TextView tv_user_name,tvVerfiy;
+    private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
+    private RelativeLayout rlWorkingStatus;
     private SimpleDraweeView iv_header;
 
 
@@ -45,7 +52,7 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-
+        getWorkInfo();
     }
 
     private void getWorkInfo() {
@@ -54,6 +61,7 @@ public class MyFragment extends BaseFragment {
                     setOnClick(bean);
                 }));
     }
+
     private void setOnClick(WorkerInfoBean bean) {
 
         //status 0草稿1认证中2认证通过3认证拒绝
@@ -81,6 +89,8 @@ public class MyFragment extends BaseFragment {
         tvVerfiy = (TextView) findViewById(R.id.tv_verfiy);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
+        tvWorkerStatus = (TextView) findViewById(R.id.tv_worker_status);
+        rlWorkingStatus = (RelativeLayout) findViewById(R.id.rel_working);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
@@ -103,9 +113,26 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+        rlWorkingStatus.setOnClickListener((v) -> {
+            PickerSelectUtil.singleTextPicker(getActivity(), "", GetConstDataUtils.getWorkerStatus(), (index, item) -> {
+                tvWorkerStatus.setText(item);
+                setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(item));
+            });
 
+        });
     }
 
+    /**
+     * 更改技师工作状态
+     */
+    private void setWorkStatus(int status) {
+        EanfangHttp.post(UserApi.GET_WORKER_CHANGE)
+                .params("accId", EanfangApplication.getApplication().getAccId())
+                .params("status", status)
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
+
+                }));
+    }
 
     @Override
     public void onResume() {

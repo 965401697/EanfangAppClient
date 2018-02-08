@@ -111,6 +111,8 @@ public class GetConstDataUtils {
 
     private static List<String> payTypeList;
 
+    private static List<String> workerStatus;
+
     /**
      * 报修订单状态
      * getRepairConstant
@@ -142,6 +144,20 @@ public class GetConstDataUtils {
             }
         }
         return designStatus;
+    }
+
+    /**
+     * 技师工作状态
+     */
+    public static List<String> getWorkerStatus() {
+        if (workerStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workerStatus == null) {
+                    workerStatus = Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS);
+                }
+            }
+        }
+        return workerStatus;
     }
 
     /**

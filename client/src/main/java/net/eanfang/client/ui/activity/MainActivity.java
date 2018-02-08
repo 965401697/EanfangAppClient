@@ -47,14 +47,12 @@ public class MainActivity extends BaseClientActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
+        setHeaders();
         initXinGe();
         initFragment();
         getBaseData();
         getConst();
 
-//        //更新
-//        UpdateManager manager = new UpdateManager(this);
-//        manager.checkUpdate();
     }
 
     private void initFragment() {
@@ -165,6 +163,13 @@ public class MainActivity extends BaseClientActivity {
             }
         });
 
+    }
+
+    public void setHeaders() {
+        if (EanfangApplication.get().getUser() != null) {
+            EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", EanfangApplication.get().getUser().getToken());
+        }
+        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
     }
 
 }

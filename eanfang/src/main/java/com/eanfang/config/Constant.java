@@ -198,8 +198,16 @@ public interface Constant {
      * 28.绑定结果
      */
     String COOPERATION_STATUS = "CooperationStatus";
-    /*29.公司规模*/
+    /**
+     * 29.公司规模
+     */
     String ORG_UNIT_SCALE = "OrgUnitScale";
+    /**
+     * 30.技师工作状态
+     */
+    String WORK_STATUS = "WorkStatus";
+
+
 
     String PAY_TYPE = "PayType";
 

@@ -116,7 +116,7 @@ public class EanfangApplication extends CustomeApplication {
         if (EanfangApplication.get().getUser() != null) {
             headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
         }
-        headers.put("Request-From", "CLIENT");
+//        headers.put("Request-From", "CLIENT");
 
         //必须调用初始化
         http = OkGo.getInstance().init(this)

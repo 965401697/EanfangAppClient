@@ -22,6 +22,7 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
 import com.im.fragment.ContactListFragment;
+import com.okgo.OkGo;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
@@ -40,6 +41,8 @@ public class MainActivity extends BaseActivity {
     View redPoint;
     private LoginBean user;
     private long mExitTime;
+    private OkGo http;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
+        setHeaders();
         initXinGe();
         initFragment();
         getBaseData();
@@ -185,5 +189,14 @@ public class MainActivity extends BaseActivity {
                     }
                 }));
     }
+
+
+    public void setHeaders() {
+        if (EanfangApplication.get().getUser() != null) {
+            EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", EanfangApplication.get().getUser().getToken());
+        }
+        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
+    }
+
 }
 

@@ -37,8 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="5dp"
             android:background="@drawable/select_work_staus"
+            android:padding="5dp"
             android:text="技师未认证，请前去认证"
             android:textColor="@color/color_white" />
 
@@ -146,6 +146,54 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/ic_more" />
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_working"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/bg_ll_selctor">
+
+        <ImageView
+            android:id="@+id/iv_0"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_woring" />
+
+        <TextView
+            android:id="@+id/tv_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_0"
+            android:text="工作状态"
+            android:textSize="@dimen/textSize_16" />
+
+        <TextView
+            android:id="@+id/tv_worker_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@id/tv_0"
+            android:text=""
+            android:textColor="@color/client"
+            android:textSize="@dimen/textSize_16" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_more" />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/rel_setting"

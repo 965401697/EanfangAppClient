@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
             //调试阶段
             if (BuildConfig.LOG_DEBUG) {
                 if (StringUtils.isEmpty(userPhone)) {
-                    userPhone = "18500320187";
+                    userPhone = "13800138021";
                 }
                 if (StringUtils.isEmpty(userAulth)) {
                     userAulth = "admin";
