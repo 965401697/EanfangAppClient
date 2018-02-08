@@ -37,7 +37,6 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.text.ParseException;
 
@@ -95,7 +94,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, PersonInfoActivity.class);
-        ((BaseWorkerActivity) context).startAnimActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
@@ -120,7 +119,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         });
         llArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, 23221);
+            startActivityForResult(intent, 1);
         });
 
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
@@ -288,7 +287,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             return;
         }
         switch (requestCode) {
-            case 23221:
+            case 1:
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
                 Log.e("address", item.toString());
                 city = item.getCity();

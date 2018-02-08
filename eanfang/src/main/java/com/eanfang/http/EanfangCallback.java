@@ -71,16 +71,6 @@ public class EanfangCallback<T> extends StringCallback {
             loadingDialog = DialogUtil.createLoadingDialog(activity);
         }
     }
-//
-//    // TODO: 2017/12/7 废弃
-//    public EanfangCallback(Activity activity, boolean showDialog, ISuccess<T> iSuccess) {
-//        this.activity = activity;
-//        // this.clazz = clazz;
-//        this.iSuccess = iSuccess;
-//        if (showDialog) {
-//            loadingDialog = DialogUtil.createLoadingDialog(activity);
-//        }
-//    }
 
     public EanfangCallback(Activity activity, boolean showDialog, Class clazz, boolean isArray, ISuccessArray<T> iSuccess) {
         this.activity = activity;

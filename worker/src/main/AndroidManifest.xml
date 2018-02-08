@@ -171,7 +171,7 @@
         <activity android:name=".ui.activity.CameraActivity" />
         <activity android:name=".ui.activity.my.MessageListActivity" />
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
-        <!--<activity android:name=".ui.activity.SelectAddressActivity" />-->
+        <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
         <activity android:name=".ui.activity.worksapce.AddTroubleActivity" />

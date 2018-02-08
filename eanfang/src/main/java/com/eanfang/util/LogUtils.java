@@ -211,20 +211,6 @@ public class LogUtils {
             }
         }
 
-//        //todo 用于删除用户本地的日志文件，之前遗留的问题导致用户本地日志过大
-//        //todo 删除时间是否过长
-//        try {
-//            File logFile = new File(logFilePath);
-//            if(logFile.exists()){
-//                android.util.Log.d(TAG, "Delete start!");
-//                boolean delete = logFile.delete();
-//                android.util.Log.d(TAG, "Delete result:" + delete);
-//            }else{
-//                android.util.Log.d(TAG, "Delete File not exist!");
-//            }
-//        } catch (Exception e) {
-//            android.util.Log.e(TAG, "Delete log file exception!", e);
-//        }
 
 
         RandomAccessFile raf = null;

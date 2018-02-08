@@ -326,7 +326,6 @@ public final class EaseUI {
 
         @Override
         public boolean isMsgNotifyAllowed(EMMessage message) {
-            // TODO Auto-generated method stub
             return true;
         }
 

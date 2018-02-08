@@ -28,7 +28,6 @@ public abstract class J_CountDownTimer {
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            // TODO Auto-generated method stub
             synchronized (J_CountDownTimer.this) {
                 final long millisLeft = mStopTimeInFuture
                         - SystemClock.elapsedRealtime();

@@ -3,11 +3,10 @@ package net.eanfang.worker.ui.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yaf.sys.entity.BaseDataEntity;
@@ -31,13 +30,10 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
     private final LayoutInflater layoutInflater;
     private List<BaseDataEntity> data;
     private OnItemClickListener onItemClickListener;
-    private SparseBooleanArray checkStates;
 
     public MultipleChoiceAdapter(Context context, List<BaseDataEntity> data) {
         layoutInflater = LayoutInflater.from(context);
         this.data = data;
-        // 默认没有选择任何item
-        checkStates = new SparseBooleanArray(0);
     }
 
     public String getItem(int position) {
@@ -55,13 +51,19 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(v, position, getItemId(position));
             }
-        });
+            if (data.get(position).isCheck()) {
+                holder.checkBox.setImageResource(R.mipmap.ic_checked);
+            } else {
+                holder.checkBox.setImageResource(R.mipmap.ic_uncheck);
+            }
 
-        if (checkStates.get(position)) {
-            holder.checkBox.setChecked(true);
+        });
+        if (data.get(position).isCheck()) {
+            holder.checkBox.setImageResource(R.mipmap.ic_checked);
         } else {
-            holder.checkBox.setChecked(false);
+            holder.checkBox.setImageResource(R.mipmap.ic_uncheck);
         }
+
         holder.tvTitle.setText(getItem(position));
     }
 
@@ -80,28 +82,13 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
     }
 
 
-    public boolean check(int position) {
-        // 如果当前item已选中了，则从集合中删除，否则选择该item
-        if (checkStates.get(position)) {
-            checkStates.delete(position);
-            notifyDataSetChanged();
-            return false;
-        } else {
-            checkStates.put(position, true);
-            notifyDataSetChanged();
-            return true;
-        }
-
-    }
-
-
     public interface OnItemClickListener {
         void onItemClick(View view, int position, long id);
     }
 
     class InternalViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.checkBox)
-        CheckBox checkBox;
+        ImageView checkBox;
         @BindView(R.id.tv_title)
         TextView tvTitle;
 
