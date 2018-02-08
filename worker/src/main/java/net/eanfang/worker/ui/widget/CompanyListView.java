@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -24,6 +25,7 @@ import com.yaf.sys.entity.OrgEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.SwitchCompanyListAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,10 +43,16 @@ public class CompanyListView extends BaseDialog {
     @BindView(R.id.rev_company_list)
     RecyclerView revCompanyList;
     private Activity mContext;
+    private setCheckItemCompany itemCompany;
 
-    public CompanyListView(Activity context) {
+    public interface setCheckItemCompany {
+        void getItemName(String name);
+    }
+
+    public CompanyListView(Activity context, setCheckItemCompany itemCompany) {
         super(context);
         this.mContext = context;
+        this.itemCompany = itemCompany;
 
     }
 
@@ -59,11 +67,9 @@ public class CompanyListView extends BaseDialog {
      * Get the list of Companies
      */
     private void getCompanyAllList() {
-        EanfangHttp.get(NewApiService.GET_COMPANY_ALL_LIST)
-                .tag(this)
-                .execute(new EanfangCallback<OrgEntity>(mContext, false, OrgEntity.class, true, (list) -> {
-                    initAdapter(list);
-                }));
+        List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
+        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0).toList();
+        initAdapter(orgEntityList);
     }
 
     private void initAdapter(List<OrgEntity> beanList) {
@@ -74,7 +80,8 @@ public class CompanyListView extends BaseDialog {
         revCompanyList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SwitchCompany(beanList.get(position).getCompanyId());
+                SwitchCompany(beanList.get(position).getOrgId());
+                itemCompany.getItemName(beanList.get(position).getOrgName());
             }
         });
         revCompanyList.setAdapter(adapter);
@@ -87,7 +94,6 @@ public class CompanyListView extends BaseDialog {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
-                    showToast("测试一下");
                     EanfangApplication.get().remove(LoginBean.class.getName());
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     OkGo http = EanfangHttp.getHttp();
@@ -95,8 +101,7 @@ public class CompanyListView extends BaseDialog {
                     headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
                     headers.put("Request-From", "WORKER");
                     http.addCommonHeaders(headers);
-
-
+                    dismiss();
                 }));
     }
 

@@ -125,7 +125,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
             //调试阶段
             if (BuildConfig.LOG_DEBUG) {
                 if (StringUtils.isEmpty(userPhone)) {
-                    userPhone = "13800138021";
+                    userPhone = "13800138020";
                 }
                 if (StringUtils.isEmpty(userAulth)) {
                     userAulth = "admin";
@@ -184,6 +184,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.APP_LOGIN)
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {

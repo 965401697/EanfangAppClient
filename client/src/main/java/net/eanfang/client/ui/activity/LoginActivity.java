@@ -180,6 +180,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.APP_LOGIN)
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {

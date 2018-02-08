@@ -21,6 +21,7 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.model.LoginBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -32,11 +33,9 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
-import com.eanfang.model.LoginBean;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.text.ParseException;
 
@@ -51,7 +50,7 @@ import butterknife.ButterKnife;
 
 public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
-    private static final int SELECT_ADDRESS_CALL_BACK_CODE = 23221;
+    private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
 
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_left)
@@ -97,7 +96,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, PersonInfoActivity.class);
-        ((BaseClientActivity) context).startAnimActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
