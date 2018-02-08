@@ -52,20 +52,20 @@ public class WorkCheckCtrlView extends BaseDialog {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("检查管控");
         llMineAssignment.setOnClickListener((v) -> {
-            jump("我创建的检查", "1");
+            jump("我创建的检查", 1);
         });
         llMineAccept.setOnClickListener((v) -> {
-            jump("我负责的检查", "2");
+            jump("我负责的检查", 2);
         });
         llMineCompany.setOnClickListener((v) -> {
-            jump("本公司的检查", "0");
+            jump("本公司的检查", 0);
         });
     }
 
     /**
      * 跳转列表界面
      */
-    private void jump(String title, String type) {
+    private void jump(String title, int type) {
         Intent intent = new Intent(mContext, WorkCheckListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

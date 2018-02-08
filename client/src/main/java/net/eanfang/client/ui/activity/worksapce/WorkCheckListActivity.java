@@ -89,7 +89,7 @@ public class WorkCheckListActivity extends BaseClientActivity {
             public void onPageSelected(int position) {
                 currentFragment = (WorkCheckListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+//                initData(1);
             }
 
             @Override
@@ -98,7 +98,7 @@ public class WorkCheckListActivity extends BaseClientActivity {
             }
         });
         currentFragment = (WorkCheckListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
     }
 
     /**
@@ -127,38 +127,6 @@ public class WorkCheckListActivity extends BaseClientActivity {
                                 currentFragment.onDataReceived();
                             });
                         })
-//                {
-//
-//                    @Override
-//                    public void onSuccess(final WorkCheckListBean bean) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                workChenkBean = bean;
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        currentFragment.onDataReceived();
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        super.onNoData(message);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                WorkCheckListBean bean = new WorkCheckListBean();
-//                                bean.setList(new ArrayList<WorkCheckListBean.ListBean>());
-//                                setWorkChenkBean(bean);
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
                 );
 
     }
@@ -166,7 +134,7 @@ public class WorkCheckListActivity extends BaseClientActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+//        initData(1);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

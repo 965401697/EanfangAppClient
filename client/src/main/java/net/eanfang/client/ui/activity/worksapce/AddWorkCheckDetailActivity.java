@@ -120,23 +120,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
             showToast("请填写区域位置");
             return false;
         }
-//        if (TextUtils.isEmpty(tvOneName.getText().toString().trim())) {
-//            showToast("请填写系统类别");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tvTwoName.getText().toString().trim())) {
-//            showToast("请填写设备类别");
-//            return false;
-//        }
-//
-//        if (TextUtils.isEmpty(tvThreeName.getText().toString().trim())) {
-//            showToast("请填写设备名称");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(etInputCheckContent.getText().toString().trim())) {
-//            showToast("请填写检查内容");
-//            return false;
-//        }
+
         return true;
     }
 
@@ -144,11 +128,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
         detailsBean = new WorkAddCheckBean.WorkInspectDetailsBean();
         detailsBean.setTitle(etTitle.getText().toString().trim());
         detailsBean.setRegion(etPosition.getText().toString().trim());
-        detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvOneName.getText().toString().trim(), 3));
-        // TODO: 2017/12/18 业务类别，设备名称
-//        detailsBean.setBusinessOne(tvOneName.getText().toString().trim());
-//        detailsBean.setBusinessTwo(tvTwoName.getText().toString().trim());
-//        detailsBean.setBusinessThree(tvThreeName.getText().toString().trim());
+        detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
         detailsBean.setInfo(etInputCheckContent.getText().toString().trim());
 
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
@@ -161,7 +141,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
                     runOnUiThread(() -> {
                         Intent intent = new Intent();
                         intent.putExtra("result", detailsBean);
-                        setResult(AddWorkCheckDetailActivity.class.hashCode(), intent);
+                        setResult(101, intent);
                         finish();
                     });
                 }
@@ -169,7 +149,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
         } else {
             Intent intent = new Intent();
             intent.putExtra("result", detailsBean);
-            setResult(AddWorkCheckDetailActivity.class.hashCode(), intent);
+            setResult(101, intent);
             finish();
         }
     }

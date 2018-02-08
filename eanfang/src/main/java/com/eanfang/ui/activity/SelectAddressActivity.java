@@ -59,6 +59,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     private SelectAddressAdapter evaluateAdapter;
     private PoiResult poiResult;
     private ArrayList<PoiItem> poiItems;
+    private static final int RESULT_CODE=1;
 
     private PoiSearch.Query query;
     private String queryType = Constant.mapScope;
@@ -109,7 +110,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 intent.putExtra("data", mDataList.get(position));
-                setResult(SelectAddressActivity.class.hashCode(), intent);
+                setResult(RESULT_CODE, intent);
                 finishSelf();
             }
         });

@@ -91,7 +91,7 @@ public class InstallOrderActivity extends BaseClientActivity {
             public void onPageSelected(int position) {
                 currentFragment = (WorkInstallListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+//                initData(1);
             }
 
             @Override
@@ -100,7 +100,7 @@ public class InstallOrderActivity extends BaseClientActivity {
             }
         });
         currentFragment = (WorkInstallListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
     }
 
     private void initData(int page) {
@@ -133,7 +133,7 @@ public class InstallOrderActivity extends BaseClientActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+//        initData(1);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

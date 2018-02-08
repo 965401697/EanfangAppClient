@@ -73,6 +73,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     private WorkTaskBean.WorkTaskDetailsBean detailsBean;
     private Long assigneeUserId;
     private String assigneeOrgCode;
+    private static int TASK_REQUEST_CODE=200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +105,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_add_task:
                 Intent intent = new Intent(TaskActivity.this, AddWorkTaskDeitailActivity.class);
-                startActivityForResult(intent, AddWorkTaskDeitailActivity.class.hashCode());
+                startActivityForResult(intent, TASK_REQUEST_CODE);
                 break;
             //责任人
             case R.id.ll_depend_person:
@@ -189,10 +190,10 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         workTaskBean.setTitle(task_title);
 
         String receiveUser = tvDependPerson.getText().toString().trim();
-        if (TextUtils.isEmpty(receiveUser)) {
-            showToast("请选择联系人");
-            return;
-        }
+//        if (TextUtils.isEmpty(receiveUser)) {
+//            showToast("请选择联系人");
+//            return;
+//        }
         workTaskBean.setAssigneeUserId(assigneeUserId);
         workTaskBean.setAssigneeOrgCode(assigneeOrgCode);
         workTaskBean.setWorkTaskDetails(beanList);

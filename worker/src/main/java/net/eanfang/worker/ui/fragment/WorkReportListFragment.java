@@ -22,7 +22,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.WorkReportListActivity;
 import net.eanfang.worker.ui.adapter.WorkReportListAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.WorkReportInfoView;
@@ -47,18 +46,7 @@ public class WorkReportListFragment extends BaseFragment implements
     TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
-    private List<WorkReportListBean.ListBean> mDataList;
-    OnItemClickListener onItemClickListener = new OnItemClickListener() {
-        @Override
-        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
-//                if (EanfangApplication.getApplication().getUserId().equals(mDataList.get(position).getAssigneeUserId())) {
-                getFirstLookData(((WorkReportListActivity) getActivity()).getWorkReportListBean(), position);
-//                }
-            }
-            new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
-        }
-    };
+
     private String mTitle;
     private String mType;
     private WorkReportListAdapter mAdapter;
@@ -83,7 +71,7 @@ public class WorkReportListFragment extends BaseFragment implements
 
     @Override
     protected void initData(Bundle arguments) {
-
+        getData(page);
     }
 
     @Override
@@ -99,19 +87,19 @@ public class WorkReportListFragment extends BaseFragment implements
     protected void setListener() {
     }
 
-    private void initAdapter() {
-        if (getActivity() == null) {
-            return;
-        }
-        if (!(getActivity() instanceof WorkReportListActivity)) {
-            return;
-        }
-        if (((WorkReportListActivity) getActivity()).getWorkReportListBean() == null) {
-            return;
-        }
-        mDataList = ((WorkReportListActivity) getActivity()).getWorkReportListBean().getList();
+    private void initAdapter(List<WorkReportListBean.ListBean> mDataList) {
+
         mAdapter = new WorkReportListAdapter(mDataList);
-        rvList.addOnItemTouchListener(onItemClickListener);
+        rvList.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                    getFirstLookData(mDataList, position);
+                }
+                new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+            }
+        });
+
         if (mDataList.size() > 0) {
             rvList.setAdapter(mAdapter);
             tvNoDatas.setVisibility(View.GONE);
@@ -125,15 +113,15 @@ public class WorkReportListFragment extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+
     }
 
     /**
      * 首次阅读，更新状态
      */
-    private void getFirstLookData(WorkReportListBean beans, int position) {
+    private void getFirstLookData(List<WorkReportListBean.ListBean> mDataList, int position) {
         EanfangHttp.get(NewApiService.WORK_REPORT_FIRST_READ)
-                .params("id", beans.getList().get(position).getId())
+                .params("id", mDataList.get(position).getId())
                 .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
 
                 }));
@@ -162,12 +150,12 @@ public class WorkReportListFragment extends BaseFragment implements
                 if (page <= 0) {
                     page = 1;
                 }
-                getData();
+                getData(page);
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
                 page++;
-                getData();
+                getData(page);
                 break;
             default:
                 break;
@@ -177,7 +165,7 @@ public class WorkReportListFragment extends BaseFragment implements
     /**
      * 获取工作任务列表
      */
-    private void getData() {
+    private void getData(int page) {
         String status = null;
         if (!mTitle.equals("全部")) {
             status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
@@ -201,46 +189,10 @@ public class WorkReportListFragment extends BaseFragment implements
                 .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true, WorkReportListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
                                 onDataReceived();
+                                initAdapter(bean.getList());
                             });
                         })
-//                {
-//                    @Override
-//                    public void onSuccess(final WorkReportListBean bean) {
-//                        ((WorkReportListActivity) getActivity()).setWorkReportListBean(bean);
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                onDataReceived();
-//                            }
-//                        });
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        swiprefresh.setRefreshing(false);
-//                        page--;
-//
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //如果是第一页 没有数据了 则清空 bean
-//                                if (page < 1) {
-//                                    WorkReportListBean bean = new WorkReportListBean();
-//                                    bean.setAll(new ArrayList<WorkReportListBean.AllBean>());
-//                                    ((WorkReportListActivity) getActivity()).setWorkReportListBean(bean);
-//                                } else {
-//                                    showToast("已经到底了");
-//                                }
-//                                onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
+
                 );
     }
 
@@ -248,7 +200,7 @@ public class WorkReportListFragment extends BaseFragment implements
     @Override
     public void onDataReceived() {
         initView();
-        initAdapter();
+
         swiprefresh.setRefreshing(false);
     }
 }

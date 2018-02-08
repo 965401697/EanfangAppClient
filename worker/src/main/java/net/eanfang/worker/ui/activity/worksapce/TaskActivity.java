@@ -187,10 +187,10 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
         workTaskBean.setTitle(task_title);
 
         String receiveUser = tvDependPerson.getText().toString().trim();
-        if (TextUtils.isEmpty(receiveUser)) {
-            showToast("请选择联系人");
-            return;
-        }
+//        if (TextUtils.isEmpty(receiveUser)) {
+//            showToast("请选择联系人");
+//            return;
+//        }
         workTaskBean.setAssigneeUserId(assigneeUserId);
         workTaskBean.setAssigneeOrgCode(assigneeOrgCode);
         workTaskBean.setWorkTaskDetails(beanList);

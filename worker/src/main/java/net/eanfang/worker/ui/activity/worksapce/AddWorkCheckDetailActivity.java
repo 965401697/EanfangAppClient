@@ -14,7 +14,6 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.WorkAddCheckBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -22,6 +21,7 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
  * @desc 添加检查明细
  */
 
-public class AddWorkCheckDetailActivity extends BaseActivity {
+public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.et_position)
     EditText etPosition;
     @BindView(R.id.tv_one_name)
@@ -72,28 +72,39 @@ public class AddWorkCheckDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
 //        initData();
         initAdapter();
-
         setTitle("添加检查明细");
         setLeftBack();
         setRightTitle("完成");
     }
 
-
     private void initAdapter() {
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
         //系统类别
         llOneType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvOneName, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
-
+            PickerSelectUtil.singleTextPicker(this, "",
+                    Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(),
+                    (index, item) -> {
+                        tvTwoName.setText("");
+                        tvThreeName.setText("");
+                        tvOneName.setText(item);
+                    });
         });
         //设备类别
         llTwoType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvOneName, Stream.of(Config.get().getBusinessList(2)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "",
+                    Stream.of(Config.get().getBusinessList(2)).map(bus -> bus.getDataName()).toList(),
+                    (index, item) -> {
+                        tvThreeName.setText("");
+                        tvTwoName.setText(item);
+                    });
         });
 
         //设备名称
         llThreeType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvOneName, Stream.of(Config.get().getBusinessList(3)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).map(bus -> bus.getDataName()).toList(),
+                    (index, item) -> {
+                        tvThreeName.setText(item);
+                    });
         });
         //上传图片
         mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
@@ -109,23 +120,7 @@ public class AddWorkCheckDetailActivity extends BaseActivity {
             showToast("请填写区域位置");
             return false;
         }
-//        if (TextUtils.isEmpty(tvOneName.getText().toString().trim())) {
-//            showToast("请填写系统类别");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tvTwoName.getText().toString().trim())) {
-//            showToast("请填写设备类别");
-//            return false;
-//        }
-//
-//        if (TextUtils.isEmpty(tvThreeName.getText().toString().trim())) {
-//            showToast("请填写设备名称");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(etInputCheckContent.getText().toString().trim())) {
-//            showToast("请填写检查内容");
-//            return false;
-//        }
+
         return true;
     }
 
@@ -133,11 +128,7 @@ public class AddWorkCheckDetailActivity extends BaseActivity {
         detailsBean = new WorkAddCheckBean.WorkInspectDetailsBean();
         detailsBean.setTitle(etTitle.getText().toString().trim());
         detailsBean.setRegion(etPosition.getText().toString().trim());
-        detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvOneName.getText().toString().trim(), 3));
-        // TODO: 2017/12/18 业务类别，设备名称
-//        detailsBean.setBusinessOne(tvOneName.getText().toString().trim());
-//        detailsBean.setBusinessTwo(tvTwoName.getText().toString().trim());
-//        detailsBean.setBusinessThree(tvThreeName.getText().toString().trim());
+        detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
         detailsBean.setInfo(etInputCheckContent.getText().toString().trim());
 
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
@@ -150,7 +141,7 @@ public class AddWorkCheckDetailActivity extends BaseActivity {
                     runOnUiThread(() -> {
                         Intent intent = new Intent();
                         intent.putExtra("result", detailsBean);
-                        setResult(10084, intent);
+                        setResult(101, intent);
                         finish();
                     });
                 }
@@ -158,11 +149,10 @@ public class AddWorkCheckDetailActivity extends BaseActivity {
         } else {
             Intent intent = new Intent();
             intent.putExtra("result", detailsBean);
-            setResult(10084, intent);
+            setResult(101, intent);
             finish();
         }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

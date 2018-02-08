@@ -98,14 +98,11 @@ public class WorkTaskListFragment extends BaseFragment
         if (((WorkTaskListActivity) getActivity()).getWorkTaskListBean() == null) {
             return;
         }
-//        mDataList = ((WorkTaskListActivity) getActivity()).getWorkTaskListBean().getList();
         OnItemClickListener onItemClickListener = new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mDataList.get(position).getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-//                    if (EanfangApplication.getApplication().getUserId().equals(mDataList.get(position).getAssigneeUserId())) {
                     getFirstLookData(((WorkTaskListActivity) getActivity()).getWorkTaskListBean(), position);
-//                    }
                 }
                 new WorkTaskInfoView(getActivity(), true, mDataList.get(position).getId()).show();
             }

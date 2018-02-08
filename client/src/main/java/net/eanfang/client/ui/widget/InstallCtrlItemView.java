@@ -3,9 +3,12 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
@@ -60,6 +63,8 @@ public class InstallCtrlItemView extends BaseDialog {
     TextView tvNumber;
     @BindView(R.id.tv_feature_time)
     TextView tvFeatureTime;
+    @BindView(R.id.ll_company_info)
+    LinearLayout llCompanyInfo;
     private Long id;
     private Activity mContext;
 
@@ -101,11 +106,17 @@ public class InstallCtrlItemView extends BaseDialog {
         tvDesc.setText(bean.getDescription());
         tvNumber.setText(bean.getOrderNo());
         tvFeatureTime.setText(bean.getCreateTime());
-        tvWorkerName.setText(bean.getAssignessUser().getAccountEntity().getRealName());
-        tvWorkerCompany.setText(bean.getCompanyEntity().getName());
-        ivPic.setImageURI(Uri.parse(bean.getCompanyEntity().getLogoPic()));
-        tvContractPhone.setTag(bean.getAssignessUser().getAccountEntity().getMobile());
-        ivPhone.setOnClickListener(v -> CallUtils.call(mContext, tvContractPhone.getTag().toString()));
+        if (bean.getAssignessUser() != null) {
+            llCompanyInfo.setVisibility(View.VISIBLE);
+            tvWorkerName.setText(bean.getAssignessUser().getAccountEntity().getRealName());
+            tvContractPhone.setTag(bean.getAssignessUser().getAccountEntity().getMobile());
+            ivPhone.setOnClickListener(v -> CallUtils.call(mContext, tvContractPhone.getTag().toString()));
+            tvWorkerCompany.setText(bean.getCompanyEntity().getName());
+            ivPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()));
+        }
+
+
+
     }
 
 }

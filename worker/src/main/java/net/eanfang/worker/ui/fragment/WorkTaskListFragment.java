@@ -73,6 +73,7 @@ public class WorkTaskListFragment extends BaseFragment
 
     @Override
     protected void initData(Bundle arguments) {
+        getData(page);
     }
 
     @Override
@@ -89,23 +90,12 @@ public class WorkTaskListFragment extends BaseFragment
     }
 
     private void initAdapter(List<WorkTaskListBean.ListBean> mDataList) {
-        if (getActivity() == null) {
-            return;
-        }
-        if (!(getActivity() instanceof WorkTaskListActivity)) {
-            return;
-        }
-        if (((WorkTaskListActivity) getActivity()).getWorkTaskListBean() == null) {
-            return;
-        }
-//        mDataList = ((WorkTaskListActivity) getActivity()).getWorkTaskListBean().getList();
+
         OnItemClickListener onItemClickListener = new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mDataList.get(position).getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-//                    if (EanfangApplication.getApplication().getUserId().equals(mDataList.get(position).getAssigneeUserId())) {
                     getFirstLookData(((WorkTaskListActivity) getActivity()).getWorkTaskListBean(), position);
-//                    }
                 }
                 new WorkTaskInfoView(getActivity(), true, mDataList.get(position).getId()).show();
             }
@@ -127,13 +117,12 @@ public class WorkTaskListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        getData();
     }
 
     /**
      * 获取工作任务列表
      */
-    private void getData() {
+    private void getData(int page) {
         String status = "";
         if (!mTitle.equals("全部")) {
             status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
@@ -162,44 +151,6 @@ public class WorkTaskListFragment extends BaseFragment
                                 onDataReceived();
                             });
                         })
-//                {
-//                    @Override
-//                    public void onSuccess(final WorkTaskListBean bean) {
-//                        ((WorkTaskListActivity) getActivity()).setWorkTaskListBean(bean);
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                onDataReceived();
-//                            }
-//                        });
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        swiprefresh.setRefreshing(false);
-//                        page--;
-//
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //如果是第一页 没有数据了 则清空 bean
-//                                if (page < 1) {
-//                                    WorkTaskListBean bean = new WorkTaskListBean();
-//                                    bean.setAll(new ArrayList<WorkTaskListBean.AllBean>());
-//                                    ((WorkTaskListActivity) getActivity()).setWorkTaskListBean(bean);
-//                                } else {
-//                                    showToast("已经到底了");
-//                                }
-//                                onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
                 );
     }
 
@@ -236,12 +187,12 @@ public class WorkTaskListFragment extends BaseFragment
                 if (page <= 0) {
                     page = 1;
                 }
-                getData();
+                getData(page);
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
                 page++;
-                getData();
+                getData(page);
                 break;
             default:
                 break;

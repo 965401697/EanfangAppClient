@@ -21,7 +21,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.InstallCtrlItemView;
@@ -72,6 +71,7 @@ public class WorkInstallListFragment extends BaseFragment
 
     @Override
     protected void initData(Bundle arguments) {
+        getData(1);
     }
 
     @Override
@@ -88,15 +88,7 @@ public class WorkInstallListFragment extends BaseFragment
     }
 
     private void initAdapter(List<WorkspaceInstallBean.ListBean> mDataList) {
-        if (getActivity() == null) {
-            return;
-        }
-        if (!(getActivity() instanceof InstallOrderActivity)) {
-            return;
-        }
-        if (((InstallOrderActivity) getActivity()).getWorkspaceInstallBean() == null) {
-            return;
-        }
+
         OnItemClickListener onItemClickListener = new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -121,11 +113,11 @@ public class WorkInstallListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+
     }
 
 
-    private void getData() {
+    private void getData(int page) {
         String status = null;
         if (!"全部".equals(mTitle)) {
             status = GetConstDataUtils.getInstallStatus().indexOf(getmTitle()) + "";
@@ -188,12 +180,12 @@ public class WorkInstallListFragment extends BaseFragment
                 if (page <= 0) {
                     page = 1;
                 }
-                getData();
+                getData(page);
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
                 page++;
-                getData();
+                getData(page);
                 break;
             default:
                 break;

@@ -59,9 +59,9 @@ public class WorkspaceInstallDetailBean implements Serializable {
     private String latitude;
     private String longitude;
     private String orderNo;
-    private int ownerCompanyId;
+    private Long ownerCompanyId;
     private String ownerOrgCode;
-    private int ownerTopCompanyId;
+    private Long ownerTopCompanyId;
     private Long ownerUserId;
     private int predictTime;
     private int revertTimeLimit;
@@ -228,11 +228,11 @@ public class WorkspaceInstallDetailBean implements Serializable {
         this.orderNo = orderNo;
     }
 
-    public int getOwnerCompanyId() {
+    public Long getOwnerCompanyId() {
         return ownerCompanyId;
     }
 
-    public void setOwnerCompanyId(int ownerCompanyId) {
+    public void setOwnerCompanyId(Long ownerCompanyId) {
         this.ownerCompanyId = ownerCompanyId;
     }
 
@@ -244,11 +244,11 @@ public class WorkspaceInstallDetailBean implements Serializable {
         this.ownerOrgCode = ownerOrgCode;
     }
 
-    public int getOwnerTopCompanyId() {
+    public Long getOwnerTopCompanyId() {
         return ownerTopCompanyId;
     }
 
-    public void setOwnerTopCompanyId(int ownerTopCompanyId) {
+    public void setOwnerTopCompanyId(Long ownerTopCompanyId) {
         this.ownerTopCompanyId = ownerTopCompanyId;
     }
 

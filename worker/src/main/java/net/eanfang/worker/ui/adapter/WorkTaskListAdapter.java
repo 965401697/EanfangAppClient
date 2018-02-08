@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.util.StringUtils;
@@ -48,7 +49,7 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
             String[] urls = item.getWorkTaskDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(urls[0]));
+            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
         }
 
     }

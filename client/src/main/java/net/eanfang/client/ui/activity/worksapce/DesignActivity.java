@@ -18,6 +18,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AddDesignOrderBean;
@@ -84,6 +85,8 @@ public class DesignActivity extends BaseClientActivity {
     @BindView(R.id.et_remark)
     EditText et_remark;
 
+    private static int REQUSERT_ADDRESS_CODE = 100;
+
 
     /**
      * 经度
@@ -128,7 +131,7 @@ public class DesignActivity extends BaseClientActivity {
         //选择地址
         ll_address.setOnClickListener((v) -> {
             Intent intent = new Intent(DesignActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, SelectAddressActivity.class.hashCode());
+            startActivityForResult(intent, REQUSERT_ADDRESS_CODE);
         });
         //回复时限选择
         ll_reply_limit.setOnClickListener((v) -> {
@@ -226,9 +229,9 @@ public class DesignActivity extends BaseClientActivity {
         bean.setDetailPlace(address);
         bean.setBudgetLimit(GetConstDataUtils.getBudgetList().indexOf(budgetLimit));
         bean.setBusinessOneCode(Config.get().getBusinessCodeByName(businessOne, 1));
-
+        bean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode())));
         bean.setZoneCode(Config.get().getAreaCodeByName(city, contry));
-//        bean.setCreateCompanyUid(user.getCompanyId());
+        bean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(), Constant.AREA)));
         bean.setLatitude(lat);
         bean.setLongitude(lon);
         bean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(planLimit));
@@ -309,7 +312,7 @@ public class DesignActivity extends BaseClientActivity {
         if (data == null) {
             return;
         }
-        if (requestCode == SelectAddressActivity.class.hashCode()) {
+        if (requestCode == REQUSERT_ADDRESS_CODE) {
             SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
             Log.e("address", item.toString());
             lat = item.getLatitude().toString();

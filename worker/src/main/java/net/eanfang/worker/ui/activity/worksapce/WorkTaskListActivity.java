@@ -92,7 +92,7 @@ public class WorkTaskListActivity extends BaseWorkerActivity {
             public void onPageSelected(int position) {
                 currentFragment = (WorkTaskListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+//                initData(1);
             }
 
             @Override
@@ -101,7 +101,7 @@ public class WorkTaskListActivity extends BaseWorkerActivity {
             }
         });
         currentFragment = (WorkTaskListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
     }
 
     private void initData(int page) {
@@ -174,7 +174,7 @@ public class WorkTaskListActivity extends BaseWorkerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+//        initData(1);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

@@ -41,7 +41,7 @@ public class WorkCheckInfoBean implements Serializable {
     private Long createCompanyId;
     private String createOrgCode;
     private String createTime;
-    private int createTopCompanyId;
+    private Long createTopCompanyId;
     private CreateUserBean createUser;
     private Long createUserId;
     private Long id;
@@ -121,11 +121,11 @@ public class WorkCheckInfoBean implements Serializable {
         this.createTime = createTime;
     }
 
-    public int getCreateTopCompanyId() {
+    public Long getCreateTopCompanyId() {
         return createTopCompanyId;
     }
 
-    public void setCreateTopCompanyId(int createTopCompanyId) {
+    public void setCreateTopCompanyId(Long createTopCompanyId) {
         this.createTopCompanyId = createTopCompanyId;
     }
 

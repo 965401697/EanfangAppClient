@@ -104,12 +104,30 @@ public class WorkspaceInstallBean implements Serializable {
         private String orderNo;
         private Long ownerCompanyId;
         private String ownerOrgCode;
-        private int ownerTopCompanyId;
+        private Long ownerTopCompanyId;
         private Long ownerUserId;
         private int predictTime;
         private int revertTimeLimit;
         private int status;
         private String zone;
+        private Long businessOneId;
+        private Long zoneId;
+
+        public Long getBusinessOneId() {
+            return businessOneId;
+        }
+
+        public void setBusinessOneId(Long businessOneId) {
+            this.businessOneId = businessOneId;
+        }
+
+        public Long getZoneId() {
+            return zoneId;
+        }
+
+        public void setZoneId(Long zoneId) {
+            this.zoneId = zoneId;
+        }
 
         public int getBudget() {
             return budget;
@@ -231,11 +249,11 @@ public class WorkspaceInstallBean implements Serializable {
             this.ownerOrgCode = ownerOrgCode;
         }
 
-        public int getOwnerTopCompanyId() {
+        public Long getOwnerTopCompanyId() {
             return ownerTopCompanyId;
         }
 
-        public void setOwnerTopCompanyId(int ownerTopCompanyId) {
+        public void setOwnerTopCompanyId(Long ownerTopCompanyId) {
             this.ownerTopCompanyId = ownerTopCompanyId;
         }
 

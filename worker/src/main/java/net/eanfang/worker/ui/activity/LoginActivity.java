@@ -196,8 +196,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                     headers.put("Request-From", "WORKER");
                     http.addCommonHeaders(headers);
 
-                    registerEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
-                    loginEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
+                    registerEase(phone, pwd);
+                    loginEase(phone, pwd);
 
                     goMain();
                 }));

@@ -204,7 +204,7 @@ public class GetConstDataUtils {
                 }
             }
         }
-        return cooperationStatus;
+        return workInspectStatus;
     }
 
     /**

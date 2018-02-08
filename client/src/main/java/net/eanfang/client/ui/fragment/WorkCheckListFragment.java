@@ -21,7 +21,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.WorkCheckListActivity;
 import net.eanfang.client.ui.adapter.WorkCheckListAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.WorkCheckInfoView;
@@ -70,6 +69,7 @@ public class WorkCheckListFragment extends BaseFragment
 
     @Override
     protected void initData(Bundle arguments) {
+        getData(1);
     }
 
     @Override
@@ -89,15 +89,7 @@ public class WorkCheckListFragment extends BaseFragment
      * 设置adapter
      */
     private void initAdapter(List<WorkCheckListBean.ListBean> mDataList) {
-        if (getActivity() == null) {
-            return;
-        }
-        if (!(getActivity() instanceof WorkCheckListActivity)) {
-            return;
-        }
-        if (((WorkCheckListActivity) getActivity()).getWorkChenkBean() == null) {
-            return;
-        }
+
         mAdapter = new WorkCheckListAdapter(mDataList);
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -118,7 +110,7 @@ public class WorkCheckListFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+
     }
 
     /**
@@ -142,12 +134,12 @@ public class WorkCheckListFragment extends BaseFragment
                 if (page <= 0) {
                     page = 1;
                 }
-                getData();
+                getData(page);
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
                 page++;
-                getData();
+                getData(page);
                 break;
             default:
                 break;
@@ -165,7 +157,7 @@ public class WorkCheckListFragment extends BaseFragment
     /**
      * 获取工作任务列表
      */
-    private void getData() {
+    private void getData(int page) {
 
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
@@ -185,48 +177,10 @@ public class WorkCheckListFragment extends BaseFragment
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<WorkCheckListBean>(getActivity(), true, WorkCheckListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
-                                initAdapter(bean.getList());
                                 onDataReceived();
+                                initAdapter(bean.getList());
                             });
                         })
-//                {
-//                    @Override
-//                    public void onSuccess(final WorkCheckListBean bean) {
-//                        ((WorkCheckListActivity) getActivity()).setWorkChenkBean(bean);
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                onDataReceived();
-//                            }
-//                        });
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        swiprefresh.setRefreshing(false);
-//                        page--;
-//
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //如果是第一页 没有数据了 则清空 bean
-//                                if (page < 1) {
-//                                    WorkCheckListBean bean = new WorkCheckListBean();
-//                                    bean.setList(new ArrayList<WorkCheckListBean.ListBean>());
-//                                    ((WorkCheckListActivity) getActivity()).setWorkChenkBean(bean);
-//                                } else {
-//                                    showToast("已经到底了");
-//                                }
-//                                onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
                 );
     }
 }

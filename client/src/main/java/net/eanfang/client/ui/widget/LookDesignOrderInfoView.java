@@ -99,17 +99,6 @@ public class LookDesignOrderInfoView extends BaseDialog {
                 .execute(new EanfangCallback<DesignOrderInfoBean>(mContext, true, DesignOrderInfoBean.class, (bean) -> {
                             fillData(bean);
                         })
-//                {
-//                    @Override
-//                    public void onSuccess(DesignOrderInfoBean bean) {
-//                        fillData(bean);
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//
-//                    }
-//                }
                 );
     }
 }

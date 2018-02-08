@@ -72,7 +72,7 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
     LinearLayout llThirdFrequency;
     private WorkTaskBean.WorkTaskDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
-
+    private static int RESULT_CODE=200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,14 +177,14 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
                 public void onOssSuccess() {
                     Intent intent = new Intent();
                     intent.putExtra("result", bean);
-                    setResult(AddWorkTaskDeitailActivity.class.hashCode(), intent);
+                    setResult(RESULT_CODE, intent);
                     finish();
                 }
             });
         } else {
             Intent intent = new Intent();
             intent.putExtra("result", bean);
-            setResult(AddWorkTaskDeitailActivity.class.hashCode(), intent);
+            setResult(RESULT_CODE, intent);
             finish();
         }
     }

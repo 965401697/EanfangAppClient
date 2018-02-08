@@ -82,6 +82,7 @@ public class CheckActivity extends BaseClientActivity {
     private AddCheckDetailAdapter maintenanceDetailAdapter;
     private Long assigneeUserId;
     private String assigneeOrgCode;
+    private static int CHECK_REQUEST_CODE=101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +111,7 @@ public class CheckActivity extends BaseClientActivity {
         //添加明细
         btnAddDetail.setOnClickListener((v) -> {
             Intent intent = new Intent(CheckActivity.this, AddWorkCheckDetailActivity.class);
-            startActivityForResult(intent, AddWorkCheckDetailActivity.class.hashCode());
+            startActivityForResult(intent, CHECK_REQUEST_CODE);
         });
 
         maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_quotation_detail, beanList);
@@ -151,10 +152,10 @@ public class CheckActivity extends BaseClientActivity {
         bean.setChangeInfo(changeContent);
 
         String receiveUser = tvDependPerson.getText().toString().trim();
-        if (TextUtils.isEmpty(receiveUser)) {
-            showToast("请选择联系人");
-            return;
-        }
+//        if (TextUtils.isEmpty(receiveUser)) {
+//            showToast("请选择联系人");
+//            return;
+//        }
 
         //接收者
         bean.setAssigneeUserId(assigneeUserId);
@@ -229,34 +230,6 @@ public class CheckActivity extends BaseClientActivity {
                                 finishSelf();
                             });
                         })
-//                {
-//                    @Override
-//                    public void onSuccess(Object object) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
-//                                Bundle bundle = new Bundle();
-//                                Message message = new Message();
-//                                message.setTitle("检查发送成功");
-//                                message.setMsgTitle("您的工作检查已发送成功");
-//                                message.setMsgContent("您可以随时通过我的检查查看");
-//                                message.setShowOkBtn(true);
-//                                message.setShowLogo(true);
-//                                message.setTip("");
-//                                bundle.putSerializable("message", message);
-//                                intent.putExtras(bundle);
-//                                startActivity(intent);
-//                                finishSelf();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        Log.e("addworkReportActivity", message.toString());
-//                    }
-//                }
                 );
 
     }

@@ -29,7 +29,7 @@ public class DesignOrderAdapter extends BaseQuickAdapter<DesignOrderListBean.Lis
         helper.setText(R.id.tv_user_name, item.getUserName());
         helper.setText(R.id.tv_order_no, "单号：" + item.getOrderNum());
         helper.setText(R.id.tv_create_time, "下单：" + item.getCreateTime());
-        helper.setText(R.id.tv_business_one, "业务：" + Config.get().getBusinessCodeByName(item.getBusinessOneCode(), 1));
+        helper.setText(R.id.tv_business_one, "业务：" + Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         helper.setText(R.id.tv_plan_limit, "工期：" + GetConstDataUtils.getPredictList().get(item.getPredictTime()));
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
 //        if (!StringUtils.isEmpty(item.getPic1())) {

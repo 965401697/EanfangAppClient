@@ -475,7 +475,7 @@ public class WorkReportInfoBean implements Serializable {
         private String field1;
         private String field2;
         private Long id;
-        private int sysWorkReportId;
+        private Long sysWorkReportId;
         private int type;
         private String field3;
         private String field4;
@@ -506,11 +506,11 @@ public class WorkReportInfoBean implements Serializable {
             this.id = id;
         }
 
-        public int getSysWorkReportId() {
+        public Long getSysWorkReportId() {
             return sysWorkReportId;
         }
 
-        public void setSysWorkReportId(int sysWorkReportId) {
+        public void setSysWorkReportId(Long sysWorkReportId) {
             this.sysWorkReportId = sysWorkReportId;
         }
 

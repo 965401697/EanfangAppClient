@@ -19,16 +19,17 @@ import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.InstallOrderConfirmBean;
+import com.eanfang.model.LoginBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.model.LoginBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -86,6 +87,8 @@ public class InstallActivity extends BaseClientActivity {
     private String city;
     private String zone;
 
+    private static int INSTALL_REQUEST_CODE = 102;
+
     public static void jumpActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, InstallActivity.class);
@@ -136,7 +139,7 @@ public class InstallActivity extends BaseClientActivity {
         //选择地址
         llAddress.setOnClickListener((v) -> {
             Intent intent = new Intent(InstallActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, 10011);
+            startActivityForResult(intent, INSTALL_REQUEST_CODE);
         });
         //回复时限选择
         llTime.setOnClickListener((v) -> {
@@ -212,6 +215,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setLongitude(longitude);
         installOrderConfirmBean.setClientCompanyName(company);
         installOrderConfirmBean.setZone(Config.get().getAreaCodeByName(city, zone));
+        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(), Constant.AREA)));
         installOrderConfirmBean.setConnector(contact);
         installOrderConfirmBean.setConnectorPhone(phone);
         installOrderConfirmBean.setDetailPlace(etDetailAddress.getText().toString().trim());
@@ -220,6 +224,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setRevertTimeLimit(GetConstDataUtils.getRevertList().indexOf(revertime));
         installOrderConfirmBean.setBudget(GetConstDataUtils.getBudgetList().indexOf(budget));
         installOrderConfirmBean.setBusinessOneCode(Config.get().getBusinessCodeByName(business, 1));
+        installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode())));
 
         doHttp(JSON.toJSONString(installOrderConfirmBean));
 
@@ -290,7 +295,7 @@ public class InstallActivity extends BaseClientActivity {
         if (data == null) {
             return;
         }
-        if (requestCode == SelectAddressActivity.class.hashCode()) {
+        if (requestCode == INSTALL_REQUEST_CODE) {
             SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
             Log.e("address", item.toString());
             latitude = item.getLatitude().toString();

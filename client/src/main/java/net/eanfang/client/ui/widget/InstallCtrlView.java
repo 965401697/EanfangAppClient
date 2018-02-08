@@ -52,12 +52,12 @@ public class InstallCtrlView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("报装管控");
-        llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
-        llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
-        llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));
+        llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
+        llMineAccept.setOnClickListener(v -> jump("我负责的", 2));
+        llMineCompany.setOnClickListener(v -> jump("本公司的", 0));
     }
 
-    private void jump(String title, String type) {
+    private void jump(String title, int type) {
         Intent intent = new Intent(mContext, InstallOrderActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

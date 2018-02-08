@@ -486,7 +486,7 @@ public class WorkTaskListBean implements Serializable {
              */
 
             private String pictures;
-            private String sysWorkTaskId;
+            private Long sysWorkTaskId;
 
             public String getPictures() {
                 return pictures;
@@ -496,11 +496,11 @@ public class WorkTaskListBean implements Serializable {
                 this.pictures = pictures;
             }
 
-            public String getSysWorkTaskId() {
+            public Long getSysWorkTaskId() {
                 return sysWorkTaskId;
             }
 
-            public void setSysWorkTaskId(String sysWorkTaskId) {
+            public void setSysWorkTaskId(Long sysWorkTaskId) {
                 this.sysWorkTaskId = sysWorkTaskId;
             }
         }

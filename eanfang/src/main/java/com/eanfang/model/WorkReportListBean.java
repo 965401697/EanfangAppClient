@@ -485,7 +485,7 @@ public class WorkReportListBean implements Serializable {
              */
 
             private String pictures;
-            private int sysWorkReportId;
+            private Long sysWorkReportId;
 
             public String getPictures() {
                 return pictures;
@@ -495,11 +495,11 @@ public class WorkReportListBean implements Serializable {
                 this.pictures = pictures;
             }
 
-            public int getSysWorkReportId() {
+            public Long getSysWorkReportId() {
                 return sysWorkReportId;
             }
 
-            public void setSysWorkReportId(int sysWorkReportId) {
+            public void setSysWorkReportId(Long sysWorkReportId) {
                 this.sysWorkReportId = sysWorkReportId;
             }
         }

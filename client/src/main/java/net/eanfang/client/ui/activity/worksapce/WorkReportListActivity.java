@@ -84,7 +84,7 @@ public class WorkReportListActivity extends BaseClientActivity {
             public void onPageSelected(int position) {
                 currentFragment = (WorkReportListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+//                initData(1);
             }
 
             @Override
@@ -93,7 +93,7 @@ public class WorkReportListActivity extends BaseClientActivity {
             }
         });
         currentFragment = (WorkReportListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
 
     }
 
@@ -122,38 +122,6 @@ public class WorkReportListActivity extends BaseClientActivity {
                                 currentFragment.onDataReceived();
                             });
                         })
-//                {
-//
-//                    @Override
-//                    public void onSuccess(final WorkReportListBean bean) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                workReportListBean = bean;
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        currentFragment.onDataReceived();
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        super.onNoData(message);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                WorkReportListBean bean = new WorkReportListBean();
-//                                bean.setAll(new ArrayList<WorkReportListBean.AllBean>());
-//                                setWorkReportListBean(bean);
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
                 );
 
     }
@@ -161,7 +129,7 @@ public class WorkReportListActivity extends BaseClientActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+//        initData(1);
     }
 
     public WorkReportListBean getWorkReportListBean() {

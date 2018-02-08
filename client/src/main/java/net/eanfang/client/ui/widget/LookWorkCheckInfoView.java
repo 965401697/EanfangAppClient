@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -120,9 +119,8 @@ public class LookWorkCheckInfoView extends BaseDialog {
         etTitle.setText(detailsBean.getTitle());
         etPosition.setText(detailsBean.getRegion());
         tvOneName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 1));
-        // TODO: 2017/12/18 二级，三级
-//        tvTwoName.setText(detailsBeanX.getBusinessTwo());
-//        tvThreeName.setText(detailsBeanX.getBusinessThree());
+        tvTwoName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 2));
+        tvThreeName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 3));
 
         etInputCheckContent.setText(detailsBean.getInfo());
 

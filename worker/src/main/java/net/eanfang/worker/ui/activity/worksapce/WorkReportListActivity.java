@@ -83,7 +83,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
             public void onPageSelected(int position) {
                 currentFragment = (WorkReportListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+//                initData(1);
             }
 
             @Override
@@ -92,7 +92,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
             }
         });
         currentFragment = (WorkReportListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
 
     }
 
@@ -130,7 +130,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+//        initData(1);
     }
 
     public WorkReportListBean getWorkReportListBean() {

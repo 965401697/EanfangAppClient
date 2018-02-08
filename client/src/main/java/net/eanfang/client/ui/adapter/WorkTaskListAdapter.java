@@ -10,6 +10,7 @@ import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
     @Override
     protected void convert(BaseViewHolder helper, WorkTaskListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getCreateCompany().getOrgName());
-        helper.setText(R.id.tv_depart_name, "部门：" + item.getCreateOrg().getOrgName());
+        helper.setText(R.id.tv_depart_name, "公司：" + item.getCreateOrg().getOrgName());
         if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
             helper.setText(R.id.tv_read_ns, "已读");
         } else {
@@ -48,7 +49,7 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
             String[] urls = item.getWorkTaskDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(urls[0]));
+            head_pic.setImageURI(BuildConfig.OSS_SERVER+Uri.parse(urls[0]));
         }
 
     }
