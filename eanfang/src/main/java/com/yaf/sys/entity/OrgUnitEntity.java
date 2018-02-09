@@ -1,17 +1,17 @@
 package com.yaf.sys.entity;
 
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -429,7 +429,6 @@ public class OrgUnitEntity implements Serializable {
     
     @Getter
     @Setter
-    @TableField(exist=false)
     private Long accId;
     
 }

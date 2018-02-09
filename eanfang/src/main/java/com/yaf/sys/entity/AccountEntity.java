@@ -1,5 +1,6 @@
 package com.yaf.sys.entity;
 
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -40,8 +41,8 @@ public class AccountEntity implements Serializable {
     //@TableField(value = "acc_type")
     @Getter
     @Setter
-    private Long accType;
-
+    private Integer accType;
+    
     //手机
     //@TableField(value = "mobile")
     @NotBlank
@@ -93,40 +94,40 @@ public class AccountEntity implements Serializable {
     //@TableField(value = "last_login_time")
     private Date lastLoginTime;
 
-    //性别0女1男
-    //@TableField(value = "gender")
-    @Digits(integer = 3, fraction = 0)
-    @Getter
-    @Setter
-    private Integer gender;
-
-    //生日
-    //@TableField(value = "birthday")
-    @Getter
-    @Setter
-    private Date birthday;
-
-    //证件号码
-    //@TableField(value = "id_card")
-    @Size(min = 0, max = 18)
-    @Getter
-    @Setter
-    private String idCard;
-
-    //所在城市编号
-    //@TableField(value = "area_code")
-    @Size(min = 0, max = 20)
-    @Getter
-    @Setter
-    private String areaCode;
-
-    //详细地址
-    //@TableField(value = "adress")
-    @Size(min = 0, max = 200)
-    @Getter
-    @Setter
-    private String address;
-
+	//性别0女1男
+	//@TableField(value = "gender")
+	@Digits(integer=3,fraction=0)
+	@Getter
+	@Setter
+	private Integer gender;
+	
+	//生日
+	//@TableField(value = "birthday")
+	@Getter
+	@Setter
+	private Date birthday;
+	
+	//证件号码
+	//@TableField(value = "id_card")
+	@Size(min = 0, max = 18)
+	@Getter
+	@Setter
+	private String idCard;
+	
+	//所在城市编号
+	//@TableField(value = "area_code")
+	@Size(min = 0, max = 20)
+	@Getter
+	@Setter
+	private String areaCode;
+	
+	//详细地址
+	//@TableField(value = "adress")
+	@Size(min = 0, max = 200)
+	@Getter
+	@Setter
+	private String address;
+	
     /**
      * 设置：账号
      */
@@ -282,13 +283,13 @@ public class AccountEntity implements Serializable {
     }
 
     /*手工代码写在下面*/
-    /**
-     * 用户信息扩展
-     */
+	/**
+	 * 用户信息扩展
+	 */ 
     @Getter
     @Setter
-    @TableField(exist = false)
-    private Object accountExtInfo;
+	@TableField(exist = false)
+	private Object accountExtInfo;
 
     @Getter
     @Setter
@@ -306,7 +307,7 @@ public class AccountEntity implements Serializable {
     @Setter
     @TableField(exist = false)
     Set<OrgEntity> belongCompanys;
-
+    
     /*归属的部门列表*/
     @Getter
     @Setter
@@ -318,30 +319,28 @@ public class AccountEntity implements Serializable {
     @Setter
     @TableField(exist = false)
     Set<Long> allowCurDomainCompanys;
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((accId == null) ? 0 : accId.hashCode());
-        return result;
-    }
-
-    @Override
+    
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((accId == null) ? 0 : accId.hashCode());
+		return result;
+	}
+	@Override
     public boolean equals(Object other) {
-        if (other instanceof AccountEntity) {
-            if (this.accId == null || other == null) {
-                return false;
-            }
-
-            return this.accId.equals(((AccountEntity) other).accId);
-        }
-        return false;
+    	if (other instanceof AccountEntity) {
+    		if(this.accId == null || other== null)
+    			return false;
+    		
+            return this.accId.equals(((AccountEntity) other).accId);   
+        }   
+        return false; 
     }
+	
 
-}
+	}

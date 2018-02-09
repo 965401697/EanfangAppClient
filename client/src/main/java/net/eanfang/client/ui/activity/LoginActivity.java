@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -173,16 +172,17 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
      * @param pwd   验证码
      */
     private void setLogin(String phone, String pwd) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("username", phone);
-            object.put("password", pwd);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        JSONObject object = new JSONObject();
+//        try {
+//            object.put("username", phone);
+//            object.put("password", pwd);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-        EanfangHttp.post(UserApi.APP_LOGIN)
-                .upJson(object.toJSONString())
+        EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
+                .params("mobile",phone)
+                .params("verifycode",pwd)
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     //EanfangApplication.get().set(LoginBean.class.getName(), bean.getToken());
@@ -208,23 +208,12 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
      * @param phone 电话号
      */
     private void getVerificationCode(String phone) {
-        EanfangHttp.get(UserApi.GET_VERIFY_CODE)
-                .tag(this)
-                .params("account", phone)
-                .params("type", BuildConfig.TYPE)
-                .execute(new EanfangCallback(LoginActivity.this, false) {
-                    @Override
-                    public void onSuccess(Object bean) {
-                        super.onSuccess(bean);
-                        showToast("验证码获取成功");
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        showToast(message);
-                    }
-                });
+        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
+        EanfangHttp.post(UserApi.GET_VERIFY_CODE)
+                .params("mobile", phone)
+                .execute(new EanfangCallback<JSONObject>(LoginActivity.this, false, JSONObject.class, (bean) -> {
+                    showToast("验证码获取成功");
+                }));
     }
 
     private void initView() {
@@ -256,9 +245,6 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             e1.printStackTrace();
         }
 
-//        //更新
-//        UpdateManager manager = new UpdateManager(this);
-//        manager.checkUpdate();
 
     }
 
@@ -326,8 +312,6 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             }
         });
     }
-
-
 
 
     private void loginEase(String phone, String pwd) {

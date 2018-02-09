@@ -1,5 +1,7 @@
 package com.yaf.sys.entity;
 
+
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -32,9 +34,23 @@ import lombok.Setter;
 @TableName(value = "sys_org")
 @Getter
 @Setter
-public class OrgEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class OrgEntity implements Serializable,Cloneable {
 
+	private static final long serialVersionUID = 1L;
+	private static final OrgEntity EMPTY = new OrgEntity();
+	public static OrgEntity newInstance() {
+		return EMPTY.clone();
+	}
+	@Override
+	protected OrgEntity clone() {
+		try {
+			return (OrgEntity)super.clone();
+		}catch(CloneNotSupportedException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
     //组织机构ID
     //@TableField(value = "org_id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER，普通自增长使用IdType.ID_AUTO
@@ -267,22 +283,25 @@ public class OrgEntity implements Serializable {
     @Setter
     @TableField(exist = false)
     private List<UserEntity> staff;
-
+    
     @Getter
     @Setter
     @TableField(exist = false)
     private OrgUnitEntity orgUnitEntity;
 
+    @Getter
+    @TableField(exist = false)
+    private Object parentEntity;
 
-    public void addStaff(UserEntity user) {
-        if (staff == null) {
-            staff = new LinkedList<UserEntity>();
-        }
-        if (!staff.contains(user)) {
-            staff.add(user);
+    public void addStaff(UserEntity user){
+    	if(staff == null) {
+    		staff = new LinkedList<UserEntity>();
+    	}
+    	if (!staff.contains(user)) {
+    		staff.add(user);
         }
     }
-
+    
     public void addChild(OrgEntity child) {
         if (children == null) {
             children = new LinkedList<>();
@@ -337,5 +356,6 @@ public class OrgEntity implements Serializable {
         level = calculateLevel();
         return level;
     }
+    
 
 }

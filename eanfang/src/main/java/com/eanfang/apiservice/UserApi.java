@@ -17,11 +17,19 @@ public interface UserApi {
     /**
      * 登录
      */
-    String APP_LOGIN = BuildConfig.HOST + "/yaf_sys/sys/login";
+    String APP_LOGIN = BuildConfig.API_HOST  + "/yaf_sys/sys/login";
+    /**
+     * 注册
+     */
+    String APP_REGISTER = BuildConfig.API_HOST  + "/yaf_sys/account/register/";
+    /**
+     * 验证码登录
+     */
+    String APP_LOGIN_VERIFY = BuildConfig.API_HOST  + "/yaf_sys/sys/login_verify";
     /**
      * 退出
      */
-    String APP_LOGOUT = BuildConfig.HOST + "/yaf_sys/sys/logout";
+    String APP_LOGOUT = BuildConfig.API_HOST  + "/yaf_sys/sys/logout";
 
     /**
      * 客户端收到的评价
@@ -36,7 +44,7 @@ public interface UserApi {
     /**
      * 获取验证码
      */
-    String GET_VERIFY_CODE = BuildConfig.HOST + "appverifycode";
+    String GET_VERIFY_CODE = BuildConfig.API_HOST + "/yaf_sys/account/sendverify";
 
     /**
      * 个人资料修改
@@ -48,7 +56,6 @@ public interface UserApi {
      * 查看修改后信息
      */
     String GET_USER_INFO = BASE_URL + "/yaf_sys/sys/userinfo";
-
 
 
     /**

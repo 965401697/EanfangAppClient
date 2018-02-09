@@ -63,13 +63,7 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-            new CompanyListView(getActivity(), new CompanyListView.setCheckItemCompany() {
-                @Override
-                public void getItemName(String name) {
-                    tvCompanyName.setText(name);
-//                    PrefUtils.setString("tvCompanyName", name);
-                }
-            }).show();
+            new CompanyListView(getActivity(), name -> tvCompanyName.setText(name)).show();
         });
         //报价
         findViewById(R.id.ll_quote).setOnClickListener((v) -> {

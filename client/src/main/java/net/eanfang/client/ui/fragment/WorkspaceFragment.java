@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseFragment;
@@ -34,7 +35,7 @@ import net.eanfang.client.ui.widget.WorkCheckCtrlView;
  * @desc 工作台
  */
 public class WorkspaceFragment extends BaseFragment {
-
+    private TextView tvCompanyName;
 
     @Override
     protected int setLayoutResouceId() {
@@ -48,20 +49,16 @@ public class WorkspaceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
+        tvCompanyName.setText(EanfangApplication.getApplication().getUser()
+                .getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         //相机
         findViewById(R.id.iv_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
         });
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-            new CompanyListView(getActivity()).show();
-//            CompanyListView companyListView = new CompanyListView(getActivity());
-//            Window window = companyListView.getWindow();
-//            //重新设置
-//            WindowManager.LayoutParams lp = window.getAttributes();
-//            window.setGravity(Gravity.LEFT | Gravity.TOP);
-//            window.setAttributes(lp);
-//            companyListView.show();
+            new CompanyListView(getActivity(), name -> tvCompanyName.setText(name)).show();
         });
         //报修
         findViewById(R.id.ll_repair).setOnClickListener((v) -> {
