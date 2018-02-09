@@ -68,6 +68,11 @@ public class RepairOrderEntity implements Serializable {
     //区/县 编码
     //@TableField(value = "place_code")
     private String placeCode;
+
+    //区/县 id
+    //@TableField(value = "place_id")
+    private String placeId;
+
     //报修详细地址
     //@TableField(value = "detail_place")
     private String address;

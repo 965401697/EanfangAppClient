@@ -90,7 +90,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getBusinessList(int level) {
-        return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
+        return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getServiceList() {
@@ -105,7 +105,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getServiceList(int level) {
-        return Stream.of(getServiceList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
+        return Stream.of(getServiceList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getRegionList() {
@@ -120,7 +120,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getRegionList(int level) {
-        return Stream.of(getRegionList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
+        return Stream.of(getRegionList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getIndustryList() {
@@ -135,7 +135,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getIndustryList(int level) {
-        return Stream.of(getIndustryList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
+        return Stream.of(getIndustryList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getModelList() {
@@ -150,7 +150,7 @@ public class Config {
     }
 
     public List<BaseDataEntity> getModelList(int level) {
-        return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level+1)).toList();
+        return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     /**
@@ -177,7 +177,7 @@ public class Config {
      * @return
      */
     public String getModelNameByCode(String code, int level) {
-        return getBaseNameByCode( Constant.MODEL, code, level);
+        return getBaseNameByCode(Constant.MODEL, code, level);
     }
 
     /**
@@ -196,8 +196,8 @@ public class Config {
     /**
      * 根据系统编码获得id
      */
-    public String getBusinessIdByCode(String code) {
-        return getBaseIdByCode(code, Constant.SYS_TYPE);
+    public String getBusinessIdByCode(String code, int level) {
+        return getBaseIdByCode(code, level, Constant.SYS_TYPE);
     }
 
     /**
@@ -208,7 +208,7 @@ public class Config {
      * @return
      */
     public String getBusinessNameByCode(String code, int level) {
-        return getBaseNameByCode( Constant.SYS_TYPE, code, level);
+        return getBaseNameByCode(Constant.SYS_TYPE, code, level);
     }
 
     /**
@@ -217,7 +217,7 @@ public class Config {
      * @param id
      * @return
      */
-    public String getBusinessNameById(long id) {
+    public String getBusinessNameById(Integer id) {
         return getBaseNameById(id, Constant.SYS_TYPE);
     }
 
@@ -240,8 +240,8 @@ public class Config {
      * @param id
      * @return
      */
-    public String getServiceNameById(Long id) {
-        if (id == null || id.longValue() <= 0) {
+    public String getServiceNameById(Integer id) {
+        if (id == null || id <= 0) {
             return null;
         }
         return getBaseNameById(id, Constant.BIZ_TYPE);
@@ -344,8 +344,8 @@ public class Config {
 
         List<String> addressList = new ArrayList<>(ADDRESS_COUNT);
 
-        addressList.add(getBaseNameByCode( Constant.AREA, code, 1));
-        addressList.add(getBaseNameByCode( Constant.AREA, code, 2));
+        addressList.add(getBaseNameByCode(Constant.AREA, code, 1));
+        addressList.add(getBaseNameByCode(Constant.AREA, code, 2));
         addressList.add(getBaseNameByCode(Constant.AREA, code, 3));
         //如果省份和城市同名，则移除
 //        if (addressList.get(0).equals(addressList.get(1))) {
@@ -378,7 +378,7 @@ public class Config {
      * @return
      */
     public String getAddressByCode(String code) {
-        return Stream.of(getAreaNameByCode(code)).collect(Collectors.joining("-"));
+        return Stream.of(getAreaNameByCode(code)).filter(name -> !StringUtils.isEmpty(name)).collect(Collectors.joining("-"));
     }
 
     /**
@@ -387,7 +387,7 @@ public class Config {
      * @param id
      * @return
      */
-    public String getAddressById(Long id) {
+    public String getAddressById(Integer id) {
         return getAddressByCode(getBaseCodeById(id, Constant.AREA));
     }
 
@@ -395,15 +395,14 @@ public class Config {
     /**
      * 根据 指定的code 获取 指定层级数据
      *
-
-     * @param type       类型
-     * @param code       code编码
-     * @param level      想要获取的层级（从0开始）
+     * @param type  类型
+     * @param code  code编码
+     * @param level 想要获取的层级（从0开始）
      * @return
      */
     public String getBaseNameByCode(int type, String code, int level) {
         //code 长度验证
-        if (StringUtils.isEmpty(code) || code.split(BASE_CODE_SPLIT_STR).length <=level) {
+        if (StringUtils.isEmpty(code) || code.split(BASE_CODE_SPLIT_STR).length <= level) {
             return null;
         }
         List codeList = Arrays.asList(code.split(BASE_CODE_SPLIT_STR));
@@ -432,11 +431,11 @@ public class Config {
      * @param type
      * @return
      */
-    public String getBaseNameById(Long id, int type) {
-        if (id == null || id.longValue() <= 0) {
+    public String getBaseNameById(Integer id, int type) {
+        if (id == null || id <= 0) {
             return null;
         }
-        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId() == id.longValue()).map(bean -> bean.getDataName() + "").findFirst().orElseGet(() -> null);
+        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId() == id).map(bean -> bean.getDataName() + "").findFirst().orElseGet(() -> null);
     }
 
     /**
@@ -463,11 +462,11 @@ public class Config {
      * @param type
      * @return
      */
-    public String getBaseCodeById(Long id, int type) {
-        if (id == null || id.longValue() <= 0) {
+    public String getBaseCodeById(Integer id, int type) {
+        if (id == null || id <= 0) {
             return null;
         }
-        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId() == id.longValue()).map(bean -> bean.getDataCode() + "").findFirst().orElseGet(() -> null);
+        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId().equals(id)).map(bean -> bean.getDataCode() + "").findFirst().orElseGet(() -> null);
     }
 
     /**
@@ -477,11 +476,11 @@ public class Config {
      * @param type
      * @return
      */
-    public String getBaseIdByCode(String code, int type) {
+    public String getBaseIdByCode(String code, int level, int type) {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
-        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataCode().equals(code)).
+        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && code.startsWith(bean.getDataCode()) && bean.getLevel() == (level + 1)).
                 map(bean -> bean.getDataId() + "").findFirst().orElseGet(() -> null);
 
     }

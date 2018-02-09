@@ -13,7 +13,6 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
-import com.annimon.stream.Stream;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -33,6 +32,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +62,7 @@ public class SelectWorkerActivity extends BaseClientActivity {
     private List<WorkerEntity> selectWorkerList;
     // 添加海量点时
     private ProgressDialog progDialog = null;
-    private List<String> businessId;
+    private List<String> businessIds;
 
     private LocationUtil locationUtil;
 
@@ -131,8 +131,8 @@ public class SelectWorkerActivity extends BaseClientActivity {
     private void initWorker(int serviceId, int collectId) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
-        queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", Constant.BIZ_TYPE)));
-        queryEntry.getIsIn().put("businessId", businessId);
+        queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE)));
+        queryEntry.getIsIn().put("businessId", businessIds);
         queryEntry.getEquals().put("served", serviceId + "");
         queryEntry.getEquals().put("collect", collectId + "");
         queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
@@ -149,7 +149,7 @@ public class SelectWorkerActivity extends BaseClientActivity {
         setLeftBack();
         setTitle("选择技师");
         toRepairBean = (RepairOrderEntity) getIntent().getSerializableExtra("bean");
-        businessId = getIntent().getStringArrayListExtra("businessId");
+        businessIds = getIntent().getStringArrayListExtra("businessIds");
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
 
     }
@@ -159,15 +159,13 @@ public class SelectWorkerActivity extends BaseClientActivity {
 
         for (int i = 0; i < selectWorkerList.size(); i++) {
             //保证经纬度没有问题的时候可以填false
-            Double lat = Double.parseDouble(selectWorkerList.get(i).getLat());
-            Double lon = Double.parseDouble(selectWorkerList.get(i).getLon());
-            Double finalLat = lat;
-            Double finalLon = lon;
-            long existsCount = Stream.of(selectWorkerList).filter(worker -> worker.getLat().equals(finalLat.toString()) && worker.getLon().equals(finalLon.toString())).count();
-            if (existsCount > 0) {
-                lat += 0.001;
-                lon += 0.001;
-            }
+            Double lat = Double.parseDouble(selectWorkerList.get(i).getLat()) + new Random().nextDouble() / 100;
+            Double lon = Double.parseDouble(selectWorkerList.get(i).getLon()) + new Random().nextDouble() / 100;
+//            long existsCount = Stream.of(selectWorkerList).filter(worker -> worker.getLat().equals(finalLat.toString()) && worker.getLon().equals(finalLon.toString())).count();
+//            if (existsCount > 0) {
+//                lat += 0.001;
+//                lon += 0.001;
+//            }
             selectWorkerList.get(i).getId();
             selectWorkerList.get(i).getCompanyUserId();
             LatLng latLng = new LatLng(lat, lon, false);

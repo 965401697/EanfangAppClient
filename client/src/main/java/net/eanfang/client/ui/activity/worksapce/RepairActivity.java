@@ -18,10 +18,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -113,6 +114,9 @@ public class RepairActivity extends BaseClientActivity {
         ivLeft.setVisibility(View.VISIBLE);
         ivLeft.setOnClickListener(v -> giveUp());
         btnAddTrouble.setOnClickListener(v -> addTouble());
+        llAddress.setOnClickListener(new MultiClickListener(this, () -> {
+            address();
+        }));
     }
 
 
@@ -122,7 +126,7 @@ public class RepairActivity extends BaseClientActivity {
         }
         Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
         intent.putExtra("bean", fillBean());
-        intent.putStringArrayListExtra("businessId", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode())).toList());
+        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1)).toList());
         startActivity(intent);
     }
 
@@ -169,6 +173,7 @@ public class RepairActivity extends BaseClientActivity {
         bean.setLongitude(longitude);
         bean.setAddress(etDetailAddress.getText().toString().trim());
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
+        bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA));
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
 
         bean.setRepairContactPhone(etContact.getText().toString().trim());
@@ -278,13 +283,13 @@ public class RepairActivity extends BaseClientActivity {
     /**
      * 选择地址
      */
-    public void address(View view) {
-        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext()) == true) {
-            Intent intent = new Intent(this, SelectAddressActivity.class);
-            startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
-        } else {
-            showToast("网络异常，请检查网络");
-        }
+    public void address() {
+//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
+        Intent intent = new Intent(this, SelectAddressActivity.class);
+        startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
+//        } else {
+//            showToast("网络异常，请检查网络");
+//        }
     }
 
     /**

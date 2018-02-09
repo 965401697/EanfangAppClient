@@ -33,6 +33,7 @@ import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
 import net.eanfang.worker.ui.widget.FillAppointmentInfoView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
@@ -222,47 +223,48 @@ public class OrderListFragment extends BaseFragment implements
 
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<RepairedOrderBean>(getActivity(), true, RepairedOrderBean.class, (bean) -> {
-                            ((RepairCtrlActivity) getActivity()).setBean(bean);
-                            getActivity().runOnUiThread(this::onDataReceived);
-                        })
-//                {
-//                    @Override
-//                    public void onSuccess(final RepairedOrderBean bean) {
-//                        ((RepairCtrlActivity) getActivity()).setBean(bean);
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        page--;
-//                        getActivity().runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //如果是第一页 没有数据了 则清空 bean
-//                                if (page < 1) {
-//                                    RepairedOrderBean bean = new RepairedOrderBean();
-//                                    bean.setAll(new ArrayList<RepairedOrderBean.AllBean>());
-//                                    ((RepairCtrlActivity) getActivity()).setBean(bean);
-//                                } else {
-//                                    showToast("已经到底了");
-//                                }
-//                                onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        //重新加载 页面
-//
-//                    }
-//                }
+                .execute(new EanfangCallback<RepairedOrderBean>(getActivity(), true, RepairedOrderBean.class)
+//                                , (bean) -> {
+//                            ((RepairCtrlActivity) getActivity()).setBean(bean);
+//                            getActivity().runOnUiThread(this::onDataReceived);
+//                        })
+                         {
+                             @Override
+                             public void onSuccess(final RepairedOrderBean bean) {
+                                 ((RepairCtrlActivity) getActivity()).setBean(bean);
+                                 getActivity().runOnUiThread(new Runnable() {
+                                     @Override
+                                     public void run() {
+                                         onDataReceived();
+                                     }
+                                 });
+                             }
+
+                             @Override
+                             public void onNoData(String message) {
+                                 page--;
+                                 getActivity().runOnUiThread(new Runnable() {
+                                     @Override
+                                     public void run() {
+                                         //如果是第一页 没有数据了 则清空 bean
+                                         if (page < 1) {
+                                             RepairedOrderBean bean = new RepairedOrderBean();
+                                             bean.setList(new ArrayList<>());
+                                             ((RepairCtrlActivity) getActivity()).setBean(bean);
+                                         } else {
+                                             showToast("已经到底了");
+                                         }
+                                         onDataReceived();
+                                     }
+                                 });
+                             }
+
+                             @Override
+                             public void onError(String message) {
+                                 //重新加载 页面
+
+                             }
+                         }
                 );
     }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.apiservice.RepairApi;
@@ -125,13 +126,13 @@ public class OrderDetailFragment extends BaseFragment {
                     ArrayList<String> picList = new ArrayList<String>();
                     String[] urls = mDataList.get(position).getPictures().split(",");
                     if (!StringUtils.isEmpty(urls[0])) {
-                        picList.add(urls[0]);
+                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[0]);
                     }
                     if (!StringUtils.isEmpty(urls[1])) {
-                        picList.add(urls[1]);
+                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[1]);
                     }
                     if (!StringUtils.isEmpty(urls[2])) {
-                        picList.add(urls[2]);
+                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[2]);
                     }
                     if (picList.size() == 0) {
                         showToast("当前没有图片");
@@ -167,7 +168,9 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
                     tv_address.setText(bean.getAddress());
                     if (bean.getBookTime() != null) {
-                        tv_time.setText(GetDateUtils.dateToDateString(bean.getBookTime()));
+                        tv_time.setText(Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--"));
+                    } else {
+                        tv_time.setText("--");
                     }
 
                     tv_number.setText(bean.getOrderNum());

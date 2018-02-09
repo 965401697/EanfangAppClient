@@ -98,17 +98,17 @@ public class WorkerEntity implements Serializable {
      * 技师服务的 业务类型 id
      */
     @TableField(exist = false)
-    private List<Long> businessList;
+    private List<Integer> businessList;
     /**
      * 技师的 服务类型 id
      */
     @TableField(exist = false)
-    private List<Long> serviceList;
+    private List<Integer> serviceList;
     /**
      * 技师服务的 区域 id
      */
     @TableField(exist = false)
-    private List<Long> regionList;
+    private List<Integer> regionList;
     /**
      * 筛选时技师所在的公司
      */

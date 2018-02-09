@@ -163,10 +163,12 @@ public class AddTroubleActivity extends BaseClientActivity {
             return;
         }
         RepairBugEntity bean = new RepairBugEntity();
-        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvSystemCategory.getText().toString().trim(), 3));
+        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvEquipmentName.getText().toString().trim(), 3));
+        bean.setModelCode(Config.get().getBaseCodeByName(tvModel.getText().toString().trim(), 2, Constant.MODEL).get(0));
         bean.setBugPosition(etLocation.getText().toString().trim());
         bean.setDeviceNo(etCode.getText().toString().trim());
         bean.setBugDescription(etDesc.getText().toString().trim());
+        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 

@@ -277,13 +277,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
-        List<Long> serviceList = bean.getServiceList();
+        List<Integer> serviceList = bean.getServiceList();
         mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
 
-        List<Long> businessType = bean.getBusinessList();
+        List<Integer> businessType = bean.getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
-        mDataList3.addAll(Stream.of(businessType).map(id -> Config.get().getBusinessNameById(id)).toList());
+        mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
         initAdapter();
         initHonor(bean);
     }

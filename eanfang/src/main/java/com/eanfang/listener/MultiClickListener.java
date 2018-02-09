@@ -12,8 +12,8 @@ import com.eanfang.util.ToastUtil;
  */
 
 public class MultiClickListener implements View.OnClickListener {
-    // 两次点击按钮之间的点击间隔不能少于30*1000毫秒
-    private static final int MIN_CLICK_DELAY_TIME = 30 * 1000;
+    // 两次点击按钮之间的点击间隔不能少于1*1000毫秒
+    private static final int MIN_CLICK_DELAY_TIME = 1 * 1000;
     private long lastClickTime = 0;
 
     private Activity activity;
@@ -57,7 +57,7 @@ public class MultiClickListener implements View.OnClickListener {
             return;
         }
         //如果重复点击
-        ToastUtil.get().showToast(activity, "请勿重复提交，30秒后重试");
+        ToastUtil.get().showToast(activity, "请勿重复操作");
     }
 
 

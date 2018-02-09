@@ -27,7 +27,8 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -330,7 +331,8 @@
                     android:gravity="right"
                     android:paddingRight="15dp"
                     android:text="参考一下"
-                    android:textColor="@color/client_form_title_color" />
+                    android:textColor="@color/client_form_title_color"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/et_desc"

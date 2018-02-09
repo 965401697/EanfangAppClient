@@ -340,7 +340,8 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -369,7 +370,8 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

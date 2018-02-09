@@ -33,7 +33,7 @@ public class SharePreferenceUtil {
 
     public SharedPreferences init(Context context) {
         mContext = context;
-        sp = context.getSharedPreferences(NAME, Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
+        sp = context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         return sp;
     }
 
