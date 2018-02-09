@@ -215,7 +215,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setLongitude(longitude);
         installOrderConfirmBean.setClientCompanyName(company);
         installOrderConfirmBean.setZone(Config.get().getAreaCodeByName(city, zone));
-        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(), Constant.AREA)));
+        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(),3, Constant.AREA)));
         installOrderConfirmBean.setConnector(contact);
         installOrderConfirmBean.setConnectorPhone(phone);
         installOrderConfirmBean.setDetailPlace(etDetailAddress.getText().toString().trim());
@@ -224,7 +224,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setRevertTimeLimit(GetConstDataUtils.getRevertList().indexOf(revertime));
         installOrderConfirmBean.setBudget(GetConstDataUtils.getBudgetList().indexOf(budget));
         installOrderConfirmBean.setBusinessOneCode(Config.get().getBusinessCodeByName(business, 1));
-        installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode())));
+        installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode(),1)));
 
         doHttp(JSON.toJSONString(installOrderConfirmBean));
 

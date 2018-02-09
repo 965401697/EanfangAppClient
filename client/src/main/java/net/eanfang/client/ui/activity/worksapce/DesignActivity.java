@@ -229,9 +229,9 @@ public class DesignActivity extends BaseClientActivity {
         bean.setDetailPlace(address);
         bean.setBudgetLimit(GetConstDataUtils.getBudgetList().indexOf(budgetLimit));
         bean.setBusinessOneCode(Config.get().getBusinessCodeByName(businessOne, 1));
-        bean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode())));
+        bean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
         bean.setZoneCode(Config.get().getAreaCodeByName(city, contry));
-        bean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(), Constant.AREA)));
+        bean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(),3, Constant.AREA)));
         bean.setLatitude(lat);
         bean.setLongitude(lon);
         bean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(planLimit));
