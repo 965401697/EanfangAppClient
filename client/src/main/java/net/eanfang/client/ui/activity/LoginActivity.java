@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -33,7 +34,6 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.okgo.OkGo;
 import com.okgo.model.HttpHeaders;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -61,6 +61,12 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     @NotEmpty
     private EditText et_yanzheng;
     private TextView tv_yanzheng;
+    private AppCompatCheckBox cb;
+    private TextView read;
+    private Button btn_login;
+    private Validator validator;
+
+
     //验证码倒计时
     CountDownTimer timer = new CountDownTimer(60000, 1000) {
 
@@ -75,11 +81,6 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             tv_yanzheng.setText("获取验证码");
         }
     };
-    private AppCompatCheckBox cb;
-    private TextView read;
-    private Button btn_login;
-    private Validator validator;
-    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,37 +99,35 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         btn_login.setOnClickListener(v -> {
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
-            if (!BuildConfig.LOG_DEBUG) {
+//            if (!BuildConfig.LOG_DEBUG) {
 
-                if (StringUtils.isEmpty(userPhone)) {
-                    showToast("手机号不能为空");
-                    return;
-                }
-
-                if (StringUtils.isEmpty(userAulth)) {
-                    showToast("验证码不能为空");
-                    return;
-                }
-                if (!cb.isChecked()) {
-                    showToast("同意易安防会员章程和协议后才可以登陆使用");
-                    return;
-                }
+            if (StringUtils.isEmpty(userPhone)) {
+                showToast("手机号不能为空");
+                return;
             }
-//            setLogin("15010263711", "admin");
-//            setLogin("13800138000", "admin");
-//            setLogin("15940525612", "admin");
 
-            //调试阶段
-            if (BuildConfig.LOG_DEBUG) {
-                if (StringUtils.isEmpty(userPhone)) {
-                    userPhone = "18500320187";
-                }
-                if (StringUtils.isEmpty(userAulth)) {
-                    userAulth = "admin";
-                }
+            if (StringUtils.isEmpty(userAulth)) {
+                showToast("验证码不能为空");
+                return;
             }
-            setLogin(userPhone, userAulth);
+            if (!cb.isChecked()) {
+                showToast("同意易安防会员章程和协议后才可以登陆使用");
+                return;
+            }
+//            }
 
+//            //调试阶段
+//            if (BuildConfig.LOG_DEBUG) {
+//                if (StringUtils.isEmpty(userPhone)) {
+//                    userPhone = "13800138020";
+//                }
+//                if (StringUtils.isEmpty(userAulth)) {
+//                    userAulth = "admin";
+//                }
+//            }
+//            appRegister(userPhone, userAulth);
+            setVerfiyLogin(userPhone, userAulth);
+//            setLogin(userPhone, userAulth);
 
         });
 
@@ -166,26 +165,18 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     }
 
     /**
-     * 登录
+     * 验证码登录
      *
      * @param phone 电话号
      * @param pwd   验证码
      */
-    private void setLogin(String phone, String pwd) {
-//        JSONObject object = new JSONObject();
-//        try {
-//            object.put("username", phone);
-//            object.put("password", pwd);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+    private void setVerfiyLogin(String phone, String pwd) {
         EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
-                .params("mobile",phone)
-                .params("verifycode",pwd)
+                .params("mobile", phone)
+                .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-                    //EanfangApplication.get().set(LoginBean.class.getName(), bean.getToken());
                     //OkGo  head 写入 token
                     OkGo http = EanfangHttp.getHttp();
                     //清除 headers
@@ -195,12 +186,47 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
                     headers.put("Request-From", "CLIENT");
                     http.addCommonHeaders(headers);
 
-                    registerEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
-                    loginEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
+                    registerEase(phone, pwd);
+                    loginEase(phone, pwd);
                     goMain();
                 }));
 
     }
+
+    /**
+     * 密码登录
+     *
+     * @param phone 电话号
+     * @param pwd   验证码
+     */
+    private void setLogin(String phone, String pwd) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("username", phone);
+            object.put("password", pwd);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        EanfangHttp.post(UserApi.APP_LOGIN)
+                .upJson(object.toJSONString())
+                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
+                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                    //OkGo  head 写入 token
+                    OkGo http = EanfangHttp.getHttp();
+                    //清除 headers
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+                    headers.put("Request-From", "WORKER");
+                    http.addCommonHeaders(headers);
+
+                    registerEase(phone, pwd);
+                    loginEase(phone, pwd);
+
+                    goMain();
+                }));
+
+    }
+
 
     /**
      * 获取验证码
@@ -211,7 +237,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
-                .execute(new EanfangCallback<JSONObject>(LoginActivity.this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
                     showToast("验证码获取成功");
                 }));
     }
@@ -294,10 +320,8 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         return super.onKeyDown(keyCode, event);
     }
 
+
     private void registerEase(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
-            return;
-        }
 
         //3、去服务器注册账号
         Model.getInstance().getGlobalThreadPool().execute(() -> {
@@ -313,11 +337,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         });
     }
 
-
     private void loginEase(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
-            return;
-        }
 
         //3、登录逻辑处理
         Model.getInstance().getGlobalThreadPool().execute(() -> {

@@ -31,7 +31,6 @@ import net.eanfang.worker.util.PrefUtils;
 
 public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
     private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_client = {R.mipmap.client0, R.mipmap.client1, R.mipmap.client2, R.mipmap.client3};
     int[] drawables_worker = {R.mipmap.worker0, R.mipmap.worker1, R.mipmap.worker2, R.mipmap.worker3};
     private boolean isFirst;
     //是否加载完成
