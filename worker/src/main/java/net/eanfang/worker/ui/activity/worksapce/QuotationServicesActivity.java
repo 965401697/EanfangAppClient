@@ -50,11 +50,11 @@ public class QuotationServicesActivity extends BaseActivity {
         quoteServicesBean.setServiceContent(etServiceContent.getText().toString().trim());
         quoteServicesBean.setServiceName(etServiceName.getText().toString().trim());
         int servicePrice = Integer.parseInt(etServicePrice.getText().toString().trim());
-        quoteServicesBean.setServicePrice(servicePrice);
+        quoteServicesBean.setServicePrice(Double.valueOf(servicePrice));
         int times = Integer.parseInt(etServiceTimes.getText().toString().trim());
         quoteServicesBean.setServiceTime(times);
         quoteServicesBean.setServiceValue(etServiceValue.getText().toString().trim());
-        quoteServicesBean.setSum(servicePrice * times);
+        quoteServicesBean.setSum(Double.valueOf(servicePrice * times));
         setResult(103, getIntent().putExtra("result", quoteServicesBean));
         finish();
     }

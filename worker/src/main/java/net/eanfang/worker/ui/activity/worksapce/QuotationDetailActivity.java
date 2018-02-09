@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.model.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.DeviceParamAdapter;
@@ -56,7 +58,6 @@ public class QuotationDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_detail);
-        supprotToolbar();
         setTitle("报价明细");
         setLeftBack();
         initView();
@@ -88,56 +89,63 @@ public class QuotationDetailActivity extends BaseActivity {
     }
 
     private void registerListener() {
+
+        //系统类别
         rl_business_type.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tv_business_type,
-                    Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+                tv_business_type.setText(item);
+                tv_device_type.setText("");
+                tv_device_name.setText("");
+                tv_brand_model.setText("");
+            });
         });
 
-//        rl_device_type.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showBusinessType();
-//            }
-//        });
-//        rl_device_name.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
-//                    showToast("请先选择设备类型");
-//                } else {
-//                    showBusiness2Type();
-//                }
-//            }
-//        });
-//        rl_brand_model.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
-//                    showToast("请先选择设备类型");
-//                    return;
-//                }
-//                if (StringUtils.isEmpty(tv_device_name.getText().toString().trim())) {
-//                    showToast("请先选择设备名称");
-//                } else {
-//                    showBusiness3Type();
-//                }
-//            }
-//        });
+        //故障设备类别
+        rl_device_type.setOnClickListener((v) -> {
+            String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
+            if (StringUtils.isEmpty(busOneCode)) {
+                showToast("请先选择系统类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tv_device_type.setText(item);
+                tv_device_name.setText("");
+                tv_brand_model.setText("");
+            }));
+        });
+        //故障设备名称
+        rl_device_name.setOnClickListener((v) -> {
+            String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
+            if (StringUtils.isEmpty(busTwoCode)) {
+                showToast("请先选择设备类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tv_device_name.setText(item);
+                tv_brand_model.setText("");
+            }));
+        });
+        //品牌型号
+        rl_brand_model.setOnClickListener((v) -> {
+            String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
+            if (StringUtils.isEmpty(busOneCode)) {
+                showToast("请先选择系统类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tv_brand_model.setText(item);
+            }));
+
+        });
         rl_unit.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", tv_unit, GetConstDataUtils.getDeviceUnitList());
         });
 
         tv_add_params.setOnClickListener((v) -> {
-            new InputNameAndValueView(QuotationDetailActivity.this, new InputNameAndValueView.onBtnClick() {
-                @Override
-                public void onClick(String name, String value) {
-                    paramsBeanList = new ArrayList<>();
-                    QuotationBean.QuoteDevicesBean.ParamsBean paramsBean = new QuotationBean.QuoteDevicesBean.ParamsBean();
-                    paramsBean.setParamName(name);
-                    paramsBean.setParamValue(value);
-                    paramsBeanList.add(paramsBean);
-                    initAdapter();
-                }
+            new InputNameAndValueView(QuotationDetailActivity.this, (name, value) -> {
+                paramsBeanList = new ArrayList<>();
+                QuotationBean.QuoteDevicesBean.ParamsBean paramsBean = new QuotationBean.QuoteDevicesBean.ParamsBean();
+                paramsBean.setParamName(name);
+                paramsBean.setParamValue(value);
+                paramsBeanList.add(paramsBean);
+                initAdapter();
             }).show();
 
         });
@@ -159,21 +167,15 @@ public class QuotationDetailActivity extends BaseActivity {
         }
         int count = Integer.parseInt(et_amount.getText().toString().trim());
         bean.setCount(count);
-        bean.setModelCode(Config.get().getBusinessNameByCode(tv_business_type.getText().toString().trim(), 1));
-//        bean.setBugoneuid(bugOneCode);
-//        bean.setBugtwouid("");
-//        bean.setBugtwoname(tv_device_type.getText().toString().trim());
-//        bean.setBugthreeuid("");
-//        bean.setBugthreename(tv_device_name.getText().toString().trim());
-//        bean.setBugfouruid("");
-//        bean.setBugfourname(tv_brand_model.getText().toString().trim());
+        bean.setModelCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
+        bean.setBusiness_three_code(Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 3));
         bean.setRemarkInfo(et_remark.getText().toString().trim());
         bean.setProducerPlace(et_factory.getText().toString().trim());
         bean.setProducerName(et_product_company.getText().toString().trim());
         bean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
         int unitPrice = Integer.parseInt(et_price.getText().toString().trim());
-        bean.setUnitPrice(unitPrice);
-        bean.setSum(unitPrice * count);
+        bean.setUnitPrice(Double.valueOf(unitPrice));
+        bean.setSum(Double.valueOf(unitPrice * count));
         bean.setParams(paramsBeanList);
         setResult(101, getIntent().putExtra("result", bean));
         finish();

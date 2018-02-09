@@ -11,7 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -22,8 +21,10 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
@@ -52,6 +53,7 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
     private List<PayOrderListBean.ListBean> mDataList;
     private String mTitle;
     private PayOrderListAdapter mAdapter;
+    private PayOrderListBean PayOrderListBean;
 
     public static PersonOfferAndPayListFragment getInstance(String title) {
         PersonOfferAndPayListFragment sf = new PersonOfferAndPayListFragment();
@@ -97,19 +99,17 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
                 startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", mDataList.get(position).getId()));
             }
         });
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.tv_do_first:
-                        CallUtils.call(getActivity(), mDataList.get(position).getOfferer().getAccountEntity().getMobile());
-                        break;
-                    case R.id.tv_do_second:
-                        showToast("等待开通");
-                        break;
-                    default:
-                        break;
-                }
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_do_first:
+                    CallUtils.call(getActivity(), mDataList.get(position).getOfferer().getAccountEntity().getMobile());
+                    break;
+                case R.id.tv_do_second:
+                    payment(mDataList, position);
+                    showToast("等待开通");
+                    break;
+                default:
+                    break;
             }
         });
         if (mDataList.size() > 0) {
@@ -122,6 +122,27 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * 支付
+     */
+    private void payment(List<PayOrderListBean.ListBean> mDataList, int pos) {
+
+        PayLogEntity payLogEntity = new PayLogEntity();
+        payLogEntity.setOrderId(mDataList.get(pos).getId());
+        payLogEntity.setOrderNum(mDataList.get(pos).getOrderNum());
+        payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+        payLogEntity.setAssigneeUserId(mDataList.get(pos).getOwnerUserId());
+        payLogEntity.setAssigneeOrgCode(mDataList.get(pos).getOwnerOrgCode());
+        payLogEntity.setAssigneeTopCompanyId(mDataList.get(pos).getOwnerTopCompanyId());
+        //查询上门费
+        payLogEntity.setOriginPrice(mDataList.get(pos).getTotalCost());
+
+        Intent intent = new Intent(getActivity(), PayActivity.class);
+        intent.putExtra("payLogEntity", payLogEntity);
+        startActivity(intent);
+        finishSelf();
+
+    }
 
     @Override
     public void onResume() {
@@ -172,10 +193,8 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.getEquals().put("status", status + "");
-
         queryEntry.setPage(page);
         queryEntry.setSize(5);
-
         EanfangHttp.post(NewApiService.QUOTE_ORDER_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<PayOrderListBean>(getActivity(), true, PayOrderListBean.class, (bean) -> {

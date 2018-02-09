@@ -79,11 +79,11 @@ public class QuotationDetailView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("设备明细");
-        tvBusinessType.setText(Config.get().getBusinessNameByCode(quoteDevicesBean.getModelCode(), 1));
-        // TODO: 2018/1/17 品牌型号等待处理 
-//        tvDeviceType.setText(Config.getConfig().getBusinessName(quoteDevicesBean.getModelCode()));
-//        tvBrandModel.setText(Config.getConfig().getBusinessName(quoteDevicesBean.getModelCode()));
-//        tvDeviceName.setText(Config.getConfig().getBusinessName(quoteDevicesBean.getModelCode()));
+        tvBusinessType.setText(Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1));
+        tvDeviceType.setText(Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2));
+        tvDeviceName.setText(Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2));
+        tvBrandModel.setText(Config.get().getModelNameByCode(quoteDevicesBean.getModelCode(),2));
+
         tvUnit.setText(GetConstDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit()));
         etAmount.setText(quoteDevicesBean.getCount() + "");
         etPrice.setText(quoteDevicesBean.getUnitPrice() + "");

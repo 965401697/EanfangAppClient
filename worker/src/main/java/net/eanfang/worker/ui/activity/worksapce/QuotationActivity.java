@@ -4,24 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
 import com.eanfang.model.QuotationBean;
+import com.eanfang.model.SelectAddressItem;
+import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.UserEntity;
@@ -46,10 +48,10 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     public static final String TAG = QuotationActivity.class.getSimpleName();
 
     public static final int RESULT_SELECT_ORDER = 100;
-    private EditText et_project_name;
+    private EditText et_project_name, tv_detail_address;
     private TextView tv_modifyOrder;
     private TextView tv_delete, tv_delete2, tv_delete3;
-    private TextView tv_add, tv_add2, tv_add3;
+    private TextView tv_add, tv_add2, tv_add3, tv_address;
     private RecyclerView rcv_detail, rcv_detail2, rcv_detail3;
     private EditText et_contract;
     private EditText et_contract_phone;
@@ -67,6 +69,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private RadioGroup radioGroup;
     private RadioButton radioClient;
     private RadioButton radioLeader;
+    private LinearLayout llProjectAddress;
     private RelativeLayout ll_client_name, ll_clent_phone;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
@@ -76,9 +79,17 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     public List<QuotationBean.QuoteDevicesBean> quoteDevicesBeanList;
     public List<QuotationBean.QuotePartsBean> quotePartsBeanList;
     public List<QuotationBean.QuoteServicesBean> quoteServicesBeanList;
-    private int deviceSum, partsSum, serviceSum;
+    private Double deviceSum, partsSum, serviceSum;
     private Long assigneeUserId;
     private String assigneeOrgCode;
+    private static final int QUOTAION_REQUEST_CODE = 1;
+
+    private String lon;
+    private String lat;
+    private String province;
+    private String city;
+    private String zone;
+    private String contry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +116,9 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         et_contract_phone = (EditText) findViewById(R.id.et_contract_phone);
         tv_count_money = (TextView) findViewById(R.id.tv_sum_monkey);
         tv_commit = (TextView) findViewById(R.id.tv_commit);
+        tv_address = findViewById(R.id.tv_address);
+        llProjectAddress = (LinearLayout) findViewById(R.id.ll_address);
+        tv_detail_address = (EditText) findViewById(R.id.et_detail_address);
         tv_relate_order = (TextView) findViewById(R.id.tv_relate_order);
         et_client_company_name_wr = (EditText) findViewById(R.id.et_client_company_name_wr);
         radioGroup = (RadioGroup) findViewById(R.id.rg_check);
@@ -129,22 +143,19 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         quotationDetailAdapter = new QuotationDetailAdapter(R.layout.item_quotation_detail, quoteDevicesBeanList);
         rcv_detail.setLayoutManager(new LinearLayoutManager(this));
         rcv_detail.setAdapter(quotationDetailAdapter);
-        quotationDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.rl_item_detail:
-                        Intent intent = new Intent(QuotationActivity.this, QuotationDetailActivity.class);
-                        intent.putExtra("data", bean.getQuoteDevices().get(position));
-                        startActivity(intent);
-                        break;
-                    case R.id.tv_delete:
-                        bean.getQuoteDevices().remove(position);
-                        quotationDetailAdapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
+        quotationDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.rl_item_detail:
+                    Intent intent = new Intent(QuotationActivity.this, QuotationDetailActivity.class);
+                    intent.putExtra("data", bean.getQuoteDevices().get(position));
+                    startActivity(intent);
+                    break;
+                case R.id.tv_delete:
+                    bean.getQuoteDevices().remove(position);
+                    quotationDetailAdapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
             }
         });
 
@@ -161,76 +172,12 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
 
     private void registerListener() {
         tv_modifyOrder.setOnClickListener(v ->
-                startActivityForResult(new Intent(QuotationActivity.this, ModifyOrderActivity.class), 100)
+                startActivityForResult(new Intent(QuotationActivity.this, ModifyOrderActivity.class), RESULT_SELECT_ORDER)
         );
-
-
-//        tv_commit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String projectName = et_project_name.getText().toString();
-//                String relateOrder = tv_relate_order.getText().toString();
-//                String contact = et_contract.getText().toString().trim();
-//                String phone = et_contract_phone.getText().toString().trim();
-//                //2017年7月5日 lin
-//                String clientcompanynamewr = et_client_company_name_wr.getText().toString().trim();
-//
-//                if (StringUtils.isEmpty(projectName)) {
-//                    showToast("请输入项目名称");
-//                    return;
-//                }
-//                bean.setItemname(projectName);
-//                //2017年7月5日 lin
-//                if (StringUtils.isEmpty(clientcompanynamewr)) {
-//                    showToast("请输入客户名称");
-//                    return;
-//                }
-//                bean.setClientcompanynamewr(clientcompanynamewr);
-//
-//                bean.setOrdernum(relateOrder);
-//
-//                if (bean.getQuotebugdetails() == null || bean.getQuotebugdetails().size() == 0) {
-//                    showToast("请填写报价明细");
-//                    return;
-//                }
-//
-//                if (StringUtils.isEmpty(contact)) {
-//                    showToast("请填写联系人姓名");
-//                    return;
-//                }
-//                bean.setClientname(contact);
-//                if (StringUtils.isEmpty(phone)) {
-//                    showToast("请填写联系电话");
-//                }
-//                bean.setClientphone(phone);
-//                EanfangHttp.post(ApiService.QUOTE_APPLY)
-//                        .params("json", new Gson().toJson(bean))
-//                        .execute(new EanfangCallback(QuotationActivity.this, true) {
-//                            @Override
-//                            public void onSuccess(Object bean) {
-//                                super.onSuccess(bean);
-//                                runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Intent intent = new Intent(QuotationActivity.this, StateChangeActivity.class);
-//                                        Message message = new Message();
-//                                        message.setTitle("下单成功");
-//                                        message.setMsgTitle("你的报价申请已下单成功！");
-//                                        message.setMsgContent("请等待客户查阅。");
-//                                        message.setShowLogo(true);
-//                                        message.setShowOkBtn(true);
-//                                        intent.putExtra("message", message);
-//                                        startActivity(intent);
-//                                        finishSelf();
-//                                    }
-//                                });
-//
-//                            }
-//                        });
-//
-//            }
-//        });
-
+        llProjectAddress.setOnClickListener((v) -> {
+            Intent intent = new Intent(QuotationActivity.this, SelectAddressActivity.class);
+            startActivityForResult(intent, QUOTAION_REQUEST_CODE);
+        });
         tv_add.setOnClickListener((v) -> {
             startActivityForResult(new Intent(QuotationActivity.this, QuotationDetailActivity.class), 101);
         });
@@ -267,13 +214,18 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         bean.setQuoteParts(quotePartsBeanList);
         bean.setQuoteDevices(quoteDevicesBeanList);
         bean.setRepairOrderNum(orderID);
-        bean.setTotalCost(deviceSum + partsSum + serviceSum);
+        bean.setTotalCost((deviceSum + partsSum + serviceSum)*100);
         bean.setAssigneeOrgCode(assigneeOrgCode);
         bean.setAssigneeUserId(assigneeUserId);
+        bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
+        bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
+        bean.setLatitude(lat);
+        bean.setLongitude(lon);
+        bean.setDetail_place(tv_detail_address.getText().toString().trim());
         bean.setProjectName(et_project_name.getText().toString().trim());
         bean.setReporter(et_contract.getText().toString().trim());
         bean.setReporterPhone(et_contract_phone.getText().toString().trim());
-        bean.setQuoteCost(deviceSum + partsSum + serviceSum);
+        bean.setQuoteCost((deviceSum + partsSum + serviceSum)*100);
         bean.setOrderId(oid);
         bean.setClientName(et_client_company_name_wr.getText().toString().trim());
         bean.setAssigneeTopCompanyId(topid);
@@ -291,10 +243,20 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 orderID = data.getStringExtra("orderID");
                 clientName = data.getStringExtra("clientName");
                 clientPhone = data.getStringExtra("clientPhone");
-                assigneeOrgCode=data.getStringExtra("orgcode");
-                assigneeUserId=data.getLongExtra("assignUid",0);
+                assigneeOrgCode = data.getStringExtra("orgcode");
+                assigneeUserId = data.getLongExtra("assignUid", 0);
                 oid = data.getLongExtra("orderid", 0);
                 topid = data.getLongExtra("topId", 0);
+                String detailAddress = data.getStringExtra("tvAddress");
+                tv_detail_address.setText(detailAddress);
+                String code = data.getStringExtra("placeCode");
+                tv_address.setText(Config.get().getAddressByCode(code));
+                lat = data.getStringExtra("lat");
+                bean.setLatitude(lat);
+                lon = data.getStringExtra("lon");
+                bean.setLongitude(lon);
+                bean.setZone_code(code);
+                bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
                 if (radioClient.isChecked() == true) {
                     if (StringUtils.isEmpty(orderID)) {
                         return;
@@ -310,35 +272,51 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 if (data.getSerializableExtra("result") == null) {
                     return;
                 }
+                QuotationBean.QuoteDevicesBean quoteDevicesBean = (QuotationBean.QuoteDevicesBean) data.getSerializableExtra("result");
                 quoteDevicesBeanList = new ArrayList<>();
-                quoteDevicesBeanList.add((QuotationBean.QuoteDevicesBean) data.getSerializableExtra("result"));
+                quoteDevicesBeanList.add(quoteDevicesBean);
                 bean.setQuoteDevices(quoteDevicesBeanList);
                 quotationDetailAdapter.notifyDataSetChanged();
-                deviceSum = Stream.of(quoteDevicesBeanList).collect(Collectors.summingInt(c -> c.getSum()));
+                deviceSum = quoteDevicesBean.getSum();
                 break;
             case 102:
                 if (data.getSerializableExtra("result") == null) {
                     return;
                 }
+                QuotationBean.QuotePartsBean quotePartsBean = (QuotationBean.QuotePartsBean) data.getSerializableExtra("result");
                 quotePartsBeanList = new ArrayList<>();
-                quotePartsBeanList.add((QuotationBean.QuotePartsBean) data.getSerializableExtra("result"));
+                quotePartsBeanList.add(quotePartsBean);
                 bean.setQuoteParts(quotePartsBeanList);
                 quotationPartsAdapter.notifyDataSetChanged();
-                partsSum = Stream.of(quotePartsBeanList).collect(Collectors.summingInt(c -> c.getSum()));
+                partsSum = quotePartsBean.getSum();
                 break;
             case 103:
                 if (data.getSerializableExtra("result") == null) {
                     return;
                 }
+                QuotationBean.QuoteServicesBean quoteServicesBean = (QuotationBean.QuoteServicesBean) data.getSerializableExtra("result");
                 quoteServicesBeanList = new ArrayList<>();
-                quoteServicesBeanList.add((QuotationBean.QuoteServicesBean) data.getSerializableExtra("result"));
+                quoteServicesBeanList.add(quoteServicesBean);
                 bean.setQuoteServices(quoteServicesBeanList);
                 quotationServiceAdapter.notifyDataSetChanged();
-                serviceSum = Stream.of(quoteServicesBeanList).collect(Collectors.summingInt(c -> c.getSum()));
+                serviceSum = quoteServicesBean.getSum();
                 tv_count_money.setText(String.valueOf(deviceSum + partsSum + serviceSum));
+                break;
+            case QUOTAION_REQUEST_CODE:
+                SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
+                lat = item.getLatitude().toString();
+                lon = item.getLongitude().toString();
+                province = item.getProvince();
+                city = item.getCity();
+                zone = item.getZone();
+                contry = item.getAddress();
+                tv_address.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
+                //地图选址 取 显示值
+                tv_detail_address.setText(item.getName());
                 break;
             default:
                 break;
+
 
         }
 
@@ -391,16 +369,13 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             showToast("暂无其他员工可选");
             return;
         }
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                posistion = options1;
-                et_contract_phone.setText(userlist.get(posistion).getAccountEntity().getMobile());
-                et_contract.setText(userlist.get(posistion).getAccountEntity().getRealName());
-                assigneeUserId = userlist.get(posistion).getUserId();
-                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
-                topid = userlist.get(posistion).getTopCompanyId();
-            }
+        pvOptions_NoLink = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+            posistion = options1;
+            et_contract_phone.setText(userlist.get(posistion).getAccountEntity().getMobile());
+            et_contract.setText(userlist.get(posistion).getAccountEntity().getRealName());
+            assigneeUserId = userlist.get(posistion).getUserId();
+            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
+            topid = userlist.get(posistion).getTopCompanyId();
         }).build();
         pvOptions_NoLink.setPicker(userNameList);
         pvOptions_NoLink.show();
