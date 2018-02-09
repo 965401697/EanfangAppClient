@@ -68,7 +68,8 @@ public class CompanyListView extends BaseDialog {
      */
     private void getCompanyAllList() {
         List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
-        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0).toList();
+        //排除默认公司 只去客户公司
+      //  orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getCompanyId() != 0 && bean.getOrgUnitEntity().getUnitType() == 2).toList();
         initAdapter(orgEntityList);
     }
 
@@ -96,11 +97,9 @@ public class CompanyListView extends BaseDialog {
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().remove(LoginBean.class.getName());
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-                    OkGo http = EanfangHttp.getHttp();
-                    HttpHeaders headers = new HttpHeaders();
-                    headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-                    headers.put("Request-From", "WORKER");
-                    http.addCommonHeaders(headers);
+
+                    EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                    EanfangHttp.setClient();
                     dismiss();
                 }));
     }

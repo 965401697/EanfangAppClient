@@ -3,7 +3,6 @@ package com.eanfang.oss;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 import com.eanfang.apiservice.OssApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangHttp;
 
 import org.json.JSONException;
@@ -25,9 +24,9 @@ public class STSGetter extends OSSFederationCredentialProvider {
         String stsJson;
         try {
             Response response = EanfangHttp.get(OssApi.STS_URL)
-                    .headers("YAF-Token", EanfangApplication.get().getUser().getToken())
-                    .headers("Content-Type", "application/json")
-                    .headers("Request-from", "CLIENT")
+//                    .headers("YAF-Token", EanfangApplication.get().getUser().getToken())
+//                    .headers("Content-Type", "application/json")
+//                    .headers("Request-from", "CLIENT")
                     .execute();
             if (response.isSuccessful()) {
                 stsJson = response.body().string();

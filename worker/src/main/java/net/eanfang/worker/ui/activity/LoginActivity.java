@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
@@ -93,6 +94,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         setTitle("登录");
         initData();
 
+        EanfangHttp.setWorker();
+
     }
 
 
@@ -117,18 +120,20 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
             }
 //            }
 
-//            //调试阶段
-//            if (BuildConfig.LOG_DEBUG) {
-//                if (StringUtils.isEmpty(userPhone)) {
-//                    userPhone = "13800138020";
-//                }
-//                if (StringUtils.isEmpty(userAulth)) {
-//                    userAulth = "admin";
-//                }
-//            }
-            appRegister(userPhone, userAulth);
-            setVerfiyLogin(userPhone, userAulth);
-//            setLogin(userPhone, userAulth);
+            //调试阶段
+            if (BuildConfig.LOG_DEBUG) {
+                if (StringUtils.isEmpty(userPhone)) {
+                    userPhone = "13800138020";
+                }
+                if (StringUtils.isEmpty(userAulth)) {
+                    userAulth = "admin";
+                }
+                if (userAulth.equals("admin")) {
+                    setLogin(userPhone, userAulth);
+                }
+            } else {
+                setVerfiyLogin(userPhone, userAulth);
+            }
 
         });
 
@@ -172,21 +177,12 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
      * @param pwd   验证码
      */
     private void setVerfiyLogin(String phone, String pwd) {
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
                 .params("mobile", phone)
                 .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-                    //OkGo  head 写入 token
-                    OkGo http = EanfangHttp.getHttp();
-                    //清除 headers
-                    // http.getCommonHeaders().clear();
-                    HttpHeaders headers = new HttpHeaders();
-                    headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-                    headers.put("Request-From", "CLIENT");
-                    http.addCommonHeaders(headers);
-
+                    EanfangHttp.setToken(bean.getToken());
                     registerEase(phone, pwd);
                     loginEase(phone, pwd);
                     goMain();
@@ -212,13 +208,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-                    //OkGo  head 写入 token
-                    OkGo http = EanfangHttp.getHttp();
-                    //清除 headers
-                    HttpHeaders headers = new HttpHeaders();
-                    headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-                    headers.put("Request-From", "WORKER");
-                    http.addCommonHeaders(headers);
+                    EanfangHttp.setToken(bean.getToken());
 
                     registerEase(phone, pwd);
                     loginEase(phone, pwd);
@@ -228,23 +218,23 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     }
 
-    private void appRegister(String phone, String pwd) {
-        /**COMMON_ACC("普通账号", 0),
-         INTERNAL_ACC("内置账号", 1),
-         WORKER_ACC("技师账号", 2),
-         WORKER_VERIFIED("已认证技师", 3);*/
-        AccountEntity accountEntity = new AccountEntity();
-        accountEntity.setMobile(phone);
-        accountEntity.setPasswd(pwd);
-        accountEntity.setAccType(0);
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-        EanfangHttp.post(UserApi.APP_REGISTER + pwd)
-                .upJson(JSONObject.toJSONString(accountEntity))
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
-
-
-                }));
-    }
+//    private void appRegister(String phone, String pwd) {
+//        /**COMMON_ACC("普通账号", 0),
+//         INTERNAL_ACC("内置账号", 1),
+//         WORKER_ACC("技师账号", 2),
+//         WORKER_VERIFIED("已认证技师", 3);*/
+//        AccountEntity accountEntity = new AccountEntity();
+//        accountEntity.setMobile(phone);
+//        accountEntity.setPasswd(pwd);
+//        accountEntity.setAccType(0);
+//        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
+//        EanfangHttp.post(UserApi.APP_REGISTER + pwd)
+//                .upJson(JSONObject.toJSONString(accountEntity))
+//                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
+//
+//
+//                }));
+//    }
 
     /**
      * 获取验证码
@@ -252,7 +242,6 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
      * @param phone 电话号
      */
     private void getVerificationCode(String phone) {
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
                 .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {

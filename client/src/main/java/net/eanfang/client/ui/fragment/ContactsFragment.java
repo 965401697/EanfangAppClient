@@ -69,6 +69,7 @@ public class ContactsFragment extends BaseFragment {
 
     private void initAdapter() {
         rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
+        //客户公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity().getUnitType() == 2).toList();
         parentAdapter = new ParentAdapter(mDatas);
         rev_list.setAdapter(parentAdapter);

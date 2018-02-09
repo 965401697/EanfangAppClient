@@ -26,7 +26,7 @@ public class EanfangHttp {
             new EanfangHttp();
         }
 
-        return getHttp().<String>get(url);
+        return OkGo.<String>get(url);
     }
 
     /**
@@ -39,7 +39,7 @@ public class EanfangHttp {
         if (getHttp() == null) {
             new EanfangHttp();
         }
-        return getHttp().<String>post(url);
+        return OkGo.<String>post(url);
     }
 
     public static OkGo getHttp() {
@@ -49,4 +49,21 @@ public class EanfangHttp {
     public static void setHttp(OkGo http) {
         EanfangHttp.http = http;
     }
+
+    public static OkGo setClient() {
+        getHttp().getCommonHeaders().put("Request-From", "CLIENT");
+        return getHttp();
+    }
+
+    public static OkGo setWorker() {
+        getHttp().getCommonHeaders().put("Request-From", "WORKER");
+        return getHttp();
+    }
+
+    public static OkGo setToken(String token) {
+        getHttp().getCommonHeaders().put("YAF-Token", token);
+        return getHttp();
+
+    }
+
 }

@@ -193,9 +193,9 @@ public class MainActivity extends BaseActivity {
 
     public void setHeaders() {
         if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", EanfangApplication.get().getUser().getToken());
+            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
         }
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
+        EanfangHttp.setWorker();
     }
 
 }

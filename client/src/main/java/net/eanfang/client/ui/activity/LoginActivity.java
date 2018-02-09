@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -90,7 +91,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         registerListener();
         setTitle("登录");
         initData();
-
+        EanfangHttp.setClient();
     }
 
 
@@ -126,8 +127,13 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
                 if (StringUtils.isEmpty(userAulth)) {
                     userAulth = "admin";
                 }
+
+                if (userAulth.equals("admin")) {
+                    setLogin(userPhone, userAulth);
+                }
+            } else {
+                setVerfiyLogin(userPhone, userAulth);
             }
-            setLogin(userPhone, userAulth);
 
 
         });
@@ -166,37 +172,51 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     }
 
     /**
-     * 登录
+     * 验证码登录
+     *
+     * @param phone 电话号
+     * @param pwd   验证码
+     */
+    private void setVerfiyLogin(String phone, String pwd) {
+
+        EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
+                .params("mobile", phone)
+                .params("verifycode", pwd)
+                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
+                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+
+                    EanfangHttp.setToken(bean.getToken());
+                    registerEase(phone, pwd);
+                    loginEase(phone, pwd);
+                    goMain();
+                }));
+
+    }
+
+    /**
+     * 密码登录
      *
      * @param phone 电话号
      * @param pwd   验证码
      */
     private void setLogin(String phone, String pwd) {
-//        JSONObject object = new JSONObject();
-//        try {
-//            object.put("username", phone);
-//            object.put("password", pwd);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-        EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
-                .params("mobile",phone)
-                .params("verifycode",pwd)
+        JSONObject object = new JSONObject();
+        try {
+            object.put("username", phone);
+            object.put("password", pwd);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        EanfangHttp.post(UserApi.APP_LOGIN)
+                .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-                    //EanfangApplication.get().set(LoginBean.class.getName(), bean.getToken());
-                    //OkGo  head 写入 token
-                    OkGo http = EanfangHttp.getHttp();
-                    //清除 headers
-                    // http.getCommonHeaders().clear();
-                    HttpHeaders headers = new HttpHeaders();
-                    headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-                    headers.put("Request-From", "CLIENT");
-                    http.addCommonHeaders(headers);
 
-                    registerEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
-                    loginEase(bean.getAccount().getMobile(), bean.getAccount().getPasswd());
+                    EanfangHttp.setToken(bean.getToken());
+
+                    registerEase(phone, pwd);
+                    loginEase(phone, pwd);
+
                     goMain();
                 }));
 
@@ -208,7 +228,6 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
      * @param phone 电话号
      */
     private void getVerificationCode(String phone) {
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
                 .execute(new EanfangCallback<JSONObject>(LoginActivity.this, false, JSONObject.class, (bean) -> {
