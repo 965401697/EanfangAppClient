@@ -35,7 +35,6 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.okgo.OkGo;
 import com.okgo.model.HttpHeaders;
-import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;
@@ -317,7 +316,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {//处理返回按钮被按下
+        //处理返回按钮被按下
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             //退出登录
             Intent intent = new Intent(context.getPackageName() + ".ExitListenerReceiver");
             context.sendBroadcast(intent);

@@ -62,6 +62,12 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     @NotEmpty
     private EditText et_yanzheng;
     private TextView tv_yanzheng;
+    private AppCompatCheckBox cb;
+    private TextView read;
+    private Button btn_login;
+    private Validator validator;
+
+
     //验证码倒计时
     CountDownTimer timer = new CountDownTimer(60000, 1000) {
 
@@ -76,11 +82,6 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             tv_yanzheng.setText("获取验证码");
         }
     };
-    private AppCompatCheckBox cb;
-    private TextView read;
-    private Button btn_login;
-    private Validator validator;
-    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +173,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     }
 
     /**
-     * 验证码登录
+     * 登录
      *
      * @param phone 电话号
      * @param pwd   验证码
@@ -180,8 +181,8 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     private void setVerfiyLogin(String phone, String pwd) {
 
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
-                .params("mobile", phone)
-                .params("verifycode", pwd)
+                .params("mobile",phone)
+                .params("verifycode",pwd)
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
@@ -230,7 +231,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     private void getVerificationCode(String phone) {
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
-                .execute(new EanfangCallback<JSONObject>(LoginActivity.this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
                     showToast("验证码获取成功");
                 }));
     }

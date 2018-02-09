@@ -7,7 +7,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
@@ -79,6 +83,7 @@ public class SettingActivity extends BaseClientActivity {
         builder.setMessage("退出后将无法查看数据，您确定退出吗？");
         builder.setTitle("");
         builder.setPositiveButton("确定", (dialog, which) -> {
+            signout();
             dialog.dismiss();
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
             ToastUtil.get().showToast(SettingActivity.this, "退出登录成功");
@@ -92,4 +97,10 @@ public class SettingActivity extends BaseClientActivity {
         builder.create().show();
     }
 
+    private void signout() {
+        EanfangHttp.post(UserApi.APP_LOGOUT)
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
+                    showToast("退出成功");
+                }));
+    }
 }
