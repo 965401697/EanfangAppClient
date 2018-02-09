@@ -5,12 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.ViewGroup;
 
-import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.SharePreferenceUtil;
@@ -73,15 +68,15 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         if (!isFirst) {
             return;
         }
-        //登录成功且加载完成
-        if (isLoadReady && isLoginReady) {
-            startActivity(new Intent(this, MainActivity.class));
-            finishSelf();
-        }
-        if (isLoadReady && isCheckReady) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finishSelf();
-        }
+//        //登录成功且加载完成
+//        if (isLoadReady && isLoginReady) {
+//            startActivity(new Intent(this, MainActivity.class));
+//            finishSelf();
+//        }
+//        if (isLoadReady && isCheckReady) {
+        startActivity(new Intent(this, LoginActivity.class));
+        finishSelf();
+//        }
     }
 
 
@@ -111,21 +106,21 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
             go();
             return;
         }
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-        EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", user.getToken());
-        EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class, (bean) -> {
-                    Object object = bean;
-                    if (object instanceof LoginBean) {
-                        LoginBean loginBean = (LoginBean) object;
-                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-                        isLoginReady = true;
-                        go();
-                    } else {
-                        isCheckReady = true;
-                        go();
-                    }
-                }));
+//        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "CLIENT");
+//        EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", user.getToken());
+//        EanfangHttp.get(UserApi.GET_USER_INFO)
+//                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class, (bean) -> {
+//                    Object object = bean;
+//                    if (object instanceof LoginBean) {
+//                        LoginBean loginBean = (LoginBean) object;
+//                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
+//                        isLoginReady = true;
+//                        go();
+//                    } else {
+//                        isCheckReady = true;
+//                        go();
+//                    }
+//                }));
 
     }
 

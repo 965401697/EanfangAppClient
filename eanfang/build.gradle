@@ -19,18 +19,23 @@ android {
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
 
-//        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
-//        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 
 //        buildConfigField("String", "HOST", "\"http://eanfang.net:8280\"")
 //        buildConfigField("String", "API_HOST", "\"http://eanfang.net:8280\"")
 
-        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
 
         buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
         buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
+        ndk {
+            // 设置支持的SO库架构
+
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86'
+        }
     }
 
     compileOptions {

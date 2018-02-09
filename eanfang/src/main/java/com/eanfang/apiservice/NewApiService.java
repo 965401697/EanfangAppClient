@@ -129,12 +129,12 @@ public interface NewApiService {
     /**
      * 推送
      */
-    String GET_PUSH_MSG_LIST = BuildConfig.API_HOST + "/yaf_oa/pushMessage/list";
+    String GET_PUSH_MSG_LIST = BuildConfig.API_HOST + "/yaf_sys/notice/list";
 
     /**
      * 推送已读Or未读
      */
-    String GET_PUSH_READ_OR_UNREAD = BuildConfig.API_HOST + "/yaf_oa/pushMessage/detail";
+    String GET_PUSH_READ_OR_UNREAD = BuildConfig.API_HOST + "/yaf_sys/notice/read/";
 
     /**
      * 新增报装

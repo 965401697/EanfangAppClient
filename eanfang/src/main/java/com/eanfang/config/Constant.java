@@ -206,7 +206,10 @@ public interface Constant {
      * 30.技师工作状态
      */
     String WORK_STATUS = "WorkStatus";
-
+    /**
+     * 31.推送类型
+     */
+    String PUSH_TYPE = "PushType";
 
 
     String PAY_TYPE = "PayType";

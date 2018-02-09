@@ -10,10 +10,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.MessageListBean;
+import com.eanfang.model.NoticeEntity;
+import com.eanfang.model.NoticeListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -39,16 +39,10 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 public class MessageListActivity extends BaseClientActivity implements
         SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
-
     private RecyclerView mRecyclerView;
-    private List<MessageListBean.ListBean> mDataList;
     private SwipyRefreshLayout refreshLayout;
     private int page = 1;
-    private MessageListBean messageListBean;
-
-    public MessageListBean getMessageListBean() {
-        return messageListBean;
-    }
+    private NoticeListBean messageListBean;
 
 
     @Override
@@ -59,14 +53,12 @@ public class MessageListActivity extends BaseClientActivity implements
     }
 
     private void initView() {
-
+        setTitle("通知提醒");
+        setLeftBack();
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
-        setTitle("通知提醒");
-        setLeftBack();
-
         refreshLayout = (SwipyRefreshLayout) findViewById(R.id.msg_refresh);
         refreshLayout.setOnRefreshListener(this);
     }
@@ -81,13 +73,12 @@ public class MessageListActivity extends BaseClientActivity implements
 
     private void getJPushMessage() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("account", EanfangApplication.getApplication().getUser().getAccount().getMobile());
         queryEntry.setPage(1);
         queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<MessageListBean>(this, true, MessageListBean.class, (bean) -> {
+                .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
                                 messageListBean = bean;
                                 initAdapter(bean.getList());
@@ -132,7 +123,7 @@ public class MessageListActivity extends BaseClientActivity implements
         }
     }
 
-    private void initAdapter(List<MessageListBean.ListBean> mDataList) {
+    private void initAdapter(List<NoticeEntity> mDataList) {
         BaseQuickAdapter evaluateAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -152,11 +143,8 @@ public class MessageListActivity extends BaseClientActivity implements
 
     }
 
-    private void unReadOrRead(MessageListBean listBean, int postion) {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("id", listBean.getList().get(postion).getId() + "");
-        EanfangHttp.post(NewApiService.GET_PUSH_READ_OR_UNREAD)
-                .upJson(JsonUtils.obj2String(queryEntry))
+    private void unReadOrRead(NoticeListBean listBean, int postion) {
+        EanfangHttp.post(NewApiService.GET_PUSH_READ_OR_UNREAD + listBean.getList().get(postion).getId())
                 .execute(new EanfangCallback<>(this, false, JSONObject.class, (bean) -> {
                 }));
     }

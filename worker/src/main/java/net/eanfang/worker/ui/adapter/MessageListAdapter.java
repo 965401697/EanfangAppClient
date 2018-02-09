@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.MessageListBean;
+import com.eanfang.model.NoticeEntity;
 
 import net.eanfang.worker.R;
 
@@ -16,16 +16,16 @@ import java.util.List;
  * Created by Administrator on 2017/3/15.
  */
 
-public class MessageListAdapter extends BaseQuickAdapter<MessageListBean.ListBean, BaseViewHolder> {
+public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewHolder> {
     public MessageListAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MessageListBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, NoticeEntity item) {
 
-        helper.setText(R.id.tv_titles, item.getTitle());
-        helper.setText(R.id.tv_content, item.getContentInfo());
+        helper.setText(R.id.tv_titles, item.getNoticeType()+"");
+        helper.setText(R.id.tv_content, item.getParams());
         if (item.getStatus() == 0) {
             helper.setText(R.id.tv_status, "未读");
         } else if (item.getStatus() == 1) {

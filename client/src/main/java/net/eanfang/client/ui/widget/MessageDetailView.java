@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.eanfang.model.MessageListBean;
+import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
@@ -28,9 +28,9 @@ public class MessageDetailView extends BaseDialog {
     @BindView(R.id.tv_msg_content)
     TextView tvMsgContent;
     private Activity mContext;
-    private MessageListBean.ListBean listBean;
+    private NoticeEntity listBean;
 
-    public MessageDetailView(Activity context, MessageListBean.ListBean listBean) {
+    public MessageDetailView(Activity context, NoticeEntity listBean) {
         super(context);
         this.mContext = context;
         this.listBean = listBean;
@@ -40,8 +40,8 @@ public class MessageDetailView extends BaseDialog {
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.message_detail_view);
         ButterKnife.bind(this);
-        tvType.setText("类型：" + listBean.getTitle());
+        tvType.setText("类型：" + listBean.getNoticeType());
         tvTime.setText("时间：" + listBean.getCreateTime());
-        tvMsgContent.setText("内容：" + "\n" + listBean.getContentInfo());
+        tvMsgContent.setText("内容：" + "\n" + listBean.getParams());
     }
 }
