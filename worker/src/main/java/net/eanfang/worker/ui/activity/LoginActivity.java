@@ -34,7 +34,6 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.okgo.OkGo;
 import com.okgo.model.HttpHeaders;
-import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;
@@ -126,7 +125,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 //                    userAulth = "admin";
 //                }
 //            }
-            appRegister(userPhone, userAulth);
+//            appRegister(userPhone, userAulth);
             setVerfiyLogin(userPhone, userAulth);
 //            setLogin(userPhone, userAulth);
 
@@ -228,23 +227,6 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     }
 
-    private void appRegister(String phone, String pwd) {
-        /**COMMON_ACC("普通账号", 0),
-         INTERNAL_ACC("内置账号", 1),
-         WORKER_ACC("技师账号", 2),
-         WORKER_VERIFIED("已认证技师", 3);*/
-        AccountEntity accountEntity = new AccountEntity();
-        accountEntity.setMobile(phone);
-        accountEntity.setPasswd(pwd);
-        accountEntity.setAccType(0);
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-        EanfangHttp.post(UserApi.APP_REGISTER + pwd)
-                .upJson(JSONObject.toJSONString(accountEntity))
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
-
-
-                }));
-    }
 
     /**
      * 获取验证码
@@ -328,7 +310,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {//处理返回按钮被按下
+        //处理返回按钮被按下
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             //退出登录
             Intent intent = new Intent(context.getPackageName() + ".ExitListenerReceiver");
             context.sendBroadcast(intent);
