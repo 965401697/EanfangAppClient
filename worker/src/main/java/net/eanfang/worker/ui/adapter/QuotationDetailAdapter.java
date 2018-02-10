@@ -21,7 +21,7 @@ public class QuotationDetailAdapter extends BaseQuickAdapter<QuotationBean.Quote
     @Override
     protected void convert(BaseViewHolder helper, QuotationBean.QuoteDevicesBean item) {
         helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "."
-                + Config.get().getBusinessNameByCode(item.getModelCode(), 1) + "-小计：￥" +
+                + Config.get().getBusinessNameByCode(item.getBusiness_three_code(), 1) + "-小计：￥" +
                 item.getSum()
 
         );

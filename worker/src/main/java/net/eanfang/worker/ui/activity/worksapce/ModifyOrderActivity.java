@@ -61,6 +61,12 @@ public class ModifyOrderActivity extends BaseWorkerActivity {
                                         setResult(RESULT_CANCELED, getIntent().putExtra("topId", bean.getList().get(position).getOwnerUser().getTopCompanyId()));
                                         setResult(RESULT_CANCELED, getIntent().putExtra("orgcode", bean.getList().get(position).getOwnerOrgCode()));
                                         setResult(RESULT_CANCELED, getIntent().putExtra("assignUid", bean.getList().get(position).getOwnerUserId()));
+                                        setResult(RESULT_CANCELED, getIntent().putExtra("tvAddress", bean.getList().get(position).getAddress()));
+                                        setResult(RESULT_CANCELED, getIntent().putExtra("placeCode", bean.getList().get(position).getPlaceCode()));
+                                        setResult(RESULT_CANCELED, getIntent().putExtra("lat", bean.getList().get(position).getLatitude()));
+                                        setResult(RESULT_CANCELED, getIntent().putExtra("lon", bean.getList().get(position).getLongitude()));
+                                        setResult(RESULT_CANCELED, getIntent().putExtra("bean", bean));
+
 
                                         finishSelf();
                                         break;

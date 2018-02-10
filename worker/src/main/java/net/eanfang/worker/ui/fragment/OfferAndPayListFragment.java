@@ -90,6 +90,9 @@ public class OfferAndPayListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
+        if (((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList() == null) {
+            return;
+        }
         mDataList = ((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
         mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -99,19 +102,16 @@ public class OfferAndPayListFragment extends BaseFragment implements
                 startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", mDataList.get(position).getId()));
             }
         });
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.tv_do_first:
-                        CallUtils.call(getActivity(), mDataList.get(position).getReporterPhone());
-                        break;
-                    case R.id.tv_do_second:
-                        agreeOffer(mDataList.get(position).getId());
-                        break;
-                    default:
-                        break;
-                }
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_do_first:
+                    CallUtils.call(getActivity(), mDataList.get(position).getReporterPhone());
+                    break;
+                case R.id.tv_do_second:
+                    agreeOffer(mDataList.get(position).getId());
+                    break;
+                default:
+                    break;
             }
         });
         if (mDataList.size() > 0) {

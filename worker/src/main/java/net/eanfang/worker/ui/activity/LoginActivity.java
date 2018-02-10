@@ -33,6 +33,8 @@ import com.im.model.bean.UserInfo;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.okgo.OkGo;
+import com.okgo.model.HttpHeaders;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;

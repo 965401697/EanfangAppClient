@@ -97,7 +97,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
                 startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", mDataList.get(position).getId()));
             }
         });
-        mAdapter.setOnItemChildClickListener((BaseQuickAdapter.OnItemChildClickListener) (adapter, view, position) -> {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_do_first:
                     CallUtils.call(getActivity(), mDataList.get(position).getOfferer().getAccountEntity().getMobile());
