@@ -33,8 +33,6 @@ import com.im.model.bean.UserInfo;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.okgo.OkGo;
-import com.okgo.model.HttpHeaders;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;
@@ -102,22 +100,22 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         btn_login.setOnClickListener(v -> {
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
-//            if (!BuildConfig.LOG_DEBUG) {
+            if (!BuildConfig.LOG_DEBUG) {
 
-            if (StringUtils.isEmpty(userPhone)) {
-                showToast("手机号不能为空");
-                return;
-            }
+                if (StringUtils.isEmpty(userPhone)) {
+                    showToast("手机号不能为空");
+                    return;
+                }
 
-            if (StringUtils.isEmpty(userAulth)) {
-                showToast("验证码不能为空");
-                return;
+                if (StringUtils.isEmpty(userAulth)) {
+                    showToast("验证码不能为空");
+                    return;
+                }
+                if (!cb.isChecked()) {
+                    showToast("同意易安防会员章程和协议后才可以登陆使用");
+                    return;
+                }
             }
-            if (!cb.isChecked()) {
-                showToast("同意易安防会员章程和协议后才可以登陆使用");
-                return;
-            }
-//            }
 
             //调试阶段
             if (BuildConfig.LOG_DEBUG) {

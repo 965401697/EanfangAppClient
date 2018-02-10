@@ -60,7 +60,7 @@ public class ContactsFragment extends BaseFragment {
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), true, OrgEntity.class, true, (list) -> {
                     if (list != null && !list.isEmpty()) {
                         //排除默认公司
-                        mDatas = Stream.of(list).filter(bean -> bean.getCompanyId() != 0).toList();
+                        mDatas = Stream.of(list).filter(bean -> bean.getOrgId() != 0).toList();
                     } else {
                         mDatas = Collections.EMPTY_LIST;
                     }

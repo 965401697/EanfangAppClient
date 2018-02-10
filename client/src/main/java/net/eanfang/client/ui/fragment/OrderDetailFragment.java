@@ -12,6 +12,7 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
@@ -166,7 +167,7 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_contract_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
                     tv_contract_phone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
                     tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
-                    tv_address.setText(bean.getAddress());
+                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
                     if (bean.getBookTime() != null) {
                         tv_time.setText(Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--"));
                     } else {

@@ -18,8 +18,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseDialog;
-import com.okgo.OkGo;
-import com.okgo.model.HttpHeaders;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
@@ -69,7 +67,8 @@ public class CompanyListView extends BaseDialog {
     private void getCompanyAllList() {
         List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         //排除默认公司 只去客户公司
-      //  orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getCompanyId() != 0 && bean.getOrgUnitEntity().getUnitType() == 2).toList();
+        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity().getUnitType() == 2).
+                toList();
         initAdapter(orgEntityList);
     }
 

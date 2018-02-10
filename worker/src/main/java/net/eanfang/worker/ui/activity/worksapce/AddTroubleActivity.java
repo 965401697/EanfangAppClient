@@ -12,6 +12,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -19,6 +20,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -115,19 +117,46 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         });
         //系统类别
         llSystemCategory.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvSystemCategory, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+                tvSystemCategory.setText(item);
+                tvEquipmentCategory.setText("");
+                tvEquipmentName.setText("");
+                tvModel.setText("");
+            });
         });
 
         //故障设备类别
         llEquipmentCategory.setOnClickListener((v) -> {
-
+            String busOneCode = Config.get().getBusinessCodeByName(tvSystemCategory.getText().toString().trim(), 1);
+            if (StringUtils.isEmpty(busOneCode)) {
+                showToast("请先选择系统类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tvEquipmentCategory.setText(item);
+                tvEquipmentName.setText("");
+                tvModel.setText("");
+            }));
         });
         //故障设备名称
         llEquipmentName.setOnClickListener((v) -> {
-
+            String busTwoCode = Config.get().getBusinessCodeByName(tvEquipmentCategory.getText().toString().trim(), 2);
+            if (StringUtils.isEmpty(busTwoCode)) {
+                showToast("请先选择设备类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tvEquipmentName.setText(item);
+                tvModel.setText("");
+            }));
         });
         //品牌型号
-        llEquipmentName.setOnClickListener((v) -> {
+        llModel.setOnClickListener((v) -> {
+            String busOneCode = Config.get().getBaseCodeByName(tvSystemCategory.getText().toString().trim(), 1, Constant.MODEL).get(0);
+            if (StringUtils.isEmpty(busOneCode)) {
+                showToast("请先选择系统类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tvModel.setText(item);
+            }));
 
         });
         setRightTitleOnClickListener(v -> onSubmitWorker());
@@ -137,11 +166,12 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     private void onSubmitWorker() {
         RepairFailureEntity bean = new RepairFailureEntity();
 
-        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvSystemCategory.getText().toString().trim(), 3));
+        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvEquipmentName.getText().toString().trim(), 3));
+        bean.setModelCode(Config.get().getBaseCodeByName(tvModel.getText().toString().trim(), 2, Constant.MODEL).get(0));
         bean.setBugPosition(etLocation.getText().toString().trim());
         bean.setDeviceNo(etCode.getText().toString().trim());
         bean.setBugDescription(etDesc.getText().toString().trim());
-        bean.setBusRepairOrderId(id);
+        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
@@ -174,6 +204,9 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
         if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
             snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {

@@ -21,6 +21,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.model.LoginBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
@@ -98,7 +99,7 @@ public class RepairActivity extends BaseClientActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
         ButterKnife.bind(this);
-//        initData();
+        initData();
         setTitle("我要报修");
         registerListener();
 //        initAdapter();
@@ -201,35 +202,34 @@ public class RepairActivity extends BaseClientActivity {
     }
 
 
-//    private void initData() {
-//        mDataList.clear();
-//        for (int i = 0; i < beanList.size(); i++) {
-//            ToRepairItem item = new ToRepairItem();
-//            item.setName(i + 1 + "." + beanList.get(i).getBugtwoname() + "-" + beanList.get(i).getBugthreename() + "(" + beanList.get(i).getBugposition() + ")");
-//            mDataList.add(item);
-//        }
-//        User user = EanfangApplication.getApplication().getUser();
-//        String name = "";
-//        if (StringUtils.isEmpty(user.getCompanyName())) {
-//            name = user.getName();
-//        } else {
-//            name = user.getCompanyName();
-//        }
-//        //如果公司名称为空 则取当前登陆人的公司
-//        if (StringUtils.isEmpty(et_company.getText())) {
-//            et_company.setText(name);
-//        }
-//
-//        et_contact.setText(user.getName());
-//        et_phone.setText(user.getAccount());
-//        if (StringUtils.isEmpty(et_phone.getText())) {
-//            et_phone.setText(user.getAccount());
-//        }
-//
-//        businessOneList = Config.getConfig().getBusinessOneList();
-//
-//
-//    }
+    private void initData() {
+        LoginBean user = EanfangApplication.getApplication().getUser();
+        String name;
+        String area = "";
+        String address = "";
+        //个人客户
+        if (user.getAccount().getDefaultUser().getCompanyId() <= 0) {
+            name = user.getAccount().getRealName();
+            area = Config.get().getAddressByCode(user.getAccount().getAreaCode());
+            address = user.getAccount().getAddress();
+        } else {
+            name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+            //getOrgUnitEntity() 为空
+//            area = Config.get().getAddressByCode(user.getAccount().getDefaultUser().getCompanyEntity().getOrgUnitEntity().getAreaCode());
+//            address = user.getAccount().getDefaultUser().getCompanyEntity().getOrgUnitEntity().getOfficeAddress();
+        }
+        //如果公司名称为空 则取当前登陆人的公司
+        if (StringUtils.isEmpty(etCompanyName.getText())) {
+            etCompanyName.setText(name);
+            tvAddress.setText(area);
+            etDetailAddress.setText(address);
+        }
+        if (StringUtils.isEmpty(etContact.getText())) {
+            etContact.setText(user.getAccount().getRealName());
+            etPhone.setText(user.getAccount().getMobile());
+        }
+
+    }
 
 
     private void initAdapter() {
