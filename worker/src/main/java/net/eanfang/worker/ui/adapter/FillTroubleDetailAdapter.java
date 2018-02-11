@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by wen on 2017/4/23.
+ * 故障处理 的 明细 Adapter
  */
 
 public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEntity, BaseViewHolder> {
@@ -33,6 +34,8 @@ public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEn
         } else {
             helper.setVisible(R.id.tv_detai_status, false);
         }
+
+
 //        helper.addOnClickListener(R.id.rl_item_detail);
         //2017年7月25日 去掉删除按钮
         helper.setVisible(R.id.tv_delete, false);

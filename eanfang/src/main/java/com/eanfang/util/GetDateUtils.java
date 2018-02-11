@@ -194,17 +194,19 @@ public class GetDateUtils {
     public static long getTimeDiff(Date fir, Date sec, String type) {
         // d1 = df.parse(fir);
         // Date d2 = df.parse(sec);
-        long diff = fir.getTime() - sec.getTime();// 这样得到的差值是微秒级别
+        // 这样得到的差值是微秒级别
+        long diff = fir.getTime() - sec.getTime();
         long days = diff / (1000 * 60 * 60 * 24);
         long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
         long minutes = (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60);
 
-        if ("day".equals(type))
+        if ("day".equals(type)) {
             return days;
-        else if ("hours".equals(type))
+        } else if ("hours".equals(type)) {
             return hours;
-        else if ("minutes".equals(type))
+        } else if ("minutes".equals(type)) {
             return minutes;
+        }
         return 0;
     }
 

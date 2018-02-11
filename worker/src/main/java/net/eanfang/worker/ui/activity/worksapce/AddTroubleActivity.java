@@ -80,7 +80,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     @BindView(R.id.ll_deviceFailure)
     LinearLayout llDeviceFailure;
     private Map<String, String> uploadMap = new HashMap<>();
-    private Long id;
+    private Long orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +89,13 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         initView();
 
-
 //        initData();
 
         setListener();
     }
 
     private void initView() {
-        id = getIntent().getLongExtra("repaid", 0);
+        orderId = getIntent().getLongExtra("repaid", 0);
         setRightTitle("提交");
         setTitle("新增故障");
         setLeftBack();
@@ -174,7 +173,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
-
+        bean.setBusRepairOrderId(orderId);
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {

@@ -1,5 +1,6 @@
 package com.eanfang.util;
 
+import com.eanfang.BuildConfig;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import java.util.HashMap;
@@ -35,8 +36,8 @@ public class PhotoUtils {
             String object = UuidUtil.getUUID() + ".png";
             if (path == null || path.length() <= 0) {
                 continue;
-            } else if (path.startsWith("http")) {
-                urls.append(path);
+            } else if (path.startsWith(BuildConfig.OSS_SERVER)) {
+                urls.append(path.replace(BuildConfig.OSS_SERVER, ""));
                 continue;
             }
             uploadMap.put(object, path);

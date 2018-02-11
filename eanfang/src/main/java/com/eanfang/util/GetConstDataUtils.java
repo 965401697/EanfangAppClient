@@ -3,6 +3,7 @@ package com.eanfang.util;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -112,6 +113,8 @@ public class GetConstDataUtils {
     private static List<String> payTypeList;
 
     private static List<String> workerStatus;
+
+    private static List<String> repairMisinformationList;
 
     /**
      * 报修订单状态
@@ -588,6 +591,20 @@ public class GetConstDataUtils {
             }
         }
         return payTypeList;
+    }
+
+    /**
+     * 是否误报
+     */
+    public static List<String> getRepairMisinformationList() {
+        if (repairMisinformationList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (repairMisinformationList == null) {
+                    repairMisinformationList = Arrays.asList("否", "是");
+                }
+            }
+        }
+        return repairMisinformationList;
     }
 }
 

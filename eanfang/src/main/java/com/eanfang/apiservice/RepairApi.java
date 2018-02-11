@@ -49,37 +49,37 @@ public interface RepairApi {
     /**
      * 7.技师电话筛查
      */
-    String GET_REPAIR_SCREENING = BuildConfig.API_HOST + "/yaf_repair/flow/screening";
+   // String GET_REPAIR_SCREENING = BuildConfig.API_HOST + "/yaf_repair/flow/screening";
 
     /**
      * 8.报修单更改预约时间
      */
-    String GET_REPAIR_RESCHEDULE = BuildConfig.API_HOST + "/yaf_repair/flow/rebook";
+    //String GET_REPAIR_RESCHEDULE = BuildConfig.API_HOST + "/yaf_repair/flow/rebook";
 
     /**
      * 9.技师上门签到
      */
-    String GET_REPAIR_WORKER_SIGNIN = BuildConfig.API_HOST + "/yaf_repair/flow/signIn";
+   // String GET_REPAIR_WORKER_SIGNIN = BuildConfig.API_HOST + "/yaf_repair/flow/signIn";
 
     /**
      * 10.【去完工】技师端点击去完工，查询真实故障列表
      */
-    String GET_REPAIR_WORKER_PREPARE = BuildConfig.API_HOST + "/yaf_repair/bughandle/prepare";
+    //String GET_REPAIR_WORKER_PREPARE = BuildConfig.API_HOST + "/yaf_repair/bughandle/prepare";
 
     /**
      * 11.【创建】创建真实故障
      */
-    String GET_REPAIR_WORKER_CREATE_REAL_TROUBLE = BuildConfig.API_HOST + "/yaf_repair/failure/create";
+   // String GET_REPAIR_WORKER_CREATE_REAL_TROUBLE = BuildConfig.API_HOST + "/yaf_repair/failure/create";
 
     /**
      * 12.【新增】故障处理明细
      */
-    String GET_REPAIR_BUGHANDLE_CREATE_DETAIL = BuildConfig.API_HOST + "/yaf_repair/bughandle/createDetail";
+    String GET_REPAIR_BUGHANDLE_CREATE_DETAIL = BuildConfig.API_HOST + "/yaf_repair/bughandle/detail/create";
 
     /**
      * 13.【详情】查看真实故障详情（包括对应的故障处理明细）
      */
-    String GET_LOOK_REPAIR_DETAIL = BuildConfig.API_HOST + "/yaf_repair/failure/detail";
+   // String GET_LOOK_REPAIR_DETAIL = BuildConfig.API_HOST + "/yaf_repair/failure/detail";
 
     /**
      * 14.【完工】报修提交完工信息

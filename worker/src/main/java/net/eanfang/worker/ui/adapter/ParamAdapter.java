@@ -11,7 +11,7 @@ import com.yaf.base.entity.BughandleParamEntity;
 
 import net.eanfang.worker.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class ParamAdapter extends BaseQuickAdapter<BughandleParamEntity, BaseViewHolder> {
 
-    public ParamAdapter(int layoutResId, ArrayList data) {
+    public ParamAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
@@ -47,6 +47,11 @@ public class ParamAdapter extends BaseQuickAdapter<BughandleParamEntity, BaseVie
             @Override
             public void afterTextChanged(Editable s) {
                 item.setParamValue(s.toString());
+//                if (!StringUtils.isEmpty(s.toString())) {
+//
+//                } else {
+//                    item.setParamName(null);
+//                }
             }
         });
     }
