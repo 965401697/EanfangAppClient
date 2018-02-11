@@ -219,7 +219,7 @@ public class OrderListFragment extends BaseFragment implements
             queryEntry.getEquals().put("status", status);
         }
         queryEntry.setSize(10);
-        queryEntry.setPage(1);
+        queryEntry.setPage(page);
 
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -232,30 +232,22 @@ public class OrderListFragment extends BaseFragment implements
                              @Override
                              public void onSuccess(final RepairedOrderBean bean) {
                                  ((RepairCtrlActivity) getActivity()).setBean(bean);
-                                 getActivity().runOnUiThread(new Runnable() {
-                                     @Override
-                                     public void run() {
-                                         onDataReceived();
-                                     }
-                                 });
+                                 getActivity().runOnUiThread(() -> onDataReceived());
                              }
 
                              @Override
                              public void onNoData(String message) {
                                  page--;
-                                 getActivity().runOnUiThread(new Runnable() {
-                                     @Override
-                                     public void run() {
-                                         //如果是第一页 没有数据了 则清空 bean
-                                         if (page < 1) {
-                                             RepairedOrderBean bean = new RepairedOrderBean();
-                                             bean.setList(new ArrayList<>());
-                                             ((RepairCtrlActivity) getActivity()).setBean(bean);
-                                         } else {
-                                             showToast("已经到底了");
-                                         }
-                                         onDataReceived();
+                                 getActivity().runOnUiThread(() -> {
+                                     //如果是第一页 没有数据了 则清空 bean
+                                     if (page < 1) {
+                                         RepairedOrderBean bean = new RepairedOrderBean();
+                                         bean.setList(new ArrayList<>());
+                                         ((RepairCtrlActivity) getActivity()).setBean(bean);
+                                     } else {
+                                         showToast("已经到底了");
                                      }
+                                     onDataReceived();
                                  });
                              }
 
@@ -292,12 +284,10 @@ public class OrderListFragment extends BaseFragment implements
 
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
-        //getData();
-
+        getData();
     }
 
     OnItemClickListener onItemClickListener = new OnItemClickListener() {

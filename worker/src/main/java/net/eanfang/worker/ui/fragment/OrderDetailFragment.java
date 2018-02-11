@@ -20,7 +20,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -126,17 +125,17 @@ public class OrderDetailFragment extends BaseFragment {
                 if (view.getId() == R.id.iv_pic) {
                     ArrayList<String> picList = new ArrayList<String>();
                     String[] urls = mDataList.get(position).getPictures().split(",");
-                    if (!StringUtils.isEmpty(urls[0])) {
+                    if (urls.length >= 1) {
                         picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[0]);
                     }
-                    if (!StringUtils.isEmpty(urls[1])) {
+                    if (urls.length >= 2) {
                         picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[1]);
                     }
-                    if (!StringUtils.isEmpty(urls[2])) {
+                    if (urls.length >= 3) {
                         picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[2]);
                     }
                     if (picList.size() == 0) {
-                        showToast("当前没有图片");
+//                        showToast("当前没有图片");
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);

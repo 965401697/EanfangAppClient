@@ -96,7 +96,8 @@
                 android:layout_marginTop="5dp"
                 android:text="类别："
                 android:textColor="@color/font_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
             <!--<TextView-->
             <!--android:id="@+id/tv_phone_solve"-->
             <!--android:layout_width="wrap_content"-->

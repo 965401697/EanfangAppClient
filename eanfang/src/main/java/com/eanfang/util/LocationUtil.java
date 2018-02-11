@@ -52,6 +52,8 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
      * 定位位置显示
      */
     private AMapLocation location;
+
+    public OnSearched onSearched;
     private LatLng latLng;
     private String curCityCode;
 
@@ -264,6 +266,9 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
 
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+        if (onSearched != null) {
+            onSearched.searched(regeocodeResult, i);
+        }
     }
 
     @Override
@@ -333,6 +338,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
         void change(String keywords, LatLng latLng);
     }
 
-    public interface OnLocationListener {
+    public interface OnSearched {
+        void searched(RegeocodeResult regeocodeResult, int i);
     }
 }

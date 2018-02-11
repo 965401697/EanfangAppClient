@@ -188,7 +188,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="right"
-                android:padding="5px">
+                android:padding="5px"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -241,7 +242,8 @@
                 android:layout_marginTop="1dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

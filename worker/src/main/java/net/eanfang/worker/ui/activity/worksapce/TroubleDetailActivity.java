@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
@@ -26,6 +28,7 @@ import net.eanfang.worker.ui.adapter.TroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -204,22 +207,22 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         picList4 = new ArrayList<>();
         if (bughandleConfirmEntity.getFrontPictures() != null) {
             String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
-            Collections.addAll(picList1, friontPic);
+            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
 
         if (bughandleConfirmEntity.getReverseSidePictures() != null) {
             String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
-            Collections.addAll(picList2, reversePic);
+            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
 
         if (bughandleConfirmEntity.getEquipmentCabinetPictures() != null) {
             String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
-            Collections.addAll(picList3, equipmentPic);
+            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
 
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            Collections.addAll(picList4, invoicesPic);
+            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
 
 

@@ -48,6 +48,14 @@ public class BughandleUseDeviceEntity implements Serializable {
     //@TableField(value = "remark_info")
     private String remarkInfo;
 
+
+    //三级业务编码
+    //@TableField(value = "business_three_code")
+    private String businessThreeCode;
+    //三级业务编码
+    //@TableField(value = "business_three_id")
+    private Integer businessThreeId;
+
     /**
      * 获取：主键
      */

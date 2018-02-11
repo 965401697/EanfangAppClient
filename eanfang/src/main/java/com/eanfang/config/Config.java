@@ -196,7 +196,7 @@ public class Config {
     /**
      * 根据系统编码获得id
      */
-    public String getBusinessIdByCode(String code, int level) {
+    public Integer getBusinessIdByCode(String code, int level) {
         return getBaseIdByCode(code, level, Constant.SYS_TYPE);
     }
 
@@ -476,12 +476,12 @@ public class Config {
      * @param type
      * @return
      */
-    public String getBaseIdByCode(String code, int level, int type) {
+    public Integer getBaseIdByCode(String code, int level, int type) {
         if (StringUtils.isEmpty(code)) {
             return null;
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && code.startsWith(bean.getDataCode()) && bean.getLevel() == (level + 1)).
-                map(bean -> bean.getDataId() + "").findFirst().orElseGet(() -> null);
+                map(bean -> bean.getDataId()).findFirst().orElseGet(() -> null);
 
     }
 

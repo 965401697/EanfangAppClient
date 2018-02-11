@@ -7,20 +7,21 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeResult;
+import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.LocationUtil;
 import com.eanfang.util.NumberUtil;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
@@ -29,12 +30,14 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.amap.api.services.geocoder.GeocodeSearch.AMAP;
+
 
 /**
  * Created by wenyouyang on 2017/4/22.
  */
 
-public class SignInActivity extends BaseWorkerActivity implements GeocodeSearch.OnGeocodeSearchListener {
+public class SignInActivity extends BaseWorkerActivity {
 
     public static final String TAG = SignInActivity.class.getSimpleName();
 
@@ -58,6 +61,7 @@ public class SignInActivity extends BaseWorkerActivity implements GeocodeSearch.
     private float distance = -1;
     private GeocodeSearch geocoderSearch;
     private Long orderId;
+    private LocationUtil locationUtil;
 
 
     @Override
@@ -67,12 +71,11 @@ public class SignInActivity extends BaseWorkerActivity implements GeocodeSearch.
         ButterKnife.bind(this);
         supprotToolbar();
         setTitle("选择地址");
+        mapView.onCreate(savedInstanceState);
+        initMap();
 
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
-        mapView.onCreate(savedInstanceState);
-        if (aMap == null) {
-            aMap = mapView.getMap();
-        }
+
         tvTime.setText(GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
 //        LocationUtil.get().addListener(this, TAG);
 //        LocationUtil.get().startOnce();
@@ -81,6 +84,28 @@ public class SignInActivity extends BaseWorkerActivity implements GeocodeSearch.
         orderId = getIntent().getLongExtra("orderId", 0);
         latLng2 = new LatLng(NumberUtil.parseDouble(latitude, 0), NumberUtil.parseDouble(longitude, 0));
         btnSignIn.setOnClickListener(v -> onViewClicked());
+
+
+    }
+
+    private void initMap() {
+        locationUtil = LocationUtil.get(this, mapView);
+        PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
+        //禁止所有手势
+        locationUtil.mAMap.getUiSettings().setAllGesturesEnabled(false);
+        locationUtil.onChanged = (keywords, latLng) -> {
+            locationUtil.setMarket(latLng);
+            distance = AMapUtils.calculateLineDistance(latLng, latLng2);
+            // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+            RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latLng.latitude, latLng.longitude), 200, AMAP);
+            locationUtil.geocoderSearch.getFromLocationAsyn(query);
+        };
+        locationUtil.onSearched = (regeocodeResult, i) -> {
+            regeocodeResult.getRegeocodeAddress();
+            tvAddress.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
+
+        };
+
 
     }
 
@@ -139,33 +164,6 @@ public class SignInActivity extends BaseWorkerActivity implements GeocodeSearch.
 //
 //        geocoderSearch.getFromLocationAsyn(query);
 //    }
-
-    private void drawMaker(LatLng latLng) {
-        if (marker == null) {
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(latLng)
-//                    .title("位置").snippet(latLng.toString())
-                    .draggable(true).
-                    icon(new MyLocationStyle().getMyLocationIcon()).setFlat(true);
-            marker = aMap.addMarker(markerOptions);
-        } else {
-            marker.setPosition(latLng);
-            mapView.invalidate();
-        }
-
-
-    }
-
-    @Override
-    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-        regeocodeResult.getRegeocodeAddress();
-        tvAddress.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
-    }
-
-    @Override
-    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-
-    }
 
 
     private void doHttp(Long orderId) {

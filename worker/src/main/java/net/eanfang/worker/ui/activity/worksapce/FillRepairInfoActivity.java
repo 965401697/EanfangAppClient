@@ -286,7 +286,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private void initAdapter() {
         mDataList = bughandleConfirmEntity.getDetailEntityList();
 
-        businessIdLis = Stream.of(mDataList).map(bean -> Config.get().getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(),3)).toList();
+        businessIdLis = Stream.of(mDataList).map(bean -> Config.get().getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(), 3) + "").toList();
         quotationDetailAdapter = new FillTroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));

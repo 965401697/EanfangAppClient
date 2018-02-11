@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -34,6 +36,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.MateraInfoView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -163,27 +166,27 @@ public class LookTroubleDetailActivity extends BaseClientActivity /*implements V
         //修改小bug 图片读取问题
         if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(Constant.IMG_SPLIT);
-            Collections.addAll(picList1, prePic);
+            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(Constant.IMG_SPLIT);
-            Collections.addAll(picList2, toolPic);
+            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(Constant.IMG_SPLIT);
-            Collections.addAll(picList3, ponitPic);
+            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(Constant.IMG_SPLIT);
-            Collections.addAll(picList4, afterHandlePic);
+            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(Constant.IMG_SPLIT);
-            Collections.addAll(picList5, returnInstallPic);
+            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(Constant.IMG_SPLIT);
-            Collections.addAll(picList6, restorePic);
+            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
 
     }

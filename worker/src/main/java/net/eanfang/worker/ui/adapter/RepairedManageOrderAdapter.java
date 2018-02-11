@@ -1,9 +1,14 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.net.Uri;
+
+import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
@@ -67,6 +72,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
 
         //将业务类型的图片显示到列表
+
+        ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Optional.ofNullable(item.getOwnerUser().getAccountEntity().getAvatar()).orElseGet(() -> "")));
 //        if (!StringUtils.isEmpty(item.getBugEntityList().get(helper.getPosition()).getPictures())) {
 //            String[] urls = item.getBugEntityList().get(helper.getPosition()).getPictures().split(",");
 //            //将业务类型的图片显示到列表

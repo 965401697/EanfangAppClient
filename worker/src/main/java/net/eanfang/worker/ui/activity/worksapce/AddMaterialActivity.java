@@ -8,7 +8,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
+import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 
@@ -47,18 +52,45 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.activity_add_material);
         initView();
         setListener();
+
+        bugOneCode = getIntent().getStringExtra("bugOneCode");
     }
 
 
     private void showBusinessSmallType() {
-
+        if (StringUtils.isEmpty(bugOneCode)) {
+            showToast("请先选择系统类别");
+        }
+        //二级
+        ll_business.setOnClickListener((v) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bean -> bean.getDataCode().startsWith(bugOneCode)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+                tv_business.setText(item);
+                tv_equipment.setText("");
+                tv_model.setText("");
+            });
+        });
     }
 
     private void showEquipmentName() {
-
+        String busTwoCode = Config.get().getBusinessCodeByName(tv_business.getText().toString().trim(), 2);
+        if (StringUtils.isEmpty(busTwoCode)) {
+            showToast("请先选择设备类别");
+        }
+        PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            tv_equipment.setText(item);
+            tv_model.setText("");
+        }));
     }
 
     private void showModel() {
+        String busOneName = Config.get().getBusinessNameByCode(bugOneCode, 1);
+        String modelOne = Config.get().getBaseCodeByName(busOneName, 1, Constant.MODEL).get(0);
+        if (StringUtils.isEmpty(modelOne)) {
+            showToast("请先选择系统类别");
+        }
+        PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(modelOne)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            tv_model.setText(item);
+        }));
 
     }
 
@@ -121,9 +153,11 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
                 BughandleUseDeviceEntity bean = new BughandleUseDeviceEntity();
                 bean.setCount(Integer.parseInt(et_location.getText().toString()));
                 bean.setRemarkInfo(et_code.getText().toString());
-//                bean.setEquipmenttype(tv_business.getText().toString());
-//                bean.setEquipmentname(tv_equipment.getText().toString());
-//                bean.setEquipmentmodel(tv_model.getText().toString());
+                bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_equipment.getText().toString(), 3));
+                bean.setModelCode(Config.get().getBaseCodeByName(tv_model.getText().toString(), 2, Constant.MODEL).get(0));
+                bean.setDeviceName(tv_equipment.getText().toString());
+                bean.setBusinessThreeId(Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 3));
+
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean", bean);
@@ -137,14 +171,14 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
     }
 
     public boolean checkInfo() {
-//        if (tv_business.getText().toString().isEmpty()) {
-//            ToastUtil.get().showToast(this, "请选择设备类别");
-//            return false;
-//        }
-//        if (tv_equipment.getText().toString().isEmpty()) {
-//            ToastUtil.get().showToast(this, "请选择设备名称");
-//            return false;
-//        }
+        if (tv_business.getText().toString().isEmpty()) {
+            ToastUtil.get().showToast(this, "请选择设备类别");
+            return false;
+        }
+        if (tv_equipment.getText().toString().isEmpty()) {
+            ToastUtil.get().showToast(this, "请选择设备名称");
+            return false;
+        }
 
         if (et_location.getText().toString().isEmpty()) {
             ToastUtil.get().showToast(this, "请选输入耗材数量");

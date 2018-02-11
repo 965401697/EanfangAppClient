@@ -12,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -20,7 +22,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.GetDeviceFailureOptionBean;
 import com.eanfang.model.device.GetDeviceFailureSolutionOptionBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -174,7 +179,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         initView();
         initData();
 
-
         initAdapter();
 
         lookFailureDetail();
@@ -182,7 +186,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         fillData();
 
         initListener();
-//        initImgUrlList(bean);
+        initImgUrlList(bean);
         initNinePhoto();
 
     }
@@ -306,7 +310,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
             Intent intent = new Intent(AddTroubleDetailActivity.this, AddMaterialActivity.class);
             Bundle bundle = new Bundle();
 //                bundle.putSerializable("bugBean", bugBean);
-            bundle.putString("bugOneCode", repairFailureEntity.getBusinessThreeCode());
+            String bugOne = Config.get().getBusinessNameByCode(bean.getFailureEntity().getBusinessThreeCode(), 1);
+            bundle.putString("bugOneCode", Config.get().getBusinessCodeByName(bugOne, 1));
             intent.putExtras(bundle);
             startActivityForResult(intent, 10009);
         });
@@ -348,72 +353,79 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         picList5 = new ArrayList<>();
         picList6 = new ArrayList<>();
         //修改小bug 图片读取问题
-        String[] presentationPic = bean.getPresentationPictures().split(",");
-        if (StringUtils.isValid(presentationPic[0])) {
-            picList1.add(presentationPic[0]);
-        }
-        if (StringUtils.isValid(presentationPic[1])) {
-            picList1.add(presentationPic[1]);
-        }
-        if (StringUtils.isValid(presentationPic[2])) {
-            picList1.add(presentationPic[2]);
-        }
-
-        String[] toolPic = bean.getToolPictures().split(",");
-        if (StringUtils.isValid(toolPic[0])) {
-            picList2.add(toolPic[0]);
-        }
-        if (StringUtils.isValid(toolPic[1])) {
-            picList2.add(toolPic[1]);
-        }
-        if (StringUtils.isValid(toolPic[2])) {
-            picList2.add(toolPic[2]);
+        if (!StringUtils.isEmpty(bean.getPresentationPictures())) {
+            String[] presentationPic = bean.getPresentationPictures().split(",");
+            if (presentationPic.length >= 1) {
+                picList1.add(BuildConfig.OSS_SERVER + presentationPic[0]);
+            }
+            if (presentationPic.length >= 2) {
+                picList1.add(BuildConfig.OSS_SERVER +presentationPic[1]);
+            }
+            if (presentationPic.length >= 3) {
+                picList1.add(BuildConfig.OSS_SERVER +presentationPic[2]);
+            }
         }
 
-        String[] pointPic = bean.getPointPictures().split(",");
-        if (StringUtils.isValid(pointPic[0])) {
-            picList3.add(pointPic[0]);
+        if (!StringUtils.isEmpty(bean.getToolPictures())) {
+            String[] toolPic = bean.getToolPictures().split(",");
+            if (toolPic.length >= 1) {
+                picList2.add(BuildConfig.OSS_SERVER+toolPic[0]);
+            }
+            if (toolPic.length >= 2) {
+                picList2.add(BuildConfig.OSS_SERVER+toolPic[1]);
+            }
+            if (toolPic.length >= 3) {
+                picList2.add(BuildConfig.OSS_SERVER+toolPic[2]);
+            }
         }
-        if (StringUtils.isValid(pointPic[1])) {
-            picList3.add(pointPic[1]);
+        if (!StringUtils.isEmpty(bean.getPointPictures())) {
+            String[] pointPic = bean.getPointPictures().split(",");
+            if (pointPic.length >= 1) {
+                picList3.add(BuildConfig.OSS_SERVER+pointPic[0]);
+            }
+            if (pointPic.length >= 2) {
+                picList3.add(BuildConfig.OSS_SERVER+pointPic[1]);
+            }
+            if (pointPic.length >= 3) {
+                picList3.add(BuildConfig.OSS_SERVER+pointPic[2]);
+            }
         }
-        if (StringUtils.isValid(pointPic[2])) {
-            picList3.add(pointPic[2]);
+        if (!StringUtils.isEmpty(bean.getAfterHandlePictures())) {
+            String[] afterHandlePic = bean.getAfterHandlePictures().split(",");
+            if (afterHandlePic.length >= 1) {
+                picList4.add(BuildConfig.OSS_SERVER+afterHandlePic[0]);
+            }
+            if (afterHandlePic.length >= 2) {
+                picList4.add(BuildConfig.OSS_SERVER+afterHandlePic[1]);
+            }
+            if (afterHandlePic.length >= 3) {
+                picList4.add(BuildConfig.OSS_SERVER+afterHandlePic[2]);
+            }
         }
-
-        String[] afterHandlePic = bean.getAfterHandlePictures().split(",");
-        if (StringUtils.isValid(afterHandlePic[0])) {
-            picList4.add(afterHandlePic[0]);
+        if (!StringUtils.isEmpty(bean.getDeviceReturnInstallPictures())) {
+            String[] deviceReturnInstallPic = bean.getDeviceReturnInstallPictures().split(",");
+            if (deviceReturnInstallPic.length >= 1) {
+                picList5.add(BuildConfig.OSS_SERVER+deviceReturnInstallPic[0]);
+            }
+            if (deviceReturnInstallPic.length >= 2) {
+                picList5.add(BuildConfig.OSS_SERVER+deviceReturnInstallPic[1]);
+            }
+            if (deviceReturnInstallPic.length >= 3) {
+                picList5.add(BuildConfig.OSS_SERVER+deviceReturnInstallPic[2]);
+            }
         }
-        if (StringUtils.isValid(afterHandlePic[1])) {
-            picList4.add(afterHandlePic[1]);
+        if (!StringUtils.isEmpty(bean.getRestorePictures())) {
+            String[] restorePic = bean.getRestorePictures().split(",");
+            if (restorePic.length >= 1) {
+                picList6.add(BuildConfig.OSS_SERVER+restorePic[0]);
+            }
+            if (restorePic.length >= 2) {
+                picList6.add(BuildConfig.OSS_SERVER+restorePic[1]);
+            }
+            if (restorePic.length >= 3) {
+                picList6.add(BuildConfig.OSS_SERVER+restorePic[2]);
+            }
         }
-        if (StringUtils.isValid(afterHandlePic[2])) {
-            picList4.add(afterHandlePic[2]);
-        }
-
-        String[] deviceReturnInstallPic = bean.getDeviceReturnInstallPictures().split(",");
-        if (StringUtils.isValid(deviceReturnInstallPic[0])) {
-            picList5.add(deviceReturnInstallPic[0]);
-        }
-        if (StringUtils.isValid(deviceReturnInstallPic[1])) {
-            picList5.add(deviceReturnInstallPic[1]);
-        }
-        if (StringUtils.isValid(deviceReturnInstallPic[2])) {
-            picList5.add(deviceReturnInstallPic[2]);
-        }
-
-        String[] restorePic = bean.getRestorePictures().split(",");
-        if (StringUtils.isValid(restorePic[0])) {
-            picList6.add(restorePic[0]);
-        }
-        if (StringUtils.isValid(restorePic[1])) {
-            picList6.add(restorePic[1]);
-        }
-        if (StringUtils.isValid(restorePic[2])) {
-            picList6.add(restorePic[2]);
-        }
-
 
     }
 
@@ -439,86 +451,87 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
     }
 
     public void fillData() {
-        if (StringUtils.isValid(bean.getFailureEntity().getBusinessThreeCode())) {
-            tv_trouble_title.setText(Config.get().getBusinessNameByCode(bean.getFailureEntity().getBusinessThreeCode(), 1));
+        if (bean.getFailureEntity() != null) {
+            if (StringUtils.isValid(bean.getFailureEntity().getBusinessThreeCode())) {
+                String bugOne = Config.get().getBusinessNameByCode(bean.getFailureEntity().getBusinessThreeCode(), 1);
+                String bugTwo = Config.get().getBusinessNameByCode(bean.getFailureEntity().getBusinessThreeCode(), 2);
+                String bugThree = Config.get().getBusinessNameByCode(bean.getFailureEntity().getBusinessThreeCode(), 3);
+                tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+            } else {
+                tv_trouble_title.setText("");
+            }
+
+            tv_trouble_device.setText(Optional.ofNullable(bean.getFailureEntity().getDeviceName()).orElse(""));
+
+            tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bean.getFailureEntity().getModelCode(), 2)).orElse(""));
+
+            tv_device_no.setText(Optional.ofNullable(bean.getFailureEntity().getDeviceNo()).orElse(""));
+
+            tv_device_location.setText(Optional.ofNullable(bean.getFailureEntity().getBugPosition()).orElse(""));
+
+            et_trouble_desc.setText(Optional.ofNullable(bean.getFailureEntity().getBugDescription()).orElse(""));
         }
-        // TODO: 2018/1/9 待处理
-//        //故障设备
-//        if (StringUtils.isValid(bean.getInstrument())) {
-//            tv_trouble_device.setText(bean.getInstrument());
-//        }
-//        //品牌型号
-//        if (StringUtils.isValid(bean.getModelnum())) {
-//            tv_brand_model.setText(bean.getModelnum());
-//        }
-        //设备编号
-        if (StringUtils.isValid(bean.getFailureEntity().getDeviceNo())) {
-            tv_device_no.setText(bean.getFailureEntity().getDeviceNo());
-        }
-        //故障位置
-        if (StringUtils.isValid(bean.getFailureEntity().getBugPosition())) {
-            tv_device_location.setText(bean.getFailureEntity().getBugPosition());
-        }
-        //故障描述
-        if (StringUtils.isValid(bean.getFailureEntity().getBugDescription())) {
-            et_trouble_desc.setText(bean.getFailureEntity().getBugDescription());
+        et_trouble_point.setText(Optional.ofNullable(bean.getCheckProcess()).orElse(""));
+        et_trouble_reason.setText(Optional.ofNullable(bean.getCause()).orElse(""));
+        et_trouble_deal.setText(Optional.ofNullable(bean.getHandle()).orElse(""));
+        if (bean.getStatus() != null) {
+            tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bean.getStatus())).orElse(""));
         }
     }
-
 
     private void submit() {
 
         bean.getFailureEntity().setBugDescription(et_trouble_desc.getText().toString().trim());
-        bean.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
-        bean.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
-        bean.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
-        bean.getFailureEntity().setDeviceName("");
+//        bean.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
+//        bean.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
+//        bean.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
+//        bean.getFailureEntity().setDeviceName("");
         bean.setCause(et_trouble_reason.getText().toString().trim());
         bean.setHandle(et_trouble_deal.getText().toString().trim());
         bean.setCheckProcess(et_trouble_point.getText().toString().trim());
         //维修结果
         bean.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tv_repair_conclusion.getText().toString().trim()));
 //
-//        //故障表象 （3张）
-//        String presentationPic = PhotoUtils.getPhotoUrl(snpl_moment_add_photos, uploadMap, true);
-//        bean.setPresentationPictures(presentationPic);
-//
-//        //工具及蓝布 （3张）
-//        String toolPic = PhotoUtils.getPhotoUrl(snpl_monitor_add_photos, uploadMap, false);
-//        bean.setToolPictures(toolPic);
-//
-//        //故障点照片 （3张）
-//        String pointPic = PhotoUtils.getPhotoUrl(snpl_tools_package_add_photos, uploadMap, false);
-//        bean.setPointPictures(pointPic);
-//
-//        //处理后现场 （3张）
-//        String afterHandlePic = PhotoUtils.getPhotoUrl(snpl_after_processing_locale, uploadMap, false);
-//        bean.setAfterHandlePictures(afterHandlePic);
-//
-//        //设备回装 （3张）
-//        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl(snpl_machine_fit_back, uploadMap, false);
-//        bean.setDeviceReturnInstallPictures(deviceReturnInstallPic);
-//
-//        //恢复后表象 （3张）
-//        String restorePic = PhotoUtils.getPhotoUrl(snpl_failure_recover_phenomena, uploadMap, false);
-//        bean.setRestorePictures(restorePic);
-//
-//        if (uploadMap.size() != 0) {
-//
-//            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-//                @Override
-//                public void onOssSuccess() {
-//                    runOnUiThread(() -> {
-//                        getIntent().putExtra("position", position);
-//                        getIntent().putExtra("bean", bean);
-//                        setResult(2000, getIntent());
-//                        finishSelf();
-//                    });
-//
-//                }
-//            });
-//            return;
-//        }
+        //故障表象 （3张）
+        String presentationPic = PhotoUtils.getPhotoUrl(snpl_moment_add_photos, uploadMap, true);
+        bean.setPresentationPictures(presentationPic);
+
+        //工具及蓝布 （3张）
+        String toolPic = PhotoUtils.getPhotoUrl(snpl_monitor_add_photos, uploadMap, false);
+        bean.setToolPictures(toolPic);
+
+        //故障点照片 （3张）
+        String pointPic = PhotoUtils.getPhotoUrl(snpl_tools_package_add_photos, uploadMap, false);
+        bean.setPointPictures(pointPic);
+
+        //处理后现场 （3张）
+        String afterHandlePic = PhotoUtils.getPhotoUrl(snpl_after_processing_locale, uploadMap, false);
+        bean.setAfterHandlePictures(afterHandlePic);
+
+        //设备回装 （3张）
+        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl(snpl_machine_fit_back, uploadMap, false);
+        bean.setDeviceReturnInstallPictures(deviceReturnInstallPic);
+
+        //恢复后表象 （3张）
+        String restorePic = PhotoUtils.getPhotoUrl(snpl_failure_recover_phenomena, uploadMap, false);
+        bean.setRestorePictures(restorePic);
+
+        if (uploadMap.size() != 0) {
+
+            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
+                @Override
+                public void onOssSuccess() {
+                    runOnUiThread(() -> {
+                        getIntent().putExtra("position", position);
+                        getIntent().putExtra("bean", bean);
+                        setResult(2000, getIntent());
+                        finishSelf();
+                    });
+
+                }
+            });
+            return;
+        }
         getIntent().putExtra("position", position);
         getIntent().putExtra("bean", bean);
         setResult(2000, getIntent());

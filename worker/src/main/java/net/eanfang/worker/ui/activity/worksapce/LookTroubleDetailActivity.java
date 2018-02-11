@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -33,6 +36,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.MateraInfoView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -171,27 +175,28 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         //修改小bug 图片读取问题
         if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(",");
-            Collections.addAll(picList1, prePic);
+            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+
         }
         if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(",");
-            Collections.addAll(picList2, toolPic);
+            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(",");
-            Collections.addAll(picList3, ponitPic);
+            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(",");
-            Collections.addAll(picList4, afterHandlePic);
+            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(",");
-            Collections.addAll(picList5, returnInstallPic);
+            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(",");
-            Collections.addAll(picList6, restorePic);
+            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
         }
 
     }
@@ -229,44 +234,31 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         }
 
 
-        if (bughandleDetailEntity.getFailureEntity().getBusinessThreeCode() != null) {
-            tv_trouble_title.setText(Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1));
+        if (bughandleDetailEntity.getFailureEntity() != null) {
+            if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
+                String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
+                String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
+                String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
+                tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+            } else {
+                tv_trouble_title.setText("");
+            }
+
+            tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
+
+            tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
+
+            tv_device_no.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
+
+            tv_device_location.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
+
+            et_trouble_desc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
         }
-//        //故障设备
-//        if (StringUtils.isValid(bughandleDetailEntity.getInstrument())) {
-//            tv_trouble_device.setText(bean.getInstrument());
-//        }
-//        //品牌型号
-//        if (StringUtils.isValid(bean.getModelnum())) {
-//            tv_brand_model.setText(bean.getModelnum());
-//        }
-//        //设备编号
-//        if (StringUtils.isValid(bean.getEquipmentcode())) {
-//            tv_device_no.setText(bean.getEquipmentcode());
-//        }
-        //故障位置
-        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
-            tv_device_location.setText(bughandleDetailEntity.getFailureEntity().getBugPosition());
-        }
-        //故障描述
-        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugDescription())) {
-            et_trouble_desc.setText(bughandleDetailEntity.getFailureEntity().getBugDescription());
-        }
-        //检查方法
-        if (StringUtils.isValid(bughandleDetailEntity.getCheckProcess())) {
-            et_trouble_point.setText(bughandleDetailEntity.getCheckProcess());
-        }
-        //故障原因
-        if (StringUtils.isValid(bughandleDetailEntity.getCause())) {
-            et_trouble_reason.setText(bughandleDetailEntity.getCause());
-        }
-        //故障处理
-        if (StringUtils.isValid(bughandleDetailEntity.getHandle())) {
-            et_trouble_deal.setText(bughandleDetailEntity.getHandle());
-        }
-        //维修结论
+        et_trouble_point.setText(Optional.ofNullable(bughandleDetailEntity.getCheckProcess()).orElse(""));
+        et_trouble_reason.setText(Optional.ofNullable(bughandleDetailEntity.getCause()).orElse(""));
+        et_trouble_deal.setText(Optional.ofNullable(bughandleDetailEntity.getHandle()).orElse(""));
         if (bughandleDetailEntity.getStatus() != null) {
-            tv_repair_conclusion.setText(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus()));
+            tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
         }
     }
 

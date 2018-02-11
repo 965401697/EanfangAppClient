@@ -102,42 +102,37 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class, (bean) -> {
-                            repairedOrderBean = bean;
-                            currentFragment.onDataReceived();
-                        })
-//                {
-//                    @Override
-//                    public void onSuccess(final RepairedOrderBean bean) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                repairedOrderBean = bean;
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        super.onNoData(message);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                RepairedOrderBean bean = new RepairedOrderBean();
-//                                bean.setAll(new ArrayList<RepairedOrderBean.AllBean>());
-//                                setBean(bean);
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        //重新加载 页面
-//                        currentFragment.onDataReceived();
-//                    }
-//                }
+                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class)
+//                                , (bean) -> {
+//                            repairedOrderBean = bean;
+//                            currentFragment.onDataReceived();
+//    })
+                         {
+                             @Override
+                             public void onSuccess(final RepairedOrderBean bean) {
+                                 runOnUiThread(() -> {
+                                     repairedOrderBean = bean;
+                                     currentFragment.onDataReceived();
+                                 });
+                             }
+
+                             @Override
+                             public void onNoData(String message) {
+                                 super.onNoData(message);
+                                 runOnUiThread(() -> {
+                                     RepairedOrderBean bean = new RepairedOrderBean();
+                                     bean.setList(new ArrayList<>());
+                                     setBean(bean);
+                                     currentFragment.onDataReceived();
+                                 });
+                             }
+
+                             @Override
+                             public void onError(String message) {
+                                 //重新加载 页面
+                                 currentFragment.onDataReceived();
+                             }
+                         }
                 );
 
     }

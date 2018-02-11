@@ -222,22 +222,22 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 String[] urls = workerInfoBean.getHonorPics().split(",");
                 picList1 = new ArrayList<>();
                 if (urls.length >= 1) {
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[0]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
                 }
                 if (urls.length >= 2) {
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[0]);
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[1]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[1]);
                 }
                 if (urls.length >= 3) {
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[0]);
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[1]);
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[2]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[1]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[2]);
                 }
                 if (urls.length >= 4) {
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[0]);
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[1]);
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[2]);
-                    picList1.add(BuildConfig.OSS_BUCKET + urls[3]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[1]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[2]);
+                    picList1.add(BuildConfig.OSS_SERVER + urls[3]);
                 }
 
                 snplMomentAddPhotos.setData(picList1);

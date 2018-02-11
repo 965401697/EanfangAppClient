@@ -22,9 +22,11 @@ public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEn
 
     @Override
     protected void convert(BaseViewHolder helper, BughandleDetailEntity item) {
-        helper.setText(R.id.tv_detail_name, Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 1) + "-"
-                + item.getFailureEntity().getDeviceName() + "-"
-                + item.getFailureEntity().getBugPosition());
+        String bugOne = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 1);
+        String bugTwo = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 2);
+        String bugThree = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 3);
+
+        helper.setText(R.id.tv_detail_name, (helper.getAdapterPosition() + 1) + "." + bugOne + "-" + bugTwo + "-" + bugThree);
         if (StringUtils.isEmpty(item.getCheckProcess())) {
             helper.setVisible(R.id.tv_detai_status, true);
             helper.setText(R.id.tv_detai_status, "待完善");

@@ -1,9 +1,11 @@
 package com.eanfang.delegate;
 
-import android.app.Activity;
 import android.os.Environment;
 import android.view.View;
 
+import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.PermissionUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -14,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * @author jornl
  * @date 2017/10/11
  */
@@ -24,18 +25,29 @@ public class BGASortableDelegate implements
 
     public static final int REQUEST_CODE_CHOOSE_PHOTO = 9801;
     public static final int REQUEST_CODE_PHOTO_PREVIEW = 9902;
-    private Activity activity;
+    private BaseActivity activity;
+    private BaseActivityWithTakePhoto activityWithTakePhoto;
 
     private List<Integer> codes;
 
 
-    public BGASortableDelegate(Activity activity, Integer chooseCode, Integer previewCode) {
+    public BGASortableDelegate(BaseActivity activity, Integer chooseCode, Integer previewCode) {
         this.activity = activity;
         this.codes = Arrays.asList(chooseCode, previewCode);
     }
 
-    public BGASortableDelegate(Activity activity) {
+    public BGASortableDelegate(BaseActivityWithTakePhoto activity, Integer chooseCode, Integer previewCode) {
+        this.activityWithTakePhoto = activity;
+        this.codes = Arrays.asList(chooseCode, previewCode);
+    }
+
+    public BGASortableDelegate(BaseActivity activity) {
         this.activity = activity;
+        this.codes = Arrays.asList(REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_PHOTO_PREVIEW);
+    }
+
+    public BGASortableDelegate(BaseActivityWithTakePhoto activity) {
+        this.activityWithTakePhoto = activity;
         this.codes = Arrays.asList(REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_PHOTO_PREVIEW);
     }
 
@@ -44,7 +56,15 @@ public class BGASortableDelegate implements
     public final void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
         // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
         File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "EanfangPhotoData");
-        activity.startActivityForResult(BGAPhotoPickerActivity.newIntent(activity, takePhotoDir, sortableNinePhotoLayout.getMaxItemCount() - sortableNinePhotoLayout.getItemCount(), null, false), codes.get(0));
+        if (activity != null) {
+            PermissionUtils.get(activity).getCameraPermission(() -> {
+                activity.startActivityForResult(BGAPhotoPickerActivity.newIntent(activity, takePhotoDir, sortableNinePhotoLayout.getMaxItemCount() - sortableNinePhotoLayout.getItemCount(), null, false), codes.get(0));
+            });
+        } else {
+            PermissionUtils.get(activityWithTakePhoto).getCameraPermission(() -> {
+                activityWithTakePhoto.startActivityForResult(BGAPhotoPickerActivity.newIntent(activityWithTakePhoto, takePhotoDir, sortableNinePhotoLayout.getMaxItemCount() - sortableNinePhotoLayout.getItemCount(), null, false), codes.get(0));
+            });
+        }
     }
 
     @Override
@@ -54,7 +74,15 @@ public class BGASortableDelegate implements
 
     @Override
     public final void onClickNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, String model, ArrayList<String> models) {
-        activity.startActivityForResult(BGAPhotoPickerPreviewActivity.newIntent(activity, sortableNinePhotoLayout.getItemCount(), models, models, position, false), codes.get(1));
+        if (activity != null) {
+            PermissionUtils.get(activity).getCameraPermission(() -> {
+                activity.startActivityForResult(BGAPhotoPickerPreviewActivity.newIntent(activity, sortableNinePhotoLayout.getItemCount(), models, models, position, false), codes.get(1));
+            });
+        } else {
+            PermissionUtils.get(activityWithTakePhoto).getCameraPermission(() -> {
+                activityWithTakePhoto.startActivityForResult(BGAPhotoPickerPreviewActivity.newIntent(activityWithTakePhoto, sortableNinePhotoLayout.getItemCount(), models, models, position, false), codes.get(1));
+            });
+        }
     }
 
 }
