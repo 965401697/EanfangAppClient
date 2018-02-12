@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
@@ -27,10 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +47,7 @@ import static android.view.KeyEvent.KEYCODE_BACK;
  * @desc 加载webview使用
  */
 
-public class WebActivity extends BaseWorkerActivity {
+public class WebActivity extends BaseActivity {
     private static final String APP_CACAHE_DIRNAME = "webview.db";
     @BindView(R.id.web_content)
     FrameLayout mRootLayout;
@@ -73,8 +72,6 @@ public class WebActivity extends BaseWorkerActivity {
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
         extraHeaders.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-        extraHeaders.put("Request-From", "WORKER");
-
         //添加webView到布局中
         addWebViewToLayout();
 
@@ -115,14 +112,6 @@ public class WebActivity extends BaseWorkerActivity {
     }
 
 
-    /**
-     * 1、不在xml中定义Webview，而是在需要的时候在Activity中创建
-     * 使用getApplicationgContext()，避免内存泄漏。
-     * <p>
-     * 2、当然，你也可以配置webView所在Activity，
-     * 在AndroidManifest中的进程为：android:process=":remote"
-     * 避免泄漏影响主进程
-     **/
     void addWebViewToLayout() {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mWebView = new WebView(getApplicationContext());
@@ -147,36 +136,14 @@ public class WebActivity extends BaseWorkerActivity {
         webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
         webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
         webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
-
-        //其他细节操作
-//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
-        //缓存模式如下：
-        //LOAD_CACHE_ONLY: 不使用网络，只读取本地缓存数据
-        //LOAD_DEFAULT: （默认）根据cache-control决定是否从网络上取数据。
-        //LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
-        //LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
-//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
-//            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);//根据cache-control决定是否从网络上取数据。
-//        } else {
-//            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//没网，则从本地获取，即离线加载
-//        }
         webSettings.setDomStorageEnabled(true); // 开启 DOM storage API 功能
         webSettings.setDatabaseEnabled(true);   //开启 database storage API 功能
         webSettings.setAppCacheEnabled(true);//开启 Application Caches 功能
-
-//        String cacheDirPath = getFilesDir().getAbsolutePath() + APP_CACAHE_DIRNAME;
-//        webSettings.setAppCachePath(cacheDirPath); //设置  Application Caches 缓存目录
         webSettings.setAllowFileAccess(true); //设置可以访问文件
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式q
 
-        mWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                //网页中触发下载动作
-            }
-        });
 
     }
 
@@ -369,29 +336,8 @@ public class WebActivity extends BaseWorkerActivity {
      */
     void loadUrl(String url) {
         mWebView.loadUrl(url, extraHeaders);
-
-        /**  格式规定为:file:///android_asset/文件名.html
-         *   mWebView.loadUrl("file:///android_asset/localHtml.html");
-         方式1. 加载远程网页：
-         方式2：加载asset的html页面
-         mWebView.loadUrl("file:///android_asset/localHtml.html");
-         方式3：加载手机SD的html页面
-         mWebView.loadUrl("file:///mnt/sdcard/database/taobao.html");*/
     }
 
-    /**
-     * 是否可以后退
-     * Webview.canGoBack()
-     * 后退网页
-     * Webview.goBack()
-     * 是否可以前进
-     * Webview.canGoForward()
-     * 前进网页
-     * Webview.goForward()
-     * 以当前的index为起始点前进或者后退到历史记录中指定的steps
-     * 如果steps为负数则为后退，正数则为前进
-     * Webview.goBackOrForward(intsteps)
-     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KEYCODE_BACK) && mWebView.canGoBack()) {

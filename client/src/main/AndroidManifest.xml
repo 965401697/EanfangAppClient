@@ -206,15 +206,8 @@
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ConstansActivity"/>
         <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.WebActivity"/>
 
-
-        <activity
-            android:name=".ui.activity.worksapce.WebActivity"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </activity>
 
 
         <!--ease Start-->

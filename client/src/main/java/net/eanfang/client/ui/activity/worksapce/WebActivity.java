@@ -72,7 +72,7 @@ public class WebActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
-        extraHeaders.put("userToken", EanfangApplication.get().getUser().getToken());
+        extraHeaders.put("YAF-Token", EanfangApplication.get().getUser().getToken());
         //添加webView到布局中
         addWebViewToLayout();
 
