@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.my;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -79,6 +81,16 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     EditText etIntro;
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
+    @BindView(R.id.iv_honor1)
+    SimpleDraweeView ivHonor1;
+    @BindView(R.id.iv_honor2)
+    SimpleDraweeView ivHonor2;
+    @BindView(R.id.iv_honor3)
+    SimpleDraweeView ivHonor3;
+    @BindView(R.id.iv_honor4)
+    SimpleDraweeView ivHonor4;
+    @BindView(R.id.ll_show_horpic)
+    LinearLayout llShowHorpic;
     private WorkerInfoBean workerInfoBean;
     private WorkerInfoBean setWorkerInfoBean = new WorkerInfoBean();
     private Map<String, String> uploadMap = new HashMap<>();
@@ -97,9 +109,6 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     //有无犯罪记录
     private final int CRIME_PIC = 106;
 
-
-    private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,7 +189,6 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         setRightTitle("下一步");
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("bean");
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
 
         fillData();
@@ -222,22 +230,29 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 String[] urls = workerInfoBean.getHonorPics().split(",");
                 picList1 = new ArrayList<>();
                 if (urls.length >= 1) {
-                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
+                    ivHonor1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                    ivHonor1.setVisibility(View.VISIBLE);
+                } else {
+                    ivHonor1.setVisibility(View.GONE);
                 }
+
                 if (urls.length >= 2) {
-                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
-                    picList1.add(BuildConfig.OSS_SERVER + urls[1]);
+                    ivHonor2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                    ivHonor2.setVisibility(View.VISIBLE);
+                } else {
+                    ivHonor2.setVisibility(View.GONE);
                 }
                 if (urls.length >= 3) {
-                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
-                    picList1.add(BuildConfig.OSS_SERVER + urls[1]);
-                    picList1.add(BuildConfig.OSS_SERVER + urls[2]);
+                    ivHonor3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                    ivHonor3.setVisibility(View.VISIBLE);
+                } else {
+                    ivHonor3.setVisibility(View.GONE);
                 }
                 if (urls.length >= 4) {
-                    picList1.add(BuildConfig.OSS_SERVER + urls[0]);
-                    picList1.add(BuildConfig.OSS_SERVER + urls[1]);
-                    picList1.add(BuildConfig.OSS_SERVER + urls[2]);
-                    picList1.add(BuildConfig.OSS_SERVER + urls[3]);
+                    ivHonor4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[3]));
+                    ivHonor4.setVisibility(View.VISIBLE);
+                } else {
+                    ivHonor4.setVisibility(View.GONE);
                 }
 
                 snplMomentAddPhotos.setData(picList1);
@@ -265,21 +280,21 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setWorkerInfoBean.setId(workerInfoBean.getId());
         setWorkerInfoBean.setIntro(etIntro.getText().toString().trim());
         setWorkerInfoBean.setStatus(0);
-//        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
-//        setWorkerInfoBean.setHonorPics(ursStr);
+        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        setWorkerInfoBean.setHonorPics(ursStr);
         String json = JSONObject.toJSONString(setWorkerInfoBean);
-        submitSuccess(json);
-//        if (uploadMap.size() != 0) {
-//            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-//                @Override
-//                public void onOssSuccess() {
-//                    submitSuccess(json);
-//
-//                }
-//            });
-//        } else {
-//            submitSuccess(json);
-//        }
+//        submitSuccess(json);
+        if (uploadMap.size() != 0) {
+            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
+                @Override
+                public void onOssSuccess() {
+                    submitSuccess(json);
+
+                }
+            });
+        } else {
+            submitSuccess(json);
+        }
 
     }
 
@@ -308,16 +323,6 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
             snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-            case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-                break;
-            default:
-                break;
         }
 
     }

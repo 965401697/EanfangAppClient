@@ -34,9 +34,9 @@ public class QuotationBean implements Serializable {
     private int reportType;
     private String repairOrderNum;
     private String projectName;
-    private Double quoteCost;
-    private Double invoiceCost;
-    private Double totalCost;
+    private int quoteCost;
+    private int invoiceCost;
+    private int totalCost;
     private String reporter;
     private String reporterPhone;
     private Long assigneeUserId;
@@ -168,27 +168,27 @@ public class QuotationBean implements Serializable {
         this.projectName = projectName;
     }
 
-    public Double getQuoteCost() {
+    public int getQuoteCost() {
         return quoteCost;
     }
 
-    public void setQuoteCost(Double quoteCost) {
+    public void setQuoteCost(int quoteCost) {
         this.quoteCost = quoteCost;
     }
 
-    public Double getInvoiceCost() {
+    public int getInvoiceCost() {
         return invoiceCost;
     }
 
-    public void setInvoiceCost(Double invoiceCost) {
+    public void setInvoiceCost(int invoiceCost) {
         this.invoiceCost = invoiceCost;
     }
 
-    public Double getTotalCost() {
+    public int getTotalCost() {
         return totalCost;
     }
 
-    public void setTotalCost(Double totalCost) {
+    public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;
     }
 
@@ -271,8 +271,8 @@ public class QuotationBean implements Serializable {
         private String modelCode;
         private int unit;
         private int count;
-        private Double unitPrice;
-        private Double sum;
+        private int unitPrice;
+        private int sum;
         private List<ParamsBean> params;
         private String producerName;
         private String producerPlace;
@@ -343,19 +343,19 @@ public class QuotationBean implements Serializable {
             this.count = count;
         }
 
-        public Double getUnitPrice() {
+        public float getUnitPrice() {
             return unitPrice;
         }
 
-        public void setUnitPrice(Double unitPrice) {
+        public void setUnitPrice(int unitPrice) {
             this.unitPrice = unitPrice;
         }
 
-        public Double getSum() {
+        public int getSum() {
             return sum;
         }
 
-        public void setSum(Double sum) {
+        public void setSum(int sum) {
             this.sum = sum;
         }
 
@@ -419,8 +419,8 @@ public class QuotationBean implements Serializable {
         private Long shopPartSpecificationId;
         private int unit;
         private int count;
-        private Double unitPrice;
-        private Double sum;
+        private int unitPrice;
+        private int sum;
         private String partSpeciication;
         //配件名称
         private String partName;
@@ -465,19 +465,19 @@ public class QuotationBean implements Serializable {
             this.count = count;
         }
 
-        public Double getUnitPrice() {
+        public int getUnitPrice() {
             return unitPrice;
         }
 
-        public void setUnitPrice(Double unitPrice) {
+        public void setUnitPrice(int unitPrice) {
             this.unitPrice = unitPrice;
         }
 
-        public Double getSum() {
+        public int getSum() {
             return sum;
         }
 
-        public void setSum(Double sum) {
+        public void setSum(int sum) {
             this.sum = sum;
         }
 
@@ -505,11 +505,11 @@ public class QuotationBean implements Serializable {
         private Long shopServiceId;
         private String serviceName;
         private String serviceContent;
-        private Double servicePrice;
+        private int servicePrice;
         private int serviceTime;
         private String serviceValue;
         private Long shopServicePriceId;
-        private Double sum;
+        private int sum;
 
         public Long getShopServiceId() {
             return shopServiceId;
@@ -535,11 +535,11 @@ public class QuotationBean implements Serializable {
             this.serviceContent = serviceContent;
         }
 
-        public Double getServicePrice() {
+        public int getServicePrice() {
             return servicePrice;
         }
 
-        public void setServicePrice(Double servicePrice) {
+        public void setServicePrice(int servicePrice) {
             this.servicePrice = servicePrice;
         }
 
@@ -567,11 +567,11 @@ public class QuotationBean implements Serializable {
             this.shopServicePriceId = shopServicePriceId;
         }
 
-        public Double getSum() {
+        public int getSum() {
             return sum;
         }
 
-        public void setSum(Double sum) {
+        public void setSum(int sum) {
             this.sum = sum;
         }
     }

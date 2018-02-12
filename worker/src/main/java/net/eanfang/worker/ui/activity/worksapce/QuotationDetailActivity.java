@@ -173,9 +173,9 @@ public class QuotationDetailActivity extends BaseActivity {
         bean.setProducerPlace(et_factory.getText().toString().trim());
         bean.setProducerName(et_product_company.getText().toString().trim());
         bean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
-        int unitPrice = Integer.parseInt(et_price.getText().toString().trim());
-        bean.setUnitPrice(Double.valueOf(unitPrice));
-        bean.setSum(Double.valueOf(unitPrice * count));
+        int unitPrice = Integer.valueOf(et_price.getText().toString().trim());
+        bean.setUnitPrice((int) unitPrice);
+        bean.setSum((unitPrice*count)*100);
         bean.setParams(paramsBeanList);
         setResult(101, getIntent().putExtra("result", bean));
         finish();
