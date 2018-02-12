@@ -72,6 +72,7 @@ public class CheckActivity extends BaseWorkerActivity {
     LinearLayout llPhoneNum;
     @BindView(R.id.tv_depend_person)
     TextView tvDependPerson;
+    private static final int REQUEST_ADD_CODE=1;
 
     private OptionsPickerView pvOptions_NoLink;
     private int posistion;
@@ -111,7 +112,7 @@ public class CheckActivity extends BaseWorkerActivity {
         //添加明细
         btnAddDetail.setOnClickListener((v) -> {
             Intent intent = new Intent(CheckActivity.this, AddWorkCheckDetailActivity.class);
-            startActivityForResult(intent, AddWorkCheckDetailActivity.class.hashCode());
+            startActivityForResult(intent, REQUEST_ADD_CODE);
         });
 
         maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_quotation_detail, beanList);

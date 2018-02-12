@@ -77,6 +77,8 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     Button llComit;
     @BindView(R.id.ll_report_type)
     LinearLayout llReportType;
+    @BindView(R.id.et_company_name)
+    TextView etCompanyName;
 
     private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
@@ -105,7 +107,11 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     private void initView() {
         setTitle("工作汇报");
         setLeftBack();
-
+        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName()!=null){
+            etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        }else {
+            etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getRealName());
+        }
         btnAddComplete.setOnClickListener(this);
         btnAddFind.setOnClickListener(this);
         btnAddPlan.setOnClickListener(this);
