@@ -99,6 +99,12 @@ public class OrgUnitEntity implements Serializable {
     //创建时间
     //@TableField(value = "create_time")
     private Date createTime;
+    
+    //更新时间
+    @Getter
+    @Setter
+    //@TableField(value = "update_time")
+    private Date updateTime;
     //状态0草稿 1认证中，2认证通过，3认证拒绝，4禁用/删除
     //@TableField(value = "status")
     @Digits(integer = 3, fraction = 0)

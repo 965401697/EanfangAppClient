@@ -1,7 +1,5 @@
 package com.im.model.bean;
 
-import com.yaf.sys.entity.AccountEntity;
-
 /**
  * Created by YQ950209 on 2017/4/23.
  */
@@ -12,15 +10,7 @@ public class UserInfo {
     private String hxid;//环信id
     private String nick;//用户的昵称
     private String photo;//头像
-    private AccountEntity accountEntity;
 
-    public AccountEntity getAccountEntity() {
-        return accountEntity;
-    }
-
-    public void setAccountEntity(AccountEntity accountEntity) {
-        this.accountEntity = accountEntity;
-    }
 
     public UserInfo(){
 

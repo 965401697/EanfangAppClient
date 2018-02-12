@@ -168,7 +168,7 @@ public class QuotationDetailActivity extends BaseActivity {
         int count = Integer.parseInt(et_amount.getText().toString().trim());
         bean.setCount(count);
         bean.setModelCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
-        bean.setBusiness_three_code(Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 3));
+        bean.setBusiness_three_code(Config.get().getBusinessCodeByName(tv_device_name.getText().toString().trim(), 3));
         bean.setRemarkInfo(et_remark.getText().toString().trim());
         bean.setProducerPlace(et_factory.getText().toString().trim());
         bean.setProducerName(et_product_company.getText().toString().trim());

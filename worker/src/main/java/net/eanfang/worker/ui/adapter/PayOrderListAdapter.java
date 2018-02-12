@@ -24,9 +24,8 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
     @Override
     protected void convert(BaseViewHolder helper, PayOrderListBean.ListBean item) {
 
-//        helper.setText(R.id.tv_company_name, (item.getAssigneeCompanyOrg().getOrgName() != null ? item.getAssigneeCompanyOrg().getOrgName() : "个人客户") /*+ "(" + item.getClientname() + ")"*/);
 
-        helper.setText(R.id.tv_order_id, "单号:" + item.getRepairOrderNum())
+        helper.setText(R.id.tv_order_id, "单号:" + item.getOrderNum())
                 .setText(R.id.tv_appointment_time, "下单:" + item.getCreateTime())
                 .setText(R.id.tv_trouble_count, "项目:" + item.getProjectName())
                 .setText(R.id.tv_count_money, "¥" + item.getTotalCost())

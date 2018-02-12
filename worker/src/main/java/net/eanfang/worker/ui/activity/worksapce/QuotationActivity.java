@@ -214,18 +214,18 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         bean.setQuoteParts(quotePartsBeanList);
         bean.setQuoteDevices(quoteDevicesBeanList);
         bean.setRepairOrderNum(orderID);
-        bean.setTotalCost((deviceSum + partsSum + serviceSum)*100);
+        bean.setTotalCost((deviceSum + partsSum + serviceSum) * 100);
         bean.setAssigneeOrgCode(assigneeOrgCode);
         bean.setAssigneeUserId(assigneeUserId);
-        bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
-        bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
+//        bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
+//        bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
         bean.setLatitude(lat);
         bean.setLongitude(lon);
         bean.setDetail_place(tv_detail_address.getText().toString().trim());
         bean.setProjectName(et_project_name.getText().toString().trim());
         bean.setReporter(et_contract.getText().toString().trim());
         bean.setReporterPhone(et_contract_phone.getText().toString().trim());
-        bean.setQuoteCost((deviceSum + partsSum + serviceSum)*100);
+        bean.setQuoteCost((deviceSum + partsSum + serviceSum) * 100);
         bean.setOrderId(oid);
         bean.setClientName(et_client_company_name_wr.getText().toString().trim());
         bean.setAssigneeTopCompanyId(topid);
@@ -256,7 +256,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 lon = data.getStringExtra("lon");
                 bean.setLongitude(lon);
                 bean.setZone_code(code);
-                bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
+                bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(code, 3, Constant.AREA)));
                 if (radioClient.isChecked() == true) {
                     if (StringUtils.isEmpty(orderID)) {
                         return;
@@ -313,6 +313,8 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 tv_address.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
                 //地图选址 取 显示值
                 tv_detail_address.setText(item.getName());
+                bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
+                bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
                 break;
             default:
                 break;

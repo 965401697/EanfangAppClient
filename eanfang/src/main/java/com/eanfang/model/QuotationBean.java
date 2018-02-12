@@ -47,12 +47,30 @@ public class QuotationBean implements Serializable {
     private String longitude;
     private String latitude;
     private String detail_place;
+    private Long owner_company_id;
+    private Long assignee_company_id;
     private List<QuoteDevicesBean> quoteDevices;
     private List<QuotePartsBean> quoteParts;
     private List<QuoteServicesBean> quoteServices;
     private UserEntity offerer;
     //用户名称
     private String clientName;
+
+    public Long getOwner_company_id() {
+        return owner_company_id;
+    }
+
+    public void setOwner_company_id(Long owner_company_id) {
+        this.owner_company_id = owner_company_id;
+    }
+
+    public Long getAssignee_company_id() {
+        return assignee_company_id;
+    }
+
+    public void setAssignee_company_id(Long assignee_company_id) {
+        this.assignee_company_id = assignee_company_id;
+    }
 
     public String getZone_code() {
         return zone_code;

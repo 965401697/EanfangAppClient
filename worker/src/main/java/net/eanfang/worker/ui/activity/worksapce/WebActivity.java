@@ -72,7 +72,9 @@ public class WebActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
-        extraHeaders.put("userToken", EanfangApplication.get().getUser().getToken());
+        extraHeaders.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+        extraHeaders.put("Request-From", "WORKER");
+
         //添加webView到布局中
         addWebViewToLayout();
 
@@ -368,13 +370,13 @@ public class WebActivity extends BaseWorkerActivity {
     void loadUrl(String url) {
         mWebView.loadUrl(url, extraHeaders);
 
-/**  格式规定为:file:///android_asset/文件名.html
- *   mWebView.loadUrl("file:///android_asset/localHtml.html");
- 方式1. 加载远程网页：
- 方式2：加载asset的html页面
- mWebView.loadUrl("file:///android_asset/localHtml.html");
- 方式3：加载手机SD的html页面
- mWebView.loadUrl("file:///mnt/sdcard/database/taobao.html");*/
+        /**  格式规定为:file:///android_asset/文件名.html
+         *   mWebView.loadUrl("file:///android_asset/localHtml.html");
+         方式1. 加载远程网页：
+         方式2：加载asset的html页面
+         mWebView.loadUrl("file:///android_asset/localHtml.html");
+         方式3：加载手机SD的html页面
+         mWebView.loadUrl("file:///mnt/sdcard/database/taobao.html");*/
     }
 
     /**

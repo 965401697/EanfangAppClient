@@ -172,6 +172,10 @@ public interface UserApi {
     String GET_WORKER_CHANGE = BuildConfig.API_HOST + "/yaf_shop/worker/change";
 
     /**
+     * 根据手机号获取用户信息
+     */
+    String GET_USER_INFO_BY_PHONE = BuildConfig.API_HOST + "/yaf_sys/account/mobile/";
+    /**
      * 技师上报位置
      */
     String POST_WORKER_SUBMIT_LOCATION = BuildConfig.API_HOST + "/yaf_shop/worker/submitLocation";
