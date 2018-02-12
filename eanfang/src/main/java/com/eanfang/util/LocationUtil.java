@@ -53,6 +53,8 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
      */
     private AMapLocation location;
 
+    private OnLocationed onLocationed;
+
     public OnSearched onSearched;
     private LatLng latLng;
     private String curCityCode;
@@ -68,6 +70,36 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
         instance.mMapView = mMapView;
         instance.init();
         return instance;
+    }
+
+    //普通定位方法
+    public static void location(BaseActivity activity, OnLocationed onLocationed) {
+        if (instance == null) {
+            instance = new LocationUtil();
+        }
+        instance.activity = activity;
+        instance.onLocationed = onLocationed;
+        instance.initLocation();
+    }
+
+    private void initLocation() {
+        mLocationClient = new AMapLocationClient(activity);
+        //初始化定位参数
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位监听
+        mLocationClient.setLocationListener(this);
+        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置定位间隔,单位毫秒,默认为2000ms
+        mLocationOption.setInterval(2000);
+        //设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        // 注意设置合适的定位时间的间隔（最小间隔支持为1000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+        // 在定位结束后，在合适的生命周期调用onDestroy()方法
+        // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+        //启动定位
+        mLocationClient.startLocation();
     }
 
     private void init() {
@@ -175,9 +207,14 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
             if (location != null && location.getErrorCode() == 0) {
                 latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 mLocationClient.stopLocation();
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+                if (mAMap != null) {
+                    mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+                }
                 if (onChanged != null) {
                     onChanged.change("", latLng);
+                }
+                if (onLocationed != null) {
+                    onLocationed.location(location);
                 }
             }
         }
@@ -336,6 +373,10 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
      */
     public interface onChanged {
         void change(String keywords, LatLng latLng);
+    }
+
+    public interface OnLocationed {
+        void location(AMapLocation aMapLocation);
     }
 
     public interface OnSearched {

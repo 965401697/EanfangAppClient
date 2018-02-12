@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -20,12 +21,15 @@ import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.LocationUtil;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.im.fragment.ContactListFragment;
 import com.okgo.OkGo;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -55,6 +59,32 @@ public class MainActivity extends BaseActivity {
         initFragment();
         getBaseData();
         getConst();
+
+
+    }
+
+
+    /**
+     * 技师上报位置专用
+     */
+    private void submitLocation() {
+
+        PermissionUtils.get(this).getLocationPermission(() -> {
+            LocationUtil.location(this, (location) -> {
+                runOnUiThread(() -> {
+                    WorkerEntity workerEntity = new WorkerEntity();
+                    workerEntity.setAccId(user.getAccount().getAccId());
+                    workerEntity.setLat(location.getLatitude() + "");
+                    workerEntity.setLon(location.getLongitude() + "");
+                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
+                    //技师上报位置
+                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                            .upJson(JSONObject.toJSONString(workerEntity))
+                            .execute(new EanfangCallback(this, false, String.class));
+                });
+            });
+        });
+
 
     }
 
@@ -166,6 +196,7 @@ public class MainActivity extends BaseActivity {
                         BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
                         EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                     }
+                    submitLocation();
                 }));
     }
 

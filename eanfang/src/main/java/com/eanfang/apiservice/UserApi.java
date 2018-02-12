@@ -17,19 +17,19 @@ public interface UserApi {
     /**
      * 登录
      */
-    String APP_LOGIN = BuildConfig.API_HOST  + "/yaf_sys/sys/login";
+    String APP_LOGIN = BuildConfig.API_HOST + "/yaf_sys/sys/login";
     /**
      * 注册
      */
-    String APP_REGISTER = BuildConfig.API_HOST  + "/yaf_sys/account/register/";
+    String APP_REGISTER = BuildConfig.API_HOST + "/yaf_sys/account/register/";
     /**
      * 验证码登录
      */
-    String APP_LOGIN_VERIFY = BuildConfig.API_HOST  + "/yaf_sys/sys/login_verify";
+    String APP_LOGIN_VERIFY = BuildConfig.API_HOST + "/yaf_sys/sys/login_verify";
     /**
      * 退出
      */
-    String APP_LOGOUT = BuildConfig.API_HOST  + "/yaf_sys/sys/logout";
+    String APP_LOGOUT = BuildConfig.API_HOST + "/yaf_sys/sys/logout";
 
     /**
      * 客户端收到的评价
@@ -171,5 +171,9 @@ public interface UserApi {
      */
     String GET_WORKER_CHANGE = BuildConfig.API_HOST + "/yaf_shop/worker/change";
 
+    /**
+     * 技师上报位置
+     */
+    String POST_WORKER_SUBMIT_LOCATION = BuildConfig.API_HOST + "/yaf_shop/worker/submitLocation";
 
 }
