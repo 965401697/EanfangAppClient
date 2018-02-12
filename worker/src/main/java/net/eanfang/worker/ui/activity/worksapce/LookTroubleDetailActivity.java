@@ -37,9 +37,11 @@ import net.eanfang.worker.ui.widget.MateraInfoView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by MrHou
@@ -65,6 +67,8 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 10;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_5 = 11;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_6 = 12;
+    @BindView(R.id.tv_repair_misinformation)
+    TextView tvRepairMisinformation;
 
     private TextView tv_trouble_device;
     private TextView tv_brand_model;
@@ -109,7 +113,6 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
     private List<BughandleParamEntity> mDataList;
     private List<BughandleUseDeviceEntity> mDataList_2;
     private LookParamAdapter paramAdapter;
-    private HashMap<String, String> uploadMap;
     //2017年7月21日
     /**
      * 维修结果
@@ -118,28 +121,28 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
     /**
      * 故障表象 （3张）
      */
-    private ArrayList<String> picList1;
+    private ArrayList<String> picList1 = new ArrayList<>();
     /**
      * 工具及蓝布 （3张）
      */
-    private ArrayList<String> picList2;
+    private ArrayList<String> picList2 = new ArrayList<>();
     /**
      * 故障点照片 （3张）
      */
-    private ArrayList<String> picList3;
+    private ArrayList<String> picList3 = new ArrayList<>();
     //2017年7月21日
     /**
      * 处理后现场 （3张）
      */
-    private ArrayList<String> picList4;
+    private ArrayList<String> picList4 = new ArrayList<>();
     /**
      * 设备回装 （3张）
      */
-    private ArrayList<String> picList5;
+    private ArrayList<String> picList5 = new ArrayList<>();
     /**
      * 故障恢复后表象 （3张）
      */
-    private ArrayList<String> picList6;
+    private ArrayList<String> picList6 = new ArrayList<>();
     private int position;
     private LookMaterialAdapter materialAdapter;
     private BughandleDetailEntity bughandleDetailEntity;
@@ -156,6 +159,7 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_look_trouble_detail);
+        ButterKnife.bind(this);
         initView();
         getData();
     }
@@ -164,39 +168,32 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
      * 初始化存储图片用的List集合
      */
     private void initImgUrlList() {
-        uploadMap = new HashMap<>();
-        picList1 = new ArrayList<>();
-        picList2 = new ArrayList<>();
-        picList3 = new ArrayList<>();
-        //2017年7月21日
-        picList4 = new ArrayList<>();
-        picList5 = new ArrayList<>();
-        picList6 = new ArrayList<>();
+
         //修改小bug 图片读取问题
         if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(",");
-            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
 
         }
         if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(",");
-            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(",");
-            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(",");
-            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(",");
-            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
 
     }
@@ -257,6 +254,7 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         et_trouble_point.setText(Optional.ofNullable(bughandleDetailEntity.getCheckProcess()).orElse(""));
         et_trouble_reason.setText(Optional.ofNullable(bughandleDetailEntity.getCause()).orElse(""));
         et_trouble_deal.setText(Optional.ofNullable(bughandleDetailEntity.getHandle()).orElse(""));
+        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(bughandleDetailEntity.getFailureEntity().getIsMisinformation()));
         if (bughandleDetailEntity.getStatus() != null) {
             tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
         }

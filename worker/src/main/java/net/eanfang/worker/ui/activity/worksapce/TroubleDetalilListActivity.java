@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.PageUtils;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -42,20 +45,18 @@ public class TroubleDetalilListActivity extends BaseDialog {
     TextView tvTitle;
     @BindView(R.id.list_trouble)
     RecyclerView listTrouble;
-    List<BughandleConfirmEntity> mDataList;
     private ToubleDetailListAdapter toubleDetailListAdapter;
     private Activity mContext;
     private Long busRepairOrderId;
     private int isPhoneSolve;
-    private String status;
     private Intent intent;
+    private List<BughandleConfirmEntity> mDataList;
 
-    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve, String status) {
+    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve) {
         super(context, isfull);
         this.mContext = context;
         this.busRepairOrderId = id;
         this.isPhoneSolve = isPhoneSolve;
-        this.status = status;
     }
 
     @Override
@@ -71,9 +72,10 @@ public class TroubleDetalilListActivity extends BaseDialog {
         queryEntry.getEquals().put("busRepairOrderId", busRepairOrderId + "");
         EanfangHttp.post(RepairApi.POST_BUGHANDLE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<BughandleConfirmEntity>(mContext, true, BughandleConfirmEntity.class, true, (list) -> {
-                    mDataList = list;
+                .execute(new EanfangCallback<PageUtils<JSONObject>>(mContext, true, PageUtils.class, (list) -> {
+                    mDataList = JSONArray.parseArray(JSONArray.toJSONString(list.getList()), BughandleConfirmEntity.class);
                     if (mDataList.size() == 1) {
+                        dismiss();
                         jump(0);
                     } else if (mDataList.size() == 0) {
                         showToast("暂无数据");
@@ -97,7 +99,6 @@ public class TroubleDetalilListActivity extends BaseDialog {
             intent = new Intent(mContext, PsTroubleDetailActivity.class);
         }
         intent.putExtra("orderId", mDataList.get(position).getId());
-        intent.putExtra("status", status);
         intent.putExtra("phoneSolve", isPhoneSolve);
         intent.putExtra("bean", mDataList.get(position));
         mContext.startActivity(intent);

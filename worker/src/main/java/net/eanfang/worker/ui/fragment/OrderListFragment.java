@@ -9,6 +9,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
@@ -99,7 +100,6 @@ public class OrderListFragment extends BaseFragment implements
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
                         CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
-
                         break;
                     default:
                         break;
@@ -109,6 +109,10 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_second:
+                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         new FillAppointmentInfoView(getActivity(), true, item.getId()).show();
                         //给客户联系人打电话
                         CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
@@ -122,10 +126,18 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
                     case R.id.tv_do_first:
                         //只有当前登陆人为订单负责人才可以操作
+                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         new FillAppointmentInfoRebookView(getActivity(), true, item.getId(), true).show();
                         break;
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
+                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         intent = new Intent(getActivity(), SignInActivity.class);
                         intent.putExtra("orderId", item.getId());
                         intent.putExtra("latitude", item.getLatitude());
@@ -141,7 +153,10 @@ public class OrderListFragment extends BaseFragment implements
             case 3:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-
+                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         //只有当前登陆人为订单负责人才可以操作
                         if (item.getIsPhoneSolve() == 0) {
                             intent = new Intent(getActivity(), FillRepairInfoActivity.class);
@@ -169,7 +184,7 @@ public class OrderListFragment extends BaseFragment implements
 
                         break;
                     case R.id.tv_do_second:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认").show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve()).show();
                         break;
                     default:
                         break;
@@ -180,10 +195,14 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve()).show();
 //
                         break;
                     case R.id.tv_do_second:
+                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         startActivity(new Intent(getActivity(), EvaluateClientActivity.class).putExtra("flag", 0)
                                 .putExtra("ordernum", item.getOrderNum())
                                 .putExtra("ownerId", item.getOwnerUserId())

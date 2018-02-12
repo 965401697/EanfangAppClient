@@ -127,7 +127,7 @@ public class RepairActivity extends BaseClientActivity {
         }
         Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
         intent.putExtra("bean", fillBean());
-        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1)).toList());
+        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").toList());
         startActivity(intent);
     }
 
@@ -174,7 +174,7 @@ public class RepairActivity extends BaseClientActivity {
         bean.setLongitude(longitude);
         bean.setAddress(etDetailAddress.getText().toString().trim());
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
-        bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA));
+        bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
 
         bean.setRepairContactPhone(etContact.getText().toString().trim());

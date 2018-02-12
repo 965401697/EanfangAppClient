@@ -2,6 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.config.Config;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.client.BuildConfig;
@@ -21,7 +22,10 @@ public class LookMaterialAdapter extends BaseQuickAdapter<BughandleUseDeviceEnti
 
     @Override
     protected void convert(BaseViewHolder helper, BughandleUseDeviceEntity item) {
-        helper.setText(R.id.tv_detail_name, helper.getAdapterPosition() + 1 + "." + item.getModelCode() + "-" + item.getDeviceName());
+        String bugOne = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
+        String bugTwo = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
+        String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
+        helper.setText(R.id.tv_detail_name, (helper.getAdapterPosition() + 1) + "." + bugOne + "-" + bugTwo + "-" + bugThree);
         helper.addOnClickListener(R.id.tv_delete);
 
         //客户端隐藏删除按钮

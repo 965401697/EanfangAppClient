@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseDialog;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 
@@ -60,9 +61,12 @@ public class MateraInfoView extends BaseDialog {
     private void initData() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("耗用材料");
-        tvBusiness.setText(bughandleUseDeviceEntity.getModelCode());
+
+        tvBusiness.setText(Config.get().getBusinessNameByCode(bughandleUseDeviceEntity.getBusinessThreeCode(), 2));
+
+        tvModel.setText(Config.get().getModelNameByCode(bughandleUseDeviceEntity.getModelCode(), 2));
         tvEquipment.setText(bughandleUseDeviceEntity.getDeviceName());
-//        etLocation.setText(bughandleUseDeviceEntity.getCount());
+        etLocation.setText(bughandleUseDeviceEntity.getCount() + "");
         etCode.setText(bughandleUseDeviceEntity.getRemarkInfo());
         etLocation.setEnabled(false);
         etCode.setEnabled(false);

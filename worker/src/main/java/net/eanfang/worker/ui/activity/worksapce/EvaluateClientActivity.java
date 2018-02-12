@@ -61,7 +61,7 @@ public class EvaluateClientActivity extends BaseWorkerActivity {
 
     private void initView() {
 
-        setTitle("评价技师");
+        setTitle("评价客户");
         setLeftBack();
         tvSelect.setOnClickListener(v -> commit());
 

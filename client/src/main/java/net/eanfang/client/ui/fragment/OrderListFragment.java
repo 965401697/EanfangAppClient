@@ -9,6 +9,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -102,9 +103,12 @@ public class OrderListFragment extends BaseFragment implements
                 //待付款
                 switch (view.getId()) {
                     case R.id.tv_do_second:
+                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
 //                        startActivity(new Intent(getActivity(), PayActivity.class)
 //                                .putExtra("ordernum", item.getOrderNum())
-//                                .putExtra("doorfee", item.getDoorfee() + "")
 //                                .putExtra("orderType", "报修"));
                         break;
                     default:
@@ -148,6 +152,10 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         break;
                     case R.id.tv_do_second:
+                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认").show();
                         break;
                     default:
@@ -159,10 +167,18 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
+                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
 
                         break;
                     case R.id.tv_do_second:
+                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                                 .putExtra("flag", 0)
                                 .putExtra("ordernum", item.getOrderNum())

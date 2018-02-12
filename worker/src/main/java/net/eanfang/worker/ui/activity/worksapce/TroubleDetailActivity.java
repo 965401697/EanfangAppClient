@@ -19,6 +19,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.photopicker.com.activity.BGAPhotoPickerActivity;
+import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -29,7 +31,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,6 +42,15 @@ import java.util.List;
  */
 
 public class TroubleDetailActivity extends BaseWorkerActivity {
+
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_2 = 2;
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_3 = 3;
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_4 = 4;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 101;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
 
     private RecyclerView rv_trouble;
     private TextView tv_over_time;
@@ -83,32 +93,23 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
     private BughandleConfirmEntity bughandleConfirmEntity;
-    OnItemClickListener onItemClickListener = new OnItemClickListener() {
-        @Override
-        public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            Intent intent = new Intent(TroubleDetailActivity.this, LookTroubleDetailActivity.class);
-            intent.putExtra("id", bughandleConfirmEntity.getDetailEntityList().get(position).getId());
-            startActivity(intent);
-        }
-    };
     private Long id;
-    private String status;
     /**
      * 电视墙/操作台正面全貌 (3张)
      */
-    private ArrayList<String> picList1;
+    private ArrayList<String> picList1 = new ArrayList<>();
     /**
      * 电视墙/操作台背面全照(3张)
      */
-    private ArrayList<String> picList2;
+    private ArrayList<String> picList2 = new ArrayList<>();
     /**
      * 机柜正面/背面 (3张)
      */
-    private ArrayList<String> picList3;
+    private ArrayList<String> picList3 = new ArrayList<>();
     /**
      * 单据照片 (3张)
      */
-    private ArrayList<String> picList4;
+    private ArrayList<String> picList4 = new ArrayList<>();
     private int isPhonesolve;
 
     @Override
@@ -117,7 +118,6 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_client_fill_repair_info);
 
         id = getIntent().getLongExtra("orderId", 0);
-        status = getIntent().getStringExtra("status");
         initView();
         setTitle("故障处理");
         initData();
@@ -157,11 +157,6 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         //协作人员
         tv_team_worker = (TextView) findViewById(R.id.tv_team_worker);
 
-
-        //非单确认状态 隐藏确认按钮
-        if (!status.equals("待确认")) {
-            findViewById(R.id.rl_client_option).setVisibility(View.GONE);
-        }
 //        tv_complete.setOnClickListener((v) -> {
 //            JSONObject object = new JSONObject();
 //            try {
@@ -200,31 +195,26 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         //协作人员
         tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
         initAdapter();
-        initNinePhoto();
-        picList1 = new ArrayList<>();
-        picList2 = new ArrayList<>();
-        picList3 = new ArrayList<>();
-        picList4 = new ArrayList<>();
+
         if (bughandleConfirmEntity.getFrontPictures() != null) {
             String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
-            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
-
         if (bughandleConfirmEntity.getReverseSidePictures() != null) {
             String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
-            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
 
         if (bughandleConfirmEntity.getEquipmentCabinetPictures() != null) {
             String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
-            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
 
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
-
+        initNinePhoto();
 
     }
 
@@ -235,10 +225,22 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
                 DividerItemDecoration.VERTICAL));
         rv_trouble.setLayoutManager(new LinearLayoutManager(this));
         rv_trouble.setAdapter(quotationDetailAdapter);
-        rv_trouble.addOnItemTouchListener(onItemClickListener);
+        rv_trouble.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(TroubleDetailActivity.this, LookTroubleDetailActivity.class);
+                intent.putExtra("id", bughandleConfirmEntity.getDetailEntityList().get(position).getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initNinePhoto() {
+        snpl_moment_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        snpl_monitor_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
+        snpl_tools_package_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
+        snpl_form_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
+
         snpl_moment_add_photos.setData(picList1);
         snpl_monitor_add_photos.setData(picList2);
         snpl_tools_package_add_photos.setData(picList3);
@@ -249,12 +251,43 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         snpl_tools_package_add_photos.setEditable(false);
         snpl_form_photos.setEditable(false);
 
-        snpl_moment_add_photos.setDelegate(new BGASortableDelegate(this));
-
-        snpl_monitor_add_photos.setDelegate(new BGASortableDelegate(this));
-
-        snpl_tools_package_add_photos.setDelegate(new BGASortableDelegate(this));
-        snpl_form_photos.setDelegate(new BGASortableDelegate(this));
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        switch (requestCode) {
+            case REQUEST_CODE_CHOOSE_PHOTO_1:
+                snpl_moment_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_CHOOSE_PHOTO_2:
+                snpl_monitor_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_CHOOSE_PHOTO_3:
+                snpl_tools_package_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_CHOOSE_PHOTO_4:
+                snpl_form_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_PREVIEW_1:
+                snpl_moment_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_PREVIEW_2:
+                snpl_monitor_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_PREVIEW_3:
+                snpl_tools_package_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_PREVIEW_4:
+                snpl_form_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                break;
+            default:
+                break;
+        }
+    }
+
 }

@@ -121,6 +121,8 @@ public interface RepairApi {
      */
     String POST_CLIENT_EVALUATE_CREATE = BuildConfig.API_HOST + "/yaf_ent/clientEvaluate/create";
 
+    String POST_WORKER_EVALUATE_CREATE = BuildConfig.API_HOST + "/yaf_shop/workerEvaluate/create";
+
     /**
      * 22.技师端电话筛查
      */

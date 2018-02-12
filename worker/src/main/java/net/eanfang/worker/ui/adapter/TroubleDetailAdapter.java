@@ -20,7 +20,10 @@ public class TroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEntity
 
     @Override
     protected void convert(BaseViewHolder helper, BughandleDetailEntity item) {
-        helper.setText(R.id.tv_detail_name, Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 1));
+        String bugOne = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 1);
+        String bugTwo = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 2);
+        String bugThree = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 3);
+        helper.setText(R.id.tv_detail_name, (helper.getAdapterPosition() + 1) + "." + bugOne + "-" + bugTwo + "-" + bugThree);
 
         helper.setVisible(R.id.tv_detai_status, false);
         helper.setVisible(R.id.tv_delete, false);

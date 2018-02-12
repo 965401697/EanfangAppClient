@@ -173,27 +173,27 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity /*impleme
         //修改小bug 图片读取问题
         if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(",");
-            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(",");
-            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(",");
-            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(",");
-            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(",");
-            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_BUCKET + url).toString()).toList());
+            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
 
     }

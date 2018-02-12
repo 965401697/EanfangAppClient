@@ -463,7 +463,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:padding="15dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_complete"
