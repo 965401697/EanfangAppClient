@@ -153,7 +153,10 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //统计
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url", "http://www.jianshu.com/u/0e0821e94979").putExtra("title", "数据统计"));
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "http://www.eanfang.net:8099/#/totalPhone")
+                    .putExtra("title", "数据统计"));
+
         });
         //合作公司
         findViewById(R.id.ll_cooperation_ctrl).setOnClickListener((v) -> {

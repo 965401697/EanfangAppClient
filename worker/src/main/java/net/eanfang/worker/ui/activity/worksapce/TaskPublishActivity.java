@@ -57,7 +57,7 @@ public class TaskPublishActivity extends BaseActivity {
     /**
      * 选择地址 回调 code
      */
-    private final int ADDRESS_CALLBACK_CODE = SelectAddressActivity.class.hashCode();
+    private final int ADDRESS_CALLBACK_CODE =1;
     @BindView(R.id.et_task_company)
     EditText etTaskCompany;
     @BindView(R.id.et_task_uname)

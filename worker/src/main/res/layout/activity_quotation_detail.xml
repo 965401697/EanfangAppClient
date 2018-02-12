@@ -290,7 +290,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:textColor="@color/black" />
             </LinearLayout>
 
@@ -379,16 +379,11 @@
                     android:textSize="12sp" />
             </RelativeLayout>
 
-            <RelativeLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_params"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rl_params"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp" />
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
 
             <LinearLayout
                 android:id="@+id/rl_remark"

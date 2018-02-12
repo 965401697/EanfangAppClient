@@ -19,7 +19,7 @@ public class QuotationServiceAdapter extends BaseQuickAdapter<QuotationBean.Quot
 
     @Override
     protected void convert(BaseViewHolder helper, QuotationBean.QuoteServicesBean item) {
-        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getServiceName() + "-小计：￥" + item.getSum());
+        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getServiceName() + "-小计：￥" +item.getSum() / 100);
         helper.addOnClickListener(R.id.tv_delete);
     }
 }

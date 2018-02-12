@@ -460,6 +460,7 @@
                 android:layout_weight="1"
                 android:gravity="left"
                 android:text="100"
+                android:inputType="numberDecimal"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
         </LinearLayout>
