@@ -73,16 +73,7 @@ public class NoticeEntity implements Serializable {
 	@NotNull
 	@Digits(integer=19,fraction=0)
 	private Long companyId;
-	private String content;
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
+	
 	/**
 	 * 设置：通知ID
 	 */
@@ -211,4 +202,17 @@ public class NoticeEntity implements Serializable {
     @Setter
     @TableField(exist=false)
     private OrgEntity companyEntity;
+    
+	//各业务根据params扩展自己的信息
+    @Getter
+    @Setter
+    @TableField(exist = false)
+	Object extInfo;
+
+    // 通知标题，通过NoticeConst配置内容自动生成
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    String content;
+
 }

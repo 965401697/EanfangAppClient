@@ -84,7 +84,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 currentFragment = (OfferAndPayListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-                initData(1);
+//                initData(1);
             }
 
             @Override
@@ -93,7 +93,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
             }
         });
         currentFragment = (OfferAndPayListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
 
     }
 
@@ -126,7 +126,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(1);
+//        initData(1);
     }
 
     public PayOrderListBean getWorkReportListBean() {

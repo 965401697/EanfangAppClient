@@ -61,7 +61,7 @@ public class PayOrderListBean implements Serializable {
     public static class ListBean {
 
         private String assigneeOrgCode;
-        private int assigneeTopCompanyId;
+        private Long assigneeTopCompanyId;
         private Long assigneeUserId;
         private String createTime;
         private Long createUserId;
@@ -70,7 +70,7 @@ public class PayOrderListBean implements Serializable {
         private Long id;
         private int invoiceCost;
         private UserEntity offerer;
-        private int orderId;
+        private Long orderId;
         private String orderNum;
         private String ownerOrgCode;
         private Long ownerTopCompanyId;
@@ -127,11 +127,11 @@ public class PayOrderListBean implements Serializable {
             this.assigneeOrgCode = assigneeOrgCode;
         }
 
-        public int getAssigneeTopCompanyId() {
+        public Long getAssigneeTopCompanyId() {
             return assigneeTopCompanyId;
         }
 
-        public void setAssigneeTopCompanyId(int assigneeTopCompanyId) {
+        public void setAssigneeTopCompanyId(Long assigneeTopCompanyId) {
             this.assigneeTopCompanyId = assigneeTopCompanyId;
         }
 
@@ -192,11 +192,11 @@ public class PayOrderListBean implements Serializable {
         }
 
 
-        public int getOrderId() {
+        public Long getOrderId() {
             return orderId;
         }
 
-        public void setOrderId(int orderId) {
+        public void setOrderId(Long orderId) {
             this.orderId = orderId;
         }
 

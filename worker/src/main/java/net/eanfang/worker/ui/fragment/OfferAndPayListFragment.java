@@ -23,7 +23,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.worker.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.worker.ui.adapter.PayOrderListAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
@@ -74,7 +73,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
 
     @Override
     protected void initData(Bundle arguments) {
-
+        getData(1);
     }
 
     @Override
@@ -89,11 +88,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
     protected void setListener() {
     }
 
-    private void initAdapter() {
-        if (((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList() == null) {
-            return;
-        }
-        mDataList = ((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
+    private void initAdapter(List<PayOrderListBean.ListBean> mDataList) {
         mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.addOnItemTouchListener(new OnItemClickListener() {
@@ -135,12 +130,6 @@ public class OfferAndPayListFragment extends BaseFragment implements
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getData();
-    }
-
     /**
      * 刷新
      */
@@ -163,12 +152,12 @@ public class OfferAndPayListFragment extends BaseFragment implements
                 if (page <= 0) {
                     page = 1;
                 }
-                getData();
+                getData(page);
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
                 page++;
-                getData();
+                getData(page);
                 break;
             default:
                 break;
@@ -178,7 +167,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
     /**
      * 获取工作任务列表
      */
-    private void getData() {
+    private void getData(int page) {
         int status = GetConstDataUtils.getQuoteStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
@@ -197,6 +186,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
                 .execute(new EanfangCallback<PayOrderListBean>(getActivity(), true, PayOrderListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
                                 onDataReceived();
+                                initAdapter(bean.getList());
                             });
                         })
                 );
@@ -206,7 +196,6 @@ public class OfferAndPayListFragment extends BaseFragment implements
     @Override
     public void onDataReceived() {
         initView();
-        initAdapter();
         swiprefresh.setRefreshing(false);
     }
 }

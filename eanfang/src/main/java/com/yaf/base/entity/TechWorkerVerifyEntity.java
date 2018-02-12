@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.AccountEntity;
 import com.yaf.sys.entity.UserEntity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -78,6 +80,15 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Digits(integer = 3, fraction = 0)
     private Integer workingYear;
 
+    //头像
+    //@TableField(value = "avatar_photo")
+    @NotBlank
+    @Getter
+    @Setter
+    @Size(min = 0, max = 255)
+    private String avatarPhoto;
+
+    
     //无犯罪证明图片
     //@TableField(value = "crime_pic")
     @Size(min = 0, max = 50)
@@ -122,6 +133,13 @@ public class TechWorkerVerifyEntity implements Serializable {
     //@TableField(value = "create_time")
     private Date createTime;
 
+    //更新时间
+    @Getter
+    @Setter
+    //@TableField(value = "update_time")
+    private Date updateTime;
+
+    
     //认证时间
     //@TableField(value = "verify_time")
     private Date verifyTime;
@@ -135,21 +153,7 @@ public class TechWorkerVerifyEntity implements Serializable {
     //@TableField(value = "verify_message")
     @Size(min = 0, max = 200)
     private String verifyMessage;
-    @Getter
-    @Setter
-    @TableField(exist = false)
-    private AccountEntity accountEntity;
-    @Getter
-    @Setter
-    @TableField(exist = false)
-    private UserEntity userEntity;
 
-    /**
-     * 获取：主键自增
-     */
-    public Long getId() {
-        return id;
-    }
 
     /**
      * 设置：主键自增
@@ -159,10 +163,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：所属的acc_id
+     * 获取：主键自增
      */
-    public Long getAccId() {
-        return accId;
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -173,10 +177,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：所属的user_id
+     * 获取：所属的acc_id
      */
-    public Long getUserId() {
-        return userId;
+    public Long getAccId() {
+        return accId;
     }
 
     /**
@@ -187,10 +191,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：紧急联系人联系人姓名
+     * 获取：所属的user_id
      */
-    public String getContactName() {
-        return contactName;
+    public Long getUserId() {
+        return userId;
     }
 
     /**
@@ -201,10 +205,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：紧急联系人电话
+     * 获取：紧急联系人联系人姓名
      */
-    public String getContactPhone() {
-        return contactPhone;
+    public String getContactName() {
+        return contactName;
     }
 
     /**
@@ -215,10 +219,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：pay_type
+     * 获取：紧急联系人电话
      */
-    public Integer getPayType() {
-        return payType;
+    public String getContactPhone() {
+        return contactPhone;
     }
 
     /**
@@ -229,10 +233,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：支付账号
+     * 获取：pay_type
      */
-    public String getPayAccount() {
-        return payAccount;
+    public Integer getPayType() {
+        return payType;
     }
 
     /**
@@ -243,10 +247,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：working_level
+     * 获取：支付账号
      */
-    public Integer getWorkingLevel() {
-        return workingLevel;
+    public String getPayAccount() {
+        return payAccount;
     }
 
     /**
@@ -257,10 +261,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：working_year
+     * 获取：working_level
      */
-    public Integer getWorkingYear() {
-        return workingYear;
+    public Integer getWorkingLevel() {
+        return workingLevel;
     }
 
     /**
@@ -271,10 +275,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：无犯罪证明图片
+     * 获取：working_year
      */
-    public String getCrimePic() {
-        return crimePic;
+    public Integer getWorkingYear() {
+        return workingYear;
     }
 
     /**
@@ -285,10 +289,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：身份证正面图片
+     * 获取：无犯罪证明图片
      */
-    public String getIdCardFront() {
-        return idCardFront;
+    public String getCrimePic() {
+        return crimePic;
     }
 
     /**
@@ -299,10 +303,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：身份证反面
+     * 获取：身份证正面图片
      */
-    public String getIdCardSide() {
-        return idCardSide;
+    public String getIdCardFront() {
+        return idCardFront;
     }
 
     /**
@@ -313,10 +317,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：手持身份证图片
+     * 获取：身份证反面
      */
-    public String getIdCardHand() {
-        return idCardHand;
+    public String getIdCardSide() {
+        return idCardSide;
     }
 
     /**
@@ -327,10 +331,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：honor_pics
+     * 获取：手持身份证图片
      */
-    public String getHonorPics() {
-        return honorPics;
+    public String getIdCardHand() {
+        return idCardHand;
     }
 
     /**
@@ -341,10 +345,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：accident_pics
+     * 获取：honor_pics
      */
-    public String getAccidentPics() {
-        return accidentPics;
+    public String getHonorPics() {
+        return honorPics;
     }
 
     /**
@@ -355,10 +359,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：个人简介
+     * 获取：accident_pics
      */
-    public String getIntro() {
-        return intro;
+    public String getAccidentPics() {
+        return accidentPics;
     }
 
     /**
@@ -369,10 +373,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：0认证中，1认证通过，2认证拒绝，3禁用/删除
+     * 获取：个人简介
      */
-    public Integer getStatus() {
-        return status;
+    public String getIntro() {
+        return intro;
     }
 
     /**
@@ -383,10 +387,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：创建时间
+     * 获取：0认证中，1认证通过，2认证拒绝，3禁用/删除
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Integer getStatus() {
+        return status;
     }
 
     /**
@@ -397,10 +401,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：认证时间
+     * 获取：创建时间
      */
-    public Date getVerifyTime() {
-        return verifyTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /**
@@ -411,10 +415,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：认证操作人员
+     * 获取：认证时间
      */
-    public String getVerifyUserName() {
-        return verifyUserName;
+    public Date getVerifyTime() {
+        return verifyTime;
     }
 
     /**
@@ -425,10 +429,10 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
 
     /**
-     * 获取：备注信息（审核意见）
+     * 获取：认证操作人员
      */
-    public String getVerifyMessage() {
-        return verifyMessage;
+    public String getVerifyUserName() {
+        return verifyUserName;
     }
 
     /**
@@ -438,17 +442,24 @@ public class TechWorkerVerifyEntity implements Serializable {
         this.verifyMessage = verifyMessage;
     }
 
+    /**
+     * 获取：备注信息（审核意见）
+     */
+    public String getVerifyMessage() {
+        return verifyMessage;
+    }
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);
     }
-    /*手工代码写在下面*/
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof TechWorkerVerifyEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((TechWorkerVerifyEntity) other).id);
         }
@@ -462,4 +473,15 @@ public class TechWorkerVerifyEntity implements Serializable {
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+    /*手工代码写在下面*/
+
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private AccountEntity accountEntity;
+
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private UserEntity userEntity;
 }

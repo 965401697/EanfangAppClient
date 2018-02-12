@@ -55,7 +55,7 @@ public class PayOrderListCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        setTitle("报价管控");
+        tvTitle.setText("报价管控");
         llMineAccept.setVisibility(View.VISIBLE);
         llMineCompany.setVisibility(View.GONE);
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
