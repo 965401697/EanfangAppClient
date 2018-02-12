@@ -156,7 +156,7 @@ public class SelectWorkerActivity extends BaseClientActivity {
 
     //绘制海量点
     private void initMarker() {
-
+        locationUtil.mAMap.clear();
         for (int i = 0; i < selectWorkerList.size(); i++) {
             //保证经纬度没有问题的时候可以填false
             Double lat = Double.parseDouble(selectWorkerList.get(i).getLat()) + new Random().nextDouble() / 100;

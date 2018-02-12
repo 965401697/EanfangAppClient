@@ -68,6 +68,8 @@ public class PayActivity extends BaseClientActivity {
     RadioButton rbWeixinPay;
     @BindView(R.id.btn_to_pay)
     Button btnToPay;
+    @BindView(R.id.btn_to_pay_latter)
+    Button btnToPayLatter;
 
 
     private Boolean isFaPiao = false;
@@ -155,6 +157,16 @@ public class PayActivity extends BaseClientActivity {
                 wxPay();
             }
         });
+
+        btnToPayLatter.setOnClickListener(v -> {
+            EanfangApplication.get().closeActivity(PayActivity.class.getName());
+            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("message", MessageUtil.payLatter());
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+
         editFapiao.setOnClickListener(v -> {
             Intent intent = new Intent(PayActivity.this, FaPiaoActivity.class);
             intent.putExtra("orderId", payLogEntity.getOrderId());

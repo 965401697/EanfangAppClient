@@ -129,8 +129,18 @@
         <!--android:name="com.tencent.android.tpush.XGPushActivity"-->
         <!--android:exported="false" />-->
 
+        <!--<activity-->
+        <!--android:name=".ui.activity.LoginActivity"-->
+        <!--android:theme="@style/launch_theme">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
+
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.SplashActivity"
             android:theme="@style/launch_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -204,7 +214,7 @@
         <activity android:name=".ui.activity.worksapce.PartnerActivity" />
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.ConstansActivity"/>
+        <activity android:name=".ui.activity.worksapce.ConstansActivity" />
         <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
 
 

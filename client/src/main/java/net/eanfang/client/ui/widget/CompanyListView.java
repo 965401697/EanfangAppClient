@@ -65,6 +65,10 @@ public class CompanyListView extends BaseDialog {
      * Get the list of Companies
      */
     private void getCompanyAllList() {
+        if (EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys() == null) {
+            showToast("没有公司可以切换");
+            return;
+        }
         List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         //排除默认公司 只去客户公司
         orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity().getUnitType() == 2).

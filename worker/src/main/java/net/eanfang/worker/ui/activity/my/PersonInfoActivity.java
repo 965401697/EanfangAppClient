@@ -145,13 +145,13 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
         }
 
-        if (infoBackBean.getAccount().getRealName() != null) {
+        if (infoBackBean.getAccount().getRealName() != null && !"待提供".equals(infoBackBean.getAccount().getRealName())) {
             etRealname.setText(infoBackBean.getAccount().getRealName());
             etRealname.setEnabled(false);
         }
         rbMan.setClickable(false);
         rbWoman.setClickable(false);
-        if (infoBackBean.getAccount().getGender() == 1) {
+        if (infoBackBean.getAccount().getGender() == null || infoBackBean.getAccount().getGender() == 1) {
             rbMan.setChecked(true);
         } else {
             rbWoman.setChecked(true);

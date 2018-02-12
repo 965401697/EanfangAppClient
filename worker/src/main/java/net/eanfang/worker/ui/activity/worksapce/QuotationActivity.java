@@ -256,7 +256,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 lon = data.getStringExtra("lon");
                 bean.setLongitude(lon);
                 bean.setZone_code(code);
-                bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(code, 3, Constant.AREA)));
+                bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(code, 3, Constant.AREA) + ""));
                 if (radioClient.isChecked() == true) {
                     if (StringUtils.isEmpty(orderID)) {
                         return;
@@ -314,7 +314,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 //地图选址 取 显示值
                 tv_detail_address.setText(item.getName());
                 bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
-                bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
+                bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA) + ""));
                 break;
             default:
                 break;
