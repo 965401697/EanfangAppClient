@@ -109,33 +109,6 @@ public class MainActivity extends BaseActivity {
         redPoint = indicator.findViewById(R.id.redPoint);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        getInfoBytoken();
-    }
-
-    /**
-     * 检查token
-     */
-//    public void getInfoBytoken() {
-//        EanfangHttp.get(UserApi.CHECK_TOKEN)
-//                .execute(new EanfangCallback<User>(this, false) {
-//                    @Override
-//                    public void onSuccess(User bean) {
-//                        EanfangApplication.get().set(User.class.getName(), bean);
-//                        BaseEvent baseEvent = new BaseEvent();
-//                        baseEvent.setObject(bean);
-//                        baseEvent.setEventId(Local.CHECK_TOKEN_HOME_SUCCESS);
-//                        EventBus.getDefault().post(baseEvent);
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        showToast(message);
-//                    }
-//                });
-//    }
 
     /**
      * 点击两次返回键退出

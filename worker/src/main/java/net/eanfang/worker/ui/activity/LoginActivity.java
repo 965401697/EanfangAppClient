@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
@@ -33,8 +32,6 @@ import com.im.model.bean.UserInfo;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.okgo.OkGo;
-import com.okgo.model.HttpHeaders;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;
@@ -102,37 +99,37 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         btn_login.setOnClickListener(v -> {
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
-            if (!BuildConfig.LOG_DEBUG) {
+//            if (!BuildConfig.LOG_DEBUG) {
 
-                if (StringUtils.isEmpty(userPhone)) {
-                    showToast("手机号不能为空");
-                    return;
-                }
-
-                if (StringUtils.isEmpty(userAulth)) {
-                    showToast("验证码不能为空");
-                    return;
-                }
-                if (!cb.isChecked()) {
-                    showToast("同意易安防会员章程和协议后才可以登陆使用");
-                    return;
-                }
+            if (StringUtils.isEmpty(userPhone)) {
+                showToast("手机号不能为空");
+                return;
             }
+
+            if (StringUtils.isEmpty(userAulth)) {
+                showToast("验证码不能为空");
+                return;
+            }
+            if (!cb.isChecked()) {
+                showToast("同意易安防会员章程和协议后才可以登陆使用");
+                return;
+            }
+//            }
 
             //调试阶段
-            if (BuildConfig.LOG_DEBUG) {
-                if (StringUtils.isEmpty(userPhone)) {
-                    userPhone = "13800138020";
-                }
-                if (StringUtils.isEmpty(userAulth)) {
-                    userAulth = "admin";
-                }
-                if (userAulth.equals("admin")) {
-                    setLogin(userPhone, userAulth);
-                }
-            } else {
-                setVerfiyLogin(userPhone, userAulth);
-            }
+//            if (BuildConfig.LOG_DEBUG) {
+//                if (StringUtils.isEmpty(userPhone)) {
+//                    userPhone = "13800138020";
+//                }
+//                if (StringUtils.isEmpty(userAulth)) {
+//                    userAulth = "admin";
+//                }
+//                if (userAulth.equals("admin")) {
+//                    setLogin(userPhone, userAulth);
+//                }
+//            } else {
+            setVerfiyLogin(userPhone, userAulth);
+//            }
 
         });
 
@@ -182,8 +179,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-                    registerEase(phone, pwd);
-                    loginEase(phone, pwd);
+                    registerEase(bean.getAccount().getMobile());
+                    loginEase(bean.getAccount().getMobile());
                     goMain();
                 }));
 
@@ -209,8 +206,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
 
-                    registerEase(phone, pwd);
-                    loginEase(phone, pwd);
+                    registerEase(bean.getAccount().getMobile());
+                    loginEase(bean.getAccount().getMobile());
 
                     goMain();
                 }));
@@ -327,13 +324,13 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
     }
 
 
-    private void registerEase(String phone, String pwd) {
+    private void registerEase(String phone) {
 
         //3、去服务器注册账号
         Model.getInstance().getGlobalThreadPool().execute(() -> {
             try {
                 //去环信服务器注册账号
-                EMClient.getInstance().createAccount(phone, pwd);
+                EMClient.getInstance().createAccount(phone, "eanfang");
 
                 //更新页面显示
                 runOnUiThread(() -> PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, true));
@@ -343,12 +340,12 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         });
     }
 
-    private void loginEase(String phone, String pwd) {
+    private void loginEase(String phone) {
 
         //3、登录逻辑处理
         Model.getInstance().getGlobalThreadPool().execute(() -> {
             //去环信服务器登录
-            EMClient.getInstance().login(phone, pwd, new EMCallBack() {
+            EMClient.getInstance().login(phone, "eanfang", new EMCallBack() {
                 //登录成功处理
                 @Override
                 public void onSuccess() {

@@ -25,14 +25,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 
 import net.eanfang.worker.R;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +56,7 @@ public class WebActivity extends BaseActivity {
     LinearLayout llRefresh;
     @BindView(R.id.ll_error_view)
     LinearLayout llErrorView;
-    Map extraHeaders = new HashMap();
+    //    Map extraHeaders = new HashMap();
     private boolean mLastLoadFailed = false;
     private String urls, title;
 
@@ -71,7 +67,7 @@ public class WebActivity extends BaseActivity {
         ButterKnife.bind(this);
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
-        extraHeaders.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+//        extraHeaders.put("token", EanfangApplication.get().getUser().getToken());
         //添加webView到布局中
         addWebViewToLayout();
 
@@ -176,6 +172,9 @@ public class WebActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                if (!mLastLoadFailed){
+                    llLoading.setVisibility(View.VISIBLE);
+                }
             }
 
             //页面加载完成
@@ -335,7 +334,8 @@ public class WebActivity extends BaseActivity {
      * 加载url
      */
     void loadUrl(String url) {
-        mWebView.loadUrl(url, extraHeaders);
+//        mWebView.loadUrl(url, extraHeaders);
+        mWebView.loadUrl(url);
     }
 
     @Override

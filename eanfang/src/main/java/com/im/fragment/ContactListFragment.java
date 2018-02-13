@@ -182,7 +182,8 @@ public class ContactListFragment extends EaseContactListFragment {
                         }
 
                         // 保存好友信息到本地数据库
-                        Model.getInstance().getDbManager().getContactTableDao().saveContacts(contacts, true);
+                            Model.getInstance().getDbManager().getContactTableDao().saveContacts(contacts, true);
+
 
                         if (getActivity() == null) {
                             return;

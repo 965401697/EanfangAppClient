@@ -73,14 +73,6 @@
             android:value="${AMAP_KEY}" />
         <service android:name="com.amap.api.location.APSService" />
 
-        <!--<meta-data-->
-        <!--android:name="XG_V2_ACCESS_ID"-->
-        <!--tools:replace="android:value"-->
-        <!--android:value="2100270002" />-->
-        <!--<meta-data-->
-        <!--android:name="XG_V2_ACCESS_KEY"-->
-        <!--tools:replace="android:value"-->
-        <!--android:value="A72E1ECQX57G" />-->
 
         <receiver
             android:name="net.eanfang.worker.ui.receiver.MessageReceiver"
@@ -94,51 +86,6 @@
         </receiver>
 
 
-        <!--&lt;!&ndash;信鸽&ndash;&gt;-->
-        <!--<receiver-->
-        <!--android:name="net.eanfang.worker.ui.receiver.MessageReceiver"-->
-        <!--android:exported="true">-->
-        <!--<intent-filter>-->
-        <!--&lt;!&ndash; 接收消息透传 &ndash;&gt;-->
-        <!--<action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />-->
-        <!--&lt;!&ndash; 监听注册、反注册、设置/删除标签、通知被点击等处理结果 &ndash;&gt;-->
-        <!--<action android:name="com.tencent.android.tpush.action.FEEDBACK" />-->
-        <!--</intent-filter>-->
-        <!--</receiver>-->
-        <!--<service-->
-        <!--android:name="com.tencent.android.tpush.service.XGPushServiceV3"-->
-        <!--android:exported="true"-->
-        <!--android:persistent="true"-->
-        <!--android:process=":xg_service_v3" />-->
-
-        <!--&lt;!&ndash; 【必须】 通知service，此选项有助于提高抵达率 &ndash;&gt;-->
-        <!--<service-->
-        <!--android:name="com.tencent.android.tpush.rpc.XGRemoteService"-->
-        <!--android:exported="true">-->
-        <!--<intent-filter>-->
-        <!--&lt;!&ndash; 【必须】 请修改为当前APP包名.PUSH_ACTION&ndash;&gt;-->
-        <!--<action android:name="net.eanfang.client.PUSH_ACTION" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
-        <!--&lt;!&ndash; 【必须】 【注意】authorities修改为 包名.AUTH_XGPUSH, 如demo的包名为：com.qq.xgdemo&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="com.tencent.android.tpush.XGPushProvider"-->
-        <!--android:authorities="net.eanfang.worker.AUTH_XGPUSH"-->
-        <!--android:exported="true" />-->
-        <!--&lt;!&ndash; 【必须】 【注意】authorities修改为 包名.TPUSH_PROVIDER, 如demo的包名为：com.qq.xgdemo&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="com.tencent.android.tpush.SettingsContentProvider"-->
-        <!--android:authorities="net.eanfang.worker.TPUSH_PROVIDER"-->
-        <!--android:exported="false" />-->
-        <!--&lt;!&ndash; 【必须】 【注意】authorities修改为 包名.TENCENT.MID.V3, 如demo的包名为：com.qq.xgdemo&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="com.tencent.mid.api.MidProvider"-->
-        <!--android:authorities="net.eanfang.worker.TENCENT.MID.V3"-->
-        <!--android:exported="true" />-->
-
-        <!--<activity-->
-        <!--android:name="com.tencent.android.tpush.XGPushActivity"-->
-        <!--android:exported="false" />-->
 
 
         <activity

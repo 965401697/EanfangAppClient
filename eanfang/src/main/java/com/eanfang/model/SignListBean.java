@@ -278,7 +278,7 @@ public class SignListBean implements Serializable {
             private int sortNum;
             private Long topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private Long updateUser;
 
             public Long getCompanyId() {
                 return companyId;
@@ -368,11 +368,11 @@ public class SignListBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public Long getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(Long updateUser) {
                 this.updateUser = updateUser;
             }
         }

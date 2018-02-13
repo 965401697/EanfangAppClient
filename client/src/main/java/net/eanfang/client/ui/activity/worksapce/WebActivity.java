@@ -26,14 +26,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.ConnectivityChangeReceiver;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +57,7 @@ public class WebActivity extends BaseClientActivity {
     LinearLayout llRefresh;
     @BindView(R.id.ll_error_view)
     LinearLayout llErrorView;
-    Map extraHeaders = new HashMap();
+//    Map extraHeaders = new HashMap();
     private boolean mLastLoadFailed = false;
     private String urls, title;
 
@@ -72,7 +68,7 @@ public class WebActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
-        extraHeaders.put("YAF-Token", EanfangApplication.get().getUser().getToken());
+//        extraHeaders.put("YAF-Token", EanfangApplication.get().getUser().getToken());
         //添加webView到布局中
         addWebViewToLayout();
 
@@ -207,6 +203,9 @@ public class WebActivity extends BaseClientActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                if (!mLastLoadFailed) {
+                    llLoading.setVisibility(View.VISIBLE);
+                }
             }
 
             //页面加载完成
@@ -366,30 +365,10 @@ public class WebActivity extends BaseClientActivity {
      * 加载url
      */
     void loadUrl(String url) {
-        mWebView.loadUrl(url, extraHeaders);
-
-/**  格式规定为:file:///android_asset/文件名.html
- *   mWebView.loadUrl("file:///android_asset/localHtml.html");
- 方式1. 加载远程网页：
- 方式2：加载asset的html页面
- mWebView.loadUrl("file:///android_asset/localHtml.html");
- 方式3：加载手机SD的html页面
- mWebView.loadUrl("file:///mnt/sdcard/database/taobao.html");*/
+//        mWebView.loadUrl(url, extraHeaders);
+        mWebView.loadUrl(url);
     }
 
-    /**
-     * 是否可以后退
-     * Webview.canGoBack()
-     * 后退网页
-     * Webview.goBack()
-     * 是否可以前进
-     * Webview.canGoForward()
-     * 前进网页
-     * Webview.goForward()
-     * 以当前的index为起始点前进或者后退到历史记录中指定的steps
-     * 如果steps为负数则为后退，正数则为前进
-     * Webview.goBackOrForward(intsteps)
-     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KEYCODE_BACK) && mWebView.canGoBack()) {

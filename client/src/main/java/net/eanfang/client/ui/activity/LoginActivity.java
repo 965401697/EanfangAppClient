@@ -179,14 +179,14 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     private void setVerfiyLogin(String phone, String pwd) {
 
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
-                .params("mobile",phone)
-                .params("verifycode",pwd)
+                .params("mobile", phone)
+                .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
                     EanfangHttp.setToken(bean.getToken());
-                    registerEase(phone, pwd);
-                    loginEase(phone, pwd);
+                    registerEase(bean.getAccount().getMobile());
+                    loginEase(bean.getAccount().getMobile());
                     goMain();
                 }));
 
@@ -213,8 +213,8 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
                     EanfangHttp.setToken(bean.getToken());
 
-                    registerEase(phone, pwd);
-                    loginEase(phone, pwd);
+                    registerEase(bean.getAccount().getMobile());
+                    loginEase(bean.getAccount().getMobile());
 
                     goMain();
                 }));
@@ -312,8 +312,8 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         return super.onKeyDown(keyCode, event);
     }
 
-    private void registerEase(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
+    private void registerEase(String phone) {
+        if (StringUtils.isEmpty(phone)) {
             return;
         }
 
@@ -321,7 +321,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         Model.getInstance().getGlobalThreadPool().execute(() -> {
             try {
                 //去环信服务器注册账号
-                EMClient.getInstance().createAccount(phone, pwd);
+                EMClient.getInstance().createAccount(phone, "eanfang");
 
                 //更新页面显示
                 runOnUiThread(() -> PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, true));
@@ -332,15 +332,15 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
     }
 
 
-    private void loginEase(String phone, String pwd) {
-        if (StringUtils.isEmpty(phone) || StringUtils.isEmpty(pwd)) {
+    private void loginEase(String phone) {
+        if (StringUtils.isEmpty(phone)) {
             return;
         }
 
         //3、登录逻辑处理
         Model.getInstance().getGlobalThreadPool().execute(() -> {
             //去环信服务器登录
-            EMClient.getInstance().login(phone, pwd, new EMCallBack() {
+            EMClient.getInstance().login(phone, "eanfang", new EMCallBack() {
                 //登录成功处理
                 @Override
                 public void onSuccess() {

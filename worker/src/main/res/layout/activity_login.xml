@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@color/worker"
+            android:background="@color/client"
             android:text="登录"
             android:textColor="#ffffff"
             android:textSize="16sp" />

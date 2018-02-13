@@ -125,8 +125,9 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //统计
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
+            String token = EanfangApplication.getApplication().getUser().getToken();
             startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "http://www.eanfang.net:8099/#/totalPhone")
+                    .putExtra("url", "http:////yaf.eanfang.net:8099/#/totalPhone?token="+token)
                     .putExtra("title", "数据统计"));
         });
         //合作公司

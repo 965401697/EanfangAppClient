@@ -67,6 +67,7 @@ public class EanfangApplication extends CustomeApplication {
         options.setAcceptInvitationAlways(false);
         //设置需要同意后才能进行群邀请
         options.setAutoAcceptGroupInvitation(false);
+        options.setAutoLogin(true);
 
         EaseUI.getInstance().init(this, options);
 
