@@ -60,17 +60,9 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
             isLoadReady = true;
             go();
         }, 1000);
-        checkVersion();
         isFirst();
     }
 
-
-    /**
-     * 如果后期有需求  加上更新
-     */
-    private void checkVersion() {
-
-    }
 
 
     //跳转

@@ -5,12 +5,12 @@ import android.net.Uri;
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 
 import java.util.List;

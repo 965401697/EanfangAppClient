@@ -1,12 +1,8 @@
-package com.eanfang.ui.base;
+package net.eanfang.client.util;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -19,8 +15,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.R;
 import com.eanfang.util.ParseXmlServiceToVersion;
+
+import net.eanfang.client.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,45 +46,35 @@ public class UpdateManager {
     /* 是否取消更新 */
     private boolean cancelUpdate = false;
 
-    private String app;
-
     //版本信息xml地址
-    private String xmlPath = BuildConfig.HOST + "file/" + app + ".xml";
+    private String xmlPath = BuildConfig.HOST + "file/" + net.eanfang.client.BuildConfig.TYPE + "2.xml";
 
-    private Activity mContext;
+    private Context mContext;
     /* 更新进度条 */
     private ProgressBar mProgress;
     private Dialog mDownloadDialog;
     private int isMust;
     private int versionCode;
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler;
-
-    {
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    // 正在下载
-                    case DOWNLOAD:
-                        // 设置进度条位置
-                        mProgress.setProgress(progress);
-                        break;
-                    case DOWNLOAD_FINISH:
-                        // 安装文件
-                        installApk();
-                        break;
-                    default:
-                        break;
-                }
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                // 正在下载
+                case DOWNLOAD:
+                    // 设置进度条位置
+                    mProgress.setProgress(progress);
+                    break;
+                case DOWNLOAD_FINISH:
+                    // 安装文件
+                    installApk();
+                    break;
+                default:
+                    break;
             }
-        };
-    }
+        }
+    };
 
-    public UpdateManager(Activity context, String app) {
+    public UpdateManager(Context context) {
         this.mContext = context;
-        this.app = app;
-
     }
 
     /**
@@ -168,7 +155,7 @@ public class UpdateManager {
         int versionCode = 0;
         try {
             // 获取软件版本号，对应AndroidManifest.xml下android:versionCode
-            versionCode = context.getPackageManager().getPackageInfo("dev.woon.eanfang." + app, 0).versionCode;
+            versionCode = context.getPackageManager().getPackageInfo("dev.woon.eanfang." + net.eanfang.client.BuildConfig.TYPE, 0).versionCode;
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -184,13 +171,10 @@ public class UpdateManager {
         builder.setTitle("软件更新");
         builder.setMessage("检测到新版本，请更新后使用\n" + mHashMap.get("info"));
         // 更新
-        builder.setPositiveButton("立即更新", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                // 显示下载对话框
-                showDownloadDialog();
-            }
+        builder.setPositiveButton("立即更新", (dialog, which) -> {
+            dialog.dismiss();
+            // 显示下载对话框
+            showDownloadDialog();
         });
 
         //屏蔽返回按键
@@ -201,12 +185,7 @@ public class UpdateManager {
         builder.setCancelable(false);
         // 稍后更新
         if (isMust == 0) {
-            builder.setNegativeButton("稍后更新", new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setNegativeButton("稍后更新", (dialog, which) -> dialog.dismiss());
         }
         Dialog noticeDialog = builder.create();
         noticeDialog.show();
@@ -219,7 +198,7 @@ public class UpdateManager {
         // 构造软件下载对话框
         Builder builder = new Builder(mContext);
         builder.setTitle("正在更新");
-        // 给下载对话框增加进度条
+// 给下载对话框增加进度条
         final LayoutInflater inflater = LayoutInflater.from(mContext);
         View v = inflater.inflate(R.layout.softupdate_progress, null);
         mProgress = (ProgressBar) v.findViewById(R.id.update_progress);

@@ -13,6 +13,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -26,7 +27,6 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 

@@ -49,6 +49,15 @@ public class WorkerInfoBean implements Serializable {
     private Long userId;
     private int workingLevel;
     private int workingYear;
+    private String avatarPhoto;
+
+    public String getAvatarPhoto() {
+        return avatarPhoto;
+    }
+
+    public void setAvatarPhoto(String avatarPhoto) {
+        this.avatarPhoto = avatarPhoto;
+    }
 
     public Long getAccId() {
         return accId;

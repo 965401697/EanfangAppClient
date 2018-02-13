@@ -36,6 +36,7 @@ import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
+import net.eanfang.worker.util.UpdateManager;
 
 import butterknife.ButterKnife;
 
@@ -59,7 +60,9 @@ public class MainActivity extends BaseActivity {
         initFragment();
         getBaseData();
         getConst();
-
+        //更新
+        UpdateManager manager = new UpdateManager(this);
+        manager.checkUpdate();
 
     }
 

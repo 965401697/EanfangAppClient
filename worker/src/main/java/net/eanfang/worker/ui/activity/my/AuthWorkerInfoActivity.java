@@ -91,6 +91,10 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     SimpleDraweeView ivHonor4;
     @BindView(R.id.ll_show_horpic)
     LinearLayout llShowHorpic;
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
     private WorkerInfoBean workerInfoBean;
     private WorkerInfoBean setWorkerInfoBean = new WorkerInfoBean();
     private Map<String, String> uploadMap = new HashMap<>();
@@ -108,6 +112,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     private final int HONOR_PIC = 105;
     //有无犯罪记录
     private final int CRIME_PIC = 106;
+
+    private final int HEADER_PIC = 107;
 
 
     @Override
@@ -130,6 +136,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_SIDE)));
         ivCrimePic.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(CRIME_PIC)));
         ivAccidentPics.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ACCIDENT_PIC)));
+        ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(HEADER_PIC)));
 
         setRightTitleOnClickListener(v -> setData());
         setRightTitleOnClickListener((v) -> {
@@ -175,6 +182,10 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             case ACCIDENT_PIC:
                 setWorkerInfoBean.setAccidentPics(imgKey);
                 ivAccidentPics.setImageURI("file://" + image.getOriginalPath());
+                break;
+            case HEADER_PIC:
+                setWorkerInfoBean.setAvatarPhoto(imgKey);
+                ivHeader.setImageURI("file://" + image.getOriginalPath());
                 break;
             default:
                 break;
@@ -225,6 +236,10 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             }
             if (workerInfoBean.getIdCardHand() != null) {
                 ivIdCardHand.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()));
+            }
+            if (workerInfoBean.getAvatarPhoto() != null) {
+                ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()));
+                tvUserName.setText(workerInfoBean.getContactName());
             }
             if (workerInfoBean.getHonorPics() != null) {
                 String[] urls = workerInfoBean.getHonorPics().split(",");

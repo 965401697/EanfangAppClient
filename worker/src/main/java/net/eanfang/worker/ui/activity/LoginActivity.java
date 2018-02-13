@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
@@ -35,6 +36,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;
+import net.eanfang.worker.util.UpdateManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -99,7 +101,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         btn_login.setOnClickListener(v -> {
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
-//            if (!BuildConfig.LOG_DEBUG) {
+            if (!BuildConfig.LOG_DEBUG) {
 
             if (StringUtils.isEmpty(userPhone)) {
                 showToast("手机号不能为空");
@@ -114,22 +116,22 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                 showToast("同意易安防会员章程和协议后才可以登陆使用");
                 return;
             }
-//            }
+            }
 
             //调试阶段
-//            if (BuildConfig.LOG_DEBUG) {
-//                if (StringUtils.isEmpty(userPhone)) {
-//                    userPhone = "13800138020";
-//                }
-//                if (StringUtils.isEmpty(userAulth)) {
-//                    userAulth = "admin";
-//                }
-//                if (userAulth.equals("admin")) {
-//                    setLogin(userPhone, userAulth);
-//                }
-//            } else {
+            if (BuildConfig.LOG_DEBUG) {
+                if (StringUtils.isEmpty(userPhone)) {
+                    userPhone = "13800138020";
+                }
+                if (StringUtils.isEmpty(userAulth)) {
+                    userAulth = "admin";
+                }
+                if (userAulth.equals("admin")) {
+                    setLogin(userPhone, userAulth);
+                }
+            } else {
             setVerfiyLogin(userPhone, userAulth);
-//            }
+            }
 
         });
 
@@ -214,23 +216,6 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     }
 
-//    private void appRegister(String phone, String pwd) {
-//        /**COMMON_ACC("普通账号", 0),
-//         INTERNAL_ACC("内置账号", 1),
-//         WORKER_ACC("技师账号", 2),
-//         WORKER_VERIFIED("已认证技师", 3);*/
-//        AccountEntity accountEntity = new AccountEntity();
-//        accountEntity.setMobile(phone);
-//        accountEntity.setPasswd(pwd);
-//        accountEntity.setAccType(0);
-//        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-//        EanfangHttp.post(UserApi.APP_REGISTER + pwd)
-//                .upJson(JSONObject.toJSONString(accountEntity))
-//                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
-//
-//
-//                }));
-//    }
 
     /**
      * 获取验证码
@@ -273,7 +258,9 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
+        //更新
+        UpdateManager manager = new UpdateManager(this);
+        manager.checkUpdate();
 
     }
 

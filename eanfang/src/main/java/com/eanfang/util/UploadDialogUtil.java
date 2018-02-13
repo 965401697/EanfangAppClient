@@ -2,7 +2,7 @@
  * Copyright (c) 2016. Huangrui All rights reserved.
  */
 
-package net.eanfang.worker.util;
+package com.eanfang.util;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import net.eanfang.worker.R;
+import com.eanfang.R;
 
 
 /**

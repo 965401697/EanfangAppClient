@@ -36,6 +36,7 @@ import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
+import net.eanfang.client.util.UpdateManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -260,7 +261,9 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             e1.printStackTrace();
         }
 
-
+        //更新
+        UpdateManager manager = new UpdateManager(this);
+        manager.checkUpdate();
     }
 
     @Override

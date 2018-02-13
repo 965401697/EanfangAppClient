@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
@@ -22,7 +23,6 @@ import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.client.util.ImagePerviewUtil;
