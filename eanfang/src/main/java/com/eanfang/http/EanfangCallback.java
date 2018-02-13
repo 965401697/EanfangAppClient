@@ -278,7 +278,7 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onServerError(String message) {
-        ToastUtil.get().showToast(this.activity, "哎呀，服务器好像罢工了");
+        ToastUtil.get().showToast(this.activity, message);
     }
 
     public void onMissingLogin() {
