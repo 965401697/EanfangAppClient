@@ -150,7 +150,7 @@ public class EanfangCallback<T> extends StringCallback {
 
             resultJson = JsonUtils.str2JSON(response.body());
             Integer code = -100;
-            String message = "响应参数错误";
+            String message = null;
             JSONObject resultObject = null;
             JSONArray resultArray = null;
             String resultString = null;
@@ -278,7 +278,9 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onServerError(String message) {
-        ToastUtil.get().showToast(this.activity, message);
+        if (message!=null){
+            ToastUtil.get().showToast(this.activity, message);
+        }
     }
 
     public void onMissingLogin() {
