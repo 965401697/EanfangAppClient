@@ -156,7 +156,7 @@ public class WorkspaceFragment extends BaseFragment {
 
             String token = EanfangApplication.getApplication().getUser().getToken();
             startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "http://shop.eanfang.net:8099/#/totalPhone?token=" + token)
+                    .putExtra("url", "http:/worker.eanfang.net:8099/#/totalPhone?token=" + token)
                     .putExtra("title", "数据统计"));
 
         });
