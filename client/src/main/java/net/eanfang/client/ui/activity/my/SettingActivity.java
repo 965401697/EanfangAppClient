@@ -89,7 +89,7 @@ public class SettingActivity extends BaseClientActivity {
             ToastUtil.get().showToast(SettingActivity.this, "退出登录成功");
             SharePreferenceUtil.get().clear();
             startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-            SettingActivity.this.finish();
+            finishSelf();
         });
         builder.setNegativeButton("取消", (dialog, which) -> {
             dialog.dismiss();

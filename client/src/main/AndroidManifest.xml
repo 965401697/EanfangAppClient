@@ -217,6 +217,11 @@
         <activity android:name=".ui.activity.worksapce.ConstansActivity" />
         <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity"/>
+        <activity android:name=".ui.activity.worksapce.SignListDetailActivity"/>
+        <activity android:name=".ui.activity.worksapce.SignListActivity"/>
+        <activity android:name=".ui.activity.worksapce.SignActivity"/>
+        <activity android:name=".ui.activity.worksapce.SignInCommitActivity"/>
+        <activity android:name=".ui.activity.LoginActivity"/>
 
 
 

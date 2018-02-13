@@ -18,6 +18,7 @@ import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.ReportActivity;
+import net.eanfang.client.ui.activity.worksapce.SignActivity;
 import net.eanfang.client.ui.activity.worksapce.TaskActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
@@ -85,7 +86,12 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.ll_check).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CheckActivity.class));
         });
-
+        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
+            jumpSign("签到", 0);
+        });
+        findViewById(R.id.ll_sign_out).setOnClickListener((v) -> {
+            jumpSign("签退", 1);
+        });
     }
 
     @Override
@@ -127,7 +133,7 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
             String token = EanfangApplication.getApplication().getUser().getToken();
             startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "http:////yaf.eanfang.net:8099/#/totalPhone?token="+token)
+                    .putExtra("url", "http://yaf.eanfang.net:8099/#/totalPhone?token="+token)
                     .putExtra("title", "数据统计"));
         });
         //合作公司
@@ -135,5 +141,10 @@ public class WorkspaceFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), PartnerActivity.class));
         });
     }
-
+    private void jumpSign(String title, int status) {
+        Intent intent = new Intent(getActivity(), SignActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("status", status);
+        startActivity(intent);
+    }
 }

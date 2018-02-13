@@ -114,9 +114,6 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
                     return;
                 }
             }
-//            setLogin("15010263711", "admin");
-//            setLogin("13800138000", "admin");
-//            setLogin("15940525612", "admin");
 
             //调试阶段
             if (BuildConfig.LOG_DEBUG) {
