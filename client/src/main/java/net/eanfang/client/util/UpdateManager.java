@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.eanfang.BuildConfig;
 import com.eanfang.util.ParseXmlServiceToVersion;
 
 import net.eanfang.client.R;
@@ -47,7 +46,7 @@ public class UpdateManager {
     private boolean cancelUpdate = false;
 
     //版本信息xml地址
-    private String xmlPath = BuildConfig.HOST + "file/" + net.eanfang.client.BuildConfig.TYPE + "2.xml";
+    private String xmlPath = "http://eanfang.net:8080/eanfang/" + "file/" + net.eanfang.client.BuildConfig.TYPE + "2.xml";
 
     private Context mContext;
     /* 更新进度条 */
@@ -155,7 +154,7 @@ public class UpdateManager {
         int versionCode = 0;
         try {
             // 获取软件版本号，对应AndroidManifest.xml下android:versionCode
-            versionCode = context.getPackageManager().getPackageInfo("dev.woon.eanfang." + net.eanfang.client.BuildConfig.TYPE, 0).versionCode;
+            versionCode = context.getPackageManager().getPackageInfo("net.eanfang.client", 0).versionCode;
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }

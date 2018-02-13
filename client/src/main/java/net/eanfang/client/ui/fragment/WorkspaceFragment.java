@@ -131,16 +131,23 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //统计
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
-            String token = EanfangApplication.getApplication().getUser().getToken();
-            startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "http://client.eanfang.net:8099/#/totalPhone?token="+token)
-                    .putExtra("title", "数据统计"));
+            boolean isHave = EanfangApplication.getApplication().getUser().getPerms().contains("top:statistics:count");
+            if (isHave == true) {
+                String token = EanfangApplication.getApplication().getUser().getToken();
+                startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("url", "http://client.eanfang.net:8099/#/totalPhone?token=" + token)
+                        .putExtra("title", "数据统计"));
+            } else {
+                showToast("您还没有权限");
+            }
+
         });
         //合作公司
         findViewById(R.id.ll_partner_ctrl).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), PartnerActivity.class));
         });
     }
+
     private void jumpSign(String title, int status) {
         Intent intent = new Intent(getActivity(), SignActivity.class);
         intent.putExtra("title", title);

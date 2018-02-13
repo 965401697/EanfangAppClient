@@ -13,7 +13,7 @@ android {
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
-        buildConfigField("String", "TYPE", "\"worker \"")
+        buildConfigField("String", "TYPE", "\"worker\"")
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
 

@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.AccountEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class LoginBean implements Serializable {
     /**
      * 权限列表
      */
-    private String[] perms;
+    private List<String> perms;
     private String token;
     private AccountEntity account;
 
