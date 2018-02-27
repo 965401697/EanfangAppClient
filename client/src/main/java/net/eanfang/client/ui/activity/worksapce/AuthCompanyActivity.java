@@ -183,10 +183,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         orgName = getIntent().getStringExtra("orgName");
         etCompany.setText(orgName);
         ivUpload.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ADPIC_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(LICENSE_CALLBACK_CODE));
         });
         ivUpload2.setOnClickListener((v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(LICENSE_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ADPIC_CALLBACK_CODE));
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {
@@ -256,7 +256,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         infoBean.setLicenseCode(edCompanyNumber.getText().toString().trim());
         infoBean.setRegisterAssets(etMoney.getText().toString().trim());
 
-        infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 1, Constant.INDUSTRY).get(0));
+        infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
         infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
         infoBean.setStatus(1);
         infoBean.setOrgId(orgid);
@@ -282,7 +282,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     }
 
     private void commit(String json) {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
+        EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
@@ -319,10 +319,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     }
 
     private void commitVerfiy(CommitVerfiyView verfiyView) {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + byNetBean.getAdminUserId())
+        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + byNetBean.getOrgId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("已提交认证");
                     verfiyView.dismiss();
+                    finishSelf();
                 }));
     }
 }

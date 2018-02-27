@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -37,10 +36,11 @@ import butterknife.ButterKnife;
 public class AuthBizActivity extends BaseActivity {
     @BindView(R.id.rev_list)
     RecyclerView revList;
-    private Long orgid, accid, adminUserId;
+    private Long orgid,adminUserId;
+    private int status;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
-    List<BaseDataEntity> bizTypeList = Config.get().getBusinessList(1);
+    List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class AuthBizActivity extends BaseActivity {
         setRightTitle("下一步");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
-        accid = getIntent().getLongExtra("accid", 0);
+        status = getIntent().getIntExtra("accid", 0);
         adminUserId = getIntent().getLongExtra("adminUserId", 0);
         revList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -93,7 +93,7 @@ public class AuthBizActivity extends BaseActivity {
 
 
         setRightTitleOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getAccId().equals(accid)) {
+            if (status==0||status==3) {
                 commit();
             } else {
                 jump();
@@ -123,7 +123,7 @@ public class AuthBizActivity extends BaseActivity {
     private void jump() {
         Intent intent = new Intent(AuthBizActivity.this, AuthAreaActivity.class);
         intent.putExtra("orgid", orgid);
-        intent.putExtra("accid", accid);
+        intent.putExtra("accid", status);
         intent.putExtra("adminUserId", adminUserId);
         startActivity(intent);
     }

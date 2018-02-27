@@ -103,10 +103,6 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class)
-//                                , (bean) -> {
-//                            repairedOrderBean = bean;
-//                            currentFragment.onDataReceived();
-//    })
                          {
                              @Override
                              public void onSuccess(final RepairedOrderBean bean) {

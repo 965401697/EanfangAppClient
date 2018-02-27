@@ -1,19 +1,10 @@
 package net.eanfang.worker.ui.fragment;
 
-import android.content.Intent;
+import android.os.Bundle;
 
-import com.hyphenate.EMMessageListener;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
+import com.eanfang.ui.base.BaseFragment;
 
-import com.im.controller.activity.ChatActivity;
-
-import java.util.List;
-
-import easeui.EaseConstant;
-import easeui.EaseUI;
-import easeui.ui.EaseConversationListFragment;
+import net.eanfang.worker.R;
 
 
 /**
@@ -24,67 +15,25 @@ import easeui.ui.EaseConversationListFragment;
  * @desc 会话
  */
 
-public class HomeFragment extends EaseConversationListFragment {
+public class HomeFragment extends BaseFragment {
+
     @Override
-    protected void initView() {
-        super.initView();
-
-        // 跳转到会话详情页面
-        setConversationListItemClickListener(conversation -> {
-            Intent intent = new Intent(getActivity(), ChatActivity.class);
-
-            // 传递参数
-            intent.putExtra(EaseConstant.EXTRA_USER_ID, conversation.conversationId());
-
-            // 是否是群聊
-            if(conversation.getType() == EMConversation.EMConversationType.GroupChat) {
-                intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
-            }
-
-            startActivity(intent);
-        });
-
-        // 清空集合数据
-        conversationList.clear();
-
-        // 监听会话消息
-        EMClient.getInstance().chatManager().addMessageListener(emMessageListener);
+    protected int setLayoutResouceId() {
+        return R.layout.fragment_message;
     }
 
-    private EMMessageListener emMessageListener = new EMMessageListener() {
-        @Override
-        public void onMessageReceived(List<EMMessage> list) {
-            // 设置数据
-            EaseUI.getInstance().getNotifier().onNewMesg(list);
+    @Override
+    protected void initData(Bundle arguments) {
 
-            // 刷新页面
-            refresh();
-        }
+    }
 
-        @Override
-        public void onCmdMessageReceived(List<EMMessage> list) {
+    @Override
+    protected void initView() {
 
-        }
+    }
 
-        @Override
-        public void onMessageRead(List<EMMessage> list) {
+    @Override
+    protected void setListener() {
 
-        }
-
-        @Override
-        public void onMessageDelivered(List<EMMessage> list) {
-
-        }
-
-        @Override
-        public void onMessageRecalled(List<EMMessage> list) {
-
-        }
-
-        @Override
-        public void onMessageChanged(EMMessage emMessage, Object o) {
-
-        }
-    };
-
+    }
 }

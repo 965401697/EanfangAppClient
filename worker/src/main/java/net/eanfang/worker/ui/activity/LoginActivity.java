@@ -25,17 +25,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.exceptions.HyphenateException;
-import com.im.model.Model;
-import com.im.model.bean.UserInfo;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.util.PrefUtils;
 import net.eanfang.worker.util.UpdateManager;
 
 import java.io.IOException;
@@ -181,8 +175,6 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-                    registerEase(bean.getAccount().getMobile());
-                    loginEase(bean.getAccount().getMobile());
                     goMain();
                 }));
 
@@ -207,9 +199,6 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-
-                    registerEase(bean.getAccount().getMobile());
-                    loginEase(bean.getAccount().getMobile());
 
                     goMain();
                 }));
@@ -311,51 +300,4 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
     }
 
 
-    private void registerEase(String phone) {
-
-        //3、去服务器注册账号
-        Model.getInstance().getGlobalThreadPool().execute(() -> {
-            try {
-                //去环信服务器注册账号
-                EMClient.getInstance().createAccount(phone, "eanfang");
-
-                //更新页面显示
-                runOnUiThread(() -> PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, true));
-            } catch (HyphenateException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void loginEase(String phone) {
-
-        //3、登录逻辑处理
-        Model.getInstance().getGlobalThreadPool().execute(() -> {
-            //去环信服务器登录
-            EMClient.getInstance().login(phone, "eanfang", new EMCallBack() {
-                //登录成功处理
-                @Override
-                public void onSuccess() {
-                    //对模型层数据处理
-                    Model.getInstance().loginSuccess(new UserInfo(phone));
-                    //保存用户信息到本地数据库
-                    Model.getInstance().getUserAccountDao().addAccount(new UserInfo(phone));
-                }
-
-                //登录失败处理
-                @Override
-                public void onError(int i, String s) {
-                    //提示登录失败
-                    runOnUiThread(() -> Toast.makeText(LoginActivity.this, "登录失败" + s, Toast.LENGTH_SHORT).show());
-
-                }
-
-                //登录中处理
-                @Override
-                public void onProgress(int i, String s) {
-
-                }
-            });
-        });
-    }
 }

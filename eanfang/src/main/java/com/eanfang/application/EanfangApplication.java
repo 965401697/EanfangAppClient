@@ -8,8 +8,6 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.hyphenate.chat.EMOptions;
-import com.im.model.Model;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -23,7 +21,6 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import easeui.EaseUI;
 import okhttp3.OkHttpClient;
 
 /**
@@ -54,28 +51,8 @@ public class EanfangApplication extends CustomeApplication {
 //        initXinGe();
         CameraApplication.init(this, true);
 
-        initEase();
     }
 
-
-    /**
-     * 环信初始化
-     */
-    private void initEase() {
-        EMOptions options = new EMOptions();
-        //设置需要同意后才接受邀请
-        options.setAcceptInvitationAlways(false);
-        //设置需要同意后才能进行群邀请
-        options.setAutoAcceptGroupInvitation(false);
-        options.setAutoLogin(true);
-
-        EaseUI.getInstance().init(this, options);
-
-        //初始化数据模型层类
-        Model.getInstance().init(this);
-
-
-    }
 
     @Override
     public void initConfig() {

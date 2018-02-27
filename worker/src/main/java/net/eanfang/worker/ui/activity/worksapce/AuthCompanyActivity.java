@@ -194,7 +194,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
 
         setRightTitleOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+            if (byNetBean.getStatus() == 0 || byNetBean.getStatus() == 3) {
                 setData();
             } else {
                 jump();
@@ -317,7 +317,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private void jump() {
         Intent intent = new Intent(AuthCompanyActivity.this, AuthSystemTypeActivity.class);
         intent.putExtra("orgid", orgid);
-        intent.putExtra("accid", byNetBean.getAccId());
+        intent.putExtra("accid", byNetBean.getStatus());
         intent.putExtra("adminUserId", byNetBean.getAdminUserId());
         startActivity(intent);
     }

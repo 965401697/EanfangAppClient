@@ -67,7 +67,7 @@ public class CompanyListView extends BaseDialog {
     private void getCompanyAllList() {
         List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         //排除默认公司 只取安防公司
-        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity().getUnitType() == 3).toList();
+        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getUnitType() == 3).toList();
         initAdapter(orgEntityList);
     }
 

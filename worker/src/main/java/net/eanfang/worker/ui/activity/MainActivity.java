@@ -24,7 +24,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
-import com.im.fragment.ContactListFragment;
 import com.okgo.OkGo;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -98,8 +97,8 @@ public class MainActivity extends BaseActivity {
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
 
-        indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
-        mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
+//        indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
+//        mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);

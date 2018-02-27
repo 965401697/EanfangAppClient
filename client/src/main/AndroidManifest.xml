@@ -93,51 +93,6 @@
         </receiver>
 
 
-        <!--&lt;!&ndash; 【必须】 信鸽service &ndash;&gt;-->
-        <!--<service-->
-        <!--android:name="com.tencent.android.tpush.service.XGPushServiceV3"-->
-        <!--android:exported="true"-->
-        <!--android:persistent="true"-->
-        <!--android:process=":xg_service_v3" />-->
-
-        <!--&lt;!&ndash; 【必须】 通知service，此选项有助于提高抵达率 &ndash;&gt;-->
-        <!--<service-->
-        <!--android:name="com.tencent.android.tpush.rpc.XGRemoteService"-->
-        <!--android:exported="true">-->
-        <!--<intent-filter>-->
-        <!--&lt;!&ndash; 【必须】 请修改为当前APP包名.PUSH_ACTION&ndash;&gt;-->
-        <!--<action android:name="net.eanfang.client.PUSH_ACTION" />-->
-        <!--</intent-filter>-->
-        <!--</service>-->
-        <!--&lt;!&ndash; 【必须】 【注意】authorities修改为 包名.AUTH_XGPUSH, 如demo的包名为：com.qq.xgdemo&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="com.tencent.android.tpush.XGPushProvider"-->
-        <!--android:authorities="net.eanfang.client.AUTH_XGPUSH"-->
-        <!--android:exported="true" />-->
-        <!--&lt;!&ndash; 【必须】 【注意】authorities修改为 包名.TPUSH_PROVIDER, 如demo的包名为：com.qq.xgdemo&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="com.tencent.android.tpush.SettingsContentProvider"-->
-        <!--android:authorities="net.eanfang.client.TPUSH_PROVIDER"-->
-        <!--android:exported="false" />-->
-        <!--&lt;!&ndash; 【必须】 【注意】authorities修改为 包名.TENCENT.MID.V3, 如demo的包名为：com.qq.xgdemo&ndash;&gt;-->
-        <!--<provider-->
-        <!--android:name="com.tencent.mid.api.MidProvider"-->
-        <!--android:authorities="net.eanfang.client.TENCENT.MID.V3"-->
-        <!--android:exported="true" />-->
-
-        <!--<activity-->
-        <!--android:name="com.tencent.android.tpush.XGPushActivity"-->
-        <!--android:exported="false" />-->
-
-        <!--<activity-->
-        <!--android:name=".ui.activity.LoginActivity"-->
-        <!--android:theme="@style/launch_theme">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.MAIN" />-->
-
-        <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -222,17 +177,6 @@
         <activity android:name=".ui.activity.worksapce.SignActivity"/>
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity"/>
         <activity android:name=".ui.activity.LoginActivity"/>
-
-
-
-        <!--ease Start-->
-        <activity android:name="com.im.controller.activity.addContactActivity" />
-        <activity android:name="com.im.controller.activity.ChatActivity" />
-        <activity android:name="com.im.controller.activity.GroupDetailActivity" />
-        <activity android:name="com.im.controller.activity.GroupListActivity" />
-        <activity android:name="com.im.controller.activity.InviteActivity" />
-        <activity android:name="com.im.controller.activity.NewGroupActivity" />
-        <activity android:name="com.im.controller.activity.PickContactActivity" />
 
     </application>
 

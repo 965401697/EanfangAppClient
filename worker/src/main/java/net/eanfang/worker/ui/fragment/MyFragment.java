@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -148,7 +149,7 @@ public class MyFragment extends BaseFragment {
         tv_user_name.setText(user.getAccount().getNickName());
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(user.getAccount().getAvatar()));
+            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+user.getAccount().getAvatar()));
         }
 
     }

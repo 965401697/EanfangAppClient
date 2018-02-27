@@ -83,7 +83,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     LinearLayout llAddress;
     @BindView(R.id.tv_right)
     TextView tvRight;
-    private String path1;
+    private String path;
     private boolean isUploadHead = false;
     /**
      * 城市
@@ -139,7 +139,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void fillData(LoginBean infoBackBean) {
         if (!StringUtils.isEmpty(infoBackBean.getAccount().getAvatar())) {
-            ivUpload.setImageURI(Uri.parse(infoBackBean.getAccount().getAvatar()));
+            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+infoBackBean.getAccount().getAvatar()));
         }
         if (infoBackBean.getAccount().getNickName() != null) {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
@@ -187,8 +187,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     public void onOssSuccess() {
                         runOnUiThread(() -> {
                             LoginBean entity = EanfangApplication.getApplication().getUser();
-                            entity.getAccount().setAvatar(BuildConfig.OSS_SERVER + imgKey);
-                            path1 = entity.getAccount().getAvatar();
+                            entity.getAccount().setAvatar(imgKey);
+                            path = entity.getAccount().getAvatar();
                         });
 
                     }
@@ -204,15 +204,15 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
 
     private boolean checkInfo() {
-//        String nickname = tvNickname.getText().toString().trim();
-//        if (TextUtils.isEmpty(nickname)) {
-//            showToast("请输入昵称");
-//            return false;
-//        }
-//        if (nickname.length() > 8) {
-//            showToast("昵称长度为8");
-//            return false;
-//        }
+        String nickname = tvNickname.getText().toString().trim();
+        if (TextUtils.isEmpty(nickname)) {
+            showToast("请输入昵称");
+            return false;
+        }
+        if (nickname.length() > 8) {
+            showToast("昵称长度为8");
+            return false;
+        }
         String realname = etRealname.getText().toString().trim();
         if (TextUtils.isEmpty(realname)) {
             showToast("请输入真实姓名");
@@ -234,13 +234,13 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             }
         } catch (ParseException e) {
         }
-//        String address = etAddress.getText().toString().trim();
-//        if (TextUtils.isEmpty(address)) {
-//            showToast("请输入详细地址");
-//            return false;
-//        }
+        String address = etAddress.getText().toString().trim();
+        if (TextUtils.isEmpty(address)) {
+            showToast("请输入详细地址");
+            return false;
+        }
         //如果为空，则代表头像
-        if (isUploadHead && StringUtils.isEmpty(path1)) {
+        if (isUploadHead && StringUtils.isEmpty(path)) {
             showToast("正在上传头像，请稍等");
             return false;
         }
@@ -250,7 +250,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void submit() {
         AccountEntity accountEntity = new AccountEntity();
-        accountEntity.setAvatar(path1);
+        accountEntity.setAvatar(path);
         accountEntity.setRealName(etRealname.getText().toString().trim());
         accountEntity.setNickName(tvNickname.getText().toString().trim());
         if (rbMan.isChecked()) {
@@ -272,7 +272,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     runOnUiThread(() -> {
                         showToast("成功");
                         LoginBean user = EanfangApplication.get().getUser();
-                        user.getAccount().setAvatar(path1);
+                        user.getAccount().setAvatar(path);
                         user.getAccount().setRealName(etRealname.getText().toString().trim());
                         EanfangApplication.get().saveUser(user);
                         finish();

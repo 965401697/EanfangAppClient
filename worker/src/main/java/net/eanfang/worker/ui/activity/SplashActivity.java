@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
@@ -16,10 +15,6 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
-import com.hyphenate.EMCallBack;
-import com.hyphenate.chat.EMClient;
-import com.im.model.Model;
-import com.im.model.bean.UserInfo;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -108,22 +103,45 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         }
         EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
         EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", user.getToken());
+//        EanfangHttp.get(UserApi.GET_USER_INFO)
+//                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class, (bean) -> {
+//                    Object object = bean;
+//                    if (object instanceof LoginBean) {
+//                        LoginBean loginBean = (LoginBean) object;
+//                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
+//                        isLoginReady = true;
+//                        go();
+//                    } else {
+//                        isCheckReady = true;
+//                        go();
+//                    }
+//                }));
         EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class, (bean) -> {
-                    Object object = bean;
-                    if (object instanceof LoginBean) {
-                        LoginBean loginBean = (LoginBean) object;
-                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-                        isLoginReady = true;
-                        loginEase(bean.getAccount().getMobile());
-
-                        go();
-                    } else {
-                        isCheckReady = true;
-                        loginEase(bean.getAccount().getMobile());
-                        go();
+                .execute(new EanfangCallback(this, false, LoginBean.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        Object object = bean;
+                        if (object instanceof LoginBean) {
+                            LoginBean loginBean = (LoginBean) object;
+                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
+                            isLoginReady = true;
+                            go();
+                        } else {
+                            isCheckReady = true;
+                            go();
+                        }
                     }
-                }));
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        if (code == 50014) {
+                            showToast("token已失效,请重新登录");
+                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        }
+                    }
+                });
 
     }
 
@@ -135,36 +153,5 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         finishSelf();
     }
 
-    private void loginEase(String phone) {
-
-        //3、登录逻辑处理
-        Model.getInstance().getGlobalThreadPool().execute(() -> {
-            //去环信服务器登录
-            EMClient.getInstance().login(phone, "eanfang", new EMCallBack() {
-                //登录成功处理
-                @Override
-                public void onSuccess() {
-                    //对模型层数据处理
-                    Model.getInstance().loginSuccess(new UserInfo(phone));
-                    //保存用户信息到本地数据库
-                    Model.getInstance().getUserAccountDao().addAccount(new UserInfo(phone));
-                }
-
-                //登录失败处理
-                @Override
-                public void onError(int i, String s) {
-                    //提示登录失败
-                    runOnUiThread(() -> Toast.makeText(SplashActivity.this, "登录失败" + s, Toast.LENGTH_SHORT).show());
-
-                }
-
-                //登录中处理
-                @Override
-                public void onProgress(int i, String s) {
-
-                }
-            });
-        });
-    }
 
 }

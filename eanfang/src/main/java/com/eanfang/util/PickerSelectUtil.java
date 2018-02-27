@@ -145,7 +145,7 @@ public class PickerSelectUtil {
     }
 
     public static void linkagePicker(Activity activity, String title, List<String> fir, List<List<String>> sed, OnLinkageTwoPickListener listener) {
-        linkagePicker(activity, false, Gravity.BOTTOM, WheelView.DividerConfig.FILL, 14, Color.BLACK, title, fir, sed, null, ((first, second, three) -> listener.picker(first, second)));
+        linkagePicker(activity, true, Gravity.BOTTOM, WheelView.DividerConfig.FILL, 14, Color.BLACK, title, fir, sed, null, ((first, second, three) -> listener.picker(first, second)));
     }
 
     /**

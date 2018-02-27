@@ -6,7 +6,6 @@ import android.widget.ExpandableListView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -39,13 +38,15 @@ public class AuthAreaActivity extends BaseActivity {
     ExpandableListView elvArea;
     List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     private GroupAdapter mAdapter;
-    private Long orgid, accid;
+    private Long orgid;
+    private int status;
     private List<Integer> checkListId;
     private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
     private CommitVerfiyView verfiyView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class AuthAreaActivity extends BaseActivity {
         setRightTitle("提交");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
-        accid = getIntent().getLongExtra("accid", 0);
+        status = getIntent().getIntExtra("accid", 0);
     }
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
@@ -85,10 +86,12 @@ public class AuthAreaActivity extends BaseActivity {
         elvArea.setAdapter(mAdapter);
 
         setRightTitleOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getAccId().equals(accid)) {
+            if (status == 0 || status == 3) {
                 commit();
-            } else {
-                showToast("抱歉，您没有权限！");
+            }else if (status==1){
+                showToast("您已经提交认证，审核中。。");
+            }else if (status==2){
+                showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
 
         });
@@ -143,8 +146,9 @@ public class AuthAreaActivity extends BaseActivity {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
                 .upJson(JSONObject.toJSONString(grantChange))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-                    verfiyView.show();
+                        verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
+                        verfiyView.show();
+
                 }));
     }
 

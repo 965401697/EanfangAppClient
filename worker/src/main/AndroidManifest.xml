@@ -192,15 +192,6 @@
 
 
 
-        <!--ease Start-->
-        <activity android:name="com.im.controller.activity.addContactActivity" />
-        <activity android:name="com.im.controller.activity.ChatActivity" />
-        <activity android:name="com.im.controller.activity.GroupDetailActivity" />
-        <activity android:name="com.im.controller.activity.GroupListActivity" />
-        <activity android:name="com.im.controller.activity.InviteActivity" />
-        <activity android:name="com.im.controller.activity.NewGroupActivity" />
-        <activity android:name="com.im.controller.activity.PickContactActivity" />
-
     </application>
 
 </manifest>

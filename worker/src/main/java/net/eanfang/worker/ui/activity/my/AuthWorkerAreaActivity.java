@@ -88,8 +88,10 @@ public class AuthWorkerAreaActivity extends BaseActivity {
         setRightTitleOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
-            } else {
-                showToast("当前状态不允许修改");
+            }else if (status==1){
+                showToast("您已经提交认证，审核中。。");
+            }else if (status==2){
+                showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
         });
     }
