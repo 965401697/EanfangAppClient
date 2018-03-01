@@ -168,7 +168,6 @@ public class WorkspaceFragment extends BaseFragment {
             } else {
                 showToast("您没有权限");
             }
-
         });
         //合作公司
         findViewById(R.id.ll_cooperation_ctrl).setOnClickListener((v) -> {
