@@ -269,7 +269,7 @@ public class CompanyStaffBean implements Serializable {
              */
 
             private int companyId;
-            private int isVerify;
+            private int VerifyStatus;
             private String orgCode;
             private int orgId;
             private String orgName;
@@ -286,12 +286,12 @@ public class CompanyStaffBean implements Serializable {
                 this.companyId = companyId;
             }
 
-            public int getIsVerify() {
-                return isVerify;
+            public int getVerifyStatus() {
+                return VerifyStatus;
             }
 
-            public void setIsVerify(int isVerify) {
-                this.isVerify = isVerify;
+            public void setVerifyStatus(int verifyStatus) {
+                VerifyStatus = verifyStatus;
             }
 
             public String getOrgCode() {

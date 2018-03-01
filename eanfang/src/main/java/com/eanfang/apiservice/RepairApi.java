@@ -49,7 +49,7 @@ public interface RepairApi {
     /**
      * 7.技师电话筛查
      */
-   // String GET_REPAIR_SCREENING = BuildConfig.API_HOST + "/yaf_repair/flow/screening";
+    // String GET_REPAIR_SCREENING = BuildConfig.API_HOST + "/yaf_repair/flow/screening";
 
     /**
      * 8.报修单更改预约时间
@@ -59,7 +59,7 @@ public interface RepairApi {
     /**
      * 9.技师上门签到
      */
-   // String GET_REPAIR_WORKER_SIGNIN = BuildConfig.API_HOST + "/yaf_repair/flow/signIn";
+    // String GET_REPAIR_WORKER_SIGNIN = BuildConfig.API_HOST + "/yaf_repair/flow/signIn";
 
     /**
      * 10.【去完工】技师端点击去完工，查询真实故障列表
@@ -69,7 +69,7 @@ public interface RepairApi {
     /**
      * 11.【创建】创建真实故障
      */
-   // String GET_REPAIR_WORKER_CREATE_REAL_TROUBLE = BuildConfig.API_HOST + "/yaf_repair/failure/create";
+    // String GET_REPAIR_WORKER_CREATE_REAL_TROUBLE = BuildConfig.API_HOST + "/yaf_repair/failure/create";
 
     /**
      * 12.【新增】故障处理明细
@@ -79,7 +79,7 @@ public interface RepairApi {
     /**
      * 13.【详情】查看真实故障详情（包括对应的故障处理明细）
      */
-   // String GET_LOOK_REPAIR_DETAIL = BuildConfig.API_HOST + "/yaf_repair/failure/detail";
+    // String GET_LOOK_REPAIR_DETAIL = BuildConfig.API_HOST + "/yaf_repair/failure/detail";
 
     /**
      * 14.【完工】报修提交完工信息
@@ -171,4 +171,8 @@ public interface RepairApi {
      * 31.查询登录人所属公司的设备列表
      */
     String GET_SHOP_DEVICE_LIST = BuildConfig.API_HOST + "/yaf_device/shopDevice/deviceList";
+    /**
+     * 遗留故障列表
+     */
+    String GET_LEAVE_BUG_LIST = BuildConfig.API_HOST + "/yaf_repair/failure/record/list";
 }

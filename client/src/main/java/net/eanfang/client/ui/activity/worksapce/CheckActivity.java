@@ -152,10 +152,10 @@ public class CheckActivity extends BaseClientActivity {
         bean.setChangeInfo(changeContent);
 
         String receiveUser = tvDependPerson.getText().toString().trim();
-//        if (TextUtils.isEmpty(receiveUser)) {
-//            showToast("请选择联系人");
-//            return;
-//        }
+        if (TextUtils.isEmpty(receiveUser)) {
+            showToast("请选择联系人");
+            return;
+        }
 
         //接收者
         bean.setAssigneeUserId(assigneeUserId);

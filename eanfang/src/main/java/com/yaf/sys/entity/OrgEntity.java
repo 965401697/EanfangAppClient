@@ -1,7 +1,6 @@
 package com.yaf.sys.entity;
 
 
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -34,23 +33,25 @@ import lombok.Setter;
 @TableName(value = "sys_org")
 @Getter
 @Setter
-public class OrgEntity implements Serializable,Cloneable {
+public class OrgEntity implements Serializable, Cloneable {
 
-	private static final long serialVersionUID = 1L;
-	private static final OrgEntity EMPTY = new OrgEntity();
-	public static OrgEntity newInstance() {
-		return EMPTY.clone();
-	}
-	@Override
-	protected OrgEntity clone() {
-		try {
-			return (OrgEntity)super.clone();
-		}catch(CloneNotSupportedException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
+    private static final long serialVersionUID = 1L;
+    private static final OrgEntity EMPTY = new OrgEntity();
+
+    public static OrgEntity newInstance() {
+        return EMPTY.clone();
+    }
+
+    @Override
+    protected OrgEntity clone() {
+        try {
+            return (OrgEntity) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     //组织机构ID
     //@TableField(value = "org_id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER，普通自增长使用IdType.ID_AUTO
@@ -108,8 +109,20 @@ public class OrgEntity implements Serializable,Cloneable {
     //是否认证0未认证号1已认证
     //@TableField(value = "is_verify")
     @Digits(integer = 3, fraction = 0)
-    private Integer isVerify;
+    private Integer VerifyStatus;
 
+    public Integer getVerifyStatus() {
+        return VerifyStatus;
+    }
+
+    public void setVerifyStatus(Integer verifyStatus) {
+        VerifyStatus = verifyStatus;
+    }
+
+    /* 当org为公司时，adminUserId为管理员，登录时自动设置*/
+    @Getter
+    @Setter
+    private Long adminUserId;
     //更新人
     @Getter
     @Setter
@@ -235,19 +248,7 @@ public class OrgEntity implements Serializable,Cloneable {
         return sortNum;
     }
 
-    /**
-     * 设置：是否认证0未认证号1已认证
-     */
-    public void setIsVerify(Integer isVerify) {
-        this.isVerify = isVerify;
-    }
 
-    /**
-     * 获取：是否认证0未认证号1已认证
-     */
-    public Integer getIsVerify() {
-        return isVerify;
-    }
 
     /*
      *===================================================================================================================================================
@@ -283,7 +284,7 @@ public class OrgEntity implements Serializable,Cloneable {
     @Setter
     @TableField(exist = false)
     private List<UserEntity> staff;
-    
+
     @Getter
     @Setter
     @TableField(exist = false)
@@ -293,15 +294,15 @@ public class OrgEntity implements Serializable,Cloneable {
     @TableField(exist = false)
     private Object parentEntity;
 
-    public void addStaff(UserEntity user){
-    	if(staff == null) {
-    		staff = new LinkedList<UserEntity>();
-    	}
-    	if (!staff.contains(user)) {
-    		staff.add(user);
+    public void addStaff(UserEntity user) {
+        if (staff == null) {
+            staff = new LinkedList<UserEntity>();
+        }
+        if (!staff.contains(user)) {
+            staff.add(user);
         }
     }
-    
+
     public void addChild(OrgEntity child) {
         if (children == null) {
             children = new LinkedList<>();
@@ -356,6 +357,6 @@ public class OrgEntity implements Serializable,Cloneable {
         level = calculateLevel();
         return level;
     }
-    
+
 
 }

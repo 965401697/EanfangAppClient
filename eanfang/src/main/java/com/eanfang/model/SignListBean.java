@@ -268,7 +268,7 @@ public class SignListBean implements Serializable {
              */
 
             private Long companyId;
-            private int isVerify;
+            private int VerifyStatus;
             private int level;
             private String orgCode;
             private Long orgId;
@@ -288,12 +288,12 @@ public class SignListBean implements Serializable {
                 this.companyId = companyId;
             }
 
-            public int getIsVerify() {
-                return isVerify;
+            public int getVerifyStatus() {
+                return VerifyStatus;
             }
 
-            public void setIsVerify(int isVerify) {
-                this.isVerify = isVerify;
+            public void setVerifyStatus(int verifyStatus) {
+                VerifyStatus = verifyStatus;
             }
 
             public int getLevel() {

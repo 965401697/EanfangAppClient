@@ -22,6 +22,7 @@ import net.eanfang.worker.ui.activity.worksapce.TaskPublishActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.InstallCtrlView;
+import net.eanfang.worker.ui.widget.LeaveBugView;
 import net.eanfang.worker.ui.widget.MaintainCtrlView;
 import net.eanfang.worker.ui.widget.PayOrderListCtrlView;
 import net.eanfang.worker.ui.widget.ReportCtrlView;
@@ -150,6 +151,11 @@ public class WorkspaceFragment extends BaseFragment {
         //维保
         findViewById(R.id.ll_maintain_ctrl).setOnClickListener((v) -> {
             new MaintainCtrlView(getActivity(), true).show();
+        });
+
+        //遗留故障
+        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
+            new LeaveBugView(getActivity(), true).show();
         });
         //统计
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {

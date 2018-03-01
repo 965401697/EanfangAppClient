@@ -121,6 +121,23 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
             return false;
         }
 
+        if (TextUtils.isEmpty(tvOneName.getText().toString().trim())) {
+            showToast("请选择系统类别");
+            return false;
+        }
+        if (TextUtils.isEmpty(tvTwoName.getText().toString().trim())) {
+            showToast("请选择设备类别");
+            return false;
+        }
+        if (TextUtils.isEmpty(tvThreeName.getText().toString().trim())) {
+            showToast("请选择设备名称");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(etInputCheckContent.getText().toString().trim())) {
+            showToast("请填写检查内容");
+            return false;
+        }
         return true;
     }
 

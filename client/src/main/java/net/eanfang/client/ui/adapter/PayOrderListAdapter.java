@@ -32,7 +32,7 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
                 .setText(R.id.tv_count_money, "¥" + item.getTotalCost())
                 .setText(R.id.tv_worker_name, "技师：" + item.getReportUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
-        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getIsVerify() == 1) {
+        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
             helper.setText(R.id.tv_do_first, "联系技师");
             if (item.getStatus() == 0) {
                 helper.setText(R.id.tv_do_second, "同意报价");

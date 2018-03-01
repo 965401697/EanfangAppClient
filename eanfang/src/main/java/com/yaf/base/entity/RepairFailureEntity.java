@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.yaf.sys.entity.OrgEntity;
+import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -340,5 +342,13 @@ public class RepairFailureEntity implements Serializable {
         this.status = status;
     }
 
+    @TableField(exist = false)
+    private UserEntity ownerUserEntity;
+    @TableField(exist = false)
+    private OrgEntity ownerOrgEntity;
 
+    @TableField(exist = false)
+    private UserEntity assigneeUserEntity;
+    @TableField(exist = false)
+    private OrgEntity assigneeOrgEntity;
 }

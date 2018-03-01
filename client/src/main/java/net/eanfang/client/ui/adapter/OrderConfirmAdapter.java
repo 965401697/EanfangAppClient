@@ -64,7 +64,7 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
         SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
-            draweeView.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+            draweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
             helper.addOnClickListener(R.id.ll_item);
         }
         helper.addOnClickListener(R.id.iv_pic);

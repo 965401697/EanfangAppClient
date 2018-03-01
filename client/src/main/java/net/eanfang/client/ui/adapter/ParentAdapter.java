@@ -37,10 +37,29 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         imageView.setImageResource(R.drawable.ic_down);
         imageView.setTag(false);
         helper.addOnClickListener(R.id.tv_auth_status);
-        if (item.getIsVerify() == 0) {
+        /*        DRAFT("草稿", 0),
+
+        IN_VERIFY("等待认证", 1),
+
+        VERIFY_SUCESS("认证通过", 2),
+
+        VERIFY_FAIL("认证拒绝", 3),
+
+        DISABLE("禁用", 4),
+
+        DELETE("删除", 5);*/
+        if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "待认证");
-        } else {
+        } else if (item.getVerifyStatus() == 1) {
+            helper.setText(R.id.tv_auth_status, "认证中");
+        } else if (item.getVerifyStatus() == 2) {
             helper.setText(R.id.tv_auth_status, "查看");
+        } else if (item.getVerifyStatus() == 3) {
+            helper.setText(R.id.tv_auth_status, "重新认证");
+        } else if (item.getVerifyStatus() == 4) {
+            helper.setText(R.id.tv_auth_status, "已禁用");
+        } else if (item.getVerifyStatus() == 5) {
+            helper.setText(R.id.tv_auth_status, "已删除");
         }
         //当点击时先进行判断
 

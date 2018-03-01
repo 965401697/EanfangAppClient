@@ -24,6 +24,7 @@ import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
+import net.eanfang.client.ui.widget.LeaveBugView;
 import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
 import net.eanfang.client.ui.widget.WorkCheckCtrlView;
@@ -106,7 +107,7 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //报价
         findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getIsVerify() == 1) {
+            if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
                 startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
             } else {
                 startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
@@ -128,6 +129,11 @@ public class WorkspaceFragment extends BaseFragment {
         //设计
         findViewById(R.id.ll_design_ctrl).setOnClickListener((v) -> {
             new DesignCtrlView(getActivity(), true).show();
+        });
+
+        //遗留故障
+        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
+            new LeaveBugView(getActivity(), true).show();
         });
         //统计
         findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {

@@ -38,10 +38,18 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         imageView.setImageResource(R.drawable.ic_down);
         imageView.setTag(false);
         helper.addOnClickListener(R.id.tv_auth_status);
-        if (item.getIsVerify() == 0) {
+        if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "待认证");
-        } else {
+        } else if (item.getVerifyStatus() == 1) {
+            helper.setText(R.id.tv_auth_status, "认证中");
+        } else if (item.getVerifyStatus() == 2) {
             helper.setText(R.id.tv_auth_status, "查看");
+        } else if (item.getVerifyStatus() == 3) {
+            helper.setText(R.id.tv_auth_status, "重新认证");
+        } else if (item.getVerifyStatus() == 4) {
+            helper.setText(R.id.tv_auth_status, "已禁用");
+        } else if (item.getVerifyStatus() == 5) {
+            helper.setText(R.id.tv_auth_status, "已删除");
         }
         //当点击时先进行判断
 

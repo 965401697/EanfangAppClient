@@ -30,7 +30,7 @@ public class ContactsBean implements Serializable {
      */
 
     private int companyId;
-    private int isVerify;
+    private int VerifyStatus;
     private int level;
     private String orgCode;
     private int orgId;
@@ -51,12 +51,12 @@ public class ContactsBean implements Serializable {
         this.companyId = companyId;
     }
 
-    public int getIsVerify() {
-        return isVerify;
+    public int getVerifyStatus() {
+        return VerifyStatus;
     }
 
-    public void setIsVerify(int isVerify) {
-        this.isVerify = isVerify;
+    public void setVerifyStatus(int verifyStatus) {
+        VerifyStatus = verifyStatus;
     }
 
     public int getLevel() {

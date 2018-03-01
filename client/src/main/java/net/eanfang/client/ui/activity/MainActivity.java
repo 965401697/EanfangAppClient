@@ -25,6 +25,7 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.ContactListFragment;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
@@ -60,14 +61,15 @@ public class MainActivity extends BaseClientActivity {
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
+        View indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
+        mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
+
+        indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
 
-//        indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
-//        mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
+        indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
+        mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
 
-        indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
-        mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);

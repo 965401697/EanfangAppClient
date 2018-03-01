@@ -175,6 +175,11 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             showToast("请选择类型");
             return;
         }
+        String connectName = tvDependPerson.getText().toString().trim();
+        if (TextUtils.isEmpty(connectName)) {
+            showToast("请选择联系人");
+            return;
+        }
         bean.setType(GetConstDataUtils.getWorkReportTypeList().indexOf(task_title));
         bean.setAssigneeUserId(assigneeUserId);
         bean.setAssigneeOrgCode(assigneeOrgCode);
