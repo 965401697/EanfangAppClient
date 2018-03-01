@@ -175,8 +175,6 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.ll_cooperation_ctrl).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), PartnerActivity.class));
         });
-
-
     }
 
 }
