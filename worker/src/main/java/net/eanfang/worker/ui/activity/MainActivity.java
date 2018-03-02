@@ -31,6 +31,7 @@ import com.tencent.android.tpush.XGPushManager;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
@@ -97,8 +98,8 @@ public class MainActivity extends BaseActivity {
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
 
-//        indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
-//        mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
+        indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
+        mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
