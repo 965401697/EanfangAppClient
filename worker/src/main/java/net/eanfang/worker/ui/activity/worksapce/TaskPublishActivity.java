@@ -118,6 +118,7 @@ public class TaskPublishActivity extends BaseActivity {
         initData();
         setListener();
         initStartTimePicker();
+
     }
 
     private void initView() {
