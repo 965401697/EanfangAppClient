@@ -2,11 +2,15 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 任务发布
  * Created by yaosheng on 2017/6/6.
  */
-
+@Getter
+@Setter
 public class TaskPublishBean implements Serializable {
 
 
@@ -43,124 +47,8 @@ public class TaskPublishBean implements Serializable {
     private String businessOneCode;
     private String description;
     private String pictures;
+    private Long zone_id;
+    private Long business_one_id;
 
-    public String getContacts() {
-        return contacts;
-    }
 
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
-
-    public String getContactsPhone() {
-        return contactsPhone;
-    }
-
-    public void setContactsPhone(String contactsPhone) {
-        this.contactsPhone = contactsPhone;
-    }
-
-    public String getPublishCompanyName() {
-        return publishCompanyName;
-    }
-
-    public void setPublishCompanyName(String publishCompanyName) {
-        this.publishCompanyName = publishCompanyName;
-    }
-
-    public String getProjectCompanyName() {
-        return projectCompanyName;
-    }
-
-    public void setProjectCompanyName(String projectCompanyName) {
-        this.projectCompanyName = projectCompanyName;
-    }
-
-    public String getZoneCode() {
-        return zoneCode;
-    }
-
-    public void setZoneCode(String zoneCode) {
-        this.zoneCode = zoneCode;
-    }
-
-    public String getDetailPlace() {
-        return detailPlace;
-    }
-
-    public void setDetailPlace(String detailPlace) {
-        this.detailPlace = detailPlace;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public String getToDoorTime() {
-        return toDoorTime;
-    }
-
-    public void setToDoorTime(String toDoorTime) {
-        this.toDoorTime = toDoorTime;
-    }
-
-    public int getPredicttime() {
-        return predicttime;
-    }
-
-    public void setPredicttime(int predicttime) {
-        this.predicttime = predicttime;
-    }
-
-    public int getBudget() {
-        return budget;
-    }
-
-    public void setBudget(int budget) {
-        this.budget = budget;
-    }
-
-    public String getBusinessOneCode() {
-        return businessOneCode;
-    }
-
-    public void setBusinessOneCode(String businessOneCode) {
-        this.businessOneCode = businessOneCode;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
-    }
 }

@@ -254,7 +254,7 @@ public class MineTaskPublishListFragment extends BaseFragment implements
         if (Constant.CREATE_DATA_CODE == (mType)) {
             queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == (mType)) {
-            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
         }
         queryEntry.getEquals().put("status", status + "");
 

@@ -50,11 +50,11 @@ public class TaskPubCtrlView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("我的发包");
-        llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
-        llMineCompany.setOnClickListener(v -> jump("我公司的", "2"));
+        llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
+        llMineCompany.setOnClickListener(v -> jump("我公司的", 2));
     }
 
-    private void jump(String title, String type) {
+    private void jump(String title, int type) {
         Intent intent = new Intent(mContext, MineTaskPublishListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

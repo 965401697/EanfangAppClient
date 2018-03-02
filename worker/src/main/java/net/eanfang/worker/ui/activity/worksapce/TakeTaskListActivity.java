@@ -69,12 +69,12 @@ public class TakeTaskListActivity extends BaseActivity implements OnDataReceived
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getNotEquals().put("createCompanyId", EanfangApplication.getApplication().getUserId() + "");
-        queryEntry.getEquals().put("status", "0");
+        queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
         queryEntry.setPage(page);
         queryEntry.setSize(5);
 
-        EanfangHttp.post(NewApiService.TASK_PUBLISH_LIST)
+        EanfangHttp.post(NewApiService.ACCEPT_TASK_PUBLISH_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<MineTaskListBean>(this, true, MineTaskListBean.class, (bean) -> {
                             mDataList = bean.getList();

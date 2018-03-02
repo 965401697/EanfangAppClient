@@ -102,6 +102,7 @@ public class GetConstDataUtils {
      */
     private static List<String> checkResultList;
     private static List<String> cooperationTypeList;
+    private static List<String> taskPublishTypeList;
 
     private static List<String> deviceParamList;
     private static List<String> orgUnitScaleList;
@@ -532,6 +533,17 @@ public class GetConstDataUtils {
             }
         }
         return cooperationTypeList;
+    }
+
+    public static List<String> getTaskPublishTypeList() {
+        if (taskPublishTypeList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (taskPublishTypeList == null) {
+                    taskPublishTypeList = Config.get().getConstBean().getData().getTaskPublishConstant().get(Constant.TASK_PUB_TYPE);
+                }
+            }
+        }
+        return taskPublishTypeList;
     }
 
     public static List<String> getDeviceParamList() {

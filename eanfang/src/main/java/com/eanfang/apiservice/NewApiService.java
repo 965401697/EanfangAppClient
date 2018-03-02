@@ -204,6 +204,8 @@ public interface NewApiService {
      */
     String TASK_PUBLISH_ADD = BuildConfig.API_HOST + "/yaf_task_publish/taskPublish/insert";
     String TASK_PUBLISH_LIST = BuildConfig.API_HOST + "/yaf_task_publish/taskPublish/list";
+    String ACCEPT_TASK_PUBLISH_LIST = BuildConfig.API_HOST + "/yaf_task_publish/taskPublish/publishList";
+    String TASK_APPLY_PUBLISH_LIST = BuildConfig.API_HOST + "/yaf_task_publish/taskApply/publishList";
     String TASK_PUBLISH_DETAIL = BuildConfig.API_HOST + "/yaf_task_publish/taskPublish/detail";
     String TASK_PUBLISH_CLOSE = BuildConfig.API_HOST + "/yaf_task_publish/taskPublish/close";
     String TASK_PUBLISH_FINISH = BuildConfig.API_HOST + "/yaf_task_publish/taskPublish/finish";

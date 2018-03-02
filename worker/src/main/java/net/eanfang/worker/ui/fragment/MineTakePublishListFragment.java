@@ -225,7 +225,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
         queryEntry.setPage(page);
         queryEntry.setSize(5);
 
-        EanfangHttp.post(NewApiService.TASK_PUBLISH_LIST)
+        EanfangHttp.post(NewApiService.TASK_APPLY_PUBLISH_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<MineTaskListBean>(getActivity(), true, MineTaskListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {

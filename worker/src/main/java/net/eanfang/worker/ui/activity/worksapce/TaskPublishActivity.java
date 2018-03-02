@@ -15,6 +15,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -57,7 +58,7 @@ public class TaskPublishActivity extends BaseActivity {
     /**
      * 选择地址 回调 code
      */
-    private final int ADDRESS_CALLBACK_CODE =1;
+    private final int ADDRESS_CALLBACK_CODE = 1;
     @BindView(R.id.et_task_company)
     EditText etTaskCompany;
     @BindView(R.id.et_task_uname)
@@ -166,7 +167,7 @@ public class TaskPublishActivity extends BaseActivity {
             PickerSelectUtil.singleTextPicker(this, "", tvBudget, GetConstDataUtils.getBudgetList());
         });
         llProjectType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvProjectType, GetConstDataUtils.getCooperationTypeList());
+            PickerSelectUtil.singleTextPicker(this, "", tvProjectType, GetConstDataUtils.getTaskPublishTypeList());
 
         });
         btnConfirm.setOnClickListener((v) -> {
@@ -178,14 +179,16 @@ public class TaskPublishActivity extends BaseActivity {
     private void summit() {
         bean.setPublishCompanyName(etTaskCompany.getText().toString().trim());
         bean.setContacts(etTaskUname.getText().toString().trim());
-        bean.setProjectCompanyName(etTaskPhone.getText().toString().trim());
+        bean.setContactsPhone(etTaskPhone.getText().toString().trim());
         bean.setProjectCompanyName(etProjectCompany.getText().toString().trim());
         bean.setZoneCode(Config.get().getAreaCodeByName(itemcity, itemzone));
+        bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(), 3, Constant.AREA)));
         bean.setDetailPlace(etDetailAddress.getText().toString().trim());
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
-        bean.setType(GetConstDataUtils.getCooperationTypeList().indexOf(tvProjectType.getText().toString().trim()));
+        bean.setType(GetConstDataUtils.getTaskPublishTypeList().indexOf(tvProjectType.getText().toString().trim()));
         bean.setBusinessOneCode(Config.get().getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
+        bean.setBusiness_one_id(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
         bean.setPredicttime(GetConstDataUtils.getPredictList().indexOf(tvProjectTime.getText().toString().trim()));
         bean.setBudget(GetConstDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
         bean.setToDoorTime(tvLoginTime.getText().toString().trim());

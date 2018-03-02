@@ -112,7 +112,7 @@ public class MineTakePublishListActivity extends BaseActivity {
         queryEntry.setPage(page);
         queryEntry.setSize(5);
 
-        EanfangHttp.post(NewApiService.TASK_PUBLISH_LIST)
+        EanfangHttp.post(NewApiService.TASK_APPLY_PUBLISH_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<MineTaskListBean>(this, true, MineTaskListBean.class, (bean) -> {
                     runOnUiThread(() -> {
