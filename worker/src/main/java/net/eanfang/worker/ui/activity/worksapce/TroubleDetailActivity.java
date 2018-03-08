@@ -19,6 +19,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -90,9 +91,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private TextView tv_team_worker;
 
 
-    private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
-    private BughandleConfirmEntity bughandleConfirmEntity;
     private Long id;
     /**
      * 电视墙/操作台正面全貌 (3张)
@@ -127,8 +126,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         EanfangHttp.get(RepairApi.GET_BUGHANDLE_DETAIL)
                 .params("id", id)
                 .execute(new EanfangCallback<BughandleConfirmEntity>(this, true, BughandleConfirmEntity.class, (bean) -> {
-                    bughandleConfirmEntity = bean;
-                    setData();
+                    setData(bean);
                 }));
     }
 
@@ -157,29 +155,12 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         //协作人员
         tv_team_worker = (TextView) findViewById(R.id.tv_team_worker);
 
-//        tv_complete.setOnClickListener((v) -> {
-//            JSONObject object = new JSONObject();
-//            try {
-//                object.put("ordernum", workspaceDetailBean.getOrder().getOrdernum());
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//            EanfangHttp.post(ApiService.TO_CONFIRM)
-//                    .tag(this)
-//                    .params("json", object.toString())
-//                    .execute(new EanfangCallback(TroubleDetailActivity.this, false, JSONObject.class, (bean) -> {
-//
-//                                showToast("确认成功");
-//                                finish();
-//                            })
-//                    );
-//        });
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "010-5877-8731");
         });
     }
 
-    private void setData() {
+    private void setData(BughandleConfirmEntity bughandleConfirmEntity) {
         tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
         tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
         //录像机天数
@@ -194,32 +175,35 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
         //协作人员
         tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
-        initAdapter();
+        initImageList(bughandleConfirmEntity);
+        initNinePhoto();
+        initAdapter(bughandleConfirmEntity.getDetailEntityList());
 
-        if (bughandleConfirmEntity.getFrontPictures() != null) {
+    }
+
+    private void initImageList(BughandleConfirmEntity bughandleConfirmEntity) {
+
+        if (StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
             String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
             picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
-        if (bughandleConfirmEntity.getReverseSidePictures() != null) {
+        if (StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
             String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
             picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
 
-        if (bughandleConfirmEntity.getEquipmentCabinetPictures() != null) {
+        if (StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
             String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
             picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
 
-        if (bughandleConfirmEntity.getInvoicesPictures() != null) {
+        if (StringUtils.isValid(bughandleConfirmEntity.getInvoicesPictures())) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
             picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
-        initNinePhoto();
-
     }
 
-    private void initAdapter() {
-        mDataList = bughandleConfirmEntity.getDetailEntityList();
+    private void initAdapter(List<BughandleDetailEntity> mDataList) {
         quotationDetailAdapter = new TroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -229,7 +213,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(TroubleDetailActivity.this, LookTroubleDetailActivity.class);
-                intent.putExtra("id", bughandleConfirmEntity.getDetailEntityList().get(position).getId());
+                intent.putExtra("id", mDataList.get(position).getId());
                 startActivity(intent);
             }
         });

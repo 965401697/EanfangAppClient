@@ -309,21 +309,6 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 ((BaseViewHolder) rvTrouble.getChildViewHolder(rvTrouble.getChildAt(position))).setText(R.id.tv_detai_status, "");
             }
         });
-//        fillTroubleDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-//            switch (view.getId()) {
-//                case R.id.rl_item_detail:
-//                    Intent intent = new Intent(FillRepairInfoActivity.this, QuotationDetailActivity.class);
-//                    intent.putExtra("data", .get(position));
-//                    startActivity(intent);
-//                    break;
-////                case R.id.tv_delete:
-////                    mDataList.remove(position);
-////                    quotationDetailAdapter.notifyDataSetChanged();
-////                    break;
-//                default:
-//                    break;
-//            }
-//        });
     }
 
     private void initNinePhoto() {
@@ -390,8 +375,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         bughandleConfirmEntity.setLeftoverProblem(etRemainQuestion.getText().toString().trim());
         //协作人员
         bughandleConfirmEntity.setTeamWorker(etTeamWorker.getText().toString().trim());
-        //bughandleConfirmEntity.setDetailEntityList(mDataList);
-        uploadMap.clear();
+//        uploadMap.clear();
         //电视墙/操作台正面全貌 （3张）
         String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bughandleConfirmEntity.setFrontPictures(presentationPic);
@@ -408,6 +392,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         String afterHandlePic = PhotoUtils.getPhotoUrl(snplFormPhotos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
+
         return bughandleConfirmEntity;
     }
 
@@ -419,16 +404,18 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
                         //代表不需要挂单Z
-                        String requestJson = JSONObject.toJSONString(fillBean());
+                        String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
                         doHttp(requestJson);
                     });
                 }
             });
             return;
+        }else {
+            //代表不需要挂单Z
+            String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
+            doHttp(requestJson);
         }
-        //代表不需要挂单Z
-        String requestJson = JSONObject.toJSONString(fillBean());
-        doHttp(requestJson);
+
     }
 
     /**
@@ -465,7 +452,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
      */
     private void doHttp(String jsonString) {
         EanfangHttp.post(RepairApi.POST_REPAIR_FINISH_WORK)
-                .upJson(jsonString.toString())
+                .upJson(jsonString)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("提交成功");
                     finishSelf();
