@@ -70,8 +70,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        bughandleConfirmEntity = (BughandleConfirmEntity) getIntent().getSerializableExtra("bean");
-        mDataList = bughandleConfirmEntity.getTransferLogEntityList();
+
         companyName = getIntent().getStringExtra("companyName");
         companyId = getIntent().getLongExtra("companyId", 0);
         businessId = getIntent().getStringArrayListExtra("businessId");
@@ -93,6 +92,9 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     }
 
     private BughandleConfirmEntity fillBean() {
+        bughandleConfirmEntity = (BughandleConfirmEntity) getIntent().getSerializableExtra("bean");
+//        mDataList = bughandleConfirmEntity.getTransferLogEntityList();
+        mDataList=new ArrayList<>();
         transferLogEntity.setCause(GetConstDataUtils.getTransferCauseList().indexOf(tvCause.getText().toString().trim()));
         transferLogEntity.setOrderId(orderId);
         transferLogEntity.setOriginalUserId(EanfangApplication.getApplication().getUserId());
@@ -123,8 +125,9 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
             return;
         }
         transferLogEntity.setReceiveUserId(data.getLongExtra("id", 0));
-//        mDataList.add(transferLogEntity);
         tvWorkerName.setText(data.getStringExtra("name"));
+        //        mDataList.add(transferLogEntity);
+
 
     }
 }

@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Optional;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
@@ -70,7 +72,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     private EditText et_trouble_reason;
     private EditText et_trouble_deal;
     private Button btn_add_trouble;
-    private BughandleDetailEntity bean;
+    private BughandleDetailEntity bughandleDetailEntity;
     private TextView tv_trouble_title;
     private OptionsPickerView pvOptions;
     private ParamAdapter paramAdapter;
@@ -84,6 +86,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     //2017年7月24日
     private String companyName;
     private Long id;
+    private Long confirmId;
 
     private GetDeviceFailureSolutionOptionBean solutionOptionBean;
     private GetDeviceFailureOptionBean failureOptionBean;
@@ -146,18 +149,19 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
 
     private void initData() {
         companyName = getIntent().getStringExtra("companyName");
-        bean = (BughandleDetailEntity) getIntent().getSerializableExtra("bean");
+        bughandleDetailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("bean");
         position = getIntent().getIntExtra("position", 0);
         id = getIntent().getLongExtra("id", 0);
+        confirmId = getIntent().getLongExtra("confirmId", 0);
 
 
-        if (bean.getParamEntityList() == null) {
+        if (bughandleDetailEntity.getParamEntityList() == null) {
             List<BughandleParamEntity> list = new ArrayList<>();
-            bean.setParamEntityList(list);
+            bughandleDetailEntity.setParamEntityList(list);
         }
-        if (bean.getUseDeviceEntityList() == null) {
+        if (bughandleDetailEntity.getUseDeviceEntityList() == null) {
             List<BughandleUseDeviceEntity> list = new ArrayList<>();
-            bean.setUseDeviceEntityList(list);
+            bughandleDetailEntity.setUseDeviceEntityList(list);
         }
 
     }
@@ -208,7 +212,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
 
     private void initAdapter() {
 
-        paramAdapter = new ParamAdapter(R.layout.item_parm, (ArrayList) bean.getParamEntityList());
+        paramAdapter = new ParamAdapter(R.layout.item_parm, (ArrayList) bughandleDetailEntity.getParamEntityList());
         rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
@@ -220,59 +224,67 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     }
 
     public void fillData() {
-        if (StringUtils.isValid(bean.getFailureEntity().getBusinessThreeCode())) {
-            tv_trouble_title.setText(Config.get().getBusinessNameByCode(bean.getFailureEntity().getBusinessThreeCode(), 1));
+        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
+            String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
+            String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
+            String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
+            tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+        } else {
+            tv_trouble_title.setText("");
         }
-        // TODO: 2018/1/9 待处理
-//        //故障设备
-//        if (StringUtils.isValid(bean.getInstrument())) {
-//            tv_trouble_device.setText(bean.getInstrument());
-//        }
-//        //品牌型号
-//        if (StringUtils.isValid(bean.getModelnum())) {
-//            tv_brand_model.setText(bean.getModelnum());
-//        }
+        //品牌型号
+        tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
+
+        //故障设备
+        tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
         //设备编号
-        if (StringUtils.isValid(bean.getFailureEntity().getDeviceNo())) {
-            tv_device_no.setText(bean.getFailureEntity().getDeviceNo());
-        }
+        tv_device_no.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
         //故障位置
-        if (StringUtils.isValid(bean.getFailureEntity().getBugPosition())) {
-            tv_device_location.setText(bean.getFailureEntity().getBugPosition());
-        }
+        tv_device_location.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
         //故障描述
-        if (StringUtils.isValid(bean.getFailureEntity().getBugDescription())) {
-            et_trouble_desc.setText(bean.getFailureEntity().getBugDescription());
-        }
+        et_trouble_desc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
     }
 
 
     private void submit() {
 
-        bean.getFailureEntity().setBugDescription(et_trouble_desc.getText().toString().trim());
-        bean.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
-        bean.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
-        bean.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
-        bean.getFailureEntity().setDeviceName("");
-        bean.setCause(et_trouble_reason.getText().toString().trim());
-        bean.setHandle(et_trouble_deal.getText().toString().trim());
-        bean.setCheckProcess(et_trouble_point.getText().toString().trim());
+        bughandleDetailEntity.getFailureEntity().setBugDescription(et_trouble_desc.getText().toString().trim());
+        bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
+        bughandleDetailEntity.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
+        bughandleDetailEntity.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
+        bughandleDetailEntity.getFailureEntity().setDeviceName("");
+        bughandleDetailEntity.setCause(et_trouble_reason.getText().toString().trim());
+        bughandleDetailEntity.setHandle(et_trouble_deal.getText().toString().trim());
+        bughandleDetailEntity.setCheckProcess(et_trouble_point.getText().toString().trim());
+        bughandleDetailEntity.setBusBughandleConfirmId(confirmId);
         //维修结果
-        bean.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tv_repair_conclusion.getText().toString().trim()));
+        bughandleDetailEntity.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tv_repair_conclusion.getText().toString().trim()));
 
-        getIntent().putExtra("position", position);
-        getIntent().putExtra("bean", bean);
-        setResult(2000, getIntent());
-        finishSelf();
+        doHttpSubmit();
 
     }
 
+    private void doHttpSubmit() {
+
+        EanfangHttp.post(RepairApi.GET_REPAIR_BUGHANDLE_CREATE_DETAIL)
+                .upJson(JSONObject.toJSONString(bughandleDetailEntity))
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> {
+                        getIntent().putExtra("beans", bughandleDetailEntity);
+                        getIntent().putExtra("position", position);
+                        setResult(2000, getIntent());
+                        finishSelf();
+                    });
+                }));
+
+
+    }
 
     private void showOptions() {
         PickerSelectUtil.singleTextPicker(this, "参数", GetConstDataUtils.getDeviceParamList(), (index, item) -> {
             BughandleParamEntity param = new BughandleParamEntity();
             param.setParamName(item);
-            bean.getParamEntityList().add(param);
+            bughandleDetailEntity.getParamEntityList().add(param);
             paramAdapter.notifyDataSetChanged();
 
         });

@@ -14,37 +14,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
+import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-
-import net.eanfang.worker.R;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
+import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -62,10 +59,8 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
 
 
     public static final int REQUEST_CODE_UPDATE_TROUBLE = 10001;
-    public static final int REQUEST_CODE_DEAL_TROUBLE = 10002;
     private static final int REQUEST_CODE_CHOOSE_PHOTO_4 = 4;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
-    private static final Integer WORKER_ADD_TROUBLE_CALLBACK = 2;
     private final Activity activity = this;
     private TextView tv_detail_name;
     private RecyclerView rv_trouble;
@@ -101,7 +96,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
             Intent intent = new Intent(PhoneSolveRepairInfoActivity.this, PhoneSolveTroubleDetailActivity.class);
             intent.putExtra("id", bughandleConfirmEntity.getDetailEntityList().get(position).getBusRepairFailureId());
             intent.putExtra("bean", bughandleConfirmEntity.getDetailEntityList().get(position));
-//            intent.putExtra("bugOneCode", bugOneCode);
+            intent.putExtra("confirmId", bughandleConfirmEntity.getId());
             intent.putExtra("position", position);
             intent.putExtra("companyName", companyName);
             startActivityForResult(intent, REQUEST_CODE_UPDATE_TROUBLE);
@@ -109,7 +104,6 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         }
     };
     private Long id;
-  //  private List<String> businessId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +169,6 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
 
     private void initAdapter() {
         mDataList = bughandleConfirmEntity.getDetailEntityList();
-       // businessId = Config.getConfig().getBusinessId(Stream.of(mDataList).map(bean -> bean.getFailureEntity().getBusinessThreeCode()).toList());
         quotationDetailAdapter = new FillTroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -204,46 +197,27 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     }
 
     private boolean checkInfo() {
-//        String overTime = tv_over_time.getText().toString().trim();
-//        if (StringUtils.isEmpty(overTime)) {
-//            showToast("请填写完工时间");
-//            return false;
-//        }
-//        String storetime = tv_store_time.getText().toString().trim();
-//        if (StringUtils.isEmpty(storetime)) {
-//            showToast("请检查录像机天数");
-//            return false;
-//        }
-//        String printOnAlarm = tv_print_on_alarm.getText().toString().trim();
-//        if (StringUtils.isEmpty(printOnAlarm)) {
-//            showToast("请检查报警打印机");
-//            return false;
-//        }
-//        String timeRight = tv_time_right.getText().toString().trim();
-//        if (StringUtils.isEmpty(timeRight)) {
-//            showToast("请检查设备时间同步");
-//            return false;
-//        }
-//        String machineDataRemote = tv_machine_data_remote.getText().toString().trim();
-//        if (StringUtils.isEmpty(machineDataRemote)) {
-//            showToast("请检查各类设备数据远传功能");
-//            return false;
-//        }
-//        String remainQuestion = et_remain_question.getText().toString().trim();
-//        if (StringUtils.isEmpty(remainQuestion)) {
-//            showToast("请填写遗留问题");
-//            return false;
-//        }
-//        if (bean.getBughandledetaillist() != null) {
-//            //增加限制，需要先完善故障处理 在提交
-//            for (int i = 0; i < bean.getBughandledetaillist().size(); i++) {
-//                if (StringUtils.isEmpty(bean.getBughandledetaillist().get(i).getCheckprocess())) {
-//                    showToast("请完善第" + (i + 1) + "条故障处理明细");
-//                    return false;
-//                }
-//            }
-//        }
+        String overTime = tv_over_time.getText().toString().trim();
+        if (StringUtils.isEmpty(overTime)) {
+            showToast("请填写完工时间");
+            return false;
+        }
 
+        String remainQuestion = et_remain_question.getText().toString().trim();
+        if (StringUtils.isEmpty(remainQuestion)) {
+            showToast("请填写遗留问题");
+            return false;
+        }
+
+        if (bughandleConfirmEntity.getDetailEntityList() != null) {
+            //增加限制，需要先完善故障处理 在提交
+            for (int i = 0; i < bughandleConfirmEntity.getDetailEntityList().size(); i++) {
+                if (StringUtils.isEmpty(bughandleConfirmEntity.getDetailEntityList().get(i).getCheckProcess())) {
+                    showToast("请完善第" + (i + 1) + "条故障处理明细");
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
@@ -254,7 +228,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         String repairTime = et_repair_time.getText().toString().trim();
         bughandleConfirmEntity.setWorkHour(repairTime);
         bughandleConfirmEntity.setLeftoverProblem(et_remain_question.getText().toString().trim());
-        uploadMap.clear();
+//        uploadMap.clear();
         //单据照片 （3张）
         String afterHandlePic = PhotoUtils.getPhotoUrl(snpl_form_photos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
@@ -269,14 +243,14 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
                 @Override
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
-                        String requestJson = JSONObject.toJSONString(fillBean());
+                        String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
                         doHttp(requestJson);
                     });
                 }
             });
             return;
         }
-        String requestJson = JSONObject.toJSONString(fillBean());
+        String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
         doHttp(requestJson);
     }
 
@@ -285,7 +259,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
      */
     private void doHttp(String jsonString) {
         EanfangHttp.post(RepairApi.POST_REPAIR_FINISH_WORK)
-                .upJson(jsonString.toString())
+                .upJson(jsonString)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("提交成功");
                     finishSelf();
@@ -300,25 +274,29 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
             return;
         }
         switch (requestCode) {
-
+            case REQUEST_CODE_CHOOSE_PHOTO_4:
+                snpl_form_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
                 snpl_form_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_UPDATE_TROUBLE:
-                Serializable resultBean = data.getSerializableExtra("bean");
+                BughandleDetailEntity resultBean = (BughandleDetailEntity) data.getSerializableExtra("bean");
                 if (resultBean == null) {
                     return;
                 }
                 int position = data.getIntExtra("position", 0);
-                bughandleConfirmEntity.getDetailEntityList().set(position, (BughandleDetailEntity) resultBean);
+                mDataList.remove(position);
+                mDataList.add(resultBean);
                 quotationDetailAdapter.notifyDataSetChanged();
                 break;
             case 10003:
-                if (data.getSerializableExtra("bean") == null) {
+                if (data.getSerializableExtra("beans") == null) {
                     return;
                 }
-                RepairFailureEntity bugBean = (RepairFailureEntity) data.getSerializableExtra("bean");
+                RepairFailureEntity bugBean = (RepairFailureEntity) data.getSerializableExtra("beans");
                 BughandleDetailEntity bughandleDetailEntity = new BughandleDetailEntity();
+                bughandleDetailEntity.setBusRepairFailureId(bugBean.getId());
                 bughandleDetailEntity.setFailureEntity(bugBean);
                 mDataList.add(bughandleDetailEntity);
                 quotationDetailAdapter.notifyDataSetChanged();

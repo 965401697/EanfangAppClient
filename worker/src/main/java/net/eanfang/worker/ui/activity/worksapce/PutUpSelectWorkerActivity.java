@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
@@ -77,15 +76,12 @@ public class PutUpSelectWorkerActivity extends BaseWorkerActivity {
     private void initAdapter() {
         BaseQuickAdapter evaluateAdapter = new PutUpSelectWorkerAdapter(R.layout.item_worker_list, mDataList);
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        evaluateAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent();
-                intent.putExtra("id", mDataList.get(position).getCompanyUserId());
-                intent.putExtra("name", mDataList.get(position).getAccountEntity().getRealName());
-                setResult(32313, intent);
-                finish();
-            }
+        evaluateAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            Intent intent = new Intent();
+            intent.putExtra("id", mDataList.get(position).getCompanyUserId());
+            intent.putExtra("name", mDataList.get(position).getAccountEntity().getRealName());
+            setResult(32313, intent);
+            finish();
         });
         mRecyclerView.setAdapter(evaluateAdapter);
     }

@@ -40,7 +40,7 @@ public class PutUpSelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, Bas
         }
 
 
-        helper.setText(R.id.tv_name, item.getVerifyEntity().getAccountEntity().getRealName())
+        helper.setText(R.id.tv_name, item.getAccountEntity().getRealName())
                 .setText(R.id.tv_company, item.getCompanyEntity().getOrgName())
                 .setText(R.id.tv_koubei, starNum + "分")
                 .setText(R.id.tv_haopinglv, per)
