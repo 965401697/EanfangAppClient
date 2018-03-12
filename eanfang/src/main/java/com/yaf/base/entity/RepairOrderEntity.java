@@ -127,6 +127,18 @@ public class RepairOrderEntity implements Serializable {
     //订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
     //@TableField(value = "status")
     private Integer status;
+
+    @TableField(exist = false)
+    private RepairFailureEntity failureEntity;
+
+    public RepairFailureEntity getFailureEntity() {
+        return failureEntity;
+    }
+
+    public void setFailureEntity(RepairFailureEntity failureEntity) {
+        this.failureEntity = failureEntity;
+    }
+
     /**
      * 归属人
      */
