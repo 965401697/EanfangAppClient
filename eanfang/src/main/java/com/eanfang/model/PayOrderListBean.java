@@ -1,5 +1,6 @@
 package com.eanfang.model;
 
+import com.yaf.base.entity.RepairFailureEntity;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
@@ -86,6 +87,15 @@ public class PayOrderListBean implements Serializable {
         private int totalCost;
         private OrgEntity assigneeCompanyOrg;
         private OrgEntity ownerCompanyOrg;
+        private RepairFailureEntity failureEntity;
+
+        public RepairFailureEntity getFailureEntity() {
+            return failureEntity;
+        }
+
+        public void setFailureEntity(RepairFailureEntity failureEntity) {
+            this.failureEntity = failureEntity;
+        }
 
         public UserEntity getOfferer() {
             return offerer;
