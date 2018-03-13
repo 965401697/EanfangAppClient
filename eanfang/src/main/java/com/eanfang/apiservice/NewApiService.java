@@ -214,5 +214,9 @@ public interface NewApiService {
     String TASK_APPLY_LIST_UPDATE = BuildConfig.API_HOST + "/yaf_task_publish/taskApply/update";
     String TAKE_APPLY_LIST_ADD = BuildConfig.API_HOST + "/yaf_task_publish/taskApply/insert";
     String TAKE_APPLY_LIST_CHECK = BuildConfig.API_HOST + "/yaf_task_publish/taskApply/check";
+    /**
+     * 报装完工
+     */
+    String INSTALL_FINISH_WORK = BuildConfig.API_HOST + "/yaf_install_order/install/updateFinish";
 
 }

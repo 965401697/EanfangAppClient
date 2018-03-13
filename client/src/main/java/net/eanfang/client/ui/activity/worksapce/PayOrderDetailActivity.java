@@ -116,7 +116,7 @@ public class PayOrderDetailActivity extends BaseClientActivity {
         tvOrder.setText(payOrderDetailBean.getRepairOrderNum());
         tvReporter.setText(payOrderDetailBean.getReporter());
         tvPhone.setText(payOrderDetailBean.getReporterPhone());
-        tvCountMoney.setText("¥" + payOrderDetailBean.getTotalCost());
+        tvCountMoney.setText("¥" + payOrderDetailBean.getTotalCost()/100);
         //2017年7月5日
         tvClientCompanyNameWr.setText(payOrderDetailBean.getClientName());
         //2017年7月6日 lin

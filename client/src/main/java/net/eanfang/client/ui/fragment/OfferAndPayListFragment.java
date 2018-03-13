@@ -122,7 +122,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
     private void agreeOffer(Long id) {
         EanfangHttp.get(NewApiService.QUOTE_ORDER_UPDATE)
                 .params("id", id)
-                .params("status", 2)
+                .params("status", 1)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
                     showToast("已同意");
                     findViewById(R.id.tv_do_second).setVisibility(View.GONE);

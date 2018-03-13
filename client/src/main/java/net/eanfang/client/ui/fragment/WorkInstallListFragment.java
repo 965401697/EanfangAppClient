@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -88,17 +86,20 @@ public class WorkInstallListFragment extends BaseFragment
     }
 
     private void initAdapter(List<WorkspaceInstallBean.ListBean> mDataList) {
-
-        OnItemClickListener onItemClickListener = new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new InstallCtrlItemView(getActivity(), mDataList.get(position).getId()).show();
-
-            }
-        };
-
         mAdapter = new WorkspaceInstallAdapter(mDataList);
-        rvList.addOnItemTouchListener(onItemClickListener);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_look:
+                    if (mDataList.get(position).getStatus() == 2) {
+                        finishWork(mDataList, position);
+                    } else {
+                        new InstallCtrlItemView(getActivity(), mDataList.get(position).getId()).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
         if (mDataList.size() > 0) {
             rvList.setAdapter(mAdapter);
             tvNoDatas.setVisibility(View.GONE);
@@ -147,14 +148,12 @@ public class WorkInstallListFragment extends BaseFragment
                 );
     }
 
-    /**
-     * 首次阅读，更新状态
-     */
-    private void getFirstLookData(WorkspaceInstallBean beans, int position) {
-        EanfangHttp.get(NewApiService.WORK_TASK_FIRST_READ)
-                .params("id", beans.getList().get(position).getId())
-                .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
-
+    private void finishWork(List<WorkspaceInstallBean.ListBean> mDataList, int position) {
+        EanfangHttp.get(NewApiService.INSTALL_FINISH_WORK)
+                .params("id", mDataList.get(position).getId())
+                .execute(new EanfangCallback<JSONObject>(getActivity(), false, JSONObject.class, (bean) -> {
+                    showToast("成功");
+                    getData(page);
                 }));
     }
 
