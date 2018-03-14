@@ -59,13 +59,15 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     private SelectAddressAdapter evaluateAdapter;
     private PoiResult poiResult;
     private ArrayList<PoiItem> poiItems;
-    private static final int RESULT_CODE=1;
+    private static final int RESULT_CODE = 1;
 
     private PoiSearch.Query query;
     private String queryType = Constant.mapScope;
     private PoiSearch poiSearch;
 
     private LocationUtil locationUtil;
+
+    private boolean isSearch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,18 +82,22 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
 
         initView();
         initAdapter();
-        PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
+        runOnUiThread(() -> {
+            PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
+        });
     }
 
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        atv_text.setOnClickListener(this);
         btnSearch.setOnClickListener((view) -> {
+
             InputMethodManager imm = (InputMethodManager)
                     getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             String keyword = atvText.getText().toString().trim();
             if (keyword.length() > 0) {
+                isSearch = true;
                 doSearchQuery(keyword, null);
             } else {
                 showToast("请输入要查找的地址");
@@ -109,6 +115,11 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
+                String address = mDataList.get(position).getName();
+                if (!address.contains("(")) {
+                    address += "(" + mDataList.get(position).getZone() + ")";
+                    mDataList.get(position).setName(address);
+                }
                 intent.putExtra("data", mDataList.get(position));
                 setResult(RESULT_CODE, intent);
                 finishSelf();
@@ -182,13 +193,14 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
                         mDataList.add(item);
                     }
 
-                    if (poiItems != null) {
+                    if (poiItems != null && isSearch) {
                         PoiItem poiItem = poiItems.get(0);
                         LatLng latLng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
                         CameraUpdate update = CameraUpdateFactory.newLatLng(latLng);
                         locationUtil.mAMap.moveCamera(update);
                         locationUtil.isSearchMove = true;
                         locationUtil.setMarket(latLng);
+                        isSearch = false;
 //                        PoiItem poiItem = poiItems.get(0);
 //                        LatLng latLng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
 //                        final Marker marker = aMap.addMarker(new MarkerOptions().position(latLng).title(poiItem.getTitle()).snippet("DefaultMarker"));
@@ -198,11 +210,11 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
                 }
             } else {
                 mDataList.clear();
-                showToast("对不起，没有搜索到相关数据！");
+                // showToast("对不起，没有搜索到相关数据！");
             }
         } else {
             mDataList.clear();
-            showToast("对不起，没有搜索到相关数据！");
+            //showToast("对不起，没有搜索到相关数据！");
         }
         evaluateAdapter.notifyDataSetChanged();
     }
@@ -211,7 +223,6 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
     }
-
 
     public void doSearchQuery(String keywords, LatLng latLng) {
         // 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
@@ -224,7 +235,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
         poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener(this);
         if (latLng != null) {
-            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude, latLng.longitude), 500, true));
+            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude, latLng.longitude), 200, true));
         }
         // 设置搜索区域为以lp点为圆心，其周围5000米范围
         // 异步搜索
