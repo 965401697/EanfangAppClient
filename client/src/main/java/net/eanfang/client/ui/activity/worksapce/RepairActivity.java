@@ -263,7 +263,6 @@ public class RepairActivity extends BaseClientActivity {
                 city = item.getCity();
                 county = item.getAddress();
                 address = item.getName();
-
                 tvAddress.setText(province + "-" + city + "-" + county);
                 //将选择的地址 取 显示值
                 etDetailAddress.setText(address);

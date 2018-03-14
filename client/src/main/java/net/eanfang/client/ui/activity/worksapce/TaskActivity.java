@@ -62,6 +62,10 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     Button llComit;
     @BindView(R.id.et_task_name)
     EditText etTaskName;
+    @BindView(R.id.et_company_name)
+    TextView etCompanyName;
+    @BindView(R.id.et_department_name)
+    TextView etDepartmentName;
     private OptionsPickerView pvOptions_NoLink;
 
     private int posistion;
@@ -73,7 +77,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     private WorkTaskBean.WorkTaskDetailsBean detailsBean;
     private Long assigneeUserId;
     private String assigneeOrgCode;
-    private static int TASK_REQUEST_CODE=200;
+    private static int TASK_REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +100,8 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         taskDetialList.setLayoutManager(new LinearLayoutManager(this));
         taskDetialList.setAdapter(maintenanceDetailAdapter);
 
-//        etCompanyName.setText(EanfangApplication.getApplication().getUser().getCompanyName());
+        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
         getData();
     }
 
@@ -147,7 +152,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
             return;
         }
 
-        if (TextUtils.isEmpty(tvDependPerson.getText().toString().trim())){
+        if (TextUtils.isEmpty(tvDependPerson.getText().toString().trim())) {
             showToast("请选择联系人");
             return;
         }
