@@ -78,6 +78,7 @@ public class MaintenanceBean implements Serializable {
          */
 
         private String businessFourCode;
+        private String businessThreeCode;
         private int count;
         private String installPosition;
         private int maintainLevel;
@@ -86,6 +87,14 @@ public class MaintenanceBean implements Serializable {
         private String cause;
         private String solution;
         private String pictures;
+
+        public String getBusinessThreeCode() {
+            return businessThreeCode;
+        }
+
+        public void setBusinessThreeCode(String businessThreeCode) {
+            this.businessThreeCode = businessThreeCode;
+        }
 
         public String getBusinessFourCode() {
             return businessFourCode;

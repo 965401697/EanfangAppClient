@@ -189,6 +189,7 @@
         <activity android:name=".ui.activity.my.AuthWorkerBizActivity" />
         <activity android:name=".ui.activity.my.AuthWorkerAreaActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity"/>
+        <activity android:name=".ui.activity.AddMaintenanceDetailActivity"/>
 
 
 

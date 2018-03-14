@@ -216,6 +216,15 @@ public class MainHistoryBean implements Serializable {
             private int count;
             private String pictures;
             private String shopMaintainId;
+            private String businessThreeCode;
+
+            public String getBusinessThreeCode() {
+                return businessThreeCode;
+            }
+
+            public void setBusinessThreeCode(String businessThreeCode) {
+                this.businessThreeCode = businessThreeCode;
+            }
 
             public int getCount() {
                 return count;

@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -67,7 +66,7 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
         et_contract_phone.setFocusable(false);
         et_client_company_name = (EditText) findViewById(R.id.et_client_company_name);
         et_client_company_name.setFocusable(false);
-
+        tv_add.setVisibility(View.GONE);
         tv_commit = (TextView) findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.GONE);
 
@@ -93,21 +92,18 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
         rcv_detail.setAdapter(maintenanceDetailAdapter);
 
         maintenanceDetailAdapter.notifyDataSetChanged();
-        maintenanceDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (view.getId()) {
-                    case R.id.rl_item_detail:
-                        MeintenanceDetailDialog dialog = new MeintenanceDetailDialog(MaintenanceHistoryDetailActivity.this, mDataList.get(position));
-                        dialog.show();
-                        break;
-                    case R.id.tv_delete:
-                        mainHistoryDetailBean.getMaintainDetails().remove(position);
-                        maintenanceDetailAdapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
+        maintenanceDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.rl_item_detail:
+                    MeintenanceDetailDialog dialog = new MeintenanceDetailDialog(MaintenanceHistoryDetailActivity.this, mDataList.get(position));
+                    dialog.show();
+                    break;
+                case R.id.tv_delete:
+                    mainHistoryDetailBean.getMaintainDetails().remove(position);
+                    maintenanceDetailAdapter.notifyDataSetChanged();
+                    break;
+                default:
+                    break;
             }
         });
         tv_maintenance_circle.setText(GetConstDataUtils.getCycleList().get(mainHistoryDetailBean.getCycle()));
