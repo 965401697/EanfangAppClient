@@ -108,6 +108,15 @@ public class WorkCheckListBean implements Serializable {
         private Long id;
         private int status;
         private String title;
+        private WorkInspectDetail workInspectDetail;
+
+        public WorkInspectDetail getWorkInspectDetail() {
+            return workInspectDetail;
+        }
+
+        public void setWorkInspectDetail(WorkInspectDetail workInspectDetail) {
+            this.workInspectDetail = workInspectDetail;
+        }
 
         public AssigneeOrgBean getAssigneeOrg() {
             return assigneeOrg;
@@ -522,6 +531,147 @@ public class WorkCheckListBean implements Serializable {
                 public void setRealName(String realName) {
                     this.realName = realName;
                 }
+            }
+        }
+
+        public static class WorkInspectDetail implements Serializable {
+
+            private Long id;
+            //工作检查表ID
+            //@TableField(value = "sys_work_inspect_id")
+            private Long sysWorkInspectId;
+            //标题
+            //@TableField(value = "title")
+            private String title;
+            //位置区域
+            //@TableField(value = "region")
+            private String region;
+            //三级业务类型编码（基础数据表）
+            //@TableField(value = "business_three_code")
+            private String businessThreeCode;
+            //检查内容
+            //@TableField(value = "info")
+            private String info;
+            //图片地址（多个图片地址用逗号分割）
+            //@TableField(value = "pictures")
+            private String pictures;
+            //状态
+            private Integer status;
+            //-----------------------------------业务字段，不存在于数据库----------------------------------------
+
+
+            /**
+             * 获取：主键
+             */
+            public Long getId() {
+                return id;
+            }
+
+            /**
+             * 设置：主键
+             */
+            public void setId(Long id) {
+                this.id = id;
+            }
+
+            /**
+             * 获取：工作检查表ID
+             */
+            public Long getSysWorkInspectId() {
+                return sysWorkInspectId;
+            }
+
+            /**
+             * 设置：工作检查表ID
+             */
+            public void setSysWorkInspectId(Long sysWorkInspectId) {
+                this.sysWorkInspectId = sysWorkInspectId;
+            }
+
+            /**
+             * 获取：标题
+             */
+            public String getTitle() {
+                return title;
+            }
+
+            /**
+             * 设置：标题
+             */
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            /**
+             * 获取：位置区域
+             */
+            public String getRegion() {
+                return region;
+            }
+
+            /**
+             * 设置：位置区域
+             */
+            public void setRegion(String region) {
+                this.region = region;
+            }
+
+            /**
+             * 获取：三级业务类型编码（基础数据表）
+             */
+            public String getBusinessThreeCode() {
+                return businessThreeCode;
+            }
+
+            /**
+             * 设置：三级业务类型编码（基础数据表）
+             */
+            public void setBusinessThreeCode(String businessThreeCode) {
+                this.businessThreeCode = businessThreeCode;
+            }
+
+            /**
+             * 获取：检查内容
+             */
+            public String getInfo() {
+                return info;
+            }
+
+            /**
+             * 设置：检查内容
+             */
+            public void setInfo(String info) {
+                this.info = info;
+            }
+
+            /**
+             * 获取：图片地址（多个图片地址用逗号分割）
+             */
+            public String getPictures() {
+                return pictures;
+            }
+
+            /**
+             * 设置：图片地址（多个图片地址用逗号分割）
+             */
+            public void setPictures(String pictures) {
+                this.pictures = pictures;
+            }
+
+
+
+            /**
+             * 获取状态
+             */
+            public Integer getStatus() {
+                return status;
+            }
+
+            /**
+             * 设置状态
+             */
+            public void setStatus(Integer status) {
+                this.status = status;
             }
         }
     }
