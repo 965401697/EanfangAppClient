@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.model.CollectionWorkerListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -27,16 +28,17 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
     protected void convert(BaseViewHolder helper, CollectionWorkerListBean.ListBean item) {
         SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
         if (!StringUtils.isEmpty(item.getAssigneeUserEntity().getAccountEntity().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(item.getAssigneeUserEntity().getAccountEntity().getAvatar()));
-
+            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeUserEntity().getAccountEntity().getAvatar()));
         }
         helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
         helper.setText(R.id.tv_time, item.getCreateTime());
-        if (item.getWorkerEntity().getPublicPraise() != 0) {
-            helper.setText(R.id.tv_koubei, item.getWorkerEntity().getPublicPraise() / 100 + "分");
-        }
-        if (item.getWorkerEntity().getGoodRate() != 0) {
-            helper.setText(R.id.tv_haopinglv, item.getWorkerEntity().getGoodRate() + "%");
+        if (item.getWorkerEntity() != null) {
+            if (item.getWorkerEntity().getPublicPraise() != 0) {
+                helper.setText(R.id.tv_koubei, item.getWorkerEntity().getPublicPraise() / 100 + "分");
+            }
+            if (item.getWorkerEntity().getGoodRate() != 0) {
+                helper.setText(R.id.tv_haopinglv, item.getWorkerEntity().getGoodRate() + "%");
+            }
         }
     }
 }

@@ -70,8 +70,8 @@ public class CompanyListView extends BaseDialog {
             return;
         }
         List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
-        //排除默认公司 只去客户公司
-        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getUnitType() == 2).toList();
+        //排除默认公司 只去客户公司 和默认
+        orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() == 0 || (bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getUnitType() == 2)).toList();
         initAdapter(orgEntityList);
     }
 

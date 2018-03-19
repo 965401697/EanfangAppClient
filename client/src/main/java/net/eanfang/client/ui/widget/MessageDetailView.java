@@ -44,7 +44,7 @@ public class MessageDetailView extends BaseDialog {
         setContentView(R.layout.message_detail_view);
         ButterKnife.bind(this);
         tvType.setText(GetConstDataUtils.getNoticeTypeList().get(listBean.getNoticeType()));
-        tvMsgContent.setText("\n\t" + listBean.getContent() + "\r\n" + (listBean.getExtInfo() != null ? listBean.getExtInfo() : ""));
+        tvMsgContent.setText("\n\t" + listBean.getContent() + "\r\n\t" + (listBean.getExtInfo() != null ? listBean.getExtInfo() : ""));
 
         tvTime.setText(GetDateUtils.dateToDateTimeString(listBean.getCreateTime()));
     }

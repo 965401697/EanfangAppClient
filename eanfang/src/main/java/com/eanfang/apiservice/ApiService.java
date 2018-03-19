@@ -13,13 +13,6 @@ import static com.eanfang.apiservice.BaseService.BASE_URL;
 public interface ApiService {
 
     /**
-     * 收藏过的公司列表
-     * get
-     */
-    String COLLECTION_COMPANY_LIST = BASE_URL + "/getCollectinstallcompany";
-
-
-    /**
      * 报装单确认
      * post
      */

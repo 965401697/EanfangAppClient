@@ -1,12 +1,13 @@
 package net.eanfang.client.ui.activity.my;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -25,6 +26,7 @@ import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.MessageDetailView;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
@@ -39,6 +41,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 public class MessageListActivity extends BaseClientActivity implements
         SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+    private Activity activity = this;
     private RecyclerView mRecyclerView;
     private SwipyRefreshLayout refreshLayout;
     private int page = 1;
@@ -128,10 +131,13 @@ public class MessageListActivity extends BaseClientActivity implements
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mDataList.get(position).getStatus() == 0) {
-                    unReadOrRead(messageListBean, position);
-                }
-                new MessageDetailView(MessageListActivity.this, mDataList.get(position)).show();
+//                if (mDataList.get(position).getStatus() == 0) {
+//                    unReadOrRead(messageListBean, position);
+//                }
+                EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mDataList.get(position).getId())
+                        .execute(new EanfangCallback<NoticeEntity>(activity, false, NoticeEntity.class, (bean) -> {
+                            new MessageDetailView(MessageListActivity.this, bean).show();
+                        }));
             }
         });
         if (mDataList.size() != 0) {
@@ -141,12 +147,6 @@ public class MessageListActivity extends BaseClientActivity implements
             findViewById(R.id.tv_no_data).setVisibility(View.VISIBLE);
         }
 
-    }
-
-    private void unReadOrRead(NoticeListBean listBean, int postion) {
-        EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + listBean.getList().get(postion).getId())
-                .execute(new EanfangCallback<>(this, false, NoticeEntity.class, (bean) -> {
-                }));
     }
 
 

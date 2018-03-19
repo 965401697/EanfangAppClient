@@ -14,7 +14,6 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.CollectionCompanyrFragment;
 import net.eanfang.client.ui.fragment.CollectionWorkerFragment;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 
 public class CollectActivity extends BaseClientActivity implements OnTabSelectListener {
     private final String[] mTitles = {
-            "技师", "公司"
+            "技师"
     };
     private Context mContext = this;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -49,7 +48,7 @@ public class CollectActivity extends BaseClientActivity implements OnTabSelectLi
         setLeftBack();
         setTitle("收藏");
         mFragments.add(CollectionWorkerFragment.getInstance());
-        mFragments.add(CollectionCompanyrFragment.getInstance());
+        //  mFragments.add(CollectionCompanyrFragment.getInstance());
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.collection_vp);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

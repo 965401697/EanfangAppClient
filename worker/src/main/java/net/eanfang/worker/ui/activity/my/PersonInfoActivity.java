@@ -230,6 +230,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         try {
             if (IDCardUtil.IDCardValidate(idcard) == false) {
                 showToast("证件格式有误，请重新输入");
+                etIdcard.setText("");
+                etIdcard.setEnabled(true);
                 return false;
             }
         } catch (ParseException e) {

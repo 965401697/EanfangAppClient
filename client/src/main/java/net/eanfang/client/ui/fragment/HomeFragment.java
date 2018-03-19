@@ -23,7 +23,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-
+        setTitle("会话");
     }
 
     @Override
