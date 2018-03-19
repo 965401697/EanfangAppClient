@@ -36,7 +36,6 @@ public class ConstAllBean implements Serializable {
         private Map<String, List<String>> QuoteOrderConstant;
         private Map<String, List<String>> InstallOrderConstant;
         private Map<String, List<String>> TaskPublishConstant;
-        private Map<String, List<String>> NoticeConst;
     }
 }
 

@@ -78,6 +78,7 @@ public class Config {
         return baseDataBean;
     }
 
+
     public List<BaseDataEntity> getBusinessList() {
         if (businessList == null) {
             synchronized (Config.class) {

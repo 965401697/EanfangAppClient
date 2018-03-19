@@ -65,6 +65,7 @@ public class ContactsFragment extends BaseFragment {
                     }
                     initAdapter();
                 }));
+
     }
 
     private void initAdapter() {

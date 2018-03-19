@@ -134,11 +134,7 @@ public interface NewApiService {
     /**
      * 推送已读Or未读
      */
-    //String GET_PUSH_READ_OR_UNREAD = BuildConfig.API_HOST + "/yaf_sys/notice/read/";
-    /**
-     * 消息详情
-     */
-    String GET_PUSH_MSG_INFO = BuildConfig.API_HOST + "/yaf_sys/notice//info/";
+    String GET_PUSH_READ_OR_UNREAD = BuildConfig.API_HOST + "/yaf_sys/notice/read/";
 
     /**
      * 新增报装

@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.eanfang.config.Config;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;
 
@@ -43,9 +40,8 @@ public class MessageDetailView extends BaseDialog {
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.message_detail_view);
         ButterKnife.bind(this);
-        tvType.setText(GetConstDataUtils.getNoticeTypeList().get(listBean.getNoticeType()));
-        tvMsgContent.setText("\n\t" + listBean.getContent() + "\r\n" + (listBean.getExtInfo() != null ? listBean.getExtInfo() : ""));
-
-        tvTime.setText(GetDateUtils.dateToDateTimeString(listBean.getCreateTime()));
+        tvType.setText("类型：" + listBean.getNoticeType());
+        tvTime.setText("时间：" + listBean.getCreateTime());
+        tvMsgContent.setText("内容：" + "\n" + listBean.getParams());
     }
 }

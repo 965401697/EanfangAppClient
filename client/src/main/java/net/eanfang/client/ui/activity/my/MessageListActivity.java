@@ -144,8 +144,8 @@ public class MessageListActivity extends BaseClientActivity implements
     }
 
     private void unReadOrRead(NoticeListBean listBean, int postion) {
-        EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + listBean.getList().get(postion).getId())
-                .execute(new EanfangCallback<>(this, false, NoticeEntity.class, (bean) -> {
+        EanfangHttp.post(NewApiService.GET_PUSH_READ_OR_UNREAD + listBean.getList().get(postion).getId())
+                .execute(new EanfangCallback<>(this, false, JSONObject.class, (bean) -> {
                 }));
     }
 
