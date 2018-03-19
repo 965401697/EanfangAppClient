@@ -77,6 +77,10 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     Button llComit;
     @BindView(R.id.ll_report_type)
     LinearLayout llReportType;
+    @BindView(R.id.et_company_name)
+    TextView etCompanyName;
+    @BindView(R.id.et_department_name)
+    TextView etDepartmentName;
 
     private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
@@ -131,7 +135,8 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 DividerItemDecoration.VERTICAL));
         reportPlanList.setLayoutManager(new LinearLayoutManager(this));
         reportPlanList.setAdapter(planAdapter);
-
+        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
         getData();
     }
 

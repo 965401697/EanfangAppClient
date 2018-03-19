@@ -1,14 +1,18 @@
 package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.model.MainHistoryDetailBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -79,10 +83,10 @@ public class MeintenanceDetailDialog extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("查看明细");
-        tvBusinessType.setText(Config.get().getBusinessNameByCode(bean.getBusinessFourCode(), 1));
-//        tvDeviceType.setText(bean.getBugtwoname());
-//        tvDeviceName.setText(bean.getBugthreename());
-//        tvBrandModel.setText(bean.getBugfourname());
+        tvBusinessType.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 1));
+        tvDeviceType.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 2));
+        tvDeviceName.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
+        tvBrandModel.setText(Config.get().getModelNameByCode(bean.getBusinessFourCode(), 2));
         etAmount.setText(bean.getCount() + "");
         etPrice.setText(bean.getInstallPosition());
         tvMainLeave.setText(GetConstDataUtils.getMaintainLevelList().get(bean.getMaintainLevel()));
@@ -90,28 +94,31 @@ public class MeintenanceDetailDialog extends BaseDialog {
         etQuestion.setText(bean.getQuestion());
         etMaintenanceMeasures.setText(bean.getSolution());
         etReasonAnalysis.setText(bean.getCause());
-        String[] urls = bean.getPictures().split(",");
-        // TODO: 2018/1/15 图片处理
 
-//        if (!TextUtils.isEmpty(urls[0])) {
-//            ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
-//            ivPic1.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPic1.setVisibility(View.GONE);
-//        }
-//
-//        if (!TextUtils.isEmpty(urls[1])) {
-//            ivPic2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[1]));
-//            ivPic2.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPic2.setVisibility(View.GONE);
-//        }
-//        if (!TextUtils.isEmpty(urls[2])) {
-//            ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[2]));
-//            ivPic3.setVisibility(View.VISIBLE);
-//        } else {
-//            ivPic3.setVisibility(View.GONE);
-//        }
+        if (!StringUtils.isEmpty(bean.getPictures())) {
+            String[] urls = bean.getPictures().split(",");
+
+            if (urls.length >= 1) {
+                ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+                ivPic1.setVisibility(View.VISIBLE);
+            } else {
+                ivPic1.setVisibility(View.GONE);
+            }
+
+            if (urls.length >= 2) {
+                ivPic2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
+                ivPic2.setVisibility(View.VISIBLE);
+            } else {
+                ivPic2.setVisibility(View.GONE);
+            }
+            if (urls.length >= 3) {
+                ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +urls[2]));
+                ivPic3.setVisibility(View.VISIBLE);
+            } else {
+                ivPic3.setVisibility(View.GONE);
+            }
+        }
+
     }
 
 }

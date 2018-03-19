@@ -1,12 +1,8 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.net.Uri;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
@@ -49,8 +45,6 @@ public class PutUpSelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, Bas
                 .setText(R.id.tv_koubei, starNum + "分")
                 .setText(R.id.tv_haopinglv, per)
                 .setText(R.id.tv_years, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()));
 
         MaterialRatingBar rb_star = helper.getView(R.id.rb_star);
         rb_star.setRating(starNum);

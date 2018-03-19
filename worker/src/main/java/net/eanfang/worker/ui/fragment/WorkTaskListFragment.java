@@ -22,7 +22,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.WorkTaskListActivity;
 import net.eanfang.worker.ui.adapter.WorkTaskListAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.WorkTaskInfoView;
@@ -48,11 +47,9 @@ public class WorkTaskListFragment extends BaseFragment
     TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
-    private List<WorkTaskListBean.ListBean> mDataList;
     private String mTitle;
     private String mType;
     private WorkTaskListAdapter mAdapter;
-
     public static WorkTaskListFragment getInstance(String title, String type) {
         WorkTaskListFragment sf = new WorkTaskListFragment();
         sf.mTitle = title;
@@ -95,7 +92,7 @@ public class WorkTaskListFragment extends BaseFragment
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mDataList.get(position).getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-                    getFirstLookData(((WorkTaskListActivity) getActivity()).getWorkTaskListBean(), position);
+                    getFirstLookData(mDataList, position);
                 }
                 new WorkTaskInfoView(getActivity(), true, mDataList.get(position).getId()).show();
             }
@@ -141,7 +138,7 @@ public class WorkTaskListFragment extends BaseFragment
         }
 
         queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setSize(50);
 
         EanfangHttp.post(NewApiService.GET_WORK_TASK_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -157,9 +154,9 @@ public class WorkTaskListFragment extends BaseFragment
     /**
      * 首次阅读，更新状态
      */
-    private void getFirstLookData(WorkTaskListBean beans, int position) {
+    private void getFirstLookData(List<WorkTaskListBean.ListBean> mDataList, int position) {
         EanfangHttp.get(NewApiService.WORK_TASK_FIRST_READ)
-                .params("id", beans.getList().get(position).getId())
+                .params("id", mDataList.get(position).getId())
                 .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
 
                 }));

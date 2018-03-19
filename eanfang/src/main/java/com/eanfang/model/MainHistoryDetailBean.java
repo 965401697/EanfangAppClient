@@ -32,7 +32,7 @@ public class MainHistoryDetailBean implements Serializable {
     private Long createCompanyId;
     private String createOrgCode;
     private String createTime;
-    private int createTopCompanyId;
+    private Long createTopCompanyId;
     private Long createUserId;
     private int cycle;
     private Long id;
@@ -88,11 +88,11 @@ public class MainHistoryDetailBean implements Serializable {
         this.createTime = createTime;
     }
 
-    public int getCreateTopCompanyId() {
+    public Long getCreateTopCompanyId() {
         return createTopCompanyId;
     }
 
-    public void setCreateTopCompanyId(int createTopCompanyId) {
+    public void setCreateTopCompanyId(Long createTopCompanyId) {
         this.createTopCompanyId = createTopCompanyId;
     }
 
@@ -160,6 +160,7 @@ public class MainHistoryDetailBean implements Serializable {
          */
 
         private String businessFourCode;
+        private String businessThreeCode;
         private String cause;
         private int checkResult;
         private int count;
@@ -173,6 +174,14 @@ public class MainHistoryDetailBean implements Serializable {
 
         public String getBusinessFourCode() {
             return businessFourCode;
+        }
+
+        public String getBusinessThreeCode() {
+            return businessThreeCode;
+        }
+
+        public void setBusinessThreeCode(String businessThreeCode) {
+            this.businessThreeCode = businessThreeCode;
         }
 
         public void setBusinessFourCode(String businessFourCode) {

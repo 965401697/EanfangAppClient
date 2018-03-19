@@ -71,23 +71,24 @@ public class MainActivity extends BaseActivity {
      * 技师上报位置专用
      */
     private void submitLocation() {
-        runOnUiThread(() -> {
-            PermissionUtils.get(this).getLocationPermission(() -> {
-                LocationUtil.location(this, (location) -> {
-                    runOnUiThread(() -> {
-                        WorkerEntity workerEntity = new WorkerEntity();
-                        workerEntity.setAccId(user.getAccount().getAccId());
-                        workerEntity.setLat(location.getLatitude() + "");
-                        workerEntity.setLon(location.getLongitude() + "");
-                        workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
-                        //技师上报位置
-                        EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
-                                .upJson(JSONObject.toJSONString(workerEntity))
-                                .execute(new EanfangCallback(this, false, String.class));
-                    });
+
+        PermissionUtils.get(this).getLocationPermission(() -> {
+            LocationUtil.location(this, (location) -> {
+                runOnUiThread(() -> {
+                    WorkerEntity workerEntity = new WorkerEntity();
+                    workerEntity.setAccId(user.getAccount().getAccId());
+                    workerEntity.setLat(location.getLatitude() + "");
+                    workerEntity.setLon(location.getLongitude() + "");
+                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
+                    //技师上报位置
+                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                            .upJson(JSONObject.toJSONString(workerEntity))
+                            .execute(new EanfangCallback(this, false, String.class));
                 });
             });
         });
+
+
     }
 
 

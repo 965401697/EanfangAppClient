@@ -2,12 +2,14 @@ package net.eanfang.worker.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.MaintenanceBean;
@@ -17,6 +19,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -98,28 +101,45 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
 
 
     private void registerListener() {
-        rl_business_type.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_business_type, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList()))
-        ;
+        rl_business_type.setOnClickListener((v)->{
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+                tv_business_type.setText(item);
+                tv_device_type.setText("");
+                tv_device_name.setText("");
+                tv_brand_model.setText("");
+            });
+        });
+        rl_device_type.setOnClickListener((v)->{
+            String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
+            if (StringUtils.isEmpty(busOneCode)) {
+                showToast("请先选择业务类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tv_device_type.setText(item);
+                tv_device_name.setText("");
+                tv_brand_model.setText("");
+            }));
+        });
+        rl_device_name.setOnClickListener((v)->{
+            String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
+            if (StringUtils.isEmpty(busTwoCode)) {
+                showToast("请先选择设备类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tv_device_name.setText(item);
+                tv_brand_model.setText("");
+            }));
+        });
 
-//        rl_device_type.setOnClickListener(v -> showBusinessType());
-//        rl_device_name.setOnClickListener(v -> {
-//            if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
-//                showToast("请先选择设备类型");
-//            } else {
-//                showBusiness2Type();
-//            }
-//        });
-//        rl_brand_model.setOnClickListener(v -> {
-//            if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
-//                showToast("请先选择设备类型");
-//                return;
-//            }
-//            if (StringUtils.isEmpty(tv_device_name.getText().toString().trim())) {
-//                showToast("请先选择设备名称");
-//            } else {
-//                showBusiness3Type();
-//            }
-//        });
+        rl_brand_model.setOnClickListener((v)->{
+            String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
+            if (StringUtils.isEmpty(busOneCode)) {
+                showToast("请先选择业务类别");
+            }
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+                tv_brand_model.setText(item);
+            }));
+        });
         rl_main_leave.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_main_leave, GetConstDataUtils.getMaintainLevelList()));
 
         rl_main_result.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_main_result, GetConstDataUtils.getCheckResultList()));
@@ -136,7 +156,8 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         bean.setQuestion(et_question.getText().toString().trim());
         bean.setSolution(et_maintenance_measures.getText().toString().trim());
         bean.setCause(et_reason_analysis.getText().toString().trim());
-        bean.setBusinessFourCode(Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1));
+        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_device_name.getText().toString().trim(), 3));
+        bean.setBusinessFourCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
 
         bean.setQuestion(et_question.getText().toString().trim());
         String urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
@@ -164,34 +185,34 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
     }
 
     private boolean checkInfo() {
-//        if (TextUtils.isEmpty(et_amount.getText().toString().trim()) && TextUtils.isDigitsOnly(et_amount.getText().toString().trim())) {
-//            Toast.makeText(this, "数量不能为空且必须为数字", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(et_price.getText().toString().trim())) {
-//            Toast.makeText(this, "安装位置不能为空", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_main_leave.getText().toString().trim())) {
-//            Toast.makeText(this, "维保标准不能为空", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_main_result.getText().toString().trim())) {
-//            Toast.makeText(this, "检查结果不能为空", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(et_question.getText().toString().trim())) {
-//            Toast.makeText(this, "发现问题不能为空", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(et_reason_analysis.getText().toString().trim())) {
-//            Toast.makeText(this, "原因分析不能为空", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(et_maintenance_measures.getText().toString().trim())) {
-//            Toast.makeText(this, "维护措施不能为空", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
+        if (TextUtils.isEmpty(et_amount.getText().toString().trim()) && TextUtils.isDigitsOnly(et_amount.getText().toString().trim())) {
+            showToast("数量不能为空且必须为数字");
+            return false;
+        }
+        if (TextUtils.isEmpty(et_price.getText().toString().trim())) {
+            showToast("安装位置不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(tv_main_leave.getText().toString().trim())) {
+            showToast("维保标准不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(tv_main_result.getText().toString().trim())) {
+            showToast("检查结果不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(et_question.getText().toString().trim())) {
+            showToast("发现问题不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(et_reason_analysis.getText().toString().trim())) {
+            showToast("原因分析不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(et_maintenance_measures.getText().toString().trim())) {
+            showToast("维护措施不能为空");
+            return false;
+        }
         return true;
     }
 

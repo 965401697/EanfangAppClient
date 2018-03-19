@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
@@ -92,7 +91,6 @@ public class MaintenanceActivity extends BaseWorkerActivity {
         tv_add.setOnClickListener((v) -> {
             Intent intent = new Intent(MaintenanceActivity.this, AddMaintenanceDetailActivity.class);
             startActivityForResult(intent, 10002);
-
         });
         tv_commit.setOnClickListener((v) -> {
                     submit();
@@ -104,14 +102,14 @@ public class MaintenanceActivity extends BaseWorkerActivity {
 
         String clientCompanyName = et_client_company_name.getText().toString().trim();
         if (TextUtils.isEmpty(clientCompanyName)) {
-            Toast.makeText(this, "请输入客户姓名", Toast.LENGTH_SHORT).show();
+            showToast("请输入客户姓名");
             return;
         }
         maintenanceBean.setClientCompanyName(clientCompanyName);
 
         String circle = tv_maintenance_circle.getText().toString().trim();
         if (TextUtils.isEmpty(circle)) {
-            Toast.makeText(this, "维保周期不能为空", Toast.LENGTH_SHORT).show();
+            showToast("请选择维保周期");
             return;
         }
         //保养周期
@@ -121,17 +119,16 @@ public class MaintenanceActivity extends BaseWorkerActivity {
         // validate
         String contract = et_contract.getText().toString().trim();
         if (TextUtils.isEmpty(contract)) {
-            Toast.makeText(this, "联系人不能为空", Toast.LENGTH_SHORT).show();
+            showToast("联系人不能为空");
             return;
         }
 
-        maintenanceBean.setClientCompanyName(contract);
+        maintenanceBean.setClientUserName(contract);
         String phone = et_contract_phone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "联系电话不能为空", Toast.LENGTH_SHORT).show();
+            showToast("联系电话不能为空");
             return;
         }
-
         maintenanceBean.setClientUserPhone(phone);
         maintenanceBean.setMaintainDetails(beanList);
         String json = JSONObject.toJSONString(maintenanceBean);

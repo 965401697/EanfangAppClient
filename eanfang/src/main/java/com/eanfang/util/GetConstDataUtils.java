@@ -117,8 +117,6 @@ public class GetConstDataUtils {
 
     private static List<String> repairMisinformationList;
 
-    private static List<String> noticeTypeList;
-
     /**
      * 报修订单状态
      * getRepairConstant
@@ -619,18 +617,6 @@ public class GetConstDataUtils {
             }
         }
         return repairMisinformationList;
-    }
-
-    public static List<String> getNoticeTypeList() {
-
-        if (noticeTypeList == null) {
-            synchronized (GetConstDataUtils.class) {
-                if (noticeTypeList == null) {
-                    noticeTypeList = Config.get().getConstBean().getData().getNoticeConst().get(Constant.NOTICE_TYPE);
-                }
-            }
-        }
-        return noticeTypeList;
     }
 }
 

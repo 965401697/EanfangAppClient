@@ -21,7 +21,7 @@ public class MaintenanceHistoryDetailAdapter extends BaseQuickAdapter<MainHistor
 
     @Override
     protected void convert(BaseViewHolder helper, MainHistoryDetailBean.MaintainDetailsBean item) {
-        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + Config.get().getBusinessNameByCode(item.getBusinessFourCode(), 1));
+        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1));
         helper.addOnClickListener(R.id.rl_item_detail);
     }
 }

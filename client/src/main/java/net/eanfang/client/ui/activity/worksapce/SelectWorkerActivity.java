@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -26,7 +24,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -77,23 +74,9 @@ public class SelectWorkerActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         aMapview.onCreate(savedInstanceState);
         locationUtil = LocationUtil.get(this, aMapview);
-        initView();
-        runOnUiThread(() -> {
-            PermissionUtils.get(this).getLocationPermission(() -> {
-                        locationUtil.startOnce();
-//                        String lat = toRepairBean.getLatitude();
-//                        String lnt = toRepairBean.getLongitude();
-//                        if (StringUtils.isEmpty(lat) || StringUtils.isEmpty(lnt)) {
-//                            return;
-//                        }
-//                        LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lnt));
-//                        CameraUpdate update = CameraUpdateFactory.newLatLng(latLng);
-//                        locationUtil.mAMap.moveCamera(update);
-//                        locationUtil.setMarket(latLng);
-                    }
-            );
-        });
 
+        PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
+        initView();
         initWorker(0, 0);
         setListener();
 
@@ -114,6 +97,33 @@ public class SelectWorkerActivity extends BaseClientActivity {
             }
             return true;
         });
+        locationUtil.mAMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                LinearLayout lineLayout = new LinearLayout(activity);
+                TextView title = new TextView(activity);
+                title.setTextSize(18);
+                TextView info = new TextView(activity);
+                title.setTextSize(16);
+
+                lineLayout.addView(title);
+                lineLayout.addView(info);
+                return lineLayout;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+        });
+
+        locationUtil.mAMap.setOnInfoWindowClickListener((marker) -> {
+            if (marker.getObject() != null) {
+                JSONObject jsonObject = (JSONObject) marker.getObject();
+                lookWorkerDetail(jsonObject.getString("companyUserId"), jsonObject.getString("workerId"));
+            }
+        });
+
     }
 
 

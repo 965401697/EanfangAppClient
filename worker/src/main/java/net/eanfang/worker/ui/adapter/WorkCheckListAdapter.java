@@ -1,8 +1,13 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.net.Uri;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.model.WorkCheckListBean;
+import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -32,10 +37,11 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
         helper.setText(R.id.tv_check_time, "检查时间：" + item.getCreateTime());
         helper.setText(R.id.tv_change_tiem, "整改期限：" + item.getChangeDeadlineTime());
 
-//        SimpleDraweeView head_pic = helper.getView(R.id.img_head);
-//        if (!StringUtils.isEmpty(item.getPic1())) {
-//            head_pic.setImageURI(Uri.parse(item.getPic1()));
-//        }
+        SimpleDraweeView head_pic = helper.getView(R.id.img_head);
+        if (!StringUtils.isEmpty(item.getWorkInspectDetail().getPictures())) {
+            String[] urls = item.getWorkInspectDetail().getPictures().split(",");
+            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+        }
 
     }
 

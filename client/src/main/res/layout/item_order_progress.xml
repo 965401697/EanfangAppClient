@@ -3,8 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="2016.12.12"
+            android:textColor="@color/font_color"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12:23"
+                android:textColor="@color/font_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_weeks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="星期一"
+                android:textColor="@color/font_color"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <com.github.vipulasri.timelineview.TimelineView
         android:id="@+id/time_marker"
@@ -12,70 +54,33 @@
         android:layout_height="match_parent"
         app:line="@color/font_color"
         app:lineSize="1dp"
-        app:marker="@drawable/progress_circle"
-        app:markerSize="5dp" />
+        app:marker="@drawable/ic_agree"
+        app:markerSize="20dp" />
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
-        app:cardElevation="1dp"
-        app:contentPadding="15dp">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="已下单，待支付"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="12:23"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_info"
+                android:id="@+id/tv_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:text="2016.12.12"
+                android:text="已下单，待支付"
                 android:textColor="@color/font_color"
                 android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="10dp"
-                android:text="2016.12.12"
-                android:textColor="@color/font_color"
-                android:textSize="16sp" />
-
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+
 
 </LinearLayout>

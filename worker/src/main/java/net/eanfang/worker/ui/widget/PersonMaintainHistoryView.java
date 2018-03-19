@@ -37,7 +37,7 @@ public class PersonMaintainHistoryView extends BaseDialog {
     ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.rcv_order)
+    @BindView(R.id.rv_list)
     RecyclerView recyclerView;
     private Activity mContext;
     private MainAdapter orderAdapter;

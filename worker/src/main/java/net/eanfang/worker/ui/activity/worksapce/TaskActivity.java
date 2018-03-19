@@ -61,6 +61,10 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     Button llComit;
     @BindView(R.id.et_task_name)
     EditText etTaskName;
+    @BindView(R.id.et_company_name)
+    TextView etCompanyName;
+    @BindView(R.id.et_department_name)
+    TextView etDepartmentName;
     private OptionsPickerView pvOptions_NoLink;
 
     private int posistion;
@@ -94,7 +98,8 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
         taskDetialList.setLayoutManager(new LinearLayoutManager(this));
         taskDetialList.setAdapter(maintenanceDetailAdapter);
 
-//        etCompanyName.setText(EanfangApplication.getApplication().getUser().getCompanyName());
+        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
         getData();
     }
 
