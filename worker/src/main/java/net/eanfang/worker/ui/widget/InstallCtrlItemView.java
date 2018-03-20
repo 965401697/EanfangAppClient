@@ -116,7 +116,7 @@ public class InstallCtrlItemView extends BaseDialog {
         if (bean.getCompanyEntity().getLogoPic() != null) {
             ivPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()));
         }
-        ivPhone.setOnClickListener(v -> CallUtils.call(mContext, tvContractPhone.getTag().toString()));
+        ivPhone.setOnClickListener(v -> CallUtils.call(mContext, bean.getConnectorPhone()));
     }
 
 }

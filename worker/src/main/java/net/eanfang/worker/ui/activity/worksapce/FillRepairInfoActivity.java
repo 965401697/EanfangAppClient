@@ -175,7 +175,6 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private HashMap<String, String> uploadMap = new HashMap<>();
     private String companyName;
     private Long companyId;
-    private String singInTime;
     private BughandleConfirmEntity bughandleConfirmEntity;
     private Long orderId;
     private List<String> businessIdLis;
@@ -185,10 +184,9 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_repair_info);
         ButterKnife.bind(this);
-
+        initData();
         initNinePhoto();
         setListener();
-        initData();
         supprotToolbar();
         setTitle("填写信息");
         setRightTitle("添加");
@@ -230,7 +228,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 tvOverTime.setText(year1 + "-" + month1 + "-" + day1 + " " + hour1 + ":" + minute1 + ":" + startSecond);
 
                 //计算维修工时
-                if (bughandleConfirmEntity.getSingInTime() == null) {
+                if (GetDateUtils.dateToDateString(bughandleConfirmEntity.getSingInTime()) == null) {
                     etRepairTime.setText("0小时0分钟");
                     return;
                 }

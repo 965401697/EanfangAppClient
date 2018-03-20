@@ -163,6 +163,10 @@ public class RepairActivity extends BaseClientActivity {
             showToast("请选择到达时限");
             return false;
         }
+        if (beanList.isEmpty()){
+            showToast("请填写明细");
+            return false;
+        }
         return true;
     }
 
