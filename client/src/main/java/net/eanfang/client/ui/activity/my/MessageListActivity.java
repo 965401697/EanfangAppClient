@@ -11,6 +11,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
@@ -45,7 +46,7 @@ public class MessageListActivity extends BaseClientActivity implements
     private RecyclerView mRecyclerView;
     private SwipyRefreshLayout refreshLayout;
     private int page = 1;
-    private NoticeListBean messageListBean;
+    private List<NoticeEntity> mDataList;
 
 
     @Override
@@ -64,27 +65,37 @@ public class MessageListActivity extends BaseClientActivity implements
                 DividerItemDecoration.VERTICAL));
         refreshLayout = (SwipyRefreshLayout) findViewById(R.id.msg_refresh);
         refreshLayout.setOnRefreshListener(this);
+
+
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mDataList.get(position).getId())
+                        .execute(new EanfangCallback<NoticeEntity>(activity, false, NoticeEntity.class, (bean) -> {
+                            new MessageDetailView(MessageListActivity.this, bean).show();
+                        }));
+            }
+        });
     }
 
 
     @Override
     public void onDataReceived() {
         initView();
-
         refreshLayout.setRefreshing(false);
     }
 
     private void getJPushMessage() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setPage(1);
+        queryEntry.setPage(page);
         queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
-                                messageListBean = bean;
-                                initAdapter(bean.getList());
+                                mDataList = bean.getList();
+                                initAdapter();
                                 onDataReceived();
                                 refreshLayout.setRefreshing(false);
                             });
@@ -126,29 +137,15 @@ public class MessageListActivity extends BaseClientActivity implements
         }
     }
 
-    private void initAdapter(List<NoticeEntity> mDataList) {
+    private void initAdapter() {
         BaseQuickAdapter evaluateAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                if (mDataList.get(position).getStatus() == 0) {
-//                    unReadOrRead(messageListBean, position);
-//                }
-                EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mDataList.get(position).getId())
-                        .execute(new EanfangCallback<NoticeEntity>(activity, false, NoticeEntity.class, (bean) -> {
-                            new MessageDetailView(MessageListActivity.this, bean).show();
-                        }));
-            }
-        });
         if (mDataList.size() != 0) {
             mRecyclerView.setAdapter(evaluateAdapter);
         } else {
             //无数据时显示“暂无数据”
             findViewById(R.id.tv_no_data).setVisibility(View.VISIBLE);
         }
-
     }
-
 
     @Override
     protected void onResume() {

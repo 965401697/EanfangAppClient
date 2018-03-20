@@ -7,11 +7,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.ErrorCodeConst;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.Var;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Response;
 import com.okgo.request.base.Request;
@@ -160,6 +162,19 @@ public class EanfangCallback<T> extends StringCallback {
             if (resultJson.containsKey("message")) {
                 message = resultJson.getString("message");
             }
+            if (resultJson.containsKey("noticeCount")) {
+                String classMainName = "MainActivity";
+                String classMyName = "MyFragment";
+                int mainActivityCount = Var.get(classMainName).getVar();
+                int myFragmentCount = Var.get(classMyName).getVar();
+                int noticeCount = resultJson.getInteger("noticeCount");
+                if (mainActivityCount != noticeCount) {
+                    Var.get(classMainName).setVar(noticeCount);
+                }
+                if (myFragmentCount != noticeCount) {
+                    Var.get(classMyName).setVar(noticeCount);
+                }
+            }
             if (resultJson.containsKey("data")) {
                 if (clazz.getName().contains("String")) {
                     resultString = resultJson.get("data").toString();
@@ -278,7 +293,7 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onServerError(String message) {
-        if (message!=null){
+        if (message != null) {
             ToastUtil.get().showToast(this.activity, message);
         }
     }
@@ -304,14 +319,17 @@ public class EanfangCallback<T> extends StringCallback {
         } else if (clazz != null) {
             return clazz;
         } else {
-            Type genType = getClass().getGenericSuperclass();
-            Type type = ((ParameterizedType) genType).getActualTypeArguments()[0];
-            if (((Class) type).getName().equals(JSONObject.class.getName())) {
-                return JSONObject.class;
-            } else {
-                return ((Class<T>) type);
-            }
+            return JSONObject.class;
         }
+// else {
+//            Type genType = getClass().getGenericSuperclass();
+//            Type type = ((ParameterizedType) genType).getActualTypeArguments()[0];
+//            if (((Class) type).getName().equals(JSONObject.class.getName())) {
+//                return JSONObject.class;
+//            } else {
+//                return ((Class<T>) type);
+//            }
+//        }
 
     }
 

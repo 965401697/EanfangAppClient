@@ -48,4 +48,10 @@ public class MessageDetailView extends BaseDialog {
 
         tvTime.setText(GetDateUtils.dateToDateTimeString(listBean.getCreateTime()));
     }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+
+    }
 }

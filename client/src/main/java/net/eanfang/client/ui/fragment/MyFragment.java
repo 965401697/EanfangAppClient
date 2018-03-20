@@ -3,13 +3,18 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.Var;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.eanfang.model.LoginBean;
 
@@ -20,6 +25,9 @@ import net.eanfang.client.ui.activity.my.MessageListActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
 import net.eanfang.client.ui.activity.my.SettingActivity;
 import net.eanfang.client.ui.widget.InviteView;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * Created by MrHou
@@ -69,7 +77,25 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.rel_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
-
+        Badge qBadgeView = new QBadgeView(getActivity())
+                .bindTarget(findViewById(R.id.iv_msg))
+                .setBadgeNumber(Var.get("MyFragment").getVar())
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(-2, -2, true)
+                .setBadgeTextSize(10, true)
+                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+                    //清除成功
+                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false));
+                        showToast("消息被清空了");
+//                        Var.get().setVar(0);
+                    }
+                });
+        //变量监听
+        Var.get("MyFragment").setChangeListener((var) -> {
+            qBadgeView.setBadgeNumber(var);
+        });
     }
 
     @Override

@@ -135,6 +135,8 @@ public interface NewApiService {
      * 推送已读Or未读
      */
     String GET_PUSH_MSG_INFO = BuildConfig.API_HOST + "/yaf_sys/notice/info/";
+    //推送消息  全部阅读
+    String GET_PUSH_READ_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/readall/";
 
     /**
      * 新增报装

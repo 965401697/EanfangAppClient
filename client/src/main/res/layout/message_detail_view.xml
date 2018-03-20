@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -15,16 +16,17 @@
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="时间：2017-12-20" />
-
-    <TextView
         android:id="@+id/tv_msg_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="内容：
         jornlin 您好：您收到易安防北京运营公司 (jornlin) 的工作检查，请及时处理" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="时间：2017-12-20"
+        android:textAlignment="textEnd" />
 
 </LinearLayout>

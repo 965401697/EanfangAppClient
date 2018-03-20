@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.Var;
 import com.okgo.OkGo;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -39,6 +41,8 @@ import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 import net.eanfang.worker.util.UpdateManager;
 
 import butterknife.ButterKnife;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -107,6 +111,27 @@ public class MainActivity extends BaseActivity {
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
+
+        Badge qBadgeView = new QBadgeView(this)
+                .bindTarget(indicator.findViewById(R.id.tabImg))
+                .setBadgeNumber(Var.get("MainActivity").getVar())
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(-2, -2, true)
+                .setBadgeTextSize(10, true)
+                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+                    //清除成功
+                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false));
+                        showToast("消息被清空了");
+//                        Var.get().setVar(0);
+                    }
+                });
+        //变量监听
+        Var.get("MainActivity").setChangeListener((var) -> {
+            qBadgeView.setBadgeNumber(var);
+        });
+
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
         redPoint = indicator.findViewById(R.id.redPoint);
     }

@@ -26,8 +26,8 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="小明童鞋"
             android:textColor="@color/color_white" />
@@ -49,8 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/bg_ll_selctor"
         android:padding="10dp">
 
@@ -66,9 +66,9 @@
             android:id="@+id/tv_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_0"
+            android:layout_centerVertical="true"
             android:text="工作状态"
             android:textSize="@dimen/textSize_16" />
 
@@ -76,14 +76,15 @@
             android:id="@+id/tv_worker_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="50dp"
             android:layout_toRightOf="@id/tv_0"
+            android:layout_centerVertical="true"
             android:text=""
             android:textColor="@color/client"
             android:textSize="@dimen/textSize_16" />
 
         <ImageView
+
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -97,8 +98,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/bg_ll_selctor">
 
         <ImageView
@@ -112,13 +113,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_1"
+            android:layout_centerVertical="true"
             android:text="通知"
             android:textSize="@dimen/textSize_16" />
 
         <ImageView
+            android:id="@+id/iv_msg"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -131,8 +133,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/bg_ll_selctor">
 
         <ImageView
@@ -146,9 +148,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_2"
+            android:layout_centerVertical="true"
             android:text="评价"
             android:textSize="@dimen/textSize_16" />
 
@@ -166,8 +168,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/bg_ll_selctor">
 
         <ImageView
@@ -181,9 +183,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_4"
+            android:layout_centerVertical="true"
             android:text="邀请"
             android:textSize="@dimen/textSize_16" />
 
@@ -201,8 +203,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/bg_ll_selctor">
 
         <ImageView
@@ -216,9 +218,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_5"
+            android:layout_centerVertical="true"
             android:text="设置"
             android:textSize="@dimen/textSize_16" />
 
