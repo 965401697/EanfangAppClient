@@ -128,7 +128,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         llEquipmentCategory.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBusinessCodeByName(tvSystemCategory.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");
+                showToast("请先选择系统类别");return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvEquipmentCategory.setText(item);
@@ -140,7 +140,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         llEquipmentName.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tvEquipmentCategory.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
-                showToast("请先选择设备类别");
+                showToast("请先选择设备类别");return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvEquipmentName.setText(item);
@@ -151,7 +151,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         llModel.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBaseCodeByName(tvSystemCategory.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");
+                showToast("请先选择系统类别");return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvModel.setText(item);

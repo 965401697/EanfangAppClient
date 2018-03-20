@@ -60,6 +60,7 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
     private void showBusinessSmallType() {
         if (StringUtils.isEmpty(bugOneCode)) {
             showToast("请先选择系统类别");
+            return;
         }
         //二级
         ll_business.setOnClickListener((v) -> {
@@ -75,6 +76,7 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
         String busTwoCode = Config.get().getBusinessCodeByName(tv_business.getText().toString().trim(), 2);
         if (StringUtils.isEmpty(busTwoCode)) {
             showToast("请先选择设备类别");
+            return;
         }
         PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
             tv_equipment.setText(item);
@@ -87,6 +89,7 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
         String modelOne = Config.get().getBaseCodeByName(busOneName, 1, Constant.MODEL).get(0);
         if (StringUtils.isEmpty(modelOne)) {
             showToast("请先选择系统类别");
+            return;
         }
         PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(modelOne)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
             tv_model.setText(item);

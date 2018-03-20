@@ -178,7 +178,7 @@ public class OrderDetailFragment extends BaseFragment {
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
                     //      获取：是否电话解决（0：未解决，1：已解决）
-                    if (bean.getIsPhoneSolve() == 0) {
+                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
                         tv_phone_solve.setText("否");
                     } else {
                         tv_phone_solve.setText("是");

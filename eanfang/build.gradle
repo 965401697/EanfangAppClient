@@ -13,7 +13,7 @@ android {
         versionCode 1802131
         versionName "2.0"
         multiDexEnabled true
-        buildConfigField("boolean", "LOG_DEBUG", "false")
+
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
@@ -35,6 +35,10 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField("boolean", "LOG_DEBUG", "true");
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

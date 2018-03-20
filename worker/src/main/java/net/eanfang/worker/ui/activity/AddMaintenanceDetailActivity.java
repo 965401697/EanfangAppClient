@@ -112,7 +112,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         rl_device_type.setOnClickListener((v)->{
             String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择业务类别");
+                showToast("请先选择业务类别");return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_type.setText(item);
@@ -123,7 +123,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         rl_device_name.setOnClickListener((v)->{
             String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
-                showToast("请先选择设备类别");
+                showToast("请先选择设备类别");return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_name.setText(item);
@@ -134,7 +134,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         rl_brand_model.setOnClickListener((v)->{
             String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择业务类别");
+                showToast("请先选择业务类别");return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_brand_model.setText(item);
