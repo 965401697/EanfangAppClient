@@ -27,6 +27,8 @@ public class InputNameAndValueView extends BaseDialog {
     EditText etValue;
     @BindView(R.id.btn_sure)
     Button btnSure;
+    @BindView(R.id.btn_cacel)
+    Button btnCacel;
     private onBtnClick click;
 
     public InputNameAndValueView(Activity context, onBtnClick click) {
@@ -46,6 +48,9 @@ public class InputNameAndValueView extends BaseDialog {
             click.onClick(etName.getText().toString().trim(), etValue.getText().toString().trim());
             dismiss();
         });
+
+        btnCacel.setOnClickListener(v -> dismiss());
+
     }
 
     public interface onBtnClick {
