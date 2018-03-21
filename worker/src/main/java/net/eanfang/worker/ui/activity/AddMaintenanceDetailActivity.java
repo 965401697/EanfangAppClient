@@ -66,8 +66,9 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_maintenance_detail);
 
         initView();
-        supprotToolbar();
-        initData();
+        setTitle("添加明细");
+        setLeftBack();
+        mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
         registerListener();
 
     }
@@ -94,10 +95,6 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         tv_commit = (TextView) findViewById(R.id.tv_commit);
     }
 
-    private void initData() {
-        setTitle("添加明细");
-        mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
-    }
 
 
     private void registerListener() {

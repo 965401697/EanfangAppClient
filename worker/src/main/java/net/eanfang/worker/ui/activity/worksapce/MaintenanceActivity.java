@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -43,7 +44,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
     List<MaintenanceBean.MaintainDetailsBean> beanList;
     private TextView tv_maintenance_circle;
     private LinearLayout ll_maintenance_circle;
-    private TextView tv_add;
+    private ImageView iv_add;
     private RecyclerView rcv_detail;
     private EditText et_contract;
     private EditText et_contract_phone;
@@ -56,14 +57,14 @@ public class MaintenanceActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance);
         initView();
-        supprotToolbar();
         setTitle("维修保养");
+        setLeftBack();
     }
 
     private void initView() {
         tv_maintenance_circle = (TextView) findViewById(R.id.tv_maintenance_circle);
         ll_maintenance_circle = (LinearLayout) findViewById(R.id.ll_maintenance_circle);
-        tv_add = (TextView) findViewById(R.id.tv_add);
+        iv_add = (ImageView) findViewById(R.id.iv_add);
         rcv_detail = (RecyclerView) findViewById(R.id.rcv_detail);
         et_contract = (EditText) findViewById(R.id.et_contract);
         et_contract_phone = (EditText) findViewById(R.id.et_contract_phone);
@@ -88,7 +89,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
                 }
         );
 
-        tv_add.setOnClickListener((v) -> {
+        iv_add.setOnClickListener((v) -> {
             Intent intent = new Intent(MaintenanceActivity.this, AddMaintenanceDetailActivity.class);
             startActivityForResult(intent, 10002);
         });
