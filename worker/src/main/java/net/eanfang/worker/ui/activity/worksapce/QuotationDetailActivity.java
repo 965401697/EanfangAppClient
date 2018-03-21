@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
@@ -33,26 +34,13 @@ import java.util.List;
 
 public class QuotationDetailActivity extends BaseActivity {
 
-    private RelativeLayout rl_device_type, rl_business_type;
-    private RelativeLayout rl_device_name;
-    private RelativeLayout rl_brand_model;
-    private RelativeLayout rl_unit;
-
-    private EditText et_amount;
-    private EditText et_price;
-    private TextView tv_commit;
-    private ArrayList<String> unitList = new ArrayList<>();
-    private TextView tv_device_type, tv_business_type;
-    private TextView tv_device_name;
-    private TextView tv_brand_model;
-    private TextView tv_unit, tv_add_params;
+    private RelativeLayout rl_device_type, rl_business_type, rl_device_name, rl_brand_model, rl_unit;
+    private TextView tv_device_type, tv_business_type, tv_commit, tv_device_name, tv_brand_model, tv_unit, tv_add_params;
     private DeviceParamAdapter paramAdapter;
     private RecyclerView rl_params;
-    private EditText et_product_company, et_factory, et_remark;
-
-
-    private QuotationBean.QuoteDevicesBean bean;
-    List<QuotationBean.QuoteDevicesBean.ParamsBean> paramsBeanList;
+    private EditText et_product_company, et_factory, et_remark, et_amount, et_price;
+    private QuotationBean.QuoteDevicesBean bean = new QuotationBean.QuoteDevicesBean();
+    List<QuotationBean.QuoteDevicesBean.ParamsBean> paramsBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +74,7 @@ public class QuotationDetailActivity extends BaseActivity {
         tv_add_params = (TextView) findViewById(R.id.tv_add_params);
         rl_params = (RecyclerView) findViewById(R.id.rl_params);
         registerListener();
+        initAdapter();
     }
 
     private void registerListener() {
@@ -104,7 +93,8 @@ public class QuotationDetailActivity extends BaseActivity {
         rl_device_type.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");return;
+                showToast("请先选择系统类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_type.setText(item);
@@ -116,7 +106,8 @@ public class QuotationDetailActivity extends BaseActivity {
         rl_device_name.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
-                showToast("请先选择设备类别");return;
+                showToast("请先选择设备类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_name.setText(item);
@@ -127,7 +118,8 @@ public class QuotationDetailActivity extends BaseActivity {
         rl_brand_model.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");return;
+                showToast("请先选择系统类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_brand_model.setText(item);
@@ -140,12 +132,11 @@ public class QuotationDetailActivity extends BaseActivity {
 
         tv_add_params.setOnClickListener((v) -> {
             new InputNameAndValueView(QuotationDetailActivity.this, (name, value) -> {
-                paramsBeanList = new ArrayList<>();
                 QuotationBean.QuoteDevicesBean.ParamsBean paramsBean = new QuotationBean.QuoteDevicesBean.ParamsBean();
                 paramsBean.setParamName(name);
                 paramsBean.setParamValue(value);
                 paramsBeanList.add(paramsBean);
-                initAdapter();
+                paramAdapter.notifyDataSetChanged();
             }).show();
 
         });
@@ -155,13 +146,12 @@ public class QuotationDetailActivity extends BaseActivity {
     private void initAdapter() {
         paramAdapter = new DeviceParamAdapter(R.layout.item_deveice_parm, (ArrayList) paramsBeanList);
         rl_params.setLayoutManager(new LinearLayoutManager(this));
-        rl_params.setNestedScrollingEnabled(false);
-        rl_params.setHasFixedSize(true);
+        rl_params.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         rl_params.setAdapter(paramAdapter);
     }
 
     private void commit() {
-        bean = new QuotationBean.QuoteDevicesBean();
         if (!checkInfo()) {
             return;
         }
@@ -175,7 +165,8 @@ public class QuotationDetailActivity extends BaseActivity {
         bean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(et_price.getText().toString().trim());
         bean.setUnitPrice((int) unitPrice);
-        bean.setSum((unitPrice*count)*100);
+        bean.setSum((unitPrice * count) * 100);
+        paramsBeanList.addAll(paramsBeanList);
         bean.setParams(paramsBeanList);
         setResult(2, getIntent().putExtra("quotedevices", bean));
         finish();

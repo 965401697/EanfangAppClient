@@ -31,6 +31,7 @@ public class DeviceParamAdapter extends BaseQuickAdapter<QuotationBean.QuoteDevi
         if (StringUtils.isValid(item.getParamValue())) {
             helper.setText(R.id.et_param_value, item.getParamValue());
         }
+        helper.setVisible(R.id.tv_delete, false);
         helper.addOnClickListener(R.id.tv_delete);
 
     }
