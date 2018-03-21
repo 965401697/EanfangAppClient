@@ -56,11 +56,11 @@ public class InstallCtrlView extends BaseDialog {
         tvTitle.setText("报装管控");
         llMineAssignment.setVisibility(View.GONE);
         llMineAccept.setVisibility(View.VISIBLE);
-        llMineAccept.setOnClickListener(v -> jump("我负责的", "1"));
-        llMineCompany.setOnClickListener(v -> jump("本公司的", "2"));
+        llMineAccept.setOnClickListener(v -> jump("我负责的", 0));
+        llMineCompany.setOnClickListener(v -> jump("本公司的", 1));
     }
 
-    private void jump(String title, String type) {
+    private void jump(String title, int type) {
         Intent intent = new Intent(mContext, InstallOrderListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

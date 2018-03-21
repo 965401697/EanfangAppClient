@@ -44,7 +44,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "LOG_DEBUG", "false")
         }
         release {
             // 不显示Log

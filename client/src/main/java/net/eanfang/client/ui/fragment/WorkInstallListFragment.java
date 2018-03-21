@@ -19,10 +19,12 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.InstallCtrlItemView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
@@ -45,7 +47,7 @@ public class WorkInstallListFragment extends BaseFragment
     SwipyRefreshLayout swiprefresh;
     private String mTitle;
     private int mType;
-
+    private List<WorkspaceInstallBean.ListBean> mDataList;
     private static int page = 1;
     private WorkspaceInstallAdapter mAdapter;
 
@@ -69,7 +71,7 @@ public class WorkInstallListFragment extends BaseFragment
 
     @Override
     protected void initData(Bundle arguments) {
-        getData(1);
+        getData();
     }
 
     @Override
@@ -85,7 +87,14 @@ public class WorkInstallListFragment extends BaseFragment
     protected void setListener() {
     }
 
-    private void initAdapter(List<WorkspaceInstallBean.ListBean> mDataList) {
+    private void initAdapter() {
+        if (getActivity() == null) {
+            return;
+        }
+        if (!(getActivity() instanceof InstallOrderActivity)) {
+            return;
+        }
+        mDataList = ((InstallOrderActivity) getActivity()).getWorkspaceInstallBean().getList();
         mAdapter = new WorkspaceInstallAdapter(mDataList);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
@@ -110,15 +119,7 @@ public class WorkInstallListFragment extends BaseFragment
         mAdapter.notifyDataSetChanged();
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-
-    private void getData(int page) {
+    private void getData() {
         String status = null;
         if (!"全部".equals(mTitle)) {
             status = GetConstDataUtils.getInstallStatus().indexOf(getmTitle()) + "";
@@ -135,17 +136,38 @@ public class WorkInstallListFragment extends BaseFragment
         }
 
         queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_WORK_INSTALL_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkspaceInstallBean>(getActivity(), true, WorkspaceInstallBean.class, (bean) -> {
-                            getActivity().runOnUiThread(() -> {
-                                initAdapter(bean.getList());
-                                onDataReceived();
-                            });
-                        })
-                );
+                .execute(new EanfangCallback<WorkspaceInstallBean>(getActivity(), true, WorkspaceInstallBean.class) {
+                    @Override
+                    public void onSuccess(WorkspaceInstallBean bean) {
+                        super.onSuccess(bean);
+                        ((InstallOrderActivity) getActivity()).setWorkspaceInstallBean(bean);
+                        getActivity().runOnUiThread(() ->
+                                onDataReceived()
+                        );
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        super.onNoData(message);
+                        page--;
+                        getActivity().runOnUiThread(() -> {
+                            //如果是第一页 没有数据了 则清空 bean
+                            if (page < 1) {
+                                WorkspaceInstallBean bean = new WorkspaceInstallBean();
+                                bean.setList(new ArrayList<>());
+                                ((InstallOrderActivity) getActivity()).setWorkspaceInstallBean(bean);
+                            } else {
+                                showToast("已经到底了");
+                            }
+                            onDataReceived();
+                        });
+                    }
+
+                });
     }
 
     private void finishWork(List<WorkspaceInstallBean.ListBean> mDataList, int position) {
@@ -153,7 +175,7 @@ public class WorkInstallListFragment extends BaseFragment
                 .params("id", mDataList.get(position).getId())
                 .execute(new EanfangCallback<JSONObject>(getActivity(), false, JSONObject.class, (bean) -> {
                     showToast("成功");
-                    getData(page);
+                    getData();
                 }));
     }
 
@@ -179,12 +201,12 @@ public class WorkInstallListFragment extends BaseFragment
                 if (page <= 0) {
                     page = 1;
                 }
-                getData(page);
+                getData();
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
                 page++;
-                getData(page);
+                getData();
                 break;
             default:
                 break;
@@ -195,7 +217,7 @@ public class WorkInstallListFragment extends BaseFragment
     @Override
     public void onDataReceived() {
         initView();
-//        initAdapter();
+        initAdapter();
         swiprefresh.setRefreshing(false);
     }
 }

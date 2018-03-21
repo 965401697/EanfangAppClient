@@ -42,9 +42,13 @@ public interface Constant {
      */
     String CREATE_COMPANY_ID = "createCompanyId";
     /***
-     * 自己公司 id
+     * 客户端id
      */
     String OWNER_COMPANY_ID = "ownerCompanyId";
+    /**
+     * 技师端
+     */
+    String ASSIGNEE_COMPANY_ID = "assigneeCompanyId";
     /***
      * 创建人 id
      */

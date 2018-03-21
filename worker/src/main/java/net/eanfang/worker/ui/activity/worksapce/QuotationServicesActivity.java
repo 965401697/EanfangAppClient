@@ -56,7 +56,7 @@ public class QuotationServicesActivity extends BaseActivity {
         quoteServicesBean.setServiceValue(etServiceValue.getText().toString().trim());
 
         quoteServicesBean.setSum((servicePrice*times)*100);
-        setResult(103, getIntent().putExtra("result", quoteServicesBean));
+        setResult(4, getIntent().putExtra("quoteservices", quoteServicesBean));
         finish();
     }
 }

@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/12/21  13:57
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 报装管控列表
  */
 
 public class InstallOrderActivity extends BaseClientActivity {
@@ -91,7 +91,7 @@ public class InstallOrderActivity extends BaseClientActivity {
             public void onPageSelected(int position) {
                 currentFragment = (WorkInstallListFragment) mFragments.get(position);
                 currentFragment.onDataReceived();
-//                initData(1);
+                initData();
             }
 
             @Override
@@ -100,10 +100,10 @@ public class InstallOrderActivity extends BaseClientActivity {
             }
         });
         currentFragment = (WorkInstallListFragment) mFragments.get(0);
-//        initData(1);
+        initData();
     }
 
-    private void initData(int page) {
+    private void initData() {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(currentFragment.getmTitle())) {
             String status = allmTitles.indexOf(currentFragment.getmTitle()) + "";
@@ -115,17 +115,33 @@ public class InstallOrderActivity extends BaseClientActivity {
         } else if (Constant.CREATE_DATA_CODE == dataType) {
             queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         }
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setPage(1);
+        queryEntry.setSize(10);
+
         EanfangHttp.post(NewApiService.GET_WORK_INSTALL_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkspaceInstallBean>(this, true, WorkspaceInstallBean.class, (bean) -> {
-                            runOnUiThread(() -> {
-                                workspaceInstallBean = bean;
-                                currentFragment.onDataReceived();
-                            });
-                        })
-                );
+                .execute(new EanfangCallback<WorkspaceInstallBean>(this, true, WorkspaceInstallBean.class) {
+                    @Override
+                    public void onSuccess(final WorkspaceInstallBean bean) {
+                        super.onSuccess(bean);
+                        runOnUiThread(() -> {
+                            workspaceInstallBean = bean;
+                            currentFragment.onDataReceived();
+                        });
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        super.onNoData(message);
+                        runOnUiThread(() -> {
+                            WorkspaceInstallBean bean = new WorkspaceInstallBean();
+                            bean.setList(new ArrayList<>());
+                            setWorkspaceInstallBean(bean);
+                            currentFragment.onDataReceived();
+                        });
+                    }
+                });
+
 
     }
 
@@ -133,7 +149,7 @@ public class InstallOrderActivity extends BaseClientActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        initData(1);
+        initData();
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

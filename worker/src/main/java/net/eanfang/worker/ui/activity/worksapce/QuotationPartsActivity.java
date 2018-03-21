@@ -71,7 +71,7 @@ public class QuotationPartsActivity extends BaseActivity {
         quotePartsBean.setSum((unitPrice*count)*100);
         quotePartsBean.setPartSpeciication(etPartSpeciication.getText().toString().trim());
         quotePartsBean.setPartName(etPartsName.getText().toString().trim());
-        setResult(102, getIntent().putExtra("result", quotePartsBean));
+        setResult(3, getIntent().putExtra("quoteparts", quotePartsBean));
         finish();
     }
 }

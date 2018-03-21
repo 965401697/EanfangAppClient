@@ -24,6 +24,7 @@ import net.eanfang.worker.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.InstallCtrlItemView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,6 +53,16 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
     private int mType;
     private static int page = 1;
     private WorkspaceInstallAdapter mAdapter;
+    private WorkspaceInstallBean workspaceInstallBean;
+    private List<WorkspaceInstallBean.ListBean> mDataList;
+
+    public WorkspaceInstallBean getWorkspaceInstallBean() {
+        return workspaceInstallBean;
+    }
+
+    public synchronized void setWorkspaceInstallBean(WorkspaceInstallBean workspaceInstallBean) {
+        this.workspaceInstallBean = workspaceInstallBean;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,36 +75,58 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
     private void initView() {
         mTitle = getIntent().getStringExtra("title");
         mType = getIntent().getIntExtra("type", 0);
+        swiprefresh.setOnRefreshListener(this);
         setTitle(mTitle);
         setLeftBack();
         getData();
     }
 
     private void getData() {
-
         QueryEntry queryEntry = new QueryEntry();
-        if (Constant.COMPANY_DATA_CODE == mType) {
+        if (mType==0) {
             queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
-        } else if (Constant.ASSIGNEE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getCompanyId() + "");
+        } else if (mType==1) {
+            queryEntry.getEquals().put(Constant.ASSIGNEE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
         }
 
         queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_WORK_INSTALL_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkspaceInstallBean>(this, true, WorkspaceInstallBean.class, (bean) -> {
-                            runOnUiThread(() -> {
-                                initAdapter(bean.getList());
-                                onDataReceived();
-                            });
-                        })
-                );
+                .execute(new EanfangCallback<WorkspaceInstallBean>(this, true, WorkspaceInstallBean.class) {
+                    @Override
+                    public void onSuccess(WorkspaceInstallBean bean) {
+                        super.onSuccess(bean);
+                        workspaceInstallBean = bean;
+                        setWorkspaceInstallBean(bean);
+                        onDataReceived();
+                        EanfangApplication.get().set(WorkspaceInstallBean.class.getName(),bean);
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        super.onNoData(message);
+                        page--;
+                        runOnUiThread(() -> {
+                            //如果是第一页 没有数据了 则清空 bean
+                            if (page < 1) {
+                                WorkspaceInstallBean bean = new WorkspaceInstallBean();
+                                bean.setList(new ArrayList<>());
+                                setWorkspaceInstallBean(bean);
+                            } else {
+                                showToast("已经到底了");
+                            }
+                            onDataReceived();
+                        });
+                    }
+
+                });
+
     }
 
-    private void initAdapter(List<WorkspaceInstallBean.ListBean> mDataList) {
-
+    private void initAdapter() {
+        mDataList = getWorkspaceInstallBean().getList();
         mAdapter = new WorkspaceInstallAdapter(mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.addOnItemTouchListener(new OnItemClickListener() {
@@ -152,7 +185,7 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
     @Override
     public void onDataReceived() {
         initView();
-//        initAdapter();
+        initAdapter();
         swiprefresh.setRefreshing(false);
     }
 }

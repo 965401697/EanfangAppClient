@@ -177,37 +177,36 @@ public class QuotationDetailActivity extends BaseActivity {
         bean.setUnitPrice((int) unitPrice);
         bean.setSum((unitPrice*count)*100);
         bean.setParams(paramsBeanList);
-        setResult(101, getIntent().putExtra("result", bean));
+        setResult(2, getIntent().putExtra("quotedevices", bean));
         finish();
     }
 
 
     public boolean checkInfo() {
-//        if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
-//            showToast("请选择设备类型");
-//            return false;
-//        }
-//        if (StringUtils.isEmpty(tv_device_name.getText().toString().trim())) {
-//            showToast("请选择设备名称");
-//            return false;
-//        }
-//        if (StringUtils.isEmpty(tv_brand_model.getText().toString().trim())) {
-//            showToast("请选择品牌型号");
-//            return false;
-//        }
-//        if (StringUtils.isEmpty(tv_unit.getText().toString().trim())) {
-//            showToast("请选择单位");
-//            return false;
-//        }
-//        if (StringUtils.isEmpty(et_amount.getText().toString().trim())) {
-//            showToast("请输入数量");
-//            return false;
-//        }
-//        if (StringUtils.isEmpty(et_price.getText().toString().trim())) {
-//            // showToast("请输入单价");
-//            //return false;
-//
-//        }
+        if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
+            showToast("请选择设备类型");
+            return false;
+        }
+        if (StringUtils.isEmpty(tv_device_name.getText().toString().trim())) {
+            showToast("请选择设备名称");
+            return false;
+        }
+        if (StringUtils.isEmpty(tv_brand_model.getText().toString().trim())) {
+            showToast("请选择品牌型号");
+            return false;
+        }
+        if (StringUtils.isEmpty(tv_unit.getText().toString().trim())) {
+            showToast("请选择单位");
+            return false;
+        }
+        if (StringUtils.isEmpty(et_amount.getText().toString().trim())) {
+            showToast("请输入数量");
+            return false;
+        }
+        if (StringUtils.isEmpty(et_price.getText().toString().trim())) {
+            showToast("请输入单价");
+            return false;
+        }
 
         return true;
 

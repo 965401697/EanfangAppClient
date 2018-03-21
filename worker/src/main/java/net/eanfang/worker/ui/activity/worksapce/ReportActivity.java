@@ -243,16 +243,13 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             showToast("暂无其他员工可选");
             return;
         }
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                posistion = options1;
-                etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
-                tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
-                assigneeUserId = userlist.get(posistion).getUserId();
-                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
+        pvOptions_NoLink = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+            posistion = options1;
+            etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
+            tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
+            assigneeUserId = userlist.get(posistion).getUserId();
+            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
 
-            }
         }).build();
         pvOptions_NoLink.setPicker(userNameList);
         pvOptions_NoLink.show();

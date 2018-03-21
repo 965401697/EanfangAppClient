@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
@@ -46,50 +47,42 @@ import java.util.List;
 
 public class QuotationActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
     public static final String TAG = QuotationActivity.class.getSimpleName();
-
+    private static final int QUOTAION_REQUEST_CODE = 1;
+    private static final int QUOTAION_REQUEST_DEVICES_CODE = 2;
+    private static final int QUOTAION_REQUEST_PARTS_CODE = 3;
+    private static final int QUOTAION_REQUEST_SERVICES_CODE = 4;
     public static final int RESULT_SELECT_ORDER = 100;
-    private EditText et_project_name, tv_detail_address;
-    private TextView tv_modifyOrder;
-    private TextView tv_delete, tv_delete2, tv_delete3;
-    private TextView tv_add, tv_add2, tv_add3, tv_address;
+    private EditText et_project_name, tv_detail_address, et_client_company_name_wr;
+    private EditText et_contract, et_contract_phone;
+
+    private TextView tv_add, tv_add2, tv_add3, tv_address, tv_modifyOrder;
+    private TextView tv_count_money, tv_commit, tv_relate_order;
+
     private RecyclerView rcv_detail, rcv_detail2, rcv_detail3;
-    private EditText et_contract;
-    private EditText et_contract_phone;
-    private TextView tv_count_money;
-    private TextView tv_commit;
-    private String orderID;
-    private String clientName;
-    private String clientPhone;
-    private Long oid, topid;
-    private TextView tv_relate_order;
-    private QuotationDetailAdapter quotationDetailAdapter;
-    private QuotationPartsAdapter quotationPartsAdapter;
-    private QuotationServiceAdapter quotationServiceAdapter;
-    private EditText et_client_company_name_wr;
-    private RadioGroup radioGroup;
-    private RadioButton radioClient;
-    private RadioButton radioLeader;
-    private LinearLayout llProjectAddress;
-    private RelativeLayout ll_client_name, ll_clent_phone;
+
+    private String lon, lat, province, city, zone, contry;
+    private String orderID, clientName, clientPhone, assigneeOrgCode;
+
+    private Long oid, topid, assigneeUserId;
+    private int deviceSum, partsSum, serviceSum, posistion;
+
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
-    private OptionsPickerView pvOptions_NoLink;
-    private int posistion;
-    private QuotationBean bean = new QuotationBean();
-    public List<QuotationBean.QuoteDevicesBean> quoteDevicesBeanList;
-    public List<QuotationBean.QuotePartsBean> quotePartsBeanList;
-    public List<QuotationBean.QuoteServicesBean> quoteServicesBeanList;
-    private int deviceSum, partsSum, serviceSum;
-    private Long assigneeUserId;
-    private String assigneeOrgCode;
-    private static final int QUOTAION_REQUEST_CODE = 1;
+    public List<QuotationBean.QuoteDevicesBean> devicesBeanList = new ArrayList<>();
+    public List<QuotationBean.QuotePartsBean> partsBeanList = new ArrayList<>();
+    public List<QuotationBean.QuoteServicesBean> servicesBeanList = new ArrayList<>();
+    private QuotationDetailAdapter devicesAdapter;
+    private QuotationPartsAdapter partsAdapter;
+    private QuotationServiceAdapter serviceAdapter;
 
-    private String lon;
-    private String lat;
-    private String province;
-    private String city;
-    private String zone;
-    private String contry;
+    private RadioGroup radioGroup;
+    private RadioButton radioClient, radioLeader;
+    private LinearLayout llProjectAddress;
+    private RelativeLayout ll_client_name, ll_clent_phone;
+
+    private OptionsPickerView pvOptions_NoLink;
+    private QuotationBean bean = new QuotationBean();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +96,6 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private void initViews() {
         et_project_name = (EditText) findViewById(R.id.et_project_name);
         tv_modifyOrder = (TextView) findViewById(R.id.tv_modifyOrder);
-        tv_delete = (TextView) findViewById(R.id.tv_delete);
-        tv_delete2 = (TextView) findViewById(R.id.tv_delete2);
-        tv_delete3 = (TextView) findViewById(R.id.tv_delete3);
         tv_add = (TextView) findViewById(R.id.tv_add);
         tv_add2 = (TextView) findViewById(R.id.tv_add2);
         tv_add3 = (TextView) findViewById(R.id.tv_add3);
@@ -130,44 +120,43 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         ll_client_name = findViewById(R.id.ll_client_name);
         getData();
         registerListener();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         initAdapter();
     }
 
+
     private void initAdapter() {
-        quoteDevicesBeanList = bean.getQuoteDevices();
-        quotationDetailAdapter = new QuotationDetailAdapter(R.layout.item_quotation_detail, quoteDevicesBeanList);
+        devicesAdapter = new QuotationDetailAdapter(R.layout.item_quotation_detail, devicesBeanList);
         rcv_detail.setLayoutManager(new LinearLayoutManager(this));
-        rcv_detail.setAdapter(quotationDetailAdapter);
-        quotationDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.rl_item_detail:
-                    Intent intent = new Intent(QuotationActivity.this, QuotationDetailActivity.class);
-                    intent.putExtra("data", bean.getQuoteDevices().get(position));
-                    startActivity(intent);
-                    break;
-                case R.id.tv_delete:
-                    bean.getQuoteDevices().remove(position);
-                    quotationDetailAdapter.notifyDataSetChanged();
-                    break;
-                default:
-                    break;
-            }
-        });
+        rcv_detail.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcv_detail.setAdapter(devicesAdapter);
+//        quotationDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+//            switch (view.getId()) {
+//                case R.id.rl_item_detail:
+//                    Intent intent = new Intent(QuotationActivity.this, QuotationDetailActivity.class);
+//                    intent.putExtra("data", bean.getQuoteDevices().get(position));
+//                    startActivity(intent);
+//                    break;
+//                case R.id.tv_delete:
+//                    bean.getQuoteDevices().remove(position);
+//                    quotationDetailAdapter.notifyDataSetChanged();
+//                    break;
+//                default:
+//                    break;
+//            }
+//        });
 
-        quotePartsBeanList = bean.getQuoteParts();
-        quotationPartsAdapter = new QuotationPartsAdapter(R.layout.item_quotation_detail, quotePartsBeanList);
+        partsAdapter = new QuotationPartsAdapter(R.layout.item_quotation_detail, partsBeanList);
         rcv_detail2.setLayoutManager(new LinearLayoutManager(this));
-        rcv_detail2.setAdapter(quotationPartsAdapter);
+        rcv_detail2.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcv_detail2.setAdapter(partsAdapter);
 
-        quoteServicesBeanList = bean.getQuoteServices();
-        quotationServiceAdapter = new QuotationServiceAdapter(R.layout.item_quotation_detail, quoteServicesBeanList);
+        serviceAdapter = new QuotationServiceAdapter(R.layout.item_quotation_detail, servicesBeanList);
         rcv_detail3.setLayoutManager(new LinearLayoutManager(this));
-        rcv_detail3.setAdapter(quotationServiceAdapter);
+        rcv_detail3.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcv_detail3.setAdapter(serviceAdapter);
     }
 
     private void registerListener() {
@@ -179,13 +168,13 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             startActivityForResult(intent, QUOTAION_REQUEST_CODE);
         });
         tv_add.setOnClickListener((v) -> {
-            startActivityForResult(new Intent(QuotationActivity.this, QuotationDetailActivity.class), 101);
+            startActivityForResult(new Intent(QuotationActivity.this, QuotationDetailActivity.class), QUOTAION_REQUEST_DEVICES_CODE);
         });
         tv_add2.setOnClickListener((v) -> {
-            startActivityForResult(new Intent(QuotationActivity.this, QuotationPartsActivity.class), 102);
+            startActivityForResult(new Intent(QuotationActivity.this, QuotationPartsActivity.class), QUOTAION_REQUEST_PARTS_CODE);
         });
         tv_add3.setOnClickListener((v) -> {
-            startActivityForResult(new Intent(QuotationActivity.this, QuotationServicesActivity.class), 103);
+            startActivityForResult(new Intent(QuotationActivity.this, QuotationServicesActivity.class), QUOTAION_REQUEST_SERVICES_CODE);
         });
         ll_client_name.setOnClickListener(v -> showDependPerson());
         tv_commit.setOnClickListener(v -> postCommit());
@@ -210,9 +199,12 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     }
 
     private String fillbean() {
-        bean.setQuoteServices(quoteServicesBeanList);
-        bean.setQuoteParts(quotePartsBeanList);
-        bean.setQuoteDevices(quoteDevicesBeanList);
+        devicesBeanList.addAll(devicesBeanList);
+        partsBeanList.addAll(partsBeanList);
+        servicesBeanList.addAll(servicesBeanList);
+        bean.setQuoteServices(servicesBeanList);
+        bean.setQuoteParts(partsBeanList);
+        bean.setQuoteDevices(devicesBeanList);
         bean.setRepairOrderNum(orderID);
         bean.setTotalCost((int) (deviceSum + partsSum + serviceSum));
         bean.setAssigneeOrgCode(assigneeOrgCode);
@@ -268,40 +260,33 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
 
 
                 break;
-            case 101:
-                if (data.getSerializableExtra("result") == null) {
+            case QUOTAION_REQUEST_DEVICES_CODE:
+                if (data.getSerializableExtra("quotedevices") == null) {
                     return;
                 }
-                QuotationBean.QuoteDevicesBean quoteDevicesBean = (QuotationBean.QuoteDevicesBean) data.getSerializableExtra("result");
-                quoteDevicesBeanList = new ArrayList<>();
-                quoteDevicesBeanList.add(quoteDevicesBean);
-                bean.setQuoteDevices(quoteDevicesBeanList);
-                quotationDetailAdapter.notifyDataSetChanged();
-                deviceSum = quoteDevicesBean.getSum();
+                QuotationBean.QuoteDevicesBean devicesBean = (QuotationBean.QuoteDevicesBean) data.getSerializableExtra("quotedevices");
+                devicesBeanList.add(devicesBean);
+                devicesAdapter.notifyDataSetChanged();
+                deviceSum = devicesBean.getSum();
                 break;
-            case 102:
-                if (data.getSerializableExtra("result") == null) {
+            case QUOTAION_REQUEST_PARTS_CODE:
+                if (data.getSerializableExtra("quoteparts") == null) {
                     return;
                 }
-                QuotationBean.QuotePartsBean quotePartsBean = (QuotationBean.QuotePartsBean) data.getSerializableExtra("result");
-                quotePartsBeanList = new ArrayList<>();
-                quotePartsBeanList.add(quotePartsBean);
-                bean.setQuoteParts(quotePartsBeanList);
-                quotationPartsAdapter.notifyDataSetChanged();
-
-                partsSum = quotePartsBean.getSum();
+                QuotationBean.QuotePartsBean partsBean = (QuotationBean.QuotePartsBean) data.getSerializableExtra("quoteparts");
+                partsBeanList.add(partsBean);
+                partsAdapter.notifyDataSetChanged();
+                partsSum = partsBean.getSum();
                 break;
-            case 103:
-                if (data.getSerializableExtra("result") == null) {
+            case QUOTAION_REQUEST_SERVICES_CODE:
+                if (data.getSerializableExtra("quoteservices") == null) {
                     return;
                 }
-                QuotationBean.QuoteServicesBean quoteServicesBean = (QuotationBean.QuoteServicesBean) data.getSerializableExtra("result");
-                quoteServicesBeanList = new ArrayList<>();
-                quoteServicesBeanList.add(quoteServicesBean);
-                bean.setQuoteServices(quoteServicesBeanList);
-                quotationServiceAdapter.notifyDataSetChanged();
-                serviceSum = quoteServicesBean.getSum();
-                tv_count_money.setText((((deviceSum + partsSum + serviceSum)/100))+"");
+                QuotationBean.QuoteServicesBean servicesBean = (QuotationBean.QuoteServicesBean) data.getSerializableExtra("quoteservices");
+                servicesBeanList.add(servicesBean);
+                serviceAdapter.notifyDataSetChanged();
+                serviceSum = servicesBean.getSum();
+                tv_count_money.setText((((deviceSum + partsSum + serviceSum) / 100)) + "");
                 break;
             case QUOTAION_REQUEST_CODE:
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
