@@ -5,6 +5,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,7 +36,8 @@ import java.util.List;
 public class QuotationDetailActivity extends BaseActivity {
 
     private RelativeLayout rl_device_type, rl_business_type, rl_device_name, rl_brand_model, rl_unit;
-    private TextView tv_device_type, tv_business_type, tv_commit, tv_device_name, tv_brand_model, tv_unit, tv_add_params;
+    private TextView tv_device_type, tv_business_type, tv_commit, tv_device_name, tv_brand_model, tv_unit;
+    private ImageView iv_add_params;
     private DeviceParamAdapter paramAdapter;
     private RecyclerView rl_params;
     private EditText et_product_company, et_factory, et_remark, et_amount, et_price;
@@ -71,7 +73,7 @@ public class QuotationDetailActivity extends BaseActivity {
         tv_device_name = (TextView) findViewById(R.id.tv_device_name);
         tv_brand_model = (TextView) findViewById(R.id.tv_brand_model);
         tv_unit = (TextView) findViewById(R.id.tv_unit);
-        tv_add_params = (TextView) findViewById(R.id.tv_add_params);
+        iv_add_params = (ImageView) findViewById(R.id.iv_add_params);
         rl_params = (RecyclerView) findViewById(R.id.rl_params);
         registerListener();
         initAdapter();
@@ -130,7 +132,7 @@ public class QuotationDetailActivity extends BaseActivity {
             PickerSelectUtil.singleTextPicker(this, "", tv_unit, GetConstDataUtils.getDeviceUnitList());
         });
 
-        tv_add_params.setOnClickListener((v) -> {
+        iv_add_params.setOnClickListener((v) -> {
             new InputNameAndValueView(QuotationDetailActivity.this, (name, value) -> {
                 QuotationBean.QuoteDevicesBean.ParamsBean paramsBean = new QuotationBean.QuoteDevicesBean.ParamsBean();
                 paramsBean.setParamName(name);

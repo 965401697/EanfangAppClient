@@ -17,6 +17,8 @@
     <string name="item_invite_reason">原因</string>
     <string name="contact_delete">删除</string>
     <string name="main_chat">会话</string>
+    <string name="hint_input">请输入</string>
+    <string name="hint_sel">请选择</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -55,7 +56,8 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private EditText et_project_name, tv_detail_address, et_client_company_name_wr;
     private EditText et_contract, et_contract_phone;
 
-    private TextView tv_add, tv_add2, tv_add3, tv_address, tv_modifyOrder;
+    private ImageView iv_add, iv_add2, iv_add3;
+    private TextView  tv_address, tv_modifyOrder;
     private TextView tv_count_money, tv_commit, tv_relate_order;
 
     private RecyclerView rcv_detail, rcv_detail2, rcv_detail3;
@@ -88,17 +90,17 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_payment);
-        supprotToolbar();
         setTitle("报价申请");
+        setLeftBack();
         initViews();
     }
 
     private void initViews() {
         et_project_name = (EditText) findViewById(R.id.et_project_name);
         tv_modifyOrder = (TextView) findViewById(R.id.tv_modifyOrder);
-        tv_add = (TextView) findViewById(R.id.tv_add);
-        tv_add2 = (TextView) findViewById(R.id.tv_add2);
-        tv_add3 = (TextView) findViewById(R.id.tv_add3);
+        iv_add = (ImageView) findViewById(R.id.iv_add);
+        iv_add2 = (ImageView) findViewById(R.id.iv_add2);
+        iv_add3 = (ImageView) findViewById(R.id.iv_add3);
         rcv_detail = (RecyclerView) findViewById(R.id.rcv_detail);
         rcv_detail2 = (RecyclerView) findViewById(R.id.rcv_detail2);
         rcv_detail3 = (RecyclerView) findViewById(R.id.rcv_detail3);
@@ -130,21 +132,6 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         rcv_detail.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rcv_detail.setAdapter(devicesAdapter);
-//        quotationDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-//            switch (view.getId()) {
-//                case R.id.rl_item_detail:
-//                    Intent intent = new Intent(QuotationActivity.this, QuotationDetailActivity.class);
-//                    intent.putExtra("data", bean.getQuoteDevices().get(position));
-//                    startActivity(intent);
-//                    break;
-//                case R.id.tv_delete:
-//                    bean.getQuoteDevices().remove(position);
-//                    quotationDetailAdapter.notifyDataSetChanged();
-//                    break;
-//                default:
-//                    break;
-//            }
-//        });
 
         partsAdapter = new QuotationPartsAdapter(R.layout.item_quotation_detail, partsBeanList);
         rcv_detail2.setLayoutManager(new LinearLayoutManager(this));
@@ -167,13 +154,13 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             Intent intent = new Intent(QuotationActivity.this, SelectAddressActivity.class);
             startActivityForResult(intent, QUOTAION_REQUEST_CODE);
         });
-        tv_add.setOnClickListener((v) -> {
+        iv_add.setOnClickListener((v) -> {
             startActivityForResult(new Intent(QuotationActivity.this, QuotationDetailActivity.class), QUOTAION_REQUEST_DEVICES_CODE);
         });
-        tv_add2.setOnClickListener((v) -> {
+        iv_add2.setOnClickListener((v) -> {
             startActivityForResult(new Intent(QuotationActivity.this, QuotationPartsActivity.class), QUOTAION_REQUEST_PARTS_CODE);
         });
-        tv_add3.setOnClickListener((v) -> {
+        iv_add3.setOnClickListener((v) -> {
             startActivityForResult(new Intent(QuotationActivity.this, QuotationServicesActivity.class), QUOTAION_REQUEST_SERVICES_CODE);
         });
         ll_client_name.setOnClickListener(v -> showDependPerson());
