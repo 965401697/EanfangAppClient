@@ -492,7 +492,7 @@
                 android:padding="5dp"
                 android:text="提交"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_18" />
+                android:textSize="@dimen/sp_16" />
         </LinearLayout>
 
     </ScrollView>

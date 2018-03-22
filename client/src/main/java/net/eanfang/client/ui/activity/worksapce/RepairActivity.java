@@ -87,6 +87,8 @@ public class RepairActivity extends BaseClientActivity {
     private String city;
     private String county;
     private String address;
+    private ToRepairAdapter evaluateAdapter = null;
+
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -102,7 +104,7 @@ public class RepairActivity extends BaseClientActivity {
         initData();
         setTitle("我要报修");
         registerListener();
-//        initAdapter();
+        initAdapter();
     }
 
 
@@ -163,7 +165,7 @@ public class RepairActivity extends BaseClientActivity {
             showToast("请选择到达时限");
             return false;
         }
-        if (beanList.isEmpty()){
+        if (beanList.isEmpty()) {
             showToast("请填写明细");
             return false;
         }
@@ -237,7 +239,7 @@ public class RepairActivity extends BaseClientActivity {
 
 
     private void initAdapter() {
-        ToRepairAdapter evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
+        evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -275,7 +277,7 @@ public class RepairActivity extends BaseClientActivity {
                 RepairBugEntity repairBugEntity = (RepairBugEntity) data.getSerializableExtra("bean");
                 beanList.add(repairBugEntity);
 
-                initAdapter();
+                evaluateAdapter.notifyDataSetChanged();
 //                initData();
                 break;
             default:
