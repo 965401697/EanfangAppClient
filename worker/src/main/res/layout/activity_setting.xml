@@ -31,29 +31,6 @@
             android:src="@mipmap/arrow_right" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_order_state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@drawable/bg_ll_selctor"
-        android:orientation="horizontal"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="接单状态"
-            android:textColor="@color/font_color"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/arrow_right" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_msg_setting"

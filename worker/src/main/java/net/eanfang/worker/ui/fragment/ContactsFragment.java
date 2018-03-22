@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
@@ -37,7 +37,7 @@ public class ContactsFragment extends BaseFragment {
     private List<OrgEntity> mDatas;
     private ParentAdapter parentAdapter;
     private RecyclerView rev_list;
-    private ImageView iv_add;
+    private RelativeLayout rl_create_team;
 
     @Override
     protected int setLayoutResouceId() {
@@ -71,7 +71,7 @@ public class ContactsFragment extends BaseFragment {
     private void initAdapter() {
         rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
         //只显示 安防公司
-        mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity()!=null&&beans.getOrgUnitEntity().getUnitType() == 3).toList();
+        mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 3).toList();
         parentAdapter = new ParentAdapter(mDatas);
         rev_list.setAdapter(parentAdapter);
         parentAdapter.notifyDataSetChanged();
@@ -105,14 +105,14 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        setTitle("组织");
+        setTitle("通讯录");
         rev_list = (RecyclerView) findViewById(R.id.rev_list);
-        iv_add = (ImageView) findViewById(R.id.iv_add);
+        rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
 
     }
 
     @Override
     protected void setListener() {
-        iv_add.setOnClickListener(v -> new CreateTeamView(getActivity()).show());
+        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity()).show());
     }
 }

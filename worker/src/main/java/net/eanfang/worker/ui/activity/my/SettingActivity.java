@@ -41,8 +41,6 @@ public class SettingActivity extends BaseWorkerActivity {
     Button btn_logout;
     @BindView(R.id.tv_cache)
     TextView tv_cache;
-    @BindView(R.id.ll_order_state)
-    LinearLayout llOrderState;
     @BindView(R.id.ll_msg_setting)
     LinearLayout llMsgSetting;
 
@@ -75,7 +73,6 @@ public class SettingActivity extends BaseWorkerActivity {
             }
         });
         btn_logout.setOnClickListener(v -> logout());
-        //llOrderState.setOnClickListener(v -> new OrderStateView(SettingActivity.this).show());
         llMsgSetting.setOnClickListener(v -> new MessageStateView(SettingActivity.this).show());
     }
 

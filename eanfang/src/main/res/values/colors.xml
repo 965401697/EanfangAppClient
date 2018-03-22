@@ -29,7 +29,7 @@
     <color name="preson_leave_admin">#00d08e</color>
     <color name="preson_leave_manager">#ffa53a</color>
     <color name="preson_leave_employee">#cccccc</color>
-    <color name="gray">#ccc</color>
+    <color name="gray">#acacac</color>
     <color name="admin">#21ce90</color>
     <color name="manage">#fda447</color>
     <color name="staff">#ccc</color>

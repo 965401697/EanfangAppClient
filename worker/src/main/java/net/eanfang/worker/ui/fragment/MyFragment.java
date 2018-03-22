@@ -3,14 +3,11 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -23,20 +20,15 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.Var;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.AuthWorkerInfoActivity;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
-import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
-
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 
 /**
@@ -92,51 +84,52 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        setTitle("我的");
-        setLeftVisible(View.GONE);
-        tvVerfiy = (TextView) findViewById(R.id.tv_verfiy);
+        tvVerfiy = (TextView) findViewById(R.id.tv_verfity_status);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
         tvWorkerStatus = (TextView) findViewById(R.id.tv_worker_status);
-        rlWorkingStatus = (RelativeLayout) findViewById(R.id.rel_working);
+        rlWorkingStatus = (RelativeLayout) findViewById(R.id.rl_working);
         tvWorkerStatus.setText(PrefUtils.getString("status", ""));
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
-        findViewById(R.id.rel_message).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), MessageListActivity.class));
-        });
-        findViewById(R.id.rel_evaluate).setOnClickListener((v) -> {
+        //通知
+//        findViewById(R.id.rel_message).setOnClickListener((v) -> {
+//            startActivity(new Intent(getActivity(), MessageListActivity.class));
+//        });
+        //评价
+        findViewById(R.id.rl_evaluate).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), EvaluateActivity.class));
         });
-
-        findViewById(R.id.rel_invite).setOnClickListener((v) -> {
+            //邀请
+        findViewById(R.id.rl_ivite).setOnClickListener((v) -> {
             InviteView inviteView = new InviteView(getActivity(), true);
             inviteView.show();
         });
-        findViewById(R.id.rel_setting).setOnClickListener((v) -> {
+        //设置
+        findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
 
-        Badge qBadgeView = new QBadgeView(getActivity())
-                .bindTarget(findViewById(R.id.iv_msg))
-                .setBadgeNumber(Var.get("MyFragment").getVar())
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(-2, -2, true)
-                .setBadgeTextSize(10, true)
-                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-                    //清除成功
-                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false));
-                        showToast("消息被清空了");
-//                        Var.get().setVar(0);
-                    }
-                });
+//        Badge qBadgeView = new QBadgeView(getActivity())
+//                .bindTarget(findViewById(R.id.iv_msg))
+//                .setBadgeNumber(Var.get("MyFragment").getVar())
+//                .setBadgePadding(5, true)
+//                .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                .setGravityOffset(-2, -2, true)
+//                .setBadgeTextSize(10, true)
+//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+//                    //清除成功
+//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false));
+//                        showToast("消息被清空了");
+////                        Var.get().setVar(0);
+//                    }
+//                });
         //变量监听
-        Var.get("MyFragment").setChangeListener((var) -> {
-            qBadgeView.setBadgeNumber(var);
-        });
+//        Var.get("MyFragment").setChangeListener((var) -> {
+//            qBadgeView.setBadgeNumber(var);
+//        });
 
     }
 
@@ -160,7 +153,6 @@ public class MyFragment extends BaseFragment {
                 .params("accId", EanfangApplication.getApplication().getAccId())
                 .params("status", status)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-
                 }));
     }
 
