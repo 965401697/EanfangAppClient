@@ -128,11 +128,11 @@ public class HomeFragment extends BaseFragment {
         rollTextView = findViewById(R.id.home_recommand_ad_text);
         List<String> data = new ArrayList<>();
         List<View> views = new ArrayList<>();
-        data.add("我是李白asd;faldfjaj;jf;adj;fja;d;j;a;adasdjfl;a;afhdalkfhahklahlfhlalaf");
-        data.add("我是杜甫");
-        data.add("我是秦始皇");
-        data.add("我是天猫");
-        data.add("我是京东");
+        data.add("出席会议的有易安防老大王兴军");
+        data.add("出席会议的有易安防总经理吴建华");
+        data.add("出席会议的有易安防技术大牛徐定兵");
+        data.add("出席会议的有易安防产品经理郭林");
+        data.add("出席会议的有没头衔的我，因为太帅，人称帅侯");
         for (int i = 0; i < data.size(); i++) {
             View view = View.inflate(getContext(), R.layout.rolltext_item, null);
             TextView rolltext = (TextView) view.findViewById(R.id.roll_item_text);

@@ -9,23 +9,14 @@ import com.eanfang.ui.base.BaseFragment;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
-import net.eanfang.client.ui.activity.worksapce.CheckActivity;
-import net.eanfang.client.ui.activity.worksapce.DesignActivity;
-import net.eanfang.client.ui.activity.worksapce.InstallActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
-import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
-import net.eanfang.client.ui.activity.worksapce.ReportActivity;
-import net.eanfang.client.ui.activity.worksapce.SignActivity;
-import net.eanfang.client.ui.activity.worksapce.TaskActivity;
-import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
-import net.eanfang.client.ui.widget.LeaveBugView;
 import net.eanfang.client.ui.widget.ReportCtrlView;
+import net.eanfang.client.ui.widget.SignCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
 import net.eanfang.client.ui.widget.WorkCheckCtrlView;
 
@@ -54,110 +45,98 @@ public class WorkspaceFragment extends BaseFragment {
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
         tvCompanyName.setText(EanfangApplication.getApplication().getUser()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        //相机
-        findViewById(R.id.iv_camera).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), CameraActivity.class));
-        });
+
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
             new CompanyListView(getActivity(), name -> tvCompanyName.setText(name)).show();
         });
-        //报修
-        findViewById(R.id.ll_repair).setOnClickListener((v) -> {
-            RepairActivity.jumpToActivity(getActivity());
-        });
 
-        //报装
-        findViewById(R.id.ll_install).setOnClickListener((v) -> {
-            InstallActivity.jumpActivity(getActivity());
-        });
-        //设计
-        findViewById(R.id.ll_design).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), DesignActivity.class));
-        });
-        //汇报
-        findViewById(R.id.ll_report).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), ReportActivity.class));
-        });
-        //任务
-        findViewById(R.id.ll_task).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), TaskActivity.class));
-        });
-        //检查
-        findViewById(R.id.ll_check).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), CheckActivity.class));
-        });
-        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
-            jumpSign("签到", 0);
-        });
-        findViewById(R.id.ll_sign_out).setOnClickListener((v) -> {
-            jumpSign("签退", 1);
-        });
     }
 
     @Override
     protected void setListener() {
-        //维修
-        findViewById(R.id.ll_repair_ctrl).setOnClickListener((v) -> {
+        progressCtrl();
+        helpTools();
+        teamWork();
+
+
+//        //遗留故障
+//        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
+//            new LeaveBugView(getActivity(), true).show();
+//        });
+//
+//        //合作公司
+//        findViewById(R.id.ll_partner_ctrl).setOnClickListener((v) -> {
+//            startActivity(new Intent(getActivity(), PartnerActivity.class));
+//        });
+
+
+    }
+
+    /**
+     * 过程管控
+     */
+    private void progressCtrl() {
+        //报修管控
+        findViewById(R.id.ll_repair_manage).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
         });
-        //报装
-        findViewById(R.id.ll_install_ctrl).setOnClickListener((v) -> {
+        //报装管控
+        findViewById(R.id.ll_install_manage).setOnClickListener((v) -> {
             new InstallCtrlView(getActivity(), true).show();
         });
-        //报价
-        findViewById(R.id.ll_quote_ctrl).setOnClickListener((v) -> {
+        //报价管控
+        findViewById(R.id.ll_quote_manage).setOnClickListener((v) -> {
             if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
                 startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
             } else {
                 startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
             }
+        });
+        //维保管控
+        findViewById(R.id.ll_order_manage).setOnClickListener((v) -> {
+//            new MaintainCtrlView(getActivity(), true).show();
+            showToast(".....");
+        });
 
-        });
-        //汇报
-        findViewById(R.id.ll_report_ctrl).setOnClickListener((v) -> {
-            new ReportCtrlView(getActivity(), true).show();
-        });
-        //检查
-        findViewById(R.id.ll_check_ctrl).setOnClickListener((v) -> {
-            new WorkCheckCtrlView(getActivity(), true).show();
-        });
-        //任务
-        findViewById(R.id.ll_task_ctrl).setOnClickListener((v) -> {
-            new TaskCtrlView(getActivity(), true).show();
-        });
-        //设计
-        findViewById(R.id.ll_design_ctrl).setOnClickListener((v) -> {
+        //免费设计
+        findViewById(R.id.ll_design_add).setOnClickListener((v) -> {
             new DesignCtrlView(getActivity(), true).show();
         });
+    }
 
-        //遗留故障
-        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
-            new LeaveBugView(getActivity(), true).show();
-        });
-        //统计
-        findViewById(R.id.ll_statistics_ctrl).setOnClickListener((v) -> {
-            boolean isHave = EanfangApplication.getApplication().getUser().getPerms().contains("top:statistics:count");
-            if (isHave == true) {
-                String token = EanfangApplication.getApplication().getUser().getToken();
-                startActivity(new Intent(getActivity(), WebActivity.class)
-                        .putExtra("url", "http://client.eanfang.net:8099/#/totalPhone?token=" + token)
-                        .putExtra("title", "数据统计"));
-            } else {
-                showToast("您还没有权限");
-            }
-
-        });
-        //合作公司
-        findViewById(R.id.ll_partner_ctrl).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), PartnerActivity.class));
+    private void helpTools() {
+        //相机
+        findViewById(R.id.ll_camera).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), CameraActivity.class));
         });
     }
 
-    private void jumpSign(String title, int status) {
-        Intent intent = new Intent(getActivity(), SignActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("status", status);
-        startActivity(intent);
+    /**
+     * 协同办公
+     */
+    private void teamWork() {
+        //签到
+        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
+            new SignCtrlView(getActivity()).show();
+        });
+
+        //工作汇报
+        findViewById(R.id.ll_work_report).setOnClickListener((v) -> {
+            new ReportCtrlView(getActivity(), true).show();
+        });
+
+        //工作任务
+        findViewById(R.id.ll_assignment_task).setOnClickListener((v) -> {
+            new TaskCtrlView(getActivity(), true).show();
+        });
+
+        //检查
+        findViewById(R.id.ll_job_check).setOnClickListener((v) -> {
+            new WorkCheckCtrlView(getActivity(), true).show();
+        });
+
+
     }
+
 }

@@ -108,7 +108,6 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        setTitle("通讯录");
         rev_list = (RecyclerView) findViewById(R.id.rev_list);
         rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
 

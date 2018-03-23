@@ -120,19 +120,16 @@ public class WorkspaceFragment extends BaseFragment {
 
         //工作汇报
         findViewById(R.id.ll_work_report).setOnClickListener((v) -> {
-//            startActivity(new Intent(getActivity(), ReportActivity.class));
             new ReportCtrlView(getActivity(), true).show();
         });
 
         //工作任务
         findViewById(R.id.ll_assignment_task).setOnClickListener((v) -> {
-//            startActivity(new Intent(getActivity(), TaskActivity.class));
             new TaskCtrlView(getActivity(), true).show();
         });
 
         //检查
         findViewById(R.id.ll_job_check).setOnClickListener((v) -> {
-//            startActivity(new Intent(getActivity(), CheckActivity.class));
             new WorkCheckCtrlView(getActivity(), true).show();
         });
 
