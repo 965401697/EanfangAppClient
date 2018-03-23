@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.TaskActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkTaskListActivity;
 
 import butterknife.BindView;
@@ -34,6 +36,8 @@ public class TaskCtrlView extends BaseDialog {
     RelativeLayout llMineAccept;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
     private Activity mContext;
 
     public TaskCtrlView(Activity context, boolean isfull) {
@@ -51,6 +55,9 @@ public class TaskCtrlView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("任务管控");
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setImageResource(R.drawable.nav_ic_add_pressed);
+        ivRight.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, TaskActivity.class)));
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));

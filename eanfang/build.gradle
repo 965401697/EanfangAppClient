@@ -37,7 +37,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField("boolean", "LOG_DEBUG", "true");
+            buildConfigField("boolean", "LOG_DEBUG", "false");
         }
         release {
             minifyEnabled true
