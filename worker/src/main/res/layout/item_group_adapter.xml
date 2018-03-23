@@ -1,69 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/bg_ll_selctor"
+    android:background="@color/color_white"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rel_company"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="50dp">
 
-        <TextView
-            android:id="@+id/tv_company_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:ellipsize="end"
-            android:maxEms="6"
-            android:paddingLeft="15dp"
-            android:singleLine="true"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_company_logo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            fresco:placeholderImage="@drawable/contend_ic_thenameofthecompany_default"
+            fresco:roundAsCircle="true" />
 
-        <TextView
-            android:id="@+id/tv_auth_status"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_toLeftOf="@id/iv_img"
-            android:background="@drawable/select_worker"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text=""
-            android:textColor="@color/client" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/iv_company_logo"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxEms="10"
+                android:singleLine="true"
+                android:text="123444"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_12" />
+
+            <ImageView
+                android:id="@+id/iv_v"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_company_name"
+                android:src="@drawable/contend_ic_v_default" />
+
+            <TextView
+                android:id="@+id/tv_auth_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_v"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="未认证"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/textSize_10" />
+        </RelativeLayout>
+
 
         <ImageView
             android:id="@+id/iv_img"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_down" />
+            android:src="@drawable/contend_ic_management_default" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
         android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:paddingLeft="15dp">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_org" />
+                android:src="@drawable/contend_ic_organizationalstructure_default" />
 
             <TextView
                 android:id="@+id/tv_org"
@@ -72,7 +101,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="组织架构"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textSize_12" />
         </LinearLayout>
 
 
@@ -81,8 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:visibility="gone"
-            android:paddingLeft="15dp">
+            android:paddingLeft="15dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="20dp"
@@ -99,18 +128,22 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f2f2f2" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="horizontal"
-            android:paddingLeft="15dp">
+            android:padding="5dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_outside_company" />
+                android:src="@drawable/contend_ic_outsourcingunit_default" />
 
             <TextView
                 android:id="@+id/tv_outside_company"
@@ -119,7 +152,61 @@
                 android:layout_marginLeft="10dp"
                 android:text="外协单位"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="@dimen/textSize_12" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f2f2f2" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/contend_ic_cooperativesupplier_default" />
+
+            <TextView
+                android:id="@+id/tv_parten_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="工作公司"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_12" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f2f2f2" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/contend_ic_externalcontact_default" />
+
+            <TextView
+                android:id="@+id/tv_outer_worker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="外部联系人"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_12" />
         </LinearLayout>
 
     </LinearLayout>

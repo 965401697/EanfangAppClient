@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -57,6 +58,8 @@ public class ConstansActivity extends BaseActivity {
         staffAdapter.setOnItemChildClickListener((adapter1, view, position) -> {
             showToast("用户信息");
         });
+        revLista.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         revLista.setAdapter(staffAdapter);
 
         ConstactsAdapter adapter = new ConstactsAdapter(list);
