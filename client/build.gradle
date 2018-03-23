@@ -49,7 +49,7 @@ android {
         }
         release {
             // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "LOG_DEBUG", "true")
             //混淆
             minifyEnabled false
             //Zipalign优化
