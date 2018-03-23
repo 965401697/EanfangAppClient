@@ -12,7 +12,6 @@ import com.alibaba.fastjson.parser.Feature;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.IBase;
-import com.eanfang.util.AssetUtil;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
@@ -48,7 +47,6 @@ public abstract class CustomeApplication extends MultiDexApplication {
     }
 
     public void initConfig() {
-        AssetUtil.get().init(getApplicationContext());
         J_MessageVerify.get().init(60);
         Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
