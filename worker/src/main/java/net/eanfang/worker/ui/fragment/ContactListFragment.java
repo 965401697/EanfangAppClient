@@ -1,10 +1,12 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.eanfang.ui.base.BaseFragment;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.my.MessageListActivity;
 
 /**
  * Created by MrHou
@@ -14,7 +16,7 @@ import net.eanfang.worker.R;
  * @desc 消息
  */
 
-public class ContactListFragment extends BaseFragment{
+public class ContactListFragment extends BaseFragment {
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -27,7 +29,7 @@ public class ContactListFragment extends BaseFragment{
 
     @Override
     protected void initView() {
-
+        findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
     }
 
     @Override
