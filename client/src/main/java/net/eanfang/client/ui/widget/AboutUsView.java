@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.AppVersionUtil;
+import com.eanfang.util.ApkUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.util.UpdateManager;
@@ -57,7 +57,7 @@ public class AboutUsView extends BaseDialog {
 
     private void initView() {
 
-        tvVersion.setText("V " + AppVersionUtil.getAppVersionName(mContext));
+        tvVersion.setText("V " + ApkUtils.getAppVersionName(mContext));
         findViewById(R.id.iv_left).setOnClickListener(v -> dismiss());
 
         llServicePhone.setOnClickListener((v) -> {
