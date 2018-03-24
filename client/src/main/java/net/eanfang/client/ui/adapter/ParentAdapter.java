@@ -34,22 +34,11 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         helper.addOnClickListener(R.id.tv_child_company);
         helper.addOnClickListener(R.id.tv_outside_company);
         helper.setText(R.id.tv_company_name, item.getOrgName());
-        imageView.setImageResource(R.drawable.ic_down);
+        imageView.setImageResource(R.drawable.contend_ic_management_default);
         imageView.setTag(false);
         helper.addOnClickListener(R.id.tv_auth_status);
-        /*        DRAFT("草稿", 0),
-
-        IN_VERIFY("等待认证", 1),
-
-        VERIFY_SUCESS("认证通过", 2),
-
-        VERIFY_FAIL("认证拒绝", 3),
-
-        DISABLE("禁用", 4),
-
-        DELETE("删除", 5);*/
         if (item.getVerifyStatus() == 0) {
-            helper.setText(R.id.tv_auth_status, "待认证");
+            helper.setText(R.id.tv_auth_status, "未认证");
         } else if (item.getVerifyStatus() == 1) {
             helper.setText(R.id.tv_auth_status, "认证中");
         } else if (item.getVerifyStatus() == 2) {
@@ -67,11 +56,11 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
             boolean flag = (boolean) imageView.getTag();
             //未被点击过
             if (!flag) {
-                imageView.setImageResource(R.drawable.ic_up);
+                imageView.setImageResource(R.drawable.contend_ic_management_default);
                 ll_show.setVisibility(View.VISIBLE);
                 imageView.setTag(true);
             } else {
-                imageView.setImageResource(R.drawable.ic_down);
+                imageView.setImageResource(R.drawable.contend_ic_management_default);
                 ll_show.setVisibility(View.GONE);
                 imageView.setTag(false);
             }

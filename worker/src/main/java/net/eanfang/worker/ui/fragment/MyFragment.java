@@ -93,10 +93,7 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
-        //通知
-//        findViewById(R.id.rel_message).setOnClickListener((v) -> {
-//            startActivity(new Intent(getActivity(), MessageListActivity.class));
-//        });
+
         //评价
         findViewById(R.id.rl_evaluate).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), EvaluateActivity.class));

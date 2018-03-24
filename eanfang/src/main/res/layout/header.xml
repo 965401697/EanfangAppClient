@@ -3,7 +3,7 @@
     android:id="@+id/titles_bar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/client"
+    android:background="#fe8f64"
     android:orientation="horizontal">
 
     <ImageView
