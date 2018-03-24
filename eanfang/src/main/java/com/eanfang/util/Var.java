@@ -12,21 +12,27 @@ import java.util.Set;
 public class Var {
 
     private ChangeListener changeListener;
-    private int var;
+    private int var = 0;
     private static Map<String, Var> varInstanceMap = new HashMap<>();
 
     private Var() {
     }
 
-    public static Var get(String className) {
-        if (!varInstanceMap.containsKey(className)) {
+    public static Var get(String key) {
+        if (!varInstanceMap.containsKey(key)) {
             synchronized (Var.class) {
-                if (!varInstanceMap.containsKey(className)) {
-                    varInstanceMap.put(className, new Var());
+                if (!varInstanceMap.containsKey(key)) {
+                    varInstanceMap.put(key, new Var());
                 }
             }
         }
-        return varInstanceMap.get(className);
+        return varInstanceMap.get(key);
+    }
+
+    public static void remove(String key) {
+        if (varInstanceMap.containsKey(key)) {
+            varInstanceMap.remove(key);
+        }
     }
 
     public void setChangeListener(ChangeListener changeListener) {

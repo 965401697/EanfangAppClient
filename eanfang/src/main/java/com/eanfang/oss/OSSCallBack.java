@@ -25,7 +25,8 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     private boolean showDialog;
     private UploadDialogUtil.UploadDialog uploadDialog;
     private int total = 1;
-    private int curr = 0;
+    private int curr = 1;
+    public boolean isAllSuccess = false;
 
     private Handler handler;
 
@@ -53,13 +54,11 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
         });
     }
 
-    public void onStart() {
-        handler.post(() -> {
-            if (uploadDialog != null) {
-                uploadDialog.setTextContent("正在上传（" + getCurr() + "/" + getTotal() + "）");
-            }
-        });
-    }
+//    public void onStart() {
+//        handler.post(() -> {
+//
+//        });
+//    }
 
     public void onFinish() {
         handler.post(() -> {
@@ -80,17 +79,20 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
 
     @Override
     public final void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-        //上传成功 当前++;
-        setCurr(curr + 1);
-        onStart();
-        //全部上传成功
-        if (getCurr() >= getTotal()) {
+        if (isAllSuccess) {
             onFinish();
             onOssSuccess();
-            return;
-        } else {
-            //没有全部上传成功
         }
+        //上传成功 当前++;
+        //onStart();
+        //全部上传成功
+//        if (getCurr() >= getTotal()) {
+//            onFinish();
+//            onOssSuccess();
+//            return;
+//        } else {
+//            //没有全部上传成功
+//        }
 
     }
 
@@ -110,6 +112,11 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
      */
 
     public void onOssProgress(PutObjectRequest request, long currentSize, long totalSize) {
+        handler.post(() -> {
+            if (uploadDialog != null) {
+                uploadDialog.setTextContent("正在上传（" + getCurr() + "/" + getTotal() + "）");
+            }
+        });
 
     }
 
@@ -156,6 +163,8 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     }
 
     public void setCurr(int curr) {
-        this.curr = curr;
+        synchronized (this) {
+            this.curr = curr;
+        }
     }
 }

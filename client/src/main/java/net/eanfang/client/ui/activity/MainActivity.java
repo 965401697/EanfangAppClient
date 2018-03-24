@@ -20,6 +20,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseClientActivity {
         user = EanfangApplication.get().getUser();
         setHeaders();
         initXinGe();
+
         initFragment();
         getBaseData();
         getConst();
@@ -81,9 +83,17 @@ public class MainActivity extends BaseClientActivity {
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
 
+        initMessageCount(indicator);
+
+        mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
+        redPoint = indicator.findViewById(R.id.redPoint);
+    }
+
+    private void initMessageCount(View indicator) {
+
         Badge qBadgeView = new QBadgeView(this)
                 .bindTarget(indicator.findViewById(R.id.tabImg))
-                .setBadgeNumber(Var.get("MainActivity").getVar())
+                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getVar())
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(-2, -2, true)
@@ -97,14 +107,12 @@ public class MainActivity extends BaseClientActivity {
                     }
                 });
         //变量监听
-        Var.get("MainActivity").setChangeListener((var) -> {
+        Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
             qBadgeView.setBadgeNumber(var);
         });
 
-
-        mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
-        redPoint = indicator.findViewById(R.id.redPoint);
     }
+
 
     @Override
     protected void onResume() {
@@ -178,22 +186,38 @@ public class MainActivity extends BaseClientActivity {
     }
 
     public void initXinGe() {
-        //开启信鸽日志输出
-        XGPushConfig.enableDebug(this, true);
+        Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
+            runOnUiThread(() -> {
+                ExecuteUtils.execute(
+                        () -> Var.get("MainActivity.initXinGe").getVar()
+                        , 1, 0,
+                        () -> Var.remove("MainActivity.initXinGe")
+                        , () -> {
+                            registerXinGe();
+                        });
+            });
+        });
+        Var.get("MainActivity.initXinGe").setVar(0);
+    }
 
+
+    private void registerXinGe() {
+        //开启信鸽日志输出
+        XGPushConfig.enableDebug(this, false);
         //信鸽注册代码
         XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
                 Log.d("TPush", "注册成功，设备token为：" + data);
+                Var.get("MainActivity.initXinGe").setVar(1);
             }
 
             @Override
             public void onFail(Object data, int errCode, String msg) {
                 Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                Var.get("MainActivity.initXinGe").setVar(0);
             }
         });
-
     }
 
     public void setHeaders() {

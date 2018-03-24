@@ -163,7 +163,7 @@ public class EanfangCallback<T> extends StringCallback {
                 message = resultJson.getString("message");
             }
             if (resultJson.containsKey("noticeCount")) {
-                String classMainName = "MainActivity";
+                String classMainName = "MainActivity.initMessageCount";
                 String classMyName = "MyFragment";
                 int mainActivityCount = Var.get(classMainName).getVar();
                 int myFragmentCount = Var.get(classMyName).getVar();
