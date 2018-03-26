@@ -119,6 +119,8 @@ public class PermissionUtils {
             activityWithTakePhoto.setPermissionsCallBack(callBack);
         }
     }
+
+
 }
 
 

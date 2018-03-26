@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.capton.easyupdate.EasyUpdate;
+import com.capton.easyupdate.UpdateInfo;
 import com.eanfang.R;
 import com.eanfang.ui.base.BaseActivity;
 
@@ -94,6 +96,19 @@ public class UpdateManager {
      * 检测软件更新
      */
     public void checkUpdate() {
+
+//        UpdateInfo info = new UpdateInfo();
+//        info.setUrl("http://oss.eanfang.net/eanfang/eanfang.client2.apk");
+//        info.setMd5("7cac63e600ad623389346eadac4811ac");
+//        info.setFileName("eanfang.client2.apk");
+//        info.setVersionCode(1803262);
+//        info.setVersionName("2.1.2");
+//        info.setCharacters("全新版本");
+//        info.setForceUpate(true);
+//        info.setAutoInstall(false);
+//
+//        EasyUpdate.debug(false).check(mContext, info);
+
         if (isUpdate()) {
             // 显示提示对话框
             showNoticeDialog();
@@ -113,7 +128,7 @@ public class UpdateManager {
      */
     public boolean isUpdate() {
         // 获取当前软件版本
-        versionCode = getVersionCode(mContext);
+        versionCode = ApkUtils.getAppVersionCode(mContext);
 
 //        Log.e("---------------------", xmlPath);
         //如果本地调试 则跳过检查更新
@@ -167,17 +182,6 @@ public class UpdateManager {
      * @param context
      * @return
      */
-
-    private int getVersionCode(Context context) {
-        int versionCode = 0;
-        try {
-            // 获取软件版本号，对应AndroidManifest.xml下android:versionCode
-            versionCode = context.getPackageManager().getPackageInfo("net.eanfang.client", 0).versionCode;
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return versionCode;
-    }
 
     /**
      * 显示软件更新对话框

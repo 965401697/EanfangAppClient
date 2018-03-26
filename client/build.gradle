@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1803261
-        versionName "2.1.1"
+        versionCode 1803260
+        versionName "2.1.2"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
@@ -49,7 +49,7 @@ android {
         }
         release {
             // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "LOG_DEBUG", "false")
             //混淆
             minifyEnabled false
             //Zipalign优化

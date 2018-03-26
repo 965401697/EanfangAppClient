@@ -15,6 +15,7 @@
  */
 package com.eanfang.util;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -53,6 +54,18 @@ public class ApkUtils {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(context, getPackageName(context, uriFile.getAbsolutePath()) + ".fileprovider", uriFile);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+
+//            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//            intent.addCategory(Intent.CATEGORY_DEFAULT);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.setDataAndType(Uri.fromFile(uriFile), "file/*");
+//            try {
+//                context.startActivity(intent);
+//                context.startActivity(Intent.createChooser(intent, "选择浏览工具"));
+//            } catch (ActivityNotFoundException e) {
+//                e.printStackTrace();
+//            }
+
         } else {
             intent.setDataAndType(Uri.fromFile(uriFile), "application/vnd.android.package-archive");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -166,6 +179,23 @@ public class ApkUtils {
             versionName = pi.versionName;
             if (versionName == null || versionName.length() <= 0) {
                 return "";
+            }
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versionName;
+    }
+
+    public static int getAppVersionCode(Context context) {
+        int versionName = 0;
+        try {
+            // ---get the package info---
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+
+            versionName = pi.versionCode;
+            if (versionName <= 0) {
+                return 0;
             }
         } catch (Exception e) {
             Log.e("VersionInfo", "Exception", e);
