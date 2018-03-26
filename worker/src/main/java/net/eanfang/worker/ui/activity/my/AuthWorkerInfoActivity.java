@@ -47,7 +47,6 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师认证
  */
-// TODO: 2018/1/31 荣誉照片上传和回显异常
 public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.et_contactName)
     EditText etContactName;
@@ -133,7 +132,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
         ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_FRONT)));
         ivIdCardSide.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_SIDE)));
-        ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_SIDE)));
+        ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_HAND)));
         ivCrimePic.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(CRIME_PIC)));
         ivAccidentPics.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ACCIDENT_PIC)));
         ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(HEADER_PIC)));
@@ -199,9 +198,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setTitle("填写技师资料");
         setLeftBack();
         setRightTitle("下一步");
-        workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("bean");
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-
+        workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("bean");
         fillData();
     }
 
@@ -232,7 +230,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 ivIdCardFront.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()));
             }
             if (workerInfoBean.getContactPhone() != null) {
-                ivIdCardSide.setImageURI(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide());
+                ivIdCardSide.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()));
             }
             if (workerInfoBean.getIdCardHand() != null) {
                 ivIdCardHand.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()));
@@ -245,26 +243,26 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 String[] urls = workerInfoBean.getHonorPics().split(",");
                 picList1 = new ArrayList<>();
                 if (urls.length >= 1) {
-                    ivHonor1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                    ivHonor1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
                     ivHonor1.setVisibility(View.VISIBLE);
                 } else {
                     ivHonor1.setVisibility(View.GONE);
                 }
 
                 if (urls.length >= 2) {
-                    ivHonor2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                    ivHonor2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
                     ivHonor2.setVisibility(View.VISIBLE);
                 } else {
                     ivHonor2.setVisibility(View.GONE);
                 }
                 if (urls.length >= 3) {
-                    ivHonor3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                    ivHonor3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
                     ivHonor3.setVisibility(View.VISIBLE);
                 } else {
                     ivHonor3.setVisibility(View.GONE);
                 }
                 if (urls.length >= 4) {
-                    ivHonor4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[3]));
+                    ivHonor4.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
                     ivHonor4.setVisibility(View.VISIBLE);
                 } else {
                     ivHonor4.setVisibility(View.GONE);
@@ -298,18 +296,15 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         setWorkerInfoBean.setHonorPics(ursStr);
         String json = JSONObject.toJSONString(setWorkerInfoBean);
-//        submitSuccess(json);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
-                    submitSuccess(json);
-
+                    runOnUiThread(() -> submitSuccess(json));
                 }
             });
-        } else {
-            submitSuccess(json);
         }
+        submitSuccess(json);
 
     }
 

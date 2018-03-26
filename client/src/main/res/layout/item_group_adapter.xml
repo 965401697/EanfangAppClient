@@ -162,6 +162,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_part_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -177,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="工作公司"
+                android:text="合作供应商"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_12" />
         </LinearLayout>

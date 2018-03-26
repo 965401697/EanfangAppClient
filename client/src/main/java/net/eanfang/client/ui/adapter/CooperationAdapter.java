@@ -58,7 +58,7 @@ public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, B
         helper.setText(R.id.tv_bugone, Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         helper.setText(R.id.tv_time_limit, item.getBeginTime()
                 + "  到  " + item.getEndTime());
-        helper.setText(R.id.tv_repair_install, GetConstDataUtils.getCooperationStatus().get(item.getBusType()));
+        helper.setText(R.id.tv_repair_install,  GetConstDataUtils.getCooperationTypeList().get(item.getBusType()));
 
 
     }

@@ -17,6 +17,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
+import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 import net.eanfang.client.ui.widget.CreateTeamView;
@@ -90,6 +91,9 @@ public class ContactsFragment extends BaseFragment {
                 //外协单位
                 case R.id.tv_outside_company:
                     startActivity(new Intent(getActivity(), ExternalCompanyActivity.class));
+                    break;
+                case R.id.ll_part_company:
+                    startActivity(new Intent(getActivity(), PartnerActivity.class));
                     break;
                 case R.id.tv_auth_status:
                     startActivity(new Intent(getActivity(), AuthCompanyActivity.class)

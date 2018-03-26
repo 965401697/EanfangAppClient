@@ -139,7 +139,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void fillData(LoginBean infoBackBean) {
         if (!StringUtils.isEmpty(infoBackBean.getAccount().getAvatar())) {
-            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+infoBackBean.getAccount().getAvatar()));
+            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
         }
         if (infoBackBean.getAccount().getNickName() != null) {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
@@ -274,8 +274,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     runOnUiThread(() -> {
                         showToast("成功");
                         LoginBean user = EanfangApplication.get().getUser();
-                        user.getAccount().setAvatar(path);
-                        user.getAccount().setRealName(etRealname.getText().toString().trim());
+                        if (!StringUtils.isEmpty(path)) {
+                            user.getAccount().setAvatar(path);
+                        }
+                        if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
+                            user.getAccount().setNickName(tvNickname.getText().toString().trim());
+                        }
                         EanfangApplication.get().saveUser(user);
                         finish();
                     });

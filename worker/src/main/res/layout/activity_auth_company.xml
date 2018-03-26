@@ -170,18 +170,18 @@
                     android:layout_height="1px"
                     android:background="@color/background" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:padding="20dp">
 
                     <TextView
+                        android:id="@+id/tv_type_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="行业类型"
+                        android:layout_alignParentLeft="true"
                         android:textColor="@color/client_form_title_color"
                         android:textSize="16sp" />
 
@@ -189,9 +189,14 @@
                         android:id="@+id/tv_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:layout_toLeftOf="@id/iv_type"
+                        android:layout_toRightOf="@id/tv_type_temp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/font_color"
-                        android:textSize="16sp" />
+                        android:gravity="right"
+                        android:textSize="@dimen/textSize_10" />
 
                     <ImageView
                         android:id="@+id/iv_type"
@@ -199,8 +204,10 @@
                         android:layout_height="18sp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
+                        android:layout_alignParentRight="true"
                         android:src="@mipmap/arrow_right" />
-                </LinearLayout>
+                </RelativeLayout>
+
 
                 <View
                     android:layout_width="match_parent"

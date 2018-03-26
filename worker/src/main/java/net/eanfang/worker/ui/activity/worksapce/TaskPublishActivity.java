@@ -155,6 +155,7 @@ public class TaskPublishActivity extends BaseActivity {
         llLoginTime.setOnClickListener((v) -> {
             if (pvTime != null) {
                 pvTime.show();
+                pvTime.show();
             }
         });
         llBusinessType.setOnClickListener((v) -> {
