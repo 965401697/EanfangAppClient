@@ -15,6 +15,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
+import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
@@ -122,7 +123,7 @@ public class SelectWorkerActivity extends BaseClientActivity {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
         queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
-        queryEntry.getIsIn().put("businessId", businessIds);
+        queryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         queryEntry.getEquals().put("served", serviceId + "");
         queryEntry.getEquals().put("collect", collectId + "");
         queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");

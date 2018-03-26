@@ -245,8 +245,33 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
         et_trouble_desc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
     }
 
+    private boolean checkData() {
+
+        if (StringUtils.isEmpty(et_trouble_desc.getText().toString().trim())) {
+            showToast("请输入故障描述");
+            return false;
+        }
+        if (StringUtils.isEmpty(tv_repair_conclusion.getText().toString().trim())) {
+            showToast("请选择是否误报");
+            return false;
+        }
+        if (StringUtils.isEmpty(et_trouble_reason.getText().toString().trim())) {
+            showToast("请输入原因");
+            return false;
+        }
+        if (StringUtils.isEmpty(tv_repair_conclusion.getText().toString().trim())) {
+            showToast("请选择维修结论");
+            return false;
+        }
+
+        return true;
+    }
 
     private void submit() {
+
+        if (!checkData()) {
+            return;
+        }
 
         bughandleDetailEntity.getFailureEntity().setBugDescription(et_trouble_desc.getText().toString().trim());
         bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));

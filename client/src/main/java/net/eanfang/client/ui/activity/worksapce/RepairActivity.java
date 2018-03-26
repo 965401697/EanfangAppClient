@@ -129,7 +129,7 @@ public class RepairActivity extends BaseClientActivity {
         }
         Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
         intent.putExtra("bean", fillBean());
-        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").toList());
+        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
         startActivity(intent);
     }
 
@@ -156,6 +156,16 @@ public class RepairActivity extends BaseClientActivity {
             showToast("请选择地址");
             return false;
         }
+        String placeCode = Config.get().getAreaCodeByName(city, county);
+        if (StringUtils.isEmpty(placeCode)) {
+            showToast("请重新选择地址");
+            return false;
+        }
+        if (StringUtils.isEmpty(Config.get().getBaseIdByCode(placeCode, 3, Constant.AREA) + "")) {
+            showToast("请重新选择地址");
+            return false;
+        }
+
         if (StringUtils.isEmpty(etDetailAddress.getText().toString().trim())) {
             showToast("请输入详细地址");
             return false;

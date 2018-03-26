@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
@@ -24,13 +23,15 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateManager;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
-import net.eanfang.worker.util.UpdateManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,19 +98,19 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
             String userAulth = et_yanzheng.getText().toString().trim();
             if (!BuildConfig.LOG_DEBUG) {
 
-            if (StringUtils.isEmpty(userPhone)) {
-                showToast("手机号不能为空");
-                return;
-            }
+                if (StringUtils.isEmpty(userPhone)) {
+                    showToast("手机号不能为空");
+                    return;
+                }
 
-            if (StringUtils.isEmpty(userAulth)) {
-                showToast("验证码不能为空");
-                return;
-            }
-            if (!cb.isChecked()) {
-                showToast("同意易安防会员章程和协议后才可以登陆使用");
-                return;
-            }
+                if (StringUtils.isEmpty(userAulth)) {
+                    showToast("验证码不能为空");
+                    return;
+                }
+                if (!cb.isChecked()) {
+                    showToast("同意易安防会员章程和协议后才可以登陆使用");
+                    return;
+                }
             }
 
             //调试阶段
@@ -124,7 +125,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
                     setLogin(userPhone, userAulth);
                 }
             } else {
-            setVerfiyLogin(userPhone, userAulth);
+                setVerfiyLogin(userPhone, userAulth);
             }
 
         });
@@ -247,9 +248,12 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        //更新
-        UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate();
+
+        PermissionUtils.get(this).getStoragePermission(() -> {
+            //更新
+            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+            manager.checkUpdate();
+        });
 
     }
 

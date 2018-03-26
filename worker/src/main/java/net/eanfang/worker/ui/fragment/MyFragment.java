@@ -108,25 +108,7 @@ public class MyFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
 
-//        Badge qBadgeView = new QBadgeView(getActivity())
-//                .bindTarget(findViewById(R.id.iv_msg))
-//                .setBadgeNumber(Var.get("MyFragment").getVar())
-//                .setBadgePadding(5, true)
-//                .setBadgeGravity(Gravity.END | Gravity.TOP)
-//                .setGravityOffset(-2, -2, true)
-//                .setBadgeTextSize(10, true)
-//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-//                    //清除成功
-//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false));
-//                        showToast("消息被清空了");
-////                        Var.get().setVar(0);
-//                    }
-//                });
-        //变量监听
-//        Var.get("MyFragment").setChangeListener((var) -> {
-//            qBadgeView.setBadgeNumber(var);
-//        });
+
 
     }
 

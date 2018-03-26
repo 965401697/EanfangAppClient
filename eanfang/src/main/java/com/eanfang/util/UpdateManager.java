@@ -1,7 +1,9 @@
-package net.eanfang.client.util;
+package com.eanfang.util;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -13,10 +15,10 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.eanfang.util.ParseXmlServiceToVersion;
-
-import net.eanfang.client.R;
+import com.eanfang.R;
+import com.eanfang.ui.base.BaseActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,6 +34,7 @@ import java.util.HashMap;
  * Created by jornl on 2017/6/23.
  */
 public class UpdateManager {
+    private final static int DOWNLOAD_FAIL = -1;
     /* 下载中 */
     private static final int DOWNLOAD = 1;
     /* 下载结束 */
@@ -46,8 +49,10 @@ public class UpdateManager {
     private boolean cancelUpdate = false;
 
     //版本信息xml地址
-    private String xmlPath = "http://eanfang.net:8080/eanfang/" + "file/" + net.eanfang.client.BuildConfig.TYPE + "2.xml";
+    private String xmlPath = "http://eanfang.net:8080/eanfang/" + "file/_type2.xml";
 
+    // 自定义通知栏类
+//    UploadNotification myNotification;
     private Context mContext;
     /* 更新进度条 */
     private ProgressBar mProgress;
@@ -61,19 +66,28 @@ public class UpdateManager {
                 case DOWNLOAD:
                     // 设置进度条位置
                     mProgress.setProgress(progress);
+                    // myNotification.changeProgressStatus(progress);
                     break;
                 case DOWNLOAD_FINISH:
                     // 安装文件
                     installApk();
+                    //  PendingIntent updatePendingIntent = PendingIntent.getActivity(mContext, 0, installIntent(), 0);
+                    // myNotification.changeContentIntent(updatePendingIntent);
+                    // myNotification.notification.defaults = Notification.DEFAULT_SOUND;// 铃声提醒
+                    // myNotification.removeNotification();
                     break;
                 default:
+                    //myNotification.changeProgressStatus(DOWNLOAD_FAIL);
                     break;
             }
         }
     };
 
-    public UpdateManager(Context context) {
+    public UpdateManager(Context context, String type) {
         this.mContext = context;
+        xmlPath = xmlPath.replace("_type", type);
+
+
     }
 
     /**
@@ -84,8 +98,12 @@ public class UpdateManager {
             // 显示提示对话框
             showNoticeDialog();
         } else {
-            //Toast.makeText(mContext, "当前版本为最新版本，暂无可用的更新", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "当前版本为最新版本", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void update() {
+        showNoticeDialog();
     }
 
     /**
@@ -174,6 +192,8 @@ public class UpdateManager {
             dialog.dismiss();
             // 显示下载对话框
             showDownloadDialog();
+            // myNotification = new UploadNotification(mContext, null, 1);
+            // myNotification.showCustomizeNotification(R.drawable.client_logo,"开始下载", R.layout.notification);
         });
 
         //屏蔽返回按键
@@ -230,11 +250,7 @@ public class UpdateManager {
         if (!apkfile.exists()) {
             return;
         }
-        // 通过Intent安装APK文件
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(i);
+        ApkUtils.install(mContext, apkfile);
     }
 
     /**

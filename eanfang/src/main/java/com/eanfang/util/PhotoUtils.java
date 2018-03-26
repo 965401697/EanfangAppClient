@@ -38,10 +38,10 @@ public class PhotoUtils {
                 continue;
             } else if (path.startsWith(BuildConfig.OSS_SERVER)) {
                 urls.append(path.replace(BuildConfig.OSS_SERVER, ""));
-                continue;
+            } else {
+                uploadMap.put(object, path);
+                urls.append(object);
             }
-            uploadMap.put(object, path);
-            urls.append(object);
             if (i < mPhotosSnpl.getData().size() - 1) {
                 urls.append(",");
             }

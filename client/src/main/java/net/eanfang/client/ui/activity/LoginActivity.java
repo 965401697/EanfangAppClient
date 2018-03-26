@@ -22,6 +22,7 @@ import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -30,7 +31,8 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.util.UpdateManager;
+
+import com.eanfang.util.UpdateManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -91,6 +93,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
     private void registerListener() {
         btn_login.setOnClickListener(v -> {
+
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
             if (!BuildConfig.LOG_DEBUG) {
@@ -173,7 +176,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
                 .params("mobile", phone)
                 .params("verifycode", pwd)
-                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
+                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, true, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
                     EanfangHttp.setToken(bean.getToken());
@@ -198,7 +201,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         }
         EanfangHttp.post(UserApi.APP_LOGIN)
                 .upJson(object.toJSONString())
-                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
+                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, true, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
                     EanfangHttp.setToken(bean.getToken());
@@ -250,9 +253,12 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             e1.printStackTrace();
         }
 
-        //更新
-        UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate();
+        PermissionUtils.get(this).getStoragePermission(() -> {
+            //更新
+            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+            manager.checkUpdate();
+        });
+
     }
 
     @Override

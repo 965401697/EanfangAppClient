@@ -79,6 +79,21 @@ public class PermissionUtils {
 
     }
 
+    /**
+     * 请求数据读取  写入权限
+     *
+     * @param callBack
+     */
+    public void getStoragePermission(PermissionsCallBack callBack) {
+        if (!hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                || !hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            getPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, callBack);
+        } else {
+            callBack.callBack();
+        }
+
+    }
+
 
     /**
      * 是否具有指定权限

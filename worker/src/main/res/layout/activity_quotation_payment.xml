@@ -44,14 +44,13 @@
                         android:id="@+id/et_client_company_name_wr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="@string/hint_input"
                         android:textColor="@color/common_ext_color"
-                        android:focusable="false"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
 
@@ -78,14 +77,13 @@
                         android:id="@+id/et_project_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="@string/hint_input"
                         android:textColor="@color/common_ext_color"
-                        android:focusable="false"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
             </LinearLayout>
@@ -199,7 +197,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:focusable="false"
                         android:hint="@string/hint_input"
                         android:textColor="@color/common_ext_color"
                         android:textSize="@dimen/sp_14" />

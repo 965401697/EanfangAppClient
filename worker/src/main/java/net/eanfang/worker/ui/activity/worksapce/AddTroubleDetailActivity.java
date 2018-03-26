@@ -272,7 +272,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
                 }));
     }
 
+
     public void fillData() {
+
+
         if (StringUtils.isValid(failureEntity.getBusinessThreeCode())) {
             String bugOne = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
             String bugTwo = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 2);
@@ -314,6 +317,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
             detailEntity.setUseDeviceEntityList(new ArrayList<>(0));
         }
     }
+
 
     private void initListener() {
         llDeviceFailure.setOnClickListener((v) -> {
@@ -495,8 +499,33 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         snplFailureRecoverPhenomena.setData(picList6);
     }
 
+    private boolean checkData() {
+
+        if (StringUtils.isEmpty(etTroubleDesc.getText().toString().trim())) {
+            showToast("请输入故障描述");
+            return false;
+        }
+        if (StringUtils.isEmpty(tvRepairMisinformation.getText().toString().trim())) {
+            showToast("请选择是否误报");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
+            showToast("请输入原因");
+            return false;
+        }
+        if (StringUtils.isEmpty(tvRepairConclusion.getText().toString().trim())) {
+            showToast("请选择维修结论");
+            return false;
+        }
+
+        return true;
+    }
 
     private void submit() {
+        if (!checkData()) {
+            return;
+        }
+
 
         RepairFailureEntity repairFailureEntity = new RepairFailureEntity();
         repairFailureEntity.setId(failureId);

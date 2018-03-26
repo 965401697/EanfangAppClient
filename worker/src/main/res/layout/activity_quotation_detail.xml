@@ -238,16 +238,15 @@
                         android:id="@+id/et_amount"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="@string/hint_input"
                         android:inputType="number"
-                        android:focusable="false"
                         android:textColor="@color/common_ext_color"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -316,15 +315,14 @@
                         android:id="@+id/et_price"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="@string/hint_input"
                         android:inputType="number"
-                        android:focusable="false"
                         android:textColor="@color/common_ext_color"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
@@ -352,16 +350,15 @@
                         android:id="@+id/et_factory"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="@string/hint_input"
                         android:textColor="@color/common_ext_color"
-                        android:focusable="false"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
 
@@ -388,16 +385,15 @@
                         android:id="@+id/et_product_company"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
                         android:hint="@string/hint_input"
                         android:textColor="@color/common_ext_color"
-                        android:focusable="false"
                         android:textSize="@dimen/sp_14" />
                 </LinearLayout>
             </LinearLayout>
@@ -475,7 +471,6 @@
                     android:gravity="left|top"
                     android:hint="@string/hint_input"
                     android:textColor="@color/common_ext_color"
-                    android:focusable="false"
                     android:textSize="@dimen/sp_14" />
             </LinearLayout>
 

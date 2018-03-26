@@ -13,27 +13,27 @@
             android:id="@+id/iv_camera"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true" />
 
         <ImageView
             android:id="@+id/iv_add"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/nav_ic_add_pressed" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/iv_add"
             android:layout_toRightOf="@id/iv_camera"
+            android:layout_centerVertical="true"
             android:gravity="center"
             android:text="消息"
             android:textColor="@color/white"
@@ -57,8 +57,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="13dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -81,8 +81,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
+            android:layout_gravity="center_vertical"
             android:text="15:38"
             android:textSize="@dimen/textSize_10" />
 
@@ -111,23 +111,25 @@
             android:id="@+id/ll_msg_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="13dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_bus_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="20dp"
                 android:text="业务通知"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_14" />
 
             <TextView
+                android:id="@+id/tv_bus_msg_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="没有订单"
                 android:textSize="@dimen/textSize_12" />
 
         </LinearLayout>
@@ -135,8 +137,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
+            android:layout_gravity="center_vertical"
             android:text="15:38"
             android:textSize="@dimen/textSize_10" />
 

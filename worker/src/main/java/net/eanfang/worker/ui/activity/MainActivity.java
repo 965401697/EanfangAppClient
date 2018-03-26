@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -26,20 +25,20 @@ import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateManager;
 import com.eanfang.util.Var;
 import com.okgo.OkGo;
 import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.yaf.base.entity.WorkerEntity;
 
+import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
-import net.eanfang.worker.util.UpdateManager;
 
 import butterknife.ButterKnife;
 import q.rorbin.badgeview.Badge;
@@ -65,10 +64,6 @@ public class MainActivity extends BaseActivity {
         initFragment();
         getBaseData();
         getConst();
-        //更新
-        UpdateManager manager = new UpdateManager(this);
-        manager.checkUpdate();
-
     }
 
 
@@ -76,23 +71,23 @@ public class MainActivity extends BaseActivity {
      * 技师上报位置专用
      */
     private void submitLocation() {
-        runOnUiThread(() -> {
+        new Thread(() -> {
             PermissionUtils.get(this).getLocationPermission(() -> {
                 LocationUtil.location(this, (location) -> {
-                    runOnUiThread(() -> {
-                        WorkerEntity workerEntity = new WorkerEntity();
-                        workerEntity.setAccId(user.getAccount().getAccId());
-                        workerEntity.setLat(location.getLatitude() + "");
-                        workerEntity.setLon(location.getLongitude() + "");
-                        workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
-                        //技师上报位置
-                        EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
-                                .upJson(JSONObject.toJSONString(workerEntity))
-                                .execute(new EanfangCallback(this, false, String.class));
-                    });
+
+                    WorkerEntity workerEntity = new WorkerEntity();
+                    workerEntity.setAccId(user.getAccount().getAccId());
+                    workerEntity.setLat(location.getLatitude() + "");
+                    workerEntity.setLon(location.getLongitude() + "");
+                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
+                    //技师上报位置
+                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                            .upJson(JSONObject.toJSONString(workerEntity))
+                            .execute(new EanfangCallback(this, false, String.class));
                 });
+
             });
-        });
+        }).start();
     }
 
 
@@ -105,15 +100,14 @@ public class MainActivity extends BaseActivity {
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
 
+        initMessageCount(indicator);
+
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
-
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
-
-        initMessageCount(indicator);
 
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
         redPoint = indicator.findViewById(R.id.redPoint);
@@ -165,15 +159,15 @@ public class MainActivity extends BaseActivity {
 
     public void initXinGe() {
         Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
-            runOnUiThread(() -> {
-                ExecuteUtils.execute(
-                        () -> Var.get("MainActivity.initXinGe").getVar()
-                        , 1, 0,
-                        () -> Var.remove("MainActivity.initXinGe")
-                        , () -> {
-                            registerXinGe();
-                        });
-            });
+
+            ExecuteUtils.execute(
+                    () -> Var.get("MainActivity.initXinGe").getVar()
+                    , 1, 0,
+                    () -> Var.remove("MainActivity.initXinGe")
+                    , () -> {
+                        registerXinGe();
+
+                    });
         });
         Var.get("MainActivity.initXinGe").setVar(0);
     }
@@ -202,44 +196,58 @@ public class MainActivity extends BaseActivity {
      * 请求基础数据
      */
     private void getBaseData() {
-        String url;
-        BaseDataBean dataBean = Config.get().getBaseDataBean();
-        if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
-            url = NewApiService.GET_BASE_DATA_CACHE + "0";
-        } else {
-            url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
-        }
+        new Thread(() -> {
+            String url;
+            BaseDataBean dataBean = Config.get().getBaseDataBean();
+            if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
+                url = NewApiService.GET_BASE_DATA_CACHE + "0";
+            } else {
+                url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
+            }
 
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-                    submitLocation();
-                }));
+            EanfangHttp.get(url)
+                    .tag(this)
+                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                        if (!str.contains(Constant.NO_UPDATE)) {
+                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+                        submitLocation();
+                    }));
+
+        }).start();
+
     }
 
     /**
      * 请求静态常量
      */
     private void getConst() {
-        String url;
-        ConstAllBean constBean = Config.get().getConstBean();
-        if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
-            url = NewApiService.GET_CONST_CACHE + "0";
-        } else {
-            url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-                }));
+        new Thread(() -> {
+            String url;
+            ConstAllBean constBean = Config.get().getConstBean();
+            if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
+                url = NewApiService.GET_CONST_CACHE + "0";
+            } else {
+                url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
+            }
+            EanfangHttp.get(url)
+                    .tag(this)
+                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                        if (!str.contains(Constant.NO_UPDATE)) {
+                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+
+                        runOnUiThread(() -> {
+                            PermissionUtils.get(this).getStoragePermission(() -> {
+                                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+                                manager.checkUpdate();
+                            });
+                        });
+
+                    }));
+        }).start();
     }
 
 

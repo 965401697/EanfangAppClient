@@ -38,7 +38,6 @@
                 android:gravity="right"
                 android:hint="@string/hint_input"
                 android:textColor="@color/common_ext_color"
-                android:focusable="false"
 
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -74,7 +73,6 @@
                 android:hint="@string/hint_input"
                 android:inputType="number"
                 android:textColor="@color/common_ext_color"
-                android:focusable="false"
 
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -142,16 +140,15 @@
                 android:id="@+id/et_price"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="right"
                 android:hint="@string/hint_input"
                 android:inputType="number"
                 android:textColor="@color/common_ext_color"
-                android:focusable="false"
 
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
@@ -178,15 +175,14 @@
                 android:id="@+id/et_partSpeciication"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:gravity="right"
                 android:hint="@string/hint_input"
                 android:textColor="@color/common_ext_color"
-                android:focusable="false"
 
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>

@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.fragment;
+package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +11,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.Var;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.MessageListActivity;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.my.MessageListActivity;
 
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -20,12 +20,13 @@ import q.rorbin.badgeview.QBadgeView;
 /**
  * Created by MrHou
  *
- * @on 2018/3/2  16:53
+ * @on 2018/3/1  16:23
  * @email houzhongzhou@yeah.net
  * @desc 消息
  */
 
 public class ContactListFragment extends BaseFragment {
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -45,7 +46,6 @@ public class ContactListFragment extends BaseFragment {
         } else {
             ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
         }
-
         Badge qBadgeView = new QBadgeView(getActivity())
                 .bindTarget(findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(Var.get("MyFragment").getVar())
@@ -61,7 +61,7 @@ public class ContactListFragment extends BaseFragment {
 //                        Var.get().setVar(0);
                     }
                 });
-//        变量监听
+        //变量监听
         Var.get("MyFragment").setChangeListener((var) -> {
             qBadgeView.setBadgeNumber(var);
         });
@@ -69,6 +69,5 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
     }
 }
