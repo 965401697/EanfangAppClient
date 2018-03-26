@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -62,7 +63,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.iv_type)
     ImageView ivType;
     @BindView(R.id.ll_type)
-    LinearLayout llType;
+    RelativeLayout llType;
     @BindView(R.id.tv_start_time)
     TextView tvStartTime;
     @BindView(R.id.ll_start_time)
