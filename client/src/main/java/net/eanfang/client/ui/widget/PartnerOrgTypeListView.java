@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.PartnerBean;
@@ -70,10 +69,10 @@ public class PartnerOrgTypeListView extends BaseDialog {
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             switch (view.getId()) {
                 case R.id.btn_confirm:
-                    audit(1);
+                    audit(1,mDataList.get(position).getId());
                     break;
                 case R.id.btn_unconfirm:
-                    audit(2);
+                    audit(2,mDataList.get(position).getId());
                     break;
                 default:
                     break;
@@ -82,9 +81,9 @@ public class PartnerOrgTypeListView extends BaseDialog {
         rvList.setAdapter(adapter);
     }
 
-    private void audit(int stauts) {
+    private void audit(int stauts,Long id) {
         EanfangHttp.post(UserApi.GET_COOPERATION_AUDIT)
-                .params("id", EanfangApplication.getApplication().getUserId())
+                .params("id", id)
                 .params("status", stauts)
                 .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
                     dismiss();

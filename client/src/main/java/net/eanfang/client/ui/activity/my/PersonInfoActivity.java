@@ -276,8 +276,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     runOnUiThread(() -> {
                         showToast("修改成功");
                         LoginBean user = EanfangApplication.get().getUser();
-                        user.getAccount().setAvatar(path);
-                        user.getAccount().setRealName(etRealname.getText().toString().trim());
+                        if (!StringUtils.isEmpty(path)) {
+                            user.getAccount().setAvatar(path);
+                        }
+                        if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
+                            user.getAccount().setNickName(tvNickname.getText().toString().trim());
+                        }
                         EanfangApplication.get().saveUser(user);
                         finish();
                     });

@@ -19,7 +19,9 @@ public class PartnerAdapter extends BaseQuickAdapter<PartnerBean.ListBean, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, PartnerBean.ListBean item) {
-        helper.setText(R.id.tv_detail_name, item.getAssignee().getOrgName());
+        if (item.getAssigneeOrg()!=null) {
+            helper.setText(R.id.tv_detail_name, item.getAssigneeOrg().getOrgName());
+        }
 
     }
 }

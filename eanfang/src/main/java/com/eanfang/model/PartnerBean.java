@@ -69,7 +69,7 @@ public class PartnerBean implements Serializable {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * assignee : {"companyId":1100,"isVerify":0,"level":2,"orgCode":"c.c1","orgId":1100,"orgName":"易安防北京运营公司","orgType":1,"parentOrgId":0,"sortNum":0,"topCompanyId":1000,"updateTime":"2017-12-05 13:34","updateUser":1}
          * assigneeOrgId : 1100
@@ -85,7 +85,7 @@ public class PartnerBean implements Serializable {
          * status : 0
          */
 
-        private OrgEntity assignee;
+        private OrgEntity assigneeOrg;
         private Long assigneeOrgId;
         private String beginTime;
         private int busType;
@@ -98,12 +98,12 @@ public class PartnerBean implements Serializable {
         private Long ownerOrgId;
         private int status;
 
-        public OrgEntity getAssignee() {
-            return assignee;
+        public OrgEntity getAssigneeOrg() {
+            return assigneeOrg;
         }
 
-        public void setAssignee(OrgEntity assignee) {
-            this.assignee = assignee;
+        public void setAssigneeOrg(OrgEntity assigneeOrg) {
+            this.assigneeOrg = assigneeOrg;
         }
 
         public Long getAssigneeOrgId() {

@@ -98,7 +98,7 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.rl_evaluate).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), EvaluateActivity.class));
         });
-            //邀请
+        //邀请
         findViewById(R.id.rl_ivite).setOnClickListener((v) -> {
             InviteView inviteView = new InviteView(getActivity(), true);
             inviteView.show();
@@ -107,7 +107,6 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
-
 
 
     }
@@ -143,7 +142,9 @@ public class MyFragment extends BaseFragment {
 
     public void initDatas() {
         LoginBean user = EanfangApplication.getApplication().getUser();
-        tv_user_name.setText(user.getAccount().getNickName());
+        if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
+            tv_user_name.setText(user.getAccount().getNickName());
+        }
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));

@@ -80,7 +80,9 @@ public class MyFragment extends BaseFragment {
 
     public void initDatas() {
         LoginBean user = EanfangApplication.getApplication().getUser();
-        tv_user_name.setText(user.getAccount().getNickName());
+        if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
+            tv_user_name.setText(user.getAccount().getNickName());
+        }
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));

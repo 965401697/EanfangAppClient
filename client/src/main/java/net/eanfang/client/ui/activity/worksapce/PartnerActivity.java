@@ -65,12 +65,13 @@ public class PartnerActivity extends BaseActivity {
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("ownerOrgId", EanfangApplication.getApplication().getUser()
+        queryEntry.getEquals().put("assigneeOrgId", EanfangApplication.getApplication().getUser()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
         EanfangHttp.post(UserApi.GET_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<PartnerBean>(this, true, PartnerBean.class, (bean) -> {
                     partnerBean = bean;
+                    List<PartnerBean.ListBean>dataList=bean.getList();
                     initAdapter(bean.getList());
                 }));
     }
