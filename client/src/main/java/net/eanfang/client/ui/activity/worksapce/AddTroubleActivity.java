@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ConnectivityChangeReceiver;
@@ -121,7 +123,8 @@ public class AddTroubleActivity extends BaseClientActivity {
         llEquipmentName.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tvEquipmentCategory.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
-                showToast("请先选择设备类别");return;
+                showToast("请先选择设备类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvEquipmentName.setText(item);
@@ -132,14 +135,16 @@ public class AddTroubleActivity extends BaseClientActivity {
         llModel.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBaseCodeByName(tvSystemCategory.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");return;
+                showToast("请先选择系统类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvModel.setText(item);
             }));
 
         });
-        setRightTitleOnClickListener(v -> onSubmitClient());
+//        setRightTitleOnClickListener(v -> onSubmitClient());
+        setRightTitleOnClickListener(new MultiClickListener(this,this::checkInfo,this::onSubmitClient));
 
     }
 
@@ -193,6 +198,41 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
     }
 
+    public boolean checkInfo() {
+        if (TextUtils.isEmpty(tvSystemCategory.getText().toString().trim())) {
+            showToast("请选择系统类别");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(tvEquipmentCategory.getText().toString().trim())) {
+            showToast("请选择故障设备类别");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(tvEquipmentName.getText().toString().trim())) {
+            showToast("请选择故障设备名称");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(tvModel.getText().toString().trim())) {
+            showToast("请选择品牌型号");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(etLocation.getText().toString().trim())) {
+            showToast("请填写故障设备位置");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(etCode.getText().toString().trim())) {
+            showToast("请填写设备编号");
+            return false;
+        }
+
+
+        return true;
+
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

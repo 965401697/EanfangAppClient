@@ -2,12 +2,7 @@ package com.eanfang.util;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -17,10 +12,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.capton.easyupdate.EasyUpdate;
-import com.capton.easyupdate.UpdateInfo;
 import com.eanfang.R;
-import com.eanfang.ui.base.BaseActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;

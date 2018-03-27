@@ -168,7 +168,7 @@ public class QuotationDetailActivity extends BaseActivity {
         int unitPrice = Integer.valueOf(et_price.getText().toString().trim());
         bean.setUnitPrice((int) unitPrice);
         bean.setSum((unitPrice * count) * 100);
-        paramsBeanList.addAll(paramsBeanList);
+//        paramsBeanList.addAll(paramsBeanList);
         bean.setParams(paramsBeanList);
         setResult(2, getIntent().putExtra("quotedevices", bean));
         finish();

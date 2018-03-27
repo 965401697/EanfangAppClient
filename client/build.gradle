@@ -9,7 +9,7 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1803260
+        versionCode 1803271
         versionName "2.1.2"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
