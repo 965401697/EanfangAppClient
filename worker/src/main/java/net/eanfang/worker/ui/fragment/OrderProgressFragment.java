@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
@@ -52,7 +51,8 @@ public class OrderProgressFragment extends BaseFragment {
         EanfangHttp.post(RepairApi.GET_REPAIR_FLOW)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<OrderProgressBean>(getActivity(), false, OrderProgressBean.class, true, (list) -> {
-                    mDataList=  Stream.of(list).sorted((o1, o2)->-Integer.compare(o1.getNodeCode(),o2.getNodeCode())).toList();
+//                    mDataList=  Stream.of(list).sorted((o1, o2)->-Integer.compare(o1.getNodeCode(),o2.getNodeCode())).toList();
+                    mDataList=list;
                     initAdapter();
                 }));
     }

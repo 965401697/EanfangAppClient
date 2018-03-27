@@ -81,6 +81,7 @@ public class CompanyListView extends BaseDialog {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 SwitchCompany(beanList.get(position).getOrgId());
                 itemCompany.getItemName(beanList.get(position).getOrgName());
+                dismiss();
             }
         });
         revCompanyList.setAdapter(adapter);
@@ -96,7 +97,6 @@ public class CompanyListView extends BaseDialog {
                     EanfangApplication.get().remove(LoginBean.class.getName());
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-                    dismiss();
                 }));
     }
 

@@ -3,12 +3,12 @@ package net.eanfang.worker.ui.activity.my;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -23,6 +23,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
@@ -34,6 +35,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import net.eanfang.worker.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -97,7 +99,10 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     private WorkerInfoBean workerInfoBean;
     private WorkerInfoBean setWorkerInfoBean = new WorkerInfoBean();
     private Map<String, String> uploadMap = new HashMap<>();
-    private ArrayList<String> picList1;
+    private ArrayList<String> honorList = new ArrayList<>();
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 7;
+
 
     //身份证正面
     private final int ID_CARD_FRONT = 101;
@@ -200,6 +205,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitle("下一步");
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("bean");
+        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         fillData();
     }
 
@@ -239,41 +245,19 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()));
                 tvUserName.setText(workerInfoBean.getContactName());
             }
-            if (workerInfoBean.getHonorPics() != null) {
-                String[] urls = workerInfoBean.getHonorPics().split(",");
-                picList1 = new ArrayList<>();
-                if (urls.length >= 1) {
-                    ivHonor1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
-                    ivHonor1.setVisibility(View.VISIBLE);
-                } else {
-                    ivHonor1.setVisibility(View.GONE);
-                }
-
-                if (urls.length >= 2) {
-                    ivHonor2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
-                    ivHonor2.setVisibility(View.VISIBLE);
-                } else {
-                    ivHonor2.setVisibility(View.GONE);
-                }
-                if (urls.length >= 3) {
-                    ivHonor3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
-                    ivHonor3.setVisibility(View.VISIBLE);
-                } else {
-                    ivHonor3.setVisibility(View.GONE);
-                }
-                if (urls.length >= 4) {
-                    ivHonor4.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
-                    ivHonor4.setVisibility(View.VISIBLE);
-                } else {
-                    ivHonor4.setVisibility(View.GONE);
-                }
-
-                snplMomentAddPhotos.setData(picList1);
-            }
 
             if (workerInfoBean.getCrimePic() != null) {
                 ivCrimePic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getCrimePic()));
             }
+
+            if (workerInfoBean.getHonorPics()!=null) {
+                String[] prePic = workerInfoBean.getHonorPics().split(",");
+                honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                snplMomentAddPhotos.setEditable(false);
+                snplMomentAddPhotos.setData(honorList);
+            }
+
+
             if (workerInfoBean.getIntro() != null) {
                 etIntro.setText(workerInfoBean.getIntro());
             }
@@ -321,6 +305,27 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 AuthWorkerSysTypeActivity.class).putExtra("status", workerInfoBean.getStatus()));
     }
 
+    /**
+     * 初始化存储图片用的List集合
+     */
+    private void initImgUrlList() {
+
+        //修改小bug 图片读取问题
+        if (StringUtils.isValid(setWorkerInfoBean.getHonorPics())) {
+            String[] prePic = setWorkerInfoBean.getHonorPics().split(",");
+            honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+        }
+
+    }
+
+    private void initNinePhoto() {
+        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        snplMomentAddPhotos.setData(honorList);
+        snplMomentAddPhotos.setEditable(false);
+
+
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -328,11 +333,15 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         if (data == null) {
             return;
         }
-
-        if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-        } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
-            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+        switch (requestCode) {
+            case REQUEST_CODE_CHOOSE_PHOTO_1:
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_PREVIEW_1:
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                break;
+            default:
+                break;
         }
 
     }
