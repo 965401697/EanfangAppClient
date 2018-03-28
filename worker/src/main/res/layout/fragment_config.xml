@@ -8,10 +8,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/ll_header"
                 android:layout_width="match_parent"
@@ -309,10 +311,7 @@
                     android:id="@+id/rl_working"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp">
+                    android:padding="10dp">
 
                     <ImageView
                         android:id="@+id/iv_0"
@@ -364,10 +363,7 @@
                     android:id="@+id/rl_worker_verfity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp">
+                    android:padding="10dp">
 
                     <ImageView
                         android:id="@+id/iv_1"
@@ -419,10 +415,7 @@
                     android:id="@+id/rl_expert_verfity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp">
+                    android:padding="10dp">
 
                     <ImageView
                         android:id="@+id/iv_2"
@@ -478,10 +471,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
@@ -518,10 +508,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
@@ -558,10 +545,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
@@ -599,10 +583,7 @@
                     android:id="@+id/rl_evaluate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
@@ -640,10 +621,7 @@
                     android:id="@+id/rl_collect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
@@ -680,10 +658,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
@@ -721,19 +696,16 @@
                     android:id="@+id/rl_ivite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:padding="10dp"
                     android:background="@drawable/bg_ll_selctor">
 
                     <ImageView
+                        android:id="@+id/imageView14"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_invitation_default"
-                        android:id="@+id/imageView14" />
+                        android:src="@drawable/contend_ic_invitation_default" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -757,9 +729,6 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-
-
 
 
 </LinearLayout>

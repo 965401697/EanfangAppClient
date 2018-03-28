@@ -161,24 +161,40 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void setData(BughandleConfirmEntity bughandleConfirmEntity) {
-        tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
-        tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
-        //录像机天数
-        tv_store_time.setText(GetConstDataUtils.getStoreDayList().get(bughandleConfirmEntity.getStoreDays()));
-        //报警打印功能
-        tv_print_on_alarm.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsAlarmPrinter()));
-        //所有设备时间同步
-        tv_time_right.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsTimeRight()));
-        //各类设备数据远传功能
-        tv_machine_data_remote.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsMachineDataRemote()));
-        //遗留问题
-        tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
-        //协作人员
-        tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
-        initImageList(bughandleConfirmEntity);
-        initNinePhoto();
-        initAdapter(bughandleConfirmEntity.getDetailEntityList());
+        if (bughandleConfirmEntity!=null){
+            if (bughandleConfirmEntity.getOverTime()!=null) {
+                tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
+            }
+            if (bughandleConfirmEntity.getWorkHour()!=null) {
+                tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
+            }
+            //录像机天数
+                tv_store_time.setText(GetConstDataUtils.getStoreDayList().get(bughandleConfirmEntity.getStoreDays()));
 
+            //报警打印功能
+            if (bughandleConfirmEntity.getIsAlarmPrinter()!=null) {
+                tv_print_on_alarm.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsAlarmPrinter()));
+            }
+            //所有设备时间同步
+            if (bughandleConfirmEntity.getIsTimeRight()!=null) {
+                tv_time_right.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsTimeRight()));
+            }
+            //各类设备数据远传功能
+            if (bughandleConfirmEntity.getIsMachineDataRemote()!=null) {
+                tv_machine_data_remote.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsMachineDataRemote()));
+            }
+            //遗留问题
+            if (bughandleConfirmEntity.getLeftoverProblem()!=null) {
+                tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
+            }
+            //协作人员
+            if (bughandleConfirmEntity.getTeamWorker()!=null) {
+                tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
+            }
+            initImageList(bughandleConfirmEntity);
+            initNinePhoto();
+            initAdapter(bughandleConfirmEntity.getDetailEntityList());
+        }
     }
 
     private void initImageList(BughandleConfirmEntity bughandleConfirmEntity) {
