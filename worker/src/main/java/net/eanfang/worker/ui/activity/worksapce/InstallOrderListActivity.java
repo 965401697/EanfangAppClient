@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -43,8 +42,6 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  */
 
 public class InstallOrderListActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
-    @BindView(R.id.tv_no_datas)
-    TextView tvNoDatas;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.swiprefresh)
@@ -83,9 +80,9 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        if (mType==0) {
+        if (mType == 0) {
             queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
-        } else if (mType==1) {
+        } else if (mType == 1) {
             queryEntry.getEquals().put(Constant.ASSIGNEE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
         }
 
@@ -101,7 +98,7 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
                         workspaceInstallBean = bean;
                         setWorkspaceInstallBean(bean);
                         onDataReceived();
-                        EanfangApplication.get().set(WorkspaceInstallBean.class.getName(),bean);
+                        EanfangApplication.get().set(WorkspaceInstallBean.class.getName(), bean);
                     }
 
                     @Override
@@ -129,21 +126,14 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
         mDataList = getWorkspaceInstallBean().getList();
         mAdapter = new WorkspaceInstallAdapter(mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(this));
+
+        rvList.setAdapter(mAdapter);
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new InstallCtrlItemView(InstallOrderListActivity.this, mDataList.get(position).getId()).show();
+                new InstallCtrlItemView(InstallOrderListActivity.this, true,mDataList.get(position).getId()).show();
             }
         });
-
-        if (mDataList.size() > 0) {
-            rvList.setAdapter(mAdapter);
-            tvNoDatas.setVisibility(View.GONE);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        mAdapter.notifyDataSetChanged();
     }
 
 
@@ -184,7 +174,7 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
 
     @Override
     public void onDataReceived() {
-        initView();
+//        initView();
         initAdapter();
         swiprefresh.setRefreshing(false);
     }

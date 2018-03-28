@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -44,7 +43,6 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 public class MineTakePublishListFragment extends BaseFragment implements
         OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {
-    TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
     PublishTakeListAdapter adapter;
@@ -79,7 +77,6 @@ public class MineTakePublishListFragment extends BaseFragment implements
 
     @Override
     protected void initView() {
-        tvNoDatas = (TextView) findViewById(R.id.tv_no_datas);
         swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
         swiprefresh.setOnRefreshListener(this);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
@@ -139,14 +136,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
                     break;
             }
         });
-        if (mDataList.size() > 0) {
             rvList.setAdapter(adapter);
-            tvNoDatas.setVisibility(View.GONE);
-            adapter.notifyDataSetChanged();
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        adapter.notifyDataSetChanged();
     }
 
 
@@ -239,7 +229,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
 
     @Override
     public void onDataReceived() {
-        initView();
+//        initView();
         initAdapter();
         swiprefresh.setRefreshing(false);
     }
