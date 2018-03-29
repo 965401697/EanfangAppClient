@@ -54,7 +54,7 @@ public class CreateTeamView extends BaseDialog {
 
     // 回调监听函数
     public interface RefreshListener {
-        public void refreshData();
+        void refreshData();
     }
 
     @Override

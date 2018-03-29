@@ -39,10 +39,21 @@ public class CreateTeamView extends BaseDialog {
     TextView tvConfirm;
     private Activity mContext;
 
-
+    //回调函数
+    private RefreshListener mRefreshListener;
     public CreateTeamView(Activity context) {
         super(context);
         this.mContext = context;
+    }
+    public CreateTeamView(Activity context, RefreshListener refreshListener) {
+        super(context);
+        this.mRefreshListener = refreshListener;
+        this.mContext = context;
+    }
+
+    // 回调监听函数
+    public interface RefreshListener {
+        void refreshData();
     }
 
     @Override
@@ -62,6 +73,7 @@ public class CreateTeamView extends BaseDialog {
                 .params("name", etInputCompany.getText().toString().trim())
                 .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
                     updateData();
+                    mRefreshListener.refreshData();
                     dismiss();
                 }));
     }
@@ -74,9 +86,7 @@ public class CreateTeamView extends BaseDialog {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
                         EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-
                     }
-
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);
