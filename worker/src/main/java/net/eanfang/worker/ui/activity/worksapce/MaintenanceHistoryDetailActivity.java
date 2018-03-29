@@ -32,7 +32,6 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
     public static final String TAG = MaintenanceHistoryDetailActivity.class.getSimpleName();
     private TextView tv_maintenance_circle;
     private LinearLayout ll_maintenance_circle;
-    private TextView tv_add;
     private RecyclerView rcv_detail;
     private EditText et_contract;
     private EditText et_contract_phone;
@@ -48,7 +47,6 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance);
         initView();
-        supprotToolbar();
         setTitle("维修保养");
         getData();
 
@@ -58,7 +56,6 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
     private void initView() {
         tv_maintenance_circle = (TextView) findViewById(R.id.tv_maintenance_circle);
         ll_maintenance_circle = (LinearLayout) findViewById(R.id.ll_maintenance_circle);
-        tv_add = (TextView) findViewById(R.id.tv_add);
         rcv_detail = (RecyclerView) findViewById(R.id.rcv_detail);
         et_contract = (EditText) findViewById(R.id.et_contract);
         et_contract.setFocusable(false);
@@ -66,7 +63,6 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
         et_contract_phone.setFocusable(false);
         et_client_company_name = (EditText) findViewById(R.id.et_client_company_name);
         et_client_company_name.setFocusable(false);
-        tv_add.setVisibility(View.GONE);
         tv_commit = (TextView) findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.GONE);
 
