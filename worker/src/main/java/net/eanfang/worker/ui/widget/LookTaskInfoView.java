@@ -78,10 +78,7 @@ public class LookTaskInfoView extends BaseDialog {
     private void initView() {
         tvTitle.setText("任务明细");
         ivLeft.setOnClickListener(v -> dismiss());
-        // TODO: 2017/12/13 图片点击放大待处理 
-//        ivPic1.setOnClickListener(this);
-//        ivPic2.setOnClickListener(this);
-//        ivPic3.setOnClickListener(this);
+
 
         tvOrders.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel())));
         tvFirstFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getFirstLook())));
@@ -119,30 +116,5 @@ public class LookTaskInfoView extends BaseDialog {
 
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        ArrayList<String> picList = new ArrayList<String>();
-//        switch (v.getId()) {
-//            case R.id.iv_pic1:
-//                if (!StringUtils.isEmpty(detailBean.getPic1())) {
-//                    picList.add(detailBean.getPic1());
-//                }
-//                break;
-//            case R.id.iv_pic2:
-//                if (!StringUtils.isEmpty(detailBean.getPic2())) {
-//                    picList.add(detailBean.getPic2());
-//                }
-//                break;
-//            case R.id.iv_pic3:
-//                if (!StringUtils.isEmpty(detailBean.getPic3())) {
-//                    picList.add(detailBean.getPic3());
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//        ImagePerviewUtil.perviewImage(mContext, picList);
-//
-//    }
 
 }
