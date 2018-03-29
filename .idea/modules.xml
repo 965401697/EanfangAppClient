@@ -3,9 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EanfangAppClient.iml" filepath="$PROJECT_DIR$/EanfangAppClient.iml" />
+      <module fileurl="file://D:\yaf\EanfangAppClient\EanfangAppClient.iml" filepath="D:\yaf\EanfangAppClient\EanfangAppClient.iml" />
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
+      <module fileurl="file://D:\yaf\EanfangAppClient\client\client.iml" filepath="D:\yaf\EanfangAppClient\client\client.iml" />
       <module fileurl="file://$PROJECT_DIR$/eanfang/eanfang.iml" filepath="$PROJECT_DIR$/eanfang/eanfang.iml" />
+      <module fileurl="file://D:\yaf\EanfangAppClient\eanfang\eanfang.iml" filepath="D:\yaf\EanfangAppClient\eanfang\eanfang.iml" />
       <module fileurl="file://$PROJECT_DIR$/worker/worker.iml" filepath="$PROJECT_DIR$/worker/worker.iml" />
+      <module fileurl="file://D:\yaf\EanfangAppClient\worker\worker.iml" filepath="D:\yaf\EanfangAppClient\worker\worker.iml" />
     </modules>
   </component>
 </project>
