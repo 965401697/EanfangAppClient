@@ -1,7 +1,9 @@
 package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -10,6 +12,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.MaintenanceActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +34,8 @@ public class MaintainCtrlView extends BaseDialog {
     RelativeLayout llMineAssignment;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
     private Activity mContext;
 
     public MaintainCtrlView(Activity context, boolean isfull) {
@@ -48,6 +53,9 @@ public class MaintainCtrlView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("维保管控");
+        ivRight.setImageResource(R.drawable.nav_ic_add_pressed);
+        ivRight.setVisibility(View.VISIBLE);
+        ivRight.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, MaintenanceActivity.class)));
         llMineAssignment.setOnClickListener((v) -> {
             new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUserId(), 0).show();
         });
