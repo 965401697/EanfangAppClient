@@ -19,9 +19,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by xudingbing on 2018/3/29.
  * 使用说明：
  * 1、写缓存：
- * CacheUtil.put(getContext(),"com.yaf.client",jsonStr)
+ * CacheUtil.put(getContext(),"com.yaf.client",keyStr,jsonStr)
  * 2、批量写缓存
- * CacheUtil.put(getContext(),"com.yaf.client",jsonStrList)
+ * CacheUtil.put(getContext(),"com.yaf.client",keyStr,jsonStrList)
  * 3、读缓存
  * CacheUtil.get(getContext(),"com.yaf.client",keyStr,(result)->{ System.out.println(result); })
  * 4、批量读缓存
