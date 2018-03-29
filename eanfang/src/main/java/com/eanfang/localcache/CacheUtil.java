@@ -17,6 +17,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by xudingbing on 2018/3/29.
+ * 使用说明：
+ * 1、写缓存：
+ * CacheUtil.put(getContext(),"com.yaf.client",jsonStr)
+ * 2、批量写缓存
+ * CacheUtil.put(getContext(),"com.yaf.client",jsonStrList)
+ * 3、读缓存
+ * CacheUtil.get(getContext(),"com.yaf.client",keyStr,(result)->{ System.out.println(result); })
+ * 4、批量读缓存
+ * CacheUtil.get(getContext(),"com.yaf.client",keyStrList,(result)->{ for(String val:result){System.out.println(val);} })
+ * 5、清空缓存
+ * CacheUtil.remove(getContext(),"com.yaf.client",keyStr)
+ * 6、批量清空缓存
+ * * CacheUtil.remove(getContext(),"com.yaf.client",keyStrList)
+ * 7、删除特定缓存
+ * CacheUtil.removeAll(getContext(),"com.yaf.client")
  */
 
 public class CacheUtil {
