@@ -193,8 +193,8 @@ public class RepairActivity extends BaseClientActivity {
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
 
-        bean.setRepairContactPhone(etContact.getText().toString().trim());
-        bean.setRepairContacts(etPhone.getText().toString().trim());
+        bean.setRepairContactPhone(etPhone.getText().toString().trim());
+        bean.setRepairContacts(etContact.getText().toString().trim());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
         bean.setOwnerUserId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getUserId());
         bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getTopCompanyId());
