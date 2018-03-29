@@ -23,6 +23,7 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateManager;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -30,14 +31,12 @@ import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-import net.eanfang.client.ui.fragment.ContactListFragment;
 import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.ContactListFragment;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
-
-import com.eanfang.util.UpdateManager;
 
 import butterknife.ButterKnife;
 import q.rorbin.badgeview.Badge;
@@ -148,23 +147,21 @@ public class MainActivity extends BaseClientActivity {
      * 请求基础数据
      */
     private void getBaseData() {
-        new Thread(() -> {
-            String url;
-            BaseDataBean dataBean = Config.get().getBaseDataBean();
-            if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
-                url = NewApiService.GET_BASE_DATA_CACHE + "0";
-            } else {
-                url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
-            }
-            EanfangHttp.get(url)
-                    .tag(this)
-                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                        if (!str.contains(Constant.NO_UPDATE)) {
-                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                        }
-                    }));
-        }).start();
+        String url;
+        BaseDataBean dataBean = Config.get().getBaseDataBean();
+        if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
+            url = NewApiService.GET_BASE_DATA_CACHE + "0";
+        } else {
+            url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    if (!str.contains(Constant.NO_UPDATE)) {
+                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                    }
+                }));
 
     }
 
@@ -172,30 +169,28 @@ public class MainActivity extends BaseClientActivity {
      * 请求静态常量
      */
     private void getConst() {
-        new Thread(() -> {
-            String url;
-            ConstAllBean constBean = Config.get().getConstBean();
-            if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
-                url = NewApiService.GET_CONST_CACHE + "0";
-            } else {
-                url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
-            }
-            EanfangHttp.get(url)
-                    .tag(this)
-                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                        if (!str.contains(Constant.NO_UPDATE)) {
-                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                        }
-                        runOnUiThread(() -> {
-                            PermissionUtils.get(this).getStoragePermission(() -> {
-                                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-                                manager.checkUpdate();
-                            });
+        String url;
+        ConstAllBean constBean = Config.get().getConstBean();
+        if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
+            url = NewApiService.GET_CONST_CACHE + "0";
+        } else {
+            url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    if (!str.contains(Constant.NO_UPDATE)) {
+                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                    }
+                    runOnUiThread(() -> {
+                        PermissionUtils.get(this).getStoragePermission(() -> {
+                            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+                            manager.checkUpdate();
                         });
+                    });
 
-                    }));
-        }).start();
+                }));
     }
 
     public void initXinGe() {
