@@ -180,6 +180,7 @@ public class CacheUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return mDiskLruCache;
     }
 
     public static String hashKeyForDisk(String key) {
