@@ -51,11 +51,11 @@ public class ContactsFragment extends BaseFragment {
         getData();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getData();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        getData();
+//    }
 
     private void getData() {
         EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)
@@ -119,6 +119,11 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity()).show());
+        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), new CreateTeamView.RefreshListener() {
+            @Override
+            public void refreshData() {
+                getData();
+            }
+        }).show());
     }
 }

@@ -31,13 +31,24 @@ public class MessageDetailView extends BaseDialog {
     TextView tvMsgContent;
     private Activity mContext;
     private NoticeEntity listBean;
-
+    //回调函数
+    private RefreshListener mRefreshListener;
     public MessageDetailView(Activity context, NoticeEntity listBean) {
         super(context);
         this.mContext = context;
         this.listBean = listBean;
     }
+    public MessageDetailView(Activity context, NoticeEntity listBean, RefreshListener refreshListener) {
+        super(context);
+        this.mRefreshListener = refreshListener;
+        this.mContext = context;
+        this.listBean = listBean;
+    }
 
+    // 回调监听函数
+    public interface RefreshListener {
+        void refreshData();
+    }
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.message_detail_view);
@@ -50,5 +61,11 @@ public class MessageDetailView extends BaseDialog {
         tvMsgContent.setText("\n\t" + listBean.getContent() + "\r\n\t" + (extInfo != null ? extInfo : ""));
 
         tvTime.setText(GetDateUtils.dateToDateTimeString(listBean.getCreateTime()));
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        mRefreshListener.refreshData();
     }
 }

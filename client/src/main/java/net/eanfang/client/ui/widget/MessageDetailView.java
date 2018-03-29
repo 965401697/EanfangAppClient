@@ -2,6 +2,7 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.eanfang.config.Config;
@@ -33,10 +34,25 @@ public class MessageDetailView extends BaseDialog {
     private Activity mContext;
     private NoticeEntity listBean;
 
+    //回调函数
+    private RefreshListener mRefreshListener;
+
     public MessageDetailView(Activity context, NoticeEntity listBean) {
         super(context);
         this.mContext = context;
         this.listBean = listBean;
+    }
+
+    public MessageDetailView(Activity context, NoticeEntity listBean, RefreshListener refreshListener) {
+        super(context);
+        this.mRefreshListener = refreshListener;
+        this.mContext = context;
+        this.listBean = listBean;
+    }
+
+    // 回调监听函数
+    public interface RefreshListener {
+        void refreshData();
     }
 
     @Override
@@ -56,6 +72,6 @@ public class MessageDetailView extends BaseDialog {
     @Override
     public void dismiss() {
         super.dismiss();
-
+        mRefreshListener.refreshData();
     }
 }
