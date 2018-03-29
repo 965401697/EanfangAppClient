@@ -107,8 +107,7 @@ public class WorkspaceFragment extends BaseFragment {
 //            new MaintainCtrlView(getActivity(), true).show();
             showToast("制造中。。。");
         });
-        //维保
-//        startActivity(new Intent(getActivity(), MaintenanceActivity.class));
+
     }
 
     /**
