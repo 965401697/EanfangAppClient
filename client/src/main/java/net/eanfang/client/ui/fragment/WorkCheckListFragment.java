@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -41,7 +40,6 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 public class WorkCheckListFragment extends BaseFragment
         implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
     private static int page = 1;
-    TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
     private List<WorkCheckListBean.ListBean> mDataList;
@@ -74,7 +72,6 @@ public class WorkCheckListFragment extends BaseFragment
 
     @Override
     protected void initView() {
-        tvNoDatas = (TextView) findViewById(R.id.tv_no_datas);
         swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
         swiprefresh.setOnRefreshListener(this);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
@@ -97,14 +94,7 @@ public class WorkCheckListFragment extends BaseFragment
                 new WorkCheckInfoView(getActivity(), true, mDataList.get(position).getId()).show();
             }
         });
-        if (mDataList.size() > 0) {
-            rvList.setAdapter(mAdapter);
-            tvNoDatas.setVisibility(View.GONE);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        mAdapter.notifyDataSetChanged();
+        rvList.setAdapter(mAdapter);
     }
 
     @Override
@@ -149,7 +139,7 @@ public class WorkCheckListFragment extends BaseFragment
 
     @Override
     public void onDataReceived() {
-        initView();
+//        initView();
 
         swiprefresh.setRefreshing(false);
     }
