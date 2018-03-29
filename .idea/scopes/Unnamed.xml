@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Unnamed" pattern="file[client]:*/||file[eanfang]:*/||file[EanfangAppClient]:*/||file[worker]:*/" />
+</component>

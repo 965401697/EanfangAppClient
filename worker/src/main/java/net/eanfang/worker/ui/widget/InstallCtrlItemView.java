@@ -68,8 +68,8 @@ public class InstallCtrlItemView extends BaseDialog {
     private Long id;
     private Activity mContext;
 
-    public InstallCtrlItemView(Activity context, Long id) {
-        super(context);
+    public InstallCtrlItemView(Activity context,boolean isFull, Long id) {
+        super(context, isFull);
         this.mContext = context;
         this.id = id;
 
