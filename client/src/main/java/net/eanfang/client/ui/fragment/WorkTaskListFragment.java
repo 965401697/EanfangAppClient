@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -45,7 +44,6 @@ public class WorkTaskListFragment extends BaseFragment
         implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
 
     private static int page = 1;
-    TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
     private List<WorkTaskListBean.ListBean> mDataList;
@@ -77,7 +75,6 @@ public class WorkTaskListFragment extends BaseFragment
 
     @Override
     protected void initView() {
-        tvNoDatas = (TextView) findViewById(R.id.tv_no_datas);
         swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
         swiprefresh.setOnRefreshListener(this);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
@@ -110,14 +107,8 @@ public class WorkTaskListFragment extends BaseFragment
 
         mAdapter = new WorkTaskListAdapter(mDataList);
         rvList.addOnItemTouchListener(onItemClickListener);
-        if (mDataList.size() > 0) {
-            rvList.setAdapter(mAdapter);
-            tvNoDatas.setVisibility(View.GONE);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        mAdapter.notifyDataSetChanged();
+        rvList.setAdapter(mAdapter);
+
     }
 
 
@@ -206,7 +197,7 @@ public class WorkTaskListFragment extends BaseFragment
 
     @Override
     public void onDataReceived() {
-        initView();
+//        initView();
 //        initAdapter();
         swiprefresh.setRefreshing(false);
     }
