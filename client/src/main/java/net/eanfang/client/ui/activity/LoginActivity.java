@@ -121,6 +121,11 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
                 if (StringUtils.isEmpty(userAulth)) {
                     userAulth = "admin";
                 }
+                //电话号码是否符合格式
+                if (!StringUtils.isMobileString(et_phone.getText().toString().trim())) {
+                    showToast("请输入正确手机号");
+                    return;
+                }
 
                 if (userAulth.equals("admin")) {
                     setLogin(userPhone, userAulth);
