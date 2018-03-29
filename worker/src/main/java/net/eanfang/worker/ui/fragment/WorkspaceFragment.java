@@ -66,11 +66,6 @@ public class WorkspaceFragment extends BaseFragment {
 //        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
 //            new LeaveBugView(getActivity(), true).show();
 //        });
-//        //合作公司
-//        findViewById(R.id.ll_cooperation_ctrl).setOnClickListener((v) -> {
-//            startActivity(new Intent(getActivity(), PartnerActivity.class));
-//        });
-//
 
     }
 

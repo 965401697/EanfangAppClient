@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +18,8 @@ import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.util.V.v;
 
 /**
  * Created by MrHou
@@ -82,15 +83,15 @@ public class LookTaskInfoView extends BaseDialog {
 //        ivPic2.setOnClickListener(this);
 //        ivPic3.setOnClickListener(this);
 
-        tvOrders.setText(GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel()));
-        tvFirstFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirstLook()));
-        tvSecondFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirstCallback()));
-        tvThirdFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getThenCallback()));
-        tvEndTimes.setText(detailBean.getEndTime());
-        etComment.setText(detailBean.getInfo());
-        etWorker.setText(detailBean.getJoinPerson());
-        etStandard.setText(detailBean.getCriterion());
-        etGoal.setText(detailBean.getPurpose());
+        tvOrders.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel())));
+        tvFirstFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getFirstLook())));
+        tvSecondFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getFirstCallback())));
+        tvThirdFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getThenCallback())));
+        tvEndTimes.setText(v(()->detailBean.getEndTime()));
+        etComment.setText(v(()->detailBean.getInfo()));
+        etWorker.setText(v(()->detailBean.getJoinPerson()));
+        etStandard.setText(v(()->detailBean.getCriterion()));
+        etGoal.setText(v(()->detailBean.getPurpose()));
         if (!StringUtils.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 

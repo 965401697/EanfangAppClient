@@ -1,5 +1,7 @@
 package com.eanfang.util;
 
+import android.util.Log;
+
 /**
  * Created by xudingbing on 2018/3/29.
  * 无异常获得对象取值
@@ -14,7 +16,8 @@ public final class V {
     public static <T> T v(IV<T> express) {
         try {
             return express.eval();
-        }catch(Exception e) {
+        } catch (Exception e) {
+            Log.e("excption", "异常了");
         }
         return null;
     }
