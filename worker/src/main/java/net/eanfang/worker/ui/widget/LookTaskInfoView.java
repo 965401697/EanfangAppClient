@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +18,8 @@ import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.util.V.v;
 
 /**
  * Created by MrHou
@@ -77,20 +78,17 @@ public class LookTaskInfoView extends BaseDialog {
     private void initView() {
         tvTitle.setText("任务明细");
         ivLeft.setOnClickListener(v -> dismiss());
-        // TODO: 2017/12/13 图片点击放大待处理 
-//        ivPic1.setOnClickListener(this);
-//        ivPic2.setOnClickListener(this);
-//        ivPic3.setOnClickListener(this);
 
-        tvOrders.setText(GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel()));
-        tvFirstFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirstLook()));
-        tvSecondFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirstCallback()));
-        tvThirdFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getThenCallback()));
-        tvEndTimes.setText(detailBean.getEndTime());
-        etComment.setText(detailBean.getInfo());
-        etWorker.setText(detailBean.getJoinPerson());
-        etStandard.setText(detailBean.getCriterion());
-        etGoal.setText(detailBean.getPurpose());
+
+        tvOrders.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel())));
+        tvFirstFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getFirstLook())));
+        tvSecondFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getFirstCallback())));
+        tvThirdFrequency.setText(v(()->GetConstDataUtils.getInstancyList().get(detailBean.getThenCallback())));
+        tvEndTimes.setText(v(()->detailBean.getEndTime()));
+        etComment.setText(v(()->detailBean.getInfo()));
+        etWorker.setText(v(()->detailBean.getJoinPerson()));
+        etStandard.setText(v(()->detailBean.getCriterion()));
+        etGoal.setText(v(()->detailBean.getPurpose()));
         if (!StringUtils.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
@@ -118,30 +116,5 @@ public class LookTaskInfoView extends BaseDialog {
 
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        ArrayList<String> picList = new ArrayList<String>();
-//        switch (v.getId()) {
-//            case R.id.iv_pic1:
-//                if (!StringUtils.isEmpty(detailBean.getPic1())) {
-//                    picList.add(detailBean.getPic1());
-//                }
-//                break;
-//            case R.id.iv_pic2:
-//                if (!StringUtils.isEmpty(detailBean.getPic2())) {
-//                    picList.add(detailBean.getPic2());
-//                }
-//                break;
-//            case R.id.iv_pic3:
-//                if (!StringUtils.isEmpty(detailBean.getPic3())) {
-//                    picList.add(detailBean.getPic3());
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//        ImagePerviewUtil.perviewImage(mContext, picList);
-//
-//    }
 
 }

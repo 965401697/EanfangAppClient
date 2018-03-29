@@ -129,38 +129,6 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
                                 currentFragment.onDataReceived();
                             });
                         })
-//                {
-//
-//                    @Override
-//                    public void onSuccess(final WorkCheckListBean bean) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                workChenkBean = bean;
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        currentFragment.onDataReceived();
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        super.onNoData(message);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                WorkCheckListBean bean = new WorkCheckListBean();
-//                                bean.setList(new ArrayList<WorkCheckListBean.ListBean>());
-//                                setWorkChenkBean(bean);
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
                 );
 
     }

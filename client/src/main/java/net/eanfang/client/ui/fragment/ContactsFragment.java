@@ -22,6 +22,7 @@ import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 import net.eanfang.client.ui.widget.CreateTeamView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,12 +49,11 @@ public class ContactsFragment extends BaseFragment {
     protected void initData(Bundle arguments) {
         getData();
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getData();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        getData();
+//    }
 
     private void getData() {
         EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)
@@ -111,11 +111,16 @@ public class ContactsFragment extends BaseFragment {
     protected void initView() {
         rev_list = (RecyclerView) findViewById(R.id.rev_list);
         rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
-
     }
 
     @Override
     protected void setListener() {
-        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity()).show());
+        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), new CreateTeamView.RefreshListener() {
+            @Override
+            public void refreshData() {
+                getData();
+                parentAdapter.notifyDataSetChanged();
+            }
+        }).show());
     }
 }
