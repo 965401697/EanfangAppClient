@@ -2,6 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.model.QuotationBean;
 import com.eanfang.util.GetConstDataUtils;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class QuotationDetailAdapter extends BaseQuickAdapter<QuotationBean.QuoteDevicesBean, BaseViewHolder> {
 
-    private Config config = Config.get(mContext);
+    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
     private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public QuotationDetailAdapter(int layoutResId, List data) {

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseViewHolder> {
 
-    private Config config = Config.get(mContext);
+    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
     private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public LeaveBugAdapter(List<RepairFailureEntity> data) {

@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:layout_marginRight="20dp"
-            android:text="完成时间:2018-01-1111:01"
+            android:text="完成时间: - -"
             android:textSize="12sp" />
 
         <TextView

@@ -6,6 +6,7 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
@@ -23,8 +24,8 @@ import java.util.List;
 
 public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHolder> {
 
-    private Config config = Config.get(mContext);
-    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
+    private Config config;
+    private GetConstDataUtils constDataUtils;
 
     private final boolean[] isShowFirstBtnClient = {
             false, false, false, false, true, true, false
@@ -38,6 +39,9 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
     public RepairedManageOrderAdapter(List<RepairOrderEntity> data) {
         super(R.layout.item_workspace_order_list, data);
         doSomething = doSomethingClient;
+        config = Config.get(EanfangApplication.get().getApplicationContext());
+        constDataUtils = GetConstDataUtils.get(config);
+
 
     }
 

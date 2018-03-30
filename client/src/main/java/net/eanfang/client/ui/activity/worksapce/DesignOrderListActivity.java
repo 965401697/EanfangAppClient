@@ -53,10 +53,11 @@ public class DesignOrderListActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_list);
+        allmTitles = constDataUtils.getDesignStatus();
         ButterKnife.bind(this);
         initView();
         initData(1);
-        allmTitles = constDataUtils.getDesignStatus();
+
     }
 
     private void initView() {

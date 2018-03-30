@@ -62,9 +62,11 @@ public class WorkTaskListActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_list);
+
+        allmTitles = constDataUtils.getWorkTaskStatus();
         ButterKnife.bind(this);
         initView();
-        allmTitles = constDataUtils.getWorkTaskStatus();
+
     }
 
     private void initView() {

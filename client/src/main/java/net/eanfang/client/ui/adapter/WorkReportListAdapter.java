@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.WorkReportListBean;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 
 public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.ListBean, BaseViewHolder> {
-    private Config config = Config.get(mContext);
+    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
     private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public WorkReportListAdapter(List<WorkReportListBean.ListBean> data) {

@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBean.ListBean, BaseViewHolder> {
-    private Config config = Config.get(mContext);
+    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
     private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public WorkspaceInstallAdapter(List<WorkspaceInstallBean.ListBean> data) {

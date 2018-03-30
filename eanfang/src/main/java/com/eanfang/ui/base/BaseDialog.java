@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.eanfang.R;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 
@@ -22,18 +23,14 @@ public abstract class BaseDialog extends Dialog {
     protected Activity context = null;
     protected Handler hander = new Handler();
 
-    public Config config;
-    public GetConstDataUtils constDataUtils;
+    public Config config = Config.get(EanfangApplication.get().getApplicationContext());
+    public GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public BaseDialog(Activity context) {
         super(context);
         this.context = context;
         setCanceledOnTouchOutside(true);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        config = Config.get(context);
-        constDataUtils = GetConstDataUtils.get(config);
-
     }
 
     public BaseDialog(Activity context, boolean isfull) {

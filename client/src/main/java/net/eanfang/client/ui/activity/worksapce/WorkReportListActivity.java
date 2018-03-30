@@ -53,10 +53,12 @@ public class WorkReportListActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_list);
+        allmTitles = constDataUtils.getWorkReportStatus();
         ButterKnife.bind(this);
+
         initView();
 
-        allmTitles = constDataUtils.getWorkReportStatus();
+
     }
 
     private void initView() {

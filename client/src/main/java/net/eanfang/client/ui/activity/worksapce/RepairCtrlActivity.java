@@ -46,6 +46,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
+        mTitlesClient = constDataUtils.getRepairStatus();
 
         mTitles = new String[mTitlesClient.size()];
         mTitlesClient.toArray(mTitles);
@@ -85,7 +86,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
         setLeftBack();
         currentFragment = (OrderListFragment) mFragments.get(0);
 
-        mTitlesClient = constDataUtils.getRepairStatus();
+
         initData();
 
     }

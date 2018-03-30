@@ -49,6 +49,7 @@ public class MateraInfoView extends BaseDialog {
         super(context, isfull);
         this.mContext = context;
         this.bughandleUseDeviceEntity = bughandleUseDeviceEntity;
+
     }
 
     @Override

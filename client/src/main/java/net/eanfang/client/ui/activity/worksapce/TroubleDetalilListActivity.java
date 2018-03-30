@@ -20,6 +20,7 @@ import com.eanfang.model.PageUtils;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.BughandleConfirmEntity;
 
 import net.eanfang.client.R;
@@ -100,6 +101,12 @@ public class TroubleDetalilListActivity extends BaseDialog {
         } else {
             intent = new Intent(mContext, PsTroubleDetailActivity.class);
         }
+
+        if (mDataList.get(position).getOverTime() == null) {
+            showToast("还没有完工，暂时不能查看");
+            return;
+        }
+
         intent.putExtra("orderId", mDataList.get(position).getId());
         intent.putExtra("repairOrderId", mDataList.get(position).getBusRepairOrderId());
         intent.putExtra("status", status);

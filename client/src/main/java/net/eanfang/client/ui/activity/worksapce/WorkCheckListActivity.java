@@ -61,9 +61,10 @@ public class WorkCheckListActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+        allmTitles  = constDataUtils.getWorkInspectStatus();
         ButterKnife.bind(this);
         initView();
-        allmTitles  = constDataUtils.getWorkInspectStatus();
+
     }
 
     private void initView() {

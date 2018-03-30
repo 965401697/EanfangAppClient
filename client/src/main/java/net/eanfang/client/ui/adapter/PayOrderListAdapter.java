@@ -23,7 +23,7 @@ import java.util.List;
 
 public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListBean, BaseViewHolder> {
 
-    private Config config = Config.get(mContext);
+    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
     private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public PayOrderListAdapter(int layoutResId, List data) {
