@@ -34,7 +34,7 @@ import java.util.List;
  */
 
 public class RepairCtrlActivity extends BaseClientActivity {
-    private List<String> mTitlesClient;
+    private final List<String> mTitlesClient = GetConstDataUtils.getRepairStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
@@ -46,7 +46,6 @@ public class RepairCtrlActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
-        mTitlesClient = constDataUtils.getRepairStatus();
 
         mTitles = new String[mTitlesClient.size()];
         mTitlesClient.toArray(mTitles);
@@ -85,8 +84,6 @@ public class RepairCtrlActivity extends BaseClientActivity {
         setTitle("报修管控");
         setLeftBack();
         currentFragment = (OrderListFragment) mFragments.get(0);
-
-
         initData();
 
     }
@@ -95,7 +92,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
     public void initData() {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(currentFragment.getTitle())) {
-            String status = constDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
+            String status = GetConstDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         queryEntry.setPage(1);

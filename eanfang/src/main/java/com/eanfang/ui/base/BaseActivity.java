@@ -25,10 +25,7 @@ import android.widget.Toast;
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PermissionsCallBack;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.model.LoginBean;
@@ -47,10 +44,6 @@ public class BaseActivity extends AppCompatActivity implements
     public Dialog loadingDialog;
     private PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
-
-    public Config config;
-
-    public GetConstDataUtils constDataUtils;
 
     //Android6.0申请权限的回调方法
     @Override
@@ -90,8 +83,6 @@ public class BaseActivity extends AppCompatActivity implements
         EventBus.getDefault().register(this);
         loadingDialog = DialogUtil.createLoadingDialog(this);
         RegListener();
-        config = Config.get(this);
-        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override

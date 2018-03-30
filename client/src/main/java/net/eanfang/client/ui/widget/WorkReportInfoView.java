@@ -115,7 +115,7 @@ public class WorkReportInfoView extends BaseDialog {
 
                             etCompanyName.setText(bean.getCreateCompany().getOrgName());
                             etDepartmentName.setText(bean.getCreateOrg().getOrgName());
-                            tvReportType.setText(constDataUtils.getWorkReportTypeList().get(bean.getType()));
+                            tvReportType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
                             tvReportCommitTime.setText(bean.getCreateTime());
                             tvReportCommitPerson.setText(bean.getCreateUser().getAccountEntity().getRealName());
                             tvReportRevPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());

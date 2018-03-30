@@ -58,7 +58,7 @@ public class QuotationPartsView extends BaseDialog {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("配件明细");
         etPartsName.setText(quotePartsBean.getPartName());
-        tvUnit.setText(constDataUtils.getDeviceUnitList().get(quotePartsBean.getUnit()));
+        tvUnit.setText(GetConstDataUtils.getDeviceUnitList().get(quotePartsBean.getUnit()));
         etAmount.setText(quotePartsBean.getCount() + "");
         etPrice.setText(quotePartsBean.getUnitPrice() + "");
         etPartSpeciication.setText(quotePartsBean.getPartSpeciication());

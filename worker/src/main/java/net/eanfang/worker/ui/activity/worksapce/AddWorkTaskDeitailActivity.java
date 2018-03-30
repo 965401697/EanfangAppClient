@@ -12,6 +12,7 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.model.WorkTaskBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -106,19 +107,19 @@ public class AddWorkTaskDeitailActivity extends BaseWorkerActivity implements Vi
         switch (v.getId()) {
             //优先级
             case R.id.ll_order:
-                PickerSelectUtil.singleTextPicker(this, "", tvOrders, constDataUtils.getInstancyList());
+                PickerSelectUtil.singleTextPicker(this, "", tvOrders, GetConstDataUtils.getInstancyList());
                 break;
             //首次响应
             case R.id.ll_first_frequency:
-                PickerSelectUtil.singleTextPicker(this, "", tvFirstFrequency, constDataUtils.getFirstLookList());
+                PickerSelectUtil.singleTextPicker(this, "", tvFirstFrequency, GetConstDataUtils.getFirstLookList());
                 break;
             //首次汇报
             case R.id.ll_second_frequency:
-                PickerSelectUtil.singleTextPicker(this, "", tvSecondFrequency, constDataUtils.getFirstCallbackList());
+                PickerSelectUtil.singleTextPicker(this, "", tvSecondFrequency, GetConstDataUtils.getFirstCallbackList());
                 break;
             //跟踪汇报
             case R.id.ll_third_frequency:
-                PickerSelectUtil.singleTextPicker(this, "", tvThirdFrequency, constDataUtils.getThenCallbackList());
+                PickerSelectUtil.singleTextPicker(this, "", tvThirdFrequency, GetConstDataUtils.getThenCallbackList());
                 break;
             //截至日期
             case R.id.ll_end_times:
@@ -191,10 +192,10 @@ public class AddWorkTaskDeitailActivity extends BaseWorkerActivity implements Vi
         }
 
         bean.setTitle(title);
-        bean.setInstancyLevel(constDataUtils.getInstancyList().indexOf(orders));
-        bean.setFirst_look(constDataUtils.getFirstLookList().indexOf(first));
-        bean.setFirst_callback(constDataUtils.getFirstCallbackList().indexOf(second));
-        bean.setThen_callback(constDataUtils.getThenCallbackList().indexOf(third));
+        bean.setInstancyLevel(GetConstDataUtils.getInstancyList().indexOf(orders));
+        bean.setFirst_look(GetConstDataUtils.getFirstLookList().indexOf(first));
+        bean.setFirst_callback(GetConstDataUtils.getFirstCallbackList().indexOf(second));
+        bean.setThen_callback(GetConstDataUtils.getThenCallbackList().indexOf(third));
         bean.setEnd_time(endtime);
         bean.setInfo(conment);
         bean.setPurpose(goal);

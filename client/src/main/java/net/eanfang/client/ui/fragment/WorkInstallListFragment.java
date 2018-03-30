@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkspaceInstallBean;
@@ -123,7 +122,7 @@ public class WorkInstallListFragment extends BaseFragment
     private void getData() {
         String status = null;
         if (!"全部".equals(mTitle)) {
-            status = constDataUtils.get(Config.get(mActivity)).getInstallStatus().indexOf(getmTitle()) + "";
+            status = GetConstDataUtils.getInstallStatus().indexOf(getmTitle()) + "";
         }
 
         QueryEntry queryEntry = new QueryEntry();

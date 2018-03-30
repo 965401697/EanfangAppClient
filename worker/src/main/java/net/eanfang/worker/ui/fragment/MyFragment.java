@@ -17,6 +17,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -113,9 +114,9 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void setListener() {
         rlWorkingStatus.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(getActivity(), "", constDataUtils.getWorkerStatus(), (index, item) -> {
+            PickerSelectUtil.singleTextPicker(getActivity(), "", GetConstDataUtils.getWorkerStatus(), (index, item) -> {
                 tvWorkerStatus.setText(item);
-                setWorkStatus(config.getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(item));
+                setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(item));
                 PrefUtils.setString("status", item);
             });
 

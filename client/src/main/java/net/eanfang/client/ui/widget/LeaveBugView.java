@@ -93,13 +93,13 @@ public class LeaveBugView extends BaseDialog {
                 if (dataList.get(position).getRepairOrderEntity().getIsPhoneSolve() == 0) {
                     mContext.startActivity(new Intent(mContext, TroubleDetailActivity.class)
                             .putExtra("orderId", dataList.get(position).getId())
-                            .putExtra("status", constDataUtils.getBugDetailList().get(dataList.get(position).getStatus()))
+                            .putExtra("status", GetConstDataUtils.getBugDetailList().get(dataList.get(position).getStatus()))
                             .putExtra("repairOrderId", dataList.get(position).getBusRepairOrderId())
                     );
                 } else {
                     mContext.startActivity(new Intent(mContext, PsTroubleDetailActivity.class)
                             .putExtra("orderId", dataList.get(position).getId())
-                            .putExtra("status", constDataUtils.getBugDetailList().get(dataList.get(position).getStatus()))
+                            .putExtra("status", GetConstDataUtils.getBugDetailList().get(dataList.get(position).getStatus()))
                             .putExtra("repairOrderId", dataList.get(position).getBusRepairOrderId())
                     );
                 }

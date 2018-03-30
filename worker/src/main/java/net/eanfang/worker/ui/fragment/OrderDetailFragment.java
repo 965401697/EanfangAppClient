@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -164,9 +165,8 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_company_name.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
                     tv_contract_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
                     tv_contract_phone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
-                    tv_time_limit.setText(constDataUtils
-.getArriveList().get(bean.getArriveTimeLimit()));
-                    tv_address.setText(config.getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
+                    tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
+                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
                     if (bean.getBookTime() != null) {
                         tv_time.setText(Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--"));
                     } else {

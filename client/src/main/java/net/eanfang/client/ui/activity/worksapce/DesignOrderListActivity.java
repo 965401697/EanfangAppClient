@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 public class DesignOrderListActivity extends BaseClientActivity {
 
     private static String titleBar;
-    public  List<String> allmTitles;
+    public final List<String> allmTitles = GetConstDataUtils.getDesignStatus();
     @BindView(R.id.tl_design_list)
     SlidingTabLayout tlDesignList;
     @BindView(R.id.vp_design_list)
@@ -53,11 +53,9 @@ public class DesignOrderListActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_list);
-        allmTitles = constDataUtils.getDesignStatus();
         ButterKnife.bind(this);
         initView();
         initData(1);
-
     }
 
     private void initView() {

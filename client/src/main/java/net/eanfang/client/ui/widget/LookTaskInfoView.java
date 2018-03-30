@@ -82,10 +82,10 @@ public class LookTaskInfoView extends BaseDialog {
 //        ivPic2.setOnClickListener(this);
 //        ivPic3.setOnClickListener(this);
 
-        tvOrders.setText(constDataUtils.getInstancyList().get(detailBean.getInstancyLevel()));
-        tvFirstFrequency.setText(constDataUtils.getInstancyList().get(detailBean.getFirstLook()));
-        tvSecondFrequency.setText(constDataUtils.getInstancyList().get(detailBean.getFirstCallback()));
-        tvThirdFrequency.setText(constDataUtils.getInstancyList().get(detailBean.getThenCallback()));
+        tvOrders.setText(GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel()));
+        tvFirstFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirstLook()));
+        tvSecondFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirstCallback()));
+        tvThirdFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getThenCallback()));
         tvEndTimes.setText(detailBean.getEndTime());
         etComment.setText(detailBean.getInfo());
         etWorker.setText(detailBean.getJoinPerson());

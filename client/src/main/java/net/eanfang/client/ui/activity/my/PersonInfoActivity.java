@@ -88,9 +88,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     TextView tvRight;
     private String path;
     private boolean isUploadHead = false;
-
-    private Config config;
-
     /**
      * 城市
      */
@@ -101,7 +98,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         Intent intent = new Intent();
         intent.setClass(context, PersonInfoActivity.class);
         context.startActivity(intent);
-
     }
 
     @Override
@@ -112,7 +108,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         initView();
         initData();
 
-        config = Config.get(this);
 
     }
 
@@ -175,7 +170,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             etAddress.setText(address);
         }
         if (infoBackBean.getAccount().getAreaCode() != null) {
-            tvArea.setText(config.getAddressByCode(infoBackBean.getAccount().getAreaCode()));
+            tvArea.setText(Config.get().getAddressByCode(infoBackBean.getAccount().getAreaCode()));
         }
 
     }
@@ -270,7 +265,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        accountEntity.setAreaCode(config.getAreaCodeByName(city, contry));
+        accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         submitSuccess(JSON.toJSONString(accountEntity));
     }
 

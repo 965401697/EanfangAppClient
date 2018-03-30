@@ -16,6 +16,7 @@ import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
@@ -232,7 +233,7 @@ public class OrderListFragment extends BaseFragment implements
         QueryEntry queryEntry = new QueryEntry();
         String status = null;
         if (!"全部".equals(getTitle())) {
-            status = constDataUtils.getRepairStatus().indexOf(getTitle()) + "";
+            status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
             queryEntry.getEquals().put("status", status);
         }
         queryEntry.setSize(10);

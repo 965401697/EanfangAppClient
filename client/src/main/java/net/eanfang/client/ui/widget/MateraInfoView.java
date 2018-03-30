@@ -49,7 +49,6 @@ public class MateraInfoView extends BaseDialog {
         super(context, isfull);
         this.mContext = context;
         this.bughandleUseDeviceEntity = bughandleUseDeviceEntity;
-
     }
 
     @Override
@@ -62,9 +61,9 @@ public class MateraInfoView extends BaseDialog {
     private void initData() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("耗用材料");
-        tvBusiness.setText(config.getBusinessNameByCode(bughandleUseDeviceEntity.getBusinessThreeCode(), 2));
+        tvBusiness.setText(Config.get().getBusinessNameByCode(bughandleUseDeviceEntity.getBusinessThreeCode(), 2));
 
-        tvModel.setText(config.getModelNameByCode(bughandleUseDeviceEntity.getModelCode(), 2));
+        tvModel.setText(Config.get().getModelNameByCode(bughandleUseDeviceEntity.getModelCode(), 2));
         tvEquipment.setText(bughandleUseDeviceEntity.getDeviceName());
         etLocation.setText(bughandleUseDeviceEntity.getCount() + "");
         etCode.setText(bughandleUseDeviceEntity.getRemarkInfo());

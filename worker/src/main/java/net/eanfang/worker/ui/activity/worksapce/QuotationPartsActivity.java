@@ -55,7 +55,7 @@ public class QuotationPartsActivity extends BaseActivity {
         setTitle("配件明细");
         setLeftBack();
         rlUnit.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvUnit, constDataUtils.getDeviceUnitList());
+            PickerSelectUtil.singleTextPicker(this, "", tvUnit, GetConstDataUtils.getDeviceUnitList());
         });
         tvCommit.setOnClickListener(v -> commit());
 
@@ -65,7 +65,7 @@ public class QuotationPartsActivity extends BaseActivity {
         quotePartsBean = new QuotationBean.QuotePartsBean();
         int count = Integer.parseInt(etAmount.getText().toString().trim());
         quotePartsBean.setCount(count);
-        quotePartsBean.setUnit(constDataUtils.getDeviceUnitList().indexOf(tvUnit.getText().toString().trim()));
+        quotePartsBean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tvUnit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(etPrice.getText().toString().trim());
         quotePartsBean.setUnitPrice(unitPrice*100);
         quotePartsBean.setSum((unitPrice*count)*100);

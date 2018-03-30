@@ -81,12 +81,12 @@ public class QuotationDetailView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("设备明细");
-        tvBusinessType.setText(v(()->config.getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1)));
-        tvDeviceType.setText(v(()->config.getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
-        tvDeviceName.setText(v(()->config.getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
-        tvBrandModel.setText(v(()->config.getModelNameByCode(quoteDevicesBean.getModelCode(),2)));
+        tvBusinessType.setText(v(()->Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1)));
+        tvDeviceType.setText(v(()->Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
+        tvDeviceName.setText(v(()->Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
+        tvBrandModel.setText(v(()->Config.get().getModelNameByCode(quoteDevicesBean.getModelCode(),2)));
 
-        tvUnit.setText(v(()->constDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit())));
+        tvUnit.setText(v(()->GetConstDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit())));
         etAmount.setText(v(()->quoteDevicesBean.getCount()) + "");
         etPrice.setText(v(()->(quoteDevicesBean.getUnitPrice()/100)) + "");
         etFactory.setText(v(()->quoteDevicesBean.getProducerPlace()));

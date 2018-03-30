@@ -85,7 +85,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
 
     private void registerListener() {
         ll_maintenance_circle.setOnClickListener((v) -> {
-                    PickerSelectUtil.singleTextPicker(this, "", tv_maintenance_circle, constDataUtils.getCycleList());
+                    PickerSelectUtil.singleTextPicker(this, "", tv_maintenance_circle, GetConstDataUtils.getCycleList());
                 }
         );
 
@@ -114,7 +114,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
             return;
         }
         //保养周期
-        maintenanceBean.setCycle(constDataUtils.getCycleList().indexOf(circle));
+        maintenanceBean.setCycle(GetConstDataUtils.getCycleList().indexOf(circle));
 
 
         // validate

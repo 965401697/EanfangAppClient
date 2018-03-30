@@ -1,122 +1,126 @@
 package com.eanfang.config;
 
-import android.content.Context;
-
-import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
-import com.eanfang.util.ApkUtils;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
 import com.yaf.sys.entity.BaseDataEntity;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-
 
 /**
  * @author wen
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc app配置信息
  */
 public class Config {
+    private static Config config = new Config();
     /**
      * 基础数据 分隔字符
      */
-    private final String BASE_CODE_SPLIT_STR = "\\.";
-    private final String BASE_CODE_JOINING_STR = ".";
+    private static final String BASE_CODE_SPLIT_STR = "\\.";
+    private static final String BASE_CODE_JOINING_STR = ".";
     /**
      * 解析地址的长度
      */
-    private final int ADDRESS_COUNT = 3;
+    private static final int ADDRESS_COUNT = 3;
 
-    private ConstAllBean constAllBean;
+
+    private ConstAllBean constBean;
     private BaseDataBean baseDataBean;
 
-//    private List<BaseDataEntity> businessList;
-//    private List<BaseDataEntity> serviceList;
-//    private List<BaseDataEntity> regionList;
-//    private List<BaseDataEntity> industryList;
-//    private List<BaseDataEntity> modelList;
+    private List<BaseDataEntity> businessList;
 
-    private Context context;
-    private String packageName;
+    private List<BaseDataEntity> serviceList;
 
-    /**
-     * 获取实例
-     *
-     * @return
-     */
-    public static Config get(Context context) {
-        return new Config(context);
-    }
+    private List<BaseDataEntity> regionList;
 
-    private Config(Context context) {
-        this.context = context;
-        this.packageName = context.getApplicationInfo().packageName;
-    }
+    private List<BaseDataEntity> industryList;
 
-    private <T> T getBase(String className, Class<T> clazz) {
-        String info = CacheUtil.get(context, packageName, className);
-        if (StringUtils.isEmpty(info)) {
-            return null;
-        }
-        return JSONObject.parseObject(info, clazz);
-    }
+    private List<BaseDataEntity> modelList;
 
     public ConstAllBean getConstBean() {
-        if (constAllBean == null) {
-            constAllBean = getBase(ConstAllBean.class.getName(), ConstAllBean.class);
+        if (constBean == null) {
+            synchronized (Config.class) {
+                if (constBean == null) {
+                    constBean = (ConstAllBean) EanfangApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
+                }
+            }
         }
-        return constAllBean == null ? new ConstAllBean() : constAllBean;
+        return constBean;
     }
 
     public BaseDataBean getBaseDataBean() {
         if (baseDataBean == null) {
-            baseDataBean = getBase(BaseDataBean.class.getName(), BaseDataBean.class);
+            synchronized (Config.class) {
+                if (baseDataBean == null) {
+                    baseDataBean = (BaseDataBean) EanfangApplication.get().get(BaseDataBean.class.getName(), BaseDataBean.class);
+                }
+            }
         }
-        return baseDataBean == null ? new BaseDataBean() : baseDataBean;
+        return baseDataBean;
     }
 
+
     public List<BaseDataEntity> getBusinessList() {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.SYS_TYPE)).toList();
+        if (businessList == null) {
+            synchronized (Config.class) {
+                if (businessList == null) {
+                    businessList = Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.SYS_TYPE)).toList();
+                }
+            }
+        }
+        return businessList;
     }
 
     public List<BaseDataEntity> getBusinessList(int level) {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.SYS_TYPE) && bean.getLevel().equals(level + 1)).toList();
+        return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getServiceList() {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.BIZ_TYPE)).toList();
+        if (serviceList == null) {
+            synchronized (Config.class) {
+                if (serviceList == null) {
+                    serviceList = Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.BIZ_TYPE)).toList();
+                }
+            }
+        }
+        return serviceList;
     }
 
     public List<BaseDataEntity> getServiceList(int level) {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.BIZ_TYPE) && bean.getLevel().equals(level + 1)).toList();
+        return Stream.of(getServiceList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getRegionList() {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.AREA)).toList();
+        if (regionList == null) {
+            synchronized (Config.class) {
+                if (regionList == null) {
+                    regionList = Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.AREA)).toList();
+                }
+            }
+        }
+        return regionList;
     }
 
     public List<BaseDataEntity> getRegionList(int level) {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.AREA) && bean.getLevel().equals(level + 1)).toList();
+        return Stream.of(getRegionList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
     public List<BaseDataEntity> getIndustryList() {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.INDUSTRY)).toList();
+        if (industryList == null) {
+            synchronized (Config.class) {
+                if (industryList == null) {
+                    industryList = Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.INDUSTRY)).toList();
+                }
+            }
+        }
+        return industryList;
     }
 
     public List<BaseDataEntity> getIndustryList(int level) {
@@ -124,13 +128,35 @@ public class Config {
     }
 
     public List<BaseDataEntity> getModelList() {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.MODEL)).toList();
+        if (modelList == null) {
+            synchronized (Config.class) {
+                if (modelList == null) {
+                    modelList = Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.MODEL)).toList();
+                }
+            }
+        }
+        return modelList;
     }
 
     public List<BaseDataEntity> getModelList(int level) {
-        return Stream.of(getBaseDataBean().getData()).filter(bean -> bean.getDataType().equals(Constant.MODEL) && bean.getLevel().equals(level + 1)).toList();
+        return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
 
+    /**
+     * 获取实例
+     *
+     * @return
+     */
+    public static Config get() {
+        if (config == null) {
+            synchronized (Config.class) {
+                if (config == null) {
+                    config = new Config();
+                }
+            }
+        }
+        return config;
+    }
 
     /**
      * 根据
@@ -212,6 +238,34 @@ public class Config {
     }
 
     /**
+     * 根据系统code获取名称
+     */
+    //    public String getBusinessName(String code) {
+//
+//        //code=1.1.1.16
+//        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataCode().equals(code)).toList();
+//
+//        if (countyList == null || countyList.isEmpty()) {
+//            return "";
+//        }
+//        if (countyList.size() > 1) {
+//            List<BaseDataBean> cityList = Stream.of(countyList).filter(bean -> bean.getDataType() == Constant.SYS_TYPE && bean.getLevel() == 2 && bean.getDataCode().equals(code)).toList();
+//            if (countyList == null || countyList.isEmpty()) {
+//                return "";
+//            }
+//            //特殊情况 如果遇到再加代码
+//            if (countyList.size() > 1) {
+//                return "";
+//            } else {
+//                return Stream.of(countyList).filter(bean -> bean.getDataName().startsWith(cityList.get(0).getDataName())).toList().get(0).getDataName();
+//            }
+//        } else {
+//            return countyList.get(0).getDataName();
+//        }
+//    }
+
+
+    /**
      * 根据地址取code
      */
     public String getAreaCodeByName(String cityStr, String countyStr) {
@@ -242,6 +296,33 @@ public class Config {
             }
         }
         return null;
+//
+//        List<BaseDataBean> countyList = Stream.of(this.baseDataBean).filter(bean -> bean.getDataType() == Constant.AREA && bean.getLevel() == 4 && bean.getDataName().equals(countyStr)).toList();
+//
+//        if (countyList == null || countyList.isEmpty()) {
+//            return null;
+//        }
+//        if (countyList.size() > 1) {
+//            List<BaseDataBean> cityList = Stream.of(this.baseDataBean).filter(
+//                    bean -> bean.getDataType() == Constant.AREA
+//                            && bean.getLevel() == 3
+//                            && bean.getDataName().startsWith(cityStr)
+//            ).toList();
+//            if (cityList == null || cityList.isEmpty()) {
+//                return null;
+//            }
+//
+//            for (int i = 0; i < cityList.size(); i++) {
+//                String cityCode = cityList.get(i).getDataCode();
+//                List<BaseDataBean> resultList = Stream.of(countyList).filter(county -> county.getDataCode().startsWith(cityCode)).toList();
+//                if (resultList != null && !resultList.isEmpty()) {
+//                    return resultList.get(0).getDataCode();
+//                }
+//            }
+//            return null;
+//        } else {
+//            return countyList.get(0).getDataCode();
+//        }
 
     }
 
@@ -260,6 +341,21 @@ public class Config {
 //            addressList.remove(0);
 //        }
         return addressList;
+//
+//        if (code.split(BASE_CODE_SPLIT_STR).length < ADDRESS_COUNT) {
+//            return new ArrayList<>(ADDRESS_COUNT);
+//        }
+//        List<String> addressList = new ArrayList<>(ADDRESS_COUNT);
+//        //区县
+//        BaseDataBean countyBean = Stream.of(this.baseDataBean).filter(county -> county.getDataCode().equals(code)).toList().get(0);
+//        addressList.add(countyBean.getDataName());
+//
+//        BaseDataBean cityBean = Stream.of(this.baseDataBean).filter(county -> county.getDataCode().equals(code.substring(0, code.lastIndexOf(BASE_CODE_SPLIT_STR)))).toList().get(0);
+//        addressList.add(cityBean.getDataName());
+//
+//        BaseDataBean perBean = Stream.of(this.baseDataBean).filter(county -> county.getDataCode().equals(cityBean.getDataCode().substring(0, cityBean.getDataCode().lastIndexOf(BASE_CODE_SPLIT_STR)))).toList().get(0);
+//        addressList.add(perBean.getDataName());
+
 
     }
 
@@ -403,5 +499,13 @@ public class Config {
         }
         return getBaseDataBean().getData();
     }
+
+//    /**
+//     * 根据id获得code
+//     */
+//    public List<String> getCode(List<Long> list, int type) {
+//        return Stream.of(this.getBaseDataBean()).filter(bean -> bean.getDataType() == type && list.contains(bean.getDataId())).map(bean -> bean.getDataCode() + "").toList();
+//    }
+
 
 }

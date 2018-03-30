@@ -82,7 +82,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
         //系统类别
         llOneType.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "",
-                    Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList(),
+                    Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(),
                     (index, item) -> {
                         tvTwoName.setText("");
                         tvThreeName.setText("");
@@ -92,7 +92,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
         //设备类别
         llTwoType.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "",
-                    Stream.of(config.getBusinessList(2)).map(bus -> bus.getDataName()).toList(),
+                    Stream.of(Config.get().getBusinessList(2)).map(bus -> bus.getDataName()).toList(),
                     (index, item) -> {
                         tvThreeName.setText("");
                         tvTwoName.setText(item);
@@ -101,7 +101,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
 
         //设备名称
         llThreeType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(3)).map(bus -> bus.getDataName()).toList(),
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).map(bus -> bus.getDataName()).toList(),
                     (index, item) -> {
                         tvThreeName.setText(item);
                     });
@@ -128,7 +128,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
         detailsBean = new WorkAddCheckBean.WorkInspectDetailsBean();
         detailsBean.setTitle(etTitle.getText().toString().trim());
         detailsBean.setRegion(etPosition.getText().toString().trim());
-        detailsBean.setBusinessThreeCode(config.getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
+        detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
         detailsBean.setInfo(etInputCheckContent.getText().toString().trim());
 
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);

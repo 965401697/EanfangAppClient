@@ -155,7 +155,7 @@ public class WorkReportListFragment extends BaseFragment implements
     private void getData(int page) {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
-            String status = constDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
+            String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         if (Constant.COMPANY_DATA_CODE == mType) {

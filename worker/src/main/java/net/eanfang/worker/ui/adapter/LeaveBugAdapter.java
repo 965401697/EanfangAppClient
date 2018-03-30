@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -25,13 +24,9 @@ import java.util.List;
  */
 
 public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseViewHolder> {
-    public Config config;
-    public GetConstDataUtils constDataUtils;
 
     public LeaveBugAdapter(List<RepairFailureEntity> data) {
         super(R.layout.item_leave_bug_list, data);
-        config = Config.get(EanfangApplication.get().getApplicationContext());
-        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override
@@ -42,7 +37,7 @@ public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseV
             helper.setText(R.id.tv_company, item.getOwnerOrgEntity().getOrgName());
         }
 
-        helper.setText(R.id.tv_state, constDataUtils.getBugDetailList().get(item.getStatus()));
+        helper.setText(R.id.tv_state, GetConstDataUtils.getBugDetailList().get(item.getStatus()));
         helper.setText(R.id.tv_create_time, GetDateUtils.dateToDateString(item.getCreateTime()));
         helper.setText(R.id.tv_instrument, item.getDeviceName());
         helper.setText(R.id.tv_equipmentposition, item.getBugPosition());

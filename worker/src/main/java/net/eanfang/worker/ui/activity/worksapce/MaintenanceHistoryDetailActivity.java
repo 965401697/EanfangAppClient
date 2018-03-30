@@ -102,7 +102,7 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
                     break;
             }
         });
-        tv_maintenance_circle.setText(constDataUtils.getCycleList().get(mainHistoryDetailBean.getCycle()));
+        tv_maintenance_circle.setText(GetConstDataUtils.getCycleList().get(mainHistoryDetailBean.getCycle()));
         et_contract.setText(mainHistoryDetailBean.getClientUserName());
         et_contract_phone.setText(mainHistoryDetailBean.getClientUserPhone());
         et_client_company_name.setText(mainHistoryDetailBean.getClientCompanyName());

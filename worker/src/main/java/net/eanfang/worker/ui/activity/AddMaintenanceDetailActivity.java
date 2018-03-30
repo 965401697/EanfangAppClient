@@ -99,7 +99,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
 
     private void registerListener() {
         rl_business_type.setOnClickListener((v)->{
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
                 tv_business_type.setText(item);
                 tv_device_type.setText("");
                 tv_device_name.setText("");
@@ -107,39 +107,39 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
             });
         });
         rl_device_type.setOnClickListener((v)->{
-            String busOneCode = config.getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
+            String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
                 showToast("请先选择业务类别");return;
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_type.setText(item);
                 tv_device_name.setText("");
                 tv_brand_model.setText("");
             }));
         });
         rl_device_name.setOnClickListener((v)->{
-            String busTwoCode = config.getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
+            String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
                 showToast("请先选择设备类别");return;
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_name.setText(item);
                 tv_brand_model.setText("");
             }));
         });
 
         rl_brand_model.setOnClickListener((v)->{
-            String busOneCode = config.getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
+            String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
                 showToast("请先选择业务类别");return;
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_brand_model.setText(item);
             }));
         });
-        rl_main_leave.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_main_leave, constDataUtils.getMaintainLevelList()));
+        rl_main_leave.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_main_leave, GetConstDataUtils.getMaintainLevelList()));
 
-        rl_main_result.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_main_result, constDataUtils.getCheckResultList()));
+        rl_main_result.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tv_main_result, GetConstDataUtils.getCheckResultList()));
         tv_commit.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
     }
 
@@ -148,13 +148,13 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         bean = new MaintenanceBean.MaintainDetailsBean();
         bean.setCount(NumberUtil.parseInt(et_amount.getText().toString().trim(), 0));
         bean.setInstallPosition(et_price.getText().toString().trim());
-        bean.setMaintainLevel(constDataUtils.getMaintainLevelList().indexOf(tv_main_leave.getText().toString().trim()));
-        bean.setCheckResult(constDataUtils.getCheckResultList().indexOf(tv_main_result.getText().toString().trim()));
+        bean.setMaintainLevel(GetConstDataUtils.getMaintainLevelList().indexOf(tv_main_leave.getText().toString().trim()));
+        bean.setCheckResult(GetConstDataUtils.getCheckResultList().indexOf(tv_main_result.getText().toString().trim()));
         bean.setQuestion(et_question.getText().toString().trim());
         bean.setSolution(et_maintenance_measures.getText().toString().trim());
         bean.setCause(et_reason_analysis.getText().toString().trim());
-        bean.setBusinessThreeCode(config.getBusinessCodeByName(tv_device_name.getText().toString().trim(), 3));
-        bean.setBusinessFourCode(config.getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
+        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_device_name.getText().toString().trim(), 3));
+        bean.setBusinessFourCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
 
         bean.setQuestion(et_question.getText().toString().trim());
         String urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);

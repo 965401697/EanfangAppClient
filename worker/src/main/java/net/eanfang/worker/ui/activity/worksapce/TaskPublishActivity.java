@@ -27,6 +27,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -158,16 +159,16 @@ public class TaskPublishActivity extends BaseActivity {
             }
         });
         llBusinessType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvBusinessType, Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", tvBusinessType, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
         });
         llProjectTime.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvProjectTime, constDataUtils.getPredictList());
+            PickerSelectUtil.singleTextPicker(this, "", tvProjectTime, GetConstDataUtils.getPredictList());
         });
         llBudget.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvBudget, constDataUtils.getBudgetList());
+            PickerSelectUtil.singleTextPicker(this, "", tvBudget, GetConstDataUtils.getBudgetList());
         });
         llProjectType.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvProjectType, constDataUtils.getTaskPublishTypeList());
+            PickerSelectUtil.singleTextPicker(this, "", tvProjectType, GetConstDataUtils.getTaskPublishTypeList());
 
         });
         btnConfirm.setOnClickListener((v) -> {
@@ -181,16 +182,16 @@ public class TaskPublishActivity extends BaseActivity {
         bean.setContacts(etTaskUname.getText().toString().trim());
         bean.setContactsPhone(etTaskPhone.getText().toString().trim());
         bean.setProjectCompanyName(etProjectCompany.getText().toString().trim());
-        bean.setZoneCode(config.getAreaCodeByName(itemcity, itemzone));
-        bean.setZone_id(Long.valueOf(config.getBaseIdByCode(bean.getZoneCode(), 3, Constant.AREA)));
+        bean.setZoneCode(Config.get().getAreaCodeByName(itemcity, itemzone));
+        bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(), 3, Constant.AREA)));
         bean.setDetailPlace(etDetailAddress.getText().toString().trim());
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
-        bean.setType(constDataUtils.getTaskPublishTypeList().indexOf(tvProjectType.getText().toString().trim()));
-        bean.setBusinessOneCode(config.getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
-        bean.setBusiness_one_id(Long.valueOf(config.getBusinessIdByCode(bean.getBusinessOneCode(),1)));
-        bean.setPredicttime(constDataUtils.getPredictList().indexOf(tvProjectTime.getText().toString().trim()));
-        bean.setBudget(constDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
+        bean.setType(GetConstDataUtils.getTaskPublishTypeList().indexOf(tvProjectType.getText().toString().trim()));
+        bean.setBusinessOneCode(Config.get().getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
+        bean.setBusiness_one_id(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
+        bean.setPredicttime(GetConstDataUtils.getPredictList().indexOf(tvProjectTime.getText().toString().trim()));
+        bean.setBudget(GetConstDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
         bean.setToDoorTime(tvLoginTime.getText().toString().trim());
         bean.setDescription(etDesc.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);

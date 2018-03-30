@@ -83,14 +83,14 @@ public class MeintenanceDetailDialog extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("查看明细");
-        tvBusinessType.setText(config.getBusinessNameByCode(bean.getBusinessThreeCode(), 1));
-        tvDeviceType.setText(config.getBusinessNameByCode(bean.getBusinessThreeCode(), 2));
-        tvDeviceName.setText(config.getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
-        tvBrandModel.setText(config.getModelNameByCode(bean.getBusinessFourCode(), 2));
+        tvBusinessType.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 1));
+        tvDeviceType.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 2));
+        tvDeviceName.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
+        tvBrandModel.setText(Config.get().getModelNameByCode(bean.getBusinessFourCode(), 2));
         etAmount.setText(bean.getCount() + "");
         etPrice.setText(bean.getInstallPosition());
-        tvMainLeave.setText(constDataUtils.getMaintainLevelList().get(bean.getMaintainLevel()));
-        tvMainResult.setText(constDataUtils.getCheckResultList().get(bean.getCheckResult()));
+        tvMainLeave.setText(GetConstDataUtils.getMaintainLevelList().get(bean.getMaintainLevel()));
+        tvMainResult.setText(GetConstDataUtils.getCheckResultList().get(bean.getCheckResult()));
         etQuestion.setText(bean.getQuestion());
         etMaintenanceMeasures.setText(bean.getSolution());
         etReasonAnalysis.setText(bean.getCause());

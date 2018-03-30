@@ -50,7 +50,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/tv_company_name"
                 android:src="@drawable/contend_ic_v_default"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_auth_status"
@@ -63,7 +63,7 @@
                 android:text="未认证"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textSize_10"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
 

@@ -165,8 +165,8 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_company_name.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
                     tv_contract_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
                     tv_contract_phone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
-                    tv_time_limit.setText(constDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
-                    tv_address.setText(config.getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
+                    tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
+                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
                     if (bean.getBookTime() != null) {
                         tv_time.setText(Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--"));
                     } else {

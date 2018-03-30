@@ -124,7 +124,7 @@ public class WorkTaskListFragment extends BaseFragment
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
-            String status = constDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
+            String status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         if (Constant.COMPANY_DATA_CODE == mType) {

@@ -6,7 +6,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.model.WorkspaceInstallBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -19,9 +18,6 @@ import java.util.List;
  */
 
 public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBean.ListBean, BaseViewHolder> {
-    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
-    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
-
     public WorkspaceInstallAdapter(List<WorkspaceInstallBean.ListBean> data) {
         super(R.layout.item_workspace_install_list, data);
     }
@@ -33,10 +29,10 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
                 .setText(R.id.tv_order_id, "单号：" + item.getOrderNo())
                 //下单时间 显示错误 已修改
                 .setText(R.id.tv_order, "下单：" + item.getCreateTime())
-                .setText(R.id.tv_time, "工期：" + config.getConstBean().getData()
+                .setText(R.id.tv_time, "工期：" + Config.get().getConstBean().getData()
                         .getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).get(item.getPredictTime()))
-                .setText(R.id.tv_count_money, config.getConstBean().getData().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).get(item.getBudget()))
-                .setText(R.id.tv_business, "业务：" + config.getBusinessNameByCode(item.getBusinessOneCode(), 1));
+                .setText(R.id.tv_count_money, Config.get().getConstBean().getData().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).get(item.getBudget()))
+                .setText(R.id.tv_business, "业务：" + Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         if (item.getStatus() == 2) {
             if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
                 helper.setText(R.id.tv_look, "完工");

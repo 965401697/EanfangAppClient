@@ -135,19 +135,19 @@ public class DesignActivity extends BaseClientActivity {
         });
         //回复时限选择
         ll_reply_limit.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tv_reply_limit, constDataUtils.getRevertList());
+            PickerSelectUtil.singleTextPicker(this, "", tv_reply_limit, GetConstDataUtils.getRevertList());
         });
         //业务类型一级
         ll_business_one.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tv_business_one, Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", tv_business_one, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
         });
         //预计工期
         ll_plan_limit.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tv_plan_limit, constDataUtils.getPredictList());
+            PickerSelectUtil.singleTextPicker(this, "", tv_plan_limit, GetConstDataUtils.getPredictList());
         });
         //预算范围
         ll_budget_limit.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tv_budget_limit, constDataUtils.getBudgetList());
+            PickerSelectUtil.singleTextPicker(this, "", tv_budget_limit, GetConstDataUtils.getBudgetList());
         });
     }
 
@@ -227,18 +227,18 @@ public class DesignActivity extends BaseClientActivity {
         }
         AddDesignOrderBean bean = new AddDesignOrderBean();
         bean.setDetailPlace(address);
-        bean.setBudgetLimit(constDataUtils.getBudgetList().indexOf(budgetLimit));
-        bean.setBusinessOneCode(config.getBusinessCodeByName(businessOne, 1));
-        bean.setBusinessOneId(Long.valueOf(config.getBusinessIdByCode(bean.getBusinessOneCode(),1)));
-        bean.setZoneCode(config.getAreaCodeByName(city, contry));
-        bean.setZoneId(Long.valueOf(config.getBaseIdByCode(bean.getZoneCode(),3, Constant.AREA)));
+        bean.setBudgetLimit(GetConstDataUtils.getBudgetList().indexOf(budgetLimit));
+        bean.setBusinessOneCode(Config.get().getBusinessCodeByName(businessOne, 1));
+        bean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
+        bean.setZoneCode(Config.get().getAreaCodeByName(city, contry));
+        bean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(),3, Constant.AREA)));
         bean.setLatitude(lat);
         bean.setLongitude(lon);
-        bean.setPredictTime(constDataUtils.getPredictList().indexOf(planLimit));
+        bean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(planLimit));
         bean.setContactUser(receiveUserName);
         bean.setContact_phone(receivePhone);
         bean.setRemarkInfo(remark);
-        bean.setRevertTimeLimit(constDataUtils.getRevertList().indexOf(replyLimit));
+        bean.setRevertTimeLimit(GetConstDataUtils.getRevertList().indexOf(replyLimit));
         bean.setUserName(userName);
 
         doHttp(JSON.toJSONString(bean));

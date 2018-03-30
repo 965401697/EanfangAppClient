@@ -62,10 +62,33 @@ public class MainActivity extends BaseActivity {
         setHeaders();
         initXinGe();
         initFragment();
+        getBaseData();
+        getConst();
     }
 
 
+    /**
+     * 技师上报位置专用
+     */
+    private void submitLocation() {
+        new Thread(() -> {
+            PermissionUtils.get(this).getLocationPermission(() -> {
+                LocationUtil.location(this, (location) -> {
 
+                    WorkerEntity workerEntity = new WorkerEntity();
+                    workerEntity.setAccId(user.getAccount().getAccId());
+                    workerEntity.setLat(location.getLatitude() + "");
+                    workerEntity.setLon(location.getLongitude() + "");
+                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
+                    //技师上报位置
+                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                            .upJson(JSONObject.toJSONString(workerEntity))
+                            .execute(new EanfangCallback(this, false, String.class));
+                });
+
+            });
+        }).start();
+    }
 
 
     private void initFragment() {
@@ -167,6 +190,64 @@ public class MainActivity extends BaseActivity {
                 Var.get("MainActivity.initXinGe").setVar(0);
             }
         });
+    }
+
+    /**
+     * 请求基础数据
+     */
+    private void getBaseData() {
+        new Thread(() -> {
+            String url;
+            BaseDataBean dataBean = Config.get().getBaseDataBean();
+            if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
+                url = NewApiService.GET_BASE_DATA_CACHE + "0";
+            } else {
+                url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
+            }
+
+            EanfangHttp.get(url)
+                    .tag(this)
+                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                        if (!str.contains(Constant.NO_UPDATE)) {
+                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+                        submitLocation();
+                    }));
+
+        }).start();
+
+    }
+
+    /**
+     * 请求静态常量
+     */
+    private void getConst() {
+        new Thread(() -> {
+            String url;
+            ConstAllBean constBean = Config.get().getConstBean();
+            if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
+                url = NewApiService.GET_CONST_CACHE + "0";
+            } else {
+                url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
+            }
+            EanfangHttp.get(url)
+                    .tag(this)
+                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                        if (!str.contains(Constant.NO_UPDATE)) {
+                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+
+                        runOnUiThread(() -> {
+                            PermissionUtils.get(this).getStoragePermission(() -> {
+                                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+                                manager.checkUpdate();
+                            });
+                        });
+
+                    }));
+        }).start();
     }
 
 

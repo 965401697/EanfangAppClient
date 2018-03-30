@@ -18,6 +18,7 @@ import com.eanfang.model.MineTaskListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -242,7 +243,7 @@ public class MineTaskPublishListFragment extends BaseFragment implements
      * 获取发包列表
      */
     private void getData() {
-        int status = constDataUtils.getTaskPublishStatus().indexOf(getmTitle());
+        int status = GetConstDataUtils.getTaskPublishStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         if (Constant.CREATE_DATA_CODE == (mType)) {

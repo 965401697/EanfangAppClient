@@ -41,7 +41,7 @@ public class MineTakePublishListActivity extends BaseActivity {
     @BindView(R.id.vp_work_list)
     ViewPager vpWorkList;
 
-    public List<String> allmTitles;
+    public final List<String> allmTitles = GetConstDataUtils.getTaskPublishStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
@@ -54,7 +54,6 @@ public class MineTakePublishListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_list);
-        allmTitles = constDataUtils.getTaskPublishStatus();
         ButterKnife.bind(this);
         initView();
     }
@@ -100,7 +99,7 @@ public class MineTakePublishListActivity extends BaseActivity {
     }
 
     private void initData(int page) {
-        int status = constDataUtils.getTaskPublishStatus().indexOf(currentFragment.getmTitle());
+        int status = GetConstDataUtils.getTaskPublishStatus().indexOf(currentFragment.getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         if (Constant.CREATE_DATA_CODE == (dataType)) {

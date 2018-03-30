@@ -11,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkReportListBean;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 
 public class WorkReportListActivity extends BaseWorkerActivity {
     private static String titleBar;
-    public List<String> allmTitles;
+    public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -51,7 +52,6 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_list);
-        allmTitles = constDataUtils.getWorkReportStatus();
         ButterKnife.bind(this);
         initView();
     }
@@ -99,7 +99,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     private void initData(int page) {
         String status = null;
         if (!"全部".equals(currentFragment.getmTitle())) {
-            status = constDataUtils.getWorkReportStatus().indexOf(currentFragment.getmTitle()) + "";
+            status = GetConstDataUtils.getWorkReportStatus().indexOf(currentFragment.getmTitle()) + "";
         }
 
         QueryEntry queryEntry = new QueryEntry();

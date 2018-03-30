@@ -7,9 +7,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairBugEntity;
@@ -28,14 +26,10 @@ import java.util.List;
 public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewHolder> {
 
     private String business;
-    public Config config;
-    public GetConstDataUtils constDataUtils;
 
     public OrderConfirmAdapter(int layoutResId, List data, String business) {
         super(layoutResId, data);
         this.business = business;
-        config = Config.get(EanfangApplication.get().getApplicationContext());
-        constDataUtils = GetConstDataUtils.get(config);
     }
 
     /**
@@ -59,11 +53,11 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
     protected void convert(BaseViewHolder helper, RepairBugEntity item) {
 //        helper.setText(R.id.tv_name, item.getName());
 
-        String bugOne = config.getBusinessNameByCode(item.getBusinessThreeCode(), 1);
-        String bugTwo = config.getBusinessNameByCode(item.getBusinessThreeCode(), 2);
-        String bugThree = config.getBusinessNameByCode(item.getBusinessThreeCode(), 3);
-        helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + "." + bugOne + "-" + bugTwo + "-" + bugThree)
-                .setText(R.id.tv_model, "品牌型号:" + config.getModelNameByCode(item.getModelCode(), 1))
+        String bugOne = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
+        String bugTwo = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
+        String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
+        helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + "." +bugOne + "-" + bugTwo + "-" + bugThree)
+                .setText(R.id.tv_model, "品牌型号:" + Config.get().getModelNameByCode(item.getModelCode(), 1))
                 .setText(R.id.tv_location, "故障位置:" + item.getBugPosition())
                 .setText(R.id.tv_number, "设备编号:" + item.getDeviceNo())
                 .setText(R.id.tv_desc, "故障描述:" + item.getBugDescription());

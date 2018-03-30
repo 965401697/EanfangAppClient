@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 public class AuthWorkerAreaActivity extends BaseActivity {
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
-    List<BaseDataEntity> areaListBean = config.getRegionList(1);
+    List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     private GroupAdapter mAdapter;
     private Long userid = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
     private List<Integer> checkListId;

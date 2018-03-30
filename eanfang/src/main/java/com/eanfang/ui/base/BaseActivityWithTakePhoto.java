@@ -24,8 +24,6 @@ import android.widget.Toast;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.config.Config;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionsCallBack;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
@@ -56,10 +54,6 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
     private int limit = 0;
     private PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
-
-    public Config config;
-
-    public GetConstDataUtils constDataUtils;
 
     //Android6.0申请权限的回调方法
     @Override
@@ -96,9 +90,6 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
             StrictMode.setThreadPolicy(policy);
         }
         EventBus.getDefault().register(this);
-
-        config = Config.get(this);
-        constDataUtils = GetConstDataUtils.get(config);
 
     }
 

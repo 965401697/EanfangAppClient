@@ -14,6 +14,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -149,7 +150,7 @@ public class WorkCheckListFragment extends BaseFragment
     private void getData(int page) {
         String status = "";
         if (!"全部".equals(mTitle)) {
-            status = constDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";
+            status = GetConstDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";
         }
 
         QueryEntry queryEntry = new QueryEntry();

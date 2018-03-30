@@ -129,7 +129,7 @@ public class RepairActivity extends BaseClientActivity {
         }
         Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
         intent.putExtra("bean", fillBean());
-        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> config.getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
+        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
         startActivity(intent);
     }
 
@@ -156,12 +156,12 @@ public class RepairActivity extends BaseClientActivity {
             showToast("请选择地址");
             return false;
         }
-        String placeCode = config.getAreaCodeByName(city, county);
+        String placeCode = Config.get().getAreaCodeByName(city, county);
         if (StringUtils.isEmpty(placeCode)) {
             showToast("请重新选择地址");
             return false;
         }
-        if (StringUtils.isEmpty(config.getBaseIdByCode(placeCode, 3, Constant.AREA) + "")) {
+        if (StringUtils.isEmpty(Config.get().getBaseIdByCode(placeCode, 3, Constant.AREA) + "")) {
             showToast("请重新选择地址");
             return false;
         }
@@ -189,13 +189,13 @@ public class RepairActivity extends BaseClientActivity {
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
         bean.setAddress(etDetailAddress.getText().toString().trim());
-        bean.setPlaceCode(config.getAreaCodeByName(city, county));
-        bean.setPlaceId(config.getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
+        bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
+        bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
 
-        bean.setRepairContactPhone(etPhone.getText().toString().trim());
-        bean.setRepairContacts(etContact.getText().toString().trim());
-        bean.setArriveTimeLimit(constDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
+        bean.setRepairContactPhone(etContact.getText().toString().trim());
+        bean.setRepairContacts(etPhone.getText().toString().trim());
+        bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
         bean.setOwnerUserId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getUserId());
         bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getTopCompanyId());
         bean.setOwnerOrgCode(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgCode());
@@ -226,7 +226,7 @@ public class RepairActivity extends BaseClientActivity {
         //个人客户
         if (user.getAccount().getDefaultUser().getCompanyId() <= 0) {
             name = user.getAccount().getRealName();
-            area = config.getAddressByCode(user.getAccount().getAreaCode());
+            area = Config.get().getAddressByCode(user.getAccount().getAreaCode());
             address = user.getAccount().getAddress();
         } else {
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
@@ -320,7 +320,7 @@ public class RepairActivity extends BaseClientActivity {
      * 到达时限
      */
     public void onArriveTimeOptionPicker(View view) {
-        PickerSelectUtil.singleTextPicker(this, "到达时限", tvTime, constDataUtils.getArriveList());
+        PickerSelectUtil.singleTextPicker(this, "到达时限", tvTime, GetConstDataUtils.getArriveList());
     }
 
 

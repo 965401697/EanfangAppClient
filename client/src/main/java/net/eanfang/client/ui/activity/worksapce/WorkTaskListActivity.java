@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 public class WorkTaskListActivity extends BaseClientActivity {
 
     private static String titleBar;
-    public  List<String> allmTitles;
+    public final List<String> allmTitles = GetConstDataUtils.getWorkTaskStatus();
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -62,11 +62,8 @@ public class WorkTaskListActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_list);
-
-        allmTitles = constDataUtils.getWorkTaskStatus();
         ButterKnife.bind(this);
         initView();
-
     }
 
     private void initView() {
@@ -112,7 +109,7 @@ public class WorkTaskListActivity extends BaseClientActivity {
 
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(currentFragment.getmTitle())) {
-            String status = constDataUtils.getWorkTaskStatus().indexOf(currentFragment.getmTitle()) + "";
+            String status = GetConstDataUtils.getWorkTaskStatus().indexOf(currentFragment.getmTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         if (Constant.COMPANY_DATA_CODE == dataType) {

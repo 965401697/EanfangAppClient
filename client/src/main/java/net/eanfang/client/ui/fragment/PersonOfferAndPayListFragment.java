@@ -188,7 +188,7 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
      * 获取工作任务列表
      */
     private void getData() {
-        int status = constDataUtils.getQuoteStatus().indexOf(getmTitle());
+        int status = GetConstDataUtils.getQuoteStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");

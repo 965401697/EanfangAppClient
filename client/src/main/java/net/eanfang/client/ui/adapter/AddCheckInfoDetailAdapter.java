@@ -5,7 +5,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.WorkCheckInfoBean;
 
-
 import net.eanfang.client.R;
 
 import java.util.List;

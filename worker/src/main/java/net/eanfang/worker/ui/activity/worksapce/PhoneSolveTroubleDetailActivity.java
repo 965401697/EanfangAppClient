@@ -20,6 +20,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.GetDeviceFailureOptionBean;
 import com.eanfang.model.device.GetDeviceFailureSolutionOptionBean;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -219,20 +220,20 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void showRepairConslusion() {
-        PickerSelectUtil.singleTextPicker(this, "维修结论", tv_repair_conclusion, constDataUtils.getBugDetailList());
+        PickerSelectUtil.singleTextPicker(this, "维修结论", tv_repair_conclusion, GetConstDataUtils.getBugDetailList());
     }
 
     public void fillData() {
         if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
-            String bugOne = config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
-            String bugTwo = config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
-            String bugThree = config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
+            String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
+            String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
+            String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
             tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
         } else {
             tv_trouble_title.setText("");
         }
         //品牌型号
-        tv_brand_model.setText(Optional.ofNullable(config.getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
+        tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
 
         //故障设备
         tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
@@ -273,7 +274,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
         }
 
         bughandleDetailEntity.getFailureEntity().setBugDescription(et_trouble_desc.getText().toString().trim());
-        bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(config.getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
+        bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
         bughandleDetailEntity.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
         bughandleDetailEntity.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
         bughandleDetailEntity.getFailureEntity().setDeviceName("");
@@ -282,7 +283,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
         bughandleDetailEntity.setCheckProcess(et_trouble_point.getText().toString().trim());
         bughandleDetailEntity.setBusBughandleConfirmId(confirmId);
         //维修结果
-        bughandleDetailEntity.setStatus(constDataUtils.getBugDetailList().indexOf(tv_repair_conclusion.getText().toString().trim()));
+        bughandleDetailEntity.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tv_repair_conclusion.getText().toString().trim()));
 
         doHttpSubmit();
 
@@ -305,7 +306,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void showOptions() {
-        PickerSelectUtil.singleTextPicker(this, "参数", constDataUtils.getDeviceParamList(), (index, item) -> {
+        PickerSelectUtil.singleTextPicker(this, "参数", GetConstDataUtils.getDeviceParamList(), (index, item) -> {
             BughandleParamEntity param = new BughandleParamEntity();
             param.setParamName(item);
             bughandleDetailEntity.getParamEntityList().add(param);

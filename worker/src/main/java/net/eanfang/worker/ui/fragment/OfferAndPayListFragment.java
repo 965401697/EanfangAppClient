@@ -17,6 +17,7 @@ import com.eanfang.model.PayOrderListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -158,7 +159,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
      * 获取工作任务列表
      */
     private void getData(int page) {
-        int status = constDataUtils.getQuoteStatus().indexOf(getmTitle());
+        int status = GetConstDataUtils.getQuoteStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         if ("1".equals(mType)) {

@@ -11,6 +11,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ViewFindUtils;
@@ -32,7 +33,7 @@ import java.util.List;
  */
 
 public class RepairCtrlActivity extends BaseWorkerActivity {
-    private List<String> mTitlesWorker;
+    private final List<String> mTitlesWorker = GetConstDataUtils.getRepairStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
@@ -44,7 +45,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
-        mTitlesWorker = constDataUtils.getRepairStatus();
+
         mTitles = new String[mTitlesWorker.size()];
         mTitlesWorker.toArray(mTitles);
 
@@ -93,7 +94,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
         String status = null;
         QueryEntry queryEntry = new QueryEntry();
         if (!"全部".equals(currentFragment.getTitle())) {
-            status = constDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
+            status = GetConstDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
             queryEntry.getEquals().put("status", status);
         }
         queryEntry.setPage(1);
@@ -101,7 +102,8 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class) {
+                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class)
+                         {
                              @Override
                              public void onSuccess(final RepairedOrderBean bean) {
                                  runOnUiThread(() -> {

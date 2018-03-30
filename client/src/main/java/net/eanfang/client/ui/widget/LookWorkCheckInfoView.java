@@ -118,9 +118,9 @@ public class LookWorkCheckInfoView extends BaseDialog {
 
         etTitle.setText(detailsBean.getTitle());
         etPosition.setText(detailsBean.getRegion());
-        tvOneName.setText(config.getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 1));
-        tvTwoName.setText(config.getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 2));
-        tvThreeName.setText(config.getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 3));
+        tvOneName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 1));
+        tvTwoName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 2));
+        tvThreeName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 3));
 
         etInputCheckContent.setText(detailsBean.getInfo());
 

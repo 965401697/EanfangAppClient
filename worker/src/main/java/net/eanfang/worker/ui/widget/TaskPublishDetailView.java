@@ -12,6 +12,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.model.MineTaskListBean;
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -102,12 +103,12 @@ public class TaskPublishDetailView extends BaseDialog {
         etTaskUname.setText(listBean.getContacts());
         etTaskPhone.setText(listBean.getContactsPhone());
         etProjectCompany.setText(listBean.getProjectCompanyName());
-        tvAddress.setText(config.getAddressByCode(listBean.getZoneCode()));
+        tvAddress.setText(Config.get().getAddressByCode(listBean.getZoneCode()));
         etDetailAddress.setText(listBean.getDetailPlace());
-        tvProjectType.setText(constDataUtils.getCooperationTypeList().get(listBean.getType()));
-        tvBusinessType.setText(config.getBusinessNameByCode(listBean.getBusinessOneCode(), 1));
-        tvProjectTime.setText(constDataUtils.getPredictList().get(listBean.getPredicttime()));
-        tvBudget.setText(constDataUtils.getBudgetList().get(listBean.getBudget()));
+        tvProjectType.setText(GetConstDataUtils.getCooperationTypeList().get(listBean.getType()));
+        tvBusinessType.setText(Config.get().getBusinessNameByCode(listBean.getBusinessOneCode(), 1));
+        tvProjectTime.setText(GetConstDataUtils.getPredictList().get(listBean.getPredicttime()));
+        tvBudget.setText(GetConstDataUtils.getBudgetList().get(listBean.getBudget()));
         tvLoginTime.setText(listBean.getToDoorTime());
         etDesc.setText(listBean.getDescription());
         if (!StringUtils.isEmpty(listBean.getPictures())) {

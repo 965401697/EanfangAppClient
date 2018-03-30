@@ -53,7 +53,7 @@ public class MessageDetailView extends BaseDialog {
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.message_detail_view);
         ButterKnife.bind(this);
-        tvType.setText(constDataUtils.getNoticeTypeList().get(listBean.getNoticeType()));
+        tvType.setText(GetConstDataUtils.getNoticeTypeList().get(listBean.getNoticeType()));
         String extInfo = null;
         if (listBean.getExtInfo() != null && !listBean.getExtInfo().toString().contains("{")) {
             extInfo = listBean.getExtInfo().toString();

@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.model.PayOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
 
@@ -18,13 +17,8 @@ import java.util.List;
  */
 
 public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListBean, BaseViewHolder> {
-    public Config config;
-    public GetConstDataUtils constDataUtils;
-
     public PayOrderListAdapter(int layoutResId, List data) {
         super(layoutResId, data);
-        config = Config.get(EanfangApplication.get().getApplicationContext());
-        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override
@@ -34,9 +28,9 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
         helper.setText(R.id.tv_order_id, "单号:" + item.getOrderNum())
                 .setText(R.id.tv_appointment_time, "下单:" + item.getCreateTime())
                 .setText(R.id.tv_trouble_count, "项目:" + item.getProjectName())
-                .setText(R.id.tv_count_money, "¥" + item.getTotalCost() / 100)
+                .setText(R.id.tv_count_money, "¥" + item.getTotalCost()/100)
                 .setText(R.id.tv_worker_name, "技师：" + item.getReportUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_state, constDataUtils.getQuoteStatus().get(item.getStatus()));
+        helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
         if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
             helper.setText(R.id.tv_do_first, "联系汇报人");
             helper.setVisible(R.id.tv_do_second, false);

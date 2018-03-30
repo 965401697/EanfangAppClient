@@ -4,7 +4,6 @@ import android.graphics.Color;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.config.Config;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.util.GetConstDataUtils;
 
@@ -26,7 +25,7 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, NoticeEntity item) {
 
-        helper.setText(R.id.tv_titles, GetConstDataUtils.get(Config.get(mContext)).getNoticeTypeList().get(item.getNoticeType()));
+        helper.setText(R.id.tv_titles, GetConstDataUtils.getNoticeTypeList().get(item.getNoticeType()));
         helper.setText(R.id.tv_content, item.getContent());
         if (item.getStatus() == 0) {
             helper.setText(R.id.tv_status, "未读");

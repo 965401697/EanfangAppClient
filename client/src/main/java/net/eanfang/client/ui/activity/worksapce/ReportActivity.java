@@ -160,7 +160,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 showDependPerson();
                 break;
             case R.id.ll_report_type://类型
-                PickerSelectUtil.singleTextPicker(this, "", etTaskName, constDataUtils.getWorkReportTypeList());
+                PickerSelectUtil.singleTextPicker(this, "", etTaskName, GetConstDataUtils.getWorkReportTypeList());
                 break;
 
             case R.id.ll_comit://提交
@@ -185,7 +185,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             showToast("请选择联系人");
             return;
         }
-        bean.setType(constDataUtils.getWorkReportTypeList().indexOf(task_title));
+        bean.setType(GetConstDataUtils.getWorkReportTypeList().indexOf(task_title));
         bean.setAssigneeUserId(assigneeUserId);
         bean.setAssigneeOrgCode(assigneeOrgCode);
         beanList.addAll(findList);

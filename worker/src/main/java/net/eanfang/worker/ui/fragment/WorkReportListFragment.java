@@ -16,6 +16,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkReportListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -158,7 +159,7 @@ public class WorkReportListFragment extends BaseFragment implements
     private void getData(int page) {
         String status = null;
         if (!mTitle.equals("全部")) {
-            status = constDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
+            status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
         }
         QueryEntry queryEntry = new QueryEntry();
         if ("0".equals(mType)) {

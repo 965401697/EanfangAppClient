@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.model.PayOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -22,10 +21,6 @@ import java.util.List;
  */
 
 public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListBean, BaseViewHolder> {
-
-    private Config config = Config.get(EanfangApplication.get().getApplicationContext());
-    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
-
     public PayOrderListAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
@@ -36,9 +31,9 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
         helper.setText(R.id.tv_order_id, "单号:" + item.getRepairOrderNum())
                 .setText(R.id.tv_appointment_time, "下单:" + item.getCreateTime())
                 .setText(R.id.tv_trouble_count, "项目:" + item.getProjectName())
-                .setText(R.id.tv_count_money, "¥" + item.getTotalCost() / 100)
+                .setText(R.id.tv_count_money, "¥" + item.getTotalCost()/100)
                 .setText(R.id.tv_worker_name, "技师：" + item.getReportUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_state, constDataUtils.getQuoteStatus().get(item.getStatus()));
+        helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
         SimpleDraweeView draweeView = helper.getView(R.id.iv_upload);
         if (item.getFailureEntity() != null) {
             String[] urls = item.getFailureEntity().getPictures().split(",");

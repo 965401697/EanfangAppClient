@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
  */
 
 public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
-    public  List<String> allmTitles;
+    public final List<String> allmTitles = GetConstDataUtils.getQuoteStatus();
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -50,10 +50,8 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_list);
-        allmTitles = constDataUtils.getQuoteStatus();
         ButterKnife.bind(this);
         initView();
-
     }
 
     private void initView() {
@@ -96,7 +94,7 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
     }
 
     private void initData(int page) {
-        int status = constDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");

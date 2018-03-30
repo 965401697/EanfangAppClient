@@ -151,7 +151,7 @@ public class WorkCheckListFragment extends BaseFragment
 
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
-            String status = constDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";
+            String status = GetConstDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         if (Constant.COMPANY_DATA_CODE == mType) {

@@ -2,8 +2,6 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -19,13 +17,8 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  */
 
 public class PutUpSelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseViewHolder> {
-    public Config config;
-    public GetConstDataUtils constDataUtils;
-
     public PutUpSelectWorkerAdapter(int layoutResId, List data) {
         super(layoutResId, data);
-        config = Config.get(EanfangApplication.get().getApplicationContext());
-        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override
@@ -51,7 +44,7 @@ public class PutUpSelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, Bas
                 .setText(R.id.tv_company, item.getCompanyEntity().getOrgName())
                 .setText(R.id.tv_koubei, starNum + "分")
                 .setText(R.id.tv_haopinglv, per)
-                .setText(R.id.tv_years, constDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
+                .setText(R.id.tv_years, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
 
         MaterialRatingBar rb_star = helper.getView(R.id.rb_star);
         rb_star.setRating(starNum);

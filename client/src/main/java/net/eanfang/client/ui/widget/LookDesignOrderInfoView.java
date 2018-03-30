@@ -79,14 +79,14 @@ public class LookDesignOrderInfoView extends BaseDialog {
 
     private void fillData(DesignOrderInfoBean bean) {
         tv_user_name.setText(bean.getUserName());
-        tv_address.setText(config.getAddressByCode(bean.getZoneCode()));
+        tv_address.setText(Config.get().getAddressByCode(bean.getZoneCode()));
         tv_detail_address.setText(bean.getDetailPlace());
         tv_receive_user_name.setText(bean.getContactUser());
         tv_receive_phone.setText(bean.getContactPhone());
-        tv_reply_limit.setText(constDataUtils.getRevertList().get(bean.getRevertTimeLimit()));
-        tv_business_one.setText(config.getBusinessNameByCode(bean.getBusinessOneCode(), 1));
-        tv_plan_limit.setText(constDataUtils.getPredictList().get(bean.getPredictTime()));
-        tv_budget_limit.setText(constDataUtils.getBudgetList().get(bean.getBudgetLimit()));
+        tv_reply_limit.setText(GetConstDataUtils.getRevertList().get(bean.getRevertTimeLimit()));
+        tv_business_one.setText(Config.get().getBusinessNameByCode(bean.getBusinessOneCode(), 1));
+        tv_plan_limit.setText(GetConstDataUtils.getPredictList().get(bean.getPredictTime()));
+        tv_budget_limit.setText(GetConstDataUtils.getBudgetList().get(bean.getBudgetLimit()));
         tv_remark.setText(bean.getRemarkInfo());
 
 

@@ -98,10 +98,6 @@ public class TroubleDetalilListActivity extends BaseDialog {
         } else {
             intent = new Intent(mContext, PsTroubleDetailActivity.class);
         }
-        if (mDataList.get(position).getOverTime() == null) {
-            showToast("还没有完工，暂时不能查看");
-            return;
-        }
         intent.putExtra("orderId", mDataList.get(position).getId());
         intent.putExtra("phoneSolve", isPhoneSolve);
         intent.putExtra("bean", mDataList.get(position));

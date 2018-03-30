@@ -143,19 +143,19 @@ public class InstallActivity extends BaseClientActivity {
         });
         //回复时限选择
         llTime.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvTime, constDataUtils.getRevertList());
+            PickerSelectUtil.singleTextPicker(this, "", tvTime, GetConstDataUtils.getRevertList());
         });
         //业务类型一级
         llBusiness.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvBusiness, Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList());
+            PickerSelectUtil.singleTextPicker(this, "", tvBusiness, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
         });
         //预计工期
         LLProjectTime.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvProjectTime, constDataUtils.getPredictList());
+            PickerSelectUtil.singleTextPicker(this, "", tvProjectTime, GetConstDataUtils.getPredictList());
         });
         //预算范围
         llBudget.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvBudget, constDataUtils.getBudgetList());
+            PickerSelectUtil.singleTextPicker(this, "", tvBudget, GetConstDataUtils.getBudgetList());
         });
 
     }
@@ -214,17 +214,17 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setLatitude(latitude);
         installOrderConfirmBean.setLongitude(longitude);
         installOrderConfirmBean.setClientCompanyName(company);
-        installOrderConfirmBean.setZone(config.getAreaCodeByName(city, zone));
-        installOrderConfirmBean.setZoneId(Long.valueOf(config.getBaseIdByCode(installOrderConfirmBean.getZone(), 3, Constant.AREA)));
+        installOrderConfirmBean.setZone(Config.get().getAreaCodeByName(city, zone));
+        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(),3, Constant.AREA)));
         installOrderConfirmBean.setConnector(contact);
         installOrderConfirmBean.setConnectorPhone(phone);
         installOrderConfirmBean.setDetailPlace(etDetailAddress.getText().toString().trim());
         installOrderConfirmBean.setDescription(desc);
-        installOrderConfirmBean.setPredictTime(constDataUtils.getPredictList().indexOf(predictTime));
-        installOrderConfirmBean.setRevertTimeLimit(constDataUtils.getRevertList().indexOf(revertime));
-        installOrderConfirmBean.setBudget(constDataUtils.getBudgetList().indexOf(budget));
-        installOrderConfirmBean.setBusinessOneCode(config.getBusinessCodeByName(business, 1));
-        installOrderConfirmBean.setBusinessOneId(Long.valueOf(config.getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode(), 1)));
+        installOrderConfirmBean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(predictTime));
+        installOrderConfirmBean.setRevertTimeLimit(GetConstDataUtils.getRevertList().indexOf(revertime));
+        installOrderConfirmBean.setBudget(GetConstDataUtils.getBudgetList().indexOf(budget));
+        installOrderConfirmBean.setBusinessOneCode(Config.get().getBusinessCodeByName(business, 1));
+        installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode(),1)));
 
         doHttp(JSON.toJSONString(installOrderConfirmBean));
 
