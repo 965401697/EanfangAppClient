@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 
 public class ConstansActivity extends BaseActivity {
     @BindView(R.id.rev_lista)
-    RecyclerView revLista;
+    RecyclerView revLista;//员工
     @BindView(R.id.rev_depart)
-    RecyclerView revDepart;
+    RecyclerView revDepart;//部门
     private OrgEntity orgEntity;
 
     @Override
