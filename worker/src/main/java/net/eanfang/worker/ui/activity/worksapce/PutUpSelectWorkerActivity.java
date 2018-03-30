@@ -48,7 +48,7 @@ public class PutUpSelectWorkerActivity extends BaseWorkerActivity {
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
+        queryEntry.getIsIn().put("serviceId", Arrays.asList(config.getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
         queryEntry.getIsIn().put("businessId", businessId);
         queryEntry.getEquals().put("companyId", companyId + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)

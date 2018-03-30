@@ -25,7 +25,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -277,15 +276,15 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
 
 
         if (StringUtils.isValid(failureEntity.getBusinessThreeCode())) {
-            String bugOne = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
-            String bugTwo = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 2);
-            String bugThree = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 3);
+            String bugOne = config.getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
+            String bugTwo = config.getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 2);
+            String bugThree = config.getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 3);
             tvTroubleTitle.setText(bugOne + "-" + bugTwo + "-" + bugThree);
         } else {
             tvTroubleTitle.setText("");
         }
         tvTroubleDevice.setText(Optional.ofNullable(failureEntity.getDeviceName()).orElse(""));
-        tvBrandModel.setText(Optional.ofNullable(Config.get().getModelNameByCode(failureEntity.getModelCode(), 2)).orElse(""));
+        tvBrandModel.setText(Optional.ofNullable(config.getModelNameByCode(failureEntity.getModelCode(), 2)).orElse(""));
         tvDeviceNo.setText(Optional.ofNullable(failureEntity.getDeviceNo()).orElse(""));
         tvDeviceLocation.setText(Optional.ofNullable(failureEntity.getBugPosition()).orElse(""));
         etTroubleDesc.setText(Optional.ofNullable(failureEntity.getBugDescription()).orElse(""));
@@ -297,9 +296,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
                         etTroublePoint.setText(Optional.ofNullable(detailEntity.getCheckProcess()).orElse(""));
                         etTroubleReason.setText(Optional.ofNullable(detailEntity.getCause()).orElse(""));
                         etTroubleDeal.setText(Optional.ofNullable(detailEntity.getHandle()).orElse(""));
-                        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(failureEntity.getIsMisinformation()));
+                        tvRepairMisinformation.setText(constDataUtils.getRepairMisinformationList().get(failureEntity.getIsMisinformation()));
                         if (detailEntity.getStatus() != null) {
-                            tvRepairConclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(detailEntity.getStatus())).orElse(""));
+                            tvRepairConclusion.setText(Optional.ofNullable(constDataUtils.getBugDetailList().get(detailEntity.getStatus())).orElse(""));
                         }
                         initImgUrlList();
                         initNinePhoto();
@@ -350,14 +349,14 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         });
 
         llRepairConclusion.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "维修结论", tvRepairConclusion, GetConstDataUtils.getBugDetailList());
+            PickerSelectUtil.singleTextPicker(this, "维修结论", tvRepairConclusion, constDataUtils.getBugDetailList());
         });
 
         llRepairMisinformation.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "是否误报", tvRepairMisinformation, GetConstDataUtils.getRepairMisinformationList());
+            PickerSelectUtil.singleTextPicker(this, "是否误报", tvRepairMisinformation, constDataUtils.getRepairMisinformationList());
         });
         tvAdd.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "参数", GetConstDataUtils.getDeviceParamList(), (index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "参数", constDataUtils.getDeviceParamList(), (index, item) -> {
                 BughandleParamEntity param = new BughandleParamEntity();
                 param.setParamName(item);
                 detailEntity.getParamEntityList().add(param);
@@ -372,8 +371,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
             Intent intent = new Intent(AddTroubleDetailActivity.this, AddMaterialActivity.class);
             Bundle bundle = new Bundle();
 //                bundle.putSerializable("bugBean", bugBean);
-            String bugOne = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
-            bundle.putString("bugOneCode", Config.get().getBusinessCodeByName(bugOne, 1));
+            String bugOne = config.getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
+            bundle.putString("bugOneCode", config.getBusinessCodeByName(bugOne, 1));
             intent.putExtras(bundle);
             startActivityForResult(intent, 10009);
         });
@@ -534,14 +533,14 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         detailEntity.setBusRepairFailureId(failureId);
         //故障描述
         repairFailureEntity.setBugDescription(etTroubleDesc.getText().toString().trim());
-        repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(tvRepairMisinformation.getText().toString().trim()));
+        repairFailureEntity.setIsMisinformation(constDataUtils.getRepairMisinformationList().indexOf(tvRepairMisinformation.getText().toString().trim()));
         detailEntity.setFailureEntity(repairFailureEntity);
 
         detailEntity.setCause(etTroubleReason.getText().toString().trim());
         detailEntity.setHandle(etTroubleDeal.getText().toString().trim());
         detailEntity.setCheckProcess(etTroublePoint.getText().toString().trim());
         //维修结果
-        detailEntity.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tvRepairConclusion.getText().toString().trim()));
+        detailEntity.setStatus(constDataUtils.getBugDetailList().indexOf(tvRepairConclusion.getText().toString().trim()));
 //
         //故障表象 （3张）
         String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);

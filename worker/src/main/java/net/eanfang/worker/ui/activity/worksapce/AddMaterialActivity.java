@@ -64,7 +64,7 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
         }
         //二级
         ll_business.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bean -> bean.getDataCode().startsWith(bugOneCode)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(2)).filter(bean -> bean.getDataCode().startsWith(bugOneCode)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
                 tv_business.setText(item);
                 tv_equipment.setText("");
                 tv_model.setText("");
@@ -73,25 +73,25 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void showEquipmentName() {
-        String busTwoCode = Config.get().getBusinessCodeByName(tv_business.getText().toString().trim(), 2);
+        String busTwoCode = config.getBusinessCodeByName(tv_business.getText().toString().trim(), 2);
         if (StringUtils.isEmpty(busTwoCode)) {
             showToast("请先选择设备类别");
             return;
         }
-        PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+        PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
             tv_equipment.setText(item);
             tv_model.setText("");
         }));
     }
 
     private void showModel() {
-        String busOneName = Config.get().getBusinessNameByCode(bugOneCode, 1);
-        String modelOne = Config.get().getBaseCodeByName(busOneName, 1, Constant.MODEL).get(0);
+        String busOneName = config.getBusinessNameByCode(bugOneCode, 1);
+        String modelOne = config.getBaseCodeByName(busOneName, 1, Constant.MODEL).get(0);
         if (StringUtils.isEmpty(modelOne)) {
             showToast("请先选择系统类别");
             return;
         }
-        PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(modelOne)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+        PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getModelList(2)).filter(bus -> bus.getDataCode().startsWith(modelOne)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
             tv_model.setText(item);
         }));
 
@@ -156,10 +156,10 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
                 BughandleUseDeviceEntity bean = new BughandleUseDeviceEntity();
                 bean.setCount(Integer.parseInt(et_location.getText().toString()));
                 bean.setRemarkInfo(et_code.getText().toString());
-                bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_equipment.getText().toString(), 3));
-                bean.setModelCode(Config.get().getBaseCodeByName(tv_model.getText().toString(), 2, Constant.MODEL).get(0));
+                bean.setBusinessThreeCode(config.getBusinessCodeByName(tv_equipment.getText().toString(), 3));
+                bean.setModelCode(config.getBaseCodeByName(tv_model.getText().toString(), 2, Constant.MODEL).get(0));
                 bean.setDeviceName(tv_equipment.getText().toString());
-                bean.setBusinessThreeId(Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 3));
+                bean.setBusinessThreeId(config.getBusinessIdByCode(bean.getBusinessThreeCode(), 3));
 
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();

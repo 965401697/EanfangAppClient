@@ -12,7 +12,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.PayOrderListBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -40,7 +39,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
     @BindView(R.id.vp_work_list)
     ViewPager vpWorkList;
 
-    public final List<String> allmTitles = GetConstDataUtils.getQuoteStatus();
+    public final List<String> allmTitles = constDataUtils.getQuoteStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
@@ -98,7 +97,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
     }
 
     private void initData(int page) {
-        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+        int status = constDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         if ("1".equals(type)) {

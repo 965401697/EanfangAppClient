@@ -19,7 +19,6 @@ import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -131,9 +130,9 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     }
 
     private void setOnClick() {
-        llWorkingLevel.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingLevel, GetConstDataUtils.getWorkingLevelList()));
-        llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, GetConstDataUtils.getWorkingYearList()));
-        llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
+        llWorkingLevel.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingLevel, constDataUtils.getWorkingLevelList()));
+        llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, constDataUtils.getWorkingYearList()));
+        llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, constDataUtils.getPayTypeList()));
 
         ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_FRONT)));
         ivIdCardSide.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_SIDE)));
@@ -218,13 +217,13 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 etContactPhone.setText(workerInfoBean.getContactPhone());
             }
             if (workerInfoBean.getWorkingLevel() >= 0) {
-                tvWorkingLevel.setText(GetConstDataUtils.getWorkingLevelList().get(workerInfoBean.getWorkingLevel()));
+                tvWorkingLevel.setText(constDataUtils.getWorkingLevelList().get(workerInfoBean.getWorkingLevel()));
             }
             if (workerInfoBean.getWorkingYear() >= 0) {
-                tvWorkingYear.setText(GetConstDataUtils.getWorkingYearList().get(workerInfoBean.getWorkingYear()));
+                tvWorkingYear.setText(constDataUtils.getWorkingYearList().get(workerInfoBean.getWorkingYear()));
             }
             if (workerInfoBean.getPayType() >= 0) {
-                tvPayType.setText(GetConstDataUtils.getPayTypeList().get(workerInfoBean.getPayType()));
+                tvPayType.setText(constDataUtils.getPayTypeList().get(workerInfoBean.getPayType()));
             }
             if (workerInfoBean.getPayAccount() != null) {
                 etPayAccount.setText(workerInfoBean.getPayAccount());
@@ -269,9 +268,9 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setWorkerInfoBean.setContactName(etContactName.getText().toString().trim());
         setWorkerInfoBean.setContactPhone(etContactPhone.getText().toString().trim());
         setWorkerInfoBean.setContactName(etContactName.getText().toString().trim());
-        setWorkerInfoBean.setPayType(GetConstDataUtils.getPayTypeList().indexOf(tvPayType.getText().toString().trim()));
-        setWorkerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(tvWorkingLevel.getText().toString().trim()));
-        setWorkerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(tvWorkingYear.getText().toString().trim()));
+        setWorkerInfoBean.setPayType(constDataUtils.getPayTypeList().indexOf(tvPayType.getText().toString().trim()));
+        setWorkerInfoBean.setWorkingLevel(constDataUtils.getWorkingLevelList().indexOf(tvWorkingLevel.getText().toString().trim()));
+        setWorkerInfoBean.setWorkingYear(constDataUtils.getWorkingYearList().indexOf(tvWorkingYear.getText().toString().trim()));
         setWorkerInfoBean.setPayAccount(etPayAccount.getText().toString().trim());
         setWorkerInfoBean.setAccId(workerInfoBean.getAccId());
         setWorkerInfoBean.setUserId(EanfangApplication.getApplication().getUser().getAccount().getNullUser());

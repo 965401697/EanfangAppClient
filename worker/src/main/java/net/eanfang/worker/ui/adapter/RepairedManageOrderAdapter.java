@@ -6,6 +6,8 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -22,13 +24,14 @@ import java.util.List;
 
 public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHolder> {
 
-
+    public Config config;
+    public GetConstDataUtils constDataUtils;
     private final boolean[] isShowFirstBtnWorker = {
             false, false, true, false, false, true, false
     };
     private String[] doSomethingWorker = {
             "联系客户", "马上回电", "上门签到"
-            , "完工", "查看故障处理", "评价客户","联系技师"
+            , "完工", "查看故障处理", "评价客户", "联系技师"
     };
     private String[] doSomething;
     private boolean[] isShowFirstBtn;
@@ -37,6 +40,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         super(R.layout.item_workspace_order_list, data);
         doSomething = doSomethingWorker;
         isShowFirstBtn = isShowFirstBtnWorker;
+        config = Config.get(EanfangApplication.get().getApplicationContext());
+        constDataUtils = GetConstDataUtils.get(config);
 
     }
 
@@ -44,21 +49,21 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
     protected void convert(BaseViewHolder helper, RepairOrderEntity item) {
         String str = "";
 
-        if (item.getOwnerOrg() != null&&item.getOwnerOrg().getBelongCompany()!=null && item.getOwnerUser() != null&&item.getOwnerUser().getAccountEntity()!=null) {
+        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
             helper.setText(R.id.tv_company_name, item.getOwnerOrg().getBelongCompany().getOrgName()
                     + "  (" + item.getOwnerUser().getAccountEntity().getRealName() + ")");
         } else if (item.getOwnerOrg() == null) {
             helper.setText(R.id.tv_company_name, item.getOwnerUser().getAccountEntity().getRealName());
         }
 
-        if (item.getAssigneeUser() != null&&item.getAssigneeUser().getAccountEntity()!=null) {
+        if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
             helper.setText(R.id.tv_person_name, "技师：" + item.getAssigneeUser().getAccountEntity().getRealName());
         }
         if (item.getOrderNum() != null) {
             helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         }
         helper.setText(R.id.tv_create_time, "下单：" + GetDateUtils.dateToDateString(item.getCreateTime()));
-        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        helper.setText(R.id.tv_state, constDataUtils.getRepairStatus().get(item.getStatus()));
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
         helper.setVisible(R.id.tv_do_first, isShowFirstBtn[item.getStatus()]);
 

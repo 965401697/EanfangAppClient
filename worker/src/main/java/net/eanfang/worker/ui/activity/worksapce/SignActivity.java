@@ -138,7 +138,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         signinBean.setTime(textClock.getText().toString().trim());
         signinBean.setDetailPlace(detailPlace);
         signinBean.setVisitorName(etVisitName.getText().toString().trim());
-        signinBean.setZoneCode(Config.get().getAreaCodeByName(cityAddress, contry));
+        signinBean.setZoneCode(config.getAreaCodeByName(cityAddress, contry));
         signinBean.setStatus(status);
         startAnimActivity(new Intent(SignActivity.this, SignInCommitActivity.class)
                 .putExtra("bean", signinBean)

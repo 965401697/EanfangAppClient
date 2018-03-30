@@ -202,7 +202,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
      * 获取发包列表
      */
     private void getData() {
-        int status = GetConstDataUtils.getTaskPublishStatus().indexOf(getmTitle());
+        int status = constDataUtils.getTaskPublishStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         if (Constant.CREATE_DATA_CODE == (mType)) {

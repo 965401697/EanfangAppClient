@@ -41,7 +41,7 @@ public class MineTaskPublishListActivity extends BaseActivity {
     @BindView(R.id.vp_work_list)
     ViewPager vpWorkList;
 
-    public final List<String> allmTitles = GetConstDataUtils.getTaskPublishStatus();
+    public final List<String> allmTitles = constDataUtils.getTaskPublishStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
@@ -99,7 +99,7 @@ public class MineTaskPublishListActivity extends BaseActivity {
     }
 
     private void initData(int page) {
-        int status = GetConstDataUtils.getTaskPublishStatus().indexOf(currentFragment.getmTitle());
+        int status = constDataUtils.getTaskPublishStatus().indexOf(currentFragment.getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         if (Constant.CREATE_DATA_CODE == (dataType)) {

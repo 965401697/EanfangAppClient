@@ -11,7 +11,6 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ViewFindUtils;
@@ -33,7 +32,7 @@ import java.util.List;
  */
 
 public class RepairCtrlActivity extends BaseWorkerActivity {
-    private final List<String> mTitlesWorker = GetConstDataUtils.getRepairStatus();
+    private final List<String> mTitlesWorker = constDataUtils.getRepairStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
@@ -94,7 +93,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
         String status = null;
         QueryEntry queryEntry = new QueryEntry();
         if (!"全部".equals(currentFragment.getTitle())) {
-            status = GetConstDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
+            status = constDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
             queryEntry.getEquals().put("status", status);
         }
         queryEntry.setPage(1);

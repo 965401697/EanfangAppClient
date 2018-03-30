@@ -24,7 +24,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
 import com.eanfang.model.WorkAddReportBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.yaf.sys.entity.UserEntity;
 
@@ -164,7 +163,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 showDependPerson();
                 break;
             case R.id.ll_report_type://类型
-                PickerSelectUtil.singleTextPicker(this, "", etTaskName, GetConstDataUtils.getWorkReportTypeList());
+                PickerSelectUtil.singleTextPicker(this, "", etTaskName, constDataUtils.getWorkReportTypeList());
                 break;
 
             case R.id.ll_comit://提交
@@ -184,7 +183,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             showToast("请选择类型");
             return;
         }
-        bean.setType(GetConstDataUtils.getWorkReportTypeList().indexOf(task_title));
+        bean.setType(constDataUtils.getWorkReportTypeList().indexOf(task_title));
         bean.setAssigneeUserId(assigneeUserId);
         bean.setAssigneeOrgCode(assigneeOrgCode);
         beanList.addAll(findList);

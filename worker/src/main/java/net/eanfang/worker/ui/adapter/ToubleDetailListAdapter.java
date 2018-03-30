@@ -2,6 +2,8 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.BughandleConfirmEntity;
@@ -16,7 +18,9 @@ import java.util.List;
  */
 
 public class ToubleDetailListAdapter extends BaseQuickAdapter<BughandleConfirmEntity, BaseViewHolder> {
-    private final List<String> mTitlesWorker = GetConstDataUtils.getRepairStatus();
+    public Config config;
+    public GetConstDataUtils constDataUtils;
+    private final List<String> mTitlesWorker = constDataUtils.getRepairStatus();
     private String[] mTitles;
 
     public ToubleDetailListAdapter(List data) {
@@ -24,6 +28,8 @@ public class ToubleDetailListAdapter extends BaseQuickAdapter<BughandleConfirmEn
         super(R.layout.item_trouble_detail_list, data);
         mTitles = new String[mTitlesWorker.size()];
         mTitlesWorker.toArray(mTitles);
+        config = Config.get(EanfangApplication.get().getApplicationContext());
+        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.TransferLogEntity;
@@ -77,7 +76,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         orderId = getIntent().getLongExtra("orderId", 0);
         tvCompany.setText(companyName);
         llCause.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvCause, GetConstDataUtils.getTransferCauseList());
+            PickerSelectUtil.singleTextPicker(this, "", tvCause, constDataUtils.getTransferCauseList());
         });
 
         llToWorker.setOnClickListener((v) -> {
@@ -95,7 +94,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         bughandleConfirmEntity = (BughandleConfirmEntity) getIntent().getSerializableExtra("bean");
 //        mDataList = bughandleConfirmEntity.getTransferLogEntityList();
         mDataList=new ArrayList<>();
-        transferLogEntity.setCause(GetConstDataUtils.getTransferCauseList().indexOf(tvCause.getText().toString().trim()));
+        transferLogEntity.setCause(constDataUtils.getTransferCauseList().indexOf(tvCause.getText().toString().trim()));
         transferLogEntity.setOrderId(orderId);
         transferLogEntity.setOriginalUserId(EanfangApplication.getApplication().getUserId());
         transferLogEntity.setRemark(etDec.getText().toString().trim());

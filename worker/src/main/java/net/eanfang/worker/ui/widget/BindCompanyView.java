@@ -18,7 +18,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BindCompanyBean;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 
 import net.eanfang.worker.R;
@@ -88,10 +87,10 @@ public class BindCompanyView extends BaseDialog {
         tvTitle.setText("绑定客户");
         tvCompanyNamewe.setText(company_name);
         rlServiceType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(mContext, "", tvServiceType,
-                GetConstDataUtils.getCooperationTypeList()));
+                constDataUtils.getCooperationTypeList()));
 
         rlBusinessType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(mContext, "", tvBusinessType,
-                Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList()));
+                Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList()));
 
         llStartTime.setOnClickListener((v) -> PickerSelectUtil.onDownYearMonthDayPicker(mContext, tvStartTime, (year, month, day) -> {
             tvStartTime.setText(year + "-" + month + "-" + day);
@@ -106,8 +105,8 @@ public class BindCompanyView extends BaseDialog {
     private String fillBean() {
         beanList = new BindCompanyBean();
         beanList.setAssigneeOrgId(orgId);
-        beanList.setBusType(GetConstDataUtils.getCooperationTypeList().indexOf(tvServiceType.getText().toString().trim()));
-        beanList.setBusinessOneCode(Config.get().getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
+        beanList.setBusType(constDataUtils.getCooperationTypeList().indexOf(tvServiceType.getText().toString().trim()));
+        beanList.setBusinessOneCode(config.getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
         beanList.setBeginTime(tvStartTime.getText().toString().trim());
         beanList.setEndTime(tvEndTime.getText().toString().trim());
         beanList.setOwnerOrgId(EanfangApplication.getApplication().getCompanyId());

@@ -11,7 +11,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckListBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
 
 public class WorkCheckListActivity extends BaseWorkerActivity {
     private static String titleBar;
-    public final List<String> allmTitles = GetConstDataUtils.getWorkInspectStatus();
+    public final List<String> allmTitles = constDataUtils.getWorkInspectStatus();
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -106,7 +105,7 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
     private void initData(int page) {
         String status = "";
         if (!currentFragment.getmTitle().equals("全部")) {
-            status = GetConstDataUtils.getWorkInspectStatus().indexOf(currentFragment.getmTitle()) + "";
+            status = constDataUtils.getWorkInspectStatus().indexOf(currentFragment.getmTitle()) + "";
         }
         QueryEntry queryEntry = new QueryEntry();
         if ("0".equals(type)) {

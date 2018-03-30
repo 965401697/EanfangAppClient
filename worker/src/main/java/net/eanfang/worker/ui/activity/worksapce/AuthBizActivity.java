@@ -40,7 +40,7 @@ public class AuthBizActivity extends BaseActivity {
     private int status;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
-    List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
+    List<BaseDataEntity> bizTypeList = config.getServiceList(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

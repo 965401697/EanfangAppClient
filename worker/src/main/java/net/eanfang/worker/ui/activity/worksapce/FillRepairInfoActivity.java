@@ -28,7 +28,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PhotoUtils;
@@ -252,19 +251,19 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         //录像机天数
         llStoreTime.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvStoreTime, GetConstDataUtils.getStoreDayList());
+            PickerSelectUtil.singleTextPicker(this, "", tvStoreTime, constDataUtils.getStoreDayList());
         });
         //报警打印机
         llPrintOnAlarm.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvPrintOnAlarm, GetConstDataUtils.getIsNormalList());
+            PickerSelectUtil.singleTextPicker(this, "", tvPrintOnAlarm, constDataUtils.getIsNormalList());
         });
         //数据远传
         llMachineDataRemote.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvMachineDataRemote, GetConstDataUtils.getIsNormalList());
+            PickerSelectUtil.singleTextPicker(this, "", tvMachineDataRemote, constDataUtils.getIsNormalList());
         });
         //时间
         llTimeRight.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvTimeRight, GetConstDataUtils.getIsNormalList());
+            PickerSelectUtil.singleTextPicker(this, "", tvTimeRight, constDataUtils.getIsNormalList());
         });
 
     }
@@ -290,7 +289,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private void initAdapter() {
         DetailEntityList = bughandleConfirmEntity.getDetailEntityList();
 
-        businessIdLis = Stream.of(DetailEntityList).map(bean -> Config.get().getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(), 3) + "").toList();
+        businessIdLis = Stream.of(DetailEntityList).map(bean -> config.getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(), 3) + "").toList();
         fillTroubleDetailAdapter = new FillTroubleDetailAdapter(R.layout.item_quotation_detail, DetailEntityList);
         rvTrouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -366,10 +365,10 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(tvOverTime.getText().toString().trim()));
         bughandleConfirmEntity.setWorkHour(etRepairTime.getText().toString().trim());
-        bughandleConfirmEntity.setStoreDays(GetConstDataUtils.getStoreDayList().indexOf(tvStoreTime.getText().toString().trim()));
-        bughandleConfirmEntity.setIsAlarmPrinter(GetConstDataUtils.getIsNormalList().indexOf(tvPrintOnAlarm.getText().toString().trim()));
-        bughandleConfirmEntity.setIsTimeRight(GetConstDataUtils.getIsNormalList().indexOf(tvTimeRight.getText().toString().trim()));
-        bughandleConfirmEntity.setIsMachineDataRemote(GetConstDataUtils.getIsNormalList().indexOf(tvMachineDataRemote.getText().toString().trim()));
+        bughandleConfirmEntity.setStoreDays(constDataUtils.getStoreDayList().indexOf(tvStoreTime.getText().toString().trim()));
+        bughandleConfirmEntity.setIsAlarmPrinter(constDataUtils.getIsNormalList().indexOf(tvPrintOnAlarm.getText().toString().trim()));
+        bughandleConfirmEntity.setIsTimeRight(constDataUtils.getIsNormalList().indexOf(tvTimeRight.getText().toString().trim()));
+        bughandleConfirmEntity.setIsMachineDataRemote(constDataUtils.getIsNormalList().indexOf(tvMachineDataRemote.getText().toString().trim()));
         bughandleConfirmEntity.setLeftoverProblem(etRemainQuestion.getText().toString().trim());
         //协作人员
         bughandleConfirmEntity.setTeamWorker(etTeamWorker.getText().toString().trim());

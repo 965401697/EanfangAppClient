@@ -40,7 +40,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
     private Long userId = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
-    List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
+    List<BaseDataEntity> bizTypeList = config.getServiceList(1);
     private int status;
 
     @Override

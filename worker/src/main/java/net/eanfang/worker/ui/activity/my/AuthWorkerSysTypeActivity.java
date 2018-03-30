@@ -42,7 +42,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
     private int status;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
-    List<BaseDataEntity> businessOneList = Config.get().getBusinessList(1);
+    List<BaseDataEntity> businessOneList = config.getBusinessList(1);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
