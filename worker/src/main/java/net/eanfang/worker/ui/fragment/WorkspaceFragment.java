@@ -56,6 +56,9 @@ public class WorkspaceFragment extends BaseFragment {
         });
     }
 
+    public void onFuck() {
+        showToast("hjhhhhh");
+    }
 
     @Override
     protected void setListener() {
