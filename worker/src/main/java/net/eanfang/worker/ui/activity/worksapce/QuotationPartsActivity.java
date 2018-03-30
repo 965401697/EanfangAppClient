@@ -67,7 +67,7 @@ public class QuotationPartsActivity extends BaseActivity {
         quotePartsBean.setCount(count);
         quotePartsBean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tvUnit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(etPrice.getText().toString().trim());
-        quotePartsBean.setUnitPrice((int) unitPrice);
+        quotePartsBean.setUnitPrice(unitPrice*100);
         quotePartsBean.setSum((unitPrice*count)*100);
         quotePartsBean.setPartSpeciication(etPartSpeciication.getText().toString().trim());
         quotePartsBean.setPartName(etPartsName.getText().toString().trim());

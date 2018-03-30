@@ -88,9 +88,9 @@ public class AuthWorkerAreaActivity extends BaseActivity {
         setRightTitleOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
-            }else if (status==1){
+            } else if (status == 1) {
                 showToast("您已经提交认证，审核中。。");
-            }else if (status==2){
+            } else if (status == 2) {
                 showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
         });
@@ -155,6 +155,15 @@ public class AuthWorkerAreaActivity extends BaseActivity {
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("已提交认证");
                     verfiyView.dismiss();
+                    closeActivity();
                 }));
     }
+
+    private void closeActivity() {
+        EanfangApplication.get().closeActivity(AuthWorkerInfoActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthWorkerSysTypeActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthWorkerBizActivity.class.getName());
+        finishSelf();
+    }
+
 }

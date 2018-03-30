@@ -8,6 +8,13 @@
 
     <include layout="@layout/header" />
 
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂无数据"
+        android:visibility="gone" />
 
     <com.eanfang.swipefresh.SwipyRefreshLayout
         android:id="@+id/msg_refresh"
@@ -15,25 +22,11 @@
         android:layout_height="match_parent"
         my:direction="both">
 
-        <LinearLayout
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <TextView
-                android:id="@+id/tv_no_data"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="暂无数据"
-                android:visibility="gone" />
-        </LinearLayout>
-
+            android:layout_height="match_parent" />
 
     </com.eanfang.swipefresh.SwipyRefreshLayout>
 

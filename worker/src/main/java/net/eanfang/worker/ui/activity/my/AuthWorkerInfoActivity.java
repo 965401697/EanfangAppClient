@@ -244,6 +244,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             if (workerInfoBean.getAvatarPhoto() != null) {
                 ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()));
                 tvUserName.setText(workerInfoBean.getContactName());
+
             }
 
             if (workerInfoBean.getCrimePic() != null) {

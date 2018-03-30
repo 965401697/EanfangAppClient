@@ -99,6 +99,9 @@ public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGr
                 doHttp(null);
             }
         });
+        ivLeft.setOnClickListener((V) -> {
+            dismiss();
+        });
         llDoorTime.setOnClickListener(v -> PickerSelectUtil.onYearMonthDayTimePicker(mContext, "开始时间", tvIndoorTime));
     }
 

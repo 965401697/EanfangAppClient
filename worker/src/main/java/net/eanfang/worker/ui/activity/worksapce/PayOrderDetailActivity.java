@@ -153,7 +153,7 @@ public class PayOrderDetailActivity extends BaseActivity {
         rvList2.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new QuotationServiceView(PayOrderDetailActivity.this, quoteServicesBeanList.get(position));
+                new QuotationServiceView(PayOrderDetailActivity.this, quoteServicesBeanList.get(position)).show();
             }
         });
     }

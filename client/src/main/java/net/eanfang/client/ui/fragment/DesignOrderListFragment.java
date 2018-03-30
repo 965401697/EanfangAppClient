@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -40,7 +39,6 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 public class DesignOrderListFragment extends BaseFragment implements OnDataReceivedListener {
 
     private static int page = 1;
-    TextView tvNoDatas;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
     private List<DesignOrderListBean.ListBean> mDataList;
@@ -67,7 +65,6 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
 
     @Override
     protected void initView() {
-        tvNoDatas = findViewById(R.id.tv_no_datas);
         rvList = findViewById(R.id.rv_list);
         swiprefresh = findViewById(R.id.swiprefresh);
     }
@@ -115,13 +112,8 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
         mDataList = ((DesignOrderListActivity) getActivity()).getDesignOrderListBean().getList();
         mAdapter = new DesignOrderAdapter(mDataList);
 
-        if (mDataList.size() > 0) {
-            rvList.setAdapter(mAdapter);
-            tvNoDatas.setVisibility(View.GONE);
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        mAdapter.notifyDataSetChanged();
+        rvList.setAdapter(mAdapter);
+
     }
 
     private void dataOption(int option) {
@@ -161,9 +153,9 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
             status = ((DesignOrderListActivity) getActivity()).allmTitles.indexOf(this.getmTitle()) + "";
         }
         QueryEntry queryEntry = new QueryEntry();
-        if ("0".equals(mType)) {
+        if ("0" .equals(mType)) {
             queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
-        } else if ("1".equals(mType)) {
+        } else if ("1" .equals(mType)) {
             queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         }
         if (!mTitle.equals("全部")) {
@@ -180,36 +172,6 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
                                 onDataReceived();
                             });
                         })
-//                {
-//                    @Override
-//                    public void onSuccess(DesignOrderListBean bean) {
-//                        ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
-//                        getActivity().runOnUiThread(() -> {
-//                            onDataReceived();
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        swiprefresh.setRefreshing(false);
-//                        page--;
-//                        getActivity().runOnUiThread(() -> {
-//                            //如果是第一页 没有数据了 则清空 bean
-//                            if (page < 1) {
-//                                DesignOrderListBean bean = new DesignOrderListBean();
-//                                bean.setList(new ArrayList<DesignOrderListBean.ListBean>());
-//                                ((DesignOrderListActivity) getActivity()).setDesignOrderListBean(bean);
-//                            } else {
-//                                showToast("已经到底了");
-//                            }
-//                            onDataReceived();
-//                        });
-//                    }
-//                }
                 );
     }
 

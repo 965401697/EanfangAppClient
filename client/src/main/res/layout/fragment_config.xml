@@ -103,7 +103,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:onClick="noOpen">
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -153,6 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:onClick="noOpen"
                         android:orientation="vertical">
 
                         <TextView
@@ -184,6 +186,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="noOpen"
                             android:orientation="horizontal">
 
                             <TextView
@@ -224,6 +227,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:onClick="noOpen"
                             android:orientation="horizontal">
 
                             <TextView
@@ -259,6 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:onClick="noOpen"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -311,6 +316,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
+                    android:onClick="noOpen"
                     android:padding="10dp">
 
                     <ImageView
@@ -348,6 +354,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
+                    android:onClick="noOpen"
                     android:padding="10dp">
 
                     <ImageView
@@ -385,6 +392,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
+                    android:onClick="noOpen"
                     android:padding="10dp">
 
                     <ImageView
@@ -422,6 +430,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
+                    android:onClick="noOpen"
                     android:padding="10dp">
 
                     <ImageView
@@ -540,6 +549,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
+                    android:onClick="noOpen"
                     android:padding="10dp">
 
                     <ImageView

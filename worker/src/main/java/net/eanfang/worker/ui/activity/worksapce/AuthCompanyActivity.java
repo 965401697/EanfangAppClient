@@ -253,8 +253,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         infoBean.setName(etCompany.getText().toString().trim());
         infoBean.setLicenseCode(edCompanyNumber.getText().toString().trim());
         infoBean.setRegisterAssets(etMoney.getText().toString().trim());
-
-        infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        if (byNetBean.getTradeTypeCode()!=null){
+            infoBean.setTradeTypeCode(byNetBean.getTradeTypeCode());
+        }else {
+            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        }
         infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
         infoBean.setStatus(1);
         infoBean.setOrgId(orgid);
@@ -264,12 +267,12 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         infoBean.setUnitType(3);
         infoBean.setIntro(etDesc.getText().toString().trim());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
-        if (infoBean.getAreaCode() != null) {
+        if (byNetBean.getAreaCode() != null) {
             infoBean.setAreaCode(byNetBean.getAreaCode());
         } else {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         }
-        if (infoBean.getAdminUserId() != null) {
+        if (byNetBean.getAdminUserId() != null) {
             infoBean.setAdminUserId(byNetBean.getAdminUserId());
         } else {
             infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
@@ -322,4 +325,5 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         intent.putExtra("adminUserId", byNetBean.getAdminUserId());
         startActivity(intent);
     }
+//
 }

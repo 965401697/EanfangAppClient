@@ -72,13 +72,22 @@ public class HomeFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), DesignActivity.class));
         });
         //开锁
-        findViewById(R.id.ll_open_door).setOnClickListener(v -> showToast("稍等一下，我准备准备。。。"));
+        findViewById(R.id.ll_open_door).setOnClickListener(v -> showToast("暂缓开通"));
         //实时监控
-        findViewById(R.id.ll_live_video).setOnClickListener(v -> showToast("稍等一下，我准备准备。。。"));
+        findViewById(R.id.ll_live_video).setOnClickListener(v -> showToast("暂缓开通"));
         //天猫安防
-        findViewById(R.id.ll_tm).setOnClickListener(v -> showToast("稍等一下，我准备准备。。。"));
+        findViewById(R.id.ll_tm).setOnClickListener((v) -> {
+
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "https://list.tmall.com/search_product.htm?q=%B0%B2%B7%C0&type=p&vmarket=&spm=875.7931836%2FB.a2227oh.d100&from=mallfp..pc_1_searchbutton")
+                    .putExtra("title", "天猫安防"));
+        });
         //京东安防
-        findViewById(R.id.ll_jd).setOnClickListener(v -> showToast("稍等一下，我准备准备。。。"));
+        findViewById(R.id.ll_jd).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
+                    .putExtra("title", "京东安防"));
+        });
         //签到
         findViewById(R.id.ll_sign).setOnClickListener((v) -> {
             new SignCtrlView(getActivity()).show();
@@ -152,6 +161,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-        findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("稍等一下，我还没准备好"));
+        findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("暂缓开通"));
     }
 }

@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +17,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
@@ -88,9 +90,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_add_trouble);
         ButterKnife.bind(this);
         initView();
-
 //        initData();
-
         setListener();
     }
 
@@ -128,7 +128,8 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         llEquipmentCategory.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBusinessCodeByName(tvSystemCategory.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");return;
+                showToast("请先选择系统类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvEquipmentCategory.setText(item);
@@ -140,7 +141,8 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         llEquipmentName.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tvEquipmentCategory.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
-                showToast("请先选择设备类别");return;
+                showToast("请先选择设备类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvEquipmentName.setText(item);
@@ -151,14 +153,15 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         llModel.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBaseCodeByName(tvSystemCategory.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择系统类别");return;
+                showToast("请先选择系统类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tvModel.setText(item);
             }));
 
         });
-        setRightTitleOnClickListener(v -> onSubmitWorker());
+        setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::onSubmitWorker));
 
     }
 
@@ -184,7 +187,6 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             });
         } else {
             commit(JSON.toJSONString(bean));
-
         }
 
     }
@@ -213,5 +215,42 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         }
     }
 
+    // 检查表单是否填写完毕
+    public boolean checkInfo() {
+        if (TextUtils.isEmpty(tvSystemCategory.getText().toString().trim())) {
+            showToast("请选择系统类别");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(tvEquipmentCategory.getText().toString().trim())) {
+            showToast("请选择故障设备类别");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(tvEquipmentName.getText().toString().trim())) {
+            showToast("请选择故障设备名称");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(tvModel.getText().toString().trim())) {
+            showToast("请选择品牌型号");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(etLocation.getText().toString().trim())) {
+            showToast("请填写故障设备位置");
+            return false;
+        }
+
+        if (TextUtils.isEmpty(etCode.getText().toString().trim())) {
+            showToast("请填写设备编号");
+            return false;
+        }
+        if (TextUtils.isEmpty(etDesc.getText().toString().trim())) {
+            showToast("请填写故障现象");
+            return false;
+        }
+        return true;
+    }
 
 }

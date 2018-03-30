@@ -13,6 +13,8 @@ import net.eanfang.worker.R;
 
 import java.util.List;
 
+import static com.eanfang.util.V.v;
+
 /**
  * 合作公司的adapter
  * Created by Administrator on 2017/3/15.
@@ -40,12 +42,14 @@ public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, B
             }
         });
 
-
-        helper.setText(R.id.tv_company, Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
-        helper.setText(R.id.btn_unconfirm, GetConstDataUtils.getCooperationStatus().get(item.getStatus()));
-        helper.setText(R.id.tv_bugone, Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
-        helper.setText(R.id.tv_time_limit, item.getBeginTime()
-                + "  到  " + item.getEndTime());
-        helper.setText(R.id.tv_repair_install, GetConstDataUtils.getCooperationTypeList().get(item.getBusType()));
+        //公司名
+        helper.setText(R.id.tv_company, v(() -> Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)));
+        //绑定，未绑定
+        helper.setText(R.id.btn_unconfirm, v(() -> GetConstDataUtils.getCooperationStatus().get(item.getStatus())));
+        //业务类型
+        helper.setText(R.id.tv_bugone, v(() -> Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)));
+        helper.setText(R.id.tv_time_limit, v(() -> item.getBeginTime()) + "  到  " + v(() -> item.getEndTime()));
+        //安装
+        helper.setText(R.id.tv_repair_install, v(() -> GetConstDataUtils.getCooperationTypeList().get(item.getBusType())));
     }
 }

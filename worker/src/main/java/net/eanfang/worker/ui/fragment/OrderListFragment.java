@@ -19,6 +19,7 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.V;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
@@ -94,6 +95,7 @@ public class OrderListFragment extends BaseFragment implements
 
     private void switchCase(RepairOrderEntity item, View view) {
         Intent intent;
+        //获取：订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         switch (item.getStatus()) {
             case 0:
                 switch (view.getId()) {
@@ -115,8 +117,7 @@ public class OrderListFragment extends BaseFragment implements
                         }
                         new FillAppointmentInfoView(getActivity(), true, item.getId()).show();
                         //给客户联系人打电话
-                        CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
-
+                        CallUtils.call(getActivity(), V.v(() -> item.getOwnerUser().getAccountEntity().getMobile()));
                         break;
                     default:
                         break;
@@ -143,7 +144,6 @@ public class OrderListFragment extends BaseFragment implements
                         intent.putExtra("latitude", item.getLatitude());
                         intent.putExtra("longitude", item.getLongitude());
                         startActivity(intent);
-
                         break;
                     default:
                         break;
@@ -158,11 +158,11 @@ public class OrderListFragment extends BaseFragment implements
                             return;
                         }
                         //只有当前登陆人为订单负责人才可以操作
+                        // 是否 电话解决 0：未解决，1：已解决
                         if (item.getIsPhoneSolve() == 0) {
                             intent = new Intent(getActivity(), FillRepairInfoActivity.class);
                         } else {
                             intent = new Intent(getActivity(), PhoneSolveRepairInfoActivity.class);
-
                         }
                         intent.putExtra("orderId", item.getId());
                         intent.putExtra("workerUserId", item.getAssigneeUser().getUserId());
@@ -180,8 +180,7 @@ public class OrderListFragment extends BaseFragment implements
             case 4:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
-
+                        CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUser().getAccountEntity().getMobile()));
                         break;
                     case R.id.tv_do_second:
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve()).show();

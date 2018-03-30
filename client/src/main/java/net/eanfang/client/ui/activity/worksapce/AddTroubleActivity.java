@@ -228,10 +228,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             showToast("请填写设备编号");
             return false;
         }
-
-
         return true;
-
     }
 
     @Override

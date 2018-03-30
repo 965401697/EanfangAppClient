@@ -27,6 +27,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
+            android:onClick="noOpen"
             android:src="@drawable/nav_ic_addfriends_pressed" />
 
     </RelativeLayout>
@@ -42,6 +43,7 @@
             android:layout_height="30dp"
             android:layout_margin="5dp"
             android:background="#f5f5f5"
+            android:onClick="noOpen"
             android:orientation="horizontal">
 
             <ImageView
@@ -65,6 +67,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:onClick="noOpen"
             android:orientation="horizontal">
 
             <ImageView
@@ -103,6 +106,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:onClick="noOpen"
             android:orientation="horizontal">
 
             <ImageView
