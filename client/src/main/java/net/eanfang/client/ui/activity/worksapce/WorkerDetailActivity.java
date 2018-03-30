@@ -24,6 +24,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
@@ -251,13 +252,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
         if (bean.getCompanyEntity() != null) {
             tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
         }
-        tvNumber.setText(bean.getRepairCount() + "单");
-        tvKoubei.setText(bean.getPublicPraise() / 100 + "分");
+        tvNumber.setText(V.v(() -> bean.getRepairCount()) + "单");
+        tvKoubei.setText(V.v(() -> bean.getPublicPraise() / 100) + "分");
         if (bean.getVerifyEntity() != null) {
             tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
             tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
-        tvCode.setText(bean.getWorkerNumber() + "");
+        tvCode.setText(V.v(() -> bean.getWorkerNumber()) + "");
 
         if (bean.getGoodRate() != 0) {
             tvHaopinglv.setText(bean.getGoodRate() + "%");
@@ -278,12 +279,16 @@ public class WorkerDetailActivity extends BaseClientActivity {
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
         List<Integer> serviceList = bean.getServiceList();
-        mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
+        if (serviceList != null && !serviceList.isEmpty()) {
+            mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
+        }
 
         List<Integer> businessType = bean.getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
-        mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
+        if (businessType != null && !businessType.isEmpty()) {
+            mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
+        }
         initAdapter();
         initHonor(bean);
     }
@@ -303,9 +308,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
     }
 
     private void getData() {
-        toRepairBean = (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean");
-        companyUserId = getIntent().getStringExtra("companyUserId");
-        workerId = getIntent().getStringExtra("workerId");
+        toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
+        companyUserId = V.v(() -> getIntent().getStringExtra("companyUserId"));
+        workerId = V.v(() -> getIntent().getStringExtra("workerId"));
     }
 
 

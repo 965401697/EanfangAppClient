@@ -10,6 +10,7 @@ import com.eanfang.ui.base.BaseFragment;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
+import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.InstallCtrlView;
 import net.eanfang.worker.ui.widget.MaintainCtrlView;
@@ -113,7 +114,6 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.ll_sign).setOnClickListener((v) -> {
             new SignCtrlView(getActivity()).show();
         });
-
         //工作汇报
         findViewById(R.id.ll_work_report).setOnClickListener((v) -> {
             new ReportCtrlView(getActivity(), true).show();
@@ -123,13 +123,10 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.ll_assignment_task).setOnClickListener((v) -> {
             new TaskCtrlView(getActivity(), true).show();
         });
-
         //检查
         findViewById(R.id.ll_job_check).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
         });
-
-
     }
 
     private void helpTools() {
