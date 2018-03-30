@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.RelativeLayout;
@@ -74,6 +75,8 @@ public class ContactsFragment extends BaseFragment {
         //客户公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null &&beans.getOrgUnitEntity().getUnitType() == 2).toList();
         parentAdapter = new ParentAdapter(mDatas);
+        rev_list.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
         rev_list.setAdapter(parentAdapter);
         parentAdapter.notifyDataSetChanged();
         parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -119,7 +122,6 @@ public class ContactsFragment extends BaseFragment {
             @Override
             public void refreshData() {
                 getData();
-                parentAdapter.notifyDataSetChanged();
             }
         }).show());
     }

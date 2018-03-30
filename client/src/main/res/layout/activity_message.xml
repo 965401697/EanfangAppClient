@@ -15,17 +15,27 @@
         android:layout_height="match_parent"
         my:direction="both">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_no_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="暂无数据"
+                android:visibility="gone" />
+        </LinearLayout>
+
+
     </com.eanfang.swipefresh.SwipyRefreshLayout>
 
-    <TextView
-        android:id="@+id/tv_no_data"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂无数据"
-        android:visibility="gone" />
+
 </LinearLayout>

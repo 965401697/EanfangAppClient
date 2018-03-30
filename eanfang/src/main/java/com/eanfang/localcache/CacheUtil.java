@@ -4,8 +4,9 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
+import android.util.Log;
 
-import com.bumptech.glide.disklrucache.DiskLruCache;
+import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
 
 /**
  * Created by xudingbing on 2018/3/29.
@@ -36,22 +38,24 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CacheUtil {
 
-    private static ConcurrentHashMap<String,DiskLruCache> caches=new ConcurrentHashMap<String,DiskLruCache>();
-    private static DiskLruCache getDiskLruCache(Context context, String uniqueName){
-        DiskLruCache cache=caches.get(uniqueName);
-        if(cache==null){
-            cache=initCache(context, uniqueName);
-            caches.put(uniqueName,cache);
+    private static ConcurrentHashMap<String, DiskLruCache> caches = new ConcurrentHashMap<String, DiskLruCache>();
+
+    private static DiskLruCache getDiskLruCache(Context context, String uniqueName) {
+        DiskLruCache cache = caches.get(uniqueName);
+        if (cache == null) {
+            cache = initCache(context, uniqueName);
+            caches.put(uniqueName, cache);
         }
         return cache;
     }
-    public static void put(Context context, String uniqueName, List<String> keys, List<String> values){
+
+    public static void put(Context context, String uniqueName, List<String> keys, List<String> values) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
-                    for(int i=0;i<keys.size();i++) {
+                    for (int i = 0; i < keys.size(); i++) {
                         String keyHash = hashKeyForDisk(keys.get(i));
                         DiskLruCache.Editor editor = mDiskLruCache.edit(keyHash);
                         if (editor != null) {
@@ -66,12 +70,14 @@ public class CacheUtil {
             }
         }).start();
     }
-    public static void put(Context context, String uniqueName,String key,String value){
+
+    public static void put(Context context, String uniqueName, String key, String value) {
+        Log.e("input", "onstart");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DiskLruCache mDiskLruCache=getDiskLruCache(context, uniqueName);
+                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
                     String keyHash = hashKeyForDisk(key);
                     DiskLruCache.Editor editor = mDiskLruCache.edit(keyHash);
                     if (editor != null) {
@@ -82,32 +88,42 @@ public class CacheUtil {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                Log.e("returnput", "start");
             }
         }).start();
     }
-    public static void get(Context context, String uniqueName, String key, CacheGetCallBack callBack){
+
+    public static void get(Context context, String uniqueName, String key, CacheGetCallBack callBack) {
+        Log.e("inget", "onget");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DiskLruCache mDiskLruCache=getDiskLruCache(context, uniqueName);
+                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
                     String keyHash = hashKeyForDisk(key);
-                    String result = mDiskLruCache.get(keyHash).getString(0);
-                    callBack.readValue(result);
+                    DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
+                    if (shot == null) {
+                        callBack.readValue(null);
+                    } else {
+                        String result = mDiskLruCache.get(keyHash).getString(0);
+                        callBack.readValue(result);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                Log.e("returnget", "123");
             }
         }).start();
     }
-    public static void getMulti(Context context, String uniqueName, List<String> keys, CacheGetCallBackMulti callBack){
+
+    public static void getMulti(Context context, String uniqueName, List<String> keys, CacheGetCallBackMulti callBack) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DiskLruCache mDiskLruCache=getDiskLruCache(context, uniqueName);
-                    List<String> result=new LinkedList<String>();
-                    for(String key:keys) {
+                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                    List<String> result = new LinkedList<String>();
+                    for (String key : keys) {
                         String keyHash = hashKeyForDisk(key);
                         String value = mDiskLruCache.get(keyHash).getString(0);
                         result.add(value);
@@ -119,13 +135,14 @@ public class CacheUtil {
             }
         }).start();
     }
-    public static void remove(Context context, String uniqueName,List<String> keys){
+
+    public static void remove(Context context, String uniqueName, List<String> keys) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DiskLruCache mDiskLruCache=getDiskLruCache(context, uniqueName);
-                    for(String key:keys) {
+                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                    for (String key : keys) {
                         String keyHash = hashKeyForDisk(key);
                         mDiskLruCache.remove(keyHash);
                     }
@@ -136,12 +153,13 @@ public class CacheUtil {
             }
         }).start();
     }
-    public static void remove(Context context, String uniqueName,String key){
+
+    public static void remove(Context context, String uniqueName, String key) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DiskLruCache mDiskLruCache=getDiskLruCache(context, uniqueName);
+                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
                     String keyHash = hashKeyForDisk(key);
                     mDiskLruCache.remove(keyHash);
                     mDiskLruCache.flush();
@@ -151,12 +169,13 @@ public class CacheUtil {
             }
         }).start();
     }
-    public static void removeAll(Context context, String uniqueName){
+
+    public static void removeAll(Context context, String uniqueName) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DiskLruCache mDiskLruCache=getDiskLruCache(context, uniqueName);
+                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
                     mDiskLruCache.delete();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -164,6 +183,7 @@ public class CacheUtil {
             }
         }).start();
     }
+
     private static File getDiskCacheDir(Context context, String uniqueName) {
         String cachePath;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
@@ -174,9 +194,10 @@ public class CacheUtil {
         }
         return new File(cachePath + File.separator + uniqueName);
     }
+
     private static int getAppVersion(Context context) {
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(),0);
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionCode;
         } catch (NameNotFoundException e) {
             e.printStackTrace();
@@ -184,7 +205,7 @@ public class CacheUtil {
         return 1;
     }
 
-    private static DiskLruCache initCache(Context context,String uniqueName){
+    private static DiskLruCache initCache(Context context, String uniqueName) {
         DiskLruCache mDiskLruCache = null;
         try {
             File cacheDir = getDiskCacheDir(context, uniqueName);
@@ -209,6 +230,7 @@ public class CacheUtil {
         }
         return cacheKey;
     }
+
     private static String bytesToHexString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
