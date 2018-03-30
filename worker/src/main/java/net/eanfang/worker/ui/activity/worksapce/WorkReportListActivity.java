@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 
 public class WorkReportListActivity extends BaseWorkerActivity {
     private static String titleBar;
-    public final List<String> allmTitles = constDataUtils.getWorkReportStatus();
+    public List<String> allmTitles;
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -51,6 +51,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_list);
+        allmTitles = constDataUtils.getWorkReportStatus();
         ButterKnife.bind(this);
         initView();
     }

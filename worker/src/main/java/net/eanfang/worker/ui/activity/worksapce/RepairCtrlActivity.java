@@ -32,7 +32,7 @@ import java.util.List;
  */
 
 public class RepairCtrlActivity extends BaseWorkerActivity {
-    private final List<String> mTitlesWorker = constDataUtils.getRepairStatus();
+    private List<String> mTitlesWorker;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
@@ -44,7 +44,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
-
+        mTitlesWorker = constDataUtils.getRepairStatus();
         mTitles = new String[mTitlesWorker.size()];
         mTitlesWorker.toArray(mTitles);
 
@@ -101,8 +101,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class)
-                         {
+                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class) {
                              @Override
                              public void onSuccess(final RepairedOrderBean bean) {
                                  runOnUiThread(() -> {

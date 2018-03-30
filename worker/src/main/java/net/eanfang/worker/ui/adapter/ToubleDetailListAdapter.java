@@ -20,16 +20,18 @@ import java.util.List;
 public class ToubleDetailListAdapter extends BaseQuickAdapter<BughandleConfirmEntity, BaseViewHolder> {
     public Config config;
     public GetConstDataUtils constDataUtils;
-    private final List<String> mTitlesWorker = constDataUtils.getRepairStatus();
+    private List<String> mTitlesWorker;
     private String[] mTitles;
 
     public ToubleDetailListAdapter(List data) {
-
         super(R.layout.item_trouble_detail_list, data);
-        mTitles = new String[mTitlesWorker.size()];
-        mTitlesWorker.toArray(mTitles);
         config = Config.get(EanfangApplication.get().getApplicationContext());
         constDataUtils = GetConstDataUtils.get(config);
+        mTitlesWorker = constDataUtils.getRepairStatus();
+        mTitles = new String[mTitlesWorker.size()];
+        mTitlesWorker.toArray(mTitles);
+
+
     }
 
     @Override

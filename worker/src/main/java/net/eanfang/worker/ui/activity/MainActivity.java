@@ -62,32 +62,10 @@ public class MainActivity extends BaseActivity {
         setHeaders();
         initXinGe();
         initFragment();
-
-        submitLocation();
     }
 
 
-    /**
-     * 技师上报位置专用
-     */
-    private void submitLocation() {
-        new Thread(() -> {
-            PermissionUtils.get(this).getLocationPermission(() -> {
-                LocationUtil.location(this, (location) -> {
-                    WorkerEntity workerEntity = new WorkerEntity();
-                    workerEntity.setAccId(user.getAccount().getAccId());
-                    workerEntity.setLat(location.getLatitude() + "");
-                    workerEntity.setLon(location.getLongitude() + "");
-                    workerEntity.setPlaceCode(Config.get(this).getAreaCodeByName(location.getCity(), location.getCountry()));
-                    //技师上报位置
-                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
-                            .upJson(JSONObject.toJSONString(workerEntity))
-                            .execute(new EanfangCallback(this, false, String.class));
-                });
 
-            });
-        }).start();
-    }
 
 
     private void initFragment() {

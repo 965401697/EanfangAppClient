@@ -96,7 +96,7 @@ public class WorkspaceFragment extends BaseFragment {
         //维保管控
         findViewById(R.id.ll_order_manage).setOnClickListener((v) -> {
 //            new MaintainCtrlView(getActivity(), true).show();
-            showToast(".....");
+            showToast("暂未开通");
         });
 
         //免费设计

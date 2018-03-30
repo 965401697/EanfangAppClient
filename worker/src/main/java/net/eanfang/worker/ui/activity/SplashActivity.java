@@ -19,11 +19,13 @@ import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.GuideUtil;
+import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateManager;
 import com.eanfang.util.V;
+import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
@@ -53,13 +55,14 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
 
         getBaseData();
         getConst();
-
+        submitLocation();
         runOnUiThread(() -> {
             PermissionUtils.get(this).getStoragePermission(() -> {
                 UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
                 manager.checkUpdate();
             });
         });
+
     }
 
     private void init() {
@@ -86,6 +89,31 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         finishSelf();
     }
 
+    /**
+     * 技师上报位置专用
+     */
+    private void submitLocation() {
+        new Thread(() -> {
+            PermissionUtils.get(this).getLocationPermission(() -> {
+                LocationUtil.location(this, (location) -> {
+                    LoginBean user = EanfangApplication.getApplication().getUser();
+                    if (user == null || StringUtils.isEmpty(user.getToken())) {
+                        return;
+                    }
+                    WorkerEntity workerEntity = new WorkerEntity();
+                    workerEntity.setAccId(user.getAccount().getAccId());
+                    workerEntity.setLat(location.getLatitude() + "");
+                    workerEntity.setLon(location.getLongitude() + "");
+                    workerEntity.setPlaceCode(Config.get(this).getAreaCodeByName(location.getCity(), location.getCountry()));
+                    //技师上报位置
+                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                            .upJson(JSONObject.toJSONString(workerEntity))
+                            .execute(new EanfangCallback(this, false, String.class));
+                });
+
+            });
+        }).start();
+    }
 
     /**
      * 请求基础数据
@@ -157,6 +185,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
                             EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+
                             goMain();
                         } else {
                             goLogin();

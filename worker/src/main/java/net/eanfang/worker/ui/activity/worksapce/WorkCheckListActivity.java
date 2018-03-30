@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
 
 public class WorkCheckListActivity extends BaseWorkerActivity {
     private static String titleBar;
-    public final List<String> allmTitles = constDataUtils.getWorkInspectStatus();
+    public List<String> allmTitles;
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -59,6 +59,7 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+        allmTitles = constDataUtils.getWorkInspectStatus();
         ButterKnife.bind(this);
         initView();
     }
