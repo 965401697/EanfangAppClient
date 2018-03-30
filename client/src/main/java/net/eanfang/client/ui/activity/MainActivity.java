@@ -238,5 +238,11 @@ public class MainActivity extends BaseClientActivity {
         EanfangHttp.setClient();
     }
 
+    /**
+     * 首页，工作台，我的，通讯录等未查找控件点击事件
+     */
+    public void noOpen(View v) {
+        showToast("暂缓开通");
+    }
 }
 

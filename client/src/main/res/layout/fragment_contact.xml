@@ -22,6 +22,7 @@
 
         <ImageView
             android:id="@+id/iv_add"
+            android:onClick="noOpen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -38,6 +39,7 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:onClick="noOpen"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_margin="5dp"
@@ -63,6 +65,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:onClick="noOpen"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
@@ -101,6 +104,7 @@
             android:background="#f2f2f2" />
 
         <RelativeLayout
+            android:onClick="noOpen"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">

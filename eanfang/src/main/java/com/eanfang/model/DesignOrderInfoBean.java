@@ -299,7 +299,7 @@ public class DesignOrderInfoBean implements Serializable {
         private int scale;
         private int status;
         private String telPhone;
-        private int tradeTypeCode;
+        private String tradeTypeCode;
         private int unitType;
 
         public Long getAdminUserId() {
@@ -422,11 +422,11 @@ public class DesignOrderInfoBean implements Serializable {
             this.telPhone = telPhone;
         }
 
-        public int getTradeTypeCode() {
+        public String getTradeTypeCode() {
             return tradeTypeCode;
         }
 
-        public void setTradeTypeCode(int tradeTypeCode) {
+        public void setTradeTypeCode(String tradeTypeCode) {
             this.tradeTypeCode = tradeTypeCode;
         }
 
