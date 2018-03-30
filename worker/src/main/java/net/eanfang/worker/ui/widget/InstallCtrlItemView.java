@@ -99,12 +99,12 @@ public class InstallCtrlItemView extends BaseDialog {
         tvCompanyName.setText(bean.getClientCompanyName());
         tvContract.setText(bean.getConnector());
         tvContractPhone.setText(bean.getConnectorPhone());
-        tvTime.setText(GetConstDataUtils.getRevertList().get(bean.getRevertTimeLimit()));
-        String area = Config.get().getAddressByCode(bean.getZone());
+        tvTime.setText(constDataUtils.getRevertList().get(bean.getRevertTimeLimit()));
+        String area = config.getAddressByCode(bean.getZone());
         tvAddress.setText(area + bean.getDetailPlace());
-        tvBusiness.setText(Config.get().getBusinessNameByCode(bean.getBusinessOneCode(), 1));
-        tvLimit.setText(GetConstDataUtils.getPredictList().get(bean.getPredictTime()));
-        tvMoney.setText(GetConstDataUtils.getBudgetList().get(bean.getBudget()));
+        tvBusiness.setText(config.getBusinessNameByCode(bean.getBusinessOneCode(), 1));
+        tvLimit.setText(constDataUtils.getPredictList().get(bean.getPredictTime()));
+        tvMoney.setText(constDataUtils.getBudgetList().get(bean.getBudget()));
         tvDesc.setText(bean.getDescription());
         tvNumber.setText(bean.getOrderNo());
         tvFeatureTime.setText(bean.getCreateTime());

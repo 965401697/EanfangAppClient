@@ -233,9 +233,9 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
 
         if (bughandleDetailEntity.getFailureEntity() != null) {
             if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
-                String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
-                String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
-                String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
+                String bugOne = config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
+                String bugTwo = config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
+                String bugThree = config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
                 tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
             } else {
                 tv_trouble_title.setText("");
@@ -243,7 +243,7 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
 
             tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
 
-            tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
+            tv_brand_model.setText(Optional.ofNullable(config.getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
 
             tv_device_no.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
 
@@ -254,9 +254,9 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         et_trouble_point.setText(Optional.ofNullable(bughandleDetailEntity.getCheckProcess()).orElse(""));
         et_trouble_reason.setText(Optional.ofNullable(bughandleDetailEntity.getCause()).orElse(""));
         et_trouble_deal.setText(Optional.ofNullable(bughandleDetailEntity.getHandle()).orElse(""));
-        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(bughandleDetailEntity.getFailureEntity().getIsMisinformation()));
+        tvRepairMisinformation.setText(constDataUtils.getRepairMisinformationList().get(bughandleDetailEntity.getFailureEntity().getIsMisinformation()));
         if (bughandleDetailEntity.getStatus() != null) {
-            tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
+            tv_repair_conclusion.setText(Optional.ofNullable(constDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
         }
     }
 

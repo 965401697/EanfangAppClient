@@ -119,7 +119,7 @@ public class LookWorkCheckInfoView extends BaseDialog {
 
         etTitle.setText(detailsBean.getTitle());
         etPosition.setText(detailsBean.getRegion());
-        tvOneName.setText(Config.get().getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 1));
+        tvOneName.setText(config.getBusinessNameByCode(detailsBean.getBusinessThreeCode(), 1));
         // TODO: 2017/12/18 二级，三级
 //        tvTwoName.setText(detailsBeanX.getBusinessTwo());
 //        tvThreeName.setText(detailsBeanX.getBusinessThree());

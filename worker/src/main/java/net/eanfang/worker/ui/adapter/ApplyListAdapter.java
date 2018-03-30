@@ -5,6 +5,8 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
 import com.eanfang.model.ApplyTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
@@ -22,8 +24,13 @@ import java.util.List;
 public class ApplyListAdapter extends BaseQuickAdapter<ApplyTaskListBean.ListBean, BaseViewHolder> {
 
 
+    public Config config;
+    public GetConstDataUtils constDataUtils;
+
     public ApplyListAdapter(List<ApplyTaskListBean.ListBean> data) {
         super(R.layout.item_apply_task, data);
+        config = Config.get(EanfangApplication.get().getApplicationContext());
+        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override
@@ -32,7 +39,7 @@ public class ApplyListAdapter extends BaseQuickAdapter<ApplyTaskListBean.ListBea
         helper.setText(R.id.tv_apply_time, item.getConfirmTime());
         helper.setText(R.id.tv_state, item.getApplyCompanyName());
         helper.setText(R.id.tv_appointment_time, item.getToDoorTime());
-        helper.setText(R.id.tv_appointment_day, GetConstDataUtils.getPredictList().get(item.getPredictTime()));
+        helper.setText(R.id.tv_appointment_day, constDataUtils.getPredictList().get(item.getPredictTime()));
         helper.setText(R.id.tv_apply_name, item.getApplyContacts());
         helper.setText(R.id.tv_apply_phone, item.getApplyConstactsPhone());
         helper.setText(R.id.tv_count_money, item.getProjectQuote() + "");

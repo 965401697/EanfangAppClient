@@ -83,7 +83,7 @@ public class QuotationDetailActivity extends BaseActivity {
 
         //系统类别
         rl_business_type.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
                 tv_business_type.setText(item);
                 tv_device_type.setText("");
                 tv_device_name.setText("");
@@ -93,12 +93,12 @@ public class QuotationDetailActivity extends BaseActivity {
 
         //故障设备类别
         rl_device_type.setOnClickListener((v) -> {
-            String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
+            String busOneCode = config.getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
                 showToast("请先选择系统类别");
                 return;
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_type.setText(item);
                 tv_device_name.setText("");
                 tv_brand_model.setText("");
@@ -106,30 +106,30 @@ public class QuotationDetailActivity extends BaseActivity {
         });
         //故障设备名称
         rl_device_name.setOnClickListener((v) -> {
-            String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
+            String busTwoCode = config.getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
                 showToast("请先选择设备类别");
                 return;
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_name.setText(item);
                 tv_brand_model.setText("");
             }));
         });
         //品牌型号
         rl_brand_model.setOnClickListener((v) -> {
-            String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
+            String busOneCode = config.getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
                 showToast("请先选择系统类别");
                 return;
             }
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+            PickerSelectUtil.singleTextPicker(this, "", Stream.of(config.getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_brand_model.setText(item);
             }));
 
         });
         rl_unit.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", tv_unit, GetConstDataUtils.getDeviceUnitList());
+            PickerSelectUtil.singleTextPicker(this, "", tv_unit, constDataUtils.getDeviceUnitList());
         });
 
         iv_add_params.setOnClickListener((v) -> {
@@ -159,12 +159,12 @@ public class QuotationDetailActivity extends BaseActivity {
         }
         int count = Integer.parseInt(et_amount.getText().toString().trim());
         bean.setCount(count);
-        bean.setModelCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
-        bean.setBusiness_three_code(Config.get().getBusinessCodeByName(tv_device_name.getText().toString().trim(), 3));
+        bean.setModelCode(config.getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
+        bean.setBusiness_three_code(config.getBusinessCodeByName(tv_device_name.getText().toString().trim(), 3));
         bean.setRemarkInfo(et_remark.getText().toString().trim());
         bean.setProducerPlace(et_factory.getText().toString().trim());
         bean.setProducerName(et_product_company.getText().toString().trim());
-        bean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
+        bean.setUnit(constDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(et_price.getText().toString().trim());
         bean.setUnitPrice( unitPrice*100);
         bean.setSum((unitPrice * count) * 100);

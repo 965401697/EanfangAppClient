@@ -16,7 +16,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -114,7 +113,7 @@ public class WorkTaskListFragment extends BaseFragment
     private void getData(int page) {
         String status = "";
         if (!mTitle.equals("全部")) {
-            status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
+            status = constDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
         }
 
         QueryEntry queryEntry = new QueryEntry();

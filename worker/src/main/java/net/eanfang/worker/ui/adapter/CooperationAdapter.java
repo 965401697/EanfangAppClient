@@ -5,10 +5,10 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.model.PartnerBean;
 import com.eanfang.util.GetConstDataUtils;
-
 import net.eanfang.worker.R;
 
 import java.util.List;
@@ -21,10 +21,13 @@ import static com.eanfang.util.V.v;
  */
 
 public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, BaseViewHolder> {
-
+    public Config config;
+    public GetConstDataUtils constDataUtils;
 
     public CooperationAdapter(int layoutResId, List data) {
         super(layoutResId, data);
+        config = Config.get(EanfangApplication.get().getApplicationContext());
+        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override
@@ -43,13 +46,13 @@ public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, B
         });
 
         //公司名
-        helper.setText(R.id.tv_company, v(() -> Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)));
+        helper.setText(R.id.tv_company, v(() -> config.getBusinessNameByCode(item.getBusinessOneCode(), 1)));
         //绑定，未绑定
-        helper.setText(R.id.btn_unconfirm, v(() -> GetConstDataUtils.getCooperationStatus().get(item.getStatus())));
+        helper.setText(R.id.btn_unconfirm, v(() -> constDataUtils.getCooperationStatus().get(item.getStatus())));
         //业务类型
-        helper.setText(R.id.tv_bugone, v(() -> Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)));
+        helper.setText(R.id.tv_bugone, v(() -> config.getBusinessNameByCode(item.getBusinessOneCode(), 1)));
         helper.setText(R.id.tv_time_limit, v(() -> item.getBeginTime()) + "  到  " + v(() -> item.getEndTime()));
         //安装
-        helper.setText(R.id.tv_repair_install, v(() -> GetConstDataUtils.getCooperationTypeList().get(item.getBusType())));
+        helper.setText(R.id.tv_repair_install, v(() -> constDataUtils.getCooperationTypeList().get(item.getBusType())));
     }
 }

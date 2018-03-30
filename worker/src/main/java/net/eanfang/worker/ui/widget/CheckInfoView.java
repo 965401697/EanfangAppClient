@@ -72,7 +72,7 @@ public class CheckInfoView extends BaseDialog {
         tvTitle.setText("检查明细");
         etTitle.setText(bean.getTitle());
         etPosition.setText(bean.getRegion());
-        tvOneName.setText(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 1));
+        tvOneName.setText(config.getBusinessNameByCode(bean.getBusinessThreeCode(), 1));
 //        tvTwoName.setText(bean.getBusinessTwo());
 //        tvThreeName.setText(bean.getBusinessThree());
         etInputCheckContent.setText(bean.getInfo());

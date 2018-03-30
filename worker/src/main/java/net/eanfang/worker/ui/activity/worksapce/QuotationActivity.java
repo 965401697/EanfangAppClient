@@ -210,8 +210,8 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         bean.setTotalCost((int) (deviceSum + partsSum + serviceSum));
         bean.setAssigneeOrgCode(assigneeOrgCode);
         bean.setAssigneeUserId(assigneeUserId);
-//        bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
-//        bean.setZone_id(Long.parseLong(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
+//        bean.setZone_code(config.getAreaCodeByName(city, contry));
+//        bean.setZone_id(Long.parseLong(config.getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
         bean.setLatitude(lat);
         bean.setLongitude(lon);
         bean.setDetail_place(tv_detail_address.getText().toString().trim());
@@ -245,13 +245,13 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 String detailAddress = data.getStringExtra("tvAddress");
                 tv_detail_address.setText(detailAddress);
                 String code = data.getStringExtra("placeCode");
-                tv_address.setText(Config.get().getAddressByCode(code));
+                tv_address.setText(config.getAddressByCode(code));
                 lat = data.getStringExtra("lat");
                 bean.setLatitude(lat);
                 lon = data.getStringExtra("lon");
                 bean.setLongitude(lon);
                 bean.setZone_code(code);
-                bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(code, 3, Constant.AREA)));
+                bean.setZone_id(Long.valueOf(config.getBaseIdByCode(code, 3, Constant.AREA)));
                 if (radioClient.isChecked() == true) {
                     if (StringUtils.isEmpty(orderID)) {
                         return;
@@ -306,8 +306,8 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 tv_address.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
                 //地图选址 取 显示值
                 tv_detail_address.setText(item.getName());
-                bean.setZone_code(Config.get().getAreaCodeByName(city, contry));
-                bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
+                bean.setZone_code(config.getAreaCodeByName(city, contry));
+                bean.setZone_id(Long.valueOf(config.getBaseIdByCode(bean.getZone_code(), 3, Constant.AREA)));
                 break;
             default:
                 break;

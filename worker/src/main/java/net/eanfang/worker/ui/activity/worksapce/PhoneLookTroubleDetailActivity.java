@@ -232,7 +232,7 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity /*impleme
 
 
         if (bughandleDetailEntity.getFailureEntity().getBusinessThreeCode() != null) {
-            tv_trouble_title.setText(Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1));
+            tv_trouble_title.setText(config.getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1));
         }
 //        //故障设备
 //        if (StringUtils.isValid(bughandleDetailEntity.getInstrument())) {
@@ -268,7 +268,7 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity /*impleme
         }
         //维修结论
         if (bughandleDetailEntity.getStatus() != null) {
-            tv_repair_conclusion.setText(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus()));
+            tv_repair_conclusion.setText(constDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus()));
         }
     }
 

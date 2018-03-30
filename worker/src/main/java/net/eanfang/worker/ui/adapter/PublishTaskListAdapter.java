@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.model.MineTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
@@ -17,7 +18,8 @@ import java.util.List;
  * Created by wen on 2017/5/12.
  */
 
-public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.ListBean, BaseViewHolder> {
+public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.ListBean, BaseViewHolder> {    public Config config;
+    public GetConstDataUtils constDataUtils;
     //private final int type;
     private String[] mTitles = {
             "待确认", "待支付", "待完工", "待验收", "已完成"
@@ -25,6 +27,8 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
 
     public PublishTaskListAdapter(List<MineTaskListBean.ListBean> data) {
         super(R.layout.item_task_list, data);
+        config = Config.get(EanfangApplication.get().getApplicationContext());
+        constDataUtils = GetConstDataUtils.get(config);
 
     }
 
@@ -32,7 +36,7 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
     protected void convert(BaseViewHolder helper, MineTaskListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getProjectCompanyName());
 
-        helper.setText(R.id.tv_type, GetConstDataUtils.getCooperationTypeList().get(item.getType()));
+        helper.setText(R.id.tv_type, constDataUtils.getCooperationTypeList().get(item.getType()));
 
         int status = item.getStatus();
         helper.setText(R.id.tv_state, mTitles[status]);
@@ -66,10 +70,10 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
 
         //helper.setText(R.id.tv_company_name, item.getCreatetime());
         helper.setText(R.id.tv_appointment_time, item.getToDoorTime());
-        helper.setText(R.id.tv_project_time, GetConstDataUtils.getPredictList().get(item.getPredicttime()));
-        helper.setText(R.id.tv_business_type, Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
+        helper.setText(R.id.tv_project_time, constDataUtils.getPredictList().get(item.getPredicttime()));
+        helper.setText(R.id.tv_business_type, config.getBusinessNameByCode(item.getBusinessOneCode(), 1));
         helper.setText(R.id.tv_project_address, item.getDetailPlace());
-        helper.setText(R.id.tv_count_money, GetConstDataUtils.getBudgetList().get(item.getBudget()));
+        helper.setText(R.id.tv_count_money, constDataUtils.getBudgetList().get(item.getBudget()));
 
         if (item.getPictures() != null) {
             String[] urls = item.getPictures().split(",");

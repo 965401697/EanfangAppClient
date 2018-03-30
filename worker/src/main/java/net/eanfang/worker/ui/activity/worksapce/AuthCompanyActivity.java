@@ -23,7 +23,6 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.UuidUtil;
@@ -141,10 +140,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 etMoney.setText(byNetBean.getRegisterAssets());
             }
             if (byNetBean.getTradeTypeCode() != null) {
-                tvType.setText(Config.get().getBaseNameByCode(byNetBean.getTradeTypeCode(), Constant.INDUSTRY));
+                tvType.setText(config.getBaseNameByCode(byNetBean.getTradeTypeCode(), Constant.INDUSTRY));
             }
             if (byNetBean.getScale() >= 0) {
-                tvCompanyScale.setText(GetConstDataUtils.getOrgUnitScaleList().get(byNetBean.getScale()));
+                tvCompanyScale.setText(constDataUtils.getOrgUnitScaleList().get(byNetBean.getScale()));
             }
             if (byNetBean.getLegalName() != null) {
                 etLegalPersion.setText(byNetBean.getLegalName());
@@ -159,7 +158,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 etDetailOfficeAddress.setText(byNetBean.getOfficeAddress());
             }
             if (byNetBean.getAreaCode() != null) {
-                tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
+                tvOfficeAddress.setText(config.getAddressByCode(byNetBean.getAreaCode()));
             }
             if (byNetBean.getLogoPic() != null) {
                 ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
@@ -192,7 +191,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         });
         llType.setOnClickListener(v -> showTradType());
         llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "",
-                tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
+                tvCompanyScale, constDataUtils.getOrgUnitScaleList()));
 
         setRightTitleOnClickListener((v) -> {
             if (byNetBean.getStatus() == 0 || byNetBean.getStatus() == 3) {
@@ -209,7 +208,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
      * 行业类型
      */
     private void showTradType() {
-        List<BaseDataEntity> baseDataBeanList = Config.get().getIndustryList();
+        List<BaseDataEntity> baseDataBeanList = config.getIndustryList();
         List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
         List<String> tradeFirststr = Stream.of(tradeFirst).map(first -> first.getDataName()).toList();
         List<List<String>> secondStr = Stream.of(tradeFirst).map(firtstr -> Stream.of(baseDataBeanList).filter(second -> second.getLevel() == 3 && second.getDataCode().startsWith(firtstr.getDataCode())).map(second -> second.getDataName()).toList()).toList();
@@ -256,9 +255,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         if (byNetBean.getTradeTypeCode()!=null){
             infoBean.setTradeTypeCode(byNetBean.getTradeTypeCode());
         }else {
-            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+            infoBean.setTradeTypeCode(config.getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
         }
-        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
+        infoBean.setScale(constDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
         infoBean.setStatus(1);
         infoBean.setOrgId(orgid);
 
@@ -270,7 +269,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         if (byNetBean.getAreaCode() != null) {
             infoBean.setAreaCode(byNetBean.getAreaCode());
         } else {
-            infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
+            infoBean.setAreaCode(config.getAreaCodeByName(itemcity, itemzone));
         }
         if (byNetBean.getAdminUserId() != null) {
             infoBean.setAdminUserId(byNetBean.getAdminUserId());
