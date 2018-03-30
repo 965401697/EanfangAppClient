@@ -45,8 +45,8 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 public class MessageListActivity extends BaseWorkerActivity implements
         SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
-    @BindView(R.id.tv_no_data)
-    TextView tvNoData;
+    //    @BindView(R.id.tv_no_data)
+//    TextView tvNoData;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.msg_refresh)
@@ -72,6 +72,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
         rvList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         msgRefresh.setOnRefreshListener(this);
+        rvList.setNestedScrollingEnabled(false);
 
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -111,11 +112,12 @@ public class MessageListActivity extends BaseWorkerActivity implements
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
-                tvNoData.setVisibility(View.VISIBLE);
-                rvList.setVisibility(View.GONE);
+//                tvNoData.setVisibility(View.VISIBLE);
+//                msgRefresh.setVisibility(View.GONE);
+                showToast("暂无数据");
             } else {
-                tvNoData.setVisibility(View.GONE);
-                rvList.setVisibility(View.VISIBLE);
+//                tvNoData.setVisibility(View.GONE);
+//                msgRefresh.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
                 showToast("已是最新数据");
@@ -123,9 +125,10 @@ public class MessageListActivity extends BaseWorkerActivity implements
         } else {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
+                page = page - 1;
             } else {
-                tvNoData.setVisibility(View.GONE);
-                rvList.setVisibility(View.VISIBLE);
+//                tvNoData.setVisibility(View.GONE);
+//                msgRefresh.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
             }
@@ -137,7 +140,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
      */
     @Override
     public void onRefresh(int index) {
-        page = 1;
+//        page = 1;
         dataOption(TOP_REFRESH);
 
     }
@@ -151,10 +154,10 @@ public class MessageListActivity extends BaseWorkerActivity implements
         switch (option) {
             case TOP_REFRESH:
                 //下拉刷新
-//                page--;
-//                if (page <= 0) {
-//                    page = 1;
-//                }
+                page--;
+                if (page <= 0) {
+                    page = 1;
+                }
                 getJPushMessage();
                 break;
             case BOTTOM_REFRESH:

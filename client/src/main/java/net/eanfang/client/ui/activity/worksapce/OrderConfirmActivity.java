@@ -21,6 +21,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.V;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -81,7 +82,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
 
     private void getData() {
         Intent intent = getIntent();
-        repairOrderEntity = (RepairOrderEntity) intent.getSerializableExtra("bean");
+        repairOrderEntity = V.v(()->(RepairOrderEntity) intent.getSerializableExtra("bean"));
     }
 
     private void registerListener() {

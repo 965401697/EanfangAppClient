@@ -58,8 +58,8 @@ public class ConstansActivity extends BaseActivity {
         staffAdapter.setOnItemChildClickListener((adapter1, view, position) -> {
             showToast("用户信息");
         });
-        revLista.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
+//        revLista.addItemDecoration(new DividerItemDecoration(this,
+//                DividerItemDecoration.VERTICAL));
         revLista.setAdapter(staffAdapter);
 
         ConstactsAdapter adapter = new ConstactsAdapter(list);

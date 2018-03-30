@@ -28,6 +28,7 @@ import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -111,7 +112,7 @@ public class SelectWorkerActivity extends BaseClientActivity {
         locationUtil.mAMap.setOnMarkerClickListener((marker) -> {
             if (marker.getObject() != null) {
                 JSONObject jsonObject = (JSONObject) marker.getObject();
-                lookWorkerDetail(jsonObject.getString("companyUserId"), jsonObject.getString("workerId"));
+                lookWorkerDetail(V.v(() -> jsonObject.getString("companyUserId")), V.v(() -> jsonObject.getString("workerId")));
             }
             return true;
         });
