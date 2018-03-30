@@ -166,7 +166,7 @@ public class QuotationDetailActivity extends BaseActivity {
         bean.setProducerName(et_product_company.getText().toString().trim());
         bean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(et_price.getText().toString().trim());
-        bean.setUnitPrice((int) unitPrice);
+        bean.setUnitPrice( unitPrice*100);
         bean.setSum((unitPrice * count) * 100);
 //        paramsBeanList.addAll(paramsBeanList);
         bean.setParams(paramsBeanList);

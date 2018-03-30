@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.eanfang.model.QuotationBean;
 import com.eanfang.ui.base.BaseDialog;
 
@@ -13,6 +12,8 @@ import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.util.V.v;
 
 /**
  * Created by MrHou
@@ -52,10 +53,10 @@ public class QuotationServiceView extends BaseDialog {
     }
 
     private void initView() {
-        etServiceName.setText(servicesBean.getServiceName());
-        etServiceContent.setText(servicesBean.getServiceContent());
-        etServicePrice.setText(servicesBean.getServicePrice() + "");
-        etServiceTimes.setText(servicesBean.getServiceTime() + "");
-        etServiceValue.setText(servicesBean.getServiceValue());
+        etServiceName.setText(v(()->servicesBean.getServiceName()));
+        etServiceContent.setText(v(()->servicesBean.getServiceContent()));
+        etServicePrice.setText(v(()->(servicesBean.getServicePrice()/100) + ""));
+        etServiceTimes.setText(v(()->servicesBean.getServiceTime() + ""));
+        etServiceValue.setText(v(()->servicesBean.getServiceValue()));
     }
 }

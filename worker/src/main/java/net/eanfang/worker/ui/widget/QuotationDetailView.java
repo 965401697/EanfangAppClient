@@ -21,6 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -79,17 +81,17 @@ public class QuotationDetailView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("设备明细");
-        tvBusinessType.setText(Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1));
-        tvDeviceType.setText(Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2));
-        tvDeviceName.setText(Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2));
-        tvBrandModel.setText(Config.get().getModelNameByCode(quoteDevicesBean.getModelCode(),2));
+        tvBusinessType.setText(v(()->Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1)));
+        tvDeviceType.setText(v(()->Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
+        tvDeviceName.setText(v(()->Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
+        tvBrandModel.setText(v(()->Config.get().getModelNameByCode(quoteDevicesBean.getModelCode(),2)));
 
-        tvUnit.setText(GetConstDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit()));
-        etAmount.setText(quoteDevicesBean.getCount() + "");
-        etPrice.setText(quoteDevicesBean.getUnitPrice() + "");
-        etFactory.setText(quoteDevicesBean.getProducerPlace());
-        etRemark.setText(quoteDevicesBean.getRemarkInfo());
-        etProductCompany.setText(quoteDevicesBean.getProducerName());
+        tvUnit.setText(v(()->GetConstDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit())));
+        etAmount.setText(v(()->quoteDevicesBean.getCount()) + "");
+        etPrice.setText(v(()->(quoteDevicesBean.getUnitPrice()/100)) + "");
+        etFactory.setText(v(()->quoteDevicesBean.getProducerPlace()));
+        etRemark.setText(v(()->quoteDevicesBean.getRemarkInfo()));
+        etProductCompany.setText(v(()->quoteDevicesBean.getProducerName()));
         paramsBeanList = quoteDevicesBean.getParams();
         if (paramsBeanList.size() != 0) {
             paramAdapter = new DeviceParamAdapter(R.layout.item_deveice_parm, (ArrayList) paramsBeanList);

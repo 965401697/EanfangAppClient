@@ -14,6 +14,8 @@ import net.eanfang.worker.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -57,10 +59,10 @@ public class QuotationPartsView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("配件明细");
-        etPartsName.setText(quotePartsBean.getPartName());
-        tvUnit.setText(GetConstDataUtils.getDeviceUnitList().get(quotePartsBean.getUnit()));
-        etAmount.setText(quotePartsBean.getCount() + "");
-        etPrice.setText(quotePartsBean.getUnitPrice() + "");
-        etPartSpeciication.setText(quotePartsBean.getPartSpeciication());
+        etPartsName.setText(v(()->quotePartsBean.getPartName()));
+        tvUnit.setText(v(()->GetConstDataUtils.getDeviceUnitList().get(quotePartsBean.getUnit())));
+        etAmount.setText(v(()->quotePartsBean.getCount()) + "");
+        etPrice.setText(v(()->(quotePartsBean.getUnitPrice()/100)) + "");
+        etPartSpeciication.setText(v(()->quotePartsBean.getPartSpeciication()));
     }
 }
