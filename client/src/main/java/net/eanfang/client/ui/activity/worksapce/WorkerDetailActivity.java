@@ -246,7 +246,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         if (bean.getAccountEntity() != null) {
             ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()));
             tvRealname.setText(bean.getAccountEntity().getRealName());
-            String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
+            String region = config.getAddressByCode(bean.getAccountEntity().getAreaCode());
             tvAddress.setText((region != null ? (region + "\r\n") : "") + bean.getAccountEntity().getAddress());
         }
         if (bean.getCompanyEntity() != null) {
@@ -255,8 +255,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvNumber.setText(V.v(() -> bean.getRepairCount()) + "单");
         tvKoubei.setText(V.v(() -> bean.getPublicPraise() / 100) + "分");
         if (bean.getVerifyEntity() != null) {
-            tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
-            tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
+            tvLevel.setText(constDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
+            tvYear.setText(constDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
         tvCode.setText(V.v(() -> bean.getWorkerNumber()) + "");
 
@@ -273,21 +273,21 @@ public class WorkerDetailActivity extends BaseClientActivity {
         mDataList1 = new ArrayList<>();
         mDataList1.clear();
         if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
-            mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+            mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> config.getAddressById(regionId)).toList());
         }
 
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
         List<Integer> serviceList = bean.getServiceList();
         if (serviceList != null && !serviceList.isEmpty()) {
-            mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
+            mDataList2.addAll(Stream.of(serviceList).map(id -> config.getServiceNameById(id)).toList());
         }
 
         List<Integer> businessType = bean.getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
         if (businessType != null && !businessType.isEmpty()) {
-            mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
+            mDataList3.addAll(Stream.of(config.getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> config.getBusinessNameById(bus.getDataId())).toList());
         }
         initAdapter();
         initHonor(bean);

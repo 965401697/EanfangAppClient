@@ -3,6 +3,7 @@ package net.eanfang.client.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
+import com.eanfang.util.GetConstDataUtils;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.client.BuildConfig;
@@ -16,15 +17,19 @@ import java.util.List;
  */
 
 public class LookMaterialAdapter extends BaseQuickAdapter<BughandleUseDeviceEntity, BaseViewHolder> {
+
+    private Config config = Config.get(mContext);
+    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
+
     public LookMaterialAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, BughandleUseDeviceEntity item) {
-        String bugOne = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
-        String bugTwo = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
-        String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
+        String bugOne = config.getBusinessNameByCode(item.getBusinessThreeCode(), 1);
+        String bugTwo = config.getBusinessNameByCode(item.getBusinessThreeCode(), 2);
+        String bugThree = config.getBusinessNameByCode(item.getBusinessThreeCode(), 3);
         helper.setText(R.id.tv_detail_name, (helper.getAdapterPosition() + 1) + "." + bugOne + "-" + bugTwo + "-" + bugThree);
         helper.addOnClickListener(R.id.tv_delete);
 

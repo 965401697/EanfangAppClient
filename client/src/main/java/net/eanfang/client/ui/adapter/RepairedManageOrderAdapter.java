@@ -6,6 +6,7 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHolder> {
 
+    private Config config = Config.get(mContext);
+    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     private final boolean[] isShowFirstBtnClient = {
             false, false, false, false, true, true, false
@@ -65,7 +68,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单：" + GetDateUtils.dateToDateString(item.getCreateTime()));
 //        helper.setText(R.id.tv_count_money, "" + item.getDoorfee());
-        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        helper.setText(R.id.tv_state, constDataUtils.getRepairStatus().get(item.getStatus()));
 //        helper.setText(R.id.tv_bug_one, "类别：" + Config.getConfig().
 //                getBusinessName(item.getBugEntityList().get(helper.getPosition()).getBusinessThreeCode()));
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);

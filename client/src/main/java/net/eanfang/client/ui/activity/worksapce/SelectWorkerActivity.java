@@ -123,7 +123,7 @@ public class SelectWorkerActivity extends BaseClientActivity {
     private void initWorker(int serviceId, int collectId) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
-        queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
+        queryEntry.getIsIn().put("serviceId", Arrays.asList(config.getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
         queryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         queryEntry.getEquals().put("served", serviceId + "");
         queryEntry.getEquals().put("collect", collectId + "");

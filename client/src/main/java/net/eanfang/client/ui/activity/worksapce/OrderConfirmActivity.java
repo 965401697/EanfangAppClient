@@ -171,9 +171,9 @@ public class OrderConfirmActivity extends BaseClientActivity {
         tvPhone.setText(repairOrderEntity.getRepairContactPhone());
         tvCompany.setText(repairOrderEntity.getRepairCompany());
         if (repairOrderEntity.getArriveTimeLimit() >= 0) {
-            tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
+            tvTime.setText(constDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
         }
-        tvAddress.setText(Config.get().getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
+        tvAddress.setText(config.getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
 
         mDataList = (ArrayList<RepairBugEntity>) repairOrderEntity.getBugEntityList();
     }

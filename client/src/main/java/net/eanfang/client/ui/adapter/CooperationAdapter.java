@@ -22,6 +22,8 @@ import static com.eanfang.util.V.v;
 
 public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, BaseViewHolder> {
 
+    private Config config = Config.get(mContext);
+    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
 
     public CooperationAdapter(int layoutResId, List data) {
         super(layoutResId, data);
@@ -43,9 +45,9 @@ public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, B
         });
 
 
-        helper.setText(R.id.tv_company, v(()->Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)));
+        helper.setText(R.id.tv_company, v(()->config.getBusinessNameByCode(item.getBusinessOneCode(), 1)));
         if (item.getStatus() != 0) {
-            helper.setText(R.id.btn_unconfirm, v(()->GetConstDataUtils.getCooperationStatus().get(item.getStatus())));
+            helper.setText(R.id.btn_unconfirm, v(()->constDataUtils.getCooperationStatus().get(item.getStatus())));
         } else {
             helper.setText(R.id.btn_unconfirm, "拒绝");
             helper.addOnClickListener(R.id.btn_unconfirm);
@@ -57,9 +59,9 @@ public class CooperationAdapter extends BaseQuickAdapter<PartnerBean.ListBean, B
             helper.setVisible(R.id.btn_confirm, false);
         }
 
-        helper.setText(R.id.tv_bugone, v(()->Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)));
+        helper.setText(R.id.tv_bugone, v(()->config.getBusinessNameByCode(item.getBusinessOneCode(), 1)));
         helper.setText(R.id.tv_time_limit, v(()->item.getBeginTime()) + "  到  " + v(()->item.getEndTime()));
-        helper.setText(R.id.tv_repair_install,  v(()->GetConstDataUtils.getCooperationTypeList().get(item.getBusType())));
+        helper.setText(R.id.tv_repair_install,  v(()->constDataUtils.getCooperationTypeList().get(item.getBusType())));
 
 
     }

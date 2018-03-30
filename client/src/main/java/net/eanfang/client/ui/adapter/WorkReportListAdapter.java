@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.WorkReportListBean;
 import com.eanfang.util.GetConstDataUtils;
@@ -25,6 +26,9 @@ import java.util.List;
  */
 
 public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.ListBean, BaseViewHolder> {
+    private Config config = Config.get(mContext);
+    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
+
     public WorkReportListAdapter(List<WorkReportListBean.ListBean> data) {
         super(R.layout.item_work_report_layout, data);
 
@@ -34,7 +38,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
     protected void convert(BaseViewHolder helper, WorkReportListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getCreateCompany().getOrgName());
         helper.setText(R.id.tv_depart_name, "部门：" + item.getCreateOrg().getOrgName());
-        helper.setText(R.id.tv_type, "类型：" + GetConstDataUtils.getWorkReportTypeList().get(item.getType()));
+        helper.setText(R.id.tv_type, "类型：" + constDataUtils.getWorkReportTypeList().get(item.getType()));
         helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreateUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_pub_time, "提交时间：" + item.getCreateTime());

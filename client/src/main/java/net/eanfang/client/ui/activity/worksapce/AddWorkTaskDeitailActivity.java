@@ -89,11 +89,11 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
         setRightTitleOnClickListener((v) -> {
             submit();
         });
-        llOrder.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvOrders, GetConstDataUtils.getInstancyList()));
+        llOrder.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvOrders, constDataUtils.getInstancyList()));
         llEndTimes.setOnClickListener((view) -> PickerSelectUtil.onUpYearMonthDayPicker(this, tvEndTimes));
-        llFirstFrequency.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvFirstFrequency, GetConstDataUtils.getFirstLookList()));
-        llSecondFrequency.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvSecondFrequency, GetConstDataUtils.getFirstCallbackList()));
-        llThirdFrequency.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvThirdFrequency, GetConstDataUtils.getThenCallbackList()));
+        llFirstFrequency.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvFirstFrequency, constDataUtils.getFirstLookList()));
+        llSecondFrequency.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvSecondFrequency, constDataUtils.getFirstCallbackList()));
+        llThirdFrequency.setOnClickListener((view) -> PickerSelectUtil.singleTextPicker(this, "", tvThirdFrequency, constDataUtils.getThenCallbackList()));
         mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
     }
 
@@ -158,10 +158,10 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
         }
 
         bean.setTitle(title);
-        bean.setInstancyLevel(GetConstDataUtils.getInstancyList().indexOf(orders));
-        bean.setFirst_look(GetConstDataUtils.getFirstLookList().indexOf(first));
-        bean.setFirst_callback(GetConstDataUtils.getFirstCallbackList().indexOf(second));
-        bean.setThen_callback(GetConstDataUtils.getThenCallbackList().indexOf(third));
+        bean.setInstancyLevel(constDataUtils.getInstancyList().indexOf(orders));
+        bean.setFirst_look(constDataUtils.getFirstLookList().indexOf(first));
+        bean.setFirst_callback(constDataUtils.getFirstCallbackList().indexOf(second));
+        bean.setThen_callback(constDataUtils.getThenCallbackList().indexOf(third));
         bean.setEnd_time(endtime);
         bean.setInfo(conment);
         bean.setPurpose(goal);

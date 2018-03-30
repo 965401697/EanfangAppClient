@@ -6,16 +6,26 @@ import android.os.Handler;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.localcache.CacheUtil;
+import com.eanfang.model.BaseDataBean;
+import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.GuideUtil;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateManager;
+import com.eanfang.util.V;
 
+import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.PrefUtils;
@@ -32,114 +42,131 @@ import net.eanfang.worker.util.PrefUtils;
 public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
     private static final String TAG = SplashActivity.class.getSimpleName();
     int[] drawables_worker = {R.mipmap.worker0, R.mipmap.worker1, R.mipmap.worker2, R.mipmap.worker3};
-    private boolean isFirst;
-    //是否加载完成
-    private boolean isLoadReady = false;
-    //是否登录成功
-    private boolean isLoginReady = false;
-    //是否校验成功
-    private boolean isCheckReady = false;
 
-    private boolean isValid;
+    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        init();
 
-        isFirst = SharePreferenceUtil.get().getBoolean("First", false);
+        getBaseData();
+        getConst();
+
+        runOnUiThread(() -> {
+            PermissionUtils.get(this).getStoragePermission(() -> {
+                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+                manager.checkUpdate();
+            });
+        });
+    }
+
+    private void init() {
         isFirst = PrefUtils.getVBoolean(this, PrefUtils.SHOWGUIDE);
-        //3s等待，3s结束isLoadReady 为true
-        new Handler().postDelayed(() -> {
-            isLoadReady = true;
-            go();
-        }, 1000);
-        isFirst();
-    }
-
-
-    //跳转
-    synchronized void go() {
-        if (!isFirst) {
-            return;
-        }
-        //登录成功且加载完成
-        if (isLoadReady && isLoginReady) {
-            startActivity(new Intent(this, MainActivity.class));
-            finishSelf();
-        }
-        if (isLoadReady && isCheckReady) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finishSelf();
-        }
-    }
-
-
-    //加载引导页
-    void isFirst() {
-        if (!isFirst) {
-            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_worker, this);
-            try {
-                PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        EanfangHttp.setClient();
+        //是第一次
+        if (isFirst) {
+            firstUse();
         } else {
-            checkToken();
+            //不是第一次
+            LoginBean user = EanfangApplication.getApplication().getUser();
+            //token失效
+            if (user == null || StringUtils.isEmpty(user.getToken())) {
+                goLogin();
+            } else {
+                EanfangHttp.setToken(user.getToken());
+                loginByToken();
+            }
         }
+    }
+
+    private void goMain() {
+        startActivity(new Intent(this, MainActivity.class));
+        finishSelf();
     }
 
 
     /**
-     * 检查token是否存在  存在 校验token  不存在 跳转到登录页面
+     * 请求基础数据
      */
-    public void checkToken() {
-        LoginBean user = EanfangApplication.getApplication().getUser();
-        isValid = (user == null) || (!StringUtils.isValid(user.getToken()));
-        if (isValid) {
-            isCheckReady = true;
-            go();
-            return;
+    private void getBaseData() {
+        String url;
+        String md5 = V.v(() -> Config.get(this).getBaseDataBean().getMD5());
+        if (StringUtils.isEmpty(md5)) {
+            url = NewApiService.GET_BASE_DATA_CACHE + "0";
+        } else {
+            url = NewApiService.GET_BASE_DATA_CACHE + md5;
         }
-        EanfangHttp.getHttp().getCommonHeaders().put("Request-From", "WORKER");
-        EanfangHttp.getHttp().getCommonHeaders().put("YAF-Token", user.getToken());
-//        EanfangHttp.get(UserApi.GET_USER_INFO)
-//                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class, (bean) -> {
-//                    Object object = bean;
-//                    if (object instanceof LoginBean) {
-//                        LoginBean loginBean = (LoginBean) object;
-//                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-//                        isLoginReady = true;
-//                        go();
-//                    } else {
-//                        isCheckReady = true;
-//                        go();
-//                    }
-//                }));
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    if (!str.contains(Constant.NO_UPDATE)) {
+                        CacheUtil.put(this, getPackageName(), BaseDataBean.class.getName(), str);
+//                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+//                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                    }
+                }));
+
+    }
+
+    /**
+     * 请求静态常量
+     */
+    private void getConst() {
+        String url;
+        String md5 = V.v(() -> Config.get(this).getConstBean().getMD5());
+        if (StringUtils.isEmpty(md5)) {
+            url = NewApiService.GET_CONST_CACHE + "0";
+        } else {
+            url = NewApiService.GET_CONST_CACHE + md5;
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    if (!str.contains(Constant.NO_UPDATE)) {
+                        CacheUtil.put(this, getPackageName(), ConstAllBean.class.getName(), str);
+//                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+//                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                    }
+
+                }));
+    }
+
+
+    //加载引导页
+    void firstUse() {
+        if (isFirst) {
+            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_worker, this);
+            try {
+                PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * token 登陆 验证
+     */
+    public void loginByToken() {
+
         EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback(this, false, LoginBean.class) {
+                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
                     @Override
-                    public void onSuccess(Object bean) {
-                        super.onSuccess(bean);
-                        Object object = bean;
-                        if (object instanceof LoginBean) {
-                            LoginBean loginBean = (LoginBean) object;
-                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-                            isLoginReady = true;
-                            go();
+                    public void onSuccess(LoginBean bean) {
+                        if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
+                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                            goMain();
                         } else {
-                            isCheckReady = true;
-                            go();
+                            goLogin();
                         }
                     }
 
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        if (code == 50014) {
-                            showToast("token已失效,请重新登录");
-                        }
-                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        goLogin();
+//
                     }
                 });
 

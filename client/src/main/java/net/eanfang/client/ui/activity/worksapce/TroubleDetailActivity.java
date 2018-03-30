@@ -185,18 +185,18 @@ public class TroubleDetailActivity extends BaseClientActivity {
             tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
         }
         //录像机天数
-        tv_store_time.setText(GetConstDataUtils.getStoreDayList().get(bughandleConfirmEntity.getStoreDays()));
+        tv_store_time.setText(constDataUtils.getStoreDayList().get(bughandleConfirmEntity.getStoreDays()));
         //报警打印功能
         if (bughandleConfirmEntity.getIsAlarmPrinter()!=null) {
-            tv_print_on_alarm.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsAlarmPrinter()));
+            tv_print_on_alarm.setText(constDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsAlarmPrinter()));
         }
         //所有设备时间同步
         if (bughandleConfirmEntity.getIsTimeRight()!=null) {
-            tv_time_right.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsTimeRight()));
+            tv_time_right.setText(constDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsTimeRight()));
         }
         //各类设备数据远传功能
         if (bughandleConfirmEntity.getIsMachineDataRemote()!=null) {
-            tv_machine_data_remote.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsMachineDataRemote()));
+            tv_machine_data_remote.setText(constDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsMachineDataRemote()));
         }
         //遗留问题
         if (bughandleConfirmEntity.getLeftoverProblem()!=null) {

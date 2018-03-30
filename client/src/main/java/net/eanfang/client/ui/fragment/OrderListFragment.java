@@ -210,7 +210,7 @@ public class OrderListFragment extends BaseFragment implements
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(getTitle())) {
-            String status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
+            String status = constDataUtils.getRepairStatus().indexOf(getTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         queryEntry.setSize(10);

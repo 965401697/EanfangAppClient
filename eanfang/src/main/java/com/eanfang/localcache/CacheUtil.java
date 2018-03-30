@@ -1,12 +1,13 @@
 package com.eanfang.localcache;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
 import android.util.Log;
 
+import com.eanfang.util.ApkUtils;
 import com.jakewharton.disklrucache.DiskLruCache;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 /**
@@ -95,25 +97,38 @@ public class CacheUtil {
 
     public static void get(Context context, String uniqueName, String key, CacheGetCallBack callBack) {
         Log.e("inget", "onget");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
-                    String keyHash = hashKeyForDisk(key);
-                    DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
-                    if (shot == null) {
-                        callBack.readValue(null);
-                    } else {
-                        String result = mDiskLruCache.get(keyHash).getString(0);
-                        callBack.readValue(result);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+        new Thread(() -> {
+            try {
+                DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                String keyHash = hashKeyForDisk(key);
+                DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
+                if (shot == null) {
+                    callBack.readValue(null);
+                } else {
+                    String result = mDiskLruCache.get(keyHash).getString(0);
+                    callBack.readValue(result);
                 }
-                Log.e("returnget", "123");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            Log.e("returnget", "123");
         }).start();
+    }
+
+    public static String get(Context context, String uniqueName, String key) {
+        String info = null;
+        try {
+            DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+            String keyHash = hashKeyForDisk(key);
+            DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
+            if (shot != null) {
+                String result = mDiskLruCache.get(keyHash).getString(0);
+                info = result;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return info;
     }
 
     public static void getMulti(Context context, String uniqueName, List<String> keys, CacheGetCallBackMulti callBack) {
@@ -195,15 +210,15 @@ public class CacheUtil {
         return new File(cachePath + File.separator + uniqueName);
     }
 
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return 1;
-    }
+//    private static int getAppVersion(Context context) {
+//        try {
+//            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+//            return info.versionCode;
+//        } catch (NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return 1;
+//    }
 
     private static DiskLruCache initCache(Context context, String uniqueName) {
         DiskLruCache mDiskLruCache = null;
@@ -212,7 +227,7 @@ public class CacheUtil {
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs();
             }
-            mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
+            mDiskLruCache = DiskLruCache.open(cacheDir, ApkUtils.getAppVersionCode(context), 1, 10 * 1024 * 1024);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 
 public class OfferAndPayOrderActivity extends BaseClientActivity {
     private static String titleBar;
-    public final List<String> allmTitles = GetConstDataUtils.getQuoteStatus();
+    public  List<String> allmTitles;
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -55,6 +55,7 @@ public class OfferAndPayOrderActivity extends BaseClientActivity {
         setContentView(R.layout.activity_work_report_list);
         ButterKnife.bind(this);
         initView();
+        allmTitles = constDataUtils.getQuoteStatus();
     }
 
     private void initView() {
@@ -98,7 +99,7 @@ public class OfferAndPayOrderActivity extends BaseClientActivity {
     }
 
     private void initData(int page) {
-        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+        int status = constDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");

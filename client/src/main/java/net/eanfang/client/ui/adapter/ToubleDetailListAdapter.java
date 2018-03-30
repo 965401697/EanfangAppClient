@@ -2,6 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.BughandleConfirmEntity;
@@ -16,7 +17,10 @@ import java.util.List;
  */
 
 public class ToubleDetailListAdapter extends BaseQuickAdapter<BughandleConfirmEntity, BaseViewHolder> {
-    private final List<String> mTitlesWorker = GetConstDataUtils.getRepairStatus();
+    private Config config = Config.get(mContext);
+    private GetConstDataUtils constDataUtils = GetConstDataUtils.get(config);
+
+    private  List<String> mTitlesWorker = constDataUtils.getRepairStatus();
     private String[] mTitles;
 
     public ToubleDetailListAdapter(List data) {

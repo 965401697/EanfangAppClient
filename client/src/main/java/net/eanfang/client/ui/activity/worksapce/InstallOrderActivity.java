@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
 
 public class InstallOrderActivity extends BaseClientActivity {
     private static String titleBar;
-    public final List<String> allmTitles = GetConstDataUtils.getInstallStatus();
+    public  List<String> allmTitles;
     @BindView(R.id.tl_work_list)
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
@@ -63,6 +63,7 @@ public class InstallOrderActivity extends BaseClientActivity {
         setContentView(R.layout.activity_work_list);
         ButterKnife.bind(this);
         initView();
+        allmTitles= constDataUtils.getInstallStatus();
     }
 
     private void initView() {

@@ -63,20 +63,23 @@ public class SettingActivity extends BaseClientActivity {
     private void initView() {
         ll_about_us.setOnClickListener(v -> new AboutUsView(this, true).show());
         ll_cache.setOnClickListener((v) -> {
-            ToastUtil.get().showToast(this, "缓存已成功清除");
+            ToastUtil.get().showToast(this, "缓存已成功清除，请重新登陆");
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
             try {
                 tv_cache.setText(CleanMessageUtil.getTotalCacheSize(EanfangApplication.get()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            signout();
+            startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+            finishSelf();
         });
         btn_logout.setOnClickListener(v -> logout());
         llMsgSetting.setOnClickListener(v -> new MessageStateView(SettingActivity.this).show());
     }
 
     /**
-     * 是否放弃修改
+     * 退出登陆
      */
     private void logout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -103,4 +106,5 @@ public class SettingActivity extends BaseClientActivity {
                     showToast("退出成功");
                 }));
     }
+
 }

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.R;
+import com.eanfang.config.Config;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -47,6 +49,9 @@ public abstract class BaseFragment extends Fragment implements IBase {
      */
     protected boolean mIsPrepare;
 
+    public Config config;
+    public GetConstDataUtils constDataUtils;
+
 
     @Override
     @Nullable
@@ -58,14 +63,11 @@ public abstract class BaseFragment extends Fragment implements IBase {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
         initView();
-
         mIsPrepare = true;
-
-//        onLazyLoad();
-
         setListener();
+
+
         return mRootView;
     }
 
@@ -171,6 +173,9 @@ public abstract class BaseFragment extends Fragment implements IBase {
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (BaseActivity) getActivity();
+
+        config = Config.get(mActivity);
+        constDataUtils = GetConstDataUtils.get(config);
     }
 
     @Override

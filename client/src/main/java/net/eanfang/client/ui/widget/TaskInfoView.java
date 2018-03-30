@@ -76,10 +76,10 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
     private void initView() {
         tvTitle.setText("任务明细");
         ivLeft.setOnClickListener(v -> dismiss());
-        tvOrders.setText(GetConstDataUtils.getInstancyList().get(detailBean.getInstancyLevel()));
-        tvFirstFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirst_look()));
-        tvSecondFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getFirst_callback()));
-        tvThirdFrequency.setText(GetConstDataUtils.getInstancyList().get(detailBean.getThen_callback()));
+        tvOrders.setText(constDataUtils.getInstancyList().get(detailBean.getInstancyLevel()));
+        tvFirstFrequency.setText(constDataUtils.getInstancyList().get(detailBean.getFirst_look()));
+        tvSecondFrequency.setText(constDataUtils.getInstancyList().get(detailBean.getFirst_callback()));
+        tvThirdFrequency.setText(constDataUtils.getInstancyList().get(detailBean.getThen_callback()));
         tvEndTimes.setText(detailBean.getEnd_time());
         etComment.setText(detailBean.getInfo());
         etWorker.setText(detailBean.getJoinPerson());

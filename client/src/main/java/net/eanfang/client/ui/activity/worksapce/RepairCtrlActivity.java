@@ -34,7 +34,7 @@ import java.util.List;
  */
 
 public class RepairCtrlActivity extends BaseClientActivity {
-    private final List<String> mTitlesClient = GetConstDataUtils.getRepairStatus();
+    private List<String> mTitlesClient;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
@@ -84,6 +84,8 @@ public class RepairCtrlActivity extends BaseClientActivity {
         setTitle("报修管控");
         setLeftBack();
         currentFragment = (OrderListFragment) mFragments.get(0);
+
+        mTitlesClient = constDataUtils.getRepairStatus();
         initData();
 
     }
@@ -92,7 +94,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
     public void initData() {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(currentFragment.getTitle())) {
-            String status = GetConstDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
+            String status = constDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         queryEntry.setPage(1);

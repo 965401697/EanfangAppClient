@@ -2,6 +2,7 @@ package com.eanfang.http;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -44,7 +45,7 @@ public class EanfangCallback<T> extends StringCallback {
     /**
      * 当前执行 请求的 activity
      */
-    private Activity activity;
+    private Context activity;
     private Type type;
     private Class<T> clazz;
 
@@ -58,14 +59,14 @@ public class EanfangCallback<T> extends StringCallback {
      * @param activity
      */
     // TODO: 2017/12/7 废弃
-    public EanfangCallback(Activity activity, boolean showDialog) {
+    public EanfangCallback(Context activity, boolean showDialog) {
         this.activity = activity;
         if (showDialog) {
             loadingDialog = DialogUtil.createLoadingDialog(activity);
         }
     }
 
-    public EanfangCallback(Activity activity, boolean showDialog, Class clazz, ISuccess<T> iSuccess) {
+    public EanfangCallback(Context activity, boolean showDialog, Class clazz, ISuccess<T> iSuccess) {
         this.activity = activity;
         this.clazz = clazz;
         this.iSuccess = iSuccess;
@@ -74,7 +75,7 @@ public class EanfangCallback<T> extends StringCallback {
         }
     }
 
-    public EanfangCallback(Activity activity, boolean showDialog, Class clazz, boolean isArray, ISuccessArray<T> iSuccess) {
+    public EanfangCallback(Context activity, boolean showDialog, Class clazz, boolean isArray, ISuccessArray<T> iSuccess) {
         this.activity = activity;
         this.clazz = clazz;
         this.iSuccessArray = iSuccess;
@@ -88,7 +89,7 @@ public class EanfangCallback<T> extends StringCallback {
      *
      * @param activity
      */
-    public EanfangCallback(Activity activity, boolean showDialog, Type type) {
+    public EanfangCallback(Context activity, boolean showDialog, Type type) {
         this.activity = activity;
         this.type = type;
         if (showDialog) {
@@ -101,7 +102,7 @@ public class EanfangCallback<T> extends StringCallback {
      *
      * @param activity
      */
-    public EanfangCallback(Activity activity, boolean showDialog, Class<T> clazz) {
+    public EanfangCallback(Context activity, boolean showDialog, Class<T> clazz) {
         this.activity = activity;
         this.clazz = clazz;
         if (showDialog) {
