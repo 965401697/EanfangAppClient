@@ -32,7 +32,6 @@ import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.LogUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -380,7 +379,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
             sb.append(amapLocation.getAoiName());//获取当前定位点的AOI信息
             sb.append(amapLocation.getBuildingId());//获取当前室内定位的建筑物Id
             sb.append(amapLocation.getFloor());//获取当前室内定位的楼层
-            LogUtils.e("amapSuccess", sb.toString());
+//            LogUtils.e("amapSuccess", sb.toString());
 
             address = sb.toString();
             //获取定位时间
@@ -389,7 +388,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
             city_address.substring(0, 1);
             queryWeather(city_address);
         } else {
-            LogUtils.e("amapfill", "定位失败");
+//            LogUtils.e("amapfill", "定位失败");
         }
     }
 

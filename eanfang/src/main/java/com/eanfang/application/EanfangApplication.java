@@ -1,5 +1,8 @@
 package com.eanfang.application;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
 import com.eanfang.http.EanfangHttp;
@@ -25,7 +28,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * @author Mr.hou
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
 public class EanfangApplication extends CustomeApplication {
@@ -113,5 +116,10 @@ public class EanfangApplication extends CustomeApplication {
     }
 
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        //解决64K问题
+        MultiDex.install(this);
+    }
 }

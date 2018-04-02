@@ -19,7 +19,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.MaintenanceBean;
 import com.eanfang.model.Message;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.LogUtils;
 import com.eanfang.util.PickerSelectUtil;
 
 import net.eanfang.worker.R;
@@ -155,7 +154,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
         EanfangHttp.post(NewApiService.POST_ADD_MAINTAIN)
                 .upJson(json.toString())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    LogUtils.d(TAG, "网络请求成功");
+//                    LogUtils.d(TAG, "网络请求成功");
                     Intent intent = new Intent(MaintenanceActivity.this, StateChangeActivity.class);
                     Bundle bundle = new Bundle();
                     Message message = new Message();
