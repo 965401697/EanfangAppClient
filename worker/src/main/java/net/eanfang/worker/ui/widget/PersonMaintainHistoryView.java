@@ -37,14 +37,14 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  */
 
 public class PersonMaintainHistoryView extends BaseDialog implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.rv_list)
     RecyclerView recyclerView;
     @BindView(R.id.swiprefresh)
     SwipyRefreshLayout swiprefresh;
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
     private Activity mContext;
     private MainAdapter orderAdapter;
     private Long id;

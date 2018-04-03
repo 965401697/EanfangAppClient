@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ import net.eanfang.worker.ui.widget.MeintenanceDetailDialog;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 /**
  * Created by wen on 2017/4/13.
@@ -30,6 +34,8 @@ import java.util.List;
 public class MaintenanceHistoryDetailActivity extends BaseActivity {
 
     public static final String TAG = MaintenanceHistoryDetailActivity.class.getSimpleName();
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
     private TextView tv_maintenance_circle;
     private LinearLayout ll_maintenance_circle;
     private RecyclerView rcv_detail;
@@ -46,6 +52,7 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance);
+        ButterKnife.bind(this);
         initView();
         setTitle("维修保养");
         getData();
@@ -65,6 +72,7 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
         et_client_company_name.setFocusable(false);
         tv_commit = (TextView) findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.GONE);
+        ivLeft.setOnClickListener((v) -> finishSelf());
 
 
     }

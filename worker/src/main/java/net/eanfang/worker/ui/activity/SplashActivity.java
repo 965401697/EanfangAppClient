@@ -136,7 +136,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);
-                        if (code == 50014) {
+                        if (code == 50014 || code == 50011) {
                             showToast("token已失效,请重新登录");
                         }
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));

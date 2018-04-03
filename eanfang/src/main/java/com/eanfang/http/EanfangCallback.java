@@ -35,7 +35,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
  *
  * @param <T>
  */
-public class EanfangCallback<T> extends StringCallback {
+    public class EanfangCallback<T> extends StringCallback {
 
     /**
      * 加载弹窗
@@ -150,7 +150,7 @@ public class EanfangCallback<T> extends StringCallback {
                 return;
             }
 
-            resultJson = JsonUtils.str2JSON(response.body());
+                resultJson = JsonUtils.str2JSON(response.body());
             Integer code = -100;
             String message = null;
             JSONObject resultObject = null;
@@ -221,7 +221,9 @@ public class EanfangCallback<T> extends StringCallback {
                 case ErrorCodeConst.REQUEST_COMMIT_AGAIN:
                     break;
                 case MISSING_LOGIN:
-                    onMissingLogin();
+                    onFail(code,message,resultObject);
+                    //taoken 过期  只弹出toast 没跳转登录页面
+//                    onMissingLogin();
                     break;
                 default:
                     onFail(code, message, resultObject);
@@ -248,7 +250,7 @@ public class EanfangCallback<T> extends StringCallback {
     /**
      * 请求成功 调用
      */
-    public void onSuccess(T bean) {
+    public void     onSuccess(T bean) {
         if (iSuccess != null) {
             iSuccess.success(bean);
         }
@@ -283,7 +285,6 @@ public class EanfangCallback<T> extends StringCallback {
      * 缺少参数 调用
      */
     public void onMissParam(String message) {
-
         ToastUtil.get().showToast(this.activity, "参数缺失");
     }
 

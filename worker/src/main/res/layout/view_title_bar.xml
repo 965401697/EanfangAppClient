@@ -11,6 +11,15 @@
     app:navigationContentDescription=""
     app:theme="@style/ToolBarStyle_light">
 
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@mipmap/ic_back"
+        android:visibility="visible" />
     <!--自定义toolbar的title 和subtitle -->
     <TextView
         android:id="@+id/tv_right"
@@ -23,7 +32,7 @@
         android:singleLine="true"
         android:text=""
         android:textColor="@color/white"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_title"
@@ -48,5 +57,5 @@
         android:scrollHorizontally="true"
         android:text=""
         android:textColor="@color/white"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 </android.support.v7.widget.Toolbar>

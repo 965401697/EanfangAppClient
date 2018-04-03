@@ -53,7 +53,7 @@ public class AboutUsView extends BaseDialog {
         setContentView(R.layout.activity_about_us);
         ButterKnife.bind(this);
         initView();
-        setTitle("关于我们");
+        tvTitle.setText("关于我们");
     }
 
     private void initView() {

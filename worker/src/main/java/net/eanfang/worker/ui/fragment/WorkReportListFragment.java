@@ -85,26 +85,30 @@ public class WorkReportListFragment extends BaseFragment implements
     }
 
     private void initAdapter(List<WorkReportListBean.ListBean> mDataList) {
+        if (mDataList.size() != 0 || mDataList != null) {
+            mAdapter = new WorkReportListAdapter(mDataList);
 
-        mAdapter = new WorkReportListAdapter(mDataList);
-        rvList.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
-                    getFirstLookData(mDataList, position);
+            rvList.addOnItemTouchListener(new OnItemClickListener() {
+                @Override
+                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                        getFirstLookData(mDataList, position);
+                    }
+                    new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
                 }
-                new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
-            }
-        });
+            });
 
-        rvList.setAdapter(mAdapter);
+            rvList.setAdapter(mAdapter);
+        } else {
+            showToast("暂无数据");
+        }
+
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     /**

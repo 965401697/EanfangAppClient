@@ -238,14 +238,6 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_14" />
 
-                    <ImageView
-                        android:id="@+id/iv_add"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_add_detail" />
-
                 </RelativeLayout>
 
                 <TextView
@@ -281,6 +273,15 @@
                         android:layout_height="20dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:src="@drawable/ic_add_detail" />
+
+                    <ImageView
+                        android:id="@+id/iv_add"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="169dp"
                         android:src="@drawable/ic_add_detail" />
                 </RelativeLayout>
 

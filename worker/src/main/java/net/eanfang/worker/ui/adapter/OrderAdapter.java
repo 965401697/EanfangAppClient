@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -37,8 +38,8 @@ public class OrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHo
             status = "待确认";
         }
 
-        helper.setText(R.id.tv_company, item.getOwnerOrg().getBelongCompany().getOrgName()
-                + "  (" + item.getOwnerUser().getAccountEntity().getRealName() + ")");
+        helper.setText(R.id.tv_company, V.v(()->item.getOwnerOrg().getBelongCompany().getOrgName())
+                + "  (" + V.v(()->item.getOwnerUser().getAccountEntity().getRealName()) + ")");
         helper.setText(R.id.tv_state, status);
         helper.setText(R.id.tv_ordernum, item.getOrderNum());
         if (item.getBookTime() != null) {
@@ -47,7 +48,7 @@ public class OrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHo
         helper.setText(R.id.tv_bugonename, GetDateUtils.dateToDateString(item.getCreateTime()));
         //将业务类型的图片显示到列表
         if (item.getFailureEntity()!=null) {
-            String[] urls = item.getFailureEntity().getPictures().split(",");
+            String[] urls = V.v(()->item.getFailureEntity().getPictures().split(","));
             //将业务类型的图片显示到列表
             ((SimpleDraweeView) helper.getView(R.id.sdv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
         }
