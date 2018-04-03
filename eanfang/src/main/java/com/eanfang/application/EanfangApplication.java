@@ -25,7 +25,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * @author Mr.hou
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
 public class EanfangApplication extends CustomeApplication {
@@ -111,7 +111,4 @@ public class EanfangApplication extends CustomeApplication {
         //全局公共参数
         EanfangHttp.setHttp(http);
     }
-
-
-
 }

@@ -31,7 +31,6 @@ import com.eanfang.model.SignCountBean;
 import com.eanfang.model.SigninBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
-import com.eanfang.util.LogUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -285,7 +284,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
                 sb.append(amapLocation.getBuildingId());
                 //获取当前室内定位的楼层
                 sb.append(amapLocation.getFloor());
-                LogUtils.e("amapSuccess", sb.toString());
+//                LogUtils.e("amapSuccess", sb.toString());
                 latitude = amapLocation.getLatitude();
                 longitude = amapLocation.getLongitude();
                 cityAddress = amapLocation.getCity();

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:padding="5dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -31,7 +32,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:src="@drawable/contend_ic_signin_default" />
+                android:src="@drawable/contend_ic_location_default" />
 
             <TextView
                 android:layout_width="wrap_content"

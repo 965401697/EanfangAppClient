@@ -40,6 +40,10 @@
             android:textColor="@color/white"
             android:textSize="@dimen/textSize_20" />
     </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@drawable/contend__gradienttone"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -61,10 +65,15 @@
 
             <include layout="@layout/layout_count" />
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#f2f2f2"/>
+            <TextView
                 android:text="安防圈"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_12"
                 android:layout_width="match_parent"

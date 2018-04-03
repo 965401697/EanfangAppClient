@@ -217,6 +217,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
                 android:text="...详情"
                 android:textSize="6sp" />
 
@@ -292,6 +294,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
                 android:text="...详情"
                 android:textSize="6sp" />
 
@@ -367,6 +371,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
                 android:text="...详情"
                 android:textSize="6sp" />
 

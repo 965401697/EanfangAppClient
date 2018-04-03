@@ -47,7 +47,7 @@ public class StringUtils {
             res = Integer.valueOf(bundle.get(param).toString());
         } catch (Exception e) {
             //e.printStackTrace();
-            LogUtils.printStackTrace(e);
+//            LogUtils.printStackTrace(e);
             res = 0;
         }
         return res;
@@ -86,7 +86,7 @@ public class StringUtils {
                 res = str;
             }
         } catch (Exception e) {
-            LogUtils.printStackTrace(e);
+//            LogUtils.printStackTrace(e);
             res = "";
         }
         return res;
@@ -111,7 +111,7 @@ public class StringUtils {
             res = context.getResources().getString(keyid, object);
         } catch (Exception e) {
             //e.printStackTrace();
-            LogUtils.printStackTrace(e);
+//            LogUtils.printStackTrace(e);
             res = "";
         }
         return res;
@@ -127,7 +127,7 @@ public class StringUtils {
             res = Html.fromHtml(res).toString();
         } catch (Exception e) {
             //e.printStackTrace();
-            LogUtils.printStackTrace(e);
+//            LogUtils.printStackTrace(e);
             res = "";
         }
         return res;
