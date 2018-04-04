@@ -21,10 +21,11 @@ import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.ExecuteUtils;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.UpdateManager;
 import com.eanfang.util.Var;
+import com.picker.common.util.LogUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
@@ -183,15 +184,18 @@ public class MainActivity extends BaseClientActivity {
                         ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
                         EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                     }
-                    runOnUiThread(() -> {
-                        PermissionUtils.get(this).getStoragePermission(() -> {
-                            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-                            manager.checkUpdate();
-                        });
-                    });
+//                    runOnUiThread(() -> {
+//                        PermissionUtils.get(this).getStoragePermission(() -> {
+//                            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+//                            manager.checkUpdate();
+//                        });
+//                    });
 
                 }));
+        //app更新
+        UpdateAppManager.update(this,BuildConfig.TYPE);
     }
+
 
     public void initXinGe() {
         Var.get("MainActivity.initXinGe").setChangeListener((var) -> {

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao' // apply plugin
+//apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
@@ -71,6 +71,7 @@ android {
         incremental true
         javaMaxHeapSize "4g"
     }
+
 }
 
 dependencies {
@@ -93,7 +94,7 @@ dependencies {
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
-    implementation 'org.greenrobot:greendao:3.2.2' // add library
+//    implementation 'org.greenrobot:greendao:3.2.2' // add library
 
 
 }

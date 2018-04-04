@@ -180,4 +180,14 @@ public interface UserApi {
      */
     String POST_WORKER_SUBMIT_LOCATION = BuildConfig.API_HOST + "/yaf_shop/worker/submitLocation";
 
+    /**
+     * 客户端APP更新
+     */
+    String GET_CILENT_UPDATE_APP = BuildConfig.API_HOST + "/yaf_sys/update/updateClient";
+
+    /**
+     * 技师端APP更新
+     */
+    String GET_WORKER_UPDATE_APP = BuildConfig.API_HOST + "/yaf_sys/update/updateWork";
+
 }

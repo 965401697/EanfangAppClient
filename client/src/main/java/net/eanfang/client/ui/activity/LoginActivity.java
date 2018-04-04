@@ -253,11 +253,11 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             e1.printStackTrace();
         }
 
-        PermissionUtils.get(this).getStoragePermission(() -> {
-            //更新
-            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-            manager.checkUpdate();
-        });
+//        PermissionUtils.get(this).getStoragePermission(() -> {
+//            //更新
+//            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+//            manager.checkUpdate();
+//        });
 
     }
 
