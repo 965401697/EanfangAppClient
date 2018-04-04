@@ -2,8 +2,11 @@ package net.eanfang.client.ui.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.LogTime;
+import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
@@ -32,6 +35,11 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onNotifactionShowedResult(Context context,
                                           XGPushShowedResult notifiShowedRlt) {
+        if (context == null || notifiShowedRlt == null) {
+            return;
+        }
+        Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
+        Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
     }
 
     @Override
@@ -44,7 +52,6 @@ public class MessageReceiver extends XGPushBaseReceiver {
 
     @Override
     public void onDeleteTagResult(Context context, int errorCode, String tagName) {
-
     }
 
     // 通知点击回调 actionType=1为该消息被清除，actionType=0为该消息被点击
@@ -68,12 +75,10 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onRegisterResult(Context context, int errorCode,
                                  XGPushRegisterResult message) {
-
     }
 
     // 消息透传
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
-
     }
 }

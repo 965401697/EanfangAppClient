@@ -6,9 +6,11 @@ package com.eanfang.application;
 
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.ArrayMap;
+import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import com.camera.util.LogUtil;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.IBase;
@@ -167,7 +169,13 @@ public abstract class CustomeApplication extends MultiDexApplication {
                 Object object = mJIBaseArrayMap.get(str);
                 if (object instanceof IBase) {
                     IBase base = (IBase) object;
-                    base.finishSelf();
+                    if (!base.isFinishing()) {
+                        try {
+                            base.finishSelf();
+                        } catch (Exception e) {
+                            LogUtil.e("close cathc", e.getMessage());
+                        }
+                    }
                 }
             }
         }

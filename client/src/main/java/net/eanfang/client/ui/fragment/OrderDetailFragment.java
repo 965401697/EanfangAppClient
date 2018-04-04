@@ -20,6 +20,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -162,19 +163,19 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-                    tv_company_name.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
-                    tv_contract_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
-                    tv_contract_phone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
-                    tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
-                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
+                    tv_company_name.setText(V.v(() -> bean.getOwnerOrg().getBelongCompany().getOrgName()));
+                    tv_contract_name.setText(V.v(() ->bean.getOwnerUser().getAccountEntity().getRealName()));
+                    tv_contract_phone.setText(V.v(() ->bean.getOwnerUser().getAccountEntity().getMobile()));
+                    tv_time_limit.setText(V.v(() ->GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
+                    tv_address.setText(V.v(() ->Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
                     if (bean.getBookTime() != null) {
-                        tv_time.setText(Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--"));
+                        tv_time.setText(V.v(() ->Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--")));
                     } else {
                         tv_time.setText("--");
                     }
 
-                    tv_number.setText(bean.getOrderNum());
-                    tv_feature_time.setText(GetDateUtils.dateToDateString(bean.getCreateTime()));
+                    tv_number.setText(V.v(() ->bean.getOrderNum()));
+                    tv_feature_time.setText(V.v(() ->GetDateUtils.dateToDateString(bean.getCreateTime())));
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
                     //      获取：是否电话解决（0：未解决，1：已解决）
@@ -187,9 +188,9 @@ public class OrderDetailFragment extends BaseFragment {
                     //客户端
                     if (bean.getAssigneeUser() != null) {
                         iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
-                        tv_worker_name.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
-                        tv_worker_company.setText(bean.getAssigneeOrg().getBelongCompany().getOrgName());
-                        iv_phone.setTag(bean.getAssigneeUser().getAccountEntity().getMobile());
+                        tv_worker_name.setText(V.v(() ->bean.getAssigneeUser().getAccountEntity().getRealName()));
+                        tv_worker_company.setText(V.v(() ->bean.getAssigneeOrg().getBelongCompany().getOrgName()));
+                        iv_phone.setTag(V.v(() ->bean.getAssigneeUser().getAccountEntity().getMobile()));
                     }
 
                     mDataList = bean.getBugEntityList();

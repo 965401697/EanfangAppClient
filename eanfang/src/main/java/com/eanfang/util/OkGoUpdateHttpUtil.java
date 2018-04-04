@@ -77,7 +77,7 @@ public class OkGoUpdateHttpUtil implements HttpManager {
         OkGo.<File>get(url).execute(new com.okgo.callback.FileCallback(path, fileName) {
 
             @Override
-            public void onSuccess(com.okgo.model.Response<File> response) {
+            public void onSuccess(Response<File> response) {
                 callback.onResponse(response.body());
             }
 
@@ -88,7 +88,7 @@ public class OkGoUpdateHttpUtil implements HttpManager {
             }
 
             @Override
-            public void onError(com.okgo.model.Response<File> response) {
+            public void onError(Response<File> response) {
                 super.onError(response);
                 callback.onError("异常");
             }

@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.picker.common.util.ConvertUtils;
+import com.picker.common.util.ScreenUtils;
 import com.picker.wheelpicker.picker.DatePicker;
 import com.picker.wheelpicker.picker.DateTimePicker;
 import com.picker.wheelpicker.picker.LinkagePicker;
@@ -48,6 +49,8 @@ public class PickerSelectUtil {
         picker.setTextSize(textsize);
         picker.setTextColor(textcolor);
         picker.setTitleText(title);
+        picker.setHeight(ScreenUtils.heightPixels(context)/3);//整体高度
+        picker.setLineSpaceMultiplier(3.0F);//每个item的高度
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
             public void onOptionPicked(int index, String item) {

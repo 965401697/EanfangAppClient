@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
@@ -32,6 +33,8 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onNotifactionShowedResult(Context context,
                                           XGPushShowedResult notifiShowedRlt) {
+        Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
+        Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
     }
 
     @Override

@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.Gravity;
@@ -10,8 +9,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -24,16 +21,16 @@ import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.ExecuteUtils;
-import com.eanfang.util.OkGoUpdateHttpUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateAppManager;
+import com.eanfang.util.UpdateManager;
 import com.eanfang.util.Var;
+import com.picker.common.util.LogUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
-import com.vector.update_app.UpdateAppBean;
-import com.vector.update_app.UpdateAppManager;
-import com.vector.update_app.UpdateCallback;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.fragment.ContactListFragment;
@@ -41,9 +38,6 @@ import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 import q.rorbin.badgeview.Badge;
@@ -197,123 +191,11 @@ public class MainActivity extends BaseClientActivity {
 //                        });
 //                    });
 
-                    new UpdateAppManager
-                            .Builder()
-                            //当前Activity
-                            .setActivity(this)
-                            //更新地址
-                            .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt?appKey=ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f&version=0.1.0")
-                            //实现httpManager接口的对象
-                            .setHttpManager(new OkGoUpdateHttpUtil())
-                            .build()
-                            .update();
-
-
-//                    String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-//
-//                    Map<String, String> params = new HashMap<String, String>();
-//
-//                    params.put("appKey", "ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f");
-//                    params.put("appVersion", "300000");
-//                    params.put("key1", "value2");
-//                    params.put("key2", "value3");
-//
-//                    new UpdateAppManager
-//                            .Builder()
-//                            //必须设置，当前Activity
-//                            .setActivity(this)
-//                            //必须设置，实现httpManager接口的对象
-//                            .setHttpManager(new OkGoUpdateHttpUtil())
-//                            //必须设置，更新地址
-//                            .setUpdateUrl("https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt?appKey=ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f&version=0.1.0")
-//
-//                            //以下设置，都是可选
-//                            //设置请求方式，默认get
-//                            .setPost(false)
-//                            //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
-//                            .setParams(params)
-//                            //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
-//                            .hideDialogOnDownloading(false)
-//                            //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
-////                            .setTopPic(R.mipmap.top_8)
-//                            //为按钮，进度条设置颜色，默认从顶部图片自动识别。
-//                            //.setThemeColor(ColorUtil.getRandomColor())
-//                            //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
-//                            .setTargetPath(path)
-//                            //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
-//                            //.setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
-//                            //不显示通知栏进度条
-////                            .dismissNotificationProgress()
-//                            //是否忽略版本
-//                            //.showIgnoreVersion()
-//
-//                            .build()
-//                            //检测是否有新版本
-//                            .checkNewApp(new UpdateCallback() {
-//                                /**
-//                                 * 解析json,自定义协议
-//                                 *
-//                                 * @param json 服务器返回的json
-//                                 * @return UpdateAppBean
-//                                 */
-//                                @Override
-//                                protected UpdateAppBean parseJson(String json) {
-//                                    UpdateAppBean updateAppBean = new UpdateAppBean();
-//                                    try {
-//                                        JSONObject jsonObject =   JSON.parseObject(json);
-//                                        updateAppBean
-//                                                //（必须）是否更新Yes,No
-//                                                .setUpdate(jsonObject.getString("update"))
-//                                                //（必须）新版本号，
-//                                                .setNewVersion(jsonObject.getString("new_version"))
-//                                                //（必须）下载地址
-//                                                .setApkFileUrl(jsonObject.getString("apk_file_url"))
-//                                                //（必须）更新内容
-//                                                .setUpdateLog(jsonObject.getString("update_log"))
-//                                                //大小，不设置不显示大小，可以不设置
-//                                                .setTargetSize(jsonObject.getString("target_size"))
-//                                                //是否强制更新，可以不设置
-//                                                .setConstraint(false)
-//                                                //设置md5，可以不设置
-//                                                .setNewMd5(jsonObject.getString("new_md51"));
-//                                    } catch (JSONException e) {
-//                                        e.printStackTrace();
-//                                    }
-//                                    return updateAppBean;
-//                                }
-//
-//                                /**
-//                                 * 网络请求之前
-//                                 */
-//                                @Override
-//                                public void onBefore() {
-////                                    CProgressDialogUtils.showProgressDialog(JavaActivity.this);
-//                                }
-//
-//                                /**
-//                                 * 网路请求之后
-//                                 */
-//                                @Override
-//                                public void onAfter() {
-////                                    CProgressDialogUtils.cancelProgressDialog(JavaActivity.this);
-//                                }
-//
-//                                /**
-//                                 * 没有新版本
-//                                 */
-//                                @Override
-//                                protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
-//                                    super.hasNewApp(updateApp, updateAppManager);
-//                                }
-//
-//                                @Override
-//                                protected void noNewApp(String error) {
-//                                    super.noNewApp(error);
-//                                }
-//                            });
-
                 }));
+        //app更新
+        UpdateAppManager.update(this,BuildConfig.TYPE);
     }
+
 
     public void initXinGe() {
         Var.get("MainActivity.initXinGe").setChangeListener((var) -> {

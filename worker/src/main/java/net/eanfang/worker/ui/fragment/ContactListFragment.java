@@ -40,7 +40,7 @@ public class ContactListFragment extends BaseFragment {
     protected void initView() {
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
 
-        if (Var.get("MyFragment").getVar() > 0) {
+        if (Var.get("ContactListFragment.messageCount").getVar() > 0) {
             ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("新订单消息");
         } else {
             ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
@@ -48,7 +48,7 @@ public class ContactListFragment extends BaseFragment {
 
         Badge qBadgeView = new QBadgeView(getActivity())
                 .bindTarget(findViewById(R.id.tv_bus_msg))
-                .setBadgeNumber(Var.get("MyFragment").getVar())
+                .setBadgeNumber(Var.get("ContactListFragment.messageCount").getVar())
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
@@ -62,7 +62,7 @@ public class ContactListFragment extends BaseFragment {
                     }
                 });
 //        变量监听
-        Var.get("MyFragment").setChangeListener((var) -> {
+        Var.get("ContactListFragment.messageCount").setChangeListener((var) -> {
             qBadgeView.setBadgeNumber(var);
         });
     }

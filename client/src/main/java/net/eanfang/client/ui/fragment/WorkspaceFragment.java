@@ -1,11 +1,16 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseFragment;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
@@ -20,6 +25,9 @@ import net.eanfang.client.ui.widget.SignCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
 import net.eanfang.client.ui.widget.WorkCheckCtrlView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by MrHou
  *
@@ -29,6 +37,7 @@ import net.eanfang.client.ui.widget.WorkCheckCtrlView;
  */
 public class WorkspaceFragment extends BaseFragment {
     private TextView tvCompanyName;
+    private SimpleDraweeView iv_company_logo;
 
     @Override
     protected int setLayoutResouceId() {
@@ -45,12 +54,23 @@ public class WorkspaceFragment extends BaseFragment {
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
         tvCompanyName.setText(EanfangApplication.getApplication().getUser()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-
+        iv_company_logo = findViewById(R.id.iv_company_logo);
+        setLogpic();
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-            new CompanyListView(getActivity(), name -> tvCompanyName.setText(name)).show();
+            new CompanyListView(getActivity(), name -> {
+                tvCompanyName.setText(name);
+                setLogpic();
+            }).show();
         });
 
+    }
+
+    private void setLogpic() {
+        List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
+        Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        String defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> be.getOrgUnitEntity().getLogoPic()).toList().get(0);
+        iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + defaultPic));
     }
 
     @Override
@@ -138,7 +158,6 @@ public class WorkspaceFragment extends BaseFragment {
 
 
     }
-
 
 
 }

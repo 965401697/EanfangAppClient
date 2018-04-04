@@ -97,7 +97,12 @@ public class TaskPublishDetailView extends BaseDialog {
         }
         tvOk.setOnClickListener(v -> tvOk());
 
-        ivLeft.setOnClickListener(v -> dismiss());
+        ivLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         tvTitle.setText("项目详情");
         etTaskCompany.setText(listBean.getPublishCompanyName());
         etTaskUname.setText(listBean.getContacts());

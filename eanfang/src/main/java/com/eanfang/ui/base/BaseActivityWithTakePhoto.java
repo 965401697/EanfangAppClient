@@ -4,6 +4,7 @@
 
 package com.eanfang.ui.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.PermissionsCallBack;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
@@ -54,6 +56,8 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
     private int limit = 0;
     private PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
+
+    private AlertDialog.Builder builder;
 
     //Android6.0申请权限的回调方法
     @Override
@@ -224,6 +228,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
         takeSuccess(result, resultCode);
+        builder.create().dismiss();
     }
 
     public void takeSuccess(TResult result, int resultCode) {
@@ -257,7 +262,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         return builder.create();
     }
 
-    public void takePhoto(int resultCode) {
+    public void takePhoto(Context context, int resultCode) {
         this.resultCode = resultCode;
 //        TakePhoto takePhoto = getTakePhoto();
 //        configCompress(takePhoto);
@@ -268,47 +273,48 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
 //        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
 //        Uri imageUri = Uri.fromFile(file);
 //        takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
-        initDialog();
+//        new Thread(() -> initDialog());
+        initDialog(context);
     }
 
-    private void initDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-//                .setIcon(R.drawable.leak_canary_icon)
-                .setTitle("选择图片：")
-                //设置两个item
-                .setItems(new String[]{"相机", "图库"}, new android.content.DialogInterface.OnClickListener() {
-                    TakePhoto takePhoto = getTakePhoto();
+    private void initDialog(Context context) {
+        if (!((Activity) context).isFinishing()) {
+//              .setIcon(R.drawable.leak_canary_icon)
+            builder = new AlertDialog.Builder(this)
+                    .setTitle("选择图片：")
+                    //设置两个item
+                    .setItems(new String[]{"相机", "图库"}, new android.content.DialogInterface.OnClickListener() {
+                        TakePhoto takePhoto = getTakePhoto();
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 1:
-                                configCompress(takePhoto);
-                                configTakePhotoOption(takePhoto);
-                                takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
-                                break;
-                            case 0:
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 1:
+                                    configCompress(takePhoto);
+                                    configTakePhotoOption(takePhoto);
+                                    takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
+                                    break;
+                                case 0:
 //                                TakePhoto takePhoto = getTakePhoto();
-                                configCompress(takePhoto);
-                                configTakePhotoOption(takePhoto);
+                                    configCompress(takePhoto);
+                                    configTakePhotoOption(takePhoto);
 //        takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
 
-                                File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
-                                if (!file.getParentFile().exists()) {
-                                    file.getParentFile().mkdirs();
-                                }
-                                Uri imageUri = Uri.fromFile(file);
-                                takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
-                                break;
-                            default:
-                                break;
+                                    File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+                                    if (!file.getParentFile().exists()) {
+                                        file.getParentFile().mkdirs();
+                                    }
+                                    Uri imageUri = Uri.fromFile(file);
+                                    takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
+                                    break;
+                                default:
+                                    break;
+                            }
+
                         }
-
-                    }
-                });
-        builder.create().show();
-
-
+                    });
+            builder.create().show();
+        }
     }
 
 }

@@ -146,7 +146,9 @@
         <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
         <activity android:name=".ui.activity.worksapce.SignInActivity" />
         <activity android:name=".ui.activity.worksapce.FillRepairInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.QuotationDetailActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.QuotationDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.PutUpOrderActivity" />
         <activity android:name=".ui.activity.worksapce.PutUpSelectWorkerActivity" />
         <activity android:name=".ui.activity.worksapce.AddTroubleDetailActivity" />
@@ -155,7 +157,9 @@
         <activity android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity" />
         <activity android:name=".ui.activity.worksapce.PhoneSolveTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.EvaluateClientActivity" />
-        <activity android:name=".ui.activity.worksapce.QuotationActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.QuotationActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.MaintenanceActivity" />
         <activity android:name=".ui.activity.worksapce.TaskPublishActivity" />
         <activity android:name=".ui.activity.worksapce.AddReportCompleteActivity" />

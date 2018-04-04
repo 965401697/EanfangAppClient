@@ -20,5 +20,23 @@
     <string name="hint_input">请输入</string>
     <string name="hint_sel">请选择</string>
 
+    <string name="hint_success_verify">验证码已发送成功，请注意查收</string>
+    <!-- 未完善个人资料 -->
+    <string name="hint_perfect_personal_info">您的注册信息不全，请尽快完善个人资料。</string>
+    <!-- 未加入企业 -->
+    <string name="hint_join_company">你还没有企业归属，请创建或加入企业团队！</string>
+    <!-- 没有权限  -->
+    <string name="hint_authority">你还没有使用此功能权限，请联系企业负责人！</string>
+    <!-- 未完善企业  -->
+    <string name="hint_perfect_company_info">您的企业团队信息不全，请尽快完善企业资料。</string>
+    <!-- 技师端 -->
+    <!-- 未通过技师认证  -->
+    <string name="hint_master_no_auth">你还没有通过技师认证，请尽快提交认证资料！</string>
+    <!-- 待审核  -->
+    <string name="hint_wait_check">您的企业信息正在审核中，请耐心等待。</string>
+    <!-- 审核拒绝  -->
+    <string name="hint_refuse_check">很遗憾，您的企业信息审核没有通过，请修改后重新提交。</string>
+
+    <string name="hint_no_team">暂未创建/加入企业</string>
 
 </resources>

@@ -135,12 +135,12 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, GetConstDataUtils.getWorkingYearList()));
         llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
 
-        ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_FRONT)));
-        ivIdCardSide.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_SIDE)));
-        ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ID_CARD_HAND)));
-        ivCrimePic.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(CRIME_PIC)));
-        ivAccidentPics.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ACCIDENT_PIC)));
-        ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(HEADER_PIC)));
+        ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ID_CARD_FRONT)));
+        ivIdCardSide.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ID_CARD_SIDE)));
+        ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ID_CARD_HAND)));
+        ivCrimePic.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,CRIME_PIC)));
+        ivAccidentPics.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ACCIDENT_PIC)));
+        ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,HEADER_PIC)));
 
         setRightTitleOnClickListener(v -> setData());
         setRightTitleOnClickListener((v) -> {

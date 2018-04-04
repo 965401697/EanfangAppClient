@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 
@@ -23,6 +25,12 @@ import net.eanfang.client.ui.widget.SignCtrlView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -36,6 +44,9 @@ public class HomeFragment extends BaseFragment {
 
     private RollTextView rollTextView;
 
+    //头部标题
+    private TextView tvHomeTitle;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_home;
@@ -47,12 +58,26 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        String orgName = v(() -> (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        if (("个人").equals(orgName)) {
+            tvHomeTitle.setText("易安防");
+        } else {
+            tvHomeTitle.setText(orgName);
+        }
+    }
+
+    @Override
     protected void initView() {
+        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         initIconClick();
         initCount();
         initLoopView();
         initRollTextView();
+
     }
+
 
     /**
      * 工作按钮

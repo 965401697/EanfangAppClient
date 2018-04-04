@@ -184,10 +184,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         orgName = getIntent().getStringExtra("orgName");
         etCompany.setText(orgName);
         ivUpload.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(LICENSE_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this,LICENSE_CALLBACK_CODE));
         });
         ivUpload2.setOnClickListener((v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(ADPIC_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this,ADPIC_CALLBACK_CODE));
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {

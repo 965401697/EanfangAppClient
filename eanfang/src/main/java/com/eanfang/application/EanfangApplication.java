@@ -1,5 +1,7 @@
 package com.eanfang.application;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
 import com.eanfang.http.EanfangHttp;
@@ -17,6 +19,7 @@ import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
 import com.tencent.bugly.crashreport.CrashReport;
+
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -41,6 +44,7 @@ public class EanfangApplication extends CustomeApplication {
     public static EanfangApplication get() {
         return mEanfangApplication;
     }
+
 
     @Override
     public void onCreate() {

@@ -125,7 +125,9 @@
 
         <!--app-->
 
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden|stateAlwaysHidden" />
         <!--<activity android:name=".ui.activLoginClientActivityvity" />-->
         <activity android:name=".ui.activity.CameraActivity" />
         <activity android:name=".ui.activity.my.MessageListActivity" />

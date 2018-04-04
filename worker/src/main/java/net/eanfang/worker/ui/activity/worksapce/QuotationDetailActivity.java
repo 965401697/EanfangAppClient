@@ -85,9 +85,9 @@ public class QuotationDetailActivity extends BaseActivity {
         rl_business_type.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
                 tv_business_type.setText(item);
-                tv_device_type.setText("");
-                tv_device_name.setText("");
-                tv_brand_model.setText("");
+                tv_device_type.setText("请输入");
+                tv_device_name.setText("请输入");
+                tv_brand_model.setText("请输入");
             });
         });
 
@@ -100,8 +100,8 @@ public class QuotationDetailActivity extends BaseActivity {
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_type.setText(item);
-                tv_device_name.setText("");
-                tv_brand_model.setText("");
+                tv_device_name.setText("请输入");
+                tv_brand_model.setText("请输入");
             }));
         });
         //故障设备名称
@@ -113,7 +113,7 @@ public class QuotationDetailActivity extends BaseActivity {
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_name.setText(item);
-                tv_brand_model.setText("");
+                tv_brand_model.setText("请输入");
             }));
         });
         //品牌型号

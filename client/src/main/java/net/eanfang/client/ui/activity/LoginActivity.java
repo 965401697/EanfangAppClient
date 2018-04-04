@@ -220,7 +220,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
                 .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
-                    showToast("验证码获取成功");
+                    showToast(R.string.hint_success_verify);
                 }));
     }
 
@@ -253,11 +253,11 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
             e1.printStackTrace();
         }
 
-        PermissionUtils.get(this).getStoragePermission(() -> {
-            //更新
-            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-            manager.checkUpdate();
-        });
+//        PermissionUtils.get(this).getStoragePermission(() -> {
+//            //更新
+//            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+//            manager.checkUpdate();
+//        });
 
     }
 

@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.ErrorCodeConst;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JsonUtils;
@@ -18,7 +17,6 @@ import com.okgo.callback.StringCallback;
 import com.okgo.model.Response;
 import com.okgo.request.base.Request;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
  *
  * @param <T>
  */
-    public class EanfangCallback<T> extends StringCallback {
+public class EanfangCallback<T> extends StringCallback {
 
     /**
      * 加载弹窗
@@ -150,7 +148,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
                 return;
             }
 
-                resultJson = JsonUtils.str2JSON(response.body());
+            resultJson = JsonUtils.str2JSON(response.body());
             Integer code = -100;
             String message = null;
             JSONObject resultObject = null;
@@ -164,7 +162,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
             }
             if (resultJson.containsKey("noticeCount")) {
                 String classMainName = "MainActivity.initMessageCount";
-                String classMyName = "MyFragment";
+                String classMyName = "ContactListFragment.messageCount";
                 int mainActivityCount = Var.get(classMainName).getVar();
                 int myFragmentCount = Var.get(classMyName).getVar();
                 int noticeCount = resultJson.getInteger("noticeCount");
@@ -221,7 +219,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
                 case ErrorCodeConst.REQUEST_COMMIT_AGAIN:
                     break;
                 case MISSING_LOGIN:
-                    onFail(code,message,resultObject);
+                    onFail(code, message, resultObject);
                     //taoken 过期  只弹出toast 没跳转登录页面
 //                    onMissingLogin();
                     break;
@@ -250,7 +248,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
     /**
      * 请求成功 调用
      */
-    public void     onSuccess(T bean) {
+    public void onSuccess(T bean) {
         if (iSuccess != null) {
             iSuccess.success(bean);
         }

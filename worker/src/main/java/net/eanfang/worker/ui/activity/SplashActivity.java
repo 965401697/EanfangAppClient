@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +20,6 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateManager;
 import com.eanfang.util.V;
@@ -67,7 +65,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
 
     private void init() {
         isFirst = PrefUtils.getVBoolean(this, PrefUtils.SHOWGUIDE);
-        EanfangHttp.setClient();
+        EanfangHttp.setWorker();
         //是第一次
         if (isFirst) {
             firstUse();

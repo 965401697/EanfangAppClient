@@ -2,8 +2,10 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -134,7 +136,6 @@ public class MineTaskPublishListFragment extends BaseFragment implements
                         //查看申请
                         case 1:
                             new TaskPubApplyListDetailView(getActivity(), true, mDataList.get(position).getShopTaskApplyId()).show();
-
                             break;
                         //查看申请
                         case 2:
@@ -273,5 +274,10 @@ public class MineTaskPublishListFragment extends BaseFragment implements
 //        initView();
         initAdapter();
         swiprefresh.setRefreshing(false);
+    }
+
+    @Override
+    public boolean isFinishing() {
+        return false;
     }
 }

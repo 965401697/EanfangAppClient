@@ -115,7 +115,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         rbMan.isChecked();
         ivUpload.setOnClickListener(v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(HEAD_PHOTO));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(PersonInfoActivity.this,HEAD_PHOTO));
         });
         llArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
