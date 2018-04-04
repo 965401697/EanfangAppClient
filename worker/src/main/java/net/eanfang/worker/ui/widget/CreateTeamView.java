@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
@@ -14,6 +15,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseDialog;
+import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.LoginActivity;
@@ -41,10 +43,12 @@ public class CreateTeamView extends BaseDialog {
 
     //回调函数
     private RefreshListener mRefreshListener;
+
     public CreateTeamView(Activity context) {
         super(context);
         this.mContext = context;
     }
+
     public CreateTeamView(Activity context, RefreshListener refreshListener) {
         super(context);
         this.mRefreshListener = refreshListener;
@@ -71,10 +75,24 @@ public class CreateTeamView extends BaseDialog {
     private void createCompany() {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD)
                 .params("name", etInputCompany.getText().toString().trim())
-                .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<OrgUnitEntity>(mContext, true, OrgUnitEntity.class, (bean) -> {
+                    SwitchCompany(bean.getOrgId());
                     updateData();
                     mRefreshListener.refreshData();
                     dismiss();
+                }));
+    }
+
+    /**
+     * @param companyid Go to another company
+     */
+    private void SwitchCompany(Long companyid) {
+        EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
+                .params("companyId", companyid)
+                .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
+                    EanfangApplication.get().remove(LoginBean.class.getName());
+                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                    EanfangHttp.setToken(bean.getToken());
                 }));
     }
 
@@ -87,6 +105,7 @@ public class CreateTeamView extends BaseDialog {
                         LoginBean loginBean = (LoginBean) bean;
                         EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
                     }
+
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);

@@ -40,12 +40,12 @@ import static com.eanfang.util.V.v;
  */
 
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.tv_homeTitle)
-    TextView tvHomeTitle;
-    Unbinder unbinder;
     private BannerView bannerView;
 
     private RollTextView rollTextView;
+
+    //头部标题
+    private TextView tvHomeTitle;
 
     @Override
     protected int setLayoutResouceId() {
@@ -67,14 +67,17 @@ public class HomeFragment extends BaseFragment {
             tvHomeTitle.setText(orgName);
         }
     }
+
     @Override
     protected void initView() {
-
+        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         initIconClick();
         initCount();
         initLoopView();
         initRollTextView();
+
     }
+
 
     /**
      * 工作按钮
@@ -184,19 +187,5 @@ public class HomeFragment extends BaseFragment {
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
         findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("暂缓开通"));
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }
