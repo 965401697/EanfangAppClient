@@ -25,7 +25,6 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UpdateManager;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;

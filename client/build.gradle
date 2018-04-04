@@ -63,6 +63,8 @@ android {
         }
 
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -95,6 +97,7 @@ dependencies {
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
 //    implementation 'org.greenrobot:greendao:3.2.2' // add library
+
 
 
 }

@@ -32,7 +32,6 @@ import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-import com.eanfang.util.UpdateManager;
 
 import java.io.IOException;
 import java.io.InputStream;
