@@ -10,8 +10,6 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.greendao.downloader.DaoMaster;
-import com.greendao.downloader.DaoSession;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -47,7 +45,6 @@ public class EanfangApplication extends CustomeApplication {
         return mEanfangApplication;
     }
 
-    private static DaoSession daoSession;
 
     @Override
     public void onCreate() {
