@@ -14,4 +14,6 @@ public interface IBase {
     void showToast(int res);
 
     void showToast(String message);
+
+    boolean isFinishing();
 }

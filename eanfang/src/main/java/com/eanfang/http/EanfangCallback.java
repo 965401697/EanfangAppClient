@@ -164,7 +164,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
             }
             if (resultJson.containsKey("noticeCount")) {
                 String classMainName = "MainActivity.initMessageCount";
-                String classMyName = "MyFragment";
+                String classMyName = "ContactListFragment.messageCount";
                 int mainActivityCount = Var.get(classMainName).getVar();
                 int myFragmentCount = Var.get(classMyName).getVar();
                 int noticeCount = resultJson.getInteger("noticeCount");

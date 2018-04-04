@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 
@@ -23,6 +25,12 @@ import net.eanfang.client.ui.widget.SignCtrlView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -32,6 +40,9 @@ import java.util.List;
  */
 
 public class HomeFragment extends BaseFragment {
+    @BindView(R.id.tv_homeTitle)
+    TextView tvHomeTitle;
+    Unbinder unbinder;
     private BannerView bannerView;
 
     private RollTextView rollTextView;
@@ -47,7 +58,18 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        String orgName = v(() -> (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        if (("个人").equals(orgName)) {
+            tvHomeTitle.setText("易安防");
+        } else {
+            tvHomeTitle.setText(orgName);
+        }
+    }
+    @Override
     protected void initView() {
+
         initIconClick();
         initCount();
         initLoopView();
@@ -162,5 +184,19 @@ public class HomeFragment extends BaseFragment {
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
         findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("暂缓开通"));
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

@@ -21,8 +21,7 @@ public final class ScreenUtils {
             return dm;
         }
         DisplayMetrics dm = new DisplayMetrics();
-        WindowManager windowManager = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(dm);
         LogUtils.verbose("screen width=" + dm.widthPixels + "px, screen height=" + dm.heightPixels
                 + "px, densityDpi=" + dm.densityDpi + ", density=" + dm.density);

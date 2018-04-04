@@ -52,6 +52,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
         initData();
     }
 
+
     private void initData() {
         EanfangHttp.get(UserApi.GET_TECH_WORKER_SYS + userId + "/BIZ_TYPE")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {

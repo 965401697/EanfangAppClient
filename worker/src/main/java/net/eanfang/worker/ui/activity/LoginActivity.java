@@ -216,7 +216,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
                 .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
-                    showToast("验证码获取成功");
+                    showToast(R.string.hint_success_verify);
                 }));
     }
 

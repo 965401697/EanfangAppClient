@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.application.EanfangApplication;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;

@@ -76,6 +76,11 @@ public abstract class BaseFragment extends Fragment implements IBase {
     }
 
     @Override
+    public boolean isFinishing() {
+        return false;
+    }
+
+    @Override
     public void showToast(int res) {
         ToastUtil.get().showToast(getActivity(), res);
     }
