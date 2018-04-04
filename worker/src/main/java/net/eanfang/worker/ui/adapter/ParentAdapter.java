@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
@@ -29,6 +31,10 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
         ImageView imageView = helper.getView(R.id.iv_img);
+        SimpleDraweeView iv_company_logo=helper.getView(R.id.iv_company_logo);
+        if (item.getOrgUnitEntity()!=null&&item.getOrgUnitEntity().getLogoPic()!=null) {
+            iv_company_logo.setImageURI(Uri.parse(item.getOrgUnitEntity().getLogoPic()));
+        }
         LinearLayout ll_show = helper.getView(R.id.ll_show);
         TextView rel = helper.getView(R.id.tv_company_name);
         helper.addOnClickListener(R.id.tv_org);
