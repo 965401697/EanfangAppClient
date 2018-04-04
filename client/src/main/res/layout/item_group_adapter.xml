@@ -38,7 +38,7 @@
                 android:ellipsize="end"
                 android:maxEms="10"
                 android:singleLine="true"
-                android:text="123444"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_12" />
 
