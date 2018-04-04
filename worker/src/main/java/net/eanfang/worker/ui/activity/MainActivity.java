@@ -25,6 +25,7 @@ import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.UpdateManager;
 import com.eanfang.util.Var;
 import com.okgo.OkGo;
@@ -239,15 +240,16 @@ public class MainActivity extends BaseActivity {
                             EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                         }
 
-                        runOnUiThread(() -> {
-                            PermissionUtils.get(this).getStoragePermission(() -> {
-                                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-                                manager.checkUpdate();
-                            });
-                        });
+//                        runOnUiThread(() -> {
+//                            PermissionUtils.get(this).getStoragePermission(() -> {
+//                                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+//                                manager.checkUpdate();
+//                            });
+//                        });
 
                     }));
         }).start();
+        UpdateAppManager.update(this, BuildConfig.TYPE);
     }
 
 
@@ -257,6 +259,7 @@ public class MainActivity extends BaseActivity {
         }
         EanfangHttp.setWorker();
     }
+
     /**
      * 首页，工作台，我的，通讯录等未查找控件点击事件
      */

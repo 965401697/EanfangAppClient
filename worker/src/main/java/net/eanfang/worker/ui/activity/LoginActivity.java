@@ -16,23 +16,16 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.localcache.CacheUtil;
-import com.eanfang.model.BaseDataBean;
-import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateManager;
-import com.eanfang.util.V;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -93,27 +86,63 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         registerListener();
         setTitle("登录");
         initData();
-        EanfangHttp.setWorker();
 
-        getBaseData();
-        getConst();
+        EanfangHttp.setWorker();
 
     }
 
 
     private void registerListener() {
         btn_login.setOnClickListener(v -> {
-            if (checkInfo()) {
-                setVerfiyLogin();
+            String userPhone = et_phone.getText().toString().trim();
+            String userAulth = et_yanzheng.getText().toString().trim();
+            if (!BuildConfig.LOG_DEBUG) {
+
+                if (StringUtils.isEmpty(userPhone)) {
+                    showToast("手机号不能为空");
+                    return;
+                }
+
+                if (StringUtils.isEmpty(userAulth)) {
+                    showToast("验证码不能为空");
+                    return;
+                }
+                if (!cb.isChecked()) {
+                    showToast("同意易安防会员章程和协议后才可以登陆使用");
+                    return;
+                }
             }
+
+            //调试阶段
+            if (BuildConfig.LOG_DEBUG) {
+                if (StringUtils.isEmpty(userPhone)) {
+                    userPhone = "13800138020";
+                }
+                if (StringUtils.isEmpty(userAulth)) {
+                    userAulth = "admin";
+                }
+                if (userAulth.equals("admin")) {
+                    setLogin(userPhone, userAulth);
+                }
+            } else {
+                setVerfiyLogin(userPhone, userAulth);
+            }
+
         });
 
         tv_yanzheng.setOnClickListener(v -> {
-            if (checkInfo()) {
-                getVerificationCode();
-                v.setEnabled(false);
-                timer.start();
+            if (StringUtils.isEmpty(et_phone.getText().toString().trim())) {
+                showToast("手机号不能为空");
+                return;
             }
+            //电话号码是否符合格式
+            if (!StringUtils.isMobileString(et_phone.getText().toString().trim())) {
+                showToast("请输入正确手机号");
+                return;
+            }
+            getVerificationCode(et_phone.getText().toString().trim());
+            v.setEnabled(false);
+            timer.start();
         });
         read.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -134,31 +163,16 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         });
     }
 
-    private boolean checkInfo() {
-        String userPhone = et_phone.getText().toString().trim();
-        String userAulth = et_yanzheng.getText().toString().trim();
-        if (StringUtils.isEmpty(userPhone)) {
-            showToast("手机号不能为空");
-            return false;
-        }
-        if (StringUtils.isEmpty(userAulth)) {
-            showToast("验证码不能为空");
-            return false;
-        }
-        if (!cb.isChecked()) {
-            showToast("同意易安防会员章程和协议后才可以登陆使用");
-            return false;
-        }
-        return true;
-    }
-
     /**
      * 验证码登录
+     *
+     * @param phone 电话号
+     * @param pwd   验证码
      */
-    private void setVerfiyLogin() {
+    private void setVerfiyLogin(String phone, String pwd) {
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
-                .params("mobile", et_phone.getText().toString().trim())
-                .params("verifycode", et_yanzheng.getText().toString().trim())
+                .params("mobile", phone)
+                .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
@@ -195,29 +209,35 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     /**
      * 获取验证码
+     *
+     * @param phone 电话号
      */
-    private void getVerificationCode() {
+    private void getVerificationCode(String phone) {
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
-                .params("mobile", et_phone.getText().toString().trim())
+                .params("mobile", phone)
                 .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
-                    showToast(R.string.hint_success_verify);
+                    showToast("验证码获取成功");
                 }));
     }
 
     private void initView() {
-        et_phone = findViewById(R.id.et_phone);
-        et_yanzheng = findViewById(R.id.et_yanzheng);
-        tv_yanzheng = findViewById(R.id.tv_yanzheng);
-        cb = findViewById(R.id.cb);
-        read = findViewById(R.id.tv_read_agreement);
-        btn_login = findViewById(R.id.btn_login);
+        et_phone = (EditText) findViewById(R.id.et_phone);
+        et_yanzheng = (EditText) findViewById(R.id.et_yanzheng);
+        tv_yanzheng = (TextView) findViewById(R.id.tv_yanzheng);
+
+        cb = (AppCompatCheckBox) findViewById(R.id.cb);
+//        cb.setBackgroundColor(#774473);
+        read = (TextView) findViewById(R.id.tv_read_agreement);
+
+        btn_login = (Button) findViewById(R.id.btn_login);
+
         validator = new Validator(this);
         validator.setValidationListener(this);
     }
 
     private void initData() {
         try {
-            InputStream is;
+            InputStream is = null;
             is = getResources().openRawResource(R.raw.legal);
             int size = 0;
             size = is.available();
@@ -228,11 +248,18 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
+//        PermissionUtils.get(this).getStoragePermission(() -> {
+//            //更新
+//            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
+//            manager.checkUpdate();
+//        });
+
     }
 
     @Override
     public void onValidationSucceeded() {
-//        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -257,53 +284,6 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         startActivity(new Intent(this, MainActivity.class));
         finishSelf();
     }
-
-    /**
-     * 请求基础数据
-     */
-    private void getBaseData() {
-        String url;
-        String md5 = V.v(() -> Config.get().getBaseDataBean().getMD5());
-        if (StringUtils.isEmpty(md5)) {
-            url = NewApiService.GET_BASE_DATA_CACHE + "0";
-        } else {
-            url = NewApiService.GET_BASE_DATA_CACHE + md5;
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        CacheUtil.put(this, getPackageName(), BaseDataBean.class.getName(), str);
-//                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-//                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-                }));
-
-    }
-
-    /**
-     * 请求静态常量
-     */
-    private void getConst() {
-        String url;
-        String md5 = V.v(() -> Config.get().getConstBean().getMD5());
-        if (StringUtils.isEmpty(md5)) {
-            url = NewApiService.GET_CONST_CACHE + "0";
-        } else {
-            url = NewApiService.GET_CONST_CACHE + md5;
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        CacheUtil.put(this, getPackageName(), ConstAllBean.class.getName(), str);
-//                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-//                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-
-                }));
-    }
-
 
     @Override
     protected void onDestroy() {

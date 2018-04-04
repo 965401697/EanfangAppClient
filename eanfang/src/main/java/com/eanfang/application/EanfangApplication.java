@@ -1,5 +1,7 @@
 package com.eanfang.application;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
 import com.eanfang.http.EanfangHttp;
@@ -8,6 +10,8 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.greendao.downloader.DaoMaster;
+import com.greendao.downloader.DaoSession;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -17,6 +21,7 @@ import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
 import com.tencent.bugly.crashreport.CrashReport;
+
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -41,6 +46,8 @@ public class EanfangApplication extends CustomeApplication {
     public static EanfangApplication get() {
         return mEanfangApplication;
     }
+
+    private static DaoSession daoSession;
 
     @Override
     public void onCreate() {
