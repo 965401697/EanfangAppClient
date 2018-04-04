@@ -163,4 +163,6 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
         findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("暂缓开通"));
     }
+
+
 }

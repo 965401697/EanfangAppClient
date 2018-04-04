@@ -23,7 +23,6 @@ import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 import net.eanfang.client.ui.widget.CreateTeamView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -118,11 +117,6 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), new CreateTeamView.RefreshListener() {
-            @Override
-            public void refreshData() {
-                getData();
-            }
-        }).show());
+        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), () -> getData()).show());
     }
 }
