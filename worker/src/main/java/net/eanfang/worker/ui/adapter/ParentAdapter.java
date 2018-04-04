@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,8 +32,9 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
         ImageView imageView = helper.getView(R.id.iv_img);
-        SimpleDraweeView iv_company_logo=helper.getView(R.id.iv_company_logo);
-        if (item.getOrgUnitEntity()!=null&&item.getOrgUnitEntity().getLogoPic()!=null) {
+        RelativeLayout rl_father = helper.getView(R.id.rel_company);
+        SimpleDraweeView iv_company_logo = helper.getView(R.id.iv_company_logo);
+        if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
             iv_company_logo.setImageURI(Uri.parse(item.getOrgUnitEntity().getLogoPic()));
         }
         LinearLayout ll_show = helper.getView(R.id.ll_show);
@@ -44,6 +46,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         helper.setText(R.id.tv_company_name, item.getOrgName());
         imageView.setImageResource(R.drawable.contend_ic_management_default);
         imageView.setTag(false);
+        rl_father.setTag(false);
         helper.addOnClickListener(R.id.tv_auth_status);
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");
@@ -58,21 +61,34 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         } else if (item.getVerifyStatus() == 5) {
             helper.setText(R.id.tv_auth_status, "已删除");
         }
-        //当点击时先进行判断
-
-        rel.setOnClickListener(v -> {
-            boolean flag = (boolean) imageView.getTag();
-            //未被点击过
+        if (helper.getAdapterPosition() == 0) {
+            ll_show.setVisibility(View.VISIBLE);
+            rl_father.setTag(true);
+        }
+        rl_father.setOnClickListener(v -> {
+            boolean flag = (boolean) rl_father.getTag();//未被点击过
             if (!flag) {
-                imageView.setImageResource(R.drawable.contend_ic_management_default);
                 ll_show.setVisibility(View.VISIBLE);
-                imageView.setTag(true);
+                rl_father.setTag(true);
             } else {
-                imageView.setImageResource(R.drawable.contend_ic_management_default);
                 ll_show.setVisibility(View.GONE);
-                imageView.setTag(false);
+                rl_father.setTag(false);
             }
         });
+        //当点击时先进行判断
+//        rel.setOnClickListener(v -> {
+//            boolean flag = (boolean) imageView.getTag();
+//            //未被点击过
+//            if (!flag) {
+//                imageView.setImageResource(R.drawable.contend_ic_management_default);
+//                ll_show.setVisibility(View.VISIBLE);
+//                imageView.setTag(true);
+//            } else {
+//                imageView.setImageResource(R.drawable.contend_ic_management_default);
+//                ll_show.setVisibility(View.GONE);
+//                imageView.setTag(false);
+//            }
+//        });
 
     }
 }
