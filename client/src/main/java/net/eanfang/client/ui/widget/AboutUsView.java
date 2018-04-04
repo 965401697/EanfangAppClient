@@ -6,13 +6,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.ApkUtils;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 
-import com.eanfang.util.UpdateManager;
+import com.eanfang.util.UpdateAppManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,8 +72,9 @@ public class AboutUsView extends BaseDialog {
             disclaimerView.show();
         });
         llUpdate.setOnClickListener((v) -> {
-            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
-            manager.checkUpdate();
+            UpdateAppManager.update(mContext, BuildConfig.TYPE);
+//            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
+//            manager.checkUpdate();
 //            if (manager.isUpdate()) {
 ////                showToast("当前已是最新版本");
 ////            } else {

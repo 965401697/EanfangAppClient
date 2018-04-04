@@ -23,7 +23,6 @@ import com.eanfang.util.GuideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UpdateManager;
 import com.eanfang.util.V;
 
 import net.eanfang.client.BuildConfig;
@@ -53,15 +52,8 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         setContentView(R.layout.activity_splash);
         init();
 
-        getBaseData();
-        getConst();
-
-        runOnUiThread(() -> {
-            PermissionUtils.get(this).getStoragePermission(() -> {
-                UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-                manager.checkUpdate();
-            });
-        });
+        //getBaseData();
+        //  getConst();
     }
 
     private void init() {
@@ -144,9 +136,9 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                 .tag(this)
                 .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
                     if (!str.contains(Constant.NO_UPDATE)) {
-                        CacheUtil.put(this, getPackageName(), BaseDataBean.class.getName(), str);
-//                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-//                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        //CacheUtil.put(this, getPackageName(), BaseDataBean.class.getName(), str);
+                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                     }
                 }));
 
@@ -167,9 +159,9 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                 .tag(this)
                 .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
                     if (!str.contains(Constant.NO_UPDATE)) {
-                        CacheUtil.put(this, getPackageName(), ConstAllBean.class.getName(), str);
-//                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-//                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        //CacheUtil.put(this, getPackageName(), ConstAllBean.class.getName(), str);
+                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                     }
 
                 }));

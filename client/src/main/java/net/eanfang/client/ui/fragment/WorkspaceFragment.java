@@ -69,8 +69,11 @@ public class WorkspaceFragment extends BaseFragment {
     private void setLogpic() {
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        String defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> be.getOrgUnitEntity().getLogoPic()).toList().get(0);
-        iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + defaultPic));
+        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> be.getOrgUnitEntity().getLogoPic()).toList();
+        if (defaultPic!=null&&!defaultPic.isEmpty()){
+            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + defaultPic.get(0)));
+        }
+
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.ApkUtils;
-import com.eanfang.util.UpdateManager;
+import com.eanfang.util.UpdateAppManager;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
@@ -70,8 +70,9 @@ public class AboutUsView extends BaseDialog {
             disclaimerView.show();
         });
         llUpdate.setOnClickListener((v) -> {
-            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
-            manager.checkUpdate();
+            UpdateAppManager.update(mContext, BuildConfig.TYPE);
+//            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
+//            manager.checkUpdate();
 //            if (manager.isUpdate()) {
 //                showToast("当前已是最新版本");
 //            } else {
