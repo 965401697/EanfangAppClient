@@ -79,7 +79,7 @@ public class ContactsFragment extends BaseFragment {
 
         //只显示 安防公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 3).toList();
-        if (mDatas.size() < 0 && mDatas != null) {
+        if (mDatas.size() <= 0 && mDatas == null) {
             tv_noTeam.setVisibility(View.VISIBLE);
             rev_list.setVisibility(View.GONE);
         } else {
