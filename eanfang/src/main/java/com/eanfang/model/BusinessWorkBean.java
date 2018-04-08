@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,9 @@ public class BusinessWorkBean implements Serializable {
         }
 
         public List<BrandBean> getBrand() {
+            if (brand == null) {
+                return new ArrayList<>();
+            }
             return brand;
         }
 
@@ -55,11 +59,14 @@ public class BusinessWorkBean implements Serializable {
             this.brand = brand;
         }
 
-        public List<TwoBean> getTow() {
+        public List<TwoBean> getTwo() {
+            if (two == null) {
+                return new ArrayList<>();
+            }
             return two;
         }
 
-        public void setTow(List<TwoBean> two) {
+        public void setTwo(List<TwoBean> two) {
             this.two = two;
         }
 
@@ -83,7 +90,7 @@ public class BusinessWorkBean implements Serializable {
             private String value;
 
             public String getCompanyUid() {
-                return companyUid;
+                return companyUid == null ? "" : companyUid;
             }
 
             public void setCompanyUid(String companyUid) {
@@ -99,7 +106,7 @@ public class BusinessWorkBean implements Serializable {
             }
 
             public String getName() {
-                return name;
+                return name == null ? "" : name;
             }
 
             public void setName(String name) {
@@ -115,7 +122,7 @@ public class BusinessWorkBean implements Serializable {
             }
 
             public String getRemark() {
-                return remark;
+                return remark == null ? "" : remark;
             }
 
             public void setRemark(String remark) {
@@ -131,7 +138,7 @@ public class BusinessWorkBean implements Serializable {
             }
 
             public String getValue() {
-                return value;
+                return value == null ? "" : value;
             }
 
             public void setValue(String value) {
@@ -149,7 +156,7 @@ public class BusinessWorkBean implements Serializable {
             private String value;
 
             public String getName() {
-                return name;
+                return name == null ? "" : name;
             }
 
             public void setName(String name) {
@@ -157,7 +164,7 @@ public class BusinessWorkBean implements Serializable {
             }
 
             public String getValue() {
-                return value;
+                return value == null ? "" : value;
             }
 
             public void setValue(String value) {
@@ -177,7 +184,7 @@ public class BusinessWorkBean implements Serializable {
             private List<ThreeBean> three;
 
             public String getName() {
-                return name;
+                return name == null ? "" : name;
             }
 
             public void setName(String name) {
@@ -185,7 +192,7 @@ public class BusinessWorkBean implements Serializable {
             }
 
             public String getValue() {
-                return value;
+                return value == null ? "" : value;
             }
 
             public void setValue(String value) {
@@ -193,6 +200,9 @@ public class BusinessWorkBean implements Serializable {
             }
 
             public List<ThreeBean> getThree() {
+                if (three == null) {
+                    return new ArrayList<>();
+                }
                 return three;
             }
 
@@ -210,7 +220,7 @@ public class BusinessWorkBean implements Serializable {
                 private String value;
 
                 public String getName() {
-                    return name;
+                    return name == null ? "" : name;
                 }
 
                 public void setName(String name) {
@@ -218,7 +228,7 @@ public class BusinessWorkBean implements Serializable {
                 }
 
                 public String getValue() {
-                    return value;
+                    return value == null ? "" : value;
                 }
 
                 public void setValue(String value) {

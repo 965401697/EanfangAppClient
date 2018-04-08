@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,24 +96,8 @@ public class CompanyDetailBean implements Serializable {
                 '}';
     }
 
-    public String getCollected() {
-        return collected;
-    }
-
-    public void setCollected(String collected) {
-        this.collected = collected;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getBusinesstype() {
-        return businesstype;
+        return businesstype == null ? "" : businesstype;
     }
 
     public void setBusinesstype(String businesstype) {
@@ -120,7 +105,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getCompanyname() {
-        return companyname;
+        return companyname == null ? "" : companyname;
     }
 
     public void setCompanyname(String companyname) {
@@ -128,7 +113,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getCompanyscale() {
-        return companyscale;
+        return companyscale == null ? "" : companyscale;
     }
 
     public void setCompanyscale(String companyscale) {
@@ -136,7 +121,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getCompanyverify() {
-        return companyverify;
+        return companyverify == null ? "" : companyverify;
     }
 
     public void setCompanyverify(String companyverify) {
@@ -144,7 +129,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getGoodpercent() {
-        return goodpercent;
+        return goodpercent == null ? "" : goodpercent;
     }
 
     public void setGoodpercent(String goodpercent) {
@@ -152,7 +137,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getHonorpic1() {
-        return honorpic1;
+        return honorpic1 == null ? "" : honorpic1;
     }
 
     public void setHonorpic1(String honorpic1) {
@@ -160,7 +145,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getHonorpic2() {
-        return honorpic2;
+        return honorpic2 == null ? "" : honorpic2;
     }
 
     public void setHonorpic2(String honorpic2) {
@@ -168,7 +153,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getHonorpic3() {
-        return honorpic3;
+        return honorpic3 == null ? "" : honorpic3;
     }
 
     public void setHonorpic3(String honorpic3) {
@@ -184,7 +169,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getLicencepic() {
-        return licencepic;
+        return licencepic == null ? "" : licencepic;
     }
 
     public void setLicencepic(String licencepic) {
@@ -192,7 +177,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getLogopic() {
-        return logopic;
+        return logopic == null ? "" : logopic;
     }
 
     public void setLogopic(String logopic) {
@@ -200,7 +185,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getPraise() {
-        return praise;
+        return praise == null ? "" : praise;
     }
 
     public void setPraise(String praise) {
@@ -208,7 +193,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getRegistercity() {
-        return registercity;
+        return registercity == null ? "" : registercity;
     }
 
     public void setRegistercity(String registercity) {
@@ -216,7 +201,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getRegisterdetailplace() {
-        return registerdetailplace;
+        return registerdetailplace == null ? "" : registerdetailplace;
     }
 
     public void setRegisterdetailplace(String registerdetailplace) {
@@ -224,7 +209,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getRegisterprovince() {
-        return registerprovince;
+        return registerprovince == null ? "" : registerprovince;
     }
 
     public void setRegisterprovince(String registerprovince) {
@@ -248,7 +233,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getServicetypeinstall() {
-        return servicetypeinstall;
+        return servicetypeinstall == null ? "" : servicetypeinstall;
     }
 
     public void setServicetypeinstall(String servicetypeinstall) {
@@ -256,7 +241,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getServicetyperepair() {
-        return servicetyperepair;
+        return servicetyperepair == null ? "" : servicetyperepair;
     }
 
     public void setServicetyperepair(String servicetyperepair) {
@@ -264,7 +249,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getWorklevel() {
-        return worklevel;
+        return worklevel == null ? "" : worklevel;
     }
 
     public void setWorklevel(String worklevel) {
@@ -272,7 +257,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getWorkyear() {
-        return workyear;
+        return workyear == null ? "" : workyear;
     }
 
     public void setWorkyear(String workyear) {
@@ -280,7 +265,7 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getZizhipic1() {
-        return zizhipic1;
+        return zizhipic1 == null ? "" : zizhipic1;
     }
 
     public void setZizhipic1(String zizhipic1) {
@@ -288,27 +273,46 @@ public class CompanyDetailBean implements Serializable {
     }
 
     public String getZizhipic2() {
-        return zizhipic2;
+        return zizhipic2 == null ? "" : zizhipic2;
     }
 
     public void setZizhipic2(String zizhipic2) {
         this.zizhipic2 = zizhipic2;
     }
 
+    public String getDescription() {
+        return description == null ? "" : description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAdpic() {
+        return adpic == null ? "" : adpic;
+    }
+
+    public void setAdpic(String adpic) {
+        this.adpic = adpic;
+    }
+
+    public String getCollected() {
+        return collected == null ? "" : collected;
+    }
+
+    public void setCollected(String collected) {
+        this.collected = collected;
+    }
+
     public List<ServiceplaceBean> getServiceplace() {
+        if (serviceplace == null) {
+            return new ArrayList<>();
+        }
         return serviceplace;
     }
 
     public void setServiceplace(List<ServiceplaceBean> serviceplace) {
         this.serviceplace = serviceplace;
-    }
-
-    public String getAdpic() {
-        return adpic;
-    }
-
-    public void setAdPic(String adpic) {
-        this.adpic = adpic;
     }
 
     public static class ServiceplaceBean {
@@ -325,7 +329,7 @@ public class CompanyDetailBean implements Serializable {
         private String zone;
 
         public String getCity() {
-            return city;
+            return city == null ? "" : city;
         }
 
         public void setCity(String city) {
@@ -333,7 +337,7 @@ public class CompanyDetailBean implements Serializable {
         }
 
         public String getCompanyuid() {
-            return companyuid;
+            return companyuid == null ? "" : companyuid;
         }
 
         public void setCompanyuid(String companyuid) {
@@ -349,7 +353,7 @@ public class CompanyDetailBean implements Serializable {
         }
 
         public String getZone() {
-            return zone;
+            return zone == null ? "" : zone;
         }
 
         public void setZone(String zone) {

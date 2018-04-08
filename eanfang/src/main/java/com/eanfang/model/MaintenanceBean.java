@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class MaintenanceBean implements Serializable {
     private List<MaintainDetailsBean> maintainDetails;
 
     public String getClientCompanyName() {
-        return clientCompanyName;
+        return clientCompanyName == null ? "" : clientCompanyName;
     }
 
     public void setClientCompanyName(String clientCompanyName) {
@@ -41,7 +42,7 @@ public class MaintenanceBean implements Serializable {
     }
 
     public String getClientUserName() {
-        return clientUserName;
+        return clientUserName == null ? "" : clientUserName;
     }
 
     public void setClientUserName(String clientUserName) {
@@ -49,7 +50,7 @@ public class MaintenanceBean implements Serializable {
     }
 
     public String getClientUserPhone() {
-        return clientUserPhone;
+        return clientUserPhone == null ? "" : clientUserPhone;
     }
 
     public void setClientUserPhone(String clientUserPhone) {
@@ -57,6 +58,9 @@ public class MaintenanceBean implements Serializable {
     }
 
     public List<MaintainDetailsBean> getMaintainDetails() {
+        if (maintainDetails == null) {
+            return new ArrayList<>();
+        }
         return maintainDetails;
     }
 
@@ -88,20 +92,20 @@ public class MaintenanceBean implements Serializable {
         private String solution;
         private String pictures;
 
-        public String getBusinessThreeCode() {
-            return businessThreeCode;
-        }
-
-        public void setBusinessThreeCode(String businessThreeCode) {
-            this.businessThreeCode = businessThreeCode;
-        }
-
         public String getBusinessFourCode() {
-            return businessFourCode;
+            return businessFourCode == null ? "" : businessFourCode;
         }
 
         public void setBusinessFourCode(String businessFourCode) {
             this.businessFourCode = businessFourCode;
+        }
+
+        public String getBusinessThreeCode() {
+            return businessThreeCode == null ? "" : businessThreeCode;
+        }
+
+        public void setBusinessThreeCode(String businessThreeCode) {
+            this.businessThreeCode = businessThreeCode;
         }
 
         public int getCount() {
@@ -113,7 +117,7 @@ public class MaintenanceBean implements Serializable {
         }
 
         public String getInstallPosition() {
-            return installPosition;
+            return installPosition == null ? "" : installPosition;
         }
 
         public void setInstallPosition(String installPosition) {
@@ -137,7 +141,7 @@ public class MaintenanceBean implements Serializable {
         }
 
         public String getQuestion() {
-            return question;
+            return question == null ? "" : question;
         }
 
         public void setQuestion(String question) {
@@ -145,7 +149,7 @@ public class MaintenanceBean implements Serializable {
         }
 
         public String getCause() {
-            return cause;
+            return cause == null ? "" : cause;
         }
 
         public void setCause(String cause) {
@@ -153,7 +157,7 @@ public class MaintenanceBean implements Serializable {
         }
 
         public String getSolution() {
-            return solution;
+            return solution == null ? "" : solution;
         }
 
         public void setSolution(String solution) {
@@ -161,7 +165,7 @@ public class MaintenanceBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {

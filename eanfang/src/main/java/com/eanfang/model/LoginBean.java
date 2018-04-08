@@ -3,10 +3,8 @@ package com.eanfang.model;
 import com.yaf.sys.entity.AccountEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Created by MrHou
@@ -15,8 +13,7 @@ import lombok.Setter;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-@Getter
-@Setter
+
 public class LoginBean implements Serializable {
     /**
      * 权限列表
@@ -25,4 +22,30 @@ public class LoginBean implements Serializable {
     private String token;
     private AccountEntity account;
 
+    public List<String> getPerms() {
+        if (perms == null) {
+            return new ArrayList<>();
+        }
+        return perms;
+    }
+
+    public void setPerms(List<String> perms) {
+        this.perms = perms;
+    }
+
+    public String getToken() {
+        return token == null ? "" : token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public AccountEntity getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountEntity account) {
+        this.account = account;
+    }
 }

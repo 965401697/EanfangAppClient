@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,9 @@ public class CollectionCompanyListBean implements Serializable {
     private List<AllBean> all;
 
     public List<AllBean> getAll() {
+        if (all == null) {
+            return new ArrayList<>();
+        }
         return all;
     }
 
@@ -39,7 +43,7 @@ public class CollectionCompanyListBean implements Serializable {
         private String praise;
 
         public String getCompanyname() {
-            return companyname;
+            return companyname == null ? "" : companyname;
         }
 
         public void setCompanyname(String companyname) {
@@ -47,7 +51,7 @@ public class CollectionCompanyListBean implements Serializable {
         }
 
         public String getCompanyverify() {
-            return companyverify;
+            return companyverify == null ? "" : companyverify;
         }
 
         public void setCompanyverify(String companyverify) {
@@ -63,7 +67,7 @@ public class CollectionCompanyListBean implements Serializable {
         }
 
         public String getLogopic() {
-            return logopic;
+            return logopic == null ? "" : logopic;
         }
 
         public void setLogopic(String logopic) {
@@ -79,7 +83,7 @@ public class CollectionCompanyListBean implements Serializable {
         }
 
         public String getGoodpercent() {
-            return goodpercent;
+            return goodpercent == null ? "" : goodpercent;
         }
 
         public void setGoodpercent(String goodpercent) {
@@ -87,7 +91,7 @@ public class CollectionCompanyListBean implements Serializable {
         }
 
         public String getPraise() {
-            return praise;
+            return praise == null ? "" : praise;
         }
 
         public void setPraise(String praise) {

@@ -2,6 +2,8 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
+import lombok.Setter;
+
 /**
  * Created by MrHou
  *
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-
+@Setter
 public class WorkerInfoBean implements Serializable {
 
     /**
@@ -51,148 +53,76 @@ public class WorkerInfoBean implements Serializable {
     private int workingYear;
     private String avatarPhoto;
 
-    public String getAvatarPhoto() {
-        return avatarPhoto;
-    }
-
-    public void setAvatarPhoto(String avatarPhoto) {
-        this.avatarPhoto = avatarPhoto;
-    }
-
     public Long getAccId() {
         return accId;
     }
 
-    public void setAccId(Long accId) {
-        this.accId = accId;
-    }
-
     public String getAccidentPics() {
-        return accidentPics;
-    }
-
-    public void setAccidentPics(String accidentPics) {
-        this.accidentPics = accidentPics;
+        return accidentPics == null ? "" : accidentPics;
     }
 
     public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+        return contactName == null ? "" : contactName;
     }
 
     public String getContactPhone() {
-        return contactPhone;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
+        return contactPhone == null ? "" : contactPhone;
     }
 
     public String getCrimePic() {
-        return crimePic;
-    }
-
-    public void setCrimePic(String crimePic) {
-        this.crimePic = crimePic;
+        return crimePic == null ? "" : crimePic;
     }
 
     public String getHonorPics() {
-        return honorPics;
-    }
-
-    public void setHonorPics(String honorPics) {
-        this.honorPics = honorPics;
+        return honorPics == null ? "" : honorPics;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getIdCardFront() {
-        return idCardFront;
-    }
-
-    public void setIdCardFront(String idCardFront) {
-        this.idCardFront = idCardFront;
+        return idCardFront == null ? "" : idCardFront;
     }
 
     public String getIdCardHand() {
-        return idCardHand;
-    }
-
-    public void setIdCardHand(String idCardHand) {
-        this.idCardHand = idCardHand;
+        return idCardHand == null ? "" : idCardHand;
     }
 
     public String getIdCardSide() {
-        return idCardSide;
-    }
-
-    public void setIdCardSide(String idCardSide) {
-        this.idCardSide = idCardSide;
+        return idCardSide == null ? "" : idCardSide;
     }
 
     public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
+        return intro == null ? "" : intro;
     }
 
     public String getPayAccount() {
-        return payAccount;
-    }
-
-    public void setPayAccount(String payAccount) {
-        this.payAccount = payAccount;
+        return payAccount == null ? "" : payAccount;
     }
 
     public int getPayType() {
         return payType;
     }
 
-    public void setPayType(int payType) {
-        this.payType = payType;
-    }
-
     public int getStatus() {
         return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
     public int getWorkingLevel() {
         return workingLevel;
-    }
-
-    public void setWorkingLevel(int workingLevel) {
-        this.workingLevel = workingLevel;
     }
 
     public int getWorkingYear() {
         return workingYear;
     }
 
-    public void setWorkingYear(int workingYear) {
-        this.workingYear = workingYear;
+    public String getAvatarPhoto() {
+        return avatarPhoto == null ? "" : avatarPhoto;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +62,9 @@ public class WorkTaskListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -106,7 +110,7 @@ public class WorkTaskListBean implements Serializable {
         private WorkTaskDetailBean workTaskDetail;
 
         public String getAssigneeOrgCode() {
-            return assigneeOrgCode;
+            return assigneeOrgCode == null ? "" : assigneeOrgCode;
         }
 
         public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -154,7 +158,7 @@ public class WorkTaskListBean implements Serializable {
         }
 
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -162,7 +166,7 @@ public class WorkTaskListBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -186,7 +190,7 @@ public class WorkTaskListBean implements Serializable {
         }
 
         public String getCreateUserId() {
-            return createUserId;
+            return createUserId == null ? "" : createUserId;
         }
 
         public void setCreateUserId(String createUserId) {
@@ -194,7 +198,7 @@ public class WorkTaskListBean implements Serializable {
         }
 
         public String getFirstLookTime() {
-            return firstLookTime;
+            return firstLookTime == null ? "" : firstLookTime;
         }
 
         public void setFirstLookTime(String firstLookTime) {
@@ -218,7 +222,7 @@ public class WorkTaskListBean implements Serializable {
         }
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {
@@ -318,7 +322,7 @@ public class WorkTaskListBean implements Serializable {
                 }
 
                 public String getMobile() {
-                    return mobile;
+                    return mobile == null ? "" : mobile;
                 }
 
                 public void setMobile(String mobile) {
@@ -326,7 +330,7 @@ public class WorkTaskListBean implements Serializable {
                 }
 
                 public String getRealName() {
-                    return realName;
+                    return realName == null ? "" : realName;
                 }
 
                 public void setRealName(String realName) {
@@ -353,7 +357,7 @@ public class WorkTaskListBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -371,7 +375,7 @@ public class WorkTaskListBean implements Serializable {
             private String orgName;
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -379,7 +383,7 @@ public class WorkTaskListBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -405,7 +409,7 @@ public class WorkTaskListBean implements Serializable {
             private String userId;
 
             public String getAccId() {
-                return accId;
+                return accId == null ? "" : accId;
             }
 
             public void setAccId(String accId) {
@@ -445,7 +449,7 @@ public class WorkTaskListBean implements Serializable {
             }
 
             public String getUserId() {
-                return userId;
+                return userId == null ? "" : userId;
             }
 
             public void setUserId(String userId) {
@@ -462,7 +466,7 @@ public class WorkTaskListBean implements Serializable {
                 private String realName;
 
                 public String getAccId() {
-                    return accId;
+                    return accId == null ? "" : accId;
                 }
 
                 public void setAccId(String accId) {
@@ -470,7 +474,7 @@ public class WorkTaskListBean implements Serializable {
                 }
 
                 public String getRealName() {
-                    return realName;
+                    return realName == null ? "" : realName;
                 }
 
                 public void setRealName(String realName) {
@@ -489,7 +493,7 @@ public class WorkTaskListBean implements Serializable {
             private Long sysWorkTaskId;
 
             public String getPictures() {
-                return pictures;
+                return pictures == null ? "" : pictures;
             }
 
             public void setPictures(String pictures) {

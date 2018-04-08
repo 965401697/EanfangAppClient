@@ -41,7 +41,7 @@ public class LookFaPiaoBean implements Serializable {
     private String zone;
 
     public String getBankaccount() {
-        return bankaccount;
+        return bankaccount == null ? "" : bankaccount;
     }
 
     public void setBankaccount(String bankaccount) {
@@ -49,7 +49,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getCity() {
-        return city;
+        return city == null ? "" : city;
     }
 
     public void setCity(String city) {
@@ -57,7 +57,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getDetailplace() {
-        return detailplace;
+        return detailplace == null ? "" : detailplace;
     }
 
     public void setDetailplace(String detailplace) {
@@ -73,7 +73,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getKaihuhang() {
-        return kaihuhang;
+        return kaihuhang == null ? "" : kaihuhang;
     }
 
     public void setKaihuhang(String kaihuhang) {
@@ -81,7 +81,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getOrdernum() {
-        return ordernum;
+        return ordernum == null ? "" : ordernum;
     }
 
     public void setOrdernum(String ordernum) {
@@ -89,7 +89,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getPostname() {
-        return postname;
+        return postname == null ? "" : postname;
     }
 
     public void setPostname(String postname) {
@@ -97,7 +97,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getPostphone() {
-        return postphone;
+        return postphone == null ? "" : postphone;
     }
 
     public void setPostphone(String postphone) {
@@ -105,7 +105,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getTaxno() {
-        return taxno;
+        return taxno == null ? "" : taxno;
     }
 
     public void setTaxno(String taxno) {
@@ -113,7 +113,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return type == null ? "" : type;
     }
 
     public void setType(String type) {
@@ -121,7 +121,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getUnitname() {
-        return unitname;
+        return unitname == null ? "" : unitname;
     }
 
     public void setUnitname(String unitname) {
@@ -129,7 +129,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getUnitphone() {
-        return unitphone;
+        return unitphone == null ? "" : unitphone;
     }
 
     public void setUnitphone(String unitphone) {
@@ -137,7 +137,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getUnitplace() {
-        return unitplace;
+        return unitplace == null ? "" : unitplace;
     }
 
     public void setUnitplace(String unitplace) {
@@ -145,7 +145,7 @@ public class LookFaPiaoBean implements Serializable {
     }
 
     public String getZone() {
-        return zone;
+        return zone == null ? "" : zone;
     }
 
     public void setZone(String zone) {

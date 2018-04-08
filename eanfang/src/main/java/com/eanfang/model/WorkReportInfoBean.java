@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class WorkReportInfoBean implements Serializable {
     }
 
     public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+        return assigneeOrgCode == null ? "" : assigneeOrgCode;
     }
 
     public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -108,7 +109,7 @@ public class WorkReportInfoBean implements Serializable {
     }
 
     public String getCreateOrgCode() {
-        return createOrgCode;
+        return createOrgCode == null ? "" : createOrgCode;
     }
 
     public void setCreateOrgCode(String createOrgCode) {
@@ -116,7 +117,7 @@ public class WorkReportInfoBean implements Serializable {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return createTime == null ? "" : createTime;
     }
 
     public void setCreateTime(String createTime) {
@@ -148,7 +149,7 @@ public class WorkReportInfoBean implements Serializable {
     }
 
     public String getFirstLookTime() {
-        return firstLookTime;
+        return firstLookTime == null ? "" : firstLookTime;
     }
 
     public void setFirstLookTime(String firstLookTime) {
@@ -180,6 +181,9 @@ public class WorkReportInfoBean implements Serializable {
     }
 
     public List<WorkReportDetailsBean> getWorkReportDetails() {
+        if (workReportDetails == null) {
+            return new ArrayList<>();
+        }
         return workReportDetails;
     }
 
@@ -197,7 +201,7 @@ public class WorkReportInfoBean implements Serializable {
         private String orgName;
 
         public String getOrgCode() {
-            return orgCode;
+            return orgCode == null ? "" : orgCode;
         }
 
         public void setOrgCode(String orgCode) {
@@ -205,7 +209,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -298,7 +302,7 @@ public class WorkReportInfoBean implements Serializable {
             }
 
             public String getMobile() {
-                return mobile;
+                return mobile == null ? "" : mobile;
             }
 
             public void setMobile(String mobile) {
@@ -306,7 +310,7 @@ public class WorkReportInfoBean implements Serializable {
             }
 
             public String getRealName() {
-                return realName;
+                return realName == null ? "" : realName;
             }
 
             public void setRealName(String realName) {
@@ -333,7 +337,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -351,7 +355,7 @@ public class WorkReportInfoBean implements Serializable {
         private String orgName;
 
         public String getOrgCode() {
-            return orgCode;
+            return orgCode == null ? "" : orgCode;
         }
 
         public void setOrgCode(String orgCode) {
@@ -359,7 +363,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -450,7 +454,7 @@ public class WorkReportInfoBean implements Serializable {
             }
 
             public String getRealName() {
-                return realName;
+                return realName == null ? "" : realName;
             }
 
             public void setRealName(String realName) {
@@ -483,7 +487,7 @@ public class WorkReportInfoBean implements Serializable {
         private String pictures;
 
         public String getField1() {
-            return field1;
+            return field1 == null ? "" : field1;
         }
 
         public void setField1(String field1) {
@@ -491,7 +495,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getField2() {
-            return field2;
+            return field2 == null ? "" : field2;
         }
 
         public void setField2(String field2) {
@@ -523,7 +527,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getField3() {
-            return field3;
+            return field3 == null ? "" : field3;
         }
 
         public void setField3(String field3) {
@@ -531,7 +535,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getField4() {
-            return field4;
+            return field4 == null ? "" : field4;
         }
 
         public void setField4(String field4) {
@@ -539,7 +543,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getField5() {
-            return field5;
+            return field5 == null ? "" : field5;
         }
 
         public void setField5(String field5) {
@@ -547,7 +551,7 @@ public class WorkReportInfoBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {

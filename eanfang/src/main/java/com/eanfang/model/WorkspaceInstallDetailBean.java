@@ -77,7 +77,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+        return assigneeOrgCode == null ? "" : assigneeOrgCode;
     }
 
     public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -117,7 +117,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getBusinessOneCode() {
-        return businessOneCode;
+        return businessOneCode == null ? "" : businessOneCode;
     }
 
     public void setBusinessOneCode(String businessOneCode) {
@@ -125,7 +125,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getClientCompanyName() {
-        return clientCompanyName;
+        return clientCompanyName == null ? "" : clientCompanyName;
     }
 
     public void setClientCompanyName(String clientCompanyName) {
@@ -141,7 +141,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getConnector() {
-        return connector;
+        return connector == null ? "" : connector;
     }
 
     public void setConnector(String connector) {
@@ -149,7 +149,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getConnectorPhone() {
-        return connectorPhone;
+        return connectorPhone == null ? "" : connectorPhone;
     }
 
     public void setConnectorPhone(String connectorPhone) {
@@ -157,7 +157,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return createTime == null ? "" : createTime;
     }
 
     public void setCreateTime(String createTime) {
@@ -173,7 +173,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "" : description;
     }
 
     public void setDescription(String description) {
@@ -181,7 +181,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getDetailPlace() {
-        return detailPlace;
+        return detailPlace == null ? "" : detailPlace;
     }
 
     public void setDetailPlace(String detailPlace) {
@@ -189,7 +189,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getEditTime() {
-        return editTime;
+        return editTime == null ? "" : editTime;
     }
 
     public void setEditTime(String editTime) {
@@ -205,7 +205,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getLatitude() {
-        return latitude;
+        return latitude == null ? "" : latitude;
     }
 
     public void setLatitude(String latitude) {
@@ -213,7 +213,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getLongitude() {
-        return longitude;
+        return longitude == null ? "" : longitude;
     }
 
     public void setLongitude(String longitude) {
@@ -221,7 +221,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getOrderNo() {
-        return orderNo;
+        return orderNo == null ? "" : orderNo;
     }
 
     public void setOrderNo(String orderNo) {
@@ -237,7 +237,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getOwnerOrgCode() {
-        return ownerOrgCode;
+        return ownerOrgCode == null ? "" : ownerOrgCode;
     }
 
     public void setOwnerOrgCode(String ownerOrgCode) {
@@ -285,7 +285,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
     }
 
     public String getZone() {
-        return zone;
+        return zone == null ? "" : zone;
     }
 
     public void setZone(String zone) {
@@ -404,7 +404,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getUpdateTime() {
-            return updateTime;
+            return updateTime == null ? "" : updateTime;
         }
 
         public void setUpdateTime(String updateTime) {
@@ -453,7 +453,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
             }
 
             public String getEmail() {
-                return email;
+                return email == null ? "" : email;
             }
 
             public void setEmail(String email) {
@@ -461,7 +461,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
             }
 
             public String getMobile() {
-                return mobile;
+                return mobile == null ? "" : mobile;
             }
 
             public void setMobile(String mobile) {
@@ -469,7 +469,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
             }
 
             public String getNickName() {
-                return nickName;
+                return nickName == null ? "" : nickName;
             }
 
             public void setNickName(String nickName) {
@@ -477,7 +477,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
             }
 
             public String getRealName() {
-                return realName;
+                return realName == null ? "" : realName;
             }
 
             public void setRealName(String realName) {
@@ -511,7 +511,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
             }
 
             public String getUpdateTime() {
-                return updateTime;
+                return updateTime == null ? "" : updateTime;
             }
 
             public void setUpdateTime(String updateTime) {
@@ -547,7 +547,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
             }
 
             public String getUpdateTime() {
-                return updateTime;
+                return updateTime == null ? "" : updateTime;
             }
 
             public void setUpdateTime(String updateTime) {
@@ -608,7 +608,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getAreaCode() {
-            return areaCode;
+            return areaCode == null ? "" : areaCode;
         }
 
         public void setAreaCode(String areaCode) {
@@ -616,7 +616,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -624,7 +624,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getIntro() {
-            return intro;
+            return intro == null ? "" : intro;
         }
 
         public void setIntro(String intro) {
@@ -632,7 +632,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getLegalName() {
-            return legalName;
+            return legalName == null ? "" : legalName;
         }
 
         public void setLegalName(String legalName) {
@@ -640,7 +640,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getLicenseCode() {
-            return licenseCode;
+            return licenseCode == null ? "" : licenseCode;
         }
 
         public void setLicenseCode(String licenseCode) {
@@ -648,7 +648,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getLicensePic() {
-            return licensePic;
+            return licensePic == null ? "" : licensePic;
         }
 
         public void setLicensePic(String licensePic) {
@@ -656,7 +656,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getLogoPic() {
-            return logoPic;
+            return logoPic == null ? "" : logoPic;
         }
 
         public void setLogoPic(String logoPic) {
@@ -664,7 +664,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getName() {
-            return name;
+            return name == null ? "" : name;
         }
 
         public void setName(String name) {
@@ -672,7 +672,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getOfficeAddress() {
-            return officeAddress;
+            return officeAddress == null ? "" : officeAddress;
         }
 
         public void setOfficeAddress(String officeAddress) {
@@ -688,7 +688,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getRegisterAssets() {
-            return registerAssets;
+            return registerAssets == null ? "" : registerAssets;
         }
 
         public void setRegisterAssets(String registerAssets) {
@@ -712,7 +712,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getTelPhone() {
-            return telPhone;
+            return telPhone == null ? "" : telPhone;
         }
 
         public void setTelPhone(String telPhone) {
@@ -728,7 +728,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getVerifyMessage() {
-            return verifyMessage;
+            return verifyMessage == null ? "" : verifyMessage;
         }
 
         public void setVerifyMessage(String verifyMessage) {
@@ -736,7 +736,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getVerifyTime() {
-            return verifyTime;
+            return verifyTime == null ? "" : verifyTime;
         }
 
         public void setVerifyTime(String verifyTime) {
@@ -744,7 +744,7 @@ public class WorkspaceInstallDetailBean implements Serializable {
         }
 
         public String getVerifyUserName() {
-            return verifyUserName;
+            return verifyUserName == null ? "" : verifyUserName;
         }
 
         public void setVerifyUserName(String verifyUserName) {

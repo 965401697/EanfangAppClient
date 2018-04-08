@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,9 @@ public class SystypeBean implements Serializable {
     private List<ListBean> list;
 
     public List<Integer> getExpand() {
+        if (expand == null) {
+            return new ArrayList<>();
+        }
         return expand;
     }
 
@@ -26,6 +30,9 @@ public class SystypeBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -49,7 +56,7 @@ public class SystypeBean implements Serializable {
         private int status;
 
         public String getCompanyId() {
-            return companyId;
+            return companyId == null ? "" : companyId;
         }
 
         public void setCompanyId(String companyId) {

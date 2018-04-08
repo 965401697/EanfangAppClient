@@ -2,14 +2,10 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by yaosheng on 2017/4/27.
  */
-@Setter
-@Getter
+
 public class InstallOrderConfirmBean implements Serializable {
 
 
@@ -43,7 +39,117 @@ public class InstallOrderConfirmBean implements Serializable {
     private Long businessOneId;
     private Long zoneId;
 
+    public String getClientCompanyName() {
+        return clientCompanyName == null ? "" : clientCompanyName;
+    }
 
+    public void setClientCompanyName(String clientCompanyName) {
+        this.clientCompanyName = clientCompanyName;
+    }
+
+    public String getLongitude() {
+        return longitude == null ? "" : longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude == null ? "" : latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getZone() {
+        return zone == null ? "" : zone;
+    }
+
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public String getDetailPlace() {
+        return detailPlace == null ? "" : detailPlace;
+    }
+
+    public void setDetailPlace(String detailPlace) {
+        this.detailPlace = detailPlace;
+    }
+
+    public String getConnector() {
+        return connector == null ? "" : connector;
+    }
+
+    public void setConnector(String connector) {
+        this.connector = connector;
+    }
+
+    public String getConnectorPhone() {
+        return connectorPhone == null ? "" : connectorPhone;
+    }
+
+    public void setConnectorPhone(String connectorPhone) {
+        this.connectorPhone = connectorPhone;
+    }
+
+    public int getRevertTimeLimit() {
+        return revertTimeLimit;
+    }
+
+    public void setRevertTimeLimit(int revertTimeLimit) {
+        this.revertTimeLimit = revertTimeLimit;
+    }
+
+    public String getBusinessOneCode() {
+        return businessOneCode == null ? "" : businessOneCode;
+    }
+
+    public void setBusinessOneCode(String businessOneCode) {
+        this.businessOneCode = businessOneCode;
+    }
+
+    public int getPredictTime() {
+        return predictTime;
+    }
+
+    public void setPredictTime(int predictTime) {
+        this.predictTime = predictTime;
+    }
+
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public String getDescription() {
+        return description == null ? "" : description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getBusinessOneId() {
+        return businessOneId;
+    }
+
+    public void setBusinessOneId(Long businessOneId) {
+        this.businessOneId = businessOneId;
+    }
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
+    }
 }
 
 

@@ -39,7 +39,7 @@ public class ExternalListBean implements Serializable{
     }
 
     public String getOrgName() {
-        return orgName;
+        return orgName == null ? "" : orgName;
     }
 
     public void setOrgName(String orgName) {

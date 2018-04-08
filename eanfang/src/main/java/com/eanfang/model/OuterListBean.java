@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,12 +64,14 @@ public class OuterListBean implements Serializable {
     }
 
     public List<UserEntity> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
     public void setList(List<UserEntity> list) {
         this.list = list;
     }
-
 }
 
