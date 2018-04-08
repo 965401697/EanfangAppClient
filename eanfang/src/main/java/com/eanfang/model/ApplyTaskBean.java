@@ -23,8 +23,16 @@ public class ApplyTaskBean implements Serializable {
 
     private String createtime;
 
+    public String getUid() {
+        return uid == null ? "" : uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public String getTaskpublishuid() {
-        return taskpublishuid;
+        return taskpublishuid == null ? "" : taskpublishuid;
     }
 
     public void setTaskpublishuid(String taskpublishuid) {
@@ -32,7 +40,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getApplypersonname() {
-        return applypersonname;
+        return applypersonname == null ? "" : applypersonname;
     }
 
     public void setApplypersonname(String applypersonname) {
@@ -40,7 +48,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getApplypersonphone() {
-        return applypersonphone;
+        return applypersonphone == null ? "" : applypersonphone;
     }
 
     public void setApplypersonphone(String applypersonphone) {
@@ -48,7 +56,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getApplycompany() {
-        return applycompany;
+        return applycompany == null ? "" : applycompany;
     }
 
     public void setApplycompany(String applycompany) {
@@ -56,7 +64,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getDoortodoortime() {
-        return doortodoortime;
+        return doortodoortime == null ? "" : doortodoortime;
     }
 
     public void setDoortodoortime(String doortodoortime) {
@@ -64,7 +72,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getPredicttime() {
-        return predicttime;
+        return predicttime == null ? "" : predicttime;
     }
 
     public void setPredicttime(String predicttime) {
@@ -72,7 +80,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getProjectquote() {
-        return projectquote;
+        return projectquote == null ? "" : projectquote;
     }
 
     public void setProjectquote(String projectquote) {
@@ -80,7 +88,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "" : description;
     }
 
     public void setDescription(String description) {
@@ -88,7 +96,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getPic1() {
-        return pic1;
+        return pic1 == null ? "" : pic1;
     }
 
     public void setPic1(String pic1) {
@@ -96,7 +104,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getPic2() {
-        return pic2;
+        return pic2 == null ? "" : pic2;
     }
 
     public void setPic2(String pic2) {
@@ -104,7 +112,7 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getPic3() {
-        return pic3;
+        return pic3 == null ? "" : pic3;
     }
 
     public void setPic3(String pic3) {
@@ -112,31 +120,10 @@ public class ApplyTaskBean implements Serializable {
     }
 
     public String getCreatetime() {
-        return createtime;
+        return createtime == null ? "" : createtime;
     }
 
     public void setCreatetime(String createtime) {
         this.createtime = createtime;
-    }
-
-    /**
-     * taskpublishuid : 被申请任务的uid
-     * applypersonname : 联系人姓名
-     * applypersonphone : 联系人电话
-     * applycompany : 申请公司名
-     * doortodoortime : 2017-04-30 19:20:20
-     * predicttime : 预计工期
-     * projectquote : 20000.5
-     * description : 项目描述
-     * pic1 : 图1
-     * pic2 :
-     * pic3 :
-     */
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 }

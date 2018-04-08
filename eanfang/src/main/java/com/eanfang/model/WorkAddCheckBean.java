@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class WorkAddCheckBean implements Serializable {
     private List<WorkInspectDetailsBean> workInspectDetails;
 
     public String getCompanyName() {
-        return companyName;
+        return companyName == null ? "" : companyName;
     }
 
     public void setCompanyName(String companyName) {
@@ -41,7 +42,7 @@ public class WorkAddCheckBean implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -49,7 +50,7 @@ public class WorkAddCheckBean implements Serializable {
     }
 
     public String getChangeDeadlineTime() {
-        return changeDeadlineTime;
+        return changeDeadlineTime == null ? "" : changeDeadlineTime;
     }
 
     public void setChangeDeadlineTime(String changeDeadlineTime) {
@@ -57,7 +58,7 @@ public class WorkAddCheckBean implements Serializable {
     }
 
     public String getChangeInfo() {
-        return changeInfo;
+        return changeInfo == null ? "" : changeInfo;
     }
 
     public void setChangeInfo(String changeInfo) {
@@ -73,7 +74,7 @@ public class WorkAddCheckBean implements Serializable {
     }
 
     public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+        return assigneeOrgCode == null ? "" : assigneeOrgCode;
     }
 
     public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -81,6 +82,9 @@ public class WorkAddCheckBean implements Serializable {
     }
 
     public List<WorkInspectDetailsBean> getWorkInspectDetails() {
+        if (workInspectDetails == null) {
+            return new ArrayList<>();
+        }
         return workInspectDetails;
     }
 
@@ -104,7 +108,7 @@ public class WorkAddCheckBean implements Serializable {
         private String pictures;
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {
@@ -112,7 +116,7 @@ public class WorkAddCheckBean implements Serializable {
         }
 
         public String getRegion() {
-            return region;
+            return region == null ? "" : region;
         }
 
         public void setRegion(String region) {
@@ -120,7 +124,7 @@ public class WorkAddCheckBean implements Serializable {
         }
 
         public String getBusinessThreeCode() {
-            return businessThreeCode;
+            return businessThreeCode == null ? "" : businessThreeCode;
         }
 
         public void setBusinessThreeCode(String businessThreeCode) {
@@ -128,7 +132,7 @@ public class WorkAddCheckBean implements Serializable {
         }
 
         public String getInfo() {
-            return info;
+            return info == null ? "" : info;
         }
 
         public void setInfo(String info) {
@@ -136,7 +140,7 @@ public class WorkAddCheckBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {

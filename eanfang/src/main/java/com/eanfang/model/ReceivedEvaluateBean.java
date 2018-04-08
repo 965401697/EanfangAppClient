@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +59,9 @@ public class ReceivedEvaluateBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -94,24 +98,8 @@ public class ReceivedEvaluateBean implements Serializable {
         private UserEntity createUser;
         private UserEntity ownerUser;
 
-        public UserEntity getCreateUser() {
-            return createUser;
-        }
-
-        public void setCreateUser(UserEntity createUser) {
-            this.createUser = createUser;
-        }
-
-        public UserEntity getOwnerUser() {
-            return ownerUser;
-        }
-
-        public void setOwnerUser(UserEntity ownerUser) {
-            this.ownerUser = ownerUser;
-        }
-
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -183,7 +171,7 @@ public class ReceivedEvaluateBean implements Serializable {
         }
 
         public String getOrderNum() {
-            return orderNum;
+            return orderNum == null ? "" : orderNum;
         }
 
         public void setOrderNum(String orderNum) {
@@ -196,6 +184,22 @@ public class ReceivedEvaluateBean implements Serializable {
 
         public void setOwnerId(Long ownerId) {
             this.ownerId = ownerId;
+        }
+
+        public UserEntity getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(UserEntity createUser) {
+            this.createUser = createUser;
+        }
+
+        public UserEntity getOwnerUser() {
+            return ownerUser;
+        }
+
+        public void setOwnerUser(UserEntity ownerUser) {
+            this.ownerUser = ownerUser;
         }
     }
 }

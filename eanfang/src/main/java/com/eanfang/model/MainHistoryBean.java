@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,9 @@ public class MainHistoryBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -99,7 +103,7 @@ public class MainHistoryBean implements Serializable {
         private int status;
 
         public String getClientCompanyName() {
-            return clientCompanyName;
+            return clientCompanyName == null ? "" : clientCompanyName;
         }
 
         public void setClientCompanyName(String clientCompanyName) {
@@ -107,7 +111,7 @@ public class MainHistoryBean implements Serializable {
         }
 
         public String getClientUserName() {
-            return clientUserName;
+            return clientUserName == null ? "" : clientUserName;
         }
 
         public void setClientUserName(String clientUserName) {
@@ -115,13 +119,12 @@ public class MainHistoryBean implements Serializable {
         }
 
         public String getClientUserPhone() {
-            return clientUserPhone;
+            return clientUserPhone == null ? "" : clientUserPhone;
         }
 
         public void setClientUserPhone(String clientUserPhone) {
             this.clientUserPhone = clientUserPhone;
         }
-
 
         public Long getCreateCompanyId() {
             return createCompanyId;
@@ -131,9 +134,8 @@ public class MainHistoryBean implements Serializable {
             this.createCompanyId = createCompanyId;
         }
 
-
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -141,7 +143,7 @@ public class MainHistoryBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -155,7 +157,6 @@ public class MainHistoryBean implements Serializable {
         public void setCreateTopCompanyId(Long createTopCompanyId) {
             this.createTopCompanyId = createTopCompanyId;
         }
-
 
         public Long getCreateUserId() {
             return createUserId;
@@ -190,7 +191,7 @@ public class MainHistoryBean implements Serializable {
         }
 
         public String getOrderNum() {
-            return orderNum;
+            return orderNum == null ? "" : orderNum;
         }
 
         public void setOrderNum(String orderNum) {
@@ -205,7 +206,6 @@ public class MainHistoryBean implements Serializable {
             this.status = status;
         }
 
-
         public static class MaintainDetailBean implements Serializable {
             /**
              * count : 5
@@ -218,14 +218,6 @@ public class MainHistoryBean implements Serializable {
             private String shopMaintainId;
             private String businessThreeCode;
 
-            public String getBusinessThreeCode() {
-                return businessThreeCode;
-            }
-
-            public void setBusinessThreeCode(String businessThreeCode) {
-                this.businessThreeCode = businessThreeCode;
-            }
-
             public int getCount() {
                 return count;
             }
@@ -235,7 +227,7 @@ public class MainHistoryBean implements Serializable {
             }
 
             public String getPictures() {
-                return pictures;
+                return pictures == null ? "" : pictures;
             }
 
             public void setPictures(String pictures) {
@@ -243,11 +235,19 @@ public class MainHistoryBean implements Serializable {
             }
 
             public String getShopMaintainId() {
-                return shopMaintainId;
+                return shopMaintainId == null ? "" : shopMaintainId;
             }
 
             public void setShopMaintainId(String shopMaintainId) {
                 this.shopMaintainId = shopMaintainId;
+            }
+
+            public String getBusinessThreeCode() {
+                return businessThreeCode == null ? "" : businessThreeCode;
+            }
+
+            public void setBusinessThreeCode(String businessThreeCode) {
+                this.businessThreeCode = businessThreeCode;
             }
         }
     }

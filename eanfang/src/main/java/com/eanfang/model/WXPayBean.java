@@ -34,7 +34,7 @@ public class WXPayBean implements Serializable {
     private String sign;
 
     public String getAppid() {
-        return appid;
+        return appid == null ? "" : appid;
     }
 
     public void setAppid(String appid) {
@@ -42,7 +42,7 @@ public class WXPayBean implements Serializable {
     }
 
     public String getPartnerid() {
-        return partnerid;
+        return partnerid == null ? "" : partnerid;
     }
 
     public void setPartnerid(String partnerid) {
@@ -50,7 +50,7 @@ public class WXPayBean implements Serializable {
     }
 
     public String getPrepayid() {
-        return prepayid;
+        return prepayid == null ? "" : prepayid;
     }
 
     public void setPrepayid(String prepayid) {
@@ -58,7 +58,7 @@ public class WXPayBean implements Serializable {
     }
 
     public String getPackageX() {
-        return packageX;
+        return packageX == null ? "" : packageX;
     }
 
     public void setPackageX(String packageX) {
@@ -66,7 +66,7 @@ public class WXPayBean implements Serializable {
     }
 
     public String getNoncestr() {
-        return noncestr;
+        return noncestr == null ? "" : noncestr;
     }
 
     public void setNoncestr(String noncestr) {
@@ -74,7 +74,7 @@ public class WXPayBean implements Serializable {
     }
 
     public String getTimestamp() {
-        return timestamp;
+        return timestamp == null ? "" : timestamp;
     }
 
     public void setTimestamp(String timestamp) {
@@ -82,7 +82,7 @@ public class WXPayBean implements Serializable {
     }
 
     public String getSign() {
-        return sign;
+        return sign == null ? "" : sign;
     }
 
     public void setSign(String sign) {

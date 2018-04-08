@@ -4,6 +4,7 @@ import com.yaf.sys.entity.AccountEntity;
 import com.yaf.sys.entity.OrgEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,6 +64,9 @@ public class WorkCompanyListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -70,7 +74,7 @@ public class WorkCompanyListBean implements Serializable {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * accountEntity : {"realName":"李旭"}
          * adminUserId : 2
@@ -134,7 +138,7 @@ public class WorkCompanyListBean implements Serializable {
         }
 
         public String getAptitudePics() {
-            return aptitudePics;
+            return aptitudePics == null ? "" : aptitudePics;
         }
 
         public void setAptitudePics(String aptitudePics) {
@@ -150,7 +154,7 @@ public class WorkCompanyListBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -166,7 +170,7 @@ public class WorkCompanyListBean implements Serializable {
         }
 
         public String getHonorPics() {
-            return honorPics;
+            return honorPics == null ? "" : honorPics;
         }
 
         public void setHonorPics(String honorPics) {
@@ -222,7 +226,7 @@ public class WorkCompanyListBean implements Serializable {
         }
 
         public String getLegalAuthorizationPic() {
-            return legalAuthorizationPic;
+            return legalAuthorizationPic == null ? "" : legalAuthorizationPic;
         }
 
         public void setLegalAuthorizationPic(String legalAuthorizationPic) {
@@ -230,7 +234,7 @@ public class WorkCompanyListBean implements Serializable {
         }
 
         public String getLegalName() {
-            return legalName;
+            return legalName == null ? "" : legalName;
         }
 
         public void setLegalName(String legalName) {
@@ -278,13 +282,12 @@ public class WorkCompanyListBean implements Serializable {
         }
 
         public String getScale() {
-            return scale;
+            return scale == null ? "" : scale;
         }
 
         public void setScale(String scale) {
             this.scale = scale;
         }
-
 
         public static class CompanyEntityBean {
             /**
@@ -340,7 +343,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getAreaCode() {
-                return areaCode;
+                return areaCode == null ? "" : areaCode;
             }
 
             public void setAreaCode(String areaCode) {
@@ -348,7 +351,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getCreateTime() {
-                return createTime;
+                return createTime == null ? "" : createTime;
             }
 
             public void setCreateTime(String createTime) {
@@ -356,7 +359,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getIntro() {
-                return intro;
+                return intro == null ? "" : intro;
             }
 
             public void setIntro(String intro) {
@@ -364,7 +367,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getLegalName() {
-                return legalName;
+                return legalName == null ? "" : legalName;
             }
 
             public void setLegalName(String legalName) {
@@ -372,7 +375,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getLicenseCode() {
-                return licenseCode;
+                return licenseCode == null ? "" : licenseCode;
             }
 
             public void setLicenseCode(String licenseCode) {
@@ -380,7 +383,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getLicensePic() {
-                return licensePic;
+                return licensePic == null ? "" : licensePic;
             }
 
             public void setLicensePic(String licensePic) {
@@ -388,7 +391,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getLogoPic() {
-                return logoPic;
+                return logoPic == null ? "" : logoPic;
             }
 
             public void setLogoPic(String logoPic) {
@@ -396,7 +399,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getName() {
-                return name;
+                return name == null ? "" : name;
             }
 
             public void setName(String name) {
@@ -404,7 +407,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getOfficeAddress() {
-                return officeAddress;
+                return officeAddress == null ? "" : officeAddress;
             }
 
             public void setOfficeAddress(String officeAddress) {
@@ -420,7 +423,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getRegisterAssets() {
-                return registerAssets;
+                return registerAssets == null ? "" : registerAssets;
             }
 
             public void setRegisterAssets(String registerAssets) {
@@ -444,7 +447,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getTelPhone() {
-                return telPhone;
+                return telPhone == null ? "" : telPhone;
             }
 
             public void setTelPhone(String telPhone) {
@@ -452,7 +455,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getTradeTypeCode() {
-                return tradeTypeCode;
+                return tradeTypeCode == null ? "" : tradeTypeCode;
             }
 
             public void setTradeTypeCode(String tradeTypeCode) {
@@ -468,7 +471,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getVerifyMessage() {
-                return verifyMessage;
+                return verifyMessage == null ? "" : verifyMessage;
             }
 
             public void setVerifyMessage(String verifyMessage) {
@@ -476,7 +479,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getVerifyTime() {
-                return verifyTime;
+                return verifyTime == null ? "" : verifyTime;
             }
 
             public void setVerifyTime(String verifyTime) {
@@ -484,7 +487,7 @@ public class WorkCompanyListBean implements Serializable {
             }
 
             public String getVerifyUserName() {
-                return verifyUserName;
+                return verifyUserName == null ? "" : verifyUserName;
             }
 
             public void setVerifyUserName(String verifyUserName) {

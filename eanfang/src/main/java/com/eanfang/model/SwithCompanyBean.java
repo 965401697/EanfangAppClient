@@ -33,7 +33,7 @@ public class SwithCompanyBean implements Serializable {
     }
 
     public String getOrgCode() {
-        return orgCode;
+        return orgCode == null ? "" : orgCode;
     }
 
     public void setOrgCode(String orgCode) {
@@ -49,7 +49,7 @@ public class SwithCompanyBean implements Serializable {
     }
 
     public String getOrgName() {
-        return orgName;
+        return orgName == null ? "" : orgName;
     }
 
     public void setOrgName(String orgName) {

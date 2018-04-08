@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,6 +61,9 @@ public class SignListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -107,14 +111,6 @@ public class SignListBean implements Serializable {
         private String zoneCode;
         private String pictures;
 
-        public String getPictures() {
-            return pictures;
-        }
-
-        public void setPictures(String pictures) {
-            this.pictures = pictures;
-        }
-
         public CompanyBean getCompany() {
             return company;
         }
@@ -132,7 +128,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -140,7 +136,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -172,7 +168,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getDetailPlace() {
-            return detailPlace;
+            return detailPlace == null ? "" : detailPlace;
         }
 
         public void setDetailPlace(String detailPlace) {
@@ -188,7 +184,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getLatitude() {
-            return latitude;
+            return latitude == null ? "" : latitude;
         }
 
         public void setLatitude(String latitude) {
@@ -196,7 +192,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getLongitude() {
-            return longitude;
+            return longitude == null ? "" : longitude;
         }
 
         public void setLongitude(String longitude) {
@@ -204,7 +200,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getRemarkInfo() {
-            return remarkInfo;
+            return remarkInfo == null ? "" : remarkInfo;
         }
 
         public void setRemarkInfo(String remarkInfo) {
@@ -212,7 +208,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getSignTime() {
-            return signTime;
+            return signTime == null ? "" : signTime;
         }
 
         public void setSignTime(String signTime) {
@@ -236,7 +232,7 @@ public class SignListBean implements Serializable {
         }
 
         public String getVisitorName() {
-            return visitorName;
+            return visitorName == null ? "" : visitorName;
         }
 
         public void setVisitorName(String visitorName) {
@@ -244,11 +240,19 @@ public class SignListBean implements Serializable {
         }
 
         public String getZoneCode() {
-            return zoneCode;
+            return zoneCode == null ? "" : zoneCode;
         }
 
         public void setZoneCode(String zoneCode) {
             this.zoneCode = zoneCode;
+        }
+
+        public String getPictures() {
+            return pictures == null ? "" : pictures;
+        }
+
+        public void setPictures(String pictures) {
+            this.pictures = pictures;
         }
 
         public static class CompanyBean implements Serializable{
@@ -305,7 +309,7 @@ public class SignListBean implements Serializable {
             }
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -321,7 +325,7 @@ public class SignListBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -361,7 +365,7 @@ public class SignListBean implements Serializable {
             }
 
             public String getUpdateTime() {
-                return updateTime;
+                return updateTime == null ? "" : updateTime;
             }
 
             public void setUpdateTime(String updateTime) {
@@ -474,7 +478,7 @@ public class SignListBean implements Serializable {
                 }
 
                 public String getAvatar() {
-                    return avatar;
+                    return avatar == null ? "" : avatar;
                 }
 
                 public void setAvatar(String avatar) {
@@ -482,7 +486,7 @@ public class SignListBean implements Serializable {
                 }
 
                 public String getMobile() {
-                    return mobile;
+                    return mobile == null ? "" : mobile;
                 }
 
                 public void setMobile(String mobile) {
@@ -490,7 +494,7 @@ public class SignListBean implements Serializable {
                 }
 
                 public String getRealName() {
-                    return realName;
+                    return realName == null ? "" : realName;
                 }
 
                 public void setRealName(String realName) {

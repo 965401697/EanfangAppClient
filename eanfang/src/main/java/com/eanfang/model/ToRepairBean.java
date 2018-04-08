@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Setter;
+
 /**
  * Created by Administrator on 2017/4/12.
  */
-
+@Setter
 public class ToRepairBean implements Serializable {
     private String company;
     private String detailAddress;
@@ -23,107 +25,58 @@ public class ToRepairBean implements Serializable {
     private String latitude;
     private List<AddTroubleBean> beanList = new ArrayList<>();
 
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getBugOneUid() {
-        return bugOneUid;
-    }
-
-    public void setBugOneUid(String bugOneUid) {
-        this.bugOneUid = bugOneUid;
-    }
-
     public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
+        return company == null ? "" : company;
     }
 
     public String getDetailAddress() {
-        return detailAddress;
-    }
-
-    public void setDetailAddress(String detailAddress) {
-        this.detailAddress = detailAddress;
+        return detailAddress == null ? "" : detailAddress;
     }
 
     public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
+        return province == null ? "" : province;
     }
 
     public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+        return city == null ? "" : city;
     }
 
     public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
+        return area == null ? "" : area;
     }
 
     public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        return name == null ? "" : name;
     }
 
     public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+        return phone == null ? "" : phone;
     }
 
     public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+        return time == null ? "" : time;
     }
 
     public String getBusiness() {
-        return business;
+        return business == null ? "" : business;
     }
 
-    public void setBusiness(String business) {
-        this.business = business;
+    public String getBugOneUid() {
+        return bugOneUid == null ? "" : bugOneUid;
+    }
+
+    public String getLongitude() {
+        return longitude == null ? "" : longitude;
+    }
+
+    public String getLatitude() {
+        return latitude == null ? "" : latitude;
     }
 
     public List<AddTroubleBean> getBeanList() {
+        if (beanList == null) {
+            return new ArrayList<>();
+        }
         return beanList;
-    }
-
-    public void setBeanList(List<AddTroubleBean> beanList) {
-        this.beanList = beanList;
     }
 }

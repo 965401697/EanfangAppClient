@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class WorkTaskBean implements Serializable {
     private List<WorkTaskDetailsBean> workTaskDetails;
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -35,7 +36,7 @@ public class WorkTaskBean implements Serializable {
     }
 
     public String getFirstLookTime() {
-        return firstLookTime;
+        return firstLookTime == null ? "" : firstLookTime;
     }
 
     public void setFirstLookTime(String firstLookTime) {
@@ -51,7 +52,7 @@ public class WorkTaskBean implements Serializable {
     }
 
     public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+        return assigneeOrgCode == null ? "" : assigneeOrgCode;
     }
 
     public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -59,6 +60,9 @@ public class WorkTaskBean implements Serializable {
     }
 
     public List<WorkTaskDetailsBean> getWorkTaskDetails() {
+        if (workTaskDetails == null) {
+            return new ArrayList<>();
+        }
         return workTaskDetails;
     }
 
@@ -94,7 +98,7 @@ public class WorkTaskBean implements Serializable {
         private String pictures;
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {
@@ -134,7 +138,7 @@ public class WorkTaskBean implements Serializable {
         }
 
         public String getEnd_time() {
-            return end_time;
+            return end_time == null ? "" : end_time;
         }
 
         public void setEnd_time(String end_time) {
@@ -142,7 +146,7 @@ public class WorkTaskBean implements Serializable {
         }
 
         public String getInfo() {
-            return info;
+            return info == null ? "" : info;
         }
 
         public void setInfo(String info) {
@@ -150,7 +154,7 @@ public class WorkTaskBean implements Serializable {
         }
 
         public String getPurpose() {
-            return purpose;
+            return purpose == null ? "" : purpose;
         }
 
         public void setPurpose(String purpose) {
@@ -158,7 +162,7 @@ public class WorkTaskBean implements Serializable {
         }
 
         public String getCriterion() {
-            return criterion;
+            return criterion == null ? "" : criterion;
         }
 
         public void setCriterion(String criterion) {
@@ -166,7 +170,7 @@ public class WorkTaskBean implements Serializable {
         }
 
         public String getJoinPerson() {
-            return joinPerson;
+            return joinPerson == null ? "" : joinPerson;
         }
 
         public void setJoinPerson(String joinPerson) {
@@ -174,7 +178,7 @@ public class WorkTaskBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {

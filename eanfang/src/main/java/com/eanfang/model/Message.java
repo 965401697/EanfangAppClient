@@ -26,7 +26,7 @@ public class Message implements Serializable {
     private String tip;
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -34,7 +34,7 @@ public class Message implements Serializable {
     }
 
     public String getMsgTitle() {
-        return msgTitle;
+        return msgTitle == null ? "" : msgTitle;
     }
 
     public void setMsgTitle(String msgTitle) {
@@ -42,7 +42,7 @@ public class Message implements Serializable {
     }
 
     public String getMsgContent() {
-        return msgContent;
+        return msgContent == null ? "" : msgContent;
     }
 
     public void setMsgContent(String msgContent) {
@@ -50,7 +50,7 @@ public class Message implements Serializable {
     }
 
     public String getMsgHelp() {
-        return msgHelp;
+        return msgHelp == null ? "" : msgHelp;
     }
 
     public void setMsgHelp(String msgHelp) {
@@ -74,7 +74,7 @@ public class Message implements Serializable {
     }
 
     public String getTip() {
-        return tip;
+        return tip == null ? "" : tip;
     }
 
     public void setTip(String tip) {

@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +60,9 @@ public class GiveEvaluateBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -97,6 +101,14 @@ public class GiveEvaluateBean implements Serializable {
         private Long ownerId;
         private UserEntity ownerUser;
 
+        public String getCreateTime() {
+            return createTime == null ? "" : createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
         public UserEntity getCreateUser() {
             return createUser;
         }
@@ -104,23 +116,6 @@ public class GiveEvaluateBean implements Serializable {
         public void setCreateUser(UserEntity createUser) {
             this.createUser = createUser;
         }
-
-        public UserEntity getOwnerUser() {
-            return ownerUser;
-        }
-
-        public void setOwnerUser(UserEntity ownerUser) {
-            this.ownerUser = ownerUser;
-        }
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-
 
         public Long getCreateUserId() {
             return createUserId;
@@ -187,7 +182,7 @@ public class GiveEvaluateBean implements Serializable {
         }
 
         public String getOrderNum() {
-            return orderNum;
+            return orderNum == null ? "" : orderNum;
         }
 
         public void setOrderNum(String orderNum) {
@@ -202,7 +197,13 @@ public class GiveEvaluateBean implements Serializable {
             this.ownerId = ownerId;
         }
 
+        public UserEntity getOwnerUser() {
+            return ownerUser;
+        }
 
+        public void setOwnerUser(UserEntity ownerUser) {
+            this.ownerUser = ownerUser;
+        }
     }
 }
 

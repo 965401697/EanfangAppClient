@@ -34,24 +34,8 @@ public class SigninBean implements Serializable {
     private String pictures;
     private String time;
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
-    }
-
     public String getLongitude() {
-        return longitude;
+        return longitude == null ? "" : longitude;
     }
 
     public void setLongitude(String longitude) {
@@ -59,7 +43,7 @@ public class SigninBean implements Serializable {
     }
 
     public String getLatitude() {
-        return latitude;
+        return latitude == null ? "" : latitude;
     }
 
     public void setLatitude(String latitude) {
@@ -67,7 +51,7 @@ public class SigninBean implements Serializable {
     }
 
     public String getDetailPlace() {
-        return detailPlace;
+        return detailPlace == null ? "" : detailPlace;
     }
 
     public void setDetailPlace(String detailPlace) {
@@ -75,7 +59,7 @@ public class SigninBean implements Serializable {
     }
 
     public String getZoneCode() {
-        return zoneCode;
+        return zoneCode == null ? "" : zoneCode;
     }
 
     public void setZoneCode(String zoneCode) {
@@ -83,7 +67,7 @@ public class SigninBean implements Serializable {
     }
 
     public String getSignTime() {
-        return signTime;
+        return signTime == null ? "" : signTime;
     }
 
     public void setSignTime(String signTime) {
@@ -91,7 +75,7 @@ public class SigninBean implements Serializable {
     }
 
     public String getRemarkInfo() {
-        return remarkInfo;
+        return remarkInfo == null ? "" : remarkInfo;
     }
 
     public void setRemarkInfo(String remarkInfo) {
@@ -99,7 +83,7 @@ public class SigninBean implements Serializable {
     }
 
     public String getVisitorName() {
-        return visitorName;
+        return visitorName == null ? "" : visitorName;
     }
 
     public void setVisitorName(String visitorName) {
@@ -112,5 +96,21 @@ public class SigninBean implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getPictures() {
+        return pictures == null ? "" : pictures;
+    }
+
+    public void setPictures(String pictures) {
+        this.pictures = pictures;
+    }
+
+    public String getTime() {
+        return time == null ? "" : time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.OrgEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,6 +63,9 @@ public class PartnerBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -115,7 +119,7 @@ public class PartnerBean implements Serializable {
         }
 
         public String getBeginTime() {
-            return beginTime;
+            return beginTime == null ? "" : beginTime;
         }
 
         public void setBeginTime(String beginTime) {
@@ -131,7 +135,7 @@ public class PartnerBean implements Serializable {
         }
 
         public String getBusinessOneCode() {
-            return businessOneCode;
+            return businessOneCode == null ? "" : businessOneCode;
         }
 
         public void setBusinessOneCode(String businessOneCode) {
@@ -139,7 +143,7 @@ public class PartnerBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -155,7 +159,7 @@ public class PartnerBean implements Serializable {
         }
 
         public String getEndTime() {
-            return endTime;
+            return endTime == null ? "" : endTime;
         }
 
         public void setEndTime(String endTime) {
@@ -193,8 +197,6 @@ public class PartnerBean implements Serializable {
         public void setStatus(int status) {
             this.status = status;
         }
-
-
     }
 }
 

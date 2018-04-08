@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,9 @@ public class WorkspaceInstallBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -113,22 +117,6 @@ public class WorkspaceInstallBean implements Serializable {
         private Long businessOneId;
         private Long zoneId;
 
-        public Long getBusinessOneId() {
-            return businessOneId;
-        }
-
-        public void setBusinessOneId(Long businessOneId) {
-            this.businessOneId = businessOneId;
-        }
-
-        public Long getZoneId() {
-            return zoneId;
-        }
-
-        public void setZoneId(Long zoneId) {
-            this.zoneId = zoneId;
-        }
-
         public int getBudget() {
             return budget;
         }
@@ -138,7 +126,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getBusinessOneCode() {
-            return businessOneCode;
+            return businessOneCode == null ? "" : businessOneCode;
         }
 
         public void setBusinessOneCode(String businessOneCode) {
@@ -146,7 +134,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getClientCompanyName() {
-            return clientCompanyName;
+            return clientCompanyName == null ? "" : clientCompanyName;
         }
 
         public void setClientCompanyName(String clientCompanyName) {
@@ -154,7 +142,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getConnector() {
-            return connector;
+            return connector == null ? "" : connector;
         }
 
         public void setConnector(String connector) {
@@ -162,7 +150,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getConnectorPhone() {
-            return connectorPhone;
+            return connectorPhone == null ? "" : connectorPhone;
         }
 
         public void setConnectorPhone(String connectorPhone) {
@@ -170,7 +158,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -186,7 +174,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getDescription() {
-            return description;
+            return description == null ? "" : description;
         }
 
         public void setDescription(String description) {
@@ -194,7 +182,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getDetailPlace() {
-            return detailPlace;
+            return detailPlace == null ? "" : detailPlace;
         }
 
         public void setDetailPlace(String detailPlace) {
@@ -210,7 +198,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getLatitude() {
-            return latitude;
+            return latitude == null ? "" : latitude;
         }
 
         public void setLatitude(String latitude) {
@@ -218,7 +206,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getLongitude() {
-            return longitude;
+            return longitude == null ? "" : longitude;
         }
 
         public void setLongitude(String longitude) {
@@ -226,7 +214,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getOrderNo() {
-            return orderNo;
+            return orderNo == null ? "" : orderNo;
         }
 
         public void setOrderNo(String orderNo) {
@@ -242,7 +230,7 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getOwnerOrgCode() {
-            return ownerOrgCode;
+            return ownerOrgCode == null ? "" : ownerOrgCode;
         }
 
         public void setOwnerOrgCode(String ownerOrgCode) {
@@ -290,11 +278,27 @@ public class WorkspaceInstallBean implements Serializable {
         }
 
         public String getZone() {
-            return zone;
+            return zone == null ? "" : zone;
         }
 
         public void setZone(String zone) {
             this.zone = zone;
+        }
+
+        public Long getBusinessOneId() {
+            return businessOneId;
+        }
+
+        public void setBusinessOneId(Long businessOneId) {
+            this.businessOneId = businessOneId;
+        }
+
+        public Long getZoneId() {
+            return zoneId;
+        }
+
+        public void setZoneId(Long zoneId) {
+            this.zoneId = zoneId;
         }
     }
 }

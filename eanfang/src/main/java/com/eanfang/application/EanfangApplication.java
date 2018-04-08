@@ -1,9 +1,6 @@
 package com.eanfang.application;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.camera.CameraApplication;
-import com.eanfang.BuildConfig;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
@@ -18,8 +15,6 @@ import com.okgo.cookie.store.DBCookieStore;
 import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
-import com.tencent.bugly.crashreport.CrashReport;
-
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -64,8 +59,7 @@ public class EanfangApplication extends CustomeApplication {
         Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
         SharePreferenceUtil.get().init(mEanfangApplication);
-        //bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false);
+
     }
 
     public void initOkGo() {

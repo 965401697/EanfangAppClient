@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,6 +63,9 @@ public class MineTaskListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -69,7 +73,7 @@ public class MineTaskListBean implements Serializable {
         this.list = list;
     }
 
-    public static class ListBean {
+    public static class ListBean implements Serializable{
         /**
          * budget : 0
          * businessOneCode : 1.2
@@ -120,22 +124,6 @@ public class MineTaskListBean implements Serializable {
         private UserEntity assigneeUser;
         private Long shopTaskApplyId;
 
-        public Long getShopTaskApplyId() {
-            return shopTaskApplyId;
-        }
-
-        public void setShopTaskApplyId(Long shopTaskApplyId) {
-            this.shopTaskApplyId = shopTaskApplyId;
-        }
-
-        public UserEntity getAssigneeUser() {
-            return assigneeUser;
-        }
-
-        public void setAssigneeUser(UserEntity assigneeUser) {
-            this.assigneeUser = assigneeUser;
-        }
-
         public int getBudget() {
             return budget;
         }
@@ -145,7 +133,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getBusinessOneCode() {
-            return businessOneCode;
+            return businessOneCode == null ? "" : businessOneCode;
         }
 
         public void setBusinessOneCode(String businessOneCode) {
@@ -153,7 +141,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getContacts() {
-            return contacts;
+            return contacts == null ? "" : contacts;
         }
 
         public void setContacts(String contacts) {
@@ -161,7 +149,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getContactsPhone() {
-            return contactsPhone;
+            return contactsPhone == null ? "" : contactsPhone;
         }
 
         public void setContactsPhone(String contactsPhone) {
@@ -177,7 +165,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -201,7 +189,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getDescription() {
-            return description;
+            return description == null ? "" : description;
         }
 
         public void setDescription(String description) {
@@ -209,7 +197,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getDetailPlace() {
-            return detailPlace;
+            return detailPlace == null ? "" : detailPlace;
         }
 
         public void setDetailPlace(String detailPlace) {
@@ -225,7 +213,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getLatitude() {
-            return latitude;
+            return latitude == null ? "" : latitude;
         }
 
         public void setLatitude(String latitude) {
@@ -233,7 +221,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getLongitude() {
-            return longitude;
+            return longitude == null ? "" : longitude;
         }
 
         public void setLongitude(String longitude) {
@@ -241,7 +229,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {
@@ -257,7 +245,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getProjectCompanyName() {
-            return projectCompanyName;
+            return projectCompanyName == null ? "" : projectCompanyName;
         }
 
         public void setProjectCompanyName(String projectCompanyName) {
@@ -265,7 +253,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getPublishCompanyName() {
-            return publishCompanyName;
+            return publishCompanyName == null ? "" : publishCompanyName;
         }
 
         public void setPublishCompanyName(String publishCompanyName) {
@@ -289,7 +277,7 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getToDoorTime() {
-            return toDoorTime;
+            return toDoorTime == null ? "" : toDoorTime;
         }
 
         public void setToDoorTime(String toDoorTime) {
@@ -305,11 +293,27 @@ public class MineTaskListBean implements Serializable {
         }
 
         public String getZoneCode() {
-            return zoneCode;
+            return zoneCode == null ? "" : zoneCode;
         }
 
         public void setZoneCode(String zoneCode) {
             this.zoneCode = zoneCode;
+        }
+
+        public UserEntity getAssigneeUser() {
+            return assigneeUser;
+        }
+
+        public void setAssigneeUser(UserEntity assigneeUser) {
+            this.assigneeUser = assigneeUser;
+        }
+
+        public Long getShopTaskApplyId() {
+            return shopTaskApplyId;
+        }
+
+        public void setShopTaskApplyId(Long shopTaskApplyId) {
+            this.shopTaskApplyId = shopTaskApplyId;
         }
     }
 }

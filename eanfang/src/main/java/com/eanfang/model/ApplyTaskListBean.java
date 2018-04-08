@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,6 +57,9 @@ public class ApplyTaskListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -101,7 +105,7 @@ public class ApplyTaskListBean implements Serializable {
         private String toDoorTime;
 
         public String getApplyCompanyName() {
-            return applyCompanyName;
+            return applyCompanyName == null ? "" : applyCompanyName;
         }
 
         public void setApplyCompanyName(String applyCompanyName) {
@@ -109,7 +113,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getApplyConstactsPhone() {
-            return applyConstactsPhone;
+            return applyConstactsPhone == null ? "" : applyConstactsPhone;
         }
 
         public void setApplyConstactsPhone(String applyConstactsPhone) {
@@ -117,7 +121,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getApplyContacts() {
-            return applyContacts;
+            return applyContacts == null ? "" : applyContacts;
         }
 
         public void setApplyContacts(String applyContacts) {
@@ -125,7 +129,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getConfirmTime() {
-            return confirmTime;
+            return confirmTime == null ? "" : confirmTime;
         }
 
         public void setConfirmTime(String confirmTime) {
@@ -141,7 +145,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -165,7 +169,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getDescription() {
-            return description;
+            return description == null ? "" : description;
         }
 
         public void setDescription(String description) {
@@ -181,7 +185,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {
@@ -221,7 +225,7 @@ public class ApplyTaskListBean implements Serializable {
         }
 
         public String getToDoorTime() {
-            return toDoorTime;
+            return toDoorTime == null ? "" : toDoorTime;
         }
 
         public void setToDoorTime(String toDoorTime) {

@@ -88,7 +88,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getBusinessOneCode() {
-        return businessOneCode;
+        return businessOneCode == null ? "" : businessOneCode;
     }
 
     public void setBusinessOneCode(String businessOneCode) {
@@ -112,7 +112,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getContactPhone() {
-        return contactPhone;
+        return contactPhone == null ? "" : contactPhone;
     }
 
     public void setContactPhone(String contactPhone) {
@@ -120,7 +120,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getContactUser() {
-        return contactUser;
+        return contactUser == null ? "" : contactUser;
     }
 
     public void setContactUser(String contactUser) {
@@ -136,7 +136,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getCreateOrgCode() {
-        return createOrgCode;
+        return createOrgCode == null ? "" : createOrgCode;
     }
 
     public void setCreateOrgCode(String createOrgCode) {
@@ -144,7 +144,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return createTime == null ? "" : createTime;
     }
 
     public void setCreateTime(String createTime) {
@@ -168,7 +168,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getDetailPlace() {
-        return detailPlace;
+        return detailPlace == null ? "" : detailPlace;
     }
 
     public void setDetailPlace(String detailPlace) {
@@ -184,7 +184,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getLatitude() {
-        return latitude;
+        return latitude == null ? "" : latitude;
     }
 
     public void setLatitude(String latitude) {
@@ -192,7 +192,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getLongitude() {
-        return longitude;
+        return longitude == null ? "" : longitude;
     }
 
     public void setLongitude(String longitude) {
@@ -200,7 +200,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getOrderNum() {
-        return orderNum;
+        return orderNum == null ? "" : orderNum;
     }
 
     public void setOrderNum(String orderNum) {
@@ -216,7 +216,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getRemarkInfo() {
-        return remarkInfo;
+        return remarkInfo == null ? "" : remarkInfo;
     }
 
     public void setRemarkInfo(String remarkInfo) {
@@ -240,7 +240,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getUserName() {
-        return userName;
+        return userName == null ? "" : userName;
     }
 
     public void setUserName(String userName) {
@@ -248,7 +248,7 @@ public class DesignOrderInfoBean implements Serializable {
     }
 
     public String getZoneCode() {
-        return zoneCode;
+        return zoneCode == null ? "" : zoneCode;
     }
 
     public void setZoneCode(String zoneCode) {
@@ -311,7 +311,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getAreaCode() {
-            return areaCode;
+            return areaCode == null ? "" : areaCode;
         }
 
         public void setAreaCode(String areaCode) {
@@ -319,7 +319,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -327,7 +327,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getIntro() {
-            return intro;
+            return intro == null ? "" : intro;
         }
 
         public void setIntro(String intro) {
@@ -335,7 +335,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getLegalName() {
-            return legalName;
+            return legalName == null ? "" : legalName;
         }
 
         public void setLegalName(String legalName) {
@@ -343,7 +343,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getLicenseCode() {
-            return licenseCode;
+            return licenseCode == null ? "" : licenseCode;
         }
 
         public void setLicenseCode(String licenseCode) {
@@ -351,7 +351,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getLicensePic() {
-            return licensePic;
+            return licensePic == null ? "" : licensePic;
         }
 
         public void setLicensePic(String licensePic) {
@@ -359,7 +359,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getLogoPic() {
-            return logoPic;
+            return logoPic == null ? "" : logoPic;
         }
 
         public void setLogoPic(String logoPic) {
@@ -367,7 +367,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getName() {
-            return name;
+            return name == null ? "" : name;
         }
 
         public void setName(String name) {
@@ -375,7 +375,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getOfficeAddress() {
-            return officeAddress;
+            return officeAddress == null ? "" : officeAddress;
         }
 
         public void setOfficeAddress(String officeAddress) {
@@ -391,7 +391,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getRegisterAssets() {
-            return registerAssets;
+            return registerAssets == null ? "" : registerAssets;
         }
 
         public void setRegisterAssets(String registerAssets) {
@@ -415,7 +415,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getTelPhone() {
-            return telPhone;
+            return telPhone == null ? "" : telPhone;
         }
 
         public void setTelPhone(String telPhone) {
@@ -423,7 +423,7 @@ public class DesignOrderInfoBean implements Serializable {
         }
 
         public String getTradeTypeCode() {
-            return tradeTypeCode;
+            return tradeTypeCode == null ? "" : tradeTypeCode;
         }
 
         public void setTradeTypeCode(String tradeTypeCode) {

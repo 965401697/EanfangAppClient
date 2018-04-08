@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class MainHistoryDetailBean implements Serializable {
     private List<MaintainDetailsBean> maintainDetails;
 
     public String getClientCompanyName() {
-        return clientCompanyName;
+        return clientCompanyName == null ? "" : clientCompanyName;
     }
 
     public void setClientCompanyName(String clientCompanyName) {
@@ -49,7 +50,7 @@ public class MainHistoryDetailBean implements Serializable {
     }
 
     public String getClientUserName() {
-        return clientUserName;
+        return clientUserName == null ? "" : clientUserName;
     }
 
     public void setClientUserName(String clientUserName) {
@@ -57,7 +58,7 @@ public class MainHistoryDetailBean implements Serializable {
     }
 
     public String getClientUserPhone() {
-        return clientUserPhone;
+        return clientUserPhone == null ? "" : clientUserPhone;
     }
 
     public void setClientUserPhone(String clientUserPhone) {
@@ -73,7 +74,7 @@ public class MainHistoryDetailBean implements Serializable {
     }
 
     public String getCreateOrgCode() {
-        return createOrgCode;
+        return createOrgCode == null ? "" : createOrgCode;
     }
 
     public void setCreateOrgCode(String createOrgCode) {
@@ -81,7 +82,7 @@ public class MainHistoryDetailBean implements Serializable {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return createTime == null ? "" : createTime;
     }
 
     public void setCreateTime(String createTime) {
@@ -121,7 +122,7 @@ public class MainHistoryDetailBean implements Serializable {
     }
 
     public String getOrderNum() {
-        return orderNum;
+        return orderNum == null ? "" : orderNum;
     }
 
     public void setOrderNum(String orderNum) {
@@ -137,6 +138,9 @@ public class MainHistoryDetailBean implements Serializable {
     }
 
     public List<MaintainDetailsBean> getMaintainDetails() {
+        if (maintainDetails == null) {
+            return new ArrayList<>();
+        }
         return maintainDetails;
     }
 
@@ -173,23 +177,23 @@ public class MainHistoryDetailBean implements Serializable {
         private String solution;
 
         public String getBusinessFourCode() {
-            return businessFourCode;
-        }
-
-        public String getBusinessThreeCode() {
-            return businessThreeCode;
-        }
-
-        public void setBusinessThreeCode(String businessThreeCode) {
-            this.businessThreeCode = businessThreeCode;
+            return businessFourCode == null ? "" : businessFourCode;
         }
 
         public void setBusinessFourCode(String businessFourCode) {
             this.businessFourCode = businessFourCode;
         }
 
+        public String getBusinessThreeCode() {
+            return businessThreeCode == null ? "" : businessThreeCode;
+        }
+
+        public void setBusinessThreeCode(String businessThreeCode) {
+            this.businessThreeCode = businessThreeCode;
+        }
+
         public String getCause() {
-            return cause;
+            return cause == null ? "" : cause;
         }
 
         public void setCause(String cause) {
@@ -213,7 +217,7 @@ public class MainHistoryDetailBean implements Serializable {
         }
 
         public String getEntMaintainId() {
-            return entMaintainId;
+            return entMaintainId == null ? "" : entMaintainId;
         }
 
         public void setEntMaintainId(String entMaintainId) {
@@ -229,7 +233,7 @@ public class MainHistoryDetailBean implements Serializable {
         }
 
         public String getInstallPosition() {
-            return installPosition;
+            return installPosition == null ? "" : installPosition;
         }
 
         public void setInstallPosition(String installPosition) {
@@ -245,7 +249,7 @@ public class MainHistoryDetailBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {
@@ -253,7 +257,7 @@ public class MainHistoryDetailBean implements Serializable {
         }
 
         public String getQuestion() {
-            return question;
+            return question == null ? "" : question;
         }
 
         public void setQuestion(String question) {
@@ -261,7 +265,7 @@ public class MainHistoryDetailBean implements Serializable {
         }
 
         public String getSolution() {
-            return solution;
+            return solution == null ? "" : solution;
         }
 
         public void setSolution(String solution) {
