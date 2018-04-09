@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -64,6 +65,8 @@ public class MainActivity extends BaseClientActivity {
 
         //app更新
         UpdateAppManager.update(this, BuildConfig.TYPE);
+        //阻止底部 菜单拦被软键盘顶起
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
 
