@@ -33,7 +33,7 @@ public class AddWorkInspectDetailBean implements Serializable {
     }
 
     public String getDisposeInfo() {
-        return disposeInfo;
+        return disposeInfo == null ? "" : disposeInfo;
     }
 
     public void setDisposeInfo(String disposeInfo) {
@@ -41,7 +41,7 @@ public class AddWorkInspectDetailBean implements Serializable {
     }
 
     public String getRemarkInfo() {
-        return remarkInfo;
+        return remarkInfo == null ? "" : remarkInfo;
     }
 
     public void setRemarkInfo(String remarkInfo) {
@@ -49,7 +49,7 @@ public class AddWorkInspectDetailBean implements Serializable {
     }
 
     public String getPictures() {
-        return pictures;
+        return pictures == null ? "" : pictures;
     }
 
     public void setPictures(String pictures) {

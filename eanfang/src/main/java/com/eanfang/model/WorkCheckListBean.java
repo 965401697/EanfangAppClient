@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,6 +62,9 @@ public class WorkCheckListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -110,14 +114,6 @@ public class WorkCheckListBean implements Serializable {
         private String title;
         private WorkInspectDetail workInspectDetail;
 
-        public WorkInspectDetail getWorkInspectDetail() {
-            return workInspectDetail;
-        }
-
-        public void setWorkInspectDetail(WorkInspectDetail workInspectDetail) {
-            this.workInspectDetail = workInspectDetail;
-        }
-
         public AssigneeOrgBean getAssigneeOrg() {
             return assigneeOrg;
         }
@@ -127,7 +123,7 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getAssigneeOrgCode() {
-            return assigneeOrgCode;
+            return assigneeOrgCode == null ? "" : assigneeOrgCode;
         }
 
         public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -151,7 +147,7 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getChangeDeadlineTime() {
-            return changeDeadlineTime;
+            return changeDeadlineTime == null ? "" : changeDeadlineTime;
         }
 
         public void setChangeDeadlineTime(String changeDeadlineTime) {
@@ -159,7 +155,7 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getChangeInfo() {
-            return changeInfo;
+            return changeInfo == null ? "" : changeInfo;
         }
 
         public void setChangeInfo(String changeInfo) {
@@ -167,7 +163,7 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getCompanyName() {
-            return companyName;
+            return companyName == null ? "" : companyName;
         }
 
         public void setCompanyName(String companyName) {
@@ -199,7 +195,7 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -207,7 +203,7 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -255,11 +251,19 @@ public class WorkCheckListBean implements Serializable {
         }
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public WorkInspectDetail getWorkInspectDetail() {
+            return workInspectDetail;
+        }
+
+        public void setWorkInspectDetail(WorkInspectDetail workInspectDetail) {
+            this.workInspectDetail = workInspectDetail;
         }
 
         public static class AssigneeOrgBean implements Serializable {
@@ -272,7 +276,7 @@ public class WorkCheckListBean implements Serializable {
             private String orgName;
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -280,7 +284,7 @@ public class WorkCheckListBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -373,7 +377,7 @@ public class WorkCheckListBean implements Serializable {
                 }
 
                 public String getMobile() {
-                    return mobile;
+                    return mobile == null ? "" : mobile;
                 }
 
                 public void setMobile(String mobile) {
@@ -381,7 +385,7 @@ public class WorkCheckListBean implements Serializable {
                 }
 
                 public String getRealName() {
-                    return realName;
+                    return realName == null ? "" : realName;
                 }
 
                 public void setRealName(String realName) {
@@ -408,7 +412,7 @@ public class WorkCheckListBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -426,7 +430,7 @@ public class WorkCheckListBean implements Serializable {
             private String orgName;
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -434,7 +438,7 @@ public class WorkCheckListBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -525,7 +529,7 @@ public class WorkCheckListBean implements Serializable {
                 }
 
                 public String getRealName() {
-                    return realName;
+                    return realName == null ? "" : realName;
                 }
 
                 public void setRealName(String realName) {
@@ -560,116 +564,66 @@ public class WorkCheckListBean implements Serializable {
             //-----------------------------------业务字段，不存在于数据库----------------------------------------
 
 
-            /**
-             * 获取：主键
-             */
             public Long getId() {
                 return id;
             }
 
-            /**
-             * 设置：主键
-             */
             public void setId(Long id) {
                 this.id = id;
             }
 
-            /**
-             * 获取：工作检查表ID
-             */
             public Long getSysWorkInspectId() {
                 return sysWorkInspectId;
             }
 
-            /**
-             * 设置：工作检查表ID
-             */
             public void setSysWorkInspectId(Long sysWorkInspectId) {
                 this.sysWorkInspectId = sysWorkInspectId;
             }
 
-            /**
-             * 获取：标题
-             */
             public String getTitle() {
-                return title;
+                return title == null ? "" : title;
             }
 
-            /**
-             * 设置：标题
-             */
             public void setTitle(String title) {
                 this.title = title;
             }
 
-            /**
-             * 获取：位置区域
-             */
             public String getRegion() {
-                return region;
+                return region == null ? "" : region;
             }
 
-            /**
-             * 设置：位置区域
-             */
             public void setRegion(String region) {
                 this.region = region;
             }
 
-            /**
-             * 获取：三级业务类型编码（基础数据表）
-             */
             public String getBusinessThreeCode() {
-                return businessThreeCode;
+                return businessThreeCode == null ? "" : businessThreeCode;
             }
 
-            /**
-             * 设置：三级业务类型编码（基础数据表）
-             */
             public void setBusinessThreeCode(String businessThreeCode) {
                 this.businessThreeCode = businessThreeCode;
             }
 
-            /**
-             * 获取：检查内容
-             */
             public String getInfo() {
-                return info;
+                return info == null ? "" : info;
             }
 
-            /**
-             * 设置：检查内容
-             */
             public void setInfo(String info) {
                 this.info = info;
             }
 
-            /**
-             * 获取：图片地址（多个图片地址用逗号分割）
-             */
             public String getPictures() {
-                return pictures;
+                return pictures == null ? "" : pictures;
             }
 
-            /**
-             * 设置：图片地址（多个图片地址用逗号分割）
-             */
             public void setPictures(String pictures) {
                 this.pictures = pictures;
             }
 
-
-
-            /**
-             * 获取状态
-             */
             public Integer getStatus() {
                 return status;
             }
 
-            /**
-             * 设置状态
-             */
             public void setStatus(Integer status) {
                 this.status = status;
             }

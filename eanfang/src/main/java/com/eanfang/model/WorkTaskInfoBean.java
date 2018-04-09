@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+        return assigneeOrgCode == null ? "" : assigneeOrgCode;
     }
 
     public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -108,7 +109,7 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public String getCreateOrgCode() {
-        return createOrgCode;
+        return createOrgCode == null ? "" : createOrgCode;
     }
 
     public void setCreateOrgCode(String createOrgCode) {
@@ -116,7 +117,7 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public String getCreateTime() {
-        return createTime;
+        return createTime == null ? "" : createTime;
     }
 
     public void setCreateTime(String createTime) {
@@ -140,7 +141,7 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public String getCreateUserId() {
-        return createUserId;
+        return createUserId == null ? "" : createUserId;
     }
 
     public void setCreateUserId(String createUserId) {
@@ -148,7 +149,7 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public String getFirstLookTime() {
-        return firstLookTime;
+        return firstLookTime == null ? "" : firstLookTime;
     }
 
     public void setFirstLookTime(String firstLookTime) {
@@ -172,7 +173,7 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return title == null ? "" : title;
     }
 
     public void setTitle(String title) {
@@ -180,6 +181,9 @@ public class WorkTaskInfoBean implements Serializable {
     }
 
     public List<WorkTaskDetailsBean> getWorkTaskDetails() {
+        if (workTaskDetails == null) {
+            return new ArrayList<>();
+        }
         return workTaskDetails;
     }
 
@@ -197,7 +201,7 @@ public class WorkTaskInfoBean implements Serializable {
         private String orgName;
 
         public String getOrgCode() {
-            return orgCode;
+            return orgCode == null ? "" : orgCode;
         }
 
         public void setOrgCode(String orgCode) {
@@ -205,7 +209,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -298,7 +302,7 @@ public class WorkTaskInfoBean implements Serializable {
             }
 
             public String getMobile() {
-                return mobile;
+                return mobile == null ? "" : mobile;
             }
 
             public void setMobile(String mobile) {
@@ -306,7 +310,7 @@ public class WorkTaskInfoBean implements Serializable {
             }
 
             public String getRealName() {
-                return realName;
+                return realName == null ? "" : realName;
             }
 
             public void setRealName(String realName) {
@@ -333,7 +337,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -351,7 +355,7 @@ public class WorkTaskInfoBean implements Serializable {
         private String orgName;
 
         public String getOrgCode() {
-            return orgCode;
+            return orgCode == null ? "" : orgCode;
         }
 
         public void setOrgCode(String orgCode) {
@@ -359,7 +363,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -491,7 +495,7 @@ public class WorkTaskInfoBean implements Serializable {
         private String pictures;
 
         public String getCriterion() {
-            return criterion;
+            return criterion == null ? "" : criterion;
         }
 
         public void setCriterion(String criterion) {
@@ -499,7 +503,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getEndTime() {
-            return endTime;
+            return endTime == null ? "" : endTime;
         }
 
         public void setEndTime(String endTime) {
@@ -531,7 +535,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getInfo() {
-            return info;
+            return info == null ? "" : info;
         }
 
         public void setInfo(String info) {
@@ -547,7 +551,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getJoinPerson() {
-            return joinPerson;
+            return joinPerson == null ? "" : joinPerson;
         }
 
         public void setJoinPerson(String joinPerson) {
@@ -555,7 +559,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getPurpose() {
-            return purpose;
+            return purpose == null ? "" : purpose;
         }
 
         public void setPurpose(String purpose) {
@@ -563,7 +567,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getSysWorkTaskId() {
-            return sysWorkTaskId;
+            return sysWorkTaskId == null ? "" : sysWorkTaskId;
         }
 
         public void setSysWorkTaskId(String sysWorkTaskId) {
@@ -579,7 +583,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {
@@ -587,7 +591,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
 
         public String getPictures() {
-            return pictures;
+            return pictures == null ? "" : pictures;
         }
 
         public void setPictures(String pictures) {

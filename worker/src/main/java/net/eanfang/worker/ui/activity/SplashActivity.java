@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -13,7 +14,6 @@ import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
@@ -22,9 +22,9 @@ import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.yaf.base.entity.WorkerEntity;
 
-import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.PrefUtils;
@@ -48,6 +48,8 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        //bugly初始化
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false);
         init();
 
         //getBaseData();
@@ -74,11 +76,6 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         }
     }
 
-    private void goMain() {
-        startActivity(new Intent(this, MainActivity.class));
-        finishSelf();
-    }
-
     /**
      * 技师上报位置专用
      */
@@ -103,6 +100,57 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
 
             });
         }).start();
+    }
+
+    //加载引导页
+    void firstUse() {
+        if (isFirst) {
+            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_worker, this);
+            try {
+                PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void goLogin() {
+        isFirst = true;
+        startActivity(new Intent(this, LoginActivity.class));
+        finishSelf();
+    }
+
+    /**
+     * token 登陆 验证
+     */
+    public void loginByToken() {
+
+        EanfangHttp.get(UserApi.GET_USER_INFO)
+                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
+                    @Override
+                    public void onSuccess(LoginBean bean) {
+                        if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
+                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+
+                            goMain();
+                        } else {
+                            goLogin();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        goLogin();
+//
+                    }
+                });
+
+    }
+
+    private void goMain() {
+        startActivity(new Intent(this, MainActivity.class));
+        finishSelf();
     }
 
     /**
@@ -149,54 +197,6 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     }
 
                 }));
-    }
-
-
-    //加载引导页
-    void firstUse() {
-        if (isFirst) {
-            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_worker, this);
-            try {
-                PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * token 登陆 验证
-     */
-    public void loginByToken() {
-
-        EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
-                    @Override
-                    public void onSuccess(LoginBean bean) {
-                        if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-
-                            goMain();
-                        } else {
-                            goLogin();
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        goLogin();
-//
-                    }
-                });
-
-    }
-
-
-    @Override
-    public void goLogin() {
-        isFirst = true;
-        startActivity(new Intent(this, LoginActivity.class));
-        finishSelf();
     }
 
 

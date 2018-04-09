@@ -30,7 +30,7 @@
                     android:id="@+id/iv_user_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    fresco:placeholderImage="@mipmap/header"
+                    fresco:placeholderImage="@mipmap/ic_header"
                     fresco:roundAsCircle="true" />
             </LinearLayout>
 

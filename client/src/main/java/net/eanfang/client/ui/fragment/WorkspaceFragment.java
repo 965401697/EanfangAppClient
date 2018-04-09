@@ -28,6 +28,8 @@ import net.eanfang.client.ui.widget.WorkCheckCtrlView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -69,9 +71,9 @@ public class WorkspaceFragment extends BaseFragment {
     private void setLogpic() {
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> be.getOrgUnitEntity().getLogoPic()).toList();
-        if (defaultPic!=null&&!defaultPic.isEmpty()){
-            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + defaultPic.get(0)));
+        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
+        if (defaultPic != null && !defaultPic.isEmpty()) {
+            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + v(() -> defaultPic.get(0))));
         }
 
     }

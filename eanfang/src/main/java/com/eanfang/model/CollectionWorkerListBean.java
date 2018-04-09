@@ -4,6 +4,7 @@ import com.yaf.base.entity.WorkerEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,6 +60,9 @@ public class CollectionWorkerListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -85,22 +89,6 @@ public class CollectionWorkerListBean implements Serializable {
         private UserEntity assigneeUserEntity;
         private WorkerEntity workerEntity;
 
-        public WorkerEntity getWorkerEntity() {
-            return workerEntity;
-        }
-
-        public void setWorkerEntity(WorkerEntity workerEntity) {
-            this.workerEntity = workerEntity;
-        }
-
-        public UserEntity getAssigneeUserEntity() {
-            return assigneeUserEntity;
-        }
-
-        public void setAssigneeUserEntity(UserEntity assigneeUserEntity) {
-            this.assigneeUserEntity = assigneeUserEntity;
-        }
-
         public Long getAssigneeId() {
             return assigneeId;
         }
@@ -109,9 +97,8 @@ public class CollectionWorkerListBean implements Serializable {
             this.assigneeId = assigneeId;
         }
 
-
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -134,7 +121,6 @@ public class CollectionWorkerListBean implements Serializable {
             this.ownerId = ownerId;
         }
 
-
         public int getType() {
             return type;
         }
@@ -143,7 +129,21 @@ public class CollectionWorkerListBean implements Serializable {
             this.type = type;
         }
 
+        public UserEntity getAssigneeUserEntity() {
+            return assigneeUserEntity;
+        }
 
+        public void setAssigneeUserEntity(UserEntity assigneeUserEntity) {
+            this.assigneeUserEntity = assigneeUserEntity;
+        }
+
+        public WorkerEntity getWorkerEntity() {
+            return workerEntity;
+        }
+
+        public void setWorkerEntity(WorkerEntity workerEntity) {
+            this.workerEntity = workerEntity;
+        }
     }
 }
 

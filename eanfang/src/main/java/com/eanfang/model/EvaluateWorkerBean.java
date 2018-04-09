@@ -77,7 +77,7 @@ public class EvaluateWorkerBean implements Serializable {
     }
 
     public String getOrderNum() {
-        return orderNum;
+        return orderNum == null ? "" : orderNum;
     }
 
     public void setOrderNum(String orderNum) {

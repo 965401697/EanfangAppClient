@@ -30,7 +30,7 @@ public class OrderProgressBean implements Serializable {
     private int orderType;
 
     public String getCreateTime() {
-        return createTime;
+        return createTime == null ? "" : createTime;
     }
 
     public void setCreateTime(String createTime) {
@@ -62,7 +62,7 @@ public class OrderProgressBean implements Serializable {
     }
 
     public String getNodeInfo() {
-        return nodeInfo;
+        return nodeInfo == null ? "" : nodeInfo;
     }
 
     public void setNodeInfo(String nodeInfo) {
@@ -70,7 +70,7 @@ public class OrderProgressBean implements Serializable {
     }
 
     public String getNodeName() {
-        return nodeName;
+        return nodeName == null ? "" : nodeName;
     }
 
     public void setNodeName(String nodeName) {

@@ -5,6 +5,7 @@ import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,6 +53,9 @@ public class PayOrderListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -89,48 +93,8 @@ public class PayOrderListBean implements Serializable {
         private OrgEntity ownerCompanyOrg;
         private RepairFailureEntity failureEntity;
 
-        public RepairFailureEntity getFailureEntity() {
-            return failureEntity;
-        }
-
-        public void setFailureEntity(RepairFailureEntity failureEntity) {
-            this.failureEntity = failureEntity;
-        }
-
-        public UserEntity getOfferer() {
-            return offerer;
-        }
-
-        public void setOfferer(UserEntity offerer) {
-            this.offerer = offerer;
-        }
-
-        public UserEntity getReportUser() {
-            return reportUser;
-        }
-
-        public void setReportUser(UserEntity reportUser) {
-            this.reportUser = reportUser;
-        }
-
-        public OrgEntity getAssigneeCompanyOrg() {
-            return assigneeCompanyOrg;
-        }
-
-        public void setAssigneeCompanyOrg(OrgEntity assigneeCompanyOrg) {
-            this.assigneeCompanyOrg = assigneeCompanyOrg;
-        }
-
-        public OrgEntity getOwnerCompanyOrg() {
-            return ownerCompanyOrg;
-        }
-
-        public void setOwnerCompanyOrg(OrgEntity ownerCompanyOrg) {
-            this.ownerCompanyOrg = ownerCompanyOrg;
-        }
-
         public String getAssigneeOrgCode() {
-            return assigneeOrgCode;
+            return assigneeOrgCode == null ? "" : assigneeOrgCode;
         }
 
         public void setAssigneeOrgCode(String assigneeOrgCode) {
@@ -154,7 +118,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -170,7 +134,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getEditTime() {
-            return editTime;
+            return editTime == null ? "" : editTime;
         }
 
         public void setEditTime(String editTime) {
@@ -201,6 +165,13 @@ public class PayOrderListBean implements Serializable {
             this.invoiceCost = invoiceCost;
         }
 
+        public UserEntity getOfferer() {
+            return offerer;
+        }
+
+        public void setOfferer(UserEntity offerer) {
+            this.offerer = offerer;
+        }
 
         public Long getOrderId() {
             return orderId;
@@ -211,7 +182,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getOrderNum() {
-            return orderNum;
+            return orderNum == null ? "" : orderNum;
         }
 
         public void setOrderNum(String orderNum) {
@@ -219,7 +190,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getOwnerOrgCode() {
-            return ownerOrgCode;
+            return ownerOrgCode == null ? "" : ownerOrgCode;
         }
 
         public void setOwnerOrgCode(String ownerOrgCode) {
@@ -243,7 +214,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getProjectName() {
-            return projectName;
+            return projectName == null ? "" : projectName;
         }
 
         public void setProjectName(String projectName) {
@@ -259,7 +230,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getRepairOrderNum() {
-            return repairOrderNum;
+            return repairOrderNum == null ? "" : repairOrderNum;
         }
 
         public void setRepairOrderNum(String repairOrderNum) {
@@ -274,9 +245,16 @@ public class PayOrderListBean implements Serializable {
             this.reportType = reportType;
         }
 
+        public UserEntity getReportUser() {
+            return reportUser;
+        }
+
+        public void setReportUser(UserEntity reportUser) {
+            this.reportUser = reportUser;
+        }
 
         public String getReporter() {
-            return reporter;
+            return reporter == null ? "" : reporter;
         }
 
         public void setReporter(String reporter) {
@@ -284,7 +262,7 @@ public class PayOrderListBean implements Serializable {
         }
 
         public String getReporterPhone() {
-            return reporterPhone;
+            return reporterPhone == null ? "" : reporterPhone;
         }
 
         public void setReporterPhone(String reporterPhone) {
@@ -305,6 +283,30 @@ public class PayOrderListBean implements Serializable {
 
         public void setTotalCost(int totalCost) {
             this.totalCost = totalCost;
+        }
+
+        public OrgEntity getAssigneeCompanyOrg() {
+            return assigneeCompanyOrg;
+        }
+
+        public void setAssigneeCompanyOrg(OrgEntity assigneeCompanyOrg) {
+            this.assigneeCompanyOrg = assigneeCompanyOrg;
+        }
+
+        public OrgEntity getOwnerCompanyOrg() {
+            return ownerCompanyOrg;
+        }
+
+        public void setOwnerCompanyOrg(OrgEntity ownerCompanyOrg) {
+            this.ownerCompanyOrg = ownerCompanyOrg;
+        }
+
+        public RepairFailureEntity getFailureEntity() {
+            return failureEntity;
+        }
+
+        public void setFailureEntity(RepairFailureEntity failureEntity) {
+            this.failureEntity = failureEntity;
         }
     }
 }

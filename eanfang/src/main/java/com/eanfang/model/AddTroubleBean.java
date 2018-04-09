@@ -58,7 +58,7 @@ public class AddTroubleBean implements Serializable {
 
 
     public String getBugtwo() {
-        return bugtwo;
+        return bugtwo == null ? "" : bugtwo;
     }
 
     public void setBugtwo(String bugtwo) {
@@ -66,7 +66,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugtwoname() {
-        return bugtwoname;
+        return bugtwoname == null ? "" : bugtwoname;
     }
 
     public void setBugtwoname(String bugtwoname) {
@@ -74,7 +74,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugthree() {
-        return bugthree;
+        return bugthree == null ? "" : bugthree;
     }
 
     public void setBugthree(String bugthree) {
@@ -82,7 +82,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugthreename() {
-        return bugthreename;
+        return bugthreename == null ? "" : bugthreename;
     }
 
     public void setBugthreename(String bugthreename) {
@@ -90,7 +90,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugfour() {
-        return bugfour;
+        return bugfour == null ? "" : bugfour;
     }
 
     public void setBugfour(String bugfour) {
@@ -98,7 +98,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugfourname() {
-        return bugfourname;
+        return bugfourname == null ? "" : bugfourname;
     }
 
     public void setBugfourname(String bugfourname) {
@@ -106,7 +106,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugposition() {
-        return bugposition;
+        return bugposition == null ? "" : bugposition;
     }
 
     public void setBugposition(String bugposition) {
@@ -114,7 +114,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getEquipnum() {
-        return equipnum;
+        return equipnum == null ? "" : equipnum;
     }
 
     public void setEquipnum(String equipnum) {
@@ -122,7 +122,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugpic1() {
-        return bugpic1;
+        return bugpic1 == null ? "" : bugpic1;
     }
 
     public void setBugpic1(String bugpic1) {
@@ -130,7 +130,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugpic2() {
-        return bugpic2;
+        return bugpic2 == null ? "" : bugpic2;
     }
 
     public void setBugpic2(String bugpic2) {
@@ -138,7 +138,7 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugpic3() {
-        return bugpic3;
+        return bugpic3 == null ? "" : bugpic3;
     }
 
     public void setBugpic3(String bugpic3) {
@@ -146,51 +146,39 @@ public class AddTroubleBean implements Serializable {
     }
 
     public String getBugdesc() {
-        return bugdesc;
+        return bugdesc == null ? "" : bugdesc;
     }
 
     public void setBugdesc(String bugdesc) {
         this.bugdesc = bugdesc;
     }
 
-    /**
-     * 关联的系统故障处理uid（如果客户选择了故障描述参考）
-     */
     public String getDeviceFailureUid() {
-        return deviceFailureUid;
+        return deviceFailureUid == null ? "" : deviceFailureUid;
     }
 
     public void setDeviceFailureUid(String deviceFailureUid) {
         this.deviceFailureUid = deviceFailureUid;
     }
 
-    /**
-     * 关联的系统设备库设备（如果客户设备库选择了系统设备）
-     */
     public String getDeviceUid() {
-        return deviceUid;
+        return deviceUid == null ? "" : deviceUid;
     }
 
     public void setDeviceUid(String deviceUid) {
         this.deviceUid = deviceUid;
     }
 
-    /**
-     * 客户设备库uid（如果报修时选择了客户设备库设备）
-     */
     public String getCustomerDeviceUid() {
-        return customerDeviceUid;
+        return customerDeviceUid == null ? "" : customerDeviceUid;
     }
 
     public void setCustomerDeviceUid(String customerDeviceUid) {
         this.customerDeviceUid = customerDeviceUid;
     }
 
-    /**
-     * 客户设备库设备名称（如果报修时选择了客户设备库设备）
-     */
     public String getCustomerDeviceName() {
-        return customerDeviceName;
+        return customerDeviceName == null ? "" : customerDeviceName;
     }
 
     public void setCustomerDeviceName(String customerDeviceName) {

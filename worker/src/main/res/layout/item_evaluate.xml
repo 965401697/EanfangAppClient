@@ -13,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center_vertical"
-        fresco:placeholderImage="@mipmap/header"
+        fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
 

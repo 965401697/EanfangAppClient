@@ -2,15 +2,11 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 任务发布
  * Created by yaosheng on 2017/6/6.
  */
-@Getter
-@Setter
+
 public class TaskPublishBean implements Serializable {
 
 
@@ -50,5 +46,139 @@ public class TaskPublishBean implements Serializable {
     private Long zone_id;
     private Long business_one_id;
 
+    public String getContacts() {
+        return contacts == null ? "" : contacts;
+    }
 
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getContactsPhone() {
+        return contactsPhone == null ? "" : contactsPhone;
+    }
+
+    public void setContactsPhone(String contactsPhone) {
+        this.contactsPhone = contactsPhone;
+    }
+
+    public String getPublishCompanyName() {
+        return publishCompanyName == null ? "" : publishCompanyName;
+    }
+
+    public void setPublishCompanyName(String publishCompanyName) {
+        this.publishCompanyName = publishCompanyName;
+    }
+
+    public String getProjectCompanyName() {
+        return projectCompanyName == null ? "" : projectCompanyName;
+    }
+
+    public void setProjectCompanyName(String projectCompanyName) {
+        this.projectCompanyName = projectCompanyName;
+    }
+
+    public String getZoneCode() {
+        return zoneCode == null ? "" : zoneCode;
+    }
+
+    public void setZoneCode(String zoneCode) {
+        this.zoneCode = zoneCode;
+    }
+
+    public String getDetailPlace() {
+        return detailPlace == null ? "" : detailPlace;
+    }
+
+    public void setDetailPlace(String detailPlace) {
+        this.detailPlace = detailPlace;
+    }
+
+    public String getLongitude() {
+        return longitude == null ? "" : longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude == null ? "" : latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getToDoorTime() {
+        return toDoorTime == null ? "" : toDoorTime;
+    }
+
+    public void setToDoorTime(String toDoorTime) {
+        this.toDoorTime = toDoorTime;
+    }
+
+    public int getPredicttime() {
+        return predicttime;
+    }
+
+    public void setPredicttime(int predicttime) {
+        this.predicttime = predicttime;
+    }
+
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public String getBusinessOneCode() {
+        return businessOneCode == null ? "" : businessOneCode;
+    }
+
+    public void setBusinessOneCode(String businessOneCode) {
+        this.businessOneCode = businessOneCode;
+    }
+
+    public String getDescription() {
+        return description == null ? "" : description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPictures() {
+        return pictures == null ? "" : pictures;
+    }
+
+    public void setPictures(String pictures) {
+        this.pictures = pictures;
+    }
+
+    public Long getZone_id() {
+        return zone_id;
+    }
+
+    public void setZone_id(Long zone_id) {
+        this.zone_id = zone_id;
+    }
+
+    public Long getBusiness_one_id() {
+        return business_one_id;
+    }
+
+    public void setBusiness_one_id(Long business_one_id) {
+        this.business_one_id = business_one_id;
+    }
 }

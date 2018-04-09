@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,9 @@ public class MessageListBean implements Serializable {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -86,7 +90,7 @@ public class MessageListBean implements Serializable {
         private int type;
 
         public String getAccount() {
-            return account;
+            return account == null ? "" : account;
         }
 
         public void setAccount(String account) {
@@ -94,7 +98,7 @@ public class MessageListBean implements Serializable {
         }
 
         public String getContentInfo() {
-            return contentInfo;
+            return contentInfo == null ? "" : contentInfo;
         }
 
         public void setContentInfo(String contentInfo) {
@@ -102,7 +106,7 @@ public class MessageListBean implements Serializable {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -118,7 +122,7 @@ public class MessageListBean implements Serializable {
         }
 
         public String getOrderId() {
-            return orderId;
+            return orderId == null ? "" : orderId;
         }
 
         public void setOrderId(String orderId) {
@@ -134,7 +138,7 @@ public class MessageListBean implements Serializable {
         }
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {

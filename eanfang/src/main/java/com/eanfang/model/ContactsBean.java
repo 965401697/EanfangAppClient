@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,7 +69,7 @@ public class ContactsBean implements Serializable {
     }
 
     public String getOrgCode() {
-        return orgCode;
+        return orgCode == null ? "" : orgCode;
     }
 
     public void setOrgCode(String orgCode) {
@@ -84,7 +85,7 @@ public class ContactsBean implements Serializable {
     }
 
     public String getOrgName() {
-        return orgName;
+        return orgName == null ? "" : orgName;
     }
 
     public void setOrgName(String orgName) {
@@ -132,6 +133,9 @@ public class ContactsBean implements Serializable {
     }
 
     public List<ChildrenBeanX> getChildren() {
+        if (children == null) {
+            return new ArrayList<>();
+        }
         return children;
     }
 
@@ -140,6 +144,9 @@ public class ContactsBean implements Serializable {
     }
 
     public List<StaffBeanX> getStaff() {
+        if (staff == null) {
+            return new ArrayList<>();
+        }
         return staff;
     }
 
@@ -173,7 +180,7 @@ public class ContactsBean implements Serializable {
         }
 
         public String getOrgCode() {
-            return orgCode;
+            return orgCode == null ? "" : orgCode;
         }
 
         public void setOrgCode(String orgCode) {
@@ -189,7 +196,7 @@ public class ContactsBean implements Serializable {
         }
 
         public String getOrgName() {
-            return orgName;
+            return orgName == null ? "" : orgName;
         }
 
         public void setOrgName(String orgName) {
@@ -197,6 +204,9 @@ public class ContactsBean implements Serializable {
         }
 
         public List<ChildrenBean> getChildren() {
+            if (children == null) {
+                return new ArrayList<>();
+            }
             return children;
         }
 
@@ -205,6 +215,9 @@ public class ContactsBean implements Serializable {
         }
 
         public List<StaffBean> getStaff() {
+            if (staff == null) {
+                return new ArrayList<>();
+            }
             return staff;
         }
 
@@ -234,7 +247,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -242,7 +255,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getOrgId() {
-                return orgId;
+                return orgId == null ? "" : orgId;
             }
 
             public void setOrgId(String orgId) {
@@ -250,7 +263,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -278,7 +291,7 @@ public class ContactsBean implements Serializable {
             private String userId;
 
             public String getAccId() {
-                return accId;
+                return accId == null ? "" : accId;
             }
 
             public void setAccId(String accId) {
@@ -326,7 +339,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getUserId() {
-                return userId;
+                return userId == null ? "" : userId;
             }
 
             public void setUserId(String userId) {
@@ -349,7 +362,7 @@ public class ContactsBean implements Serializable {
                 private String realName;
 
                 public String getAccId() {
-                    return accId;
+                    return accId == null ? "" : accId;
                 }
 
                 public void setAccId(String accId) {
@@ -357,7 +370,7 @@ public class ContactsBean implements Serializable {
                 }
 
                 public String getAvatar() {
-                    return avatar;
+                    return avatar == null ? "" : avatar;
                 }
 
                 public void setAvatar(String avatar) {
@@ -365,7 +378,7 @@ public class ContactsBean implements Serializable {
                 }
 
                 public String getMobile() {
-                    return mobile;
+                    return mobile == null ? "" : mobile;
                 }
 
                 public void setMobile(String mobile) {
@@ -373,7 +386,7 @@ public class ContactsBean implements Serializable {
                 }
 
                 public String getNickName() {
-                    return nickName;
+                    return nickName == null ? "" : nickName;
                 }
 
                 public void setNickName(String nickName) {
@@ -381,7 +394,7 @@ public class ContactsBean implements Serializable {
                 }
 
                 public String getRealName() {
-                    return realName;
+                    return realName == null ? "" : realName;
                 }
 
                 public void setRealName(String realName) {
@@ -411,7 +424,7 @@ public class ContactsBean implements Serializable {
         private String userId;
 
         public String getAccId() {
-            return accId;
+            return accId == null ? "" : accId;
         }
 
         public void setAccId(String accId) {
@@ -459,7 +472,7 @@ public class ContactsBean implements Serializable {
         }
 
         public String getUserId() {
-            return userId;
+            return userId == null ? "" : userId;
         }
 
         public void setUserId(String userId) {
@@ -482,7 +495,7 @@ public class ContactsBean implements Serializable {
             private String realName;
 
             public String getAccId() {
-                return accId;
+                return accId == null ? "" : accId;
             }
 
             public void setAccId(String accId) {
@@ -490,7 +503,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getAvatar() {
-                return avatar;
+                return avatar == null ? "" : avatar;
             }
 
             public void setAvatar(String avatar) {
@@ -498,7 +511,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getMobile() {
-                return mobile;
+                return mobile == null ? "" : mobile;
             }
 
             public void setMobile(String mobile) {
@@ -506,7 +519,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getNickName() {
-                return nickName;
+                return nickName == null ? "" : nickName;
             }
 
             public void setNickName(String nickName) {
@@ -514,7 +527,7 @@ public class ContactsBean implements Serializable {
             }
 
             public String getRealName() {
-                return realName;
+                return realName == null ? "" : realName;
             }
 
             public void setRealName(String realName) {

@@ -33,7 +33,7 @@ public class InfoBackBean implements Serializable {
     private String departmentname;
 
     public String getBirthday() {
-        return birthday;
+        return birthday == null ? "" : birthday;
     }
 
     public void setBirthday(String birthday) {
@@ -41,7 +41,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getCity() {
-        return city;
+        return city == null ? "" : city;
     }
 
     public void setCity(String city) {
@@ -49,7 +49,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getHeadpic() {
-        return headpic;
+        return headpic == null ? "" : headpic;
     }
 
     public void setHeadpic(String headpic) {
@@ -57,7 +57,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getIdentity() {
-        return identity;
+        return identity == null ? "" : identity;
     }
 
     public void setIdentity(String identity) {
@@ -65,7 +65,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getNickname() {
-        return nickname;
+        return nickname == null ? "" : nickname;
     }
 
     public void setNickname(String nickname) {
@@ -73,7 +73,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getRealname() {
-        return realname;
+        return realname == null ? "" : realname;
     }
 
     public void setRealname(String realname) {
@@ -81,7 +81,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getSex() {
-        return sex;
+        return sex == null ? "" : sex;
     }
 
     public void setSex(String sex) {
@@ -89,7 +89,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getStreet() {
-        return street;
+        return street == null ? "" : street;
     }
 
     public void setStreet(String street) {
@@ -97,7 +97,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getZone() {
-        return zone;
+        return zone == null ? "" : zone;
     }
 
     public void setZone(String zone) {
@@ -105,7 +105,7 @@ public class InfoBackBean implements Serializable {
     }
 
     public String getDepartmentname() {
-        return departmentname;
+        return departmentname == null ? "" : departmentname;
     }
 
     public void setDepartmentname(String departmentname) {

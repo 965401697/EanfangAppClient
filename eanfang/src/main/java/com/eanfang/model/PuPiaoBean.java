@@ -29,16 +29,8 @@ public class PuPiaoBean implements Serializable {
     private String postphone;
     private String taxno;
 
-    public String getTaxno() {
-        return taxno;
-    }
-
-    public void setTaxno(String taxno) {
-        this.taxno = taxno;
-    }
-
     public String getOrdernum() {
-        return ordernum;
+        return ordernum == null ? "" : ordernum;
     }
 
     public void setOrdernum(String ordernum) {
@@ -46,7 +38,7 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getType() {
-        return type;
+        return type == null ? "" : type;
     }
 
     public void setType(String type) {
@@ -54,7 +46,7 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getUnitname() {
-        return unitname;
+        return unitname == null ? "" : unitname;
     }
 
     public void setUnitname(String unitname) {
@@ -62,7 +54,7 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getPostname() {
-        return postname;
+        return postname == null ? "" : postname;
     }
 
     public void setPostname(String postname) {
@@ -70,7 +62,7 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getCity() {
-        return city;
+        return city == null ? "" : city;
     }
 
     public void setCity(String city) {
@@ -78,7 +70,7 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getZone() {
-        return zone;
+        return zone == null ? "" : zone;
     }
 
     public void setZone(String zone) {
@@ -86,7 +78,7 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getDetailplace() {
-        return detailplace;
+        return detailplace == null ? "" : detailplace;
     }
 
     public void setDetailplace(String detailplace) {
@@ -94,10 +86,18 @@ public class PuPiaoBean implements Serializable {
     }
 
     public String getPostphone() {
-        return postphone;
+        return postphone == null ? "" : postphone;
     }
 
     public void setPostphone(String postphone) {
         this.postphone = postphone;
+    }
+
+    public String getTaxno() {
+        return taxno == null ? "" : taxno;
+    }
+
+    public void setTaxno(String taxno) {
+        this.taxno = taxno;
     }
 }

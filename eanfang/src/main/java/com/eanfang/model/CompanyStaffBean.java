@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,9 @@ public class CompanyStaffBean implements Serializable {
     }
 
     public List<DataBean> getData() {
+        if (data == null) {
+            return new ArrayList<>();
+        }
         return data;
     }
 
@@ -118,7 +122,7 @@ public class CompanyStaffBean implements Serializable {
         }
 
         public String getUpdateTime() {
-            return updateTime;
+            return updateTime == null ? "" : updateTime;
         }
 
         public void setUpdateTime(String updateTime) {
@@ -163,7 +167,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getEmail() {
-                return email;
+                return email == null ? "" : email;
             }
 
             public void setEmail(String email) {
@@ -171,7 +175,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getMobile() {
-                return mobile;
+                return mobile == null ? "" : mobile;
             }
 
             public void setMobile(String mobile) {
@@ -179,7 +183,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getNickName() {
-                return nickName;
+                return nickName == null ? "" : nickName;
             }
 
             public void setNickName(String nickName) {
@@ -187,7 +191,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getRealName() {
-                return realName;
+                return realName == null ? "" : realName;
             }
 
             public void setRealName(String realName) {
@@ -239,7 +243,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -247,7 +251,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {
@@ -295,7 +299,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getOrgCode() {
-                return orgCode;
+                return orgCode == null ? "" : orgCode;
             }
 
             public void setOrgCode(String orgCode) {
@@ -311,7 +315,7 @@ public class CompanyStaffBean implements Serializable {
             }
 
             public String getOrgName() {
-                return orgName;
+                return orgName == null ? "" : orgName;
             }
 
             public void setOrgName(String orgName) {

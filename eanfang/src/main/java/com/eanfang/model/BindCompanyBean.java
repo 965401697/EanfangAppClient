@@ -28,7 +28,7 @@ public class BindCompanyBean implements Serializable{
     private String businessOneCode;
     private String endTime;
     private Long ownerOrgId;
-    private Object status;
+    private int status;
 
     public Long getAssigneeOrgId() {
         return assigneeOrgId;
@@ -39,7 +39,7 @@ public class BindCompanyBean implements Serializable{
     }
 
     public String getBeginTime() {
-        return beginTime;
+        return beginTime == null ? "" : beginTime;
     }
 
     public void setBeginTime(String beginTime) {
@@ -55,7 +55,7 @@ public class BindCompanyBean implements Serializable{
     }
 
     public String getBusinessOneCode() {
-        return businessOneCode;
+        return businessOneCode == null ? "" : businessOneCode;
     }
 
     public void setBusinessOneCode(String businessOneCode) {
@@ -63,7 +63,7 @@ public class BindCompanyBean implements Serializable{
     }
 
     public String getEndTime() {
-        return endTime;
+        return endTime == null ? "" : endTime;
     }
 
     public void setEndTime(String endTime) {
@@ -78,11 +78,12 @@ public class BindCompanyBean implements Serializable{
         this.ownerOrgId = ownerOrgId;
     }
 
-    public Object getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Object status) {
+    public void setStatus(int status) {
         this.status = status;
     }
+
 }

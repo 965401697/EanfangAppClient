@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
@@ -14,18 +13,14 @@ import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
-import com.eanfang.util.ApkUtils;
 import com.eanfang.util.GuideUtil;
-import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.tencent.bugly.crashreport.CrashReport;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -50,6 +45,8 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        //bugly初始化
+        CrashReport.initCrashReport(getApplicationContext(), com.eanfang.BuildConfig.BUGLY_CLIENT, false);
         init();
 
         //getBaseData();

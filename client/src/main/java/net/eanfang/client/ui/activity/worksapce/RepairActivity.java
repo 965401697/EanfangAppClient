@@ -237,8 +237,9 @@ public class RepairActivity extends BaseClientActivity {
         //如果公司名称为空 则取当前登陆人的公司
         if (StringUtils.isEmpty(etCompanyName.getText())) {
             etCompanyName.setText(name);
-            tvAddress.setText(area);
-            etDetailAddress.setText(address);
+            // 当选择为个人时，拿到的地址没有经纬度 所以进行手动选择
+//            tvAddress.setText(area);
+//            etDetailAddress.setText(address);
         }
         if (StringUtils.isEmpty(etContact.getText())) {
             etContact.setText(user.getAccount().getRealName());

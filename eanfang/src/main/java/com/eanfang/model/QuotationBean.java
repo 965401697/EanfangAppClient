@@ -3,6 +3,7 @@ package com.eanfang.model;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,78 +57,6 @@ public class QuotationBean implements Serializable {
     //用户名称
     private String clientName;
 
-    public Long getOwner_company_id() {
-        return owner_company_id;
-    }
-
-    public void setOwner_company_id(Long owner_company_id) {
-        this.owner_company_id = owner_company_id;
-    }
-
-    public Long getAssignee_company_id() {
-        return assignee_company_id;
-    }
-
-    public void setAssignee_company_id(Long assignee_company_id) {
-        this.assignee_company_id = assignee_company_id;
-    }
-
-    public String getZone_code() {
-        return zone_code;
-    }
-
-    public void setZone_code(String zone_code) {
-        this.zone_code = zone_code;
-    }
-
-    public Long getZone_id() {
-        return zone_id;
-    }
-
-    public void setZone_id(Long zone_id) {
-        this.zone_id = zone_id;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getDetail_place() {
-        return detail_place;
-    }
-
-    public void setDetail_place(String detail_place) {
-        this.detail_place = detail_place;
-    }
-
-    public UserEntity getOfferer() {
-        return offerer;
-    }
-
-    public void setOfferer(UserEntity offerer) {
-        this.offerer = offerer;
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
-    }
-
     public Long getOrderId() {
         return orderId;
     }
@@ -137,7 +66,7 @@ public class QuotationBean implements Serializable {
     }
 
     public String getOrderNum() {
-        return orderNum;
+        return orderNum == null ? "" : orderNum;
     }
 
     public void setOrderNum(String orderNum) {
@@ -153,7 +82,7 @@ public class QuotationBean implements Serializable {
     }
 
     public String getRepairOrderNum() {
-        return repairOrderNum;
+        return repairOrderNum == null ? "" : repairOrderNum;
     }
 
     public void setRepairOrderNum(String repairOrderNum) {
@@ -161,7 +90,7 @@ public class QuotationBean implements Serializable {
     }
 
     public String getProjectName() {
-        return projectName;
+        return projectName == null ? "" : projectName;
     }
 
     public void setProjectName(String projectName) {
@@ -193,7 +122,7 @@ public class QuotationBean implements Serializable {
     }
 
     public String getReporter() {
-        return reporter;
+        return reporter == null ? "" : reporter;
     }
 
     public void setReporter(String reporter) {
@@ -201,7 +130,7 @@ public class QuotationBean implements Serializable {
     }
 
     public String getReporterPhone() {
-        return reporterPhone;
+        return reporterPhone == null ? "" : reporterPhone;
     }
 
     public void setReporterPhone(String reporterPhone) {
@@ -225,14 +154,73 @@ public class QuotationBean implements Serializable {
     }
 
     public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+        return assigneeOrgCode == null ? "" : assigneeOrgCode;
     }
 
     public void setAssigneeOrgCode(String assigneeOrgCode) {
         this.assigneeOrgCode = assigneeOrgCode;
     }
 
+    public String getZone_code() {
+        return zone_code == null ? "" : zone_code;
+    }
+
+    public void setZone_code(String zone_code) {
+        this.zone_code = zone_code;
+    }
+
+    public Long getZone_id() {
+        return zone_id;
+    }
+
+    public void setZone_id(Long zone_id) {
+        this.zone_id = zone_id;
+    }
+
+    public String getLongitude() {
+        return longitude == null ? "" : longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude == null ? "" : latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getDetail_place() {
+        return detail_place == null ? "" : detail_place;
+    }
+
+    public void setDetail_place(String detail_place) {
+        this.detail_place = detail_place;
+    }
+
+    public Long getOwner_company_id() {
+        return owner_company_id;
+    }
+
+    public void setOwner_company_id(Long owner_company_id) {
+        this.owner_company_id = owner_company_id;
+    }
+
+    public Long getAssignee_company_id() {
+        return assignee_company_id;
+    }
+
+    public void setAssignee_company_id(Long assignee_company_id) {
+        this.assignee_company_id = assignee_company_id;
+    }
+
     public List<QuoteDevicesBean> getQuoteDevices() {
+        if (quoteDevices == null) {
+            return new ArrayList<>();
+        }
         return quoteDevices;
     }
 
@@ -241,6 +229,9 @@ public class QuotationBean implements Serializable {
     }
 
     public List<QuotePartsBean> getQuoteParts() {
+        if (quoteParts == null) {
+            return new ArrayList<>();
+        }
         return quoteParts;
     }
 
@@ -249,11 +240,30 @@ public class QuotationBean implements Serializable {
     }
 
     public List<QuoteServicesBean> getQuoteServices() {
+        if (quoteServices == null) {
+            return new ArrayList<>();
+        }
         return quoteServices;
     }
 
     public void setQuoteServices(List<QuoteServicesBean> quoteServices) {
         this.quoteServices = quoteServices;
+    }
+
+    public UserEntity getOfferer() {
+        return offerer;
+    }
+
+    public void setOfferer(UserEntity offerer) {
+        this.offerer = offerer;
+    }
+
+    public String getClientName() {
+        return clientName == null ? "" : clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 
     public static class QuoteDevicesBean implements Serializable {
@@ -279,38 +289,6 @@ public class QuotationBean implements Serializable {
         private String remarkInfo;
         private String business_three_code;
 
-        public String getBusiness_three_code() {
-            return business_three_code;
-        }
-
-        public void setBusiness_three_code(String business_three_code) {
-            this.business_three_code = business_three_code;
-        }
-
-        public String getProducerName() {
-            return producerName;
-        }
-
-        public void setProducerName(String producerName) {
-            this.producerName = producerName;
-        }
-
-        public String getProducerPlace() {
-            return producerPlace;
-        }
-
-        public void setProducerPlace(String producerPlace) {
-            this.producerPlace = producerPlace;
-        }
-
-        public String getRemarkInfo() {
-            return remarkInfo;
-        }
-
-        public void setRemarkInfo(String remark_info) {
-            this.remarkInfo = remark_info;
-        }
-
         public Long getShopDeviceId() {
             return shopDeviceId;
         }
@@ -320,7 +298,7 @@ public class QuotationBean implements Serializable {
         }
 
         public String getModelCode() {
-            return modelCode;
+            return modelCode == null ? "" : modelCode;
         }
 
         public void setModelCode(String modelCode) {
@@ -343,7 +321,7 @@ public class QuotationBean implements Serializable {
             this.count = count;
         }
 
-        public float getUnitPrice() {
+        public int getUnitPrice() {
             return unitPrice;
         }
 
@@ -360,11 +338,46 @@ public class QuotationBean implements Serializable {
         }
 
         public List<ParamsBean> getParams() {
+            if (params == null) {
+                return new ArrayList<>();
+            }
             return params;
         }
 
         public void setParams(List<ParamsBean> params) {
             this.params = params;
+        }
+
+        public String getProducerName() {
+            return producerName == null ? "" : producerName;
+        }
+
+        public void setProducerName(String producerName) {
+            this.producerName = producerName;
+        }
+
+        public String getProducerPlace() {
+            return producerPlace == null ? "" : producerPlace;
+        }
+
+        public void setProducerPlace(String producerPlace) {
+            this.producerPlace = producerPlace;
+        }
+
+        public String getRemarkInfo() {
+            return remarkInfo == null ? "" : remarkInfo;
+        }
+
+        public void setRemarkInfo(String remarkInfo) {
+            this.remarkInfo = remarkInfo;
+        }
+
+        public String getBusiness_three_code() {
+            return business_three_code == null ? "" : business_three_code;
+        }
+
+        public void setBusiness_three_code(String business_three_code) {
+            this.business_three_code = business_three_code;
         }
 
         public static class ParamsBean implements Serializable {
@@ -387,7 +400,7 @@ public class QuotationBean implements Serializable {
             }
 
             public String getParamValue() {
-                return paramValue;
+                return paramValue == null ? "" : paramValue;
             }
 
             public void setParamValue(String paramValue) {
@@ -395,7 +408,7 @@ public class QuotationBean implements Serializable {
             }
 
             public String getParamName() {
-                return paramName;
+                return paramName == null ? "" : paramName;
             }
 
             public void setParamName(String paramName) {
@@ -424,14 +437,6 @@ public class QuotationBean implements Serializable {
         private String partSpeciication;
         //配件名称
         private String partName;
-
-        public String getPartName() {
-            return partName;
-        }
-
-        public void setPartName(String partName) {
-            this.partName = partName;
-        }
 
         public Long getShopAccessoriesPartId() {
             return shopAccessoriesPartId;
@@ -482,11 +487,19 @@ public class QuotationBean implements Serializable {
         }
 
         public String getPartSpeciication() {
-            return partSpeciication;
+            return partSpeciication == null ? "" : partSpeciication;
         }
 
         public void setPartSpeciication(String partSpeciication) {
             this.partSpeciication = partSpeciication;
+        }
+
+        public String getPartName() {
+            return partName == null ? "" : partName;
+        }
+
+        public void setPartName(String partName) {
+            this.partName = partName;
         }
     }
 
@@ -520,7 +533,7 @@ public class QuotationBean implements Serializable {
         }
 
         public String getServiceName() {
-            return serviceName;
+            return serviceName == null ? "" : serviceName;
         }
 
         public void setServiceName(String serviceName) {
@@ -528,7 +541,7 @@ public class QuotationBean implements Serializable {
         }
 
         public String getServiceContent() {
-            return serviceContent;
+            return serviceContent == null ? "" : serviceContent;
         }
 
         public void setServiceContent(String serviceContent) {
@@ -552,7 +565,7 @@ public class QuotationBean implements Serializable {
         }
 
         public String getServiceValue() {
-            return serviceValue;
+            return serviceValue == null ? "" : serviceValue;
         }
 
         public void setServiceValue(String serviceValue) {

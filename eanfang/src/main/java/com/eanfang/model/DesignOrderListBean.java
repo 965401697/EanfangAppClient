@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,9 @@ public class DesignOrderListBean {
     }
 
     public List<ListBean> getList() {
+        if (list == null) {
+            return new ArrayList<>();
+        }
         return list;
     }
 
@@ -108,7 +112,7 @@ public class DesignOrderListBean {
         private String zoneCode;
 
         public String getBudgetLimit() {
-            return budgetLimit;
+            return budgetLimit == null ? "" : budgetLimit;
         }
 
         public void setBudgetLimit(String budgetLimit) {
@@ -116,7 +120,7 @@ public class DesignOrderListBean {
         }
 
         public String getBusinessOneCode() {
-            return businessOneCode;
+            return businessOneCode == null ? "" : businessOneCode;
         }
 
         public void setBusinessOneCode(String businessOneCode) {
@@ -124,7 +128,7 @@ public class DesignOrderListBean {
         }
 
         public String getContactPhone() {
-            return contactPhone;
+            return contactPhone == null ? "" : contactPhone;
         }
 
         public void setContactPhone(String contactPhone) {
@@ -132,7 +136,7 @@ public class DesignOrderListBean {
         }
 
         public String getContactUser() {
-            return contactUser;
+            return contactUser == null ? "" : contactUser;
         }
 
         public void setContactUser(String contactUser) {
@@ -140,7 +144,7 @@ public class DesignOrderListBean {
         }
 
         public String getCreateOrgCode() {
-            return createOrgCode;
+            return createOrgCode == null ? "" : createOrgCode;
         }
 
         public void setCreateOrgCode(String createOrgCode) {
@@ -148,7 +152,7 @@ public class DesignOrderListBean {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
@@ -172,7 +176,7 @@ public class DesignOrderListBean {
         }
 
         public String getDetailPlace() {
-            return detailPlace;
+            return detailPlace == null ? "" : detailPlace;
         }
 
         public void setDetailPlace(String detailPlace) {
@@ -188,7 +192,7 @@ public class DesignOrderListBean {
         }
 
         public String getLatitude() {
-            return latitude;
+            return latitude == null ? "" : latitude;
         }
 
         public void setLatitude(String latitude) {
@@ -196,7 +200,7 @@ public class DesignOrderListBean {
         }
 
         public String getLongitude() {
-            return longitude;
+            return longitude == null ? "" : longitude;
         }
 
         public void setLongitude(String longitude) {
@@ -204,7 +208,7 @@ public class DesignOrderListBean {
         }
 
         public String getOrderNum() {
-            return orderNum;
+            return orderNum == null ? "" : orderNum;
         }
 
         public void setOrderNum(String orderNum) {
@@ -220,7 +224,7 @@ public class DesignOrderListBean {
         }
 
         public String getRemarkInfo() {
-            return remarkInfo;
+            return remarkInfo == null ? "" : remarkInfo;
         }
 
         public void setRemarkInfo(String remarkInfo) {
@@ -244,7 +248,7 @@ public class DesignOrderListBean {
         }
 
         public String getUserName() {
-            return userName;
+            return userName == null ? "" : userName;
         }
 
         public void setUserName(String userName) {
@@ -252,7 +256,7 @@ public class DesignOrderListBean {
         }
 
         public String getZoneCode() {
-            return zoneCode;
+            return zoneCode == null ? "" : zoneCode;
         }
 
         public void setZoneCode(String zoneCode) {
