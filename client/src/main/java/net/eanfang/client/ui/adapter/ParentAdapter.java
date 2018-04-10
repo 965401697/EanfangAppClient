@@ -38,7 +38,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         helper.addOnClickListener(R.id.tv_outside_company);
         helper.addOnClickListener(R.id.ll_part_company);
         helper.setText(R.id.tv_company_name, item.getOrgName());
-        imageView.setImageResource(R.drawable.contend_ic_management_default);
+        imageView.setImageResource(R.mipmap.ic_contact_setting);
         imageView.setTag(false);
         rl_father.setTag(false);
         helper.addOnClickListener(R.id.tv_auth_status);

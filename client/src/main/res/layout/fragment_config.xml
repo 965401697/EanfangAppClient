@@ -3,7 +3,9 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_white"
     android:orientation="vertical">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,96 +17,134 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll_header"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:background="#fe8f64"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_personal_top_back"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_setting"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/nav_ic_setup_pressed" />
-
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_user_header"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    fresco:placeholderImage="@mipmap/ic_header"
-                    fresco:roundAsCircle="true" />
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/tv_user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center_vertical"
-                        android:text="小明童鞋"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/textSize_14" />
-                    <ImageView
-                        android:paddingTop="10dp"
-                        android:layout_width="10dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/contend_ic_v"/>
-                </LinearLayout>
-
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dimen_20">
+
+                    <ImageView
+                        android:id="@+id/iv_setting"
+                        android:layout_width="22dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="16dp"
+                        android:padding="2dp"
+                        android:src="@mipmap/ic_personal_setting" />
 
                     <TextView
+                        android:id="@+id/tv_homeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/iv_scan"
+                        android:gravity="center"
+                        android:text="个人中心"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_15" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_60">
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:text="信用值："
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textSize_10" />
+                        android:layout_marginLeft="@dimen/dimen_32"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_credit_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textSize_10" />
+                        <TextView
+                            android:id="@+id/tv_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:drawablePadding="@dimen/dimen_20"
+                            android:drawableRight="@mipmap/ic_personal_qrcode"
+                            android:gravity="center_vertical"
+                            android:text="小明童鞋"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/textSize_20" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="积分:"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textSize_10" />
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent"
+                            android:paddingTop="10dp"
+                            android:src="@drawable/contend_ic_v"
+                            android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/tv_accumulate_poin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/textSize_10" />
-                </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_28"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:text="信用值："
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:id="@+id/tv_credit_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/textSize_12" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="积分:"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:id="@+id/tv_accumulate_poin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/textSize_12" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_user_header"
+                        android:layout_width="@dimen/dimen_160"
+                        android:layout_height="@dimen/dimen_160"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="@dimen/dimen_70"
+                        fresco:placeholderImage="@mipmap/ic_header"
+                        fresco:roundAsCircle="true" />
+                </RelativeLayout>
 
             </LinearLayout>
-            <!---->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,7 +165,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/contend_ic_invitation_default" />
+                        android:src="@mipmap/ic_personal_wallet" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -134,77 +174,149 @@
                         android:layout_gravity="center_vertical"
                         android:layout_toEndOf="@+id/imageView2"
                         android:text="钱包"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentEnd="true"
                         android:layout_alignTop="@+id/imageView2"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="11dp"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/bg_under_line" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_90">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="noOpen"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0.00"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/textSize_12" />
+                            android:gravity="center"
+                            android:onClick="noOpen"
+                            android:orientation="horizontal">
 
-                        <TextView
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="余额："
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1.23456"
+                                android:textColor="@color/color_personal_text"
+                                android:textSize="@dimen/textSize_12" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="余额"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textSize_10" />
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:gravity="center"
+                            android:onClick="noOpen"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="银行卡"
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/color_personal_text"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="个"
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_12" />
+
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
                         android:orientation="vertical"
-                        android:weightSum="1">
+                        android:paddingLeft="@dimen/dimen_50">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:onClick="noOpen"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="红包："
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/color_personal_text"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:text="个"
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_12" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:gravity="center"
                             android:onClick="noOpen"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="优惠券"
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_12" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:text="0"
-                                android:textColor="@color/black"
+                                android:textColor="@color/color_personal_text"
                                 android:textSize="@dimen/textSize_12" />
 
                             <TextView
@@ -212,102 +324,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="2dp"
                                 android:text="个"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/textSize_10" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="红包"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textSize_10" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:onClick="noOpen"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="@color/black"
+                                android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_12" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="个"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/textSize_10" />
+
                         </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="优惠券"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textSize_10" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:onClick="noOpen"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/textSize_12" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="2dp"
-                                android:text="个"
-                                android:textColor="@color/gray"
-                                android:textSize="@dimen/textSize_10" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="银行卡"
-                            android:textColor="@color/gray"
-                            android:textSize="@dimen/textSize_10" />
-
-
                     </LinearLayout>
 
                 </LinearLayout>
@@ -315,11 +336,16 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_34"
+                android:background="@color/color_new_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -332,11 +358,11 @@
 
                     <ImageView
                         android:id="@+id/imageView7"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_integral_default" />
+                        android:src="@mipmap/ic_personal_integral" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -345,21 +371,22 @@
                         android:layout_marginStart="13dp"
                         android:layout_toEndOf="@+id/imageView7"
                         android:text="积分"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_under_line" />
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -370,11 +397,11 @@
 
                     <ImageView
                         android:id="@+id/imageView9"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_creditrating_default" />
+                        android:src="@mipmap/ic_personal_credit" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -383,21 +410,22 @@
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView9"
                         android:text="信用等级"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_under_line" />
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -408,11 +436,11 @@
 
                     <ImageView
                         android:id="@+id/imageView15"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_membercenter_default" />
+                        android:src="@mipmap/ic_personal_vip" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -421,21 +449,22 @@
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView15"
                         android:text="会员中心"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_under_line" />
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -446,11 +475,11 @@
 
                     <ImageView
                         android:id="@+id/imageView10"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_activity_default" />
+                        android:src="@mipmap/ic_personal_active" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -459,40 +488,37 @@
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView10"
                         android:text="活动"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@color/white"
-                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line" />
 
                 <RelativeLayout
                     android:id="@+id/rl_evaluate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
-
                     android:padding="10dp">
 
                     <ImageView
                         android:id="@+id/imageView11"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_evaluate_default" />
+                        android:src="@mipmap/ic_personal_evaluate" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -501,21 +527,22 @@
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView11"
                         android:text="评价"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_under_line" />
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line" />
 
                 <RelativeLayout
                     android:id="@+id/rl_collect"
@@ -527,11 +554,11 @@
 
                     <ImageView
                         android:id="@+id/imageView12"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_collect_default" />
+                        android:src="@mipmap/ic_personal_collect" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -539,29 +566,31 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
                         android:layout_toEndOf="@+id/imageView12"
-                        android:text="收藏"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/textSize_12" />
+                        android:text="我的收藏"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_under_line" />
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
                     android:onClick="noOpen"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imageView13"
@@ -582,17 +611,19 @@
                         android:textSize="@dimen/textSize_12" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@drawable/bg_under_line" />
+                    android:layout_marginLeft="@dimen/dimen_90"
+                    android:background="@color/color_new_line"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/rl_ivite"
@@ -603,11 +634,11 @@
 
                     <ImageView
                         android:id="@+id/imageView14"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_40"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_invitation_default" />
+                        android:src="@mipmap/ic_personal_invite" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -620,11 +651,11 @@
                         android:textSize="@dimen/textSize_12" />
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/contend_ic_return_pressed" />
+                        android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

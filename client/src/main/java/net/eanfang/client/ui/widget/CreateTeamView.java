@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -38,6 +39,8 @@ public class CreateTeamView extends BaseDialog {
     TextView tvCancle;
     @BindView(R.id.tv_confirm)
     TextView tvConfirm;
+    @BindView(R.id.tl_close)
+    RelativeLayout tlClose;
     private Activity mContext;
 
     //回调函数
@@ -68,6 +71,7 @@ public class CreateTeamView extends BaseDialog {
 
     private void initView() {
         tvCancle.setOnClickListener(v -> dismiss());
+        tlClose.setOnClickListener(v -> dismiss());
         tvConfirm.setOnClickListener(v -> createCompany());
     }
 
