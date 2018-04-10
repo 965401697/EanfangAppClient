@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'org.greenrobot.greendao' // apply plugin
 //lambda
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -50,13 +49,6 @@ android {
     }
     dataBinding {
         enabled = true
-    }
-    //greendao配置
-    greendao {
-        //版本号，升级时可配置
-        schemaVersion 1
-        daoPackage 'com.greendao.downloader'//设置DaoMaster、DaoSession、Dao包名
-        targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
     }
 }
 
@@ -146,9 +138,6 @@ dependencies {
 
     //app updata
     compile 'com.qianwen:update-app:3.4.1'
-
-    //greendao
-    implementation 'org.greenrobot:greendao:3.2.2' // add library
 
     //高德
     implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
