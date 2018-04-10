@@ -2,119 +2,74 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:padding="5dp"
+    android:layout_marginTop="@dimen/dimen_40"
     android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="@dimen/dimen_30"
         android:text="辅助工具"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textSize_14"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_16"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_36"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_camera"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_work_camera"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_camera"
+            android:text="@string/text_work_camera" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_camera_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="相机"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_calculatedcode_rate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_calculate"
+            style="@style/style_client_work_meun"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:drawableTop="@mipmap/ic_client_work_calculate"
+            android:text="@string/text_work_calculate" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_calculatedcoderate_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="计算汇率"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_experr_answer"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_answer"
+            style="@style/style_client_work_meun"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:drawableTop="@mipmap/ic_client_work_answer"
+            android:text="@string/text_work_answer" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_expertanswerl_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="专家解答"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_industry_knowledge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_knowledge"
+            style="@style/style_client_work_meun"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:drawableTop="@mipmap/ic_client_work_knowledge"
+            android:text="@string/text_work_knowledge" />
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_industryknowledge_default" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_36"
+        android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="行业知识"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_tm"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_tm"
+            android:text="@string/text_work_tm" />
+
+        <TextView
+            android:id="@+id/tv_work_jd"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_jd"
+            android:text="@string/text_work_jd" />
+
+        <TextView style="@style/style_client_work_meun" />
+
+        <TextView style="@style/style_client_work_meun" />
     </LinearLayout>
 
 

@@ -2,32 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#fe8f64">
+        android:background="@drawable/ic_main_top_back">
 
         <ImageView
             android:id="@+id/iv_camera"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="26dp"
+            android:layout_height="22dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/nav_ic_camera_pressed" />
+            android:layout_marginLeft="18dp"
+            android:padding="2dp"
+            android:src="@mipmap/ic_main_top_camera" />
 
         <ImageView
             android:id="@+id/iv_scan"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="22dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/nav_ic_scan_pressed" />
+            android:layout_marginRight="16dp"
+            android:padding="2dp"
+            android:src="@mipmap/ic_main_top_qrcode" />
 
         <TextView
             android:id="@+id/tv_homeTitle"
@@ -39,12 +40,8 @@
             android:gravity="center"
             android:text="易安防"
             android:textColor="@color/white"
-            android:textSize="@dimen/textSize_20" />
+            android:textSize="@dimen/textSize_15" />
     </RelativeLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@drawable/contend__gradienttone"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -58,31 +55,38 @@
             <com.eanfang.witget.BannerView
                 android:id="@+id/bv_loop"
                 android:layout_width="match_parent"
-                android:layout_height="140dp" />
+                android:layout_height="140dp"
+                android:visibility="visible" />
 
             <include layout="@layout/layout_home_function" />
 
             <include layout="@layout/layout_roll_msg" />
 
             <include layout="@layout/layout_count" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <include layout="@layout/layout_home_data" />
+
+                <include layout="@layout/layout_home_data" />
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="#f2f2f2"/>
-            <TextView
-                android:text="安防圈"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textSize_12"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_marginLeft="@dimen/dimen_28"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:text="安防圈"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
         </LinearLayout>
 
     </ScrollView>
-
 
 
 </LinearLayout>

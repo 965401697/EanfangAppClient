@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#FF7C26</color>
+    <color name="colorPrimaryDark">#FF7C26</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimary_client">#3F51B5</color>
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
@@ -33,4 +33,10 @@
     <color name="config_black_color">#323333</color>
     <color name="camera_color">#ff0000</color>
     <color name="work_logo_color">#2196f3</color>
+
+    <!-- 首页 -->
+    <color name="color_client_menu">#666</color>
+    <color name="color_client_neworder">#333333</color>
+    <color name="color_client_notice_solid">#f0f0f0</color>
+    <color name="color_client_data_item_title">#FB973B</color>
 </resources>

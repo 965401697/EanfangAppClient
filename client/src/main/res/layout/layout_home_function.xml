@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginTop="@dimen/size_level5"
+    android:layout_marginLeft="@dimen/item_margin_10"
+    android:layout_marginRight="@dimen/item_margin_10"
     android:background="@color/white"
-    android:padding="5dp"
     android:orientation="vertical">
 
 
@@ -13,194 +14,59 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_repair_add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_reparir"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_client_home_repair"
+            android:text="@string/text_home_reapir" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_iwanttorepairdefault" />
+        <TextView
+            android:id="@+id/tv_install"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_client_home_install"
+            android:text="@string/text_home_install" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="我要报修"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_design"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_client_home_design"
+            android:text="@string/text_home_design" />
 
-        <LinearLayout
-            android:id="@+id/ll_install_add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_unlock"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_client_home_unlock"
+            android:text="@string/text_home_unlock" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_iwantanewspaperoutfit_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="我要报装"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_design_add"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_freedesign_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="免费设计"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_open_door"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_unlock_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="开锁"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/size_level4"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_sign"
+        <TextView
+            android:id="@+id/tv_service"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_client_home_service"
+            android:text="@string/text_home_service" />
+
+        <TextView
+            android:id="@+id/tv_monitor"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_client_home_monitor"
+            android:text="@string/text_home_monitor" />
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_signin_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="签到"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_live_video"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_real_timemonitoring_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="实时监控"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_tm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_tmallsecurity_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="天猫安防"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_jd"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_jingdongsecurity_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="京东安防"
-                android:textSize="@dimen/textSize_10" />
-
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -17,6 +17,7 @@ import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
+import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
@@ -103,15 +104,15 @@ public class WorkspaceFragment extends BaseFragment {
      */
     private void progressCtrl() {
         //报修管控
-        findViewById(R.id.ll_repair_manage).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_repair).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
         });
         //报装管控
-        findViewById(R.id.ll_install_manage).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_install).setOnClickListener((v) -> {
             new InstallCtrlView(getActivity(), true).show();
         });
         //报价管控
-        findViewById(R.id.ll_quote_manage).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_price).setOnClickListener((v) -> {
             if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
                 startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
             } else {
@@ -119,21 +120,36 @@ public class WorkspaceFragment extends BaseFragment {
             }
         });
         //维保管控
-        findViewById(R.id.ll_order_manage).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_maintain).setOnClickListener((v) -> {
 //            new MaintainCtrlView(getActivity(), true).show();
             showToast(".....");
         });
 
         //免费设计
-        findViewById(R.id.ll_design_add).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_design).setOnClickListener((v) -> {
             new DesignCtrlView(getActivity(), true).show();
         });
     }
 
+    /**
+     * 辅助工具
+     */
     private void helpTools() {
         //相机
-        findViewById(R.id.ll_camera).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
+        });
+        //天猫安防
+        findViewById(R.id.tv_work_tm).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "https://list.tmall.com/search_product.htm?q=%B0%B2%B7%C0&type=p&vmarket=&spm=875.7931836%2FB.a2227oh.d100&from=mallfp..pc_1_searchbutton")
+                    .putExtra("title", "天猫安防"));
+        });
+        //京东安防
+        findViewById(R.id.tv_work_jd).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
+                    .putExtra("title", "京东安防"));
         });
     }
 
@@ -142,22 +158,22 @@ public class WorkspaceFragment extends BaseFragment {
      */
     private void teamWork() {
         //签到
-        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_sign).setOnClickListener((v) -> {
             new SignCtrlView(getActivity()).show();
         });
 
         //工作汇报
-        findViewById(R.id.ll_work_report).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
             new ReportCtrlView(getActivity(), true).show();
         });
 
         //工作任务
-        findViewById(R.id.ll_assignment_task).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
             new TaskCtrlView(getActivity(), true).show();
         });
 
         //检查
-        findViewById(R.id.ll_job_check).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
         });
 

@@ -88,5 +88,10 @@
     <!--<item name="tabSelectedTextColor">@color/client</item>-->
     <!--</style>-->
 
-
+    <!-- base color -->
+    <style name="NewBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 </resources>

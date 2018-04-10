@@ -37,6 +37,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
     <style name="dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -65,9 +66,11 @@
         <!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
     <style name="Translucent_NoTitle" parent="@android:style/Theme">
         <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
-        <item name="android:windowBackground">@android:color/transparent</item> <!-- 设置window背景透明，也就是去边框 -->
+        <item name="android:windowBackground">@android:color/transparent
+        </item> <!-- 设置window背景透明，也就是去边框 -->
     </style>
 
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
@@ -75,5 +78,25 @@
         <item name="tabIndicatorColor">@color/client</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabSelectedTextColor">@color/client</item>
+    </style>
+
+    <style name="style_client_home_meun">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/color_client_menu</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
+    </style>
+    <style name="style_client_work_meun">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dimen_20</item>
+        <item name="android:textColor">@color/color_client_menu</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
     </style>
 </resources>

@@ -8,15 +8,15 @@
     <color name="color_00">#00000000</color>
     <color name="color_gray">#cccccc</color>
     <color name="white">#ffffff</color>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#FF7C26</color>
     <color name="transparent_gray">#f8f8f8</color>
     <color name="transparent">#00000000</color>
 
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#FF7C26</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimary_client">#3F51B5</color>
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <color name="title_bar_color">#F8602F</color>
+    <color name="title_bar_color">#FF7C26</color>
     <color name="window_background">#f0f0f0</color>
     <color name="client">#2c88cb</color>
     <color name="font_color">#8b8b8b</color>
@@ -45,6 +45,8 @@
     <color name="color_text_selected">#00ff00</color>
     <color name="color_text_normal">#e6e6e6</color>
 
+    <color name="roll_title">#333333</color>
+    <color name="roll_content">#666666</color>
 
     <!--
     十进制转十六进制

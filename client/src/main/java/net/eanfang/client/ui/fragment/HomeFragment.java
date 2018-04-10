@@ -83,49 +83,39 @@ public class HomeFragment extends BaseFragment {
      * 工作按钮
      */
     private void initIconClick() {
-        //报修
-        findViewById(R.id.ll_repair_add).setOnClickListener((v) -> {
+        //我要报修
+        findViewById(R.id.tv_reparir).setOnClickListener((v) -> {
             RepairActivity.jumpToActivity(getActivity());
         });
-
-        //报装
-        findViewById(R.id.ll_install_add).setOnClickListener((v) -> {
+        //我要报装
+        findViewById(R.id.tv_install).setOnClickListener((v) -> {
             InstallActivity.jumpActivity(getActivity());
         });
-        //设计
-        findViewById(R.id.ll_design_add).setOnClickListener((v) -> {
+        //免费设计
+        findViewById(R.id.tv_design).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), DesignActivity.class));
         });
         //开锁
-        findViewById(R.id.ll_open_door).setOnClickListener(v -> showToast("暂缓开通"));
+        findViewById(R.id.tv_unlock).setOnClickListener(v -> showToast("暂缓开通"));
         //实时监控
-        findViewById(R.id.ll_live_video).setOnClickListener(v -> showToast("暂缓开通"));
-        //天猫安防
-        findViewById(R.id.ll_tm).setOnClickListener((v) -> {
+        findViewById(R.id.tv_monitor).setOnClickListener(v -> showToast("暂缓开通"));
+        //客服
+        findViewById(R.id.tv_service).setOnClickListener(v -> showToast("暂缓开通"));
 
-            startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "https://list.tmall.com/search_product.htm?q=%B0%B2%B7%C0&type=p&vmarket=&spm=875.7931836%2FB.a2227oh.d100&from=mallfp..pc_1_searchbutton")
-                    .putExtra("title", "天猫安防"));
-        });
-        //京东安防
-        findViewById(R.id.ll_jd).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
-                    .putExtra("title", "京东安防"));
-        });
+
         //签到
-        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
-            new SignCtrlView(getActivity()).show();
-        });
+//        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
+//            new SignCtrlView(getActivity()).show();
+//        });
     }
 
     /**
      * 统计
      */
     private void initCount() {
-        findViewById(R.id.rl_today_repair).setOnClickListener(v -> jumpWebview());
-        findViewById(R.id.rl_free_install).setOnClickListener(v -> jumpWebview());
-        findViewById(R.id.rl_free_design).setOnClickListener(v -> jumpWebview());
+//        findViewById(R.id.rl_today_repair).setOnClickListener(v -> jumpWebview());
+//        findViewById(R.id.rl_free_install).setOnClickListener(v -> jumpWebview());
+//        findViewById(R.id.rl_free_design).setOnClickListener(v -> jumpWebview());
     }
 
     private void jumpWebview() {
@@ -165,16 +155,26 @@ public class HomeFragment extends BaseFragment {
     private void initRollTextView() {
         rollTextView = findViewById(R.id.home_recommand_ad_text);
         List<String> data = new ArrayList<>();
+        ;
+        List<String> titleList = new ArrayList<>();
         List<View> views = new ArrayList<>();
         data.add("出席会议的有易安防老大王兴军");
         data.add("出席会议的有易安防总经理吴建华");
         data.add("出席会议的有易安防技术大牛徐定兵");
         data.add("出席会议的有易安防产品经理郭林");
         data.add("出席会议的有没头衔的我，因为太帅，人称帅侯");
+
+        titleList.add("王兴军");
+        titleList.add("吴建华");
+        titleList.add("徐定兵");
+        titleList.add("郭林");
+        titleList.add("帅侯");
         for (int i = 0; i < data.size(); i++) {
             View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-            TextView rolltext = (TextView) view.findViewById(R.id.roll_item_text);
-            rolltext.setText(data.get(i).toString());
+            TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
+            TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
+            title.setText(titleList.get(i).toString());
+            content.setText(data.get(i).toString());
             views.add(view);
         }
         rollTextView.setViews(views);

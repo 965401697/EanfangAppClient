@@ -135,8 +135,9 @@ public class HomeFragment extends BaseFragment {
         data.add("出席会议的有没头衔的我，因为太帅，人称帅侯");
         for (int i = 0; i < data.size(); i++) {
             View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-            TextView rolltext = (TextView) view.findViewById(R.id.roll_item_text);
-            rolltext.setText(data.get(i).toString());
+            TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
+            TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
+            content.setText(data.get(i).toString());
             views.add(view);
         }
         rollTextView.setViews(views);

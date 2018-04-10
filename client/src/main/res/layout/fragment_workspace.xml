@@ -3,12 +3,13 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_white"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#fe8f64">
+        android:background="@drawable/ic_main_top_back">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_company_logo"
@@ -33,11 +34,11 @@
                 android:layout_height="wrap_content"
                 android:text="北京法安视科技有限公司"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSize_16" />
+                android:textSize="@dimen/textSize_15" />
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginLeft="5dp"
                 android:src="@drawable/ic_down" />
 
@@ -54,7 +55,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+
+            android:paddingBottom="@dimen/dimen_40">
 
             <include layout="@layout/layout_progress_ctrl" />
 
