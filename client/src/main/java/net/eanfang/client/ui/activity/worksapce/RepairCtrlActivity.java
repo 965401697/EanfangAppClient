@@ -60,9 +60,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
         /**自定义部分属性*/
         SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_2);
         tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
-
         vp.setCurrentItem(0);
-
 //        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 //            @Override
 //            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
