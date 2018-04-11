@@ -32,8 +32,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
     };
     private String[] doSomething;
 
-    public RepairedManageOrderAdapter(List<RepairOrderEntity> data) {
-        super(R.layout.item_workspace_order_list, data);
+    public RepairedManageOrderAdapter() {
+        super(R.layout.item_workspace_order_list);
         doSomething = doSomethingClient;
 
     }

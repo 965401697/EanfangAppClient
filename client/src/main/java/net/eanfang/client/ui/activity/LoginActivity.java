@@ -283,7 +283,7 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
     //跳转首页
     synchronized void goMain() {
-        showToast("欢迎使用易安防");
+//        showToast("欢迎使用易安防");
         startActivity(new Intent(this, MainActivity.class));
         finishSelf();
     }

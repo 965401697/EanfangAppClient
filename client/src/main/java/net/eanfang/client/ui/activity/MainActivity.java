@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -26,10 +27,11 @@ import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
-import com.picker.common.util.LogUtils;
+import com.greendao.downloader.FinalDataUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.yaf.base.entity.FinalDataEntity;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
@@ -39,6 +41,12 @@ import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.ButterKnife;
 import q.rorbin.badgeview.Badge;
@@ -185,13 +193,63 @@ public class MainActivity extends BaseClientActivity {
             }
             EanfangHttp.get(url)
                     .tag(this)
-                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    .execute(new EanfangCallback<String>(this, false, String.class, (String str) -> {
                         if (!str.contains(Constant.NO_UPDATE)) {
+
                             ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
                             EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+
+//
+//                            JSONObject jsonObject = JSON.parseObject(str);
+//                            JSONObject data = JSON.parseObject(jsonObject.getString("data"));
+//
+//                            JsonParse(data);
+
                         }
                     }));
         }).start();
+    }
+
+    /**
+     * 解析常量数据的json
+     *
+     * @param data
+     */
+    private void JsonParse(JSONObject data) {
+        Log.e("zzw5", System.currentTimeMillis() + "");
+        List<FinalDataEntity> enityList = new ArrayList<>();
+
+
+        Set<Map.Entry<String, Object>> set = data.entrySet();
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Object> key = (Map.Entry<String, Object>) iterator.next();
+            String k = key.getKey();
+            Log.e("zzw5", k);
+            Map<String, List<String>> map = (Map<String, List<String>>) key.getValue();
+            Set<Map.Entry<String, List<String>>> s = map.entrySet();
+            Iterator iterator1 = s.iterator();
+            while (iterator1.hasNext()) {
+                if (enityList.size() > 0) enityList.clear();
+                Map.Entry<String, List<String>> key1 = (Map.Entry<String, List<String>>) iterator1.next();
+                String k1 = key1.getKey();
+                Log.e("zzw5", k1);
+                List<String> list2 = key1.getValue();
+                for (int i = 0; i < list2.size(); i++) {
+                    Log.e("zzw5", list2.get(i));
+                    FinalDataEntity enity = new FinalDataEntity();
+                    enity.setFileName(k);
+                    enity.setList(k1);
+                    enity.setIndex(i);
+                    enity.setName(list2.get(i));
+                    enityList.add(enity);
+                }
+
+                FinalDataUtils.getInstance().insertMultFinalData(enityList);
+            }
+
+        }
+        Log.e("zzw5", System.currentTimeMillis() + "");
     }
 
 
