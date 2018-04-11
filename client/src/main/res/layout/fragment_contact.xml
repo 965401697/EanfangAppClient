@@ -5,34 +5,41 @@
     android:background="@color/color_white"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/ic_main_top_back">
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_main_top_back"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
-            android:text="通讯录"
-            android:textColor="@color/color_white"
-            android:textSize="@dimen/textSize_15" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:paddingTop="20dp">
 
-        <ImageView
-            android:id="@+id/iv_add"
-            android:layout_width="@dimen/dimen_44"
-            android:layout_height="@dimen/dimen_44"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:onClick="noOpen"
-            android:padding="@dimen/dimen_4"
-            android:src="@mipmap/ic_contact_add" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:text="通讯录"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_15" />
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="@dimen/dimen_44"
+                android:layout_height="@dimen/dimen_44"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:onClick="noOpen"
+                android:padding="@dimen/dimen_4"
+                android:src="@mipmap/ic_contact_add" />
+
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -103,10 +110,7 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_new_line" />
+        <TextView style="@style/style_common_line_gray" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -143,10 +147,7 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_new_line" />
+        <TextView style="@style/style_common_line_gray" />
 
         <RelativeLayout
             android:id="@+id/rl_create_team"

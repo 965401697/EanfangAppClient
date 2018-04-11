@@ -14,6 +14,7 @@
         android:layout_height="1dp"
         android:background="@color/color_bottom_back_line" />
 
+
     <ImageView
         android:id="@+id/tabImg"
         android:layout_width="@dimen/dimen_36"
@@ -23,6 +24,7 @@
         android:layout_marginTop="@dimen/dimen_12"
         android:contentDescription="@null"
         android:src="@drawable/main_tab_contact_selector" />
+
 
     <TextView
         android:id="@+id/tabText"
@@ -36,4 +38,5 @@
         android:text="消息"
         android:textColor="@drawable/tab_item_txt_sel"
         android:textSize="@dimen/textSize_11" />
+
 </LinearLayout>

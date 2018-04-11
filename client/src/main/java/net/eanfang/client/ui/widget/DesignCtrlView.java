@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.DesignActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 
 import butterknife.BindView;
@@ -34,6 +34,8 @@ public class DesignCtrlView extends BaseDialog {
     RelativeLayout llMineAssignment;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public DesignCtrlView(Activity context, boolean isfull) {
@@ -51,23 +53,26 @@ public class DesignCtrlView extends BaseDialog {
     private void initView() {
         tvTitle.setText("安防设计");
         ivLeft.setOnClickListener(v -> dismiss());
+        ivAdd.setOnClickListener((v) -> {
+            jumpInDialog(mContext, DesignActivity.class);
+        });
         llMineAssignment.setOnClickListener((v) -> {
-            jump("我的设计单", "1");
+            jumpInDialog(mContext, DesignOrderListActivity.class, "我的设计单", "1");
         });
         //如果是个人 隐藏公司
         if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() != null) {
             llMineCompany.setVisibility(View.GONE);
         }
         llMineCompany.setOnClickListener((v) -> {
-            jump("公司的设计单", "0");
+            jumpInDialog(mContext, DesignOrderListActivity.class, "公司的设计单", "0");
         });
     }
 
 
-    private void jump(String title, String type) {
-        Intent intent = new Intent(mContext, DesignOrderListActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        mContext.startActivity(intent);
-    }
+//    private void jump(String title, String type) {
+//        Intent intent = new Intent(mContext, DesignOrderListActivity.class);
+//        intent.putExtra("title", title);
+//        intent.putExtra("type", type);
+//        mContext.startActivity(intent);
+//    }
 }

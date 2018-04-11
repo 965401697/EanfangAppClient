@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_28"
+        android:elevation="10dp"
         android:text="@string/text_new_order"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_16" />
@@ -37,7 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dimen_14"
-            android:layout_marginRight="@dimen/dimen_20" />
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginTop="-4dp" />
     </LinearLayout>
 
 </LinearLayout>

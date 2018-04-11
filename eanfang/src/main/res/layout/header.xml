@@ -3,7 +3,7 @@
     android:id="@+id/titles_bar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#fe8f64"
+    android:background="@drawable/ic_main_top_back"
     android:orientation="horizontal">
 
     <ImageView
@@ -30,8 +30,12 @@
     <ImageView
         android:id="@+id/iv_right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        android:src="@mipmap/ic_news_add" />
 
     <TextView
         android:id="@+id/tv_right"

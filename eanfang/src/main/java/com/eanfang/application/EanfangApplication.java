@@ -2,6 +2,8 @@ package com.eanfang.application;
 
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.BarUtil.BarUtils;
+import com.eanfang.util.BarUtil.BaseUtil;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -47,6 +49,7 @@ public class EanfangApplication extends CustomeApplication {
         mEanfangApplication = this;
         initConfig();
         initOkGo();
+//        BaseUtil.init(this);
 //        initXinGe();
         CameraApplication.init(this, true);
 

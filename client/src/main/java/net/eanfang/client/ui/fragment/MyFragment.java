@@ -1,8 +1,13 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -39,7 +44,6 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-
     }
 
     @Override
@@ -63,7 +67,6 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
-
     }
 
     @Override
@@ -88,5 +91,22 @@ public class MyFragment extends BaseFragment {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
         }
 
+    }
+    /**
+     * 获取状态栏高度
+     * @return
+     */
+    public int getStatusBar(){
+        /**
+         * 获取状态栏高度
+         * */
+        int statusBarHeight1 = -1;
+        //获取status_bar_height资源的ID
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            //根据资源ID获取响应的尺寸值
+            statusBarHeight1 = getResources().getDimensionPixelSize(resourceId);
+        }
+        return statusBarHeight1;
     }
 }

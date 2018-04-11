@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/dimen_358"
-    android:layout_height="@dimen/dimen_370"
+    android:layout_width="@dimen/dimen_282"
+    android:layout_height="@dimen/dimen_314"
     android:background="@mipmap/ic_client_home_data_back"
     android:orientation="vertical">
 
 
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_50"
-        android:layout_marginTop="@dimen/dimen_50"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_44"
         android:text="当日维修"
         android:textColor="@color/color_client_data_item_title"
         android:textSize="@dimen/textSize_15" />
@@ -18,7 +19,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_50"
+        android:layout_marginLeft="@dimen/dimen_32"
         android:layout_marginTop="@dimen/dimen_30"
         android:gravity="center"
         android:orientation="horizontal">
@@ -31,6 +32,7 @@
             android:textSize="@dimen/textSize_12" />
 
         <TextView
+            android:id="@+id/tv_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -47,6 +49,7 @@
             android:textSize="@dimen/textSize_12" />
 
         <TextView
+            android:id="@+id/tv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -58,7 +61,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_50"
+        android:layout_marginLeft="@dimen/dimen_25"
         android:layout_marginTop="@dimen/dimen_26"
         android:orientation="horizontal">
 
@@ -69,8 +72,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:id="@+id/tv_repairOne"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
                 android:background="@drawable/contend_repair_selected"
                 android:gravity="center"
                 android:text="1"
@@ -92,13 +96,14 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dimen_8"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:id="@+id/tv_repairTwo"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
                 android:background="@drawable/contend_maintenancein_deault"
                 android:gravity="center"
                 android:text="1"
@@ -119,13 +124,14 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dimen_8"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:id="@+id/tv_repairThree"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
                 android:background="@drawable/contend_scrap_selected"
                 android:gravity="center"
                 android:text="1"
@@ -146,13 +152,14 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dimen_8"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:id="@+id/tv_repairFour"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
                 android:background="@drawable/contend_giveup_selected"
                 android:gravity="center"
                 android:text="1"
@@ -169,7 +176,6 @@
                 android:textSize="@dimen/textSize_11" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

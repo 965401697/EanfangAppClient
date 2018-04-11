@@ -5,43 +5,54 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/ic_main_top_back">
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_main_top_back"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_camera"
-            android:layout_width="26dp"
-            android:layout_height="22dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="18dp"
-            android:padding="2dp"
-            android:src="@mipmap/ic_main_top_camera" />
-
-        <ImageView
-            android:id="@+id/iv_scan"
-            android:layout_width="22dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:padding="2dp"
-            android:src="@mipmap/ic_main_top_qrcode" />
-
-        <TextView
-            android:id="@+id/tv_homeTitle"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/iv_scan"
-            android:layout_toRightOf="@id/iv_camera"
-            android:gravity="center"
-            android:text="易安防"
-            android:textColor="@color/white"
-            android:textSize="@dimen/textSize_15" />
-    </RelativeLayout>
+            android:layout_height="@dimen/dimen_40" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <ImageView
+                android:id="@+id/iv_camera"
+                android:layout_width="26dp"
+                android:layout_height="22dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="18dp"
+                android:padding="2dp"
+                android:src="@mipmap/ic_main_top_camera" />
+
+            <ImageView
+                android:id="@+id/iv_scan"
+                android:layout_width="22dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:padding="2dp"
+                android:src="@mipmap/ic_main_top_qrcode" />
+
+            <TextView
+                android:id="@+id/tv_homeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_scan"
+                android:layout_toRightOf="@id/iv_camera"
+                android:gravity="center"
+                android:text="易安防"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_15" />
+        </RelativeLayout>
+    </LinearLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -67,11 +78,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_32"
                 android:orientation="horizontal">
 
-                <include layout="@layout/layout_home_data" />
-
-                <include layout="@layout/layout_home_data" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
 
             </LinearLayout>
 
@@ -84,6 +98,12 @@
                 android:text="安防圈"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_16" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@mipmap/ic_client_circle" />
         </LinearLayout>
 
     </ScrollView>

@@ -103,14 +103,6 @@ public class WorkspaceFragment extends BaseFragment {
      * 过程管控
      */
     private void progressCtrl() {
-        //报修管控
-        findViewById(R.id.tv_work_repair).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
-        });
-        //报装管控
-        findViewById(R.id.tv_work_install).setOnClickListener((v) -> {
-            new InstallCtrlView(getActivity(), true).show();
-        });
         //报价管控
         findViewById(R.id.tv_work_price).setOnClickListener((v) -> {
             if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
@@ -125,10 +117,7 @@ public class WorkspaceFragment extends BaseFragment {
             showToast(".....");
         });
 
-        //免费设计
-        findViewById(R.id.tv_work_design).setOnClickListener((v) -> {
-            new DesignCtrlView(getActivity(), true).show();
-        });
+
     }
 
     /**

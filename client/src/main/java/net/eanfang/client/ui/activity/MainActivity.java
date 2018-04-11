@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initState();
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
         setHeaders();
@@ -70,6 +72,14 @@ public class MainActivity extends BaseClientActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
+    /**
+     * 沉浸式状态栏
+     */
+    private void initState() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
+        }
+    }
 
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
@@ -99,7 +109,7 @@ public class MainActivity extends BaseClientActivity {
         Badge qBadgeView = new QBadgeView(this)
                 .bindTarget(indicator.findViewById(R.id.tabImg))
                 .setBadgeNumber(Var.get("MainActivity.initMessageCount").getVar())
-                .setBadgePadding(5, true)
+                .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(-2, -2, true)
                 .setBadgeTextSize(10, true)

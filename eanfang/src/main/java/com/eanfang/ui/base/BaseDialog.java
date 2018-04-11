@@ -2,6 +2,8 @@ package com.eanfang.ui.base;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -56,6 +58,18 @@ public abstract class BaseDialog extends Dialog {
     protected void showToast(final int msgRid) {
         hander.post(() -> Toast.makeText(context, msgRid, Toast.LENGTH_SHORT).show());
 
+    }
+
+    public void jumpInDialog(Activity activity, Class<?> cls,String title, String type) {
+        Intent intent = new Intent(activity,cls);
+        intent.putExtra("title", title);
+        intent.putExtra("type", type);
+        activity.startActivity(intent);
+    }
+
+    public void jumpInDialog(Activity activity, Class<?> cls) {
+        Intent intent = new Intent(activity, cls);
+        activity.startActivity(intent);
     }
 
     /**

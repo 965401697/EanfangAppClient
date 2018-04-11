@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ConstactsAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
     public ConstactsAdapter(List data) {
-        super(R.layout.item_group_adapter, data);
+        super(R.layout.item_contact_group_adapter, data);
     }
 
     @Override

@@ -44,13 +44,13 @@
 
             <ImageView
                 android:id="@+id/iv_v"
-                android:layout_width="@dimen/dimen_26"
-                android:layout_height="@dimen/dimen_26"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/tv_company_name"
-                android:src="@mipmap/ic_contact_noauthentication"
-                android:visibility="visible" />
+                android:src="@drawable/contend_ic_v_default"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_auth_status"
@@ -63,7 +63,7 @@
                 android:text="未认证"
                 android:textColor="@color/color_contact_authentication"
                 android:textSize="@dimen/textSize_12"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
 
@@ -86,8 +86,10 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-
-        <TextView style="@style/style_common_line_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_new_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,8 +137,10 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-
-        <TextView style="@style/style_common_line_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_new_line" />
 
 
         <LinearLayout
@@ -161,8 +165,10 @@
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
-
-        <TextView style="@style/style_common_line_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_new_line" />
 
 
         <LinearLayout
@@ -188,8 +194,10 @@
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
-
-        <TextView style="@style/style_common_line_gray" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_new_line" />
 
 
         <LinearLayout

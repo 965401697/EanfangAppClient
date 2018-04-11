@@ -3,13 +3,17 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.V;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.DesignActivity;
+import net.eanfang.client.ui.activity.worksapce.InstallActivity;
 import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
 
 import butterknife.BindView;
@@ -28,6 +32,8 @@ public class InstallCtrlView extends BaseDialog {
     ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.ll_mine_assignment)
     RelativeLayout llMineAssignment;
     @BindView(R.id.ll_mine_accept)
@@ -52,6 +58,9 @@ public class InstallCtrlView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("报装管控");
+        ivAdd.setOnClickListener((v) -> {
+            InstallActivity.jumpActivity(mContext);
+        });
         llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         llMineAccept.setOnClickListener(v -> jump("我负责的", 2));
         llMineCompany.setOnClickListener(v -> jump("本公司的", 0));
