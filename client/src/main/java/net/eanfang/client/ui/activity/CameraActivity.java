@@ -30,9 +30,12 @@ import com.camera.model.PermissionsModel;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.V;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -210,7 +213,10 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         project_type = tvTypeSel.getText().toString().trim();
 
         //创建者
-//        creatUser = EanfangApplication.get().getUser().getName();
+        creatUser = V.v(() -> EanfangApplication.get().getUser().getAccount().getRealName());
+        if (StringUtils.isEmpty(creatUser)) {
+            creatUser = "--";
+        }
 
     }
 
@@ -229,7 +235,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         permissionsModel.checkCameraPermission(isPermission -> {
             if (isPermission) {
                 //如果没有添加属性
-                if (!checkCameraData(true)) {
+                if (!checkCameraData()) {
                     return;
                 }
                 Intent intent = new Intent(CameraActivity.this, TakePhotoActivity.class);
@@ -271,42 +277,41 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     /**
      * 检查有没有输入属性
      */
-    private boolean checkCameraData(boolean check) {
-        if (check) {
-            //项目名称
-            project_name = etProjectName.getText().toString().trim();
-            if (TextUtils.isEmpty(project_name)) {
-                showToast("请输入项目名称");
-                return false;
-            }
-
-            //部位名称
-            region_name = etRegionName.getText().toString().trim();
-            if (TextUtils.isEmpty(region_name)) {
-                showToast("请输入部位名称/区域名称");
-                return false;
-            }
-
-            //字体颜色
-            if (color == 0) {
-                showToast("请选择字体颜色");
-                return false;
-            }
-
-            //项目类型
-            project_type = tvTypeSel.getText().toString().trim();
-            if (TextUtils.isEmpty(project_type)) {
-                showToast("请选择项目类型");
-                return false;
-            }
-
-            //项目内容
-            project_content = etProjectConment.getText().toString().trim();
-            if (TextUtils.isEmpty(project_content)) {
-                showToast("请输入项目内容");
-                return false;
-            }
+    private boolean checkCameraData() {
+        //项目名称
+        project_name = etProjectName.getText().toString().trim();
+        if (TextUtils.isEmpty(project_name)) {
+            showToast("请输入项目名称");
+            return false;
         }
+
+        //部位名称
+        region_name = etRegionName.getText().toString().trim();
+        if (TextUtils.isEmpty(region_name)) {
+            showToast("请输入部位名称/区域名称");
+            return false;
+        }
+
+        //字体颜色
+        if (color == 0) {
+            showToast("请选择字体颜色");
+            return false;
+        }
+
+        //项目类型
+        project_type = tvTypeSel.getText().toString().trim();
+        if (TextUtils.isEmpty(project_type)) {
+            showToast("请选择项目类型");
+            return false;
+        }
+
+        //项目内容
+        project_content = etProjectConment.getText().toString().trim();
+        if (TextUtils.isEmpty(project_content)) {
+            showToast("请输入项目内容");
+            return false;
+        }
+
         return true;
 
     }

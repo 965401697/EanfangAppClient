@@ -8,6 +8,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -32,8 +34,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
     };
     private String[] doSomething;
 
-    public RepairedManageOrderAdapter(List<RepairOrderEntity> data) {
-        super(R.layout.item_workspace_order_list, data);
+    public RepairedManageOrderAdapter() {
+        super(R.layout.item_workspace_order_list);
         doSomething = doSomethingClient;
 
     }
@@ -52,8 +54,6 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         }
         if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
             orgName += " " + Optional.ofNullable(item.getAssigneeUser().getAccountEntity().getRealName()).orElseGet(() -> "");
-            //头像
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Optional.ofNullable(item.getAssigneeUser().getAccountEntity().getAvatar()).orElseGet(() -> "")));
         }
         helper.setText(R.id.tv_company_name, orgName);
         String userName = "";
@@ -86,6 +86,12 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 //            //将业务类型的图片显示到列表
 //            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(urls[0]));
 //        }
+
+        //将业务类型的图片显示到列表
+        String imgUrl = V.v(() -> item.getAssigneeUser().getAccountEntity().getAvatar());
+        if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
+            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+        }
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);
 

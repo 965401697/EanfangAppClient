@@ -18,9 +18,11 @@ import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.V;
 import com.tencent.bugly.crashreport.CrashReport;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -49,8 +51,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         CrashReport.initCrashReport(getApplicationContext(), com.eanfang.BuildConfig.BUGLY_CLIENT, false);
         init();
 
-        //getBaseData();
-        //  getConst();
+
     }
 
     private void init() {
@@ -116,54 +117,6 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                 });
 
     }
-
-
-    /**
-     * 请求基础数据
-     */
-    private void getBaseData() {
-        String url;
-        String md5 = V.v(() -> Config.get().getBaseDataBean().getMD5());
-        if (StringUtils.isEmpty(md5)) {
-            url = NewApiService.GET_BASE_DATA_CACHE + "0";
-        } else {
-            url = NewApiService.GET_BASE_DATA_CACHE + md5;
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        //CacheUtil.put(this, getPackageName(), BaseDataBean.class.getName(), str);
-                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-                }));
-
-    }
-
-    /**
-     * 请求静态常量
-     */
-    private void getConst() {
-        String url;
-        String md5 = V.v(() -> Config.get().getConstBean().getMD5());
-        if (StringUtils.isEmpty(md5)) {
-            url = NewApiService.GET_CONST_CACHE + "0";
-        } else {
-            url = NewApiService.GET_CONST_CACHE + md5;
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        //CacheUtil.put(this, getPackageName(), ConstAllBean.class.getName(), str);
-                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-
-                }));
-    }
-
 
     @Override
     public void goLogin() {

@@ -25,9 +25,6 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
@@ -44,21 +41,18 @@ import java.util.List;
  * @desc 登录
  */
 
-public class LoginActivity extends BaseActivity implements Validator.ValidationListener {
+public class LoginActivity extends BaseActivity{
     public static final String TAG = LoginActivity.class.getSimpleName();
 
     private Context context = this;
     private String legalText;
 
-    @NotEmpty
     private EditText et_phone;
-    @NotEmpty
     private EditText et_yanzheng;
     private TextView tv_yanzheng;
     private AppCompatCheckBox cb;
     private TextView read;
     private Button btn_login;
-    private Validator validator;
 
 
     //验证码倒计时
@@ -215,7 +209,7 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
         EanfangHttp.post(UserApi.GET_VERIFY_CODE)
                 .params("mobile", phone)
                 .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
-                    showToast("验证码获取成功");
+                    showToast(R.string.hint_success_verify);
                 }));
     }
 
@@ -230,8 +224,8 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
         btn_login = (Button) findViewById(R.id.btn_login);
 
-        validator = new Validator(this);
-        validator.setValidationListener(this);
+//        validator = new Validator(this);
+//        validator.setValidationListener(this);
     }
 
     private void initData() {
@@ -256,25 +250,25 @@ public class LoginActivity extends BaseActivity implements Validator.ValidationL
 
     }
 
-    @Override
-    public void onValidationSucceeded() {
-        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
+//    @Override
+//    public void onValidationSucceeded() {
+//        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onValidationFailed(List<ValidationError> errors) {
+//        for (ValidationError error : errors) {
+//            View view = error.getView();
+//            String message = error.getCollatedErrorMessage(this);
+//
+//            // Display error messages ;)
+//            if (view instanceof EditText) {
+//                ((EditText) view).setError(message);
+//            } else {
+//                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 
 
     //跳转首页

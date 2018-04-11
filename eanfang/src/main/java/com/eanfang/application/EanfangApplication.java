@@ -43,6 +43,7 @@ public class EanfangApplication extends CustomeApplication {
     }
 
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -51,6 +52,9 @@ public class EanfangApplication extends CustomeApplication {
         initOkGo();
 //        BaseUtil.init(this);
 //        initXinGe();
+        //数据库初始化 ziwu
+//        mManager = DaoManager.getInstance();
+//        mManager.init(this);
         CameraApplication.init(this, true);
 
     }

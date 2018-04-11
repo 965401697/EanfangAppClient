@@ -14,7 +14,9 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
+
+import android.support.v4.widget.SwipeRefreshLayout;
+
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
@@ -41,21 +43,22 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * 工作台已报修
  */
 public class OrderListFragment extends BaseFragment implements
-        OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {
+        OnDataReceivedListener, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
     private static int page = 1;
     private String mTitle;
     private View v;
     private String Msg;
-    private SwipyRefreshLayout refreshLayout;
+    private SwipeRefreshLayout refreshLayout;
     private RecyclerView mRecyclerView;
-    private List<RepairOrderEntity> mDataList;
+    //    private List<RepairOrderEntity> mDataList;
+    private RepairedManageOrderAdapter adapter;
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-            intent.putExtra(Constant.ID, mDataList.get(position).getId());
+            intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
             startActivity(intent);
         }
     };
@@ -69,31 +72,33 @@ public class OrderListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-        if (getActivity() == null) {
-            return;
-        }
-        if (!(getActivity() instanceof RepairCtrlActivity)) {
-            return;
-        }
-        if (((RepairCtrlActivity) getActivity()).getBean() == null) {
-            return;
-        }
-        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getList();
-        RepairedManageOrderAdapter adapter = new RepairedManageOrderAdapter(mDataList);
+//        if (getActivity() == null) {
+//            return;
+//        }
+//        if (!(getActivity() instanceof RepairCtrlActivity)) {
+//            return;
+//        }
+//        if (((RepairCtrlActivity) getActivity()).getBean() == null) {
+//            return;
+//        }
+//        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getList();
+        adapter = new RepairedManageOrderAdapter();
+        adapter.bindToRecyclerView(mRecyclerView);
+        adapter.setOnLoadMoreListener(this);
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            RepairOrderEntity item = mDataList.get(position);
+            RepairOrderEntity item = adapter.getData().get(position);
             switchCase(item, view);
         });
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
-        if (mDataList.size() > 0) {
-            mRecyclerView.setAdapter(adapter);
-            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
-            adapter.notifyDataSetChanged();
-        } else {
-            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
-        }
-
-        adapter.notifyDataSetChanged();
+//        if (mDataList.size() > 0) {
+//            mRecyclerView.setAdapter(adapter);
+//            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
+//            adapter.notifyDataSetChanged();
+//        } else {
+//            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
+//        }
+//
+//        adapter.notifyDataSetChanged();
     }
 
     private void switchCase(RepairOrderEntity item, View view) {
@@ -226,24 +231,53 @@ public class OrderListFragment extends BaseFragment implements
                 {
                     @Override
                     public void onSuccess(final RepairedOrderBean bean) {
-                        ((RepairCtrlActivity) getActivity()).setBean(bean);
-                        getActivity().runOnUiThread(() -> onDataReceived());
+
+                        if (page == 1) {
+                            adapter.getData().clear();
+                            adapter.setNewData(bean.getList());
+                            refreshLayout.setRefreshing(false);
+                            adapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                adapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
+                            } else {
+                                findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            adapter.addData(bean.getList());
+                            adapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                adapter.loadMoreEnd();
+                            }
+                        }
+
+
+//                        ((RepairCtrlActivity) getActivity()).setBean(bean);
+//                        getActivity().runOnUiThread(() -> onDataReceived());
                     }
 
                     @Override
                     public void onNoData(String message) {
-                        page--;
-                        getActivity().runOnUiThread(() -> {
-                            //如果是第一页 没有数据了 则清空 bean
-                            if (page < 1) {
-                                RepairedOrderBean bean = new RepairedOrderBean();
-                                bean.setList(new ArrayList<>());
-                                ((RepairCtrlActivity) getActivity()).setBean(bean);
-                            } else {
-                                showToast("已经到底了");
-                            }
-                            onDataReceived();
-                        });
+
+
+                        adapter.loadMoreEnd();//没有数据了
+//                        page--;
+//                        getActivity().runOnUiThread(() -> {
+//                            //如果是第一页 没有数据了 则清空 bean
+//                            if (page < 1) {
+//                                RepairedOrderBean bean = new RepairedOrderBean();
+//                                bean.setList(new ArrayList<>());
+//                                ((RepairCtrlActivity) getActivity()).setBean(bean);
+//                            } else {
+//                                showToast("已经到底了");
+//                            }
+//                            onDataReceived();
+//                        });
                     }
 
                     @Override
@@ -267,6 +301,8 @@ public class OrderListFragment extends BaseFragment implements
 
         refreshLayout = findViewById(R.id.swiprefresh);
         refreshLayout.setOnRefreshListener(this);
+
+        initAdapter();
     }
 
     @Override
@@ -278,58 +314,72 @@ public class OrderListFragment extends BaseFragment implements
     protected void onLazyLoad() {
 //        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
 //        ((RepairedManageActivity) getActivity()).initData();
+        getData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+//        getData();
 
     }
 
     @Override
     public void onDataReceived() {
-        initView();
-        initAdapter();
-        refreshLayout.setRefreshing(false);
+//        initView();
+//        initAdapter();
+//        refreshLayout.setRefreshing(false);
     }
 
     /**
      * 刷新
      */
-    @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
-
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
+//    @Override
+//    public void onRefresh(int index) {
+//        dataOption(TOP_REFRESH);
+//
+//    }
+//
+//    @Override
+//    public void onLoad(int index) {
+//        dataOption(BOTTOM_REFRESH);
+//    }
     private void dataOption(int option) {
         switch (option) {
             case TOP_REFRESH:
                 //下拉刷新
-//                mDataList.clear();
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
+//                page--;
+//                if (page <= 0) {
+//                    page = 1;
+//                }
+
+                page = 1;//下拉永远第一页
                 getData();
-                // ((RepairedManageActivity) getActivity()).initData(page);
-                //initAdapter();
+
                 break;
             case BOTTOM_REFRESH:
                 //上拉加载更多
-                page++;
-                getData();
-                // ((RepairedManageActivity) getActivity()).initData(page);
-                //initAdapter();
+//                page++;
+//                getData();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 上拉加载更多
+     */
+
+    @Override
+    public void onLoadMoreRequested() {
+        //上拉加载更多
+        page++;
+        getData();
+    }
+
+    @Override
+    public void onRefresh() {
+        dataOption(TOP_REFRESH);
     }
 }

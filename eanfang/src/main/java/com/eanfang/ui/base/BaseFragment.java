@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,9 +69,18 @@ public abstract class BaseFragment extends Fragment implements IBase {
 //        onLazyLoad();
 
         setListener();
+
+        Log.e("zzw", "BaseFragment 执行onCreateView = " + mIsPrepare);
+
         return mRootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mIsPrepare = true;
+        onVisibleToUser();
+    }
 
     @Override
     public void finishSelf() {
@@ -132,7 +142,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
         super.setUserVisibleHint(isVisibleToUser);
 
         this.mIsVisible = isVisibleToUser;
-
+        Log.e("zzw", "BaseFragment setUserVisibleHint = " + isVisibleToUser);
         if (isVisibleToUser) {
             onVisibleToUser();
         }
@@ -145,6 +155,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
      * @date 2016-5-26 下午4:09:39
      */
     protected void onVisibleToUser() {
+        Log.e("zzw", "BaseFragment onVisibleToUser = " + mIsPrepare);
         if (mIsPrepare && mIsVisible) {
             onLazyLoad();
         }

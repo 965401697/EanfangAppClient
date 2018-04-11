@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -14,6 +13,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
@@ -21,10 +21,12 @@ import com.eanfang.util.GuideUtil;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.V;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.yaf.base.entity.WorkerEntity;
 
+import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.PrefUtils;
@@ -49,11 +51,8 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false);
+        CrashReport.initCrashReport(getApplicationContext(), com.eanfang.BuildConfig.BUGLY_WORKER, false);
         init();
-
-        //getBaseData();
-        //getConst();
         submitLocation();
     }
 
@@ -74,6 +73,11 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                 loginByToken();
             }
         }
+    }
+
+    private void goMain() {
+        startActivity(new Intent(this, MainActivity.class));
+        finishSelf();
     }
 
     /**
@@ -114,13 +118,6 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         }
     }
 
-    @Override
-    public void goLogin() {
-        isFirst = true;
-        startActivity(new Intent(this, LoginActivity.class));
-        finishSelf();
-    }
-
     /**
      * token 登陆 验证
      */
@@ -132,7 +129,6 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
                             EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-
                             goMain();
                         } else {
                             goLogin();
@@ -148,55 +144,12 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
 
     }
 
-    private void goMain() {
-        startActivity(new Intent(this, MainActivity.class));
+
+    @Override
+    public void goLogin() {
+        isFirst = true;
+        startActivity(new Intent(this, LoginActivity.class));
         finishSelf();
-    }
-
-    /**
-     * 请求基础数据
-     */
-    private void getBaseData() {
-        String url;
-        String md5 = V.v(() -> Config.get().getBaseDataBean().getMD5());
-        if (StringUtils.isEmpty(md5)) {
-            url = NewApiService.GET_BASE_DATA_CACHE + "0";
-        } else {
-            url = NewApiService.GET_BASE_DATA_CACHE + md5;
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        //CacheUtil.put(this, getPackageName(), BaseDataBean.class.getName(), str);
-                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-                }));
-
-    }
-
-    /**
-     * 请求静态常量
-     */
-    private void getConst() {
-        String url;
-        String md5 = V.v(() -> Config.get().getConstBean().getMD5());
-        if (StringUtils.isEmpty(md5)) {
-            url = NewApiService.GET_CONST_CACHE + "0";
-        } else {
-            url = NewApiService.GET_CONST_CACHE + md5;
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        // CacheUtil.put(this, getPackageName(), ConstAllBean.class.getName(), str);
-                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
-
-                }));
     }
 
 

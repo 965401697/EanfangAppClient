@@ -7,13 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.eanfang.apiservice.RepairApi;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -38,7 +33,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
     private String[] mTitles;
-    private OrderListFragment currentFragment;
+//    private OrderListFragment currentFragment;
 
 
     @Override
@@ -58,80 +53,80 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         vp.setAdapter(mAdapter);
-        /**自定义部分属性*/
-        SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_2);
-        tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
-
         vp.setCurrentItem(0);
 
-        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        /**自定义部分属性*/
+        SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_2);
+//        tabLayout_2.setViewPager(vp, mTitles);
+        tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentFragment = (OrderListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-                initData();
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                currentFragment = (OrderListFragment) mFragments.get(position);
+//                currentFragment.onDataReceived();
+//                initData();
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
         setTitle("报修管控");
         setLeftBack();
-        currentFragment = (OrderListFragment) mFragments.get(0);
-        initData();
+//        currentFragment = (OrderListFragment) mFragments.get(0);
+//        initData();
 
     }
 
 
-    public void initData() {
-        String status = null;
-        QueryEntry queryEntry = new QueryEntry();
-        if (!"全部".equals(currentFragment.getTitle())) {
-            status = GetConstDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
-            queryEntry.getEquals().put("status", status);
-        }
-        queryEntry.setPage(1);
-        queryEntry.setSize(10);
-
-        EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class)
-                         {
-                             @Override
-                             public void onSuccess(final RepairedOrderBean bean) {
-                                 runOnUiThread(() -> {
-                                     repairedOrderBean = bean;
-                                     currentFragment.onDataReceived();
-                                 });
-                             }
-
-                             @Override
-                             public void onNoData(String message) {
-                                 super.onNoData(message);
-                                 runOnUiThread(() -> {
-                                     RepairedOrderBean bean = new RepairedOrderBean();
-                                     bean.setList(new ArrayList<>());
-                                     setBean(bean);
-                                     currentFragment.onDataReceived();
-                                 });
-                             }
-
-                             @Override
-                             public void onError(String message) {
-                                 //重新加载 页面
-                                 currentFragment.onDataReceived();
-                             }
-                         }
-                );
-
-    }
+//    public void initData() {
+//        String status = null;
+//        QueryEntry queryEntry = new QueryEntry();
+//        if (!"全部".equals(currentFragment.getTitle())) {
+//            status = GetConstDataUtils.getRepairStatus().indexOf(currentFragment.getTitle()) + "";
+//            queryEntry.getEquals().put("status", status);
+//        }
+//        queryEntry.setPage(1);
+//        queryEntry.setSize(10);
+//
+//        EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
+//                .upJson(JsonUtils.obj2String(queryEntry))
+//                .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class) {
+//                             @Override
+//                             public void onSuccess(final RepairedOrderBean bean) {
+//                                 runOnUiThread(() -> {
+//                                     repairedOrderBean = bean;
+//                                     currentFragment.onDataReceived();
+//                                 });
+//                             }
+//
+//                             @Override
+//                             public void onNoData(String message) {
+//                                 super.onNoData(message);
+//                                 runOnUiThread(() -> {
+//                                     RepairedOrderBean bean = new RepairedOrderBean();
+//                                     bean.setList(new ArrayList<>());
+//                                     setBean(bean);
+//                                     currentFragment.onDataReceived();
+//                                 });
+//                             }
+//
+//                             @Override
+//                             public void onError(String message) {
+//                                 //重新加载 页面
+//                                 currentFragment.onDataReceived();
+//                             }
+//                         }
+//                );
+//
+//    }
 
 
     public RepairedOrderBean getBean() {
@@ -146,7 +141,7 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
+//        initData();
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

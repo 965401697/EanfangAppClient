@@ -65,11 +65,18 @@ public class MainActivity extends BaseClientActivity {
         initFragment();
         getBaseData();
         getConst();
-
-        //app更新
-        UpdateAppManager.update(this, BuildConfig.TYPE);
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        initUpdate();
+    }
+
+    private void initUpdate() {
+        int isUpdate = Var.get("MainActivity.initUpdate").getVar();
+        if (isUpdate <= 0) {
+            //app更新
+            UpdateAppManager.update(this, BuildConfig.TYPE);
+        }
+        Var.get("MainActivity.initUpdate").setVar(1);
     }
 
     /**
@@ -185,23 +192,21 @@ public class MainActivity extends BaseClientActivity {
      * 请求静态常量
      */
     private void getConst() {
-        new Thread(() -> {
-            String url;
-            ConstAllBean constBean = Config.get().getConstBean();
-            if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
-                url = NewApiService.GET_CONST_CACHE + "0";
-            } else {
-                url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
-            }
-            EanfangHttp.get(url)
-                    .tag(this)
-                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                        if (!str.contains(Constant.NO_UPDATE)) {
-                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                        }
-                    }));
-        }).start();
+        String url;
+        ConstAllBean constBean = Config.get().getConstBean();
+        if (constBean == null || StringUtils.isEmpty(constBean.getMD5())) {
+            url = NewApiService.GET_CONST_CACHE + "0";
+        } else {
+            url = NewApiService.GET_CONST_CACHE + constBean.getMD5();
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    if (!str.contains(Constant.NO_UPDATE)) {
+                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                    }
+                }));
     }
 
 

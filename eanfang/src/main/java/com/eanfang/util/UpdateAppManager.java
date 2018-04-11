@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangHttp;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateCallback;
@@ -29,7 +30,7 @@ public class UpdateAppManager {
     public static void update(Activity activity, String type) {
 //      String path = Environment.getExternalStorageDirectory().getAbsolutePath();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("token", EanfangHttp.getHttp().getCommonHeaders().get("YAF-Token"));
+        //params.put("token", EanfangApplication.get().getUser().getToken());
         String updateUrl = "";
         if (type.equals("client")) {
             updateUrl = UserApi.GET_CILENT_UPDATE_APP + "?versionCode=" + AppUpdateUtils.getVersionCode(activity);

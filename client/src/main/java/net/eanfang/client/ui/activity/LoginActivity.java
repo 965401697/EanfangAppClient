@@ -24,9 +24,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
@@ -45,21 +42,18 @@ import java.util.List;
  * @desc 登录
  */
 
-public class LoginActivity extends BaseClientActivity implements Validator.ValidationListener {
+public class LoginActivity extends BaseClientActivity {
     public static final String TAG = LoginActivity.class.getSimpleName();
 
     private Context context = this;
     private String legalText;
 
-    @NotEmpty
     private EditText et_phone;
-    @NotEmpty
     private EditText et_yanzheng;
     private TextView tv_yanzheng;
     private AppCompatCheckBox cb;
     private TextView read;
     private Button btn_login;
-    private Validator validator;
 
 
     //验证码倒计时
@@ -95,40 +89,20 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
-            if (!BuildConfig.LOG_DEBUG) {
-
-                if (StringUtils.isEmpty(userPhone)) {
-                    showToast("手机号不能为空");
-                    return;
-                }
-
-                if (StringUtils.isEmpty(userAulth)) {
-                    showToast("验证码不能为空");
-                    return;
-                }
-                if (!cb.isChecked()) {
-                    showToast("同意易安防会员章程和协议后才可以登陆使用");
-                    return;
-                }
+            if (StringUtils.isEmpty(userPhone)) {
+                showToast("手机号不能为空");
+                return;
             }
 
-            //调试阶段
-            if (BuildConfig.LOG_DEBUG) {
-                if (StringUtils.isEmpty(userPhone)) {
-                    userPhone = "18500320187";
-                }
-                if (StringUtils.isEmpty(userAulth)) {
-                    userAulth = "admin";
-                }
-
-                if (userAulth.equals("admin")) {
-                    setLogin(userPhone, userAulth);
-                }
-            } else {
-                setVerfiyLogin(userPhone, userAulth);
+            if (StringUtils.isEmpty(userAulth)) {
+                showToast("验证码不能为空");
+                return;
             }
-
-
+            if (!cb.isChecked()) {
+                showToast("同意易安防会员章程和协议后才可以登陆使用");
+                return;
+            }
+            setVerfiyLogin(userPhone, userAulth);
         });
 
         tv_yanzheng.setOnClickListener(v -> {
@@ -179,7 +153,9 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
                     EanfangHttp.setToken(bean.getToken());
-                    goMain();
+                    runOnUiThread(() -> {
+                        goMain();
+                    });
                 }));
 
     }
@@ -234,8 +210,8 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
 
         btn_login = (Button) findViewById(R.id.btn_login);
 
-        validator = new Validator(this);
-        validator.setValidationListener(this);
+        //validator = new Validator(this);
+        //  validator.setValidationListener(this);
     }
 
     private void initData() {
@@ -251,39 +227,32 @@ public class LoginActivity extends BaseClientActivity implements Validator.Valid
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
-//        PermissionUtils.get(this).getStoragePermission(() -> {
-//            //更新
-//            UpdateManager manager = new UpdateManager(this, BuildConfig.TYPE);
-//            manager.checkUpdate();
-//        });
-
     }
 
-    @Override
-    public void onValidationSucceeded() {
-        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
-            View view = error.getView();
-            String message = error.getCollatedErrorMessage(this);
-
-            // Display error messages ;)
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
-    }
+//    @Override
+//    public void onValidationSucceeded() {
+//        //Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onValidationFailed(List<ValidationError> errors) {
+//        for (ValidationError error : errors) {
+//            View view = error.getView();
+//            String message = error.getCollatedErrorMessage(this);
+//
+//            // Display error messages ;)
+//            if (view instanceof EditText) {
+//                ((EditText) view).setError(message);
+//            } else {
+//                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+//            }
+//        }
+//    }
 
 
     //跳转首页
     synchronized void goMain() {
-        showToast("欢迎使用易安防");
+//        showToast("欢迎使用易安防");
         startActivity(new Intent(this, MainActivity.class));
         finishSelf();
     }

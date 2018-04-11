@@ -77,12 +77,7 @@ public class MessageListActivity extends BaseClientActivity implements
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mDataList.get(position).getId())
                         .execute(new EanfangCallback<NoticeEntity>(activity, false, NoticeEntity.class, (bean) -> {
-                            new MessageDetailView(MessageListActivity.this, bean, new MessageDetailView.RefreshListener() {
-                                @Override
-                                public void refreshData() {
-                                    getJPushMessage();
-                                }
-                            }).show();
+                            new MessageDetailView(MessageListActivity.this, bean, () -> getJPushMessage()).show();
                         }));
             }
         });

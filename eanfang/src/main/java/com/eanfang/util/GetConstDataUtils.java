@@ -3,6 +3,7 @@ package com.eanfang.util;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -118,6 +119,8 @@ public class GetConstDataUtils {
     private static List<String> repairMisinformationList;
 
     private static List<String> noticeTypeList;
+
+    private static List<String> dataList;//数据库查询数据集合
 
     /**
      * 报修订单状态
@@ -417,12 +420,14 @@ public class GetConstDataUtils {
         if (arriveList == null) {
             synchronized (GetConstDataUtils.class) {
                 if (arriveList == null) {
+//                    arriveList = getDataUtlis(GetConstDataUtils.CONST, Constant.ARRIVE_LIMIT);
                     arriveList = Config.get().getConstBean().getData().getConst().get(Constant.ARRIVE_LIMIT);
                 }
             }
         }
         return arriveList;
     }
+
 
     public static List<String> getWorkReportTypeList() {
         if (workReportTypeList == null) {
@@ -632,4 +637,6 @@ public class GetConstDataUtils {
         }
         return noticeTypeList;
     }
+
+
 }
