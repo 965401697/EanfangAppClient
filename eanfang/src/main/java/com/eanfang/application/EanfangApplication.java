@@ -7,7 +7,6 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.greendao.downloader.DaoManager;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -32,7 +31,6 @@ public class EanfangApplication extends CustomeApplication {
     public static final String TAG = EanfangApplication.class.getSimpleName();
     private static EanfangApplication mEanfangApplication;
     private OkGo http;
-    private static DaoManager mManager;
 
     public static EanfangApplication getApplication() {
         return mEanfangApplication;
@@ -42,9 +40,6 @@ public class EanfangApplication extends CustomeApplication {
         return mEanfangApplication;
     }
 
-    public static DaoManager getDaoManager() {
-        return mManager;
-    }
 
 
     @Override

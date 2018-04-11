@@ -31,29 +31,23 @@ public class PermissionsModel {
     }
 
     public void checkCameraPermission(final PermissionListener listener) {
-        rxPermissions.request(Manifest.permission.CAMERA).subscribe(new Action1<Boolean>() {
-            @Override
-            public void call(Boolean aBoolean) {
-                if (!aBoolean) {
-                    gotoPermissionSetting();
-                }
-                if (listener != null) {
-                    listener.onPermission(aBoolean);
-                }
+        rxPermissions.request(Manifest.permission.CAMERA).subscribe(aBoolean -> {
+            if (!aBoolean) {
+                gotoPermissionSetting();
+            }
+            if (listener != null) {
+                listener.onPermission(aBoolean);
             }
         });
     }
 
     public void checkWriteSDCardPermission(final PermissionListener listener) {
-        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
-            @Override
-            public void call(Boolean aBoolean) {
-                if (!aBoolean) {
-                    gotoPermissionSetting();
-                }
-                if (listener != null) {
-                    listener.onPermission(aBoolean);
-                }
+        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(aBoolean -> {
+            if (!aBoolean) {
+                gotoPermissionSetting();
+            }
+            if (listener != null) {
+                listener.onPermission(aBoolean);
             }
         });
     }

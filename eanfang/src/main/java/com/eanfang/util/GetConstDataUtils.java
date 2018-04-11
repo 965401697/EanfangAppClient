@@ -1,12 +1,7 @@
 package com.eanfang.util;
 
-import android.content.Context;
-import android.util.Log;
-
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.greendao.downloader.FinalDataUtils;
-import com.yaf.base.entity.FinalDataEntity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -643,48 +638,5 @@ public class GetConstDataUtils {
         return noticeTypeList;
     }
 
-    /**
-     * 根据条件查询
-     *
-     * @param value
-     * @param value1
-     * @return
-     */
-    public static List<String> getDataUtlis(String value, String value1) {
-
-
-        if (dataList == null) {
-            dataList = new ArrayList<>();
-        }
-        if (dataList.size() > 0) dataList.clear();
-
-        String sql = "where FILE_NAME=? and LIST=?";
-        String[] condition = new String[]{value, value1};
-        try {
-            List<FinalDataEntity> l = FinalDataUtils.getInstance().queryFinalDataByNativeSql(sql, condition);
-            for (FinalDataEntity e : l) {
-                dataList.add(e.getName());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dataList;
-    }
-
-    /**
-     * 查询条件的常量
-     */
-    public static String CONST = "Const";
-    public static String WorkReportConstant;
-    public static String RepairConstant;
-    public static String ShopConstant;
-    public static String WorkInspectConstant;
-    public static String DESIGNORDERCONSTANT = "DesignOrderConstant";
-    public static String MainTainConstant;
-    public static String DeviceConstant;
-    public static String QuoteOrderConstant;
-    public static String InstallOrderConstant;
-    public static String TaskPublishConstant;
-    public static String NoticeConst;
 
 }

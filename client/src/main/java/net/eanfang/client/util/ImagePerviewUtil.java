@@ -14,6 +14,9 @@ import java.util.ArrayList;
 
 public class ImagePerviewUtil {
     public static void perviewImage(Context context, ArrayList<String> images) {
+        if (images == null || images.isEmpty()) {
+            return;
+        }
         Intent intent = MyBGAPhotoPickerPreviewActivity.newIntent(context, images.size(), images, images, 0, false);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
