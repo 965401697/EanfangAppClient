@@ -15,6 +15,10 @@ import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import lombok.Getter;
+
 /**
  * Created by jornl on 2017/9/13.
  */
@@ -24,9 +28,10 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     private Activity activity;
     private boolean showDialog;
     private UploadDialogUtil.UploadDialog uploadDialog;
-    private int total = 1;
-    private int curr = 1;
-    public boolean isAllSuccess = false;
+    @Getter
+    private AtomicInteger total = new AtomicInteger(0);
+    @Getter
+    private AtomicInteger curr = new AtomicInteger(0);
 
     private Handler handler;
 
@@ -79,21 +84,8 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
 
     @Override
     public final void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-        if (isAllSuccess) {
-            onFinish();
-            onOssSuccess();
-        }
-        //上传成功 当前++;
-        //onStart();
-        //全部上传成功
-//        if (getCurr() >= getTotal()) {
-//            onFinish();
-//            onOssSuccess();
-//            return;
-//        } else {
-//            //没有全部上传成功
-//        }
-
+        onFinish();
+        onOssSuccess();
     }
 
     @Override
@@ -114,7 +106,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     public void onOssProgress(PutObjectRequest request, long currentSize, long totalSize) {
         handler.post(() -> {
             if (uploadDialog != null) {
-                uploadDialog.setTextContent("正在上传（" + getCurr() + "/" + getTotal() + "）");
+                uploadDialog.setTextContent("正在上传（" + curr.get() + "/" + total.get() + "）");
             }
         });
 
@@ -148,23 +140,5 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     public void onCompressFailed() {
         onFinish();
         ToastUtil.get().showToast(this.activity, "哎呀，图片压缩失败了，再试一下吧");
-    }
-
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public int getCurr() {
-        return curr;
-    }
-
-    public void setCurr(int curr) {
-        synchronized (this) {
-            this.curr = curr;
-        }
     }
 }

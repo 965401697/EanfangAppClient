@@ -50,4 +50,8 @@ public class LubanUtils {
     public static void compress(Context context, String url, Consumer<String> success) {
         compress(context, Arrays.asList(url), null, success, null);
     }
+
+    public static void compress(Context context, String url, Consumer<String> success, Consumer<Throwable> fail) {
+        compress(context, Arrays.asList(url), null, success, fail);
+    }
 }

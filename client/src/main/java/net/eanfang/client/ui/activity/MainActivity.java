@@ -169,23 +169,21 @@ public class MainActivity extends BaseClientActivity {
      * 请求基础数据
      */
     private void getBaseData() {
-        new Thread(() -> {
-            String url;
-            BaseDataBean dataBean = Config.get().getBaseDataBean();
-            if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
-                url = NewApiService.GET_BASE_DATA_CACHE + "0";
-            } else {
-                url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
-            }
-            EanfangHttp.get(url)
-                    .tag(this)
-                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                        if (!str.contains(Constant.NO_UPDATE)) {
-                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                        }
-                    }));
-        }).start();
+        String url;
+        BaseDataBean dataBean = Config.get().getBaseDataBean();
+        if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
+            url = NewApiService.GET_BASE_DATA_CACHE + "0";
+        } else {
+            url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                    }
+                }));
     }
 
     /**
@@ -202,7 +200,7 @@ public class MainActivity extends BaseClientActivity {
         EanfangHttp.get(url)
                 .tag(this)
                 .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
+                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
                         ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
                         EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                     }

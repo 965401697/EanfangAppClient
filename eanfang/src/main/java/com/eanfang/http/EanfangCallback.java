@@ -136,7 +136,6 @@ public class EanfangCallback<T> extends StringCallback {
                 loadingDialog.dismiss();
             } catch (Exception e) {
             }
-
         }
     }
 

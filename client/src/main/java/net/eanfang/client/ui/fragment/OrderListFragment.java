@@ -320,7 +320,7 @@ public class OrderListFragment extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
-//        getData();
+        getData();
 
     }
 
