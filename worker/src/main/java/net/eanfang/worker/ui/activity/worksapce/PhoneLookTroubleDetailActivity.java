@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -36,7 +37,6 @@ import net.eanfang.worker.ui.widget.MateraInfoView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -153,7 +153,8 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity /*impleme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_look_trouble_detail);
+//        setContentView(R.layout.activity_look_trouble_detail);
+        setContentView(R.layout.activity_ps_look_trouble_detail);
         initView();
         getData();
     }
@@ -231,21 +232,26 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity /*impleme
         }
 
 
-        if (bughandleDetailEntity.getFailureEntity().getBusinessThreeCode() != null) {
-            tv_trouble_title.setText(Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1));
+        if (bughandleDetailEntity.getFailureEntity() != null) {
+            if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
+                String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
+                String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
+                String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
+                tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+            } else {
+                tv_trouble_title.setText("");
+            }
+
+            tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
+
+            tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
+
+            tv_device_no.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
+
+            tv_device_location.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
+
+            et_trouble_desc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
         }
-//        //故障设备
-//        if (StringUtils.isValid(bughandleDetailEntity.getInstrument())) {
-//            tv_trouble_device.setText(bean.getInstrument());
-//        }
-//        //品牌型号
-//        if (StringUtils.isValid(bean.getModelnum())) {
-//            tv_brand_model.setText(bean.getModelnum());
-//        }
-//        //设备编号
-//        if (StringUtils.isValid(bean.getEquipmentcode())) {
-//            tv_device_no.setText(bean.getEquipmentcode());
-//        }
         //故障位置
         if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
             tv_device_location.setText(bughandleDetailEntity.getFailureEntity().getBugPosition());

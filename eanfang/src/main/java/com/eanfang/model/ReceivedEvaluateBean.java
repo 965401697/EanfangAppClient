@@ -85,7 +85,7 @@ public class ReceivedEvaluateBean implements Serializable {
          */
 
         private String createTime;
-        private int createUserId;
+        private Long createUserId;
         private Long id;
         private int item1;
         private int item2;
@@ -106,11 +106,11 @@ public class ReceivedEvaluateBean implements Serializable {
             this.createTime = createTime;
         }
 
-        public int getCreateUserId() {
+        public Long getCreateUserId() {
             return createUserId;
         }
 
-        public void setCreateUserId(int createUserId) {
+        public void setCreateUserId(Long createUserId) {
             this.createUserId = createUserId;
         }
 

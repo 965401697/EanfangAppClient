@@ -286,6 +286,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/ll_repair_misinformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -310,6 +311,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_gone_c"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
