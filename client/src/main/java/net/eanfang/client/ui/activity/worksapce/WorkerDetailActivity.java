@@ -319,26 +319,26 @@ public class WorkerDetailActivity extends BaseClientActivity {
             String[] urls = bean.getVerifyEntity().getHonorPics().split(",");
 
             if (urls.length >= 1) {
-                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);
             }
             if (urls.length >= 4) {
-                ivPic4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[3]));
+                ivPic4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[3]));
                 ivPic4.setVisibility(View.VISIBLE);
             } else {
                 ivPic4.setVisibility(View.GONE);

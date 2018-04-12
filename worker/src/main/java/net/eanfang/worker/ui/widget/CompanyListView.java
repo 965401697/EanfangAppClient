@@ -43,10 +43,6 @@ public class CompanyListView extends BaseDialog {
     private Activity mContext;
     private setCheckItemCompany itemCompany;
 
-    public interface setCheckItemCompany {
-        void getItemName(String name);
-    }
-
     public CompanyListView(Activity context, setCheckItemCompany itemCompany) {
         super(context);
         this.mContext = context;
@@ -80,7 +76,15 @@ public class CompanyListView extends BaseDialog {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 SwitchCompany(beanList.get(position).getOrgId());
-                itemCompany.getItemName(beanList.get(position).getOrgName());
+                String companyName = null;
+                if (beanList.get(position).getOrgName() != null) {
+                    companyName = beanList.get(position).getOrgName();
+                }
+                String logpic = null;
+                if (beanList.get(position).getOrgUnitEntity() != null && beanList.get(position).getOrgUnitEntity().getLogoPic() != null) {
+                    logpic = beanList.get(position).getOrgUnitEntity().getLogoPic();
+                }
+                itemCompany.getItemName(companyName, logpic);
                 dismiss();
             }
         });
@@ -98,6 +102,10 @@ public class CompanyListView extends BaseDialog {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
                 }));
+    }
+
+    public interface setCheckItemCompany {
+        void getItemName(String name, String url);
     }
 
 }

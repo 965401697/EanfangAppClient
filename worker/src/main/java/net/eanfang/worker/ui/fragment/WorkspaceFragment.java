@@ -63,10 +63,11 @@ public class WorkspaceFragment extends BaseFragment {
         setLogpic();
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-//            new CompanyListView(getActivity(), name -> tvCompanyName.setText(name)).show();
-            new CompanyListView(getActivity(), name -> {
+            new CompanyListView(getActivity(), (name, url) -> {
                 tvCompanyName.setText(name);
-                setLogpic();
+                if (url != null) {
+                    iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                }
             }).show();
         });
     }
@@ -74,9 +75,13 @@ public class WorkspaceFragment extends BaseFragment {
     private void setLogpic() {
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
+        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
+                && bean.getOrgUnitEntity().getLogoPic()!=null
+                && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         if (defaultPic != null && !defaultPic.isEmpty()) {
-            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + v(() -> defaultPic.get(0))));
+            if (defaultPic.get(0)!=null) {
+                iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + v(() -> defaultPic.get(0))));
+            }
         }
 
     }
@@ -130,6 +135,13 @@ public class WorkspaceFragment extends BaseFragment {
 
     }
 
+    private void helpTools() {
+        //相机
+        findViewById(R.id.ll_camera).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), CameraActivity.class));
+        });
+    }
+
     /**
      * 协同办公
      */
@@ -150,13 +162,6 @@ public class WorkspaceFragment extends BaseFragment {
         //检查
         findViewById(R.id.ll_job_check).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
-        });
-    }
-
-    private void helpTools() {
-        //相机
-        findViewById(R.id.ll_camera).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), CameraActivity.class));
         });
     }
 

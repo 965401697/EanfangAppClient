@@ -48,6 +48,18 @@ import butterknife.ButterKnife;
  */
 
 public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
+    /**
+     * 营业执照 take photo回调 code
+     */
+    private final int LICENSE_CALLBACK_CODE = 300;
+    /**
+     * 公司LOGO take photo 回调 code
+     */
+    private final int ADPIC_CALLBACK_CODE = 400;
+    /**
+     * 地址回掉code
+     */
+    private final int ADDRESS_CALLBACK_CODE = 100;
     @BindView(R.id.iv_upload)
     SimpleDraweeView ivUpload;
     @BindView(R.id.iv_upload2)
@@ -96,18 +108,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     EditText etDesc;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private AuthCompanyBaseInfoBean byNetBean;
-    /**
-     * 营业执照 take photo回调 code
-     */
-    private final int LICENSE_CALLBACK_CODE = 300;
-    /**
-     * 公司LOGO take photo 回调 code
-     */
-    private final int ADPIC_CALLBACK_CODE = 400;
-    /**
-     * 地址回掉code
-     */
-    private final int ADDRESS_CALLBACK_CODE = 100;
     private String firstTraed, secondTraed;
     private String longitude, orgName;
     private String latitude;
@@ -124,12 +124,104 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         initData();
     }
 
+    private void initView() {
+        setTitle("填写企业信息");
+        setRightTitle("下一步");
+        setLeftBack();
+        orgid = getIntent().getLongExtra("orgid", 0);
+        orgName = getIntent().getStringExtra("orgName");
+        etCompany.setText(orgName);
+        ivUpload.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
+        });
+        ivUpload2.setOnClickListener((v -> {
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, ADPIC_CALLBACK_CODE));
+        }));
+
+        llOfficeAddress.setOnClickListener((v) -> {
+            Intent intent = new Intent(AuthCompanyActivity.this, SelectAddressActivity.class);
+            startActivityForResult(intent, ADDRESS_CALLBACK_CODE);
+        });
+        llType.setOnClickListener(v -> showTradType());
+        llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "",
+                tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
+
+        setRightTitleOnClickListener((v) -> {
+            if (byNetBean.getStatus() == 0 || byNetBean.getStatus() == 3) {
+                setData();
+            } else {
+                jump();
+            }
+
+        });
+
+    }
+
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
                 .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
                     byNetBean = beans;
                     fillData();
                 }));
+    }
+
+    /**
+     * 行业类型
+     */
+    private void showTradType() {
+        List<BaseDataEntity> baseDataBeanList = Config.get().getIndustryList();
+        List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
+        List<String> tradeFirststr = Stream.of(tradeFirst).map(first -> first.getDataName()).toList();
+        List<List<String>> secondStr = Stream.of(tradeFirst).map(firtstr -> Stream.of(baseDataBeanList).filter(second -> second.getLevel() == 3 && second.getDataCode().startsWith(firtstr.getDataCode())).map(second -> second.getDataName()).toList()).toList();
+
+        PickerSelectUtil.linkagePicker(this, "行业类型", tradeFirststr, secondStr, ((first, second) -> {
+            firstTraed = first;
+            secondTraed = second;
+            String tradeStr = first + " - " + second;
+            tvType.setText(tradeStr);
+        }));
+    }
+
+    private void setData() {
+        infoBean.setName(etCompany.getText().toString().trim());
+        infoBean.setLicenseCode(edCompanyNumber.getText().toString().trim());
+        infoBean.setRegisterAssets(etMoney.getText().toString().trim());
+        if (byNetBean.getTradeTypeCode().equals("")) {
+            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        } else {
+            infoBean.setTradeTypeCode(byNetBean.getTradeTypeCode());
+        }
+
+        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
+        infoBean.setStatus(1);
+        infoBean.setOrgId(orgid);
+
+        infoBean.setLegalName(etLegalPersion.getText().toString().trim());
+        infoBean.setTelPhone(etPhone.getText().toString().trim());
+        infoBean.setUnitType(3);
+        infoBean.setIntro(etDesc.getText().toString().trim());
+        infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
+        if (byNetBean.getAreaCode().equals("")) {
+            infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
+        } else {
+            infoBean.setAreaCode(byNetBean.getAreaCode());
+        }
+        if (byNetBean.getAdminUserId().equals("")) {
+            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+        } else {
+            infoBean.setAdminUserId(byNetBean.getAdminUserId());
+        }
+
+        String json = JSONObject.toJSONString(infoBean);
+        commit(json);
+    }
+
+    private void jump() {
+        Intent intent = new Intent(AuthCompanyActivity.this, AuthSystemTypeActivity.class);
+        intent.putExtra("orgid", orgid);
+        intent.putExtra("accid", byNetBean.getStatus());
+        intent.putExtra("adminUserId", byNetBean.getAdminUserId());
+        startActivity(intent);
     }
 
     private void fillData() {
@@ -172,54 +264,12 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         }
     }
 
-    private void initView() {
-        setTitle("填写企业信息");
-        setRightTitle("下一步");
-        setLeftBack();
-        orgid = getIntent().getLongExtra("orgid", 0);
-        orgName = getIntent().getStringExtra("orgName");
-        etCompany.setText(orgName);
-        ivUpload.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this,LICENSE_CALLBACK_CODE));
-        });
-        ivUpload2.setOnClickListener((v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this,ADPIC_CALLBACK_CODE));
-        }));
-
-        llOfficeAddress.setOnClickListener((v) -> {
-            Intent intent = new Intent(AuthCompanyActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, ADDRESS_CALLBACK_CODE);
-        });
-        llType.setOnClickListener(v -> showTradType());
-        llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "",
-                tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
-
-        setRightTitleOnClickListener((v) -> {
-            if (byNetBean.getStatus() == 0 || byNetBean.getStatus() == 3) {
-                setData();
-            } else {
-                jump();
-            }
-
-        });
-
-    }
-
-    /**
-     * 行业类型
-     */
-    private void showTradType() {
-        List<BaseDataEntity> baseDataBeanList = Config.get().getIndustryList();
-        List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
-        List<String> tradeFirststr = Stream.of(tradeFirst).map(first -> first.getDataName()).toList();
-        List<List<String>> secondStr = Stream.of(tradeFirst).map(firtstr -> Stream.of(baseDataBeanList).filter(second -> second.getLevel() == 3 && second.getDataCode().startsWith(firtstr.getDataCode())).map(second -> second.getDataName()).toList()).toList();
-
-        PickerSelectUtil.linkagePicker(this, "行业类型", tradeFirststr, secondStr, ((first, second) -> {
-            firstTraed = first;
-            secondTraed = second;
-            String tradeStr = first + " - " + second;
-            tvType.setText(tradeStr);
-        }));
+    private void commit(String json) {
+        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
+                .upJson(json)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    jump();
+                }));
     }
 
     /**
@@ -249,48 +299,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 
     }
 
-    private void setData() {
-        infoBean.setName(etCompany.getText().toString().trim());
-        infoBean.setLicenseCode(edCompanyNumber.getText().toString().trim());
-        infoBean.setRegisterAssets(etMoney.getText().toString().trim());
-        if (byNetBean.getTradeTypeCode()!=null){
-            infoBean.setTradeTypeCode(byNetBean.getTradeTypeCode());
-        }else {
-            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
-        }
-        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
-        infoBean.setStatus(1);
-        infoBean.setOrgId(orgid);
-
-        infoBean.setLegalName(etLegalPersion.getText().toString().trim());
-        infoBean.setTelPhone(etPhone.getText().toString().trim());
-        infoBean.setUnitType(3);
-        infoBean.setIntro(etDesc.getText().toString().trim());
-        infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
-        if (byNetBean.getAreaCode() != null) {
-            infoBean.setAreaCode(byNetBean.getAreaCode());
-        } else {
-            infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
-        }
-        if (byNetBean.getAdminUserId() != null) {
-            infoBean.setAdminUserId(byNetBean.getAdminUserId());
-        } else {
-            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
-        }
-
-        String json = JSONObject.toJSONString(infoBean);
-        commit(json);
-    }
-
-    private void commit(String json) {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
-                .upJson(json)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    jump();
-                }));
-    }
-
-
     /**
      * 地图选址 回调
      *
@@ -316,14 +324,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             etDetailOfficeAddress.setText(item.getName());
 
         }
-    }
-
-    private void jump() {
-        Intent intent = new Intent(AuthCompanyActivity.this, AuthSystemTypeActivity.class);
-        intent.putExtra("orgid", orgid);
-        intent.putExtra("accid", byNetBean.getStatus());
-        intent.putExtra("adminUserId", byNetBean.getAdminUserId());
-        startActivity(intent);
     }
 //
 }

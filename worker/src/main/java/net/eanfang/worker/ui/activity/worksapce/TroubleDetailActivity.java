@@ -6,7 +6,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -35,7 +34,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -56,8 +54,8 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
+//    @BindView(R.id.iv_left)
+//    ImageView ivLeft;
 
     private RecyclerView rv_trouble;
     private TextView tv_over_time;
@@ -165,7 +163,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "010-5877-8731");
         });
-        ivLeft.setOnClickListener((v) -> finishSelf());
+//        ivLeft.setOnClickListener((v) -> finishSelf());
     }
 
     private void setData(BughandleConfirmEntity bughandleConfirmEntity) {

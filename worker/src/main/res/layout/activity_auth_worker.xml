@@ -79,6 +79,8 @@
                     android:gravity="center_vertical|right"
                     android:hint="请输入姓名"
                     android:singleLine="true"
+                    android:inputType="textPersonName"
+                    android:maxLength="6"
                     android:textColor="@color/font_color"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -107,7 +109,8 @@
                     android:background="@null"
                     android:gravity="right"
                     android:hint="联系电话"
-                    android:inputType="phone"
+                    android:inputType="phone|number"
+                    android:maxLength="18"
                     android:textColor="@color/font_color"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -243,7 +246,8 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入支付账户"
-                    android:inputType="none"
+                    android:inputType="number"
+                    android:maxLength="18"
                     android:singleLine="true"
                     android:textColor="@color/font_color"
                     android:textSize="16sp" />
