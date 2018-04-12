@@ -267,10 +267,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         infoBean.setUnitType(3);
         infoBean.setIntro(etDesc.getText().toString().trim());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
-        if (infoBean.getAreaCode() != null) {
-            infoBean.setAreaCode(byNetBean.getAreaCode());
-        } else {
+        if (infoBean.getAreaCode().equals("")) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
+        } else {
+            infoBean.setAreaCode(byNetBean.getAreaCode());
         }
         if (infoBean.getAdminUserId() != null) {
             infoBean.setAdminUserId(byNetBean.getAdminUserId());

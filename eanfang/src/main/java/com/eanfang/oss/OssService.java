@@ -1,7 +1,6 @@
 package com.eanfang.oss;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
@@ -11,23 +10,16 @@ import com.alibaba.sdk.android.oss.ServiceException;
 import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.LubanUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.Var;
-import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.compress.CompressImageUtil;
-import com.jph.takephoto.model.LubanOptions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 /**
@@ -173,7 +165,7 @@ public class OssService {
         Integer curr = result.getInteger("curr");
         Integer code = result.getInteger("code");
         //code 为 -1 代表失败
-        if (code == UPLOAD_FAILED) {
+        if (code.equals(UPLOAD_FAILED)) {
             ossCallBack.onFailure(null, null, null);
             EventBus.getDefault().unregister(this);
             return;

@@ -160,7 +160,8 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
-                        android:hint="注册资本"
+                        android:hint="注册资本(万)"
+                        android:inputType="number"
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -499,7 +500,8 @@
                         android:background="@null"
                         android:gravity="right"
                         android:hint="单位电话"
-                        android:inputType="phone"
+                        android:inputType="phone|number"
+                        android:maxLength="11"
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
                 </LinearLayout>
