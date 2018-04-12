@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/dimen_100"
     android:layout_gravity="center"
-    android:background="@drawable/tab_bg"
+    android:background="@color/color_bottom_back"
     android:gravity="center"
-    android:orientation="vertical"
-    android:paddingBottom="2dp"
-    android:paddingTop="4dp">
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bottom_back_line" />
 
     <ImageView
         android:id="@+id/tabImg"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/dimen_36"
+        android:layout_height="@dimen/dimen_36"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_12"
         android:contentDescription="@null"
         android:src="@drawable/main_tab_my_selector" />
 
@@ -32,12 +36,11 @@
         android:id="@+id/tabText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tabImg"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_8"
         android:focusable="true"
         android:gravity="center"
         android:text="我的"
         android:textColor="@drawable/tab_item_txt_sel"
-        android:textSize="12sp" />
-</RelativeLayout>
+        android:textSize="@dimen/textSize_11" />
+</LinearLayout>

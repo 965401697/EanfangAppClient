@@ -139,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="#fe8f64"
+            android:background="@drawable/ic_main_top_back"
             android:text="登录"
             android:textColor="#ffffff"
             android:textSize="16sp" />

@@ -27,4 +27,16 @@
     <string name="item_invite_reason">原因</string>
     <string name="contact_delete">删除</string>
     <string name="main_chat">会话</string>
+
+    <!-- 首页 -->
+    <string name="text_worker_repair_order">报修订单</string>
+    <string name="text_worker_install_order">报装订单</string>
+    <string name="text_worker_design_order">设计订单</string>
+    <string name="text_worker_maintain_order">维保订单</string>
+    <string name="text_worker_inside_price">内部报价</string>
+    <string name="text_worker_project_send">项目发包</string>
+    <string name="text_worker_project_receive">项目接包</string>
+    <string name="text_worker_sign">签到</string>
+
+    <string name="text_new_order">最新订单</string>
 </resources>

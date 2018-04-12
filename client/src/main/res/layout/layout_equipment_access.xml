@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_44"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -9,7 +10,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_30"
-        android:layout_marginTop="@dimen/dimen_40"
         android:text="资料库"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_16"
@@ -24,29 +24,29 @@
         <TextView
             android:id="@+id/tv_work_library"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_library"
+            android:onClick="noOpen"
             android:text="@string/text_work_library" />
 
         <TextView
             android:id="@+id/tv_work_fault"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_fault"
+            android:onClick="noOpen"
             android:text="@string/text_work_fault" />
 
         <TextView
             android:id="@+id/tv_work_change"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_change"
+            android:onClick="noOpen"
             android:text="@string/text_work_change" />
 
         <TextView
             android:id="@+id/tv_work_file"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_file"
+            android:onClick="noOpen"
             android:text="@string/text_work_file" />
     </LinearLayout>
 
