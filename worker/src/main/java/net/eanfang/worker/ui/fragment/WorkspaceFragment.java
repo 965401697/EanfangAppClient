@@ -77,7 +77,7 @@ public class WorkspaceFragment extends BaseFragment {
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
-                && bean.getOrgUnitEntity().getLogoPic()!=null
+                && bean.getOrgUnitEntity().getLogoPic() != null
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
         if (!StringUtils.isEmpty(imgUrl)) {
