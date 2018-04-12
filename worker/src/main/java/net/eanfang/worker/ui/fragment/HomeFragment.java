@@ -30,6 +30,8 @@ import net.eanfang.worker.ui.widget.SignCtrlView;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.eanfang.util.V.v;
+
 
 /**
  * Created by MrHou
@@ -41,7 +43,8 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
     private BannerView bannerView;
-
+    //头部标题
+    private TextView tvHomeTitle;
     private RollTextView rollTextView;
 
     private RecyclerView rvData;
@@ -70,6 +73,18 @@ public class HomeFragment extends BaseFragment {
         rvData.setLayoutManager(linearLayoutManager);
         initCount();
         initFalseData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
+        String orgName = v(() -> (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        if (("个人").equals(orgName)) {
+            tvHomeTitle.setText("易安防");
+        } else {
+            tvHomeTitle.setText(orgName);
+        }
     }
 
     /**

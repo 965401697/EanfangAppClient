@@ -274,10 +274,10 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
         }
 
         bughandleDetailEntity.getFailureEntity().setBugDescription(et_trouble_desc.getText().toString().trim());
-        bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_title.getText().toString().trim(), 3));
-        bughandleDetailEntity.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
-        bughandleDetailEntity.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
-        bughandleDetailEntity.getFailureEntity().setDeviceName("");
+//        bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_device.getText().toString().trim(), 3));
+//        bughandleDetailEntity.getFailureEntity().setDeviceNo(tv_device_no.getText().toString().trim());
+//        bughandleDetailEntity.getFailureEntity().setBugPosition(tv_device_location.getText().toString().trim());
+//        bughandleDetailEntity.getFailureEntity().setDeviceName("");
         bughandleDetailEntity.setCause(et_trouble_reason.getText().toString().trim());
         bughandleDetailEntity.setHandle(et_trouble_deal.getText().toString().trim());
         bughandleDetailEntity.setCheckProcess(et_trouble_point.getText().toString().trim());

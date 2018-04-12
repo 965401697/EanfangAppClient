@@ -24,6 +24,7 @@ import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.ExecuteUtils;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
@@ -63,11 +64,16 @@ public class MainActivity extends BaseClientActivity {
 
         initXinGe();
         initFragment();
-        getBaseData();
-        getConst();
+
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initUpdate();
+        //  PermissionUtils.get(this).getStoragePermission(() -> {
+        //   new Thread(() -> {
+        getBaseData();
+        getConst();
+        // }).start();
+        //  });
     }
 
     private void initUpdate() {
@@ -169,23 +175,23 @@ public class MainActivity extends BaseClientActivity {
      * 请求基础数据
      */
     private void getBaseData() {
-        new Thread(() -> {
-            String url;
-            BaseDataBean dataBean = Config.get().getBaseDataBean();
-            if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
-                url = NewApiService.GET_BASE_DATA_CACHE + "0";
-            } else {
-                url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
-            }
-            EanfangHttp.get(url)
-                    .tag(this)
-                    .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                        if (!str.contains(Constant.NO_UPDATE)) {
+        String url;
+        BaseDataBean dataBean = Config.get().getBaseDataBean();
+        if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
+            url = NewApiService.GET_BASE_DATA_CACHE + "0";
+        } else {
+            url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                    new Thread(() -> {
+                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
                             BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
                             EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
                         }
-                    }));
-        }).start();
+                    }).start();
+                }));
     }
 
     /**
@@ -202,10 +208,12 @@ public class MainActivity extends BaseClientActivity {
         EanfangHttp.get(url)
                 .tag(this)
                 .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!str.contains(Constant.NO_UPDATE)) {
-                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
+                    new Thread(() -> {
+                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+                    }).start();
                 }));
     }
 

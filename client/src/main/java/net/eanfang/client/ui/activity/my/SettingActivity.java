@@ -85,7 +85,7 @@ public class SettingActivity extends BaseClientActivity {
         builder.setPositiveButton("确定", (dialog, which) -> {
             signout();
             dialog.dismiss();
-            //CleanMessageUtil.clearAllCache(EanfangApplication.get());
+//            CleanMessageUtil.clearAllCache(EanfangApplication.get());
             // ToastUtil.get().showToast(SettingActivity.this, "退出登录成功");
             // SharePreferenceUtil.get().clear();
             startActivity(new Intent(SettingActivity.this, LoginActivity.class));
@@ -98,7 +98,7 @@ public class SettingActivity extends BaseClientActivity {
     }
 
     private void signout() {
-        EanfangHttp.post(UserApi.APP_LOGOUT)
+        EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
                     showToast("退出成功");
                 }));

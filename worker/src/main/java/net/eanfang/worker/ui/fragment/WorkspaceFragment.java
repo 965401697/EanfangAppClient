@@ -9,6 +9,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
@@ -76,14 +77,12 @@ public class WorkspaceFragment extends BaseFragment {
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
-                && bean.getOrgUnitEntity().getLogoPic()!=null
+                && bean.getOrgUnitEntity().getLogoPic() != null
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
-        if (defaultPic != null && !defaultPic.isEmpty()) {
-            if (defaultPic.get(0)!=null) {
-                iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + v(() -> defaultPic.get(0))));
-            }
+        String imgUrl = v(() -> defaultPic.get(0));
+        if (!StringUtils.isEmpty(imgUrl)) {
+            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
         }
-
     }
 
     @Override

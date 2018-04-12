@@ -2,8 +2,6 @@ package com.eanfang.http;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.os.Looper;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -25,8 +23,6 @@ import org.greenrobot.eventbus.Subscribe;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.android.schedulers.AndroidSchedulers;
 
 import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
 
@@ -136,7 +132,6 @@ public class EanfangCallback<T> extends StringCallback {
                 loadingDialog.dismiss();
             } catch (Exception e) {
             }
-
         }
     }
 

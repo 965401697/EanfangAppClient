@@ -1,8 +1,10 @@
 package com.eanfang.oss;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.ServiceException;
@@ -16,6 +18,9 @@ import com.eanfang.util.Var;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.compress.CompressImageUtil;
 import com.jph.takephoto.model.LubanOptions;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,15 +39,18 @@ public class OssService {
     //private MultiPartUploadManager multiPartUploadManager;
     //根据实际需求改变分片大小
     private final static int partSize = 256 * 1024;
+    private final Integer UPLOAD_FAILED = -1;
+    private final Integer UPLOAD_SUCCESS = 1;
     private OSS oss;
     private String bucket;
-    private Context context;
-    private Integer total = 1;
+    private Activity activity;
+    private OSSCallBack ossCallBack;
 
-    public OssService(Context context, OSS oss, String bucket) {
+
+    public OssService(Activity activity, OSS oss, String bucket) {
         this.oss = oss;
         this.bucket = bucket;
-        this.context = context;
+        this.activity = activity;
     }
 
     /**
@@ -84,34 +92,24 @@ public class OssService {
         if (!file.exists()) {
             return null;
         }
-
         // 构造上传请求
         return new PutObjectRequest(bucket, objectKey, localFileUrl);
     }
 
-    /**
-     * 图片压缩处理
-     */
-    private void photoCompress(String localFileUrl, CompressImageUtil.CompressListener listener) {
-        LubanOptions option = new LubanOptions.Builder()
-                .setMaxHeight(720)
-                .setMaxWidth(720)
-                .setMaxSize(720 * 720)
-                .create();
-        CompressConfig config = CompressConfig.ofLuban(option);
-        CompressImageUtil util = new CompressImageUtil(context, config);
-        util.compress(localFileUrl, listener);
-    }
 
     public void putImage(String objectKey, String urlPath) {
         //图片压缩
-        LubanUtils.compress(context, urlPath, (path) -> {
+        LubanUtils.compress(activity, urlPath, (path) -> {
             PutObjectRequest put = getPutObjectRequest(objectKey, path);
+            JSONObject resultJson = new JSONObject();
             //如果为空  则跳过
             if (put == null) {
-                Var.get("OssService.asyncPutImages." + objectKey).setVar(1);
+                resultJson.put("code", UPLOAD_SUCCESS);
+                resultJson.put("curr", (ossCallBack.getCurr().get() + 1));
+                EventBus.getDefault().post(resultJson);
                 return;
             }
+
             // 异步上传时可以设置进度回调
 //            put.setProgressCallback(ossCallBack);
 //            if (ossCallBack.getTotal() <= ossCallBack.getCurr()) {
@@ -120,77 +118,74 @@ public class OssService {
             oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
                 @Override
                 public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                    Var.get("OssService.asyncPutImages." + objectKey).setVar(1);
-                    int count = Var.get("OssService.asyncPutImage.count").getVar() + 1;
-                    Var.get("OssService.asyncPutImage.count").setVar(count);
+                    ossCallBack.onOssProgress(null, 0, 0);
+                    resultJson.put("code", UPLOAD_SUCCESS);
+                    resultJson.put("curr", (ossCallBack.getCurr().get() + 1));
+                    EventBus.getDefault().post(resultJson);
                 }
 
                 @Override
                 public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
-                    //如果失败次数超过三次  则上传失败
-                    if (Var.get("OssService.asyncPutImages." + objectKey).getVar() > 3) {
-////                        ossCallBack.onFailure(request, clientException, serviceException);
-                        Var.get("OssService.asyncPutImages." + objectKey).setVar(99);
-                        return;
-                    }
-                    Var.get("OssService.asyncPutImages." + objectKey).setVar(Var.get("OssService.asyncPutImages." + objectKey).getVar() + 1);
+                    resultJson.put("code", UPLOAD_FAILED);
+                    resultJson.put("curr", (ossCallBack.getCurr().get()));
+                    EventBus.getDefault().post(resultJson);
                 }
             });
+        }, (e) -> {
+            JSONObject resultJson = new JSONObject();
+            resultJson.put("code", UPLOAD_FAILED);
+            resultJson.put("curr", (ossCallBack.getCurr().get()));
+            EventBus.getDefault().post(resultJson);
         });
     }
 
     public void asyncPutImage(String objectKey, String urlPath, OSSCallBack ossCallBack) {
-//        if (Var.get("OssService.asyncPutImage.count").getVar() <= 0) {
-        Var.get("OssService.asyncPutImage.count").setChangeListener((var) -> {
-            ExecuteUtils.execute(() -> {
-                        ossCallBack.onProgress(null, 0L, 0L);
-                        ossCallBack.setCurr(Var.get("OssService.asyncPutImage.count").getVar() + 1);
-                        return Var.get("OssService.asyncPutImage.count").getVar();
-                    }
-                    , total, 0
-                    , () -> {
-                        Var.remove("OssService.asyncPutImage.count");
-                        ossCallBack.isAllSuccess = true;
-                        ossCallBack.onSuccess(null, null);
-                    }
-                    , () -> putImage(objectKey, urlPath));
-        });
-//        }
-        Var.get("OssService.asyncPutImage.count").setVar(Var.get("OssService.asyncPutImage.count").getVar());
+        EventBus.getDefault().register(this);
+        this.ossCallBack = ossCallBack;
+        putImage(objectKey, urlPath);
     }
 
-
     public void asyncPutImages(final Map<String, String> objectMap, final OSSCallBack callBack) {
-
+        this.ossCallBack = callBack;
+        EventBus.getDefault().register(this);
         //如果没有了 则成功
         if (objectMap == null || objectMap.size() <= 0 || objectMap.keySet().size() <= 0) {
-            callBack.isAllSuccess = true;
-            callBack.onSuccess(null, null);
+            ossCallBack.onSuccess(null, null);
             return;
         }
-
         final List<String> keyList = new ArrayList(objectMap.keySet());
-        total = keyList.size();
         //初始化 总数
-        callBack.setTotal(keyList.size());
+        ossCallBack.getTotal().set(keyList.size());
         for (int i = 0; i < keyList.size(); i++) {
             String objectKey = keyList.get(i);
             String localFileUrl = objectMap.get(objectKey);
-            //监控 是否上传成功
-            Var.get("OssService.asyncPutImages." + objectKey).setChangeListener((var) -> {
-                ExecuteUtils.execute(() -> Var.get("OssService.asyncPutImages." + objectKey).getVar()
-                        , 1, 0
-                        , () -> Var.remove("OssService.asyncPutImages." + objectKey)
-                        , () -> asyncPutImage(objectKey, localFileUrl, callBack));
-            });
-            //触发上传
-            Var.get("OssService.asyncPutImages." + objectKey).setVar(0);
+            putImage(objectKey, localFileUrl);
         }
-
-
         //开始执行检测线程
 //        asyncCheckPicExist(keyList.get(keyList.size() - 1), callBack);
+    }
 
+
+    @Subscribe
+    public void onEvent(JSONObject result) {
+
+        //获取当前成功的 数量  赋值给 ossCallBack
+        Integer curr = result.getInteger("curr");
+        Integer code = result.getInteger("code");
+        //code 为 -1 代表失败
+        if (code == UPLOAD_FAILED) {
+            ossCallBack.onFailure(null, null, null);
+            EventBus.getDefault().unregister(this);
+            return;
+        }
+        ossCallBack.getCurr().set(curr);
+
+        //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
+        Log.e("ossService", "onEvent: total:" + ossCallBack.getCurr().get() + "  curr:" + ossCallBack.getCurr().get());
+        if (ossCallBack.getCurr().get() >= ossCallBack.getTotal().get()) {
+            ossCallBack.onSuccess(null, null);
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /**

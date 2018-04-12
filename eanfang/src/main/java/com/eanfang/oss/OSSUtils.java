@@ -1,6 +1,7 @@
 package com.eanfang.oss;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
@@ -14,22 +15,22 @@ public class OSSUtils {
     private static volatile OssService instance = null;
 
     //初始化一个OssService用来上传下载
-    public static OssService initOSS(Context context) {
+    public static OssService initOSS(Activity activity) {
         if (instance == null) {
             synchronized (OSSUtils.class) {
                 if (instance == null) {
                     OSSCredentialProvider credentialProvider = new STSGetter();
                     ClientConfiguration conf = new ClientConfiguration();
                     // 连接超时，默认15秒
-                    conf.setConnectionTimeout(60 * 1000);
+                    conf.setConnectionTimeout(15 * 1000);
                     // socket超时，默认15秒
                     conf.setSocketTimeout(60 * 1000);
                     // 最大并发请求书，默认5个
-                    conf.setMaxConcurrentRequest(5);
+                    conf.setMaxConcurrentRequest(10);
                     // 失败后最大重试次数，默认2次
-                    conf.setMaxErrorRetry(5);
-                    OSS oss = new OSSClient(context, BuildConfig.OSS_ENDPOINT, credentialProvider, conf);
-                    instance = new OssService(context, oss, BuildConfig.OSS_BUCKET);
+                    conf.setMaxErrorRetry(3);
+                    OSS oss = new OSSClient(activity, BuildConfig.OSS_ENDPOINT, credentialProvider, conf);
+                    instance = new OssService(activity, oss, BuildConfig.OSS_BUCKET);
                 }
             }
         }

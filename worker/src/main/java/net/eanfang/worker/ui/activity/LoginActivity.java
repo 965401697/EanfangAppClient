@@ -41,7 +41,7 @@ import java.util.List;
  * @desc 登录
  */
 
-public class LoginActivity extends BaseActivity{
+public class LoginActivity extends BaseActivity {
     public static final String TAG = LoginActivity.class.getSimpleName();
 
     private Context context = this;
@@ -166,7 +166,7 @@ public class LoginActivity extends BaseActivity{
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
                 .params("mobile", phone)
                 .params("verifycode", pwd)
-                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
+                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, true, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
                     goMain();

@@ -11,7 +11,8 @@
         android:background="@mipmap/ic_work_top_back"
         android:orientation="vertical">
 
-        <View
+        <TextView
+            android:id="@+id/tv_homeTitle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40" />
 
