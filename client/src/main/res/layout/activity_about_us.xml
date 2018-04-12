@@ -18,8 +18,8 @@
         <ImageView
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:src="@drawable/client2_logo"
-            app:srcCompat="@drawable/client2_logo" />
+            android:src="@drawable/client_logo"
+            app:srcCompat="@drawable/client_logo" />
 
         <TextView
             android:id="@+id/tv_logo_text"

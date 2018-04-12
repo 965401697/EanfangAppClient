@@ -19,10 +19,10 @@
 //import com.eanfang.util.StringUtils;
 //import com.eanfang.util.ToastUtil;
 //
-//import net.eanfang.worker.R;
-//import net.eanfang.worker.ui.adapter.WorkerDetailAdapter;
-//import net.eanfang.worker.ui.base.BaseWorkerActivity;
-//import net.eanfang.worker.util.ImagePerviewUtil;
+//import net.eanfang.worker_logo.R;
+//import net.eanfang.worker_logo.ui.adapter.WorkerDetailAdapter;
+//import net.eanfang.worker_logo.ui.base.BaseWorkerActivity;
+//import net.eanfang.worker_logo.util.ImagePerviewUtil;
 //
 //import org.json.JSONException;
 //import org.json.JSONObject;

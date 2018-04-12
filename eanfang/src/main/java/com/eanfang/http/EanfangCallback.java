@@ -19,6 +19,7 @@ import com.okgo.request.base.Request;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -220,8 +221,8 @@ public class EanfangCallback<T> extends StringCallback {
         }
     }
 
-    @Subscribe
-    public void onEvent(JSONObject jsonObject) {
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public synchronized void onEvent(JSONObject jsonObject) {
         Integer code = jsonObject.getInteger("code");
         String message = jsonObject.getString("message");
         Object data = jsonObject.get("data");

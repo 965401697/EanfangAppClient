@@ -18,8 +18,8 @@
         <ImageView
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:src="@drawable/worker3_logo"
-            app:srcCompat="@drawable/worker3_logo" />
+            android:src="@drawable/worker_logo"
+            app:srcCompat="@drawable/worker_logo" />
 
         <TextView
             android:id="@+id/tv_logo_text"

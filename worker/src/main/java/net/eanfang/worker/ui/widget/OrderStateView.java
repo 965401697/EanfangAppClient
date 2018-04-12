@@ -8,8 +8,8 @@
 //import BaseDialog;
 //import com.eanfang.witget.SwitchButton;
 //
-//import net.eanfang.worker.R;
-//import net.eanfang.worker.util.PrefUtils;
+//import net.eanfang.worker_logo.R;
+//import net.eanfang.worker_logo.util.PrefUtils;
 //
 //import butterknife.BindView;
 //import butterknife.ButterKnife;

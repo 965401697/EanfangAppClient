@@ -17,10 +17,10 @@
 //import com.eanfang.util.StringUtils;
 //import com.facebook.drawee.view.SimpleDraweeView;
 //
-//import net.eanfang.worker.R;
-//import net.eanfang.worker.ui.adapter.CompanyDetailAdapter;
-//import net.eanfang.worker.ui.base.BaseWorkerActivity;
-//import net.eanfang.worker.util.PerviewUtil;
+//import net.eanfang.worker_logo.R;
+//import net.eanfang.worker_logo.ui.adapter.CompanyDetailAdapter;
+//import net.eanfang.worker_logo.ui.base.BaseWorkerActivity;
+//import net.eanfang.worker_logo.util.PerviewUtil;
 //
 //import java.util.ArrayList;
 //import java.util.List;
