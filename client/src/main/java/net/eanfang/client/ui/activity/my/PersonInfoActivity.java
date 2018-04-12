@@ -118,7 +118,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         rbMan.isChecked();
         ivUpload.setOnClickListener(v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(PersonInfoActivity.this,HEAD_PHOTO));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(PersonInfoActivity.this, HEAD_PHOTO));
         });
         llArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
@@ -132,7 +132,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     private void initData() {
         EanfangHttp.get(UserApi.GET_USER_INFO)
                 .tag(this)
-                .execute(new EanfangCallback<LoginBean>(PersonInfoActivity.this, false, LoginBean.class, (bean) -> {
+                .execute(new EanfangCallback<LoginBean>(PersonInfoActivity.this, true, LoginBean.class, (bean) -> {
                     runOnUiThread(() -> {
                         fillData(bean);
                     });

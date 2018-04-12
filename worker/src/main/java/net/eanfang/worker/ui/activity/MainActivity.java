@@ -61,12 +61,42 @@ public class MainActivity extends BaseActivity {
         setHeaders();
         initXinGe();
         initFragment();
-        getBaseData();
-        getConst();
         initUpdate();
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        //   PermissionUtils.get(this).getStoragePermission(() -> {
+        getBaseData();
+        getConst();
+        //  });
+        submitLocation();
     }
+
+    /**
+     * 技师上报位置专用
+     */
+    private void submitLocation() {
+        new Thread(() -> {
+            PermissionUtils.get(this).getLocationPermission(() -> {
+                LocationUtil.location(this, (location) -> {
+                    LoginBean user = EanfangApplication.getApplication().getUser();
+                    if (user == null || StringUtils.isEmpty(user.getToken())) {
+                        return;
+                    }
+                    WorkerEntity workerEntity = new WorkerEntity();
+                    workerEntity.setAccId(user.getAccount().getAccId());
+                    workerEntity.setLat(location.getLatitude() + "");
+                    workerEntity.setLon(location.getLongitude() + "");
+                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
+                    //技师上报位置
+                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                            .upJson(JSONObject.toJSONString(workerEntity))
+                            .execute(new EanfangCallback(this, false, String.class));
+                });
+
+            });
+        }).start();
+    }
+
 
     private void initUpdate() {
         int isUpdate = Var.get("MainActivity.initUpdate").getVar();
@@ -195,10 +225,12 @@ public class MainActivity extends BaseActivity {
         EanfangHttp.get(url)
                 .tag(this)
                 .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                        EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
+                    new Thread(() -> {
+                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+                    }).start();
                 }));
     }
 
@@ -216,10 +248,12 @@ public class MainActivity extends BaseActivity {
         EanfangHttp.get(url)
                 .tag(this)
                 .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
-                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                        ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
-                    }
+                    new Thread(() -> {
+                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        }
+                    }).start();
                 }));
     }
 
