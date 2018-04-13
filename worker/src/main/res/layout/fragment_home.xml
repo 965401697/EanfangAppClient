@@ -11,8 +11,7 @@
         android:background="@mipmap/ic_work_top_back"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_homeTitle"
+        <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_40" />
 
@@ -41,6 +40,7 @@
                 android:src="@mipmap/ic_main_top_qrcode" />
 
             <TextView
+                android:id="@+id/tv_homeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

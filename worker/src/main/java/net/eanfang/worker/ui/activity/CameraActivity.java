@@ -33,6 +33,7 @@ import com.camera.view.TakePhotoActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.witget.CustomRadioGroup;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -81,14 +82,14 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     @BindView(R.id.tv_task)
     RadioButton tvTask;
     @BindView(R.id.rg_type)
-    RadioGroup rgType;
-    @BindView(R.id.tv_type_sel)
-    TextView tvTypeSel;
+    CustomRadioGroup rgType;
     @BindView(R.id.et_address)
     EditText etAddress;
     WeatherSearchQuery query;
     WeatherSearch search;
     LocalWeatherLive weatherlive;
+    @BindView(R.id.tv_location_address)
+    TextView tvLocationAddress;
     private String time, weather, city_address;
     private String project_name;
     private String region_name;
@@ -96,7 +97,9 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     private String project_type;
     private String address;
     private String creatUser;
-    private int color;
+    private int color = Color.parseColor("#ffffff");
+    //项目类型
+    private String selectProjectType = "维修";
 
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
@@ -207,7 +210,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         //项目内容
         project_content = etProjectConment.getText().toString().trim();
         //项目类型
-        project_type = tvTypeSel.getText().toString().trim();
+        project_type = selectProjectType;
 
         //创建者
 //        creatUser = EanfangApplication.get().getUser().getName();
@@ -294,7 +297,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
             }
 
             //项目类型
-            project_type = tvTypeSel.getText().toString().trim();
+            project_type = selectProjectType;
             if (TextUtils.isEmpty(project_type)) {
                 showToast("请选择项目类型");
                 return false;
@@ -382,6 +385,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
 //            LogUtils.e("amapSuccess", sb.toString());
 
             address = sb.toString();
+            tvLocationAddress.setText(address);
             //获取定位时间
 //            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDate(amapLocation.getTime()));
             city_address = amapLocation.getCity();
@@ -402,22 +406,22 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
                 color = Color.parseColor("#ff0000");
                 break;
             case R.id.tv_repair://维修
-                tvTypeSel.setText("维修");
+                selectProjectType = "维修";
                 break;
             case R.id.tv_check://检查
-                tvTypeSel.setText("检查");
+                selectProjectType = "检查";
                 break;
             case R.id.tv_task://任务
-                tvTypeSel.setText("任务");
+                selectProjectType = "任务";
                 break;
             case R.id.tv_do://施工
-                tvTypeSel.setText("施工");
+                selectProjectType = "施工";
                 break;
             case R.id.tv_accept://验收
-                tvTypeSel.setText("验收");
+                selectProjectType = "验收";
                 break;
             case R.id.tv_care://保养
-                tvTypeSel.setText("保养");
+                selectProjectType = "保养";
                 break;
             default:
                 break;
@@ -445,7 +449,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     private void initGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         // 判断GPS模块是否开启，如果没有则开启
-        if (!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             ToastUtil.get().showToast(this, "请打开GPS,定位更准确");
         }
         if (ConnectivityChangeReceiver.isNetConnected(this) == false) {

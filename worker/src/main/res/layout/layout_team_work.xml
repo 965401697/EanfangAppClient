@@ -2,115 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginTop="@dimen/dimen_40"
     android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="@dimen/dimen_30"
         android:text="协同办公"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textSize_14"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_16"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_36"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_sign"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_sign"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_sign"
+            android:text="@string/text_worker_sign" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_signin_default" />
+        <TextView
+            android:id="@+id/tv_work_report"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_report"
+            android:text="@string/text_work_report" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="签到"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_task"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_task"
+            android:text="@string/text_work_task" />
 
-        <LinearLayout
-            android:id="@+id/ll_work_report"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_work_inspect"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_inspect"
+            android:text="@string/text_work_inspect" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_workreport_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="工作汇报"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_assignment_task"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_assignmenttask_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="布置任务"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_job_check"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_jobcheck_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="工作检查"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -119,77 +53,26 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_point_check"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_point_check"
+            style="@style/style_client_work_meun"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:text="@string/text_worker_point_check" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_check_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="点检"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_apply_goods"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_apply_goods"
+            style="@style/style_client_work_meun"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:text="@string/text_worker_apply_goods" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_applicationmaterials_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="申领物资"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_face_to_worker"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_talk"
+            style="@style/style_client_work_meun"
             android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_interviewstaff_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="面谈员工"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+            android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:text="@string/text_work_talk" />
 
         <LinearLayout
             android:id="@+id/ll_accept_apply"

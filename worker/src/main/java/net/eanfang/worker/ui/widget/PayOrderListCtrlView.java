@@ -12,6 +12,7 @@ import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderActivity;
+import net.eanfang.worker.ui.activity.worksapce.QuotationActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +40,8 @@ public class PayOrderListCtrlView extends BaseDialog {
     TextView tvMineAssignment;
     @BindView(R.id.tv_mine_accept)
     TextView tvMineAccept;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public PayOrderListCtrlView(Activity context, boolean isfull) {
@@ -60,6 +63,9 @@ public class PayOrderListCtrlView extends BaseDialog {
         llMineCompany.setVisibility(View.GONE);
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
+        ivAdd.setOnClickListener((v) -> {
+            jumpInDialog(mContext, QuotationActivity.class);
+        });
     }
 
     private void jump(String title, String type) {

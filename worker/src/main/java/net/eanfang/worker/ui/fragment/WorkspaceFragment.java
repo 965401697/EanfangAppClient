@@ -16,6 +16,7 @@ import com.yaf.sys.entity.OrgEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
+import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.InstallCtrlView;
 import net.eanfang.worker.ui.widget.MaintainCtrlView;
@@ -102,42 +103,24 @@ public class WorkspaceFragment extends BaseFragment {
      * 过程管控
      */
     private void progressCtrl() {
-        //报修管控
-        findViewById(R.id.ll_repair_manage).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
-        });
-        //报装管控
-        findViewById(R.id.ll_install_manage).setOnClickListener((v) -> {
-            new InstallCtrlView(getActivity(), true).show();
-        });
-        //报价管控
-        findViewById(R.id.ll_quote_manage).setOnClickListener((v) -> {
-            new PayOrderListCtrlView(getActivity(), true).show();
-        });
-        //维保管控
-        findViewById(R.id.ll_order_manage).setOnClickListener((v) -> {
-            new MaintainCtrlView(getActivity(), true).show();
-        });
-        //发包管控
-        findViewById(R.id.ll_assign_packpage).setOnClickListener((v) -> {
-            new TaskPubCtrlView(getActivity(), true).show();
-        });
-        //接包管控
-        findViewById(R.id.ll_accept_packpage).setOnClickListener((v) -> {
-            new TakePubCtrlView(getActivity(), true).show();
-        });
-        //免费设计
-        findViewById(R.id.ll_design_add).setOnClickListener((v) -> {
-//            new MaintainCtrlView(getActivity(), true).show();
-            showToast("制造中。。。");
-        });
-
     }
 
     private void helpTools() {
         //相机
-        findViewById(R.id.ll_camera).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
+        });
+        //天猫安防
+        findViewById(R.id.tv_work_tm).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "https://list.tmall.com/search_product.htm?q=%B0%B2%B7%C0&type=p&vmarket=&spm=875.7931836%2FB.a2227oh.d100&from=mallfp..pc_1_searchbutton")
+                    .putExtra("title", "天猫安防"));
+        });
+        //京东安防
+        findViewById(R.id.tv_work_jd).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WebActivity.class)
+                    .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
+                    .putExtra("title", "京东安防"));
         });
     }
 
@@ -146,20 +129,20 @@ public class WorkspaceFragment extends BaseFragment {
      */
     private void teamWork() {
         //签到
-        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
+        findViewById(R.id.tv_sign).setOnClickListener((v) -> {
             new SignCtrlView(getActivity()).show();
         });
         //工作汇报
-        findViewById(R.id.ll_work_report).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
             new ReportCtrlView(getActivity(), true).show();
         });
 
         //工作任务
-        findViewById(R.id.ll_assignment_task).setOnClickListener((v) -> {
+        findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
             new TaskCtrlView(getActivity(), true).show();
         });
-        //检查
-        findViewById(R.id.ll_job_check).setOnClickListener((v) -> {
+        //工作检查
+        findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
         });
     }

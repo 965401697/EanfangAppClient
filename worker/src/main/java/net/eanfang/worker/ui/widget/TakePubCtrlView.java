@@ -7,11 +7,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.MineTakePublishListActivity;
+import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +37,8 @@ public class TakePubCtrlView extends BaseDialog {
     TextView tvMine;
     @BindView(R.id.tv_company)
     TextView tvCompany;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public TakePubCtrlView(Activity context, boolean isfull) {
@@ -57,6 +59,9 @@ public class TakePubCtrlView extends BaseDialog {
         tvMine.setText("我负责的");
         llMineAssignment.setOnClickListener(v -> jump("我负责的", "1"));
         llMineCompany.setOnClickListener(v -> jump("我公司的", "2"));
+        ivAdd.setOnClickListener((v) -> {
+            jumpInDialog(mContext, TakeTaskListActivity.class);
+        });
     }
 
     private void jump(String title, String type) {

@@ -37,7 +37,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  *
  * @on 2018/1/18  16:03
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 我要接包
  */
 
 public class TakeTaskListActivity extends BaseActivity implements OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {

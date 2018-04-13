@@ -51,8 +51,8 @@
 
     <string name="text_worker_point_check">点检</string>
     <string name="text_worker_apply_goods">申请物资</string>
-    <string name="text_worker_five_sjop">五金店</string>
-    <string name="text_worker_test">在线考试</string>
+    <string name="text_worker_five_shop">五金店</string>
+    <string name="text_worker_test">培训考试</string>
     <string name="text_worker_project_finish">竣工项目</string>
     <string name="text_worker_manual_repair">维修手册</string>
     <string name="text_worker_parts_library">配件库</string>

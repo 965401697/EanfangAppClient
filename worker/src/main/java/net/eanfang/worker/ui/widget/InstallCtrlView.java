@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
@@ -36,6 +35,8 @@ public class InstallCtrlView extends BaseDialog {
     RelativeLayout llMineAccept;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
 
@@ -54,6 +55,7 @@ public class InstallCtrlView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("报装管控");
+        ivAdd.setVisibility(View.GONE);
         llMineAssignment.setVisibility(View.GONE);
         llMineAccept.setVisibility(View.VISIBLE);
         llMineAccept.setOnClickListener(v -> jump("我负责的", 0));
