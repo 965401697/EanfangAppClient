@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginTop="@dimen/dimen_40"
     android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="@dimen/dimen_30"
         android:text="项目管控"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textSize_14"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_16"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -20,204 +20,60 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_creat_project"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_work_create_project"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_create_project" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_createaproject_default" />
+        <TextView
+            android:id="@+id/tv_work_log_work"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_log_work"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="创建项目"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_project_change"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_project_change"/>
 
-        <LinearLayout
-            android:id="@+id/ll_construction_logs"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_constructionlogsl_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="施工日志"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_project_undate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_engineeringchange_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="工程变更"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_start_apply"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_applicationforcommencement_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="开工申请"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_apply_start"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_apply_start" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_worker_in"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_work_comein"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_comein" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_personnelapproach_default" />
+        <TextView
+            android:id="@+id/tv_work_progress"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_progress"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="人员进场"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_accident"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_accident" />
 
-        <LinearLayout
-            android:id="@+id/ll_progress_logs"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_schedule_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="进度表格"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_accident_logs"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_accidentreport_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="事故报告"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_accept_apply"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_acceptanceapplicationl_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="验收申请"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_apply_check"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_apply_check" />
     </LinearLayout>
 
 
@@ -227,29 +83,12 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_safe_check"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="noOpen"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_securitycheck_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="安全检查"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_work_check_safety"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:text="@string/text_worker_check_safety"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="0dp"

@@ -68,4 +68,7 @@
     <color name="color_worker_data_item_title">#4988F5</color>
     <color name="color_bottom_back">#fbfbfb</color>
     <color name="color_bottom_back_line">#d7d7d7</color>
+    <color name="color_new_line">#E8E8E8</color>
+    <color name="color_bottom">#999999</color>
+    <color name="color_contact_line_gray">#F5F3F3</color>
 </resources>

@@ -98,4 +98,20 @@
         <item name="android:textColor">@color/color_client_menu</item>
         <item name="android:textSize">@dimen/textSize_12</item>
     </style>
+
+    <style name="style_common_line_gray">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/color_new_line</item>
+    </style>
+    <style name="style_client_work_meun">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dimen_20</item>
+        <item name="android:textColor">@color/color_client_menu</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
+    </style>
 </resources>
