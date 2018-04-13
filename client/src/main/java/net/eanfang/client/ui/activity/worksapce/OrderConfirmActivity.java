@@ -94,7 +94,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
                 .upJson(JSON.toJSONString(repairOrderEntity))
                 .execute(new EanfangCallback<RepairOrderEntity>(this, true, RepairOrderEntity.class, (bean) -> {
                     //待支付
-                    if (Constant.RepairStatus.CREATED.v == bean.getStatus().intValue()) {
+                    if (Constant.RepairStatus.CREATED.v == repairOrderEntity.getStatus().intValue()) {
                         payment(bean);
                     } else {
                         submitSuccess();

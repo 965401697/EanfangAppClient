@@ -15,8 +15,6 @@ import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * Created by wen on 2017/5/12.
@@ -26,7 +24,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
 
     private final boolean[] isShowFirstBtnClient = {
-            false, false, false, false, true, true, false
+            true, false, false, false, true, true, false
     };
     private String[] doSomethingClient = {
             "立即支付", "联系技师", "联系技师",

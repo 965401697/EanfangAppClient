@@ -4,17 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdate;
-import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
@@ -27,7 +21,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
@@ -83,15 +76,6 @@ public class SelectWorkerActivity extends BaseClientActivity {
         runOnUiThread(() -> {
             PermissionUtils.get(this).getLocationPermission(() -> {
                         locationUtil.startOnce();
-//                        String lat = toRepairBean.getLatitude();
-//                        String lnt = toRepairBean.getLongitude();
-//                        if (StringUtils.isEmpty(lat) || StringUtils.isEmpty(lnt)) {
-//                            return;
-//                        }
-//                        LatLng latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lnt));
-//                        CameraUpdate update = CameraUpdateFactory.newLatLng(latLng);
-//                        locationUtil.mAMap.moveCamera(update);
-//                        locationUtil.setMarket(latLng);
                     }
             );
         });
@@ -153,11 +137,6 @@ public class SelectWorkerActivity extends BaseClientActivity {
             //保证经纬度没有问题的时候可以填false
             Double lat = Double.parseDouble(selectWorkerList.get(i).getLat()) + new Random().nextDouble() / 100;
             Double lon = Double.parseDouble(selectWorkerList.get(i).getLon()) + new Random().nextDouble() / 100;
-//            long existsCount = Stream.of(selectWorkerList).filter(worker -> worker.getLat().equals(finalLat.toString()) && worker.getLon().equals(finalLon.toString())).count();
-//            if (existsCount > 0) {
-//                lat += 0.001;
-//                lon += 0.001;
-//            }
             selectWorkerList.get(i).getId();
             selectWorkerList.get(i).getCompanyUserId();
             LatLng latLng = new LatLng(lat, lon, false);
@@ -211,27 +190,5 @@ public class SelectWorkerActivity extends BaseClientActivity {
         aMapview.onSaveInstanceState(outState);
     }
 
-//    /**
-//     * 显示进度框
-//     */
-//    private void showProgressDialog() {
-//        if (progDialog == null) {
-//            progDialog = new ProgressDialog(this);
-//        }
-//        progDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//        progDialog.setIndeterminate(false);
-//        progDialog.setCancelable(true);
-//        progDialog.setMessage("努力查找技师中，请稍后...");
-//        progDialog.show();
-//    }
-//
-//    /**
-//     * 隐藏进度框
-//     */
-//    private void dissmissProgressDialog() {
-//        if (progDialog != null) {
-//            progDialog.dismiss();
-//        }
-//    }
 
 }
