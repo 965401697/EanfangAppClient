@@ -83,11 +83,12 @@ public class ContactsFragment extends BaseFragment {
             tv_noTeam.setVisibility(View.VISIBLE);
             rev_list.setVisibility(View.GONE);
         } else {
-            rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
-            rev_list.addItemDecoration(new DividerItemDecoration(getActivity(),
-                    DividerItemDecoration.VERTICAL));
             tv_noTeam.setVisibility(View.GONE);
             rev_list.setVisibility(View.VISIBLE);
+            //设置布局样式
+            rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
+            rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
             Long companyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
             // 获取默认公司
             List<OrgEntity> firstList = Stream.of(mDatas).filter((bean) -> bean.getCompanyId().equals(companyId)).toList();

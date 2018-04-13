@@ -64,15 +64,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dimen_40"
             android:orientation="vertical">
 
             <!--<include layout="@layout/layout_progress_ctrl" />-->
 
             <include layout="@layout/layout_project_ctrl" />
 
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_34" />
+
             <include layout="@layout/layout_team_work" />
 
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_34" />
+
             <include layout="@layout/layout_tools_utils" />
+
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_34" />
 
             <include layout="@layout/layout_equipment_access" />
 

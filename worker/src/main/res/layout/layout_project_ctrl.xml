@@ -18,30 +18,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_36"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_work_create_project"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:onClick="noOpen"
             android:text="@string/text_worker_create_project" />
 
         <TextView
             android:id="@+id/tv_work_log_work"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
-            android:text="@string/text_worker_log_work"/>
+            android:drawableTop="@mipmap/ic_worker_log_work"
+            android:onClick="noOpen"
+            android:text="@string/text_worker_log_work" />
 
         <TextView
             android:id="@+id/tv_work_project_change"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
-            android:text="@string/text_worker_project_change"/>
+            android:drawableTop="@mipmap/ic_worker_project_change"
+            android:onClick="noOpen"
+            android:text="@string/text_worker_project_change" />
 
         <TextView
             android:id="@+id/tv_work_apply_start"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:drawableTop="@mipmap/ic_worker_apply_start"
+            android:onClick="noOpen"
             android:text="@string/text_worker_apply_start" />
     </LinearLayout>
 
@@ -54,25 +59,29 @@
         <TextView
             android:id="@+id/tv_work_comein"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:drawableTop="@mipmap/ic_worker_comein"
+            android:onClick="noOpen"
             android:text="@string/text_worker_comein" />
 
         <TextView
             android:id="@+id/tv_work_progress"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
-            android:text="@string/text_worker_progress"/>
+            android:drawableTop="@mipmap/ic_worker_progress"
+            android:onClick="noOpen"
+            android:text="@string/text_worker_progress" />
 
         <TextView
             android:id="@+id/tv_work_accident"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:drawableTop="@mipmap/ic_worker_accident"
+            android:onClick="noOpen"
             android:text="@string/text_worker_accident" />
 
         <TextView
             android:id="@+id/tv_work_apply_check"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_worker_project_receive"
+            android:drawableTop="@mipmap/ic_worker_apply_check"
+            android:onClick="noOpen"
             android:text="@string/text_worker_apply_check" />
     </LinearLayout>
 

@@ -2,119 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginTop="@dimen/dimen_40"
     android:background="@color/white"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="@dimen/dimen_40"
         android:text="设备库"
-        android:textColor="@color/black"
-        android:textSize="@dimen/textSize_14"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_16"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_36"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_equipment_lib"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_library"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_library"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_work_library" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_equipmentlibrary_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="设备库"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_error_logs"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_fault"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_fault"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_work_fault" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_errorrecording_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="故障记录"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_chagge_record"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_change"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_change"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_work_change" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_changerecord_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="变更记录"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_online_doc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_file"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_file"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_work_file" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_onlinedocumentl_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="在线文档"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -123,101 +58,34 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_train_test"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_test"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_test"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_worker_test" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_trainingexamination_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="培训考试"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_complete_project"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_finish"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_finish"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_worker_project_finish" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_completedproject_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="竣工项目"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_repair_books"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_manusl_repair"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_manusl_repair"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_worker_manual_repair" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_servicemanual_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="维修手册"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_parts_lib"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/tv_work_parts_library"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_parts_library"
             android:onClick="noOpen"
-            android:orientation="vertical">
+            android:text="@string/text_worker_parts_library" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:src="@drawable/contend_ic_partslibrary_default" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="配件库"
-                android:textSize="@dimen/textSize_10" />
-        </LinearLayout>
     </LinearLayout>
 
 

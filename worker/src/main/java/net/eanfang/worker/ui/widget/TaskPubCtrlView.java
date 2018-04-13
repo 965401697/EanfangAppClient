@@ -7,11 +7,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListActivity;
+import net.eanfang.worker.ui.activity.worksapce.TaskPublishActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +33,8 @@ public class TaskPubCtrlView extends BaseDialog {
     RelativeLayout llMineAssignment;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public TaskPubCtrlView(Activity context, boolean isfull) {
@@ -52,6 +54,9 @@ public class TaskPubCtrlView extends BaseDialog {
         tvTitle.setText("我的发包");
         llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         llMineCompany.setOnClickListener(v -> jump("我公司的", 2));
+        ivAdd.setOnClickListener((v) -> {
+            jumpInDialog(mContext, TaskPublishActivity.class);
+        });
     }
 
     private void jump(String title, int type) {

@@ -71,4 +71,9 @@
     <color name="color_new_line">#E8E8E8</color>
     <color name="color_bottom">#999999</color>
     <color name="color_contact_line_gray">#F5F3F3</color>
+    <color name="color_personal_text">#E16531</color>
+    <color name="color_camera_input_stoke">#D6D6D6</color>
+    <color name="color_camera_input_radiobutton_stoke">#666</color>
+    <color name="color_main_client">#FB973B</color>
+    <color name="color_main_worker">#4988F5</color>
 </resources>

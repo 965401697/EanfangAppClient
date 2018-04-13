@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_white"
     android:orientation="vertical">
 
 
@@ -38,7 +39,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:orientation="vertical">
 
         <LinearLayout
@@ -52,265 +52,325 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="项目名称"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:text="用户/项目名称"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
 
                 <EditText
                     android:id="@+id/et_project_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:background="@drawable/bg_camera_input_back"
                     android:hint="请输入项目/单位名称(30字以内)"
                     android:maxLength="30"
-                    android:textColor="@color/camera_color"
-                    android:textSize="12sp" />
+                    android:padding="@dimen/dimen_15"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
+
+            <TextView
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="部位名称"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:text="工程部位/区域"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
 
                 <EditText
                     android:id="@+id/et_region_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:background="@drawable/bg_camera_input_back"
                     android:hint="请输入部位/区域名称(30字以内)"
                     android:maxLength="30"
-                    android:textColor="@color/camera_color"
-                    android:textSize="12sp" />
+                    android:padding="@dimen/dimen_15"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
 
+
+            <TextView
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp">
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp"
                     android:text="字体颜色"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
 
                 <RadioGroup
                     android:id="@+id/rg_color"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dimen_28"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/color_white"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
                         android:text="白色"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/color_red"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
                         android:text="红色"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                 </RadioGroup>
             </LinearLayout>
 
+            <TextView
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:text="项目类型"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="项目类型"
-                        android:textColor="@color/client_form_title_color"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_type_sel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:textColor="@color/camera_color"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-                <RadioGroup
+                <com.eanfang.witget.CustomRadioGroup
                     android:id="@+id/rg_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dimen_28"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/tv_repair"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
                         android:text="维修"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/tv_check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
                         android:text="检查"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/tv_do"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
                         android:text="施工"
-
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/tv_accept"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
                         android:text="验收"
-
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/tv_care"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
                         android:text="保养"
-
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/tv_task"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
                         android:text="任务"
-
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
-                </RadioGroup>
+
+                </com.eanfang.witget.CustomRadioGroup>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
                 android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="施工地址(可选)"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:text="施工地址"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
 
-                <EditText
-                    android:id="@+id/et_address"
+                <TextView
+                    android:id="@+id/tv_select_other_address"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="无网络时手动输入地址"
-                    android:maxLength="30"
-                    android:textColor="@color/camera_color"
-                    android:textSize="12sp" />
+                    android:drawablePadding="@dimen/dimen_14"
+                    android:drawableRight="@mipmap/ic_camera_select_otheraddress"
+                    android:gravity="right|center_vertical"
+                    android:text="选择其他地址"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_location_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:background="@drawable/bg_camera_input_back"
+                android:drawableLeft="@mipmap/ic_camera_location"
+                android:drawablePadding="@dimen/dimen_20"
+                android:padding="@dimen/dimen_15"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:background="@drawable/bg_camera_input_back"
+                android:hint="暂无网络,请手动输入地址"
+                android:maxLength="30"
+                android:padding="@dimen/dimen_15"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_30" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
                 android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="项目内容"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:text="工程内容"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
 
-                <EditText
-                    android:id="@+id/et_project_conment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请输入项目内容(30字以内)"
-                    android:maxLength="30"
-                    android:textColor="@color/camera_color"
-                    android:textSize="12sp" />
             </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_project_conment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_weight="1"
+                android:background="@drawable/bg_camera_input_back"
+                android:hint="请输入项目内容(30字以内)"
+                android:maxLength="30"
+                android:padding="@dimen/dimen_15"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
 
             <ImageView
                 android:id="@+id/start_take_photo"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="@dimen/dimen_200"
+                android:layout_height="@dimen/dimen_200"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:onClick="startTakePhoto"
-                android:src="@mipmap/ic_take_photo" />
+                android:src="@mipmap/ic_client_camera" />
 
         </LinearLayout>
 

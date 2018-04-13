@@ -74,6 +74,7 @@ public class ContactsFragment extends BaseFragment {
     }
 
     private void initAdapter() {
+        rev_list = (RecyclerView) findViewById(R.id.rev_list);
         //客户公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 2).toList();
         if (mDatas.size() <= 0 || mDatas == null) {
@@ -86,6 +87,7 @@ public class ContactsFragment extends BaseFragment {
             //设置布局样式
             rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
             rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
             Long companyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
             // 获取默认公司 进行排序和添加到第一个item
             List<OrgEntity> firstList = Stream.of(mDatas).filter((bean) -> bean.getCompanyId().equals(companyId)).toList();
@@ -96,6 +98,7 @@ public class ContactsFragment extends BaseFragment {
             parentAdapter = new ParentAdapter(mDatas);
             rev_list.setAdapter(parentAdapter);
             parentAdapter.notifyDataSetChanged();
+
             parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     //组织结构
@@ -130,7 +133,6 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        rev_list = (RecyclerView) findViewById(R.id.rev_list);
         rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
         tv_noTeam = (TextView) findViewById(R.id.tv_noTeam);
     }
