@@ -6,11 +6,14 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
@@ -85,32 +88,52 @@ public class HomeFragment extends BaseFragment {
         rvData = (RecyclerView) findViewById(R.id.rv_data);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         initIconClick();
-        initCount();
         initLoopView();
         initRollTextView();
         //设置布局样式
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvData.setLayoutManager(linearLayoutManager);
+        initCount();
         initFalseData();
     }
 
     private void initFalseData() {
         ClientData clientDataOne = new ClientData();
-        clientDataOne.setType(1);clientDataOne.setTotal(23);clientDataOne.setAdded(5);clientDataOne.setStatusOne(16);
-        clientDataOne.setStatusTwo(2);clientDataOne.setStatusThree(1); clientDataOne.setStatusFour(14);
+        clientDataOne.setType(1);
+        clientDataOne.setTotal(23);
+        clientDataOne.setAdded(5);
+        clientDataOne.setStatusOne(16);
+        clientDataOne.setStatusTwo(2);
+        clientDataOne.setStatusThree(1);
+        clientDataOne.setStatusFour(14);
         clientDataList.add(clientDataOne);
         ClientData clientDataTwo = new ClientData();
-        clientDataTwo.setType(2);clientDataTwo.setTotal(16);clientDataTwo.setAdded(7);clientDataTwo.setStatusOne(18);
-        clientDataTwo.setStatusTwo(9);clientDataTwo.setStatusThree(4); clientDataTwo.setStatusFour(2);
+        clientDataTwo.setType(2);
+        clientDataTwo.setTotal(16);
+        clientDataTwo.setAdded(7);
+        clientDataTwo.setStatusOne(18);
+        clientDataTwo.setStatusTwo(9);
+        clientDataTwo.setStatusThree(4);
+        clientDataTwo.setStatusFour(2);
         clientDataList.add(clientDataTwo);
         ClientData clientDataThree = new ClientData();
-        clientDataThree.setType(3);clientDataThree.setTotal(37);clientDataThree.setAdded(3);clientDataThree.setStatusOne(12);
-        clientDataThree.setStatusTwo(3);clientDataThree.setStatusThree(6); clientDataThree.setStatusFour(8);
+        clientDataThree.setType(3);
+        clientDataThree.setTotal(37);
+        clientDataThree.setAdded(3);
+        clientDataThree.setStatusOne(12);
+        clientDataThree.setStatusTwo(3);
+        clientDataThree.setStatusThree(6);
+        clientDataThree.setStatusFour(8);
         clientDataList.add(clientDataThree);
         ClientData clientDataFour = new ClientData();
-        clientDataFour.setType(4);clientDataFour.setTotal(27);clientDataFour.setAdded(7);clientDataFour.setStatusOne(13);
-        clientDataFour.setStatusTwo(6);clientDataFour.setStatusThree(8); clientDataFour.setStatusFour(0);
+        clientDataFour.setType(4);
+        clientDataFour.setTotal(27);
+        clientDataFour.setAdded(7);
+        clientDataFour.setStatusOne(13);
+        clientDataFour.setStatusTwo(6);
+        clientDataFour.setStatusThree(8);
+        clientDataFour.setStatusFour(0);
         clientDataList.add(clientDataFour);
 
         homeDataAdapter = new HomeDataAdapter(clientDataList);
@@ -152,9 +175,12 @@ public class HomeFragment extends BaseFragment {
      * 统计
      */
     private void initCount() {
-//        findViewById(R.id.rl_today_repair).setOnClickListener(v -> jumpWebview());
-//        findViewById(R.id.rl_free_install).setOnClickListener(v -> jumpWebview());
-//        findViewById(R.id.rl_free_design).setOnClickListener(v -> jumpWebview());
+        rvData.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                jumpWebview();
+            }
+        });
     }
 
     private void jumpWebview() {
@@ -194,7 +220,6 @@ public class HomeFragment extends BaseFragment {
     private void initRollTextView() {
         rollTextView = findViewById(R.id.home_recommand_ad_text);
         List<String> data = new ArrayList<>();
-        ;
         List<String> titleList = new ArrayList<>();
         List<View> views = new ArrayList<>();
         data.add("出席会议的有易安防老大王兴军");

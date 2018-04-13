@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dimen_80"
+    android:layout_marginTop="@dimen/dimen_44"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -55,15 +55,15 @@
         <TextView
             android:id="@+id/tv_work_transfer"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_transfer"
+            android:onClick="noOpen"
             android:text="@string/text_work_transfer" />
 
         <TextView
             android:id="@+id/tv_work_talk"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_talk"
+            android:onClick="noOpen"
             android:text="@string/text_work_talk" />
 
         <TextView style="@style/style_client_work_meun" />

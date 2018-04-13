@@ -27,4 +27,33 @@
     <string name="item_invite_reason">原因</string>
     <string name="contact_delete">删除</string>
     <string name="main_chat">会话</string>
+
+    <!-- 首页 -->
+    <string name="text_worker_repair_order">报修订单</string>
+    <string name="text_worker_install_order">报装订单</string>
+    <string name="text_worker_design_order">设计订单</string>
+    <string name="text_worker_maintain_order">维保订单</string>
+    <string name="text_worker_inside_price">内部报价</string>
+    <string name="text_worker_project_send">项目发包</string>
+    <string name="text_worker_project_receive">项目接包</string>
+    <string name="text_worker_sign">签到</string>
+
+    <string name="text_new_order">最新订单</string>
+    <string name="text_worker_create_project">创建项目</string>
+    <string name="text_worker_log_work">施工日志</string>
+    <string name="text_worker_project_change">工程变更</string>
+    <string name="text_worker_apply_start">开工申请</string>
+    <string name="text_worker_comein">人员入场</string>
+    <string name="text_worker_progress">进度表</string>
+    <string name="text_worker_accident">事故报告</string>
+    <string name="text_worker_apply_check">验收申请</string>
+    <string name="text_worker_check_safety">安全检查</string>
+
+    <string name="text_worker_point_check">点检</string>
+    <string name="text_worker_apply_goods">申请物资</string>
+    <string name="text_worker_five_sjop">五金店</string>
+    <string name="text_worker_test">在线考试</string>
+    <string name="text_worker_project_finish">竣工项目</string>
+    <string name="text_worker_manual_repair">维修手册</string>
+    <string name="text_worker_parts_library">配件库</string>
 </resources>

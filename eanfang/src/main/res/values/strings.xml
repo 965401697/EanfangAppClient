@@ -39,4 +39,22 @@
 
     <string name="hint_no_team">暂未创建/加入企业</string>
 
+    <string name="text_new_order">最新订单</string>
+    <string name="text_home_alldata">查看全部 ></string>
+    <string name="text_work_check_point">点检</string>
+    <string name="text_work_tm">天猫安防</string>
+    <string name="text_work_jd">京东安防</string>
+    <string name="text_work_camera">相机</string>
+    <string name="text_work_calculate">计算码率</string>
+    <string name="text_work_answer">专家解答</string>
+    <string name="text_work_knowledge">行业知识</string>
+    <string name="text_work_report">工作汇报</string>
+    <string name="text_work_task">布置任务</string>
+    <string name="text_work_inspect">工作检查</string>
+    <string name="text_work_sign">签到</string>
+    <string name="text_work_library">设备库</string>
+    <string name="text_work_fault">故障记录</string>
+    <string name="text_work_change">变更记录</string>
+    <string name="text_work_file">在线文档</string>
+    <string name="text_work_talk">面谈员工</string>
 </resources>

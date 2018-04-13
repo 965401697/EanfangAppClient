@@ -11,10 +11,13 @@
         android:background="@drawable/ic_main_top_back"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40" />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:paddingTop="20dp">
+            android:layout_height="50dp">
 
             <TextView
                 android:id="@+id/tv_title"

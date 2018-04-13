@@ -76,10 +76,10 @@ public class ContactsFragment extends BaseFragment {
     }
 
     private void initAdapter() {
-
+        rev_list = (RecyclerView) findViewById(R.id.rev_list);
         //只显示 安防公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 3).toList();
-        if (mDatas.size() <= 0 && mDatas == null) {
+        if (mDatas.size() <= 0 || mDatas == null) {
             tv_noTeam.setVisibility(View.VISIBLE);
             rev_list.setVisibility(View.GONE);
         } else {
@@ -133,7 +133,6 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        rev_list = (RecyclerView) findViewById(R.id.rev_list);
         rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
         tv_noTeam = (TextView) findViewById(R.id.tv_noTeam);
     }

@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.view.Gravity;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initState();
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
         setHeaders();
@@ -105,6 +107,15 @@ public class MainActivity extends BaseActivity {
             UpdateAppManager.update(this, BuildConfig.TYPE);
         }
         Var.get("MainActivity.initUpdate").setVar(1);
+    }
+
+    /**
+     * 沉浸式状态栏
+     */
+    private void initState() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
+        }
     }
 
     private void initFragment() {

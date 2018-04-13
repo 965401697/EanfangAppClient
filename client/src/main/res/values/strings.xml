@@ -15,27 +15,10 @@
     <string name="text_home_unlock">开锁</string>
     <string name="text_home_service">客服</string>
     <string name="text_home_monitor">实时监控</string>
-    <string name="text_new_order">最新订单</string>
-    <string name="text_home_alldata">查看全部 ></string>
     <string name="text_work_repair">报修管控</string>
     <string name="text_work_install">报装管控</string>
     <string name="text_work_price">报价管控</string>
     <string name="text_work_maintain">维保管控</string>
     <string name="text_work_design">免费设计</string>
-    <string name="text_work_sign">签到</string>
-    <string name="text_work_report">工作汇报</string>
-    <string name="text_work_task">布置任务</string>
-    <string name="text_work_inspect">工作检查</string>
     <string name="text_work_transfer">交接班</string>
-    <string name="text_work_talk">面谈员工</string>
-    <string name="text_work_camera">相机</string>
-    <string name="text_work_calculate">计算码率</string>
-    <string name="text_work_answer">专家解答</string>
-    <string name="text_work_knowledge">行业知识</string>
-    <string name="text_work_tm">天猫安防</string>
-    <string name="text_work_jd">京东安防</string>
-    <string name="text_work_library">设备库</string>
-    <string name="text_work_fault">故障记录</string>
-    <string name="text_work_change">变更记录</string>
-    <string name="text_work_file">在线文档</string>
 </resources>

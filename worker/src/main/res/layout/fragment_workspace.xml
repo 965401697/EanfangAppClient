@@ -5,47 +5,57 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#2c88cb">
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_work_top_back"
+        android:orientation="vertical">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_company_logo"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            fresco:roundAsCircle="true" />
-
-        <LinearLayout
-            android:id="@+id/ll_switch_company"
+        <TextView
+            android:id="@+id/tv_homeTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@id/iv_company_logo"
-            android:gravity="center">
+            android:layout_height="@dimen/dimen_40" />
 
-            <TextView
-                android:id="@+id/tv_company_name"
-                android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_company_logo"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                fresco:roundAsCircle="true" />
+
+            <LinearLayout
+                android:id="@+id/ll_switch_company"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="北京法安视科技有限公司"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSize_16" />
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/iv_company_logo"
+                android:gravity="center">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/ic_down" />
+                <TextView
+                    android:id="@+id/tv_company_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="北京法安视科技有限公司"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_16" />
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_down" />
+
+            </LinearLayout>
 
 
-    </RelativeLayout>
-
+        </RelativeLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -56,7 +66,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_progress_ctrl" />
+            <!--<include layout="@layout/layout_progress_ctrl" />-->
 
             <include layout="@layout/layout_project_ctrl" />
 
