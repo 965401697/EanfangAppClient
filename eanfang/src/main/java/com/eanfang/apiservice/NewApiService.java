@@ -191,15 +191,15 @@ public interface NewApiService {
     /**
      * 微信 报修接口
      */
-    String WEI_XIN_REPAIR = BuildConfig.API_HOST + YAF_SYS + "/weixin/repair";
+    String WEI_XIN_REPAIR = BuildConfig.API_HOST + YAF_SYS + "/wxPay/repair";
     /**
      * 微信 报价接口
      */
-    String WEI_XIN_QUOTE = BuildConfig.API_HOST + YAF_SYS + "/weixin/quote";
+    String WEI_XIN_QUOTE = BuildConfig.API_HOST + YAF_SYS + "/wxPay/quote";
     /**
      * 微信 发包接口
      */
-    String WEI_XIN_PUBLISH = BuildConfig.API_HOST + YAF_SYS + "/weixin/publish";
+    String WEI_XIN_PUBLISH = BuildConfig.API_HOST + YAF_SYS + "/wxPay/publish";
 
     /**
      * 发包相关

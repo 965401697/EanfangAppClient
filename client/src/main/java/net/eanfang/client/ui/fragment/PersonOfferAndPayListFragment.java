@@ -106,7 +106,7 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
                     break;
                 case R.id.tv_do_second:
                     payment(mDataList, position);
-                    showToast("等待开通");
+//                    showToast("等待开通");
                     break;
                 default:
                     break;

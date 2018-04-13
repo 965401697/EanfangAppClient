@@ -17,11 +17,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
-import net.eanfang.client.ui.widget.DesignCtrlView;
-import net.eanfang.client.ui.widget.InstallCtrlView;
 import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.SignCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
@@ -62,9 +59,11 @@ public class WorkspaceFragment extends BaseFragment {
         setLogpic();
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-            new CompanyListView(getActivity(), name -> {
+            new CompanyListView(getActivity(), (name, url) -> {
                 tvCompanyName.setText(name);
-                setLogpic();
+                if (url != null) {
+                    iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                }
             }).show();
         });
 
@@ -73,10 +72,9 @@ public class WorkspaceFragment extends BaseFragment {
     private void setLogpic() {
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
         Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        List<String> defaultPic = Stream.of(orgUnitEntityList)
-                .filter(bean -> bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid))
-                .map(be -> v(() -> be.getOrgUnitEntity().getLogoPic()))
-                .toList();
+        List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
+                && bean.getOrgUnitEntity().getLogoPic() != null
+                && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
         if (!StringUtils.isEmpty(imgUrl)) {
             iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));

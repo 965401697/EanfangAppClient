@@ -44,7 +44,7 @@ public class CompanyListView extends BaseDialog {
     private setCheckItemCompany itemCompany;
 
     public interface setCheckItemCompany {
-        void getItemName(String name);
+        void getItemName(String name, String url);
     }
 
     public CompanyListView(Activity context, setCheckItemCompany itemCompany) {
@@ -84,7 +84,16 @@ public class CompanyListView extends BaseDialog {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 SwitchCompany(beanList.get(position).getOrgId());
-                itemCompany.getItemName(beanList.get(position).getOrgName());
+                String companyName = null;
+                if (beanList.get(position).getOrgName() != null) {
+                    companyName = beanList.get(position).getOrgName();
+                }
+                String logpic = null;
+                if (beanList.get(position).getOrgUnitEntity() != null && beanList.get(position).getOrgUnitEntity().getLogoPic() != null) {
+                    logpic = beanList.get(position).getOrgUnitEntity().getLogoPic();
+                }
+                itemCompany.getItemName(companyName, logpic);
+                dismiss();
             }
         });
         revCompanyList.setAdapter(adapter);

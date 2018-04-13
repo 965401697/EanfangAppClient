@@ -15,8 +15,6 @@ import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * Created by wen on 2017/5/12.

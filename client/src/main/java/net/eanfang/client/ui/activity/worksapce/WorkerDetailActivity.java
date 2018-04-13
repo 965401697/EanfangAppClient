@@ -150,7 +150,11 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvSelect.setOnClickListener((v) -> {
             toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
             toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
-            toRepairBean.setStatus(1);
+            if (EanfangApplication.getApplication().getCompanyId()==0) {
+                toRepairBean.setStatus(0);
+            }else {
+                toRepairBean.setStatus(1);
+            }
             toRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
             Intent intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
             intent.putExtra("bean", toRepairBean);

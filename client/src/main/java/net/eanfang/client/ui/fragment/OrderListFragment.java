@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,9 +15,6 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
-
-import android.support.v4.widget.SwipeRefreshLayout;
-
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
@@ -25,15 +23,12 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
@@ -47,13 +42,6 @@ public class OrderListFragment extends BaseFragment implements
 
 
     private static int page = 1;
-    private String mTitle;
-    private View v;
-    private String Msg;
-    private SwipeRefreshLayout refreshLayout;
-    private RecyclerView mRecyclerView;
-    //    private List<RepairOrderEntity> mDataList;
-    private RepairedManageOrderAdapter adapter;
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -62,6 +50,13 @@ public class OrderListFragment extends BaseFragment implements
             startActivity(intent);
         }
     };
+    private String mTitle;
+    private View v;
+    private String Msg;
+    private SwipeRefreshLayout refreshLayout;
+    private RecyclerView mRecyclerView;
+    //    private List<RepairOrderEntity> mDataList;
+    private RepairedManageOrderAdapter adapter;
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -71,17 +66,28 @@ public class OrderListFragment extends BaseFragment implements
 
     }
 
+    @Override
+    protected int setLayoutResouceId() {
+        return R.layout.fragment_workspace_order_list;
+    }
+
+    @Override
+    protected void initData(Bundle arguments) {
+
+    }
+
+    @Override
+    protected void initView() {
+        mRecyclerView = findViewById(R.id.rv_list);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        refreshLayout = findViewById(R.id.swiprefresh);
+        refreshLayout.setOnRefreshListener(this);
+
+        initAdapter();
+    }
+
     private void initAdapter() {
-//        if (getActivity() == null) {
-//            return;
-//        }
-//        if (!(getActivity() instanceof RepairCtrlActivity)) {
-//            return;
-//        }
-//        if (((RepairCtrlActivity) getActivity()).getBean() == null) {
-//            return;
-//        }
-//        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getList();
         adapter = new RepairedManageOrderAdapter();
         adapter.bindToRecyclerView(mRecyclerView);
         adapter.setOnLoadMoreListener(this);
@@ -90,15 +96,6 @@ public class OrderListFragment extends BaseFragment implements
             switchCase(item, view);
         });
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
-//        if (mDataList.size() > 0) {
-//            mRecyclerView.setAdapter(adapter);
-//            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
-//            adapter.notifyDataSetChanged();
-//        } else {
-//            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
-//        }
-//
-//        adapter.notifyDataSetChanged();
     }
 
     private void switchCase(RepairOrderEntity item, View view) {
@@ -112,9 +109,9 @@ public class OrderListFragment extends BaseFragment implements
                             showToast("当前订单负责人可以操作");
                             return;
                         }
-//                        startActivity(new Intent(getActivity(), PayActivity.class)
-//                                .putExtra("ordernum", item.getOrderNum())
-//                                .putExtra("orderType", "报修"));
+                        startActivity(new Intent(getActivity(), PayActivity.class)
+                                .putExtra("ordernum", item.getOrderNum())
+                                .putExtra("orderType", "报修"));
                         break;
                     default:
                         break;
@@ -203,13 +200,15 @@ public class OrderListFragment extends BaseFragment implements
     }
 
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_workspace_order_list;
+    protected void setListener() {
+
     }
 
     @Override
-    protected void initData(Bundle arguments) {
-
+    protected void onLazyLoad() {
+//        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
+//        ((RepairedManageActivity) getActivity()).initData();
+        getData();
     }
 
     protected void getData() {
@@ -262,6 +261,11 @@ public class OrderListFragment extends BaseFragment implements
                     }
 
                     @Override
+                    public void onError(String message) {
+                        //重新加载 页面
+                    }
+
+                    @Override
                     public void onNoData(String message) {
 
 
@@ -279,11 +283,6 @@ public class OrderListFragment extends BaseFragment implements
 //                            onDataReceived();
 //                        });
                     }
-
-                    @Override
-                    public void onError(String message) {
-                        //重新加载 页面
-                    }
                 });
 
         initAdapter();
@@ -292,29 +291,6 @@ public class OrderListFragment extends BaseFragment implements
 
     public String getTitle() {
         return mTitle;
-    }
-
-    @Override
-    protected void initView() {
-        mRecyclerView = findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        refreshLayout = findViewById(R.id.swiprefresh);
-        refreshLayout.setOnRefreshListener(this);
-
-        initAdapter();
-    }
-
-    @Override
-    protected void setListener() {
-
-    }
-
-    @Override
-    protected void onLazyLoad() {
-//        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
-//        ((RepairedManageActivity) getActivity()).initData();
-        getData();
     }
 
     @Override
@@ -329,6 +305,22 @@ public class OrderListFragment extends BaseFragment implements
 //        initView();
 //        initAdapter();
 //        refreshLayout.setRefreshing(false);
+    }
+
+    /**
+     * 上拉加载更多
+     */
+
+    @Override
+    public void onLoadMoreRequested() {
+        //上拉加载更多
+        page++;
+        getData();
+    }
+
+    @Override
+    public void onRefresh() {
+        dataOption(TOP_REFRESH);
     }
 
     /**
@@ -365,21 +357,5 @@ public class OrderListFragment extends BaseFragment implements
             default:
                 break;
         }
-    }
-
-    /**
-     * 上拉加载更多
-     */
-
-    @Override
-    public void onLoadMoreRequested() {
-        //上拉加载更多
-        page++;
-        getData();
-    }
-
-    @Override
-    public void onRefresh() {
-        dataOption(TOP_REFRESH);
     }
 }
