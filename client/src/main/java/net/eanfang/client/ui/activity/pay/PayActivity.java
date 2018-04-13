@@ -151,9 +151,11 @@ public class PayActivity extends BaseClientActivity {
         btnToPay.setOnClickListener(v -> {
             if (rbAlipay.isChecked()) {
                 //支付宝支付
+                payLogEntity.setPayType(0);
                 aliPay();
             } else {
                 //微信支付
+                payLogEntity.setPayType(1);
                 wxPay();
             }
         });

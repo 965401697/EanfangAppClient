@@ -88,16 +88,6 @@ public class OrderListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-//        if (getActivity() == null) {
-//            return;
-//        }
-//        if (!(getActivity() instanceof RepairCtrlActivity)) {
-//            return;
-//        }
-//        if (((RepairCtrlActivity) getActivity()).getBean() == null) {
-//            return;
-//        }
-//        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getList();
         adapter = new RepairedManageOrderAdapter();
         adapter.bindToRecyclerView(mRecyclerView);
         adapter.setOnLoadMoreListener(this);
@@ -106,15 +96,6 @@ public class OrderListFragment extends BaseFragment implements
             switchCase(item, view);
         });
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
-//        if (mDataList.size() > 0) {
-//            mRecyclerView.setAdapter(adapter);
-//            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
-//            adapter.notifyDataSetChanged();
-//        } else {
-//            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
-//        }
-//
-//        adapter.notifyDataSetChanged();
     }
 
     private void switchCase(RepairOrderEntity item, View view) {
@@ -123,8 +104,6 @@ public class OrderListFragment extends BaseFragment implements
             case 0:
                 //待付款
                 switch (view.getId()) {
-                    case R.id.tv_do_first:
-                        break;
                     case R.id.tv_do_second:
                         if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
                             showToast("当前订单负责人可以操作");
