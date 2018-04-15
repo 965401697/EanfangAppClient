@@ -190,4 +190,19 @@ public interface UserApi {
      */
     String GET_WORKER_UPDATE_APP = BuildConfig.API_HOST + "/yaf_sys/update/updateWork";
 
+    /**
+     * 获取好有列表
+     */
+    String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
+
+    /**
+     * 获取好有列表
+     */
+    String POST_RONGY_TOKEN = BuildConfig.API_HOST + "/yaf_im/im/getToken";
+
+    /**
+     * 搜索好友
+     */
+    String POST_FIND_FRIEND = BuildConfig.API_HOST + "/yaf_im/im/friendPush";
+
 }

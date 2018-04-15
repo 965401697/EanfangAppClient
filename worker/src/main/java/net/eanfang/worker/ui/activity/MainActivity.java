@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +18,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -23,19 +26,18 @@ import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
-import com.okgo.OkGo;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
@@ -43,6 +45,9 @@ import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Message;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -64,6 +69,16 @@ public class MainActivity extends BaseActivity {
         initXinGe();
         initFragment();
         initUpdate();
+
+        //融云登录
+//        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""))) {
+//            getRongYToken();
+//        } else {
+        //如果有融云token 就直接登录
+        WorkerApplication.connect("8r+X1NYm7DQ/eyyCfExBqKnYAGMEYj7eH80GfOhEd+nNdJZYZAPTY8ftDd0y3YxHe0vITuRR9NnUtyzaI5DrInqIYvXOLkvs");
+//            WokerApplication.connect(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""));
+//        }
+
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //   PermissionUtils.get(this).getStoragePermission(() -> {
@@ -71,6 +86,7 @@ public class MainActivity extends BaseActivity {
         getConst();
         //  });
         submitLocation();
+//        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
     }
 
     /**
@@ -274,6 +290,41 @@ public class MainActivity extends BaseActivity {
             EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
         }
         EanfangHttp.setWorker();
+    }
+
+    /**
+     * 获取融云的token
+     */
+    private void getRongYToken() {
+        EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
+                .params("userId", EanfangApplication.get().getAccId())
+                .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
+                    if (!TextUtils.isEmpty(str)) {
+                        JSONObject json = JSONObject.parseObject(str);
+                        String token = json.getString("token");
+                        EanfangApplication.get().set(EanfangConst.RONGY_TOKEN, token);
+                        WorkerApplication.connect(token);
+                    }
+                }));
+    }
+
+
+    private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
+
+        /**
+         * 收到消息的处理。
+         *
+         * @param message 收到的消息实体。
+         * @param left    剩余未拉取消息数目。
+         * @return 收到消息是否处理完成，true 表示自己处理铃声和后台通知，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onReceived(Message message, int left) {
+            //开发者根据自己需求自行处理
+            Log.e("zzw", message.getContent().toString());
+            //根据消息类型判断
+            return false;
+        }
     }
 
     /**

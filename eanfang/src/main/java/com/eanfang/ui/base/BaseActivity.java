@@ -44,6 +44,7 @@ public class BaseActivity extends AppCompatActivity implements
     public Dialog loadingDialog;
     private PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
+    private ExitListenerReceiver exitre;
 
     //Android6.0申请权限的回调方法
     @Override
@@ -169,6 +170,7 @@ public class BaseActivity extends AppCompatActivity implements
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         CustomeApplication.get().pull(this);
+        this.unregisterReceiver(exitre);
     }
 
 
@@ -217,7 +219,9 @@ public class BaseActivity extends AppCompatActivity implements
      * 退出程序广播
      */
     public void RegListener() {
-        ExitListenerReceiver exitre = new ExitListenerReceiver();
+        if (exitre == null) {
+            exitre = new ExitListenerReceiver();
+        }
         IntentFilter intentfilter = new IntentFilter();
         intentfilter.addAction(this.getPackageName() + "."
                 + "ExitListenerReceiver");

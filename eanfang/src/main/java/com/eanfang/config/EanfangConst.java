@@ -55,4 +55,9 @@ public class EanfangConst {
      */
     public static final int WORK_INSPECT_STATUS_FINISH = 2;
     public static final String WORK_INSPECT_STATUS_FINISH_STR = "已完成";
+
+    /**
+     * 融云的token
+     */
+    public static final String RONGY_TOKEN = "rongyu_token";
 }
