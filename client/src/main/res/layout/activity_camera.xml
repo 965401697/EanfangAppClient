@@ -289,6 +289,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dimen_14"
+                    android:onClick="selectOtherAddress"
                     android:drawableRight="@mipmap/ic_camera_select_otheraddress"
                     android:gravity="right|center_vertical"
                     android:text="选择其他地址"

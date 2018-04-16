@@ -17,7 +17,7 @@ import android.widget.RadioGroup;
  * Created by admin on 2018/4/13.
  */
 
-public class CustomRadioGroup extends RadioGroup{
+public class CustomRadioGroup extends RadioGroup {
     private static final String TAG = "RadioGroupEx";
 
     public CustomRadioGroup(Context context) {
@@ -68,7 +68,7 @@ public class CustomRadioGroup extends RadioGroup{
                 //重置宽度
                 lineWidth = deltaX;
                 //累加高度
-                totalHeight += oldHeight;
+                totalHeight += oldHeight * 2;
                 //重置行高,当前这个View，属于下一行，因此当前最大行高为这个child的高度加上margin
                 maxLineHeight = child.getMeasuredHeight() + params.topMargin + params.bottomMargin;
 
@@ -89,7 +89,7 @@ public class CustomRadioGroup extends RadioGroup{
 
         //加上当前容器的padding值
         maxWidth += getPaddingLeft() + getPaddingRight();
-        totalHeight += getPaddingTop() + getPaddingBottom();
+        totalHeight += getPaddingTop() + getPaddingBottom()*2;
         setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? widthSize : maxWidth,
                 heightMode == MeasureSpec.EXACTLY ? heightSize : totalHeight);
 

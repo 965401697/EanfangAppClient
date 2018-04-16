@@ -18,7 +18,7 @@
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2D2D2D">
+        android:background="@color/color_bottom_back">
 
         <FrameLayout
             android:id="@android:id/tabcontent"
