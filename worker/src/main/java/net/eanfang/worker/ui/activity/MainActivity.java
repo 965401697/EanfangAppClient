@@ -1,9 +1,12 @@
 package net.eanfang.worker.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -47,7 +50,9 @@ import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -71,13 +76,12 @@ public class MainActivity extends BaseActivity {
         initUpdate();
 
         //融云登录
-//        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""))) {
-//            getRongYToken();
-//        } else {
-        //如果有融云token 就直接登录
-        WorkerApplication.connect("8r+X1NYm7DQ/eyyCfExBqKnYAGMEYj7eH80GfOhEd+nNdJZYZAPTY8ftDd0y3YxHe0vITuRR9NnUtyzaI5DrInqIYvXOLkvs");
-//            WokerApplication.connect(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""));
-//        }
+        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""))) {
+            getRongYToken();
+        } else {
+            //如果有融云token 就直接登录
+            WorkerApplication.connect(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""));
+        }
 
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -86,7 +90,8 @@ public class MainActivity extends BaseActivity {
         getConst();
         //  });
         submitLocation();
-//        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+        privoderMy();
     }
 
     /**
@@ -321,7 +326,11 @@ public class MainActivity extends BaseActivity {
         @Override
         public boolean onReceived(Message message, int left) {
             //开发者根据自己需求自行处理
-            Log.e("zzw", message.getContent().toString());
+            if (message.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
+                runOnUiThread(() -> {
+                    DialogShow(message.getTargetId());
+                });
+            }
             //根据消息类型判断
             return false;
         }
@@ -332,6 +341,57 @@ public class MainActivity extends BaseActivity {
      */
     public void noOpen(View v) {
         showToast("暂缓开通");
+    }
+
+
+    private void DialogShow(String userId) {
+        // TODO: 2018/4/16 userid 可能是多个
+        AlertDialog dialog = new AlertDialog.Builder(this)
+//                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle("消息通知")//设置对话框的标题
+                .setMessage("有人添加您为好友？")//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //拒接被添加好友
+                        EanfangHttp.post(UserApi.POST_REFUSE_FRIEND)
+                                .params("ids", userId)
+                                .execute(new EanfangCallback<org.json.JSONObject>(MainActivity.this, true, org.json.JSONObject.class, (bean) -> {
+                                }));
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //同意被添加好友
+                        EanfangHttp.post(UserApi.POST_ACCEPT_FRIEND)
+                                .params("ids", userId)
+                                .execute(new EanfangCallback<org.json.JSONObject>(MainActivity.this, true, org.json.JSONObject.class, (bean) -> {
+                                }));
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
+    }
+
+    /**
+     * 向融云提供自己的头像和昵称  兼容老版本
+     */
+    private void privoderMy() {
+        //提供融云的自己头像和昵称
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String s) {
+
+                UserInfo userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), EanfangApplication.getApplication().getUser().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
+                Log.e("zzw", userInfo.toString());
+                return userInfo;
+
+
+            }
+        }, true);
     }
 
 }

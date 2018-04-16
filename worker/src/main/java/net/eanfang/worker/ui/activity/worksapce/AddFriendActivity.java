@@ -1,31 +1,40 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.FriendListBean;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddFriendActivity extends BaseWorkerActivity implements View.OnClickListener {
+public class AddFriendActivity extends BaseWorkerActivity {
 
     @BindView(R.id.et_phone)
     EditText etPhone;
-    @BindView(R.id.iv_friend_header)
-    ImageView ivFriendHeader;
-    @BindView(R.id.tv_friend_name)
-    TextView tvFriendName;
-    @BindView(R.id.ll_friend)
-    LinearLayout llFriend;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    private FriendsAdapter mFriendsAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +43,15 @@ public class AddFriendActivity extends BaseWorkerActivity implements View.OnClic
         ButterKnife.bind(this);
 
         initViews();
+        setTitle("添加好友");
+        setLeftBack();
     }
 
     private void initViews() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list);
+        mFriendsAdapter.bindToRecyclerView(recyclerView);
+
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -51,20 +66,64 @@ public class AddFriendActivity extends BaseWorkerActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 11) {
-//                    EanfangHttp.get("").execute(new EanfangCallback(AddFriendActivity.this,true,new EanfangCallback<String>()));
+                    EanfangHttp.post(UserApi.POST_FIND_FRIEND)
+                            .params("mobile", etPhone.getText().toString().trim())
+//                            .params("email", etPhone.getText().toString().trim())
+                            .execute(new EanfangCallback<FriendListBean>(AddFriendActivity.this, true, FriendListBean.class, true, (list) -> {
+                                if (list.size() > 0) {
+                                    mFriendsAdapter.setNewData(list);
+                                } else {
+                                    mFriendsAdapter.getData().clear();
+                                    ToastUtil.get().showToast(AddFriendActivity.this, "没有搜索到好友");
+                                }
+                            }));
 
+                } else {
 
-                    llFriend.setVisibility(View.VISIBLE);
-                    llFriend.setOnClickListener(AddFriendActivity.this);
-//                    ivFriendHeader
-                    tvFriendName.setText("");
                 }
+            }
+        });
+
+        mFriendsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("mobile", friendListBean.getMobile());
+                    jsonObject.put("email", friendListBean.getEmail());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                DialogShow(jsonObject, friendListBean.getNickName());
+
             }
         });
     }
 
-    @Override
-    public void onClick(View v) {
-
+    private void DialogShow(JSONObject jsonObject, String name) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+//                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle("添加好友")//设置对话框的标题
+                .setMessage("您确定添加“" + name + "”为好友？")//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EanfangHttp.post(UserApi.POST_ADD_FRIEND)
+                                .upJson(jsonObject)
+                                .execute(new EanfangCallback<JSONObject>(AddFriendActivity.this, true, JSONObject.class, (bean) -> {
+                                    ToastUtil.get().showToast(AddFriendActivity.this, "发送成功");
+                                }));
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
     }
 }

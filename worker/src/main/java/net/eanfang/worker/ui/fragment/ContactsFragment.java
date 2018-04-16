@@ -1,27 +1,24 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.V;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.AddFriendActivity;
 import net.eanfang.worker.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
@@ -31,13 +28,8 @@ import net.eanfang.worker.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.worker.ui.adapter.ParentAdapter;
 import net.eanfang.worker.ui.widget.CreateTeamView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 
 /**
@@ -143,52 +135,23 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
-        List<UserInfo> userInfoList = new ArrayList<>();
-        UserInfo userInfo = new UserInfo("18519005131", "子武", Uri.parse("http://e.hiphotos.baidu.com/image/pic/item/b7003af33a87e950b96100121c385343fbf2b45e.jpg"));
-        UserInfo userInfo1 = new UserInfo("13001011991", "武子", Uri.parse("http://c.hiphotos.baidu.com/image/pic/item/fd039245d688d43f5d9c4d8a711ed21b0ef43b95.jpg"));
-
-        userInfoList.add(userInfo);
-        userInfoList.add(userInfo1);
-
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String s) {
-
-                for (int i = 0; i < userInfoList.size(); i++) {
-                    if (userInfoList.get(i).getUserId().equals(s)) {
-                        return userInfoList.get(i);
-                    }
-                }
-
-                return null;
-            }
-        }, true);
-
         rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
         tv_noTeam = (TextView) findViewById(R.id.tv_noTeam);
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //开启会话界面
-
-//                startActivity(new Intent(getActivity(), MyFriendsListActivity.class));
-
-                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, "13001011991", "5131->1991");
+                startActivity(new Intent(getActivity(), MyFriendsListActivity.class));
             }
         });
 
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EanfangHttp.post(UserApi.POST_FIND_FRIEND)
-                        .params("senderId", "936487014348365825")
-                        .params("targetIds", "937871078913511425")
-                        .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
+                //添加好友界面
+                startActivity(new Intent(getActivity(), AddFriendActivity.class));
 
-                            Log.e("zzw", "访问成功");
 
-                        }));
             }
         });
     }

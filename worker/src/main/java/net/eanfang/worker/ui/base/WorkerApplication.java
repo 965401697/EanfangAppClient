@@ -46,7 +46,7 @@ public class WorkerApplication extends EanfangApplication {
                  */
                 @Override
                 public void onSuccess(String userid) {
-                    Log.d("r", "--onSuccess" + userid);
+                    Log.d("zzw", "融云登录onSuccess" + userid);
                 }
 
                 /**
@@ -55,7 +55,7 @@ public class WorkerApplication extends EanfangApplication {
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.d("r", "--onError" + errorCode);
+                    Log.d("zzw", "--融云登录onError" + errorCode);
                 }
             });
         }

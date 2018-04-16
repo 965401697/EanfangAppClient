@@ -163,11 +163,15 @@
 
     <TextView style="@style/style_common_line_gray" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="2dp" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="会话列表" />
 
+    <FrameLayout
+        android:id="@+id/rong_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

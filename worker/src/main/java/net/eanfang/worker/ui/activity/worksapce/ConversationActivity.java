@@ -29,6 +29,7 @@ public class ConversationActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         String title = getIntent().getData().getQueryParameter("title").toString();
         tvTitle.setText(title);
+        setLeftBack();
     }
 
 }

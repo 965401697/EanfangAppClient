@@ -1,7 +1,9 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -14,6 +16,8 @@ import com.eanfang.util.Var;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
 
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -38,6 +42,19 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
+        ConversationListFragment fragment = new ConversationListFragment();
+        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
+                .build();
+        fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.rong_content, fragment);
+        transaction.commit();
+
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
 
         if (Var.get("ContactListFragment.messageCount").getVar() > 0) {

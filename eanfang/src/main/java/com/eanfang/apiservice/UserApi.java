@@ -203,6 +203,22 @@ public interface UserApi {
     /**
      * 搜索好友
      */
-    String POST_FIND_FRIEND = BuildConfig.API_HOST + "/yaf_im/im/friendPush";
+    String POST_FIND_FRIEND = BuildConfig.API_HOST + "/yaf_sys/account/find";
+    /**
+     * 添加好友
+     */
+    String POST_ADD_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/insert";
+    /**
+     * 同意添加
+     */
+    String POST_ACCEPT_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/accept";
+    /**
+     * 拒绝
+     */
+    String POST_REFUSE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/refuse";
+    /**
+     * 删除好友
+     */
+    String POST_DELETE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/delete";
 
 }

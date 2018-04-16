@@ -288,7 +288,7 @@ public class OrderListFragment extends BaseFragment implements
 
                              @Override
                              public void onNoData(String message) {
-
+                                 refreshLayout.setRefreshing(false);
                                  adapter.loadMoreEnd();//没有数据了
 
 //                                 page--;
@@ -337,12 +337,18 @@ public class OrderListFragment extends BaseFragment implements
 
     @Override
     protected void onLazyLoad() {
+        Log.e("zzw", "onLazyLoad");
+        page = 1;
         getData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+
+        Log.e("zzw", "onResume");
+        page = 1;
         getData();
     }
 

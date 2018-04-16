@@ -12,30 +12,18 @@
         android:id="@+id/et_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableLeft="@mipmap/ic_contact_search"
+        android:drawablePadding="5dp"
         android:hint="输入好友手机号"
-        android:maxEms="11" />
+        android:inputType="number"
+        android:maxEms="11"
+        android:padding="10dp" />
 
-    <LinearLayout
-        android:id="@+id/ll_friend"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible">
-
-        <ImageView
-            android:id="@+id/iv_friend_header"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher" />
-
-
-        <TextView
-            android:id="@+id/tv_friend_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:text="名字" />
-
-    </LinearLayout>
+        android:layout_height="match_parent"
+ />
 
 </LinearLayout>
