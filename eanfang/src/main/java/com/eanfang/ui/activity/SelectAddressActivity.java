@@ -210,11 +210,11 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
                 }
             } else {
                 mDataList.clear();
-                // showToast("对不起，没有搜索到相关数据！");
+                showToast("对不起，没有搜索到相关数据！");
             }
         } else {
             mDataList.clear();
-            //showToast("对不起，没有搜索到相关数据！");
+            showToast("对不起，没有搜索到相关数据！");
         }
         evaluateAdapter.notifyDataSetChanged();
     }

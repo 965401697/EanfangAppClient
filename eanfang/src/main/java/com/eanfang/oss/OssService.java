@@ -110,7 +110,9 @@ public class OssService {
             oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
                 @Override
                 public void onSuccess(PutObjectRequest request, PutObjectResult result) {
-                    ossCallBack.onOssProgress(null, 0, 0);
+                    activity.runOnUiThread(() -> {
+                        ossCallBack.onOssProgress(null, 0, 0);
+                    });
                     resultJson.put("code", UPLOAD_SUCCESS);
                     resultJson.put("curr", (ossCallBack.getCurr().get() + 1));
                     EventBus.getDefault().post(resultJson);
@@ -142,7 +144,10 @@ public class OssService {
         EventBus.getDefault().register(this);
         //如果没有了 则成功
         if (objectMap == null || objectMap.size() <= 0 || objectMap.keySet().size() <= 0) {
-            ossCallBack.onSuccess(null, null);
+            activity.runOnUiThread(() -> {
+                ossCallBack.onSuccess(null, null);
+                EventBus.getDefault().unregister(this);
+            });
             return;
         }
         final List<String> keyList = new ArrayList(objectMap.keySet());
@@ -166,7 +171,9 @@ public class OssService {
         Integer code = result.getInteger("code");
         //code 为 -1 代表失败
         if (code.equals(UPLOAD_FAILED)) {
-            ossCallBack.onFailure(null, null, null);
+            activity.runOnUiThread(()->{
+                ossCallBack.onFailure(null, null, null);
+            });
             EventBus.getDefault().unregister(this);
             return;
         }
@@ -175,7 +182,9 @@ public class OssService {
         //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
         Log.e("ossService", "onEvent: total:" + ossCallBack.getCurr().get() + "  curr:" + ossCallBack.getCurr().get());
         if (ossCallBack.getCurr().get() >= ossCallBack.getTotal().get()) {
-            ossCallBack.onSuccess(null, null);
+            activity.runOnUiThread(() -> {
+                ossCallBack.onSuccess(null, null);
+            });
             EventBus.getDefault().unregister(this);
         }
     }

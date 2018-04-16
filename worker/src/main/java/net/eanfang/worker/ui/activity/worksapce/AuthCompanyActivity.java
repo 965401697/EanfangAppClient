@@ -26,6 +26,7 @@ import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
@@ -224,6 +225,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         startActivity(intent);
     }
 
+    /**
+     * 初始化  填充数据
+     */
     private void fillData() {
         if (byNetBean != null) {
             if (byNetBean.getLicenseCode() != null) {
@@ -253,11 +257,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             if (byNetBean.getAreaCode() != null) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
-            if (byNetBean.getLogoPic() != null) {
+            if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
                 ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
-            if (byNetBean.getLicensePic() != null) {
+            if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
                 ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
                 infoBean.setLicensePic(byNetBean.getLogoPic());
             }

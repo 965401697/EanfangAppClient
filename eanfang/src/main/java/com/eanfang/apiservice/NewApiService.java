@@ -22,7 +22,10 @@ public interface NewApiService {
      * 获取基础数据 缓存
      */
     String GET_BASE_DATA_CACHE = BuildConfig.API_HOST + "/yaf_sys/basedata/listallcache/";
-
+    /**
+     * 基础数据 树
+     */
+    String GET_BASE_DATA_CACHE_TREE = BuildConfig.API_HOST + "/yaf_sys/basedata/treecache/";
     /**
      * 获取静态常量
      */

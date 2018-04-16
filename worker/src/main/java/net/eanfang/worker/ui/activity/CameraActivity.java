@@ -30,9 +30,12 @@ import com.camera.model.PermissionsModel;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.V;
 import com.eanfang.witget.CustomRadioGroup;
 
 import net.eanfang.worker.R;
@@ -212,9 +215,12 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         //项目类型
         project_type = selectProjectType;
 
-        //创建者
-//        creatUser = EanfangApplication.get().getUser().getName();
 
+        //创建者
+        creatUser = V.v(() -> EanfangApplication.get().getUser().getAccount().getRealName());
+        if (StringUtils.isEmpty(creatUser)) {
+            creatUser = "--";
+        }
     }
 
     /**

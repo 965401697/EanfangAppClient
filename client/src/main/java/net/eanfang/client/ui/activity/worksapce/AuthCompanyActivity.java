@@ -27,6 +27,7 @@ import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
@@ -166,11 +167,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             if (byNetBean.getAreaCode() != null) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
-            if (byNetBean.getLogoPic() != null) {
+            if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
                 ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
-            if (byNetBean.getLicensePic() != null) {
+            if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
                 ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
                 infoBean.setLicensePic(byNetBean.getLogoPic());
             }
@@ -184,10 +185,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         orgName = getIntent().getStringExtra("orgName");
         etCompany.setText(orgName);
         ivUpload.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this,LICENSE_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
         });
         ivUpload2.setOnClickListener((v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this,ADPIC_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, ADPIC_CALLBACK_CODE));
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {

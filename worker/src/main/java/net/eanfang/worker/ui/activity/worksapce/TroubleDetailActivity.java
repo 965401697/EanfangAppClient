@@ -119,7 +119,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_fill_repair_info);
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
 
         id = getIntent().getLongExtra("orderId", 0);
         initView();
