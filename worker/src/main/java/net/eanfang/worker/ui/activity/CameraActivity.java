@@ -97,8 +97,6 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     LocalWeatherLive weatherlive;
     @BindView(R.id.tv_location_address)
     TextView tvLocationAddress;
-    @BindView(R.id.tv_select_other_address)
-    TextView tvSelectOtherAddress;
     private String time, weather, city_address;
     private String project_name;
     private String region_name;

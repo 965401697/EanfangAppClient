@@ -97,8 +97,6 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     WeatherSearchQuery query;
     WeatherSearch search;
     LocalWeatherLive weatherlive;
-    @BindView(R.id.tv_select_other_address)
-    TextView tvSelectOtherAddress;
     private String time, weather, city_address;
     private String project_name;
     private String region_name;
