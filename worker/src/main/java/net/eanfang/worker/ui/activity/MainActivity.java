@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
                         EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false));
-                        showToast("消息被清空了");
+                        //  showToast("消息被清空了");
                     }
                 });
         //变量监听

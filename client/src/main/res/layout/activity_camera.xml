@@ -195,6 +195,7 @@
                         android:id="@+id/tv_repair"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:checked="true"
@@ -207,7 +208,7 @@
                         android:id="@+id/tv_check"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -219,7 +220,7 @@
                         android:id="@+id/tv_do"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -231,7 +232,7 @@
                         android:id="@+id/tv_accept"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -243,7 +244,7 @@
                         android:id="@+id/tv_care"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -255,6 +256,7 @@
                         android:id="@+id/tv_task"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:layout_marginTop="@dimen/dimen_20"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
@@ -289,12 +291,23 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/dimen_14"
-                    android:onClick="selectOtherAddress"
                     android:drawableRight="@mipmap/ic_camera_select_otheraddress"
                     android:gravity="right|center_vertical"
+                    android:onClick="selectOtherAddress"
                     android:text="选择其他地址"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_12" />
+                <!--<TextView-->
+                <!--android:id="@+id/tv_select_other_address"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:drawablePadding="@dimen/dimen_14"-->
+                <!--android:drawableRight="@mipmap/ic_camera_select_otheraddress"-->
+                <!--android:gravity="right|center_vertical"-->
+                <!--android:text="选择其他地址"-->
+                <!--android:textColor="@color/color_bottom"-->
+                <!--android:textSize="@dimen/textSize_12" />-->
 
             </LinearLayout>
 
@@ -320,7 +333,7 @@
                 android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
                 android:background="@drawable/bg_camera_input_back"
-                android:hint="暂无网络,请手动输入地址"
+                android:hint="请手动输入地址"
                 android:maxLength="30"
                 android:padding="@dimen/dimen_15"
                 android:textColor="@color/color_bottom"
