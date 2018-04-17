@@ -221,7 +221,7 @@ public class EanfangCallback<T> extends StringCallback {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe
     public synchronized void onEvent(JSONObject jsonObject) {
         Integer code = jsonObject.getInteger("code");
         String message = jsonObject.getString("message");

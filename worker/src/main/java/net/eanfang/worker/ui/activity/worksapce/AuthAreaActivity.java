@@ -5,13 +5,17 @@ import android.widget.ExpandableListView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -36,7 +40,7 @@ import butterknife.ButterKnife;
 public class AuthAreaActivity extends BaseActivity {
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
-    List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+    List<BaseDataEntity> areaListBean;
     private GroupAdapter mAdapter;
     private Long orgid;
     private int status;
@@ -54,7 +58,19 @@ public class AuthAreaActivity extends BaseActivity {
         setContentView(R.layout.activity_area_auth);
         ButterKnife.bind(this);
         initView();
-        initData();
+        initArea();
+    }
+
+    private void initArea() {
+        EanfangHttp.get(NewApiService.GET_BASE_DATA_CACHE_TREE + "0")
+                .tag(this)
+                .execute(new EanfangCallback<String>(this, true, String.class, (str) -> {
+                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+                        areaListBean = Stream.of(newDate.getData()).filter(bean -> bean.getDataCode().equals("3")).toList().get(0).getChildren();
+                        initData();
+                    }
+                }));
     }
 
     private void initData() {
@@ -63,6 +79,8 @@ public class AuthAreaActivity extends BaseActivity {
                     byNetGrant = bean;
                     fillData();
                 }));
+
+
     }
 
 
@@ -88,9 +106,9 @@ public class AuthAreaActivity extends BaseActivity {
         setRightTitleOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
-            }else if (status==1){
+            } else if (status == 1) {
                 showToast("您已经提交认证，审核中。。");
-            }else if (status==2){
+            } else if (status == 2) {
                 showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
 
@@ -146,8 +164,8 @@ public class AuthAreaActivity extends BaseActivity {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
                 .upJson(JSONObject.toJSONString(grantChange))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                        verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-                        verfiyView.show();
+                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
+                    verfiyView.show();
 
                 }));
     }

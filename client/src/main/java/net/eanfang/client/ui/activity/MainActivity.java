@@ -97,6 +97,7 @@ public class MainActivity extends BaseClientActivity {
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+        mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
 
@@ -130,7 +131,9 @@ public class MainActivity extends BaseClientActivity {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
                         EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false));
-                        showToast("消息被清空了");
+//                        runOnUiThread(() -> {
+//                            showToast("消息被清空了");
+//                        });
 //                        Var.get().setVar(0);
                     }
                 });

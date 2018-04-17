@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.model.SelectAddressItem;
+import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
@@ -55,6 +58,8 @@ import butterknife.ButterKnife;
  */
 
 public class CameraActivity extends BaseClientActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
+    //选择其他地址回调 code
+    private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
     @BindView(R.id.et_project_name)
     EditText etProjectName;
     @BindView(R.id.et_region_name)
@@ -157,7 +162,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     @Override
     protected void onStart() {
         super.onStart();
-        startLocation();
+//        startLocation();
     }
 
     @Override
@@ -220,6 +225,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
             creatUser = "--";
         }
 
+
     }
 
     /**
@@ -244,6 +250,14 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
                 startActivityForResult(intent, TakePhotoActivity.REQUEST_CAPTRUE_CODE);
             }
         });
+    }
+
+    /**
+     * 选择其他地址
+     */
+    public void selectOtherAddress(View v) {
+        Intent intent = new Intent(this, SelectAddressActivity.class);
+        startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
     }
 
     /**
@@ -334,7 +348,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
                 Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
 
                 if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
-                    Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, "地址：" + address, 16, color, 5, 8);
+                    Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, "地址：" + tvLocationAddress.getText().toString().trim(), 16, color, 5, 8);
                     textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "内容：" + project_content, 16, color, 5, 28);
                     textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "部位/区域：" + region_name, 16, color, 5, 48);
                     textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "类型：" + project_type, 16, color, 5, 68);
@@ -368,6 +382,13 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
                         e.printStackTrace();
                     }
                 }
+                break;
+            case REPAIR_ADDRESS_CALLBACK_CODE:
+                locationClient.stopLocation();
+                SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
+                address = item.getCity() + item.getAddress()+item.getName();
+                //将选择的地址 取 显示值
+                tvLocationAddress.setText(address);
                 break;
             default:
                 break;
@@ -453,7 +474,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     private void initGPS() {
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         // 判断GPS模块是否开启，如果没有则开启
-        if (!locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER)) {
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             ToastUtil.get().showToast(this, "请打开GPS,定位更准确");
         }
         if (ConnectivityChangeReceiver.isNetConnected(this) == false) {

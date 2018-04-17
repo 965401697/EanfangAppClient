@@ -30,9 +30,14 @@ import com.camera.model.PermissionsModel;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
+import com.eanfang.model.SelectAddressItem;
+import com.eanfang.ui.activity.SelectAddressActivity;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.V;
 import com.eanfang.witget.CustomRadioGroup;
 
 import net.eanfang.worker.R;
@@ -53,6 +58,8 @@ import butterknife.ButterKnife;
  */
 
 public class CameraActivity extends BaseWorkerActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
+    //选择其他地址回调 code
+    private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
     @BindView(R.id.et_project_name)
     EditText etProjectName;
     @BindView(R.id.et_region_name)
@@ -155,7 +162,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     @Override
     protected void onStart() {
         super.onStart();
-        startLocation();
+//        startLocation();
     }
 
     @Override
@@ -212,9 +219,12 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         //项目类型
         project_type = selectProjectType;
 
-        //创建者
-//        creatUser = EanfangApplication.get().getUser().getName();
 
+        //创建者
+        creatUser = V.v(() -> EanfangApplication.get().getUser().getAccount().getRealName());
+        if (StringUtils.isEmpty(creatUser)) {
+            creatUser = "--";
+        }
     }
 
     /**
@@ -239,6 +249,14 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
                 startActivityForResult(intent, TakePhotoActivity.REQUEST_CAPTRUE_CODE);
             }
         });
+    }
+
+    /**
+     * 选择其他地址
+     */
+    public void selectOtherAddress(View v) {
+        Intent intent = new Intent(this, SelectAddressActivity.class);
+        startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
     }
 
     /**
@@ -364,6 +382,13 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
                         e.printStackTrace();
                     }
                 }
+                break;
+            case REPAIR_ADDRESS_CALLBACK_CODE:
+                locationClient.stopLocation();
+                SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
+                address = item.getCity() + item.getAddress()+item.getName();
+                //将选择的地址 取 显示值
+                tvLocationAddress.setText(address);
                 break;
             default:
                 break;

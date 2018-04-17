@@ -40,8 +40,6 @@
     <color name="color_client_data_item_title">#FB973B</color>
     <color name="color_bottom_pressed">#FB973B</color>
     <color name="color_contact_authentication">#D3D3D3</color>
-    <color name="color_contact_create_line">#CCC</color>
-    <color name="color_contact_create_cancel_back">#c6c6c6</color>
     <color name="color_contact_create_confim_back">#FE933D</color>
     <color name="color_personal_text">#E16531</color>
 

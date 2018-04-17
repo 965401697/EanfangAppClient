@@ -30,7 +30,7 @@ import com.eanfang.ui.base.BaseActivity;
 
 /**
  * @author Mr.hou
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc
  */
 public class LocationUtil implements AMap.OnMarkerClickListener,
@@ -215,7 +215,9 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
                 }
                 if (onLocationed != null) {
                     onLocationed.location(location);
+                    onLocationed = null;
                 }
+
             }
         }
 
