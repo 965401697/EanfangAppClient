@@ -387,10 +387,7 @@ public class MainActivity extends BaseActivity {
             public UserInfo getUserInfo(String s) {
 
                 UserInfo userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), EanfangApplication.getApplication().getUser().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
-                Log.e("zzw", userInfo.toString());
                 return userInfo;
-
-
             }
         }, true);
     }

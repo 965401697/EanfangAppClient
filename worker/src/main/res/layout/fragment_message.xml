@@ -37,9 +37,9 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:onClick="noOpen"
                 android:padding="2dp"
-                android:src="@mipmap/ic_news_add" />
+            android:src="@mipmap/ic_news_add" />
+            <!--android:onClick="noOpen"-->
 
             <TextView
                 android:layout_width="match_parent"

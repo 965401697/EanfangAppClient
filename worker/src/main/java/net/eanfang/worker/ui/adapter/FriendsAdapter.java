@@ -1,6 +1,8 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,14 +17,30 @@ import net.eanfang.worker.R;
  */
 
 public class FriendsAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHolder> {
+    private int flag;
 
-    public FriendsAdapter(int layoutResId) {
+    public FriendsAdapter(int layoutResId, int flag) {
         super(layoutResId);
+        this.flag = flag;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, FriendListBean item) {
-        ((ImageView)helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatar()));
-        helper.setText(R.id.tv_friend_name,item.getNickName());
+
+        if (flag == 0) {
+            helper.getView(R.id.cb_checked).setVisibility(View.INVISIBLE);
+        } else {
+            helper.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
+        }
+
+        if (item.getFlag() == 0) {
+            ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(false);
+        } else {
+            ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(true);
+        }
+
+        ((ImageView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatar()));
+        helper.setText(R.id.tv_friend_name, item.getNickName());
+        helper.addOnClickListener(R.id.cb_checked);
     }
 }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
@@ -49,7 +50,8 @@ public class AddFriendActivity extends BaseWorkerActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list);
+        // 0:我的好友列表没有checkbox  1:创建群组需要checkbox
+        mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, 0);
         mFriendsAdapter.bindToRecyclerView(recyclerView);
 
         etPhone.addTextChangedListener(new TextWatcher() {
@@ -95,13 +97,13 @@ public class AddFriendActivity extends BaseWorkerActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                DialogShow(jsonObject, friendListBean.getNickName());
+                DialogShow(jsonObject, friendListBean, friendListBean.getNickName());
 
             }
         });
     }
 
-    private void DialogShow(JSONObject jsonObject, String name) {
+    private void DialogShow(JSONObject jsonObject, FriendListBean friendListBean, String name) {
         AlertDialog dialog = new AlertDialog.Builder(this)
 //                .setIcon(R.mipmap.icon)//设置标题的图片
                 .setTitle("添加好友")//设置对话框的标题
@@ -119,7 +121,15 @@ public class AddFriendActivity extends BaseWorkerActivity {
                         EanfangHttp.post(UserApi.POST_ADD_FRIEND)
                                 .upJson(jsonObject)
                                 .execute(new EanfangCallback<JSONObject>(AddFriendActivity.this, true, JSONObject.class, (bean) -> {
-                                    ToastUtil.get().showToast(AddFriendActivity.this, "发送成功");
+
+
+                                    EanfangHttp.post(UserApi.POST_ADD_FRIEND_PUSH)
+                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("targetIds", friendListBean.getAccId())
+                                            .execute(new EanfangCallback<JSONObject>(AddFriendActivity.this, true, JSONObject.class, (json) -> {
+                                                ToastUtil.get().showToast(AddFriendActivity.this, "发送成功");
+                                            }));
+
                                 }));
                         dialog.dismiss();
                     }

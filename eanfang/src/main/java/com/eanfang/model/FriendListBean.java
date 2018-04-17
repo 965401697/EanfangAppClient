@@ -19,6 +19,7 @@ public class FriendListBean implements Serializable {
     private String nickName;
     private String email;
     private String mobile;
+    private int flag;//是否选中的flag
 
     public String getAccId() {
         return accId;
@@ -58,5 +59,13 @@ public class FriendListBean implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 }

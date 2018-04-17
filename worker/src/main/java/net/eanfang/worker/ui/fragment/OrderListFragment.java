@@ -28,6 +28,7 @@ import net.eanfang.worker.ui.activity.worksapce.EvaluateClientActivity;
 import net.eanfang.worker.ui.activity.worksapce.FillRepairInfoActivity;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.PhoneSolveRepairInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
 import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.worker.ui.adapter.RepairedManageOrderAdapter;
@@ -54,6 +55,7 @@ public class OrderListFragment extends BaseFragment implements
     private RecyclerView mRecyclerView;
     //    private List<RepairOrderEntity> mDataList;
     private RepairedManageOrderAdapter adapter;
+    private String status = null;
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -239,7 +241,7 @@ public class OrderListFragment extends BaseFragment implements
     protected void getData() {
 
         QueryEntry queryEntry = new QueryEntry();
-        String status = null;
+
         if (!"全部".equals(getTitle())) {
             status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
             queryEntry.getEquals().put("status", status);
@@ -346,10 +348,11 @@ public class OrderListFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
 
-
-        Log.e("zzw", "onResume");
-        page = 1;
-        getData();
+//        if (status.equals(((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab())) {
+//            Log.e("zzw", "onResume");
+//            page = 1;
+//            getData();
+//        }
     }
 
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
