@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="D:\workspace\Eanfang\IMLib\src\main\assets"/><source path="D:\workspace\Eanfang\IMLib\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\workspace\Eanfang\IMLib\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="F:\Eanfang\EanfangAppClient\IMLib\src\main\assets"/><source path="F:\Eanfang\EanfangAppClient\IMLib\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="F:\Eanfang\EanfangAppClient\IMLib\src\debug\assets"/></dataSet></merger>
