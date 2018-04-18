@@ -29,7 +29,7 @@ public class GiveEvaluateAdapter extends BaseQuickAdapter<GiveEvaluateBean.ListB
         SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
 
         if (!StringUtils.isEmpty(item.getOwnerUser().getAccountEntity().getAvatar())) {
-            iv_header.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(item.getOwnerUser().getAccountEntity().getAvatar()));
+            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getOwnerUser().getAccountEntity().getAvatar()));
         }
 
         int totalStar = item.getItem1() + item.getItem2() +

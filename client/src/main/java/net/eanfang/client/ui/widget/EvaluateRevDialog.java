@@ -3,7 +3,6 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.model.GiveEvaluateBean;
@@ -38,8 +37,6 @@ public class EvaluateRevDialog extends BaseDialog {
 
     @BindView(R.id.tv_select)
     TextView tvSelect;
-    @BindView(R.id.titles_bar)
-    LinearLayout titlesBar;
     private GiveEvaluateBean.ListBean bean;
 
     public EvaluateRevDialog(Activity context, GiveEvaluateBean.ListBean bean) {
@@ -55,7 +52,6 @@ public class EvaluateRevDialog extends BaseDialog {
     }
 
     private void initView() {
-        titlesBar.setVisibility(View.GONE);
         tvSelect.setVisibility(View.GONE);
         rbStar1.setNumStars(bean.getItem1());
         rbStar2.setNumStars(bean.getItem2());

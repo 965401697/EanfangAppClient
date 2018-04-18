@@ -43,6 +43,13 @@ public class EvaluateFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
+
+
+    }
+
+    @Override
+    protected void onLazyLoad() {
+        super.onLazyLoad();
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.setPage(1);
@@ -52,7 +59,6 @@ public class EvaluateFragment extends BaseFragment {
                 .execute(new EanfangCallback<ReceivedEvaluateBean>(getActivity(), false, ReceivedEvaluateBean.class, (bean) -> {
                     initAdapter(bean.getList());
                 }));
-
     }
 
     @Override
