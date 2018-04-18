@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.activity.my;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +54,21 @@ import butterknife.ButterKnife;
  * @desc 技师认证
  */
 public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 7;
+    //身份证正面
+    private final int ID_CARD_FRONT = 101;
+    // 身份证反面
+    private final int ID_CARD_SIDE = 102;
+    //身份证手持
+    private final int ID_CARD_HAND = 103;
+    //意外保险
+    private final int ACCIDENT_PIC = 104;
+    //荣誉证书
+    private final int HONOR_PIC = 105;
+    //有无犯罪记录
+    private final int CRIME_PIC = 106;
+    private final int HEADER_PIC = 107;
     @BindView(R.id.et_contactName)
     EditText etContactName;
     @BindView(R.id.et_contactPhone)
@@ -96,29 +115,27 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     SimpleDraweeView ivHeader;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
+
+    //edittext拦截器
+    InputFilter inputFilter = new InputFilter() {
+        Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
+                Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Matcher emojiMatcher = emoji.matcher(source);
+            if (emojiMatcher.find()) {
+                showToast("不支持输入表情");
+                return "";
+            }
+            return null;
+        }
+    };
+
     private WorkerInfoBean workerInfoBean;
     private WorkerInfoBean setWorkerInfoBean = new WorkerInfoBean();
     private Map<String, String> uploadMap = new HashMap<>();
     private ArrayList<String> honorList = new ArrayList<>();
-    private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 7;
-
-
-    //身份证正面
-    private final int ID_CARD_FRONT = 101;
-    // 身份证反面
-    private final int ID_CARD_SIDE = 102;
-    //身份证手持
-    private final int ID_CARD_HAND = 103;
-    //意外保险
-    private final int ACCIDENT_PIC = 104;
-    //荣誉证书
-    private final int HONOR_PIC = 105;
-    //有无犯罪记录
-    private final int CRIME_PIC = 106;
-
-    private final int HEADER_PIC = 107;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,28 +145,6 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         initView();
         setOnClick();
 
-    }
-
-    private void setOnClick() {
-        llWorkingLevel.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingLevel, GetConstDataUtils.getWorkingLevelList()));
-        llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, GetConstDataUtils.getWorkingYearList()));
-        llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
-
-        ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ID_CARD_FRONT)));
-        ivIdCardSide.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ID_CARD_SIDE)));
-        ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ID_CARD_HAND)));
-        ivCrimePic.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,CRIME_PIC)));
-        ivAccidentPics.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,ACCIDENT_PIC)));
-        ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this,HEADER_PIC)));
-
-        setRightTitleOnClickListener(v -> setData());
-        setRightTitleOnClickListener((v) -> {
-            if (workerInfoBean.getStatus() == 0 || workerInfoBean.getStatus() == 3) {
-                setData();
-            } else {
-                jump();
-            }
-        });
     }
 
     /**
@@ -203,10 +198,38 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setTitle("填写技师资料");
         setLeftBack();
         setRightTitle("下一步");
+        //设置表情过滤，最多输入字数为100
+        etIntro.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(100)});
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("bean");
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         fillData();
+    }
+
+    private void setOnClick() {
+        llWorkingLevel.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingLevel, GetConstDataUtils.getWorkingLevelList()));
+        llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, GetConstDataUtils.getWorkingYearList()));
+        llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
+
+        ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, ID_CARD_FRONT)));
+        ivIdCardSide.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, ID_CARD_SIDE)));
+        ivIdCardHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, ID_CARD_HAND)));
+        ivCrimePic.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, CRIME_PIC)));
+        ivAccidentPics.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, ACCIDENT_PIC)));
+        ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
+        setRightTitleOnClickListener(v -> setData());
+        setRightTitleOnClickListener((v) -> {
+            if (workerInfoBean.getStatus() == 0 || workerInfoBean.getStatus() == 3) {
+
+                if (StringUtils.isMobileString(etContactPhone.getText().toString())) {
+                    showToast("请输入正确手机号");
+                    return;
+                }
+                setData();
+            } else {
+                jump();
+            }
+        });
     }
 
     private void fillData() {
@@ -251,7 +274,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 ivCrimePic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getCrimePic()));
             }
 
-            if (workerInfoBean.getHonorPics()!=null) {
+            if (workerInfoBean.getHonorPics() != null) {
                 String[] prePic = workerInfoBean.getHonorPics().split(",");
                 honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
                 snplMomentAddPhotos.setEditable(false);
@@ -293,17 +316,17 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
     }
 
+    private void jump() {
+        startActivity(new Intent(AuthWorkerInfoActivity.this,
+                AuthWorkerSysTypeActivity.class).putExtra("status", workerInfoBean.getStatus()));
+    }
+
     private void submitSuccess(String json) {
         EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     jump();
                 }));
-    }
-
-    private void jump() {
-        startActivity(new Intent(AuthWorkerInfoActivity.this,
-                AuthWorkerSysTypeActivity.class).putExtra("status", workerInfoBean.getStatus()));
     }
 
     /**
