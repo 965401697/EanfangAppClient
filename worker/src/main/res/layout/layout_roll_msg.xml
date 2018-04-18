@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/recommand_hotnews"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/item_margin_25"
     android:background="@color/color_white"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,4 +42,4 @@
             android:layout_marginTop="-4dp" />
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
