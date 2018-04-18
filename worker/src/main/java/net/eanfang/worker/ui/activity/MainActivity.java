@@ -179,7 +179,9 @@ public class MainActivity extends BaseActivity {
                 });
         //变量监听
         Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
-            qBadgeView.setBadgeNumber(var);
+            runOnUiThread(() -> {
+                qBadgeView.setBadgeNumber(var);
+            });
         });
     }
 
