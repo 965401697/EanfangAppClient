@@ -27,7 +27,7 @@ public class FriendsAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, FriendListBean item) {
 
-        if (flag == 0) {
+        if (flag == 0 ) {
             helper.getView(R.id.cb_checked).setVisibility(View.INVISIBLE);
         } else {
             helper.getView(R.id.cb_checked).setVisibility(View.VISIBLE);

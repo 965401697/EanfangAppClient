@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="start"
+                android:padding="14dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="4"
+          />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.25dp"
+
+                    android:background="#dfdfdd" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/group_member_size_item"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:clickable="true">
+
+                <TextView
+                    android:id="@+id/group_member_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/all_group_member"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_group_port"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/group_portrait"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/group_header"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="14dp"
+                    android:scaleType="centerCrop" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_group_name"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/group_name"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/group_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:textColor="#999"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+            <Button
+                android:id="@+id/group_quit"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/quit_group"
+                android:textColor="#FFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/group_dismiss"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/dismiss_group"
+                android:textColor="#FFF"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

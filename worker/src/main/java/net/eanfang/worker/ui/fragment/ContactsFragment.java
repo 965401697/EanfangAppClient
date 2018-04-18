@@ -23,6 +23,7 @@ import net.eanfang.worker.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.MyFriendsListActivity;
+import net.eanfang.worker.ui.activity.worksapce.MyGroupsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.worker.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.worker.ui.adapter.ParentAdapter;
@@ -140,8 +141,15 @@ public class ContactsFragment extends BaseFragment {
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //开启会话界面
+                //开启我的好友列表
                 startActivity(new Intent(getActivity(), MyFriendsListActivity.class));
+            }
+        });
+        findViewById(R.id.ll_my_group).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //开启我的群组列表
+                startActivity(new Intent(getActivity(), MyGroupsListActivity.class));
             }
         });
 

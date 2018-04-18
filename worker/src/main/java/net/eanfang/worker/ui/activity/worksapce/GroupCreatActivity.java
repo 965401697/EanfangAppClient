@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,8 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupCreatBean;
+import com.eanfang.model.GroupsBean;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -23,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 
 public class GroupCreatActivity extends BaseWorkerActivity {
 
@@ -38,6 +42,7 @@ public class GroupCreatActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("创建群组");
         setLeftBack();
+        startTransaction(true);
     }
 
     /**
@@ -57,18 +62,21 @@ public class GroupCreatActivity extends BaseWorkerActivity {
                 array.put(jsonObject2);
             }
 
-            jsonObject1.put("groupName", "测试一下");
+            jsonObject1.put("groupName", etGroupName.getText().toString().trim());
             jsonObject.put("sysGroup", jsonObject1);
             jsonObject.put("sysGroupUsers", array);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //删除好友
+        //创建群组
         EanfangHttp.post(UserApi.POST_CREAT_GROUP)
                 .upJson(jsonObject)
                 .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
+                    ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
+                    EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                     RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                    endTransaction(true);
                 }));
     }
 

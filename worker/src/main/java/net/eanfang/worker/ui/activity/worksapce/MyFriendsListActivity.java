@@ -25,6 +25,8 @@ import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     private FriendsAdapter mFriendsAdapter;
     private int flag = 0;//显示不显示checkbox的标志位
     private ArrayList<String> userIdList = new ArrayList<String>();
+    private ArrayList<FriendListBean> mFriendListBeanArrayList;
+    private String groupId;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,33 +56,105 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
 
         setLeftBack();
+        //1:创建选着好友  2：群组删除还有 3：群组添加好友
         flag = getIntent().getIntExtra("flag", 0);
-        if (flag == 1) {
-            setTitle("选择好友");
-            setRightTitle("下一步");
-            setRightTitleOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MyFriendsListActivity.this, GroupCreatActivity.class);
-                    intent.putStringArrayListExtra("userIdList", userIdList);
-                    startActivity(intent);
-                }
-            });
-        } else {
-            setTitle("我的好友");
-        }
+        rightTitleOnClick(flag);
         initViews();
+
         initData();
     }
 
+
+    private void rightTitleOnClick(int flag) {
+        if (flag == 1) {
+            setTitle("选择好友");
+            setRightTitle("下一步");
+            startTransaction(true);
+        } else if (flag == 2) {
+            setTitle("群组移除好友");
+            setRightTitle("确定");
+            mFriendListBeanArrayList = (ArrayList<FriendListBean>) getIntent().getSerializableExtra("list");
+            groupId = getIntent().getStringExtra("groupId");
+            title = getIntent().getStringExtra("title");
+            startTransaction(true);
+        } else if (flag == 3) {
+            setTitle("选择好友");
+            setRightTitle("确定");
+            groupId = getIntent().getStringExtra("groupId");
+            startTransaction(true);
+        } else {
+            setTitle("我的好友");
+        }
+
+        setRightTitleOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (flag == 1) {
+                    Intent intent = new Intent(MyFriendsListActivity.this, GroupCreatActivity.class);
+                    intent.putStringArrayListExtra("userIdList", userIdList);
+                    startActivity(intent);
+                } else if (flag == 2) {
+                    removeNumber();
+                } else if (flag == 3) {
+                    AddNumber();
+                }
+            }
+        });
+    }
+
     private void initData() {
-        EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
-                .params("accId", EanfangApplication.get().getAccId())
-                .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
-                    if (list.size() > 0) {
-                        mFriendsAdapter.setNewData(list);
-                    }
-                }));
+        if (flag != 2) {
+            if (flag == 3) {
+                //查找没有在群组的好友
+                EanfangHttp.post(UserApi.POST_GROUP_NOJOIN)
+                        .params("groupId", groupId)
+                        .params("accId", EanfangApplication.get().getAccId())
+                        .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
+                            if (list.size() > 0) {
+                                mFriendsAdapter.setNewData(list);
+
+
+                                //提供融云的头像和昵称
+                                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+                                    @Override
+                                    public UserInfo getUserInfo(String s) {
+                                        for (int i = 0; i < list.size(); i++) {
+                                            FriendListBean friendListBean = (FriendListBean) list.get(i);
+                                            UserInfo userInfo = new UserInfo(friendListBean.getAccId(), friendListBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + friendListBean.getAvatar()));
+                                            return userInfo;
+                                        }
+                                        return null;
+                                    }
+                                }, true);
+                            }
+                        }));
+            } else {
+                EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
+                        .params("accId", EanfangApplication.get().getAccId())
+                        .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
+                            if (list.size() > 0) {
+                                mFriendsAdapter.setNewData(list);
+
+
+//                                //提供融云的头像和昵称
+//                                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+//                                    @Override
+//                                    public UserInfo getUserInfo(String s) {
+//                                        for (int i = 0; i < list.size(); i++) {
+//                                            FriendListBean friendListBean = (FriendListBean) list.get(i);
+//                                            UserInfo userInfo = new UserInfo(friendListBean.getAccId(), friendListBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + friendListBean.getAvatar()));
+//                                            return userInfo;
+//                                        }
+//                                        return null;
+//                                    }
+//                                }, true);
+                            }
+                        }));
+            }
+        } else {
+            mFriendsAdapter.setNewData(mFriendListBeanArrayList);
+        }
     }
 
     private void initViews() {
@@ -111,22 +188,14 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 RongIM.getInstance().startConversation(MyFriendsListActivity.this, Conversation.ConversationType.PRIVATE, ((FriendListBean) adapter.getData().get(position)).getAccId(), ((FriendListBean) adapter.getData().get(position)).getNickName());
-                //提供融云的头像和昵称
-                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                    @Override
-                    public UserInfo getUserInfo(String s) {
-                        for (int i = 0; i < adapter.getData().size(); i++) {
-                            FriendListBean friendListBean = (FriendListBean) adapter.getData().get(i);
-                            UserInfo userInfo = new UserInfo(friendListBean.getAccId(), friendListBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + friendListBean.getAvatar()));
-                            return userInfo;
-                        }
-                        return null;
-                    }
-                }, true);
+
             }
         });
     }
 
+    /**
+     * 选择好友
+     */
     private void selectFriends() {
         mFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -143,6 +212,54 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 移除组内成员
+     */
+    private void removeNumber() {
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < userIdList.size(); i++) {
+            if (i == 0) {
+                buffer.append(userIdList.get(i));
+            } else {
+                buffer.append("," + userIdList.get(i));
+            }
+        }
+
+        EanfangHttp.post(UserApi.POST_GROUP_REMOVE)
+                .params("groupId", groupId)
+                .params("ids", buffer.toString())
+//                .params("ids", userIdList.toString())
+                .params("groupName", title)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                    ToastUtil.get().showToast(MyFriendsListActivity.this, "移除成功");
+                    endTransaction(true);
+                }));
+    }
+
+    /**
+     * 添加成员
+     */
+    private void AddNumber() {
+        JSONArray array = new JSONArray();
+        JSONObject object = null;
+        for (String s : userIdList) {
+            object = new JSONObject();
+            try {
+                object.put("accId", s);
+                object.put("groupId", groupId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        array.put(object);
+        EanfangHttp.post(UserApi.POST_GROUP_JOIN)
+                .upJson(array)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                    ToastUtil.get().showToast(MyFriendsListActivity.this, "添加成功");
+                    endTransaction(true);
+                }));
     }
 
     private void DialogShow(String userId, String name, int position) {

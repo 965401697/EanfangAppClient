@@ -7,11 +7,20 @@
 
     <include layout="@layout/header" />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_above="@+id/et_group_name"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_launcher" />
+
     <EditText
         android:id="@+id/et_group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_margin="10dp"
+        android:hint="请输入群组的名称" />
 
     <Button
         android:id="@+id/btn_created"

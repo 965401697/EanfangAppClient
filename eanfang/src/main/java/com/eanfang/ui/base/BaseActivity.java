@@ -34,6 +34,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+
 /**
  * Created by jornl on 2018/1/19.
  */
@@ -45,6 +47,10 @@ public class BaseActivity extends AppCompatActivity implements
     private PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
     private ExitListenerReceiver exitre;
+
+    private boolean hasTransaction = false;
+    private boolean containsFirst = false;
+    public final static ArrayList<Activity> transactionActivities = new ArrayList<Activity>();
 
     //Android6.0申请权限的回调方法
     @Override
@@ -84,6 +90,11 @@ public class BaseActivity extends AppCompatActivity implements
         EventBus.getDefault().register(this);
         loadingDialog = DialogUtil.createLoadingDialog(this);
         RegListener();
+
+        // 如果已开启事务将当前activity加入事务队列
+        if (hasTransaction) {
+            transactionActivities.add(this);
+        }
     }
 
     @Override
@@ -164,6 +175,35 @@ public class BaseActivity extends AppCompatActivity implements
         super.onSaveInstanceState(outState, outPersistentState);
     }*/
 
+
+    /**
+     * @param containThis 完成时是否关闭当前Activity true为关闭
+     */
+
+    public void startTransaction(boolean containThis) {
+        hasTransaction = true;
+        containsFirst = containThis;
+        if (containThis && !transactionActivities.contains(this)) {
+            transactionActivities.add(this);
+        }
+    }
+
+    /**
+     * @param finishThis 结束事务时是否关闭当前activity
+     */
+
+    public void endTransaction(boolean finishThis) {
+        if (finishThis) {
+            finish();
+        }
+        for (Activity activity : transactionActivities) {
+            if (activity != this) {
+                activity.finish();
+            }
+        }
+        containsFirst = false;
+        hasTransaction = false;
+    }
 
     @Override
     protected void onDestroy() {

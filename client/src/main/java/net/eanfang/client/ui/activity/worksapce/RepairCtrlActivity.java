@@ -39,7 +39,8 @@ public class RepairCtrlActivity extends BaseClientActivity {
     private MyPagerAdapter mAdapter;
     private RepairedOrderBean repairedOrderBean;
     private String[] mTitles;
-//    private OrderListFragment currentFragment;
+    public SlidingTabLayout tabLayout_2;
+    //    private OrderListFragment currentFragment;
 
 
     @Override
@@ -58,7 +59,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         vp.setAdapter(mAdapter);
         /**自定义部分属性*/
-        SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_2);
+        tabLayout_2 = ViewFindUtils.find(decorView, R.id.tl_2);
         tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
         vp.setCurrentItem(0);
 //        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

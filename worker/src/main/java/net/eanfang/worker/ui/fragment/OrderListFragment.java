@@ -292,6 +292,11 @@ public class OrderListFragment extends BaseFragment implements
                              public void onNoData(String message) {
                                  refreshLayout.setRefreshing(false);
                                  adapter.loadMoreEnd();//没有数据了
+                                 if (adapter.getData().size() == 0) {
+                                     findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
+                                 } else {
+                                     findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
+                                 }
 
 //                                 page--;
 //                                 getActivity().runOnUiThread(() -> {
@@ -347,12 +352,14 @@ public class OrderListFragment extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
-
-//        if (status.equals(((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab())) {
-//            Log.e("zzw", "onResume");
-//            page = 1;
-//            getData();
-//        }
+        if (status != null) {
+            int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab();
+            if (status.equals(String.valueOf(index))) {
+                Log.e("zzw", "onResume == " + status);
+                page = 1;
+                getData();
+            }
+        }
     }
 
     OnItemClickListener onItemClickListener = new OnItemClickListener() {

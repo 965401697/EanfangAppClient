@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,6 +27,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
@@ -57,6 +59,7 @@ public class OrderListFragment extends BaseFragment implements
     private RecyclerView mRecyclerView;
     //    private List<RepairOrderEntity> mDataList;
     private RepairedManageOrderAdapter adapter;
+    private String status;
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -214,7 +217,7 @@ public class OrderListFragment extends BaseFragment implements
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(getTitle())) {
-            String status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
+            status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         queryEntry.setSize(10);
@@ -267,9 +270,13 @@ public class OrderListFragment extends BaseFragment implements
 
                     @Override
                     public void onNoData(String message) {
-
-
+                        refreshLayout.setRefreshing(false);
                         adapter.loadMoreEnd();//没有数据了
+                        if (adapter.getData().size() == 0) {
+                            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
+                        }
 //                        page--;
 //                        getActivity().runOnUiThread(() -> {
 //                            //如果是第一页 没有数据了 则清空 bean
@@ -296,7 +303,14 @@ public class OrderListFragment extends BaseFragment implements
     @Override
     public void onResume() {
         super.onResume();
-        getData();
+        if (status != null) {
+            int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab();
+            if (status.equals(String.valueOf(index))) {
+                Log.e("zzw", "onResume == " + status);
+                page = 1;
+                getData();
+            }
+        }
 
     }
 

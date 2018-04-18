@@ -229,5 +229,26 @@ public interface UserApi {
      * 创建群组
      */
     String POST_CREAT_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/create";
+    /**
+     * 获取我的群组
+     */
+    String POST_GET_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/list";
+    /**
+     * 群成员列表
+     */
+    String POST_GROUP_NUM = BuildConfig.API_HOST + "/yaf_im/sysgroupuser/list";
+    /**
+     * 群成员移除
+     */
+    String POST_GROUP_REMOVE = BuildConfig.API_HOST + "/yaf_im/sysgroup/quit";
+
+    /**
+     * 群成员添加
+     */
+    String POST_GROUP_JOIN = BuildConfig.API_HOST + "/yaf_im/sysgroupuser/join";
+    /**
+     * 查询没有在群组的成员
+     */
+    String POST_GROUP_NOJOIN = BuildConfig.API_HOST + "/yaf_sys/outer2user/findJoin";
 
 }
