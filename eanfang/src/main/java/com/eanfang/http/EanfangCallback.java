@@ -136,106 +136,64 @@ public class EanfangCallback<T> extends StringCallback {
         }
     }
 
-    /*** @param response
-     */
     @Override
     public final void onSuccess(Response<String> response) {
-
-        EventBus.getDefault().register(this);
         try {
             if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
                 onServerError("服务器无响应");
                 return;
             }
+            //获得响应json
+            JSONObject resultJson = null;
+            Class<T> clazz = getClazz();
+            //指定date类型自动格式化
+            JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
-            new Thread(() -> {
-                //获得响应json
-                JSONObject resultJson = null;
-                Class<T> clazz = getClazz();
-                //指定date类型自动格式化
-                JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
+            resultJson = JsonUtils.str2JSON(response.body());
+            Integer code = -100;
+            String message = null;
+            JSONObject resultObject = null;
+            JSONArray resultArray = null;
+            String resultString = null;
+            //返回的编码
+            if (resultJson.containsKey("code")) {
+                code = resultJson.getInteger("code");
+            }
+            //消息
+            if (resultJson.containsKey("message")) {
+                message = resultJson.getString("message");
+            }
+            //消息数量
+            if (resultJson.containsKey("noticeCount")) {
+                updateNoticeCount(resultJson);
+            }
+            if (resultJson.containsKey("data")) {
+                if (clazz.getName().contains("String")) {
+                    resultString = resultJson.get("data").toString();
+                } else if (resultJson.get("data") instanceof JSONArray) {
+                    resultArray = resultJson.getJSONArray("data");
+                } else if (resultJson.get("data") instanceof JSONObject) {
+                    resultObject = resultJson.getJSONObject("data");
+                } else {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("data", resultJson.get("data").toString());
+                    resultObject = jsonObject;
+                }
+            }
 
-                resultJson = JsonUtils.str2JSON(response.body());
-                Integer code = -100;
-                String message = null;
-                JSONObject resultObject = null;
-                JSONArray resultArray = null;
-                String resultString = null;
-                if (resultJson.containsKey("code")) {
-                    code = resultJson.getInteger("code");
-                }
-                if (resultJson.containsKey("message")) {
-                    message = resultJson.getString("message");
-                }
-                if (resultJson.containsKey("noticeCount")) {
-                    String classMainName = "MainActivity.initMessageCount";
-                    String classMyName = "ContactListFragment.messageCount";
-                    int mainActivityCount = Var.get(classMainName).getVar();
-                    int myFragmentCount = Var.get(classMyName).getVar();
-                    int noticeCount = resultJson.getInteger("noticeCount");
-                    if (mainActivityCount != noticeCount) {
-                        Var.get(classMainName).setVar(noticeCount);
-                    }
-                    if (myFragmentCount != noticeCount) {
-                        Var.get(classMyName).setVar(noticeCount);
-                    }
-                }
-                if (resultJson.containsKey("data")) {
-                    if (clazz.getName().contains("String")) {
-                        resultString = resultJson.get("data").toString();
-                    } else if (resultJson.get("data") instanceof JSONArray) {
-                        resultArray = resultJson.getJSONArray("data");
-                    } else if (resultJson.get("data") instanceof JSONObject) {
-                        resultObject = resultJson.getJSONObject("data");
-                    } else {
-                        resultString = resultJson.get("data").toString();
-                    }
-                }
-
-                T result = null;
-                List<T> list = new ArrayList();
-                if (code == ErrorCodeConst.REQUEST_SUCCESS) {
-                    if (resultArray != null) {
-                        for (int i = 0; i < resultArray.size(); i++) {
-                            list.add(JSONObject.parseObject(resultArray.getString(i), clazz));
-                        }
-                    } else if (resultObject != null) {
-                        result = JSONObject.parseObject(resultObject.toJSONString(), clazz);
-                    } else {
-                        result = (T) resultString;
-                    }
-                }
-
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("code", code);
-                jsonObject.put("message", message);
-                if (result != null) {
-                    jsonObject.put("data", result);
-                } else if (list != null && !list.isEmpty()) {
-                    jsonObject.put("data", list);
-                }
-                EventBus.getDefault().post(jsonObject);
-            }).start();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Subscribe
-    public synchronized void onEvent(JSONObject jsonObject) {
-        Integer code = jsonObject.getInteger("code");
-        String message = jsonObject.getString("message");
-        Object data = jsonObject.get("data");
-
-        activity.runOnUiThread(() -> {
-            /* Do something */
             switch (code) {
                 //请求成功 回调 success
                 case ErrorCodeConst.REQUEST_SUCCESS:
-                    if (data instanceof List) {
-                        onSuccessArray((List<T>) data);
+//                    T result = null;
+//                    List<T> list = new ArrayList();
+                    if (resultArray != null) {
+                        onSuccessArray(resultArray.toJavaList(clazz));
+                    } else if (resultObject != null) {
+                        //result = JSONObject.parseObject(resultObject.toJSONString(), clazz);
+                        onSuccess(resultObject.toJavaObject(clazz));
                     } else {
-                        onSuccess((T) data);
+//                        result = (T) resultString;
+                        onSuccess((T) resultString);
                     }
                     break;
                 //服务端无数据 回调
@@ -261,9 +219,154 @@ public class EanfangCallback<T> extends StringCallback {
                     onFail(code, message, null);
                     break;
             }
-        });
-        EventBus.getDefault().unregister(this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            onError("请求失败，请重试");
+        }
     }
+
+    private void updateNoticeCount(JSONObject resultJson) {
+        String classMainName = "MainActivity.initMessageCount";
+        String classMyName = "ContactListFragment.messageCount";
+        int mainActivityCount = Var.get(classMainName).getVar();
+        int myFragmentCount = Var.get(classMyName).getVar();
+        int noticeCount = resultJson.getInteger("noticeCount");
+        if (mainActivityCount != noticeCount) {
+            Var.get(classMainName).setVar(noticeCount);
+        }
+        if (myFragmentCount != noticeCount) {
+            Var.get(classMyName).setVar(noticeCount);
+        }
+    }
+
+    //EventBus 解决方案
+//    /*** @param response
+//     */
+//    @Override
+//    public final void onSuccess(Response<String> response) {
+//
+//        EventBus.getDefault().register(this);
+//        try {
+//            if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
+//                onServerError("服务器无响应");
+//                return;
+//            }
+//
+//            new Thread(() -> {
+//                //获得响应json
+//                JSONObject resultJson = null;
+//                Class<T> clazz = getClazz();
+//                //指定date类型自动格式化
+//                JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
+//
+//                resultJson = JsonUtils.str2JSON(response.body());
+//                Integer code = -100;
+//                String message = null;
+//                JSONObject resultObject = null;
+//                JSONArray resultArray = null;
+//                String resultString = null;
+//                if (resultJson.containsKey("code")) {
+//                    code = resultJson.getInteger("code");
+//                }
+//                if (resultJson.containsKey("message")) {
+//                    message = resultJson.getString("message");
+//                }
+//                if (resultJson.containsKey("noticeCount")) {
+//                    String classMainName = "MainActivity.initMessageCount";
+//                    String classMyName = "ContactListFragment.messageCount";
+//                    int mainActivityCount = Var.get(classMainName).getVar();
+//                    int myFragmentCount = Var.get(classMyName).getVar();
+//                    int noticeCount = resultJson.getInteger("noticeCount");
+//                    if (mainActivityCount != noticeCount) {
+//                        Var.get(classMainName).setVar(noticeCount);
+//                    }
+//                    if (myFragmentCount != noticeCount) {
+//                        Var.get(classMyName).setVar(noticeCount);
+//                    }
+//                }
+//                if (resultJson.containsKey("data")) {
+//                    if (clazz.getName().contains("String")) {
+//                        resultString = resultJson.get("data").toString();
+//                    } else if (resultJson.get("data") instanceof JSONArray) {
+//                        resultArray = resultJson.getJSONArray("data");
+//                    } else if (resultJson.get("data") instanceof JSONObject) {
+//                        resultObject = resultJson.getJSONObject("data");
+//                    } else {
+//                        resultString = resultJson.get("data").toString();
+//                    }
+//                }
+//
+//                T result = null;
+//                List<T> list = new ArrayList();
+//                if (code == ErrorCodeConst.REQUEST_SUCCESS) {
+//                    if (resultArray != null) {
+//                        for (int i = 0; i < resultArray.size(); i++) {
+//                            list.add(JSONObject.parseObject(resultArray.getString(i), clazz));
+//                        }
+//                    } else if (resultObject != null) {
+//                        result = JSONObject.parseObject(resultObject.toJSONString(), clazz);
+//                    } else {
+//                        result = (T) resultString;
+//                    }
+//                }
+//
+//                JSONObject jsonObject = new JSONObject();
+//                jsonObject.put("code", code);
+//                jsonObject.put("message", message);
+//                if (result != null) {
+//                    jsonObject.put("data", result);
+//                } else if (list != null && !list.isEmpty()) {
+//                    jsonObject.put("data", list);
+//                }
+//                EventBus.getDefault().post(jsonObject);
+//            }).start();
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    @Subscribe
+//    public synchronized void onEvent(JSONObject jsonObject) {
+//        Integer code = jsonObject.getInteger("code");
+//        String message = jsonObject.getString("message");
+//        Object data = jsonObject.get("data");
+//
+//        activity.runOnUiThread(() -> {
+//            /* Do something */
+//            switch (code) {
+//                //请求成功 回调 success
+//                case ErrorCodeConst.REQUEST_SUCCESS:
+//                    if (data instanceof List) {
+//                        onSuccessArray((List<T>) data);
+//                    } else {
+//                        onSuccess((T) data);
+//                    }
+//                    break;
+//                //服务端无数据 回调
+//                case ErrorCodeConst.REQUEST_NO_DATA:
+//                    onNoData(message);
+//                    break;
+//                //请求缺少参数 回调
+//                case ErrorCodeConst.MISSING_PARAMETER:
+//                    onMissParam(message);
+//                    break;
+//                //服务端异常 回调
+//                case ErrorCodeConst.SERVICE_ERROR:
+//                    onServerError(message);
+//                    break;
+//                case ErrorCodeConst.REQUEST_COMMIT_AGAIN:
+//                    break;
+//                case MISSING_LOGIN:
+//                    onFail(code, message, null);
+//                    //taoken 过期  只弹出toast 没跳转登录页面
+////                    onMissingLogin();
+//                    break;
+//                default:
+//                    onFail(code, message, null);
+//                    break;
+//            }
+//        });
+//        EventBus.getDefault().unregister(this);
+//    }
 
     /**
      * 请求服务器失败
@@ -273,7 +376,7 @@ public class EanfangCallback<T> extends StringCallback {
     @Override
     public final void onError(Response<String> response) {
         // onError(response.body());
-        onFail(0, "系统异常，请返回后重试", null);
+        onFail(0, "哎呀，服务器好像罢工了试", null);
     }
 
     /**
@@ -297,7 +400,7 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onError(String message) {
-        ToastUtil.get().showToast(this.activity, "系统异常，返回后请重试");
+        ToastUtil.get().showToast(this.activity, message);
     }
 
     /**
@@ -314,7 +417,7 @@ public class EanfangCallback<T> extends StringCallback {
      * 缺少参数 调用
      */
     public void onMissParam(String message) {
-        ToastUtil.get().showToast(this.activity, "参数缺失");
+        ToastUtil.get().showToast(this.activity, "缺少请求参数，请返回后重试");
     }
 
     /**
@@ -323,14 +426,16 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onServerError(String message) {
-        if (message != null) {
+        if (StringUtils.isEmpty(message)) {
             ToastUtil.get().showToast(this.activity, message);
+        } else {
+            ToastUtil.get().showToast(this.activity, "哎呀，服务器好像罢工了");
         }
     }
 
-    public void onMissingLogin() {
-        ToastUtil.get().showToast(this.activity, "当前登陆失效了，请重新登陆。");
-    }
+//    public void onMissingLogin() {
+//        ToastUtil.get().showToast(this.activity, "当前登陆失效了，请重新登陆。");
+//    }
 
     /**
      * 服务器返回其他异常情况

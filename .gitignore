@@ -7,3 +7,8 @@
 /build
 /captures
 .externalNativeBuild
+/eanfang/build
+/client/build
+/worker/build
+/IMKit/build
+/IMLib/build

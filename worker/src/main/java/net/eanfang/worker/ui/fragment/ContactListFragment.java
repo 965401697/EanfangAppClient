@@ -83,7 +83,9 @@ public class ContactListFragment extends BaseFragment {
                 });
 //        变量监听
         Var.get("ContactListFragment.messageCount").setChangeListener((var) -> {
-            qBadgeView.setBadgeNumber(var);
+            getActivity().runOnUiThread(()->{
+                qBadgeView.setBadgeNumber(var);
+            });
         });
 
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {

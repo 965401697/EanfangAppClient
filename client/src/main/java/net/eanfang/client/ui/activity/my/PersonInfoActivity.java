@@ -88,6 +88,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     TextView tvRight;
     private String path;
     private boolean isUploadHead = false;
+
+    private LoginBean loginBean;
     /**
      * 城市
      */
@@ -105,12 +107,18 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
         ButterKnife.bind(this);
+        initPermission();
         initView();
         initData();
-
-
     }
 
+    /**
+     * 申请拍照权限
+     */
+    private void initPermission() {
+        PermissionUtils.get(this).getCameraPermission(() -> {
+        });
+    }
 
     private void initView() {
         setTitle("我的资料");
@@ -118,7 +126,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         rbMan.isChecked();
         ivUpload.setOnClickListener(v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(PersonInfoActivity.this, HEAD_PHOTO));
+            takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
         });
         llArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
@@ -135,12 +143,19 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                 .execute(new EanfangCallback<LoginBean>(PersonInfoActivity.this, true, LoginBean.class, (bean) -> {
                     runOnUiThread(() -> {
                         fillData(bean);
+                        loginBean = bean;
                     });
                 }));
     }
 
 
     private void fillData(LoginBean infoBackBean) {
+        /**
+         * 操作过快会闪退
+         * */
+        if (infoBackBean == null) {
+            return;
+        }
         if (!StringUtils.isEmpty(infoBackBean.getAccount().getAvatar())) {
             ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
         }
@@ -152,12 +167,17 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             etRealname.setText(infoBackBean.getAccount().getRealName());
             etRealname.setEnabled(false);
         }
-        rbMan.setClickable(false);
-        rbWoman.setClickable(false);
-        if (infoBackBean.getAccount().getGender() == null || infoBackBean.getAccount().getGender() == 1) {
+        if (infoBackBean.getAccount().getGender() == null) {
+            rbMan.setClickable(true);
+            rbWoman.setClickable(true);
+        } else if (infoBackBean.getAccount().getGender() == 1) {// 男
+            rbMan.setClickable(false);
+            rbWoman.setClickable(false);
             rbMan.setChecked(true);
         } else {
-            rbWoman.setChecked(true);
+            rbMan.setClickable(false);
+            rbWoman.setClickable(false);
+            rbWoman.setChecked(true);// 女
         }
         if (infoBackBean.getAccount().getIdCard() != null) {
             etIdcard.setText(infoBackBean.getAccount().getIdCard());
@@ -169,7 +189,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (address != null) {
             etAddress.setText(address);
         }
-        if (infoBackBean.getAccount().getAreaCode() != null) {
+        if (!infoBackBean.getAccount().getAreaCode().equals("")) {
             tvArea.setText(Config.get().getAddressByCode(infoBackBean.getAccount().getAreaCode()));
         }
 
@@ -265,7 +285,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
+        if (loginBean.getAccount().getAreaCode()==null||loginBean.getAccount().getAreaCode().equals("")) {
+            accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
+        } else {
+            accountEntity.setAreaCode(loginBean.getAccount().getAreaCode());
+        }
+
         submitSuccess(JSON.toJSONString(accountEntity));
     }
 

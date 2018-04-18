@@ -7,7 +7,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,31 +50,26 @@ import java.util.List;
 
 public class QuotationActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
     public static final String TAG = QuotationActivity.class.getSimpleName();
+    public static final int RESULT_SELECT_ORDER = 100;
     private static final int QUOTAION_REQUEST_CODE = 1;
     private static final int QUOTAION_REQUEST_DEVICES_CODE = 2;
     private static final int QUOTAION_REQUEST_PARTS_CODE = 3;
     private static final int QUOTAION_REQUEST_SERVICES_CODE = 4;
-    public static final int RESULT_SELECT_ORDER = 100;
-    private EditText et_project_name, tv_detail_address, et_client_company_name_wr;
-    private EditText et_contract, et_contract_phone;
-
-    private ImageView iv_add, iv_add2, iv_add3;
-    private TextView tv_address, tv_modifyOrder;
-    private TextView tv_count_money, tv_commit, tv_relate_order;
-
-    private RecyclerView rcv_detail, rcv_detail2, rcv_detail3;
-
-    private String lon, lat, province, city, zone, contry;
-    private String orderID, clientName, clientPhone, assigneeOrgCode;
-
-    private Long oid, topid, assigneeUserId;
-    private int deviceSum, partsSum, serviceSum, posistion;
-
-    private List<UserEntity> userlist = new ArrayList<>();
-    private List<String> userNameList = new ArrayList<>();
     public List<QuotationBean.QuoteDevicesBean> devicesBeanList = new ArrayList<>();
     public List<QuotationBean.QuotePartsBean> partsBeanList = new ArrayList<>();
     public List<QuotationBean.QuoteServicesBean> servicesBeanList = new ArrayList<>();
+    private EditText et_project_name, tv_detail_address, et_client_company_name_wr;
+    private EditText et_contract, et_contract_phone;
+    private ImageView iv_add, iv_add2, iv_add3;
+    private TextView tv_address, tv_modifyOrder;
+    private TextView tv_count_money, tv_commit, tv_relate_order;
+    private RecyclerView rcv_detail, rcv_detail2, rcv_detail3;
+    private String lon, lat, province, city, zone, contry;
+    private String orderID, clientName, clientPhone, assigneeOrgCode;
+    private Long oid, topid, assigneeUserId;
+    private int deviceSum, partsSum, serviceSum, posistion;
+    private List<UserEntity> userlist = new ArrayList<>();
+    private List<String> userNameList = new ArrayList<>();
     private QuotationDetailAdapter devicesAdapter;
     private QuotationPartsAdapter partsAdapter;
     private QuotationServiceAdapter serviceAdapter;
@@ -128,25 +122,18 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         initAdapter();
     }
 
+    /**
+     * 获取公司部门员工信息
+     */
+    private void getData() {
 
-    private void initAdapter() {
-        devicesAdapter = new QuotationDetailAdapter(R.layout.item_quotation_detail, devicesBeanList);
-        rcv_detail.setLayoutManager(new LinearLayoutManager(this));
-        rcv_detail.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rcv_detail.setAdapter(devicesAdapter);
-
-        partsAdapter = new QuotationPartsAdapter(R.layout.item_quotation_detail, partsBeanList);
-        rcv_detail2.setLayoutManager(new LinearLayoutManager(this));
-        rcv_detail2.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rcv_detail2.setAdapter(partsAdapter);
-
-        serviceAdapter = new QuotationServiceAdapter(R.layout.item_quotation_detail, servicesBeanList);
-        rcv_detail3.setLayoutManager(new LinearLayoutManager(this));
-        rcv_detail3.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rcv_detail3.setAdapter(serviceAdapter);
+        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
+                .params("id", EanfangApplication.getApplication().getUserId())
+                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .execute(new EanfangCallback<UserEntity>(QuotationActivity.this, false, UserEntity.class, true, (list) -> {
+                    userlist = list;
+                    userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
+                }));
     }
 
     private void registerListener() {
@@ -177,10 +164,87 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         ll_client_name.setOnClickListener(v -> showDependPerson());
 //        tv_commit.setOnClickListener(v -> postCommit());
         tv_commit.setOnClickListener((v) -> {
-            checkInfo();
+            if (!checkInfo(true)) {
+                return;
+            }
             postCommit();
         });
 
+    }
+
+    private void initAdapter() {
+        devicesAdapter = new QuotationDetailAdapter(R.layout.item_quotation_detail, devicesBeanList);
+        rcv_detail.setLayoutManager(new LinearLayoutManager(this));
+        rcv_detail.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcv_detail.setAdapter(devicesAdapter);
+
+        partsAdapter = new QuotationPartsAdapter(R.layout.item_quotation_detail, partsBeanList);
+        rcv_detail2.setLayoutManager(new LinearLayoutManager(this));
+        rcv_detail2.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcv_detail2.setAdapter(partsAdapter);
+
+        serviceAdapter = new QuotationServiceAdapter(R.layout.item_quotation_detail, servicesBeanList);
+        rcv_detail3.setLayoutManager(new LinearLayoutManager(this));
+        rcv_detail3.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rcv_detail3.setAdapter(serviceAdapter);
+    }
+
+    /**
+     * 责任人
+     */
+    private void showDependPerson() {
+        if (userlist == null || userlist.isEmpty()) {
+            showToast("暂无其他员工可选");
+            return;
+        }
+        pvOptions_NoLink = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+            posistion = options1;
+            et_contract_phone.setText(userlist.get(posistion).getAccountEntity().getMobile());
+            et_contract.setText(userlist.get(posistion).getAccountEntity().getRealName());
+            assigneeUserId = userlist.get(posistion).getUserId();
+            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
+            topid = userlist.get(posistion).getTopCompanyId();
+        }).build();
+        pvOptions_NoLink.setPicker(userNameList);
+        pvOptions_NoLink.show();
+    }
+
+    private boolean checkInfo(boolean check) {
+        if (StringUtils.isEmpty(et_client_company_name_wr.getText().toString().trim())) {
+            showToast("请填写用户名称");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(et_project_name.getText().toString().trim())) {
+            showToast("请填写项目名称");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(tv_address.getText().toString().trim())) {
+            showToast("请填写地址名称");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(et_contract.getText().toString().trim())) {
+            showToast("请选择联系人");
+            return false;
+        }
+        if (devicesBeanList.size() == 0) {
+            showToast("请填写设备明细");
+            return false;
+        }
+        if (partsBeanList.size() == 0) {
+            showToast("请填写配件明细");
+            return false;
+        }
+        if (servicesBeanList.size() == 0) {
+            showToast("请填写服务明细");
+            return false;
+        }
+        return true;
     }
 
     private void postCommit() {
@@ -225,7 +289,6 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         String json = JSONObject.toJSONString(bean);
         return json;
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -340,75 +403,6 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             default:
                 break;
         }
-    }
-
-    /**
-     * 获取公司部门员工信息
-     */
-    private void getData() {
-
-        EanfangHttp.get(NewApiService.GET_COLLEAGUE)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
-                .execute(new EanfangCallback<UserEntity>(QuotationActivity.this, false, UserEntity.class, true, (list) -> {
-                    userlist = list;
-                    userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
-                }));
-    }
-
-    private boolean checkInfo() {
-        if (TextUtils.isEmpty(et_client_company_name_wr.getText().toString().trim())) {
-            showToast("请填写用户名称");
-            return false;
-        }
-
-        if (TextUtils.isEmpty(et_project_name.getText().toString().trim())) {
-            showToast("请填写项目名称");
-            return false;
-        }
-
-        if (TextUtils.isEmpty(tv_address.getText().toString().trim())) {
-            showToast("请填写地址名称");
-            return false;
-        }
-
-        if (TextUtils.isEmpty(et_contract.getText().toString().trim())) {
-            showToast("请选择联系人");
-            return false;
-        }
-        if (devicesBeanList.size() == 0) {
-            showToast("请填写设备明细");
-            return false;
-        }
-        if (partsBeanList.size() == 0) {
-            showToast("请填写配件明细");
-            return false;
-        }
-        if (servicesBeanList.size() == 0) {
-            showToast("请填写服务明细");
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 责任人
-     */
-    private void showDependPerson() {
-        if (userlist == null || userlist.isEmpty()) {
-            showToast("暂无其他员工可选");
-            return;
-        }
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
-            posistion = options1;
-            et_contract_phone.setText(userlist.get(posistion).getAccountEntity().getMobile());
-            et_contract.setText(userlist.get(posistion).getAccountEntity().getRealName());
-            assigneeUserId = userlist.get(posistion).getUserId();
-            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
-            topid = userlist.get(posistion).getTopCompanyId();
-        }).build();
-        pvOptions_NoLink.setPicker(userNameList);
-        pvOptions_NoLink.show();
     }
 
 }

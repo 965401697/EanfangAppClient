@@ -240,23 +240,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
 //        bugOneCode = getIntent().getStringExtra("bugOneCode");
     }
 
-    private void initAdapter() {
-        if (detailEntity.getParamEntityList() != null) {
-            paramAdapter = new ParamAdapter(R.layout.item_parm, detailEntity.getParamEntityList());
-            rcyParameter.addItemDecoration(new DividerItemDecoration(this,
-                    DividerItemDecoration.VERTICAL));
-            rcyParameter.setLayoutManager(new LinearLayoutManager(this));
-            rcyParameter.setAdapter(paramAdapter);
-        }
-        if (detailEntity.getUseDeviceEntityList() != null) {
-            materialAdapter = new MaterialAdapter(R.layout.item_quotation_detail, detailEntity.getUseDeviceEntityList());
-            rcyConsumable.addItemDecoration(new DividerItemDecoration(this,
-                    DividerItemDecoration.VERTICAL));
-            rcyConsumable.setLayoutManager(new LinearLayoutManager(this));
-            rcyConsumable.setAdapter(materialAdapter);
-        }
-    }
-
     private void lookFailureDetail() {
         EanfangHttp.get(RepairApi.GET_FAILURE_DETAIL)
                 .params("id", failureId)
@@ -271,53 +254,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
                     initAdapter();
                 }));
     }
-
-
-    public void fillData() {
-
-
-        if (StringUtils.isValid(failureEntity.getBusinessThreeCode())) {
-            String bugOne = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
-            String bugTwo = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 2);
-            String bugThree = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 3);
-            tvTroubleTitle.setText(bugOne + "-" + bugTwo + "-" + bugThree);
-        } else {
-            tvTroubleTitle.setText("");
-        }
-        tvTroubleDevice.setText(Optional.ofNullable(failureEntity.getDeviceName()).orElse(""));
-        tvBrandModel.setText(Optional.ofNullable(Config.get().getModelNameByCode(failureEntity.getModelCode(), 2)).orElse(""));
-        tvDeviceNo.setText(Optional.ofNullable(failureEntity.getDeviceNo()).orElse(""));
-        tvDeviceLocation.setText(Optional.ofNullable(failureEntity.getBugPosition()).orElse(""));
-        etTroubleDesc.setText(Optional.ofNullable(failureEntity.getBugDescription()).orElse(""));
-
-        //加载上次提交记录
-        if (detailEntity.getId() != null) {
-            new TrueFalseDialog(this, "系统提醒", "是否加载并修改上次提交的记录？",
-                    () -> {
-                        etTroublePoint.setText(Optional.ofNullable(detailEntity.getCheckProcess()).orElse(""));
-                        etTroubleReason.setText(Optional.ofNullable(detailEntity.getCause()).orElse(""));
-                        etTroubleDeal.setText(Optional.ofNullable(detailEntity.getHandle()).orElse(""));
-                        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(failureEntity.getIsMisinformation()));
-                        if (detailEntity.getStatus() != null) {
-                            tvRepairConclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(detailEntity.getStatus())).orElse(""));
-                        }
-                        initImgUrlList();
-                        initNinePhoto();
-                    },
-                    () -> {
-                        detailEntity.setId(null);
-                    }).showDialog();
-        } else {
-            initNinePhoto();
-        }
-        if (detailEntity == null || detailEntity.getParamEntityList() == null) {
-            detailEntity.setParamEntityList(new ArrayList<>(0));
-        }
-        if (detailEntity == null || detailEntity.getUseDeviceEntityList() == null) {
-            detailEntity.setUseDeviceEntityList(new ArrayList<>(0));
-        }
-    }
-
 
     private void initListener() {
         llDeviceFailure.setOnClickListener((v) -> {
@@ -398,6 +334,144 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
 //                    break;
 //            }
 //        });
+    }
+
+    public void fillData() {
+
+
+        if (StringUtils.isValid(failureEntity.getBusinessThreeCode())) {
+            String bugOne = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
+            String bugTwo = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 2);
+            String bugThree = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 3);
+            tvTroubleTitle.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+        } else {
+            tvTroubleTitle.setText("");
+        }
+        tvTroubleDevice.setText(Optional.ofNullable(failureEntity.getDeviceName()).orElse(""));
+        tvBrandModel.setText(Optional.ofNullable(Config.get().getModelNameByCode(failureEntity.getModelCode(), 2)).orElse(""));
+        tvDeviceNo.setText(Optional.ofNullable(failureEntity.getDeviceNo()).orElse(""));
+        tvDeviceLocation.setText(Optional.ofNullable(failureEntity.getBugPosition()).orElse(""));
+        etTroubleDesc.setText(Optional.ofNullable(failureEntity.getBugDescription()).orElse(""));
+
+        //加载上次提交记录
+        if (detailEntity.getId() != null) {
+            new TrueFalseDialog(this, "系统提醒", "是否加载并修改上次提交的记录？",
+                    () -> {
+                        etTroublePoint.setText(Optional.ofNullable(detailEntity.getCheckProcess()).orElse(""));
+                        etTroubleReason.setText(Optional.ofNullable(detailEntity.getCause()).orElse(""));
+                        etTroubleDeal.setText(Optional.ofNullable(detailEntity.getHandle()).orElse(""));
+                        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(failureEntity.getIsMisinformation()));
+                        if (detailEntity.getStatus() != null) {
+                            tvRepairConclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(detailEntity.getStatus())).orElse(""));
+                        }
+                        initImgUrlList();
+                        initNinePhoto();
+                    },
+                    () -> {
+                        detailEntity.setId(null);
+                    }).showDialog();
+        } else {
+            initNinePhoto();
+        }
+        if (detailEntity == null || detailEntity.getParamEntityList() == null) {
+            detailEntity.setParamEntityList(new ArrayList<>(0));
+        }
+        if (detailEntity == null || detailEntity.getUseDeviceEntityList() == null) {
+            detailEntity.setUseDeviceEntityList(new ArrayList<>(0));
+        }
+    }
+
+    private void initAdapter() {
+        if (detailEntity.getParamEntityList() != null) {
+            paramAdapter = new ParamAdapter(R.layout.item_parm, detailEntity.getParamEntityList());
+            rcyParameter.addItemDecoration(new DividerItemDecoration(this,
+                    DividerItemDecoration.VERTICAL));
+            rcyParameter.setLayoutManager(new LinearLayoutManager(this));
+            rcyParameter.setAdapter(paramAdapter);
+        }
+        if (detailEntity.getUseDeviceEntityList() != null) {
+            materialAdapter = new MaterialAdapter(R.layout.item_quotation_detail, detailEntity.getUseDeviceEntityList());
+            rcyConsumable.addItemDecoration(new DividerItemDecoration(this,
+                    DividerItemDecoration.VERTICAL));
+            rcyConsumable.setLayoutManager(new LinearLayoutManager(this));
+            rcyConsumable.setAdapter(materialAdapter);
+            materialAdapter.setOnItemClickListener((adapter, view, position) -> {
+                switch (view.getId()) {
+                    case R.id.tv_delete:
+                        detailEntity.getUseDeviceEntityList().remove(position);
+                        materialAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+    }
+
+    private void submit() {
+        if (!checkData()) {
+            return;
+        }
+
+
+        RepairFailureEntity repairFailureEntity = new RepairFailureEntity();
+        repairFailureEntity.setId(failureId);
+        repairFailureEntity.setBusinessThreeCode(failureEntity.getBusinessThreeCode());
+        repairFailureEntity.setModelCode(failureEntity.getModelCode());
+        detailEntity.setBusRepairFailureId(failureId);
+        //故障描述
+        repairFailureEntity.setBugDescription(etTroubleDesc.getText().toString().trim());
+        repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(tvRepairMisinformation.getText().toString().trim()));
+        detailEntity.setFailureEntity(repairFailureEntity);
+
+        detailEntity.setCause(etTroubleReason.getText().toString().trim());
+        detailEntity.setHandle(etTroubleDeal.getText().toString().trim());
+        detailEntity.setCheckProcess(etTroublePoint.getText().toString().trim());
+        //维修结果
+        detailEntity.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tvRepairConclusion.getText().toString().trim()));
+//
+        //故障表象 （3张）
+        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        detailEntity.setPresentationPictures(presentationPic);
+
+        //工具及蓝布 （3张）
+        String toolPic = PhotoUtils.getPhotoUrl(snplMonitorAddPhotos, uploadMap, false);
+        detailEntity.setToolPictures(toolPic);
+
+        //故障点照片 （3张）
+        String pointPic = PhotoUtils.getPhotoUrl(snplToolsPackageAddPhotos, uploadMap, false);
+        detailEntity.setPointPictures(pointPic);
+
+        //处理后现场 （3张）
+        String afterHandlePic = PhotoUtils.getPhotoUrl(snplAfterProcessingLocale, uploadMap, false);
+        detailEntity.setAfterHandlePictures(afterHandlePic);
+
+        //设备回装 （3张）
+        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl(snplMachineFitBack, uploadMap, false);
+        detailEntity.setDeviceReturnInstallPictures(deviceReturnInstallPic);
+
+        //恢复后表象 （3张）
+        String restorePic = PhotoUtils.getPhotoUrl(snplFailureRecoverPhenomena, uploadMap, false);
+
+        detailEntity.setBusBughandleConfirmId(confirmId);
+        detailEntity.setRestorePictures(restorePic);
+
+
+        if (uploadMap.size() != 0) {
+
+            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
+                @Override
+                public void onOssSuccess() {
+                    runOnUiThread(() -> {
+                        doHttpSubmit();
+                    });
+
+                }
+            });
+            return;
+        }
+        doHttpSubmit();
+
     }
 
     /**
@@ -519,72 +593,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity {
         }
 
         return true;
-    }
-
-    private void submit() {
-        if (!checkData()) {
-            return;
-        }
-
-
-        RepairFailureEntity repairFailureEntity = new RepairFailureEntity();
-        repairFailureEntity.setId(failureId);
-        repairFailureEntity.setBusinessThreeCode(failureEntity.getBusinessThreeCode());
-        repairFailureEntity.setModelCode(failureEntity.getModelCode());
-        detailEntity.setBusRepairFailureId(failureId);
-        //故障描述
-        repairFailureEntity.setBugDescription(etTroubleDesc.getText().toString().trim());
-        repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(tvRepairMisinformation.getText().toString().trim()));
-        detailEntity.setFailureEntity(repairFailureEntity);
-
-        detailEntity.setCause(etTroubleReason.getText().toString().trim());
-        detailEntity.setHandle(etTroubleDeal.getText().toString().trim());
-        detailEntity.setCheckProcess(etTroublePoint.getText().toString().trim());
-        //维修结果
-        detailEntity.setStatus(GetConstDataUtils.getBugDetailList().indexOf(tvRepairConclusion.getText().toString().trim()));
-//
-        //故障表象 （3张）
-        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
-        detailEntity.setPresentationPictures(presentationPic);
-
-        //工具及蓝布 （3张）
-        String toolPic = PhotoUtils.getPhotoUrl(snplMonitorAddPhotos, uploadMap, false);
-        detailEntity.setToolPictures(toolPic);
-
-        //故障点照片 （3张）
-        String pointPic = PhotoUtils.getPhotoUrl(snplToolsPackageAddPhotos, uploadMap, false);
-        detailEntity.setPointPictures(pointPic);
-
-        //处理后现场 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl(snplAfterProcessingLocale, uploadMap, false);
-        detailEntity.setAfterHandlePictures(afterHandlePic);
-
-        //设备回装 （3张）
-        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl(snplMachineFitBack, uploadMap, false);
-        detailEntity.setDeviceReturnInstallPictures(deviceReturnInstallPic);
-
-        //恢复后表象 （3张）
-        String restorePic = PhotoUtils.getPhotoUrl(snplFailureRecoverPhenomena, uploadMap, false);
-
-        detailEntity.setBusBughandleConfirmId(confirmId);
-        detailEntity.setRestorePictures(restorePic);
-
-
-        if (uploadMap.size() != 0) {
-
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doHttpSubmit();
-                    });
-
-                }
-            });
-            return;
-        }
-        doHttpSubmit();
-
     }
 
     private void doHttpSubmit() {

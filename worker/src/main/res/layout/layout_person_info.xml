@@ -199,8 +199,9 @@
                     android:background="@null"
                     android:digits="0123456789Xx"
                     android:gravity="right"
-                    android:maxLength="18"
                     android:hint="请输入证件号码"
+                    android:inputType="number"
+                    android:maxLength="18"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
             </LinearLayout>

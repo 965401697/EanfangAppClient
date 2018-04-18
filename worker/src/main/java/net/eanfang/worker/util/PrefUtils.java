@@ -45,6 +45,6 @@ public class PrefUtils {
     //从preferences取出来
     public static boolean getVBoolean(Context context, String key) {
         SharedPreferences preferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        return preferences.getBoolean(key, false);
+        return preferences.getBoolean(key, true);
     }
 }

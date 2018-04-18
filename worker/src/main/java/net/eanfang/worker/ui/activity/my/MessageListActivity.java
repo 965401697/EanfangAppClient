@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
@@ -51,6 +52,8 @@ public class MessageListActivity extends BaseWorkerActivity implements
     RecyclerView rvList;
     @BindView(R.id.msg_refresh)
     SwipyRefreshLayout msgRefresh;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
     private Activity activity = this;
     private int page = 1;
     private List<NoticeEntity> mDataList = new ArrayList<>();
@@ -67,6 +70,10 @@ public class MessageListActivity extends BaseWorkerActivity implements
 
     private void initView() {
         setTitle("通知提醒");
+        tvRight.setText("全读");
+        tvRight.setOnClickListener((v) -> {
+            doReadAll();
+        });
         setLeftBack();
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.addItemDecoration(new DividerItemDecoration(this,
@@ -86,6 +93,19 @@ public class MessageListActivity extends BaseWorkerActivity implements
                                 }
                             }).show();
                         }));
+            }
+        });
+    }
+
+    /**
+     * 一键已读
+     */
+    private void doReadAll() {
+        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false) {
+            @Override
+            public void onSuccess(Object bean) {
+                super.onSuccess(bean);
+                getJPushMessage();
             }
         });
     }
@@ -112,14 +132,11 @@ public class MessageListActivity extends BaseWorkerActivity implements
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
-//                tvNoData.setVisibility(View.VISIBLE);
-//                msgRefresh.setVisibility(View.GONE);
                 showToast("暂无数据");
             } else {
-//                tvNoData.setVisibility(View.GONE);
-//                msgRefresh.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
+                messageListAdapter.notifyDataSetChanged();
                 showToast("已是最新数据");
             }
         } else {
@@ -131,6 +148,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
 //                msgRefresh.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
+                messageListAdapter.notifyDataSetChanged();
             }
         }
     }

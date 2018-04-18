@@ -27,7 +27,7 @@ public class MaterialAdapter extends BaseQuickAdapter<BughandleUseDeviceEntity, 
         String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
         helper.setText(R.id.tv_detail_name, (helper.getAdapterPosition() + 1) + "." + bugOne + "-" + bugTwo + "-" + bugThree);
         helper.addOnClickListener(R.id.rl_item_detail);
-        helper.setVisible(R.id.tv_delete, true);
+        helper.setVisible(R.id.tv_delete, false);
         helper.addOnClickListener(R.id.tv_delete);
     }
 }

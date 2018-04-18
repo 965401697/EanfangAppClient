@@ -179,7 +179,9 @@ public class MainActivity extends BaseActivity {
                 });
         //变量监听
         Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
-            qBadgeView.setBadgeNumber(var);
+            runOnUiThread(() -> {
+                qBadgeView.setBadgeNumber(var);
+            });
         });
     }
 
@@ -254,14 +256,13 @@ public class MainActivity extends BaseActivity {
         } else {
             url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
         }
-
         EanfangHttp.get(url)
                 .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
                     new Thread(() -> {
-                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+//                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
+                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
                         }
                     }).start();
                 }));
@@ -280,16 +281,15 @@ public class MainActivity extends BaseActivity {
         }
         EanfangHttp.get(url)
                 .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
                     new Thread(() -> {
-                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+//                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                            EanfangApplication.get().set(ConstAllBean.class.getName(), jsonObject.toJSONString());
                         }
                     }).start();
                 }));
     }
-
 
     public void setHeaders() {
         if (EanfangApplication.get().getUser() != null) {

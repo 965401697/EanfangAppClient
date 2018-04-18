@@ -11,6 +11,15 @@
     app:navigationContentDescription=""
     app:theme="@style/ToolBarStyle_light">
 
+    <ImageView
+        android:id="@+id/iv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@mipmap/ic_back"
+        android:visibility="gone" />
     <!--自定义toolbar的title 和subtitle -->
     <TextView
         android:id="@+id/tv_right"

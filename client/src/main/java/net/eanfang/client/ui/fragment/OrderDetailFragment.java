@@ -163,9 +163,9 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-                    tv_company_name.setText(V.v(() -> bean.getOwnerOrg().getBelongCompany().getOrgName()));
-                    tv_contract_name.setText(V.v(() ->bean.getOwnerUser().getAccountEntity().getRealName()));
-                    tv_contract_phone.setText(V.v(() ->bean.getOwnerUser().getAccountEntity().getMobile()));
+                    tv_company_name.setText(V.v(() ->bean.getRepairCompany()));//单位名称
+                    tv_contract_name.setText(V.v(() ->bean.getRepairContacts()));//联系人
+                    tv_contract_phone.setText(V.v(() ->bean.getRepairContactPhone()));
                     tv_time_limit.setText(V.v(() ->GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
                     tv_address.setText(V.v(() ->Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
                     if (bean.getBookTime() != null) {
