@@ -38,6 +38,12 @@ public class GiveEvaluateFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
+
+    }
+
+    @Override
+    protected void onLazyLoad() {
+        super.onLazyLoad();
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.setPage(1);

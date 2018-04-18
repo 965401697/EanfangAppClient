@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.model.ReceivedEvaluateBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -28,7 +29,7 @@ public class EvaluateAdapter extends BaseQuickAdapter<ReceivedEvaluateBean.ListB
         SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
 
         if (!StringUtils.isEmpty(item.getCreateUser().getAccountEntity().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(item.getCreateUser().getAccountEntity().getAvatar()));
+            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+item.getCreateUser().getAccountEntity().getAvatar()));
         }
 
         int totalStar = item.getItem1() + item.getItem2() +
