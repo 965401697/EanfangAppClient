@@ -209,6 +209,11 @@ public interface UserApi {
      */
     String POST_ADD_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/insert";
     /**
+     * /**
+     * 添加好友推送
+     */
+    String POST_ADD_FRIEND_PUSH = BuildConfig.API_HOST + "/yaf_im/im/friendPush";
+    /**
      * 同意添加
      */
     String POST_ACCEPT_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/accept";
@@ -220,5 +225,9 @@ public interface UserApi {
      * 删除好友
      */
     String POST_DELETE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/delete";
+    /**
+     * 创建群组
+     */
+    String POST_CREAT_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/create";
 
 }

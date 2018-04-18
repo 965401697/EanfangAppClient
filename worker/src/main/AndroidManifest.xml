@@ -249,7 +249,9 @@
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
         </receiver>
-        <activity android:name=".ui.activity.worksapce.AddFriendActivity"></activity>
+
+        <activity android:name=".ui.activity.worksapce.AddFriendActivity" />
+        <activity android:name=".ui.activity.worksapce.GroupCreatActivity"></activity>
     </application>
 
 </manifest>

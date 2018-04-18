@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -15,6 +16,7 @@ import com.eanfang.util.Var;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.MyFriendsListActivity;
 
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
@@ -82,6 +84,17 @@ public class ContactListFragment extends BaseFragment {
         Var.get("ContactListFragment.messageCount").setChangeListener((var) -> {
             qBadgeView.setBadgeNumber(var);
         });
+
+        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MyFriendsListActivity.class);
+                intent.putExtra("flag", 1);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override

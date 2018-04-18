@@ -1,0 +1,79 @@
+package net.eanfang.worker.ui.activity.worksapce;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupCreatBean;
+
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+
+public class GroupCreatActivity extends BaseWorkerActivity {
+
+    @BindView(R.id.et_group_name)
+    EditText etGroupName;
+    @BindView(R.id.btn_created)
+    Button btnCreated;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_group_creat);
+        ButterKnife.bind(this);
+        setTitle("创建群组");
+        setLeftBack();
+    }
+
+    /**
+     * 提交群组的名字
+     */
+    private void submit() {
+        ArrayList<String> list = getIntent().getStringArrayListExtra("userIdList");
+        list.add(String.valueOf(EanfangApplication.get().getAccId()));
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject1 = new JSONObject();
+
+        JSONArray array = new JSONArray();
+        try {
+            for (String s : list) {
+                JSONObject jsonObject2 = new JSONObject();
+                jsonObject2.put("accId", s);
+                array.put(jsonObject2);
+            }
+
+            jsonObject1.put("groupName", "测试一下");
+            jsonObject.put("sysGroup", jsonObject1);
+            jsonObject.put("sysGroupUsers", array);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //删除好友
+        EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                .upJson(jsonObject)
+                .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
+                    RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                }));
+    }
+
+    @OnClick(R.id.btn_created)
+    public void onViewClicked() {
+        submit();
+    }
+}

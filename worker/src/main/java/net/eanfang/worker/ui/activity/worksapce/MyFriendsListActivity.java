@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,9 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -37,14 +41,31 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private FriendsAdapter mFriendsAdapter;
+    private int flag = 0;//显示不显示checkbox的标志位
+    private ArrayList<String> userIdList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_friends_list);
         ButterKnife.bind(this);
-        setTitle("我的好友");
+
         setLeftBack();
+        flag = getIntent().getIntExtra("flag", 0);
+        if (flag == 1) {
+            setTitle("选择好友");
+            setRightTitle("下一步");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MyFriendsListActivity.this, GroupCreatActivity.class);
+                    intent.putStringArrayListExtra("userIdList", userIdList);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            setTitle("我的好友");
+        }
         initViews();
         initData();
     }
@@ -61,9 +82,30 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list);
+        mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, flag);
 
         mFriendsAdapter.bindToRecyclerView(recyclerView);
+        if (flag == 0) {
+            startConv();
+        } else {
+            selectFriends();
+        }
+
+        //删除好友
+        mFriendsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
+                DialogShow(friendListBean.getAccId(), friendListBean.getNickName(), position);
+                return false;
+            }
+        });
+    }
+
+    /**
+     * 开始聊天
+     */
+    private void startConv() {
         mFriendsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -83,13 +125,22 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                 }, true);
             }
         });
+    }
 
-        mFriendsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+    private void selectFriends() {
+        mFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
-                DialogShow(friendListBean.getAccId(), friendListBean.getNickName(), position);
-                return false;
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                //创建群组选着好友
+                if (view.getId() == R.id.cb_checked) {
+                    FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+                    if (bean.getFlag() == 1) {
+                        //移除
+                        userIdList.remove(bean.getAccId());
+                    } else {
+                        userIdList.add(bean.getAccId());
+                    }
+                }
             }
         });
     }
