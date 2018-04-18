@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -94,6 +95,8 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     //协助人员
     private TextView tv_team_worker;
 
+    private ImageView iv_left;
+
 
     private TroubleDetailAdapter quotationDetailAdapter;
     private Long id;
@@ -136,6 +139,8 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left.setVisibility(View.VISIBLE);
         rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
         tv_over_time = (TextView) findViewById(R.id.tv_over_time);
         tv_repair_time = (TextView) findViewById(R.id.tv_repair_time);
@@ -163,7 +168,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "010-5877-8731");
         });
-//        ivLeft.setOnClickListener((v) -> finishSelf());
+        iv_left.setOnClickListener((v) -> finishSelf());
     }
 
     private void setData(BughandleConfirmEntity bughandleConfirmEntity) {
