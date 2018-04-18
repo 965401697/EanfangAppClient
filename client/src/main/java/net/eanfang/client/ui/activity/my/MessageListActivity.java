@@ -46,12 +46,14 @@ public class MessageListActivity extends BaseClientActivity implements
         SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
     @BindView(R.id.rv_list)
     RecyclerView rvList;
-//    @BindView(R.id.tv_no_data)
+    //    @BindView(R.id.tv_no_data)
 //    TextView tvNoData;
     @BindView(R.id.msg_refresh)
     SwipyRefreshLayout msgRefresh;
     private Activity activity = this;
     private int page = 1;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
     private List<NoticeEntity> mDataList = new ArrayList<>();
     private MessageListAdapter messageListAdapter = null;
 
@@ -65,6 +67,10 @@ public class MessageListActivity extends BaseClientActivity implements
 
     private void initView() {
         setTitle("通知提醒");
+        tvRight.setText("全读");
+        tvRight.setOnClickListener((v) -> {
+            doReadAll();
+        });
         setLeftBack();
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.addItemDecoration(new DividerItemDecoration(this,
@@ -96,6 +102,7 @@ public class MessageListActivity extends BaseClientActivity implements
 //                rvList.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
+                messageListAdapter.notifyDataSetChanged();
                 showToast("已是最新数据");
             }
         } else {
@@ -106,9 +113,23 @@ public class MessageListActivity extends BaseClientActivity implements
 //                tvNoData.setVisibility(View.GONE);
 //                rvList.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
+                messageListAdapter.notifyDataSetChanged();
                 rvList.setAdapter(messageListAdapter);
             }
         }
+    }
+
+    /**
+     * 一键已读
+     */
+    private void doReadAll() {
+        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false){
+            @Override
+            public void onSuccess(Object bean) {
+                super.onSuccess(bean);
+                getJPushMessage();
+            }
+        });
     }
 
     private void getJPushMessage() {

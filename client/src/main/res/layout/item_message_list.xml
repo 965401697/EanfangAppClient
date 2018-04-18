@@ -54,7 +54,8 @@
         android:background="@drawable/select_worker"
         android:padding="2dp"
         android:text="查看详情"
-        android:textColor="@color/work_logo_color" />
+        android:textColor="@color/work_logo_color"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

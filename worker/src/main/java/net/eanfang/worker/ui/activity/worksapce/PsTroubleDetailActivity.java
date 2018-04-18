@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -43,7 +44,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     private RecyclerView rv_trouble;
     private TextView tv_over_time;
     private TextView tv_repair_time;
-
+    private ImageView iv_left;
     /**
      * 单据照片 (3张)
      */
@@ -93,6 +94,8 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     }
 
     private void initView() {
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left.setVisibility(View.VISIBLE);
         rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
         tv_over_time = (TextView) findViewById(R.id.tv_over_time);
         tv_repair_time = (TextView) findViewById(R.id.tv_repair_time);
@@ -100,6 +103,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
 
         //遗留问题
         tv_remain_question = (TextView) findViewById(R.id.tv_remain_question);
+        iv_left.setOnClickListener((v) -> finishSelf());
     }
 
     private void setData() {

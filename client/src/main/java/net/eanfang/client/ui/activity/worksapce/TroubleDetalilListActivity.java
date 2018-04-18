@@ -46,6 +46,8 @@ public class TroubleDetalilListActivity extends BaseDialog {
     @BindView(R.id.list_trouble)
     RecyclerView listTrouble;
     List<BughandleConfirmEntity> mDataList;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
     private ToubleDetailListAdapter toubleDetailListAdapter;
     private Activity mContext;
     private Long busRepairOrderId;
@@ -91,6 +93,7 @@ public class TroubleDetalilListActivity extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("故障处理");
+        tvRight.setText("23233");
         listTrouble.setLayoutManager(new LinearLayoutManager(mContext));
     }
 
