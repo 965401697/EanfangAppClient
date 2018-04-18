@@ -189,11 +189,11 @@ public class MainActivity extends BaseClientActivity {
         }
         EanfangHttp.get(url)
                 .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
                     new Thread(() -> {
-                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                            BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                            EanfangApplication.get().set(BaseDataBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+//                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
+                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
                         }
                     }).start();
                 }));
@@ -212,11 +212,11 @@ public class MainActivity extends BaseClientActivity {
         }
         EanfangHttp.get(url)
                 .tag(this)
-                .execute(new EanfangCallback<String>(this, false, String.class, (str) -> {
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
                     new Thread(() -> {
-                        if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                            EanfangApplication.get().set(ConstAllBean.class.getName(), JSONObject.toJSONString(newDate, FastjsonConfig.config));
+                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+//                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+                            EanfangApplication.get().set(ConstAllBean.class.getName(), jsonObject.toJSONString());
                         }
                     }).start();
                 }));
@@ -224,41 +224,40 @@ public class MainActivity extends BaseClientActivity {
 
 
     public void initXinGe() {
-        Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
-
-            ExecuteUtils.execute(
-                    () -> Var.get("MainActivity.initXinGe").getVar()
-                    , 1, 0,
-                    () -> Var.remove("MainActivity.initXinGe")
-                    , () -> {
-                        registerXinGe();
-                    });
-
-        });
-        Var.get("MainActivity.initXinGe").setVar(0);
+        registerXinGe();
+//        Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
+//
+//            ExecuteUtils.execute(
+//                    () -> Var.get("MainActivity.initXinGe").getVar()
+//                    , 1, 0,
+//                    () -> Var.remove("MainActivity.initXinGe")
+//                    , () -> {
+//                        registerXinGe();
+//                    });
+//
+//        });
+//        Var.get("MainActivity.initXinGe").setVar(0);
     }
 
 
     private void registerXinGe() {
-        new Thread(() -> {
-            //开启信鸽日志输出
-            XGPushConfig.enableDebug(this, false);
-            //信鸽注册代码
-            XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
-                @Override
-                public void onSuccess(Object data, int flag) {
-                    Log.d("TPush", "注册成功，设备token为：" + data);
-                    Var.get("MainActivity.initXinGe").setVar(1);
-                }
+        //开启信鸽日志输出
+//        XGPushConfig.enableDebug(this, false);
+        //信鸽注册代码
+        XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.d("TPush", "注册成功，设备token为：" + data);
+//                    Var.get("MainActivity.initXinGe").setVar(1);
+            }
 
-                @Override
-                public void onFail(Object data, int errCode, String msg) {
-                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-                    Var.get("MainActivity.initXinGe").setVar(0);
-                }
-            });
-        }).start();
-
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+//                    Var.get("MainActivity.initXinGe").setVar(0);
+                registerXinGe();
+            }
+        });
     }
 
     public void setHeaders() {
