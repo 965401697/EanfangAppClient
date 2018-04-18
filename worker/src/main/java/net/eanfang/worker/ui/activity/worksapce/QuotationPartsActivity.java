@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -37,8 +36,6 @@ public class QuotationPartsActivity extends BaseActivity {
     EditText etPartSpeciication;
     @BindView(R.id.tv_commit)
     TextView tvCommit;
-    @BindView(R.id.titles_bar)
-    LinearLayout titlesBar;
     @BindView(R.id.et_parts_name)
     EditText etPartsName;
     private QuotationBean.QuotePartsBean quotePartsBean;
