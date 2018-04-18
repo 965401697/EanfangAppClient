@@ -20,6 +20,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -162,9 +163,9 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-                    tv_company_name.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
-                    tv_contract_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
-                    tv_contract_phone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
+                    tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
+                    tv_contract_name.setText(V.v(() -> bean.getRepairContacts()));//联系人
+                    tv_contract_phone.setText(V.v(() -> bean.getRepairContactPhone()));
                     tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
                     tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
                     if (bean.getBookTime() != null) {
@@ -184,12 +185,15 @@ public class OrderDetailFragment extends BaseFragment {
                         tv_phone_solve.setText("是");
                     }
 
-                    //客户端
+                    //技师端
                     if (bean.getOwnerUser() != null) {
                         iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()));
-                        tv_worker_name.setText(bean.getOwnerUser().getAccountEntity().getRealName());
-                        tv_worker_company.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
-                        iv_phone.setTag(bean.getOwnerUser().getAccountEntity().getMobile());
+                        tv_worker_name.setText(bean.getRepairContacts());
+                        if (bean.getOwnerOrg() != null) {
+                            if (bean.getOwnerOrg().getBelongCompany().getOrgName() != null)
+                                tv_worker_company.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
+                        }
+                        iv_phone.setTag(bean.getRepairContactPhone());
                     }
 
                     mDataList = bean.getBugEntityList();
