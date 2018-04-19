@@ -11,8 +11,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -72,7 +72,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     @BindView(R.id.showTakePhotoImg)
     ImageView showTakePhotoImg;
     @BindView(R.id.fl_camera)
-    FrameLayout flCamera;
+    LinearLayout flCamera;
     @BindView(R.id.color_white)
     RadioButton colorWhite;
     @BindView(R.id.color_red)
