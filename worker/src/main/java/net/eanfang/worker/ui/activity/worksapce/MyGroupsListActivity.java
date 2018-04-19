@@ -59,18 +59,6 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
                             GroupsBean groupsBean = (GroupsBean) list.get(i);
                             EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
                         }
-                        //提供融云的头像和昵称
-                        RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-                            @Override
-                            public Group getGroupInfo(String s) {
-                                for (int i = 0; i < list.size(); i++) {
-                                    GroupsBean groupsBean = (GroupsBean) list.get(i);
-                                    Group group = new Group(groupsBean.getRcloudGroupId(), groupsBean.getGroupName(), Uri.parse("https://imgcache.cjmx.com/star/201512/20151207142700908.jpg"));
-                                    return group;
-                                }
-                                return null;
-                            }
-                        }, true);
                     }
                 }));
     }
@@ -82,17 +70,6 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
         mGroupsAdapter.bindToRecyclerView(recyclerView);
 
         startConv();
-
-
-        //删除好友
-        mGroupsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-                FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
-//                DialogShow(friendListBean.getAccId(), friendListBean.getNickName(), position);
-                return false;
-            }
-        });
     }
 
     /**
@@ -102,6 +79,19 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
         mGroupsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                //提供融云的头像和昵称
+                RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
+                    @Override
+                    public Group getGroupInfo(String s) {
+
+                        GroupsBean groupsBean = (GroupsBean) adapter.getData().get(position);
+                        Group group = new Group(groupsBean.getRcloudGroupId(), groupsBean.getGroupName(), Uri.parse("https://imgcache.cjmx.com/star/201512/20151207142700908.jpg"));
+                        return group;
+
+                    }
+                }, true);
+
 
                 RongIM.getInstance().startConversation(MyGroupsListActivity.this, Conversation.ConversationType.GROUP, ((GroupsBean) adapter.getData().get(position)).getRcloudGroupId(), ((GroupsBean) adapter.getData().get(position)).getGroupName());
 
