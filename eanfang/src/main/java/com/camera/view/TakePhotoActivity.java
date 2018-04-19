@@ -20,8 +20,6 @@ import com.eanfang.R;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -74,42 +72,12 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         okBtn = (ImageView) findViewById(R.id.okBtn);
         //控件处理
         cameraFocusView.setmIAutoFocus(this);
-        openFlashImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFlash();
-            }
-        });
-        cameraSwitchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeCamera();
-            }
-        });
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rephotograph();
-            }
-        });
-        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                savePhoto();
-            }
-        });
+        openFlashImg.setOnClickListener(v -> openFlash());
+        cameraSwitchBtn.setOnClickListener(v -> changeCamera());
+        closeBtn.setOnClickListener(v -> finish());
+        cancelBtn.setOnClickListener(v -> rephotograph());
+        takePhotoBtn.setOnClickListener(v -> takePhoto());
+        okBtn.setOnClickListener(v -> savePhoto());
     }
 
     @Override
@@ -119,23 +87,21 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
 
 
     private void takePhoto() {
-        cameraSurfaceView.takePicture(new Camera.PictureCallback() {
-            @Override
-            public void onPictureTaken(final byte[] data, Camera camera) {
-                if (data.length == 0)
-                    return;
-                cameraSurfaceView.getmCamera().stopPreview();// 关闭预览
-                photoData = data;
-                cancelBtn.setVisibility(View.VISIBLE);
-                okBtn.setVisibility(View.VISIBLE);
-                takePhotoBtn.setVisibility(View.GONE);
-                cameraTopLayout.setVisibility(View.GONE);
-                cameraFocusView.setVisibility(View.GONE);
-                Animation leftAnim = AnimationUtils.loadAnimation(TakePhotoActivity.this, R.anim.anim_slide_left);
-                Animation rightAnim = AnimationUtils.loadAnimation(TakePhotoActivity.this, R.anim.anim_slide_right);
-                cancelBtn.setAnimation(leftAnim);
-                okBtn.setAnimation(rightAnim);
+        cameraSurfaceView.takePicture((data, camera) -> {
+            if (data.length == 0) {
+                return;
             }
+            cameraSurfaceView.getmCamera().stopPreview();// 关闭预览
+            photoData = data;
+            cancelBtn.setVisibility(View.VISIBLE);
+            okBtn.setVisibility(View.VISIBLE);
+            takePhotoBtn.setVisibility(View.GONE);
+            cameraTopLayout.setVisibility(View.GONE);
+            cameraFocusView.setVisibility(View.GONE);
+            Animation leftAnim = AnimationUtils.loadAnimation(TakePhotoActivity.this, R.anim.anim_slide_left);
+            Animation rightAnim = AnimationUtils.loadAnimation(TakePhotoActivity.this, R.anim.anim_slide_right);
+            cancelBtn.setAnimation(leftAnim);
+            okBtn.setAnimation(rightAnim);
         });
     }
 
@@ -152,27 +118,16 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
 
 
     private void savePhoto() {
-        mPermissionsModel.checkWriteSDCardPermission(new PermissionsModel.PermissionListener() {
-            @Override
-            public void onPermission(boolean isPermission) {
-                if (isPermission) {
-                    Observable.just(photoData)
-                            .map(new Func1<byte[], String>() {
-                                @Override
-                                public String call(byte[] bytes) {
-                                    String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
-                                    return path;
-                                }
-                            })
-                            .subscribeOn(Schedulers.io())
-                            .subscribeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Action1<String>() {
-                                @Override
-                                public void call(String path) {
-                                    onResult(path);
-                                }
-                            });
-                }
+        mPermissionsModel.checkWriteSDCardPermission(isPermission -> {
+            if (isPermission) {
+                Observable.just(photoData)
+                        .map(bytes -> {
+                            String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
+                            return path;
+                        })
+                        .subscribeOn(Schedulers.io())
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe(path -> onResult(path));
             }
         });
     }
