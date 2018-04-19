@@ -21,7 +21,7 @@
                 android:background="@mipmap/ic_personal_top_back"
                 android:fitsSystemWindows="true"
                 android:orientation="vertical"
-                android:paddingTop="20dp">
+                android:paddingTop="40dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

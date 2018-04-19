@@ -43,11 +43,11 @@
                     android:layout_height="wrap_content"
                     android:text="北京法安视科技有限公司"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_16" />
+                    android:textSize="@dimen/textSize_15" />
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
                     android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_down" />
 
