@@ -347,15 +347,15 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             showToast("请填写遗留问题");
             return false;
         }
-//        if (DetailEntityList != null) {
-//            //增加限制，需要先完善故障处理 在提交
-//            for (int i = 0; i < DetailEntityList.size(); i++) {
-//                if (StringUtils.isEmpty(DetailEntityList.get(i).getCheckProcess())) {
-//                    showToast("请完善第" + (i + 1) + "条故障处理明细");
-//                    return false;
-//                }
-//            }
-//        }
+        if (DetailEntityList != null) {
+            //增加限制，需要先完善故障处理 在提交
+            for (int i = 0; i < DetailEntityList.size(); i++) {
+                if (StringUtils.isEmpty(DetailEntityList.get(i).getCheckProcess())) {
+                    showToast("请完善第" + (i + 1) + "条故障处理明细");
+                    return false;
+                }
+            }
+        }
 
         return true;
     }
