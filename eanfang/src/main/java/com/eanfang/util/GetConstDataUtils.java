@@ -133,6 +133,8 @@ public class GetConstDataUtils {
             synchronized (GetConstDataUtils.class) {
                 if (repairStatus == null) {
                     repairStatus = Config.get().getConstBean().getData().getRepairConstant().get(Constant.STATUS);
+                    repairStatus.add("全部");
+                    repairStatus.remove("订单取消");
                 }
             }
         }
