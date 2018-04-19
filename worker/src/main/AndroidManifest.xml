@@ -254,7 +254,8 @@
         <activity android:name=".ui.activity.worksapce.AddFriendActivity" />
         <activity android:name=".ui.activity.worksapce.GroupCreatActivity" />
         <activity android:name=".ui.activity.worksapce.MyGroupsListActivity" />
-        <activity android:name=".ui.activity.worksapce.GroupDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.GroupDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.SystemMessageActivity"></activity>
     </application>
 
 </manifest>

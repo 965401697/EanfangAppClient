@@ -91,7 +91,6 @@ public class MainActivity extends BaseActivity {
         PermissionUtils.get(this).getStoragePermission(() -> {
         });
         submitLocation();
-        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         privoderMy();
     }
 
@@ -315,29 +314,6 @@ public class MainActivity extends BaseActivity {
                 }));
     }
 
-
-    private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
-
-        /**
-         * 收到消息的处理。
-         *
-         * @param message 收到的消息实体。
-         * @param left    剩余未拉取消息数目。
-         * @return 收到消息是否处理完成，true 表示自己处理铃声和后台通知，false 走融云默认处理方式。
-         */
-        @Override
-        public boolean onReceived(Message message, int left) {
-            //开发者根据自己需求自行处理
-            if (message.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
-                runOnUiThread(() -> {
-                    DialogShow(message.getTargetId());
-                });
-            }
-            //根据消息类型判断
-            return false;
-        }
-    }
-
     /**
      * 首页，工作台，我的，通讯录等未查找控件点击事件
      */
@@ -345,38 +321,6 @@ public class MainActivity extends BaseActivity {
         showToast("暂缓开通");
     }
 
-
-    private void DialogShow(String userId) {
-        // TODO: 2018/4/16 userid 可能是多个
-        AlertDialog dialog = new AlertDialog.Builder(this)
-//                .setIcon(R.mipmap.icon)//设置标题的图片
-                .setTitle("消息通知")//设置对话框的标题
-                .setMessage("有人添加您为好友？")//设置对话框的内容
-                //设置对话框的按钮
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //拒接被添加好友
-                        EanfangHttp.post(UserApi.POST_REFUSE_FRIEND)
-                                .params("ids", userId)
-                                .execute(new EanfangCallback<org.json.JSONObject>(MainActivity.this, true, org.json.JSONObject.class, (bean) -> {
-                                }));
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //同意被添加好友
-                        EanfangHttp.post(UserApi.POST_ACCEPT_FRIEND)
-                                .params("ids", userId)
-                                .execute(new EanfangCallback<org.json.JSONObject>(MainActivity.this, true, org.json.JSONObject.class, (bean) -> {
-                                }));
-                        dialog.dismiss();
-                    }
-                }).create();
-        dialog.show();
-    }
 
     /**
      * 向融云提供自己的头像和昵称  兼容老版本

@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,13 +13,18 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.util.Var;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.worksapce.MyFriendsListActivity;
+import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
 
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.model.UIConversation;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -50,7 +56,7 @@ public class ContactListFragment extends BaseFragment {
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
-//                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
                 .build();
         fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
@@ -83,7 +89,7 @@ public class ContactListFragment extends BaseFragment {
                 });
 //        变量监听
         Var.get("ContactListFragment.messageCount").setChangeListener((var) -> {
-            getActivity().runOnUiThread(()->{
+            getActivity().runOnUiThread(() -> {
                 qBadgeView.setBadgeNumber(var);
             });
         });
@@ -97,6 +103,42 @@ public class ContactListFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+
+
+/**
+ * 设置会话列表界面操作的监听器。
+ */
+        RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
+
+            @Override
+            public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
+                return true;
+            }
+
+            @Override
+            public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
+                return true;
+            }
+
+            @Override
+            public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
+                return false;
+            }
+
+            @Override
+            public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
+                if (uiConversation.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
+                    Intent intent = new Intent(getActivity(), SystemMessageActivity.class);
+                    intent.putExtra("userId", uiConversation.getConversationTargetId());
+                    intent.putExtra("content", uiConversation.getConversationContent());
+                    startActivity(intent);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
 
     }
 
