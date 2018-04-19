@@ -188,7 +188,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (address != null) {
             etAddress.setText(address);
         }
-        if (infoBackBean.getAccount().getAreaCode() != null) {
+        if (!infoBackBean.getAccount().getAreaCode().equals("")||infoBackBean.getAccount().getAreaCode() != null) {
             tvArea.setText(Config.get().getAddressByCode(infoBackBean.getAccount().getAreaCode()));
         }
 
