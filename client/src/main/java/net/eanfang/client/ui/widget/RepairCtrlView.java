@@ -2,8 +2,12 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +29,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/21  10:19
  * @email houzhongzhou@yeah.net
- * @desc 设计管控
+ * @desc 报修管控
  */
 
 public class RepairCtrlView extends BaseDialog {
