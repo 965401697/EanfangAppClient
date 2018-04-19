@@ -22,6 +22,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
 public class AuthAreaActivity extends BaseActivity {
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
-    List<BaseDataEntity> areaListBean;
+    List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     private GroupAdapter mAdapter;
     private Long orgid;
     private int status;
@@ -59,18 +60,39 @@ public class AuthAreaActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
         initArea();
+        initData();
+        // initArea();
     }
 
     private void initArea() {
-        EanfangHttp.get(NewApiService.GET_BASE_DATA_CACHE_TREE + "0")
-                .tag(this)
-                .execute(new EanfangCallback<String>(this, true, String.class, (str) -> {
-                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-                        areaListBean = Stream.of(newDate.getData()).filter(bean -> bean.getDataCode().equals("3")).toList().get(0).getChildren();
-                        initData();
-                    }
-                }));
+//        EanfangHttp.get(NewApiService.GET_BASE_DATA_CACHE_TREE + "0")
+//                .tag(this)
+//                .execute(new EanfangCallback<String>(this, true, String.class, (str) -> {
+//                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+//                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
+//                        areaListBean = Stream.of(newDate.getData()).filter(bean -> bean.getDataCode().equals("3")).toList().get(0).getChildren();
+//                        initData();
+//                    }
+//                }));
+        //获得全部 地区数据
+        List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
+        for (int i = 0; i < areaListBean.size(); i++) {
+            BaseDataEntity provinceEntity = areaListBean.get(i);
+            //处理当前省下的所有市
+            List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+            //查询出来后，移除，以增加效率
+            allAreaList.removeAll(cityList);
+            for (int j = 0; j < cityList.size(); j++) {
+                BaseDataEntity cityEntity = cityList.get(j);
+                //处理当前市下所有区县
+                List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                //查询出来后，移除，以增加效率
+                allAreaList.removeAll(countyList);
+                cityList.get(j).setChildren(countyList);
+            }
+            areaListBean.get(i).setChildren(cityList);
+        }
+
     }
 
     private void initData() {
