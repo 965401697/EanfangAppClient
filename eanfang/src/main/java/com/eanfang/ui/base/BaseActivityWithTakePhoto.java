@@ -45,7 +45,7 @@ import java.io.File;
  * BaseAppCompatFragmentActivity
  *
  * @author hr
- *         Created at 2016/1/1 11:33
+ * Created at 2016/1/1 11:33
  * @desc activity基类
  */
 
@@ -71,7 +71,9 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
                     permissionsCallBack.callBack();
                 } else {
                     // 没有获取到权限，做特殊处理
-                    Toast.makeText(getApplicationContext(), "获取权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        Toast.makeText(getApplicationContext(), "获取权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                    });
                 }
                 break;
             default:

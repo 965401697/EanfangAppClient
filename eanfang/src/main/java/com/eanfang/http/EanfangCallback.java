@@ -426,7 +426,7 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onServerError(String message) {
-        if (StringUtils.isEmpty(message)) {
+        if (!StringUtils.isEmpty(message)) {
             ToastUtil.get().showToast(this.activity, message);
         } else {
             ToastUtil.get().showToast(this.activity, "哎呀，服务器好像罢工了");

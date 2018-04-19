@@ -85,10 +85,11 @@ public class MainActivity extends BaseActivity {
 
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        //   PermissionUtils.get(this).getStoragePermission(() -> {
+
         getBaseData();
         getConst();
-        //  });
+        PermissionUtils.get(this).getStoragePermission(() -> {
+        });
         submitLocation();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         privoderMy();

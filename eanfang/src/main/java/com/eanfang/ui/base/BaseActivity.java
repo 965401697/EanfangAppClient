@@ -61,7 +61,9 @@ public class BaseActivity extends AppCompatActivity implements
             case PermissionsCallBack.callBackCode:
                 if (grantResults == null || grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     // 没有获取到权限，做特殊处理
-                    Toast.makeText(getApplicationContext(), "获取权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        Toast.makeText(getApplicationContext(), "获取权限失败，请手动开启", Toast.LENGTH_SHORT).show();
+                    });
                 } else {
 
                     // 获取到权限，作相应处理

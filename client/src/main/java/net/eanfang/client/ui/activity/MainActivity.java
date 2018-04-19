@@ -62,18 +62,17 @@ public class MainActivity extends BaseClientActivity {
         user = EanfangApplication.get().getUser();
         setHeaders();
 
-        initXinGe();
         initFragment();
-
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
         initUpdate();
-        //  PermissionUtils.get(this).getStoragePermission(() -> {
-        //   new Thread(() -> {
+        initXinGe();
         getBaseData();
         getConst();
-        // }).start();
-        //  });
+        PermissionUtils.get(this).getStoragePermission(() -> {
+        });
     }
 
     private void initUpdate() {
