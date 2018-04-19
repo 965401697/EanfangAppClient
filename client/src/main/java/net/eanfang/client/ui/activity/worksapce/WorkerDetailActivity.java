@@ -150,6 +150,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvSelect.setOnClickListener((v) -> {
             toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
             toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
+            toRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
             if (EanfangApplication.getApplication().getCompanyId()==0) {
                 toRepairBean.setStatus(0);
             }else {

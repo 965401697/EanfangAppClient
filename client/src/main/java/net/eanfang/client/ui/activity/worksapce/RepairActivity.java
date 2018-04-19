@@ -107,6 +107,35 @@ public class RepairActivity extends BaseClientActivity {
         initAdapter();
     }
 
+    private void initData() {
+        LoginBean user = EanfangApplication.getApplication().getUser();
+        String name;
+        String area = "";
+        String address = "";
+        //个人客户
+        if (user.getAccount().getDefaultUser().getCompanyId() <= 0) {
+            name = user.getAccount().getRealName();
+            area = Config.get().getAddressByCode(user.getAccount().getAreaCode());
+            address = user.getAccount().getAddress();
+        } else {
+            name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+            //getOrgUnitEntity() 为空
+//            area = Config.get().getAddressByCode(user.getAccount().getDefaultUser().getCompanyEntity().getOrgUnitEntity().getAreaCode());
+//            address = user.getAccount().getDefaultUser().getCompanyEntity().getOrgUnitEntity().getOfficeAddress();
+        }
+        //如果公司名称为空 则取当前登陆人的公司
+        if (StringUtils.isEmpty(etCompanyName.getText())) {
+            etCompanyName.setText(name);
+            // 当选择为个人时，拿到的地址没有经纬度 所以进行手动选择
+//            tvAddress.setText(area);
+//            etDetailAddress.setText(address);
+        }
+        if (StringUtils.isEmpty(etContact.getText())) {
+            etContact.setText(user.getAccount().getRealName());
+            etPhone.setText(user.getAccount().getMobile());
+        }
+
+    }
 
     private void registerListener() {
         setRightTitle("下一步");
@@ -122,6 +151,19 @@ public class RepairActivity extends BaseClientActivity {
         }));
     }
 
+    private void initAdapter() {
+        evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
+        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        rvList.setLayoutManager(new LinearLayoutManager(this));
+        rvList.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                beanList.remove(position);
+                evaluateAdapter.notifyDataSetChanged();
+            }
+        });
+        rvList.setAdapter(evaluateAdapter);
+    }
 
     private void goSelectWorker() {
         if (!checkInfo()) {
@@ -131,6 +173,32 @@ public class RepairActivity extends BaseClientActivity {
         intent.putExtra("bean", fillBean());
         intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
         startActivity(intent);
+    }
+
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+            finish();
+        }).showDialog();
+    }
+
+    /**
+     * 故障明细
+     */
+    public void addTouble() {
+        Intent intent = new Intent(this, AddTroubleActivity.class);
+        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
+    }
+
+    /**
+     * 选择地址
+     */
+    public void address() {
+//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
+        Intent intent = new Intent(this, SelectAddressActivity.class);
+        startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
+//        } else {
+//            showToast("网络异常，请检查网络");
+//        }
     }
 
     private boolean checkInfo() {
@@ -182,7 +250,6 @@ public class RepairActivity extends BaseClientActivity {
         return true;
     }
 
-
     private RepairOrderEntity fillBean() {
         RepairOrderEntity bean = new RepairOrderEntity();
         bean.setBugEntityList(beanList);
@@ -192,6 +259,7 @@ public class RepairActivity extends BaseClientActivity {
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
+        bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
 
         bean.setRepairContactPhone(etPhone.getText().toString().trim());
         bean.setRepairContacts(etContact.getText().toString().trim());
@@ -203,12 +271,6 @@ public class RepairActivity extends BaseClientActivity {
         return bean;
     }
 
-    private void giveUp() {
-        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
-            finish();
-        }).showDialog();
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -216,53 +278,6 @@ public class RepairActivity extends BaseClientActivity {
         }
         return false;
     }
-
-
-    private void initData() {
-        LoginBean user = EanfangApplication.getApplication().getUser();
-        String name;
-        String area = "";
-        String address = "";
-        //个人客户
-        if (user.getAccount().getDefaultUser().getCompanyId() <= 0) {
-            name = user.getAccount().getRealName();
-            area = Config.get().getAddressByCode(user.getAccount().getAreaCode());
-            address = user.getAccount().getAddress();
-        } else {
-            name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
-            //getOrgUnitEntity() 为空
-//            area = Config.get().getAddressByCode(user.getAccount().getDefaultUser().getCompanyEntity().getOrgUnitEntity().getAreaCode());
-//            address = user.getAccount().getDefaultUser().getCompanyEntity().getOrgUnitEntity().getOfficeAddress();
-        }
-        //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(etCompanyName.getText())) {
-            etCompanyName.setText(name);
-            // 当选择为个人时，拿到的地址没有经纬度 所以进行手动选择
-//            tvAddress.setText(area);
-//            etDetailAddress.setText(address);
-        }
-        if (StringUtils.isEmpty(etContact.getText())) {
-            etContact.setText(user.getAccount().getRealName());
-            etPhone.setText(user.getAccount().getMobile());
-        }
-
-    }
-
-
-    private void initAdapter() {
-        evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
-        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        rvList.setLayoutManager(new LinearLayoutManager(this));
-        rvList.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                beanList.remove(position);
-                evaluateAdapter.notifyDataSetChanged();
-            }
-        });
-        rvList.setAdapter(evaluateAdapter);
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -295,26 +310,6 @@ public class RepairActivity extends BaseClientActivity {
                 break;
 
         }
-    }
-
-    /**
-     * 选择地址
-     */
-    public void address() {
-//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
-        Intent intent = new Intent(this, SelectAddressActivity.class);
-        startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
-//        } else {
-//            showToast("网络异常，请检查网络");
-//        }
-    }
-
-    /**
-     * 故障明细
-     */
-    public void addTouble() {
-        Intent intent = new Intent(this, AddTroubleActivity.class);
-        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
     }
 
     /**
