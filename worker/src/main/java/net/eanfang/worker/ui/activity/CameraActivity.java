@@ -412,6 +412,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         }
     }
 
+
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (null != amapLocation) {

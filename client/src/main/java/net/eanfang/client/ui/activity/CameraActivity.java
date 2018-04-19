@@ -369,6 +369,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
                 Bitmap waterBitmap = BitmapUtil.getBitmap(path);
                 Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
 
+
                 if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
                     String netAddress = tvLocationAddress.getText().toString();
                     drawBitmap(path, watermarkBitmap, netAddress, time);
