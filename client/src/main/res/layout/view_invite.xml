@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/ic_client_invite_back"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -20,35 +20,53 @@
             android:padding="30dp">
 
             <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@mipmap/client_app_qr_500" />
-
-            <TextView
-                android:id="@+id/tv_share"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="50dp"
-                android:text="点击分享一下"
-                android:textColor="@color/client"
-                android:textSize="18sp" />
+                android:src="@mipmap/ic_client_invite" />
 
-            <ImageView
-                android:id="@+id/iv_share2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@mipmap/worker_app_qr_500" />
-
-            <TextView
-                android:id="@+id/tv_share2"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="点击分享一下"
-                android:textColor="@color/client"
-                android:textSize="18sp" />
+                android:layout_marginTop="@dimen/dimen_120"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_share_back">
+
+                    <TextView
+                        android:id="@+id/tv_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_30"
+                        android:gravity="center"
+                        android:text="点击分享客户端"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/textSize_14" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_share_back">
+
+                    <TextView
+                        android:id="@+id/tv_share2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_30"
+                        android:gravity="center"
+                        android:text="点击分享技师端"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/textSize_14" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

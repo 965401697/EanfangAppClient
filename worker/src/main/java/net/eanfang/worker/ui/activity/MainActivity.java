@@ -67,7 +67,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initState();
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
         setHeaders();
@@ -109,7 +108,7 @@ public class MainActivity extends BaseActivity {
                     workerEntity.setAccId(user.getAccount().getAccId());
                     workerEntity.setLat(location.getLatitude() + "");
                     workerEntity.setLon(location.getLongitude() + "");
-                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getCountry()));
+                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getDistrict()));
                     //技师上报位置
                     EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
                             .upJson(JSONObject.toJSONString(workerEntity))
@@ -130,14 +129,6 @@ public class MainActivity extends BaseActivity {
         Var.get("MainActivity.initUpdate").setVar(1);
     }
 
-    /**
-     * 沉浸式状态栏
-     */
-    private void initState() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
-        }
-    }
 
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);

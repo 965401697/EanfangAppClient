@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/titles_bar"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="70dp"
     android:background="@drawable/ic_main_top_back"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/dimen_40">
 
     <ImageView
         android:id="@+id/iv_left"
@@ -19,31 +20,33 @@
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:layout_weight="1"
         android:gravity="center"
         android:text="标题"
         android:textColor="#fff"
-        android:textSize="20sp" />
+        android:textSize="@dimen/textSize_15" />
 
     <ImageView
         android:id="@+id/iv_right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:layout_toLeftOf="@+id/tv_right" />
+        android:layout_toLeftOf="@+id/tv_right"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/tv_right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginRight="15dp"
+        android:gravity="center"
         android:text=" "
         android:textColor="#fff"
-        android:textSize="20sp" />
+        android:textSize="@dimen/textSize_15" />
 
 </RelativeLayout>

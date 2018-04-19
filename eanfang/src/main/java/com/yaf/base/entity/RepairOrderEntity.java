@@ -128,6 +128,25 @@ public class RepairOrderEntity implements Serializable {
     //@TableField(value = "status")
     private Integer status;
 
+    private Long ownerCompanyId;
+    private Long assigneeCompanyId;
+
+    public Long getOwnerCompanyId() {
+        return ownerCompanyId;
+    }
+
+    public void setOwnerCompanyId(Long ownerCompanyId) {
+        this.ownerCompanyId = ownerCompanyId;
+    }
+
+    public Long getAssigneeCompanyId() {
+        return assigneeCompanyId;
+    }
+
+    public void setAssigneeCompanyId(Long assigneeCompanyId) {
+        this.assigneeCompanyId = assigneeCompanyId;
+    }
+
     @TableField(exist = false)
     private RepairFailureEntity failureEntity;
 

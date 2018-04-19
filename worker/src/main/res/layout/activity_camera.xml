@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/fl_camera"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
             android:drawableLeft="@drawable/ic_arrow_back"
@@ -32,7 +32,7 @@
             android:id="@+id/showTakePhotoImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </FrameLayout>
+    </LinearLayout>
 
     <include layout="@layout/header" />
 
@@ -57,12 +57,26 @@
                 android:layout_marginTop="@dimen/dimen_32"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="用户/项目名称"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="用户/项目名称"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="(*)"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
 
                 <EditText
                     android:id="@+id/et_project_name"
@@ -89,12 +103,25 @@
                 android:layout_marginTop="@dimen/dimen_32"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="工程部位/区域"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工程部位/区域"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="(*)"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_region_name"
@@ -122,12 +149,20 @@
                 android:layout_marginTop="@dimen/dimen_32"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="字体颜色"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="字体颜色"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                </LinearLayout>
+
 
                 <RadioGroup
                     android:id="@+id/rg_color"
@@ -177,12 +212,20 @@
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="项目类型"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="项目类型"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                </LinearLayout>
+
 
                 <com.eanfang.witget.CustomRadioGroup
                     android:id="@+id/rg_type"
@@ -196,6 +239,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:checked="true"
@@ -209,6 +253,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_20"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -221,6 +266,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_20"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -233,6 +279,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_20"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -245,6 +292,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="@dimen/dimen_15"
+                        android:layout_marginTop="@dimen/dimen_20"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:gravity="center"
@@ -284,6 +332,13 @@
                     android:text="施工地址"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(*)"
+                    android:textColor="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/tv_select_other_address"
@@ -347,6 +402,13 @@
                     android:text="工程内容"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(*)"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 

@@ -35,6 +35,15 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
+    <style name="BaseDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Actionbar color -->
@@ -104,6 +113,7 @@
         <item name="android:layout_height">@dimen/dimen_1</item>
         <item name="android:background">@color/color_new_line</item>
     </style>
+
     <style name="style_client_work_meun">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>

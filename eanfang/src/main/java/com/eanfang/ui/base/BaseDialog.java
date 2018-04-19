@@ -4,8 +4,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -26,17 +31,18 @@ public abstract class BaseDialog extends Dialog {
         super(context);
         this.context = context;
         setCanceledOnTouchOutside(true);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
     }
 
     public BaseDialog(Activity context, boolean isfull) {
-        super(context, R.style.translucent_noTitle);
+        super(context, R.style.BaseDialog);
         this.context = context;
         if (isfull) {
             setOwnerActivity((Activity) context);
         }
         setCanceledOnTouchOutside(true);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
     }
