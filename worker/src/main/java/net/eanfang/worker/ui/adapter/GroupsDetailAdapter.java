@@ -26,9 +26,9 @@ public class GroupsDetailAdapter extends BaseQuickAdapter<FriendListBean, BaseVi
     protected void convert(BaseViewHolder helper, FriendListBean item) {
         ((SimpleDraweeView) helper.getView(R.id.iv_icon)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatar()));
         if (getData().size() - 2 == helper.getAdapterPosition()) {
-            helper.setText(R.id.tv_name, "减");
+            helper.setText(R.id.tv_name, "移除");
         } else if (getData().size() - 1 == helper.getAdapterPosition()) {
-            helper.setText(R.id.tv_name, "加");
+            helper.setText(R.id.tv_name, "添加");
         } else {
 
             helper.setText(R.id.tv_name, item.getNickName());

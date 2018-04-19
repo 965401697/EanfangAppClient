@@ -68,8 +68,6 @@ public class GroupDetailActivity extends BaseWorkerActivity {
                         mGroupsDetailAdapter.addData(bean);
                     }
                 }));
-
-
     }
 
     private void initViews() {
