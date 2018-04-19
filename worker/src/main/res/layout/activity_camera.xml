@@ -57,12 +57,26 @@
                 android:layout_marginTop="@dimen/dimen_32"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="用户/项目名称"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="用户/项目名称"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="(*)"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+
 
                 <EditText
                     android:id="@+id/et_project_name"
@@ -89,12 +103,25 @@
                 android:layout_marginTop="@dimen/dimen_32"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="工程部位/区域"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="工程部位/区域"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="(*)"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_region_name"
@@ -122,12 +149,20 @@
                 android:layout_marginTop="@dimen/dimen_32"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="字体颜色"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="字体颜色"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                </LinearLayout>
+
 
                 <RadioGroup
                     android:id="@+id/rg_color"
@@ -177,12 +212,20 @@
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="项目类型"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="项目类型"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                </LinearLayout>
+
 
                 <com.eanfang.witget.CustomRadioGroup
                     android:id="@+id/rg_type"
@@ -286,6 +329,13 @@
                     android:textSize="@dimen/textSize_15" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(*)"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
                     android:id="@+id/tv_select_other_address"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -347,6 +397,13 @@
                     android:text="工程内容"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(*)"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 

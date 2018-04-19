@@ -186,6 +186,14 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         if (StringUtils.isEmpty(creatUser)) {
             creatUser = "--";
         }
+
+        if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
+            etAddress.setVisibility(View.GONE);
+            tvLocationAddress.setVisibility(View.VISIBLE);
+        } else {
+            etAddress.setVisibility(View.VISIBLE);
+            tvLocationAddress.setVisibility(View.GONE);
+        }
     }
 
     /**
