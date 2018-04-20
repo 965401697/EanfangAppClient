@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity {
 
         getBaseData();
         getConst();
-        PermissionUtils.get(this).getStoragePermission(() -> {
+        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
         });
         submitLocation();
         privoderMy();
@@ -98,23 +98,20 @@ public class MainActivity extends BaseActivity {
      */
     private void submitLocation() {
         new Thread(() -> {
-            PermissionUtils.get(this).getLocationPermission(() -> {
-                LocationUtil.location(this, (location) -> {
-                    LoginBean user = EanfangApplication.getApplication().getUser();
-                    if (user == null || StringUtils.isEmpty(user.getToken())) {
-                        return;
-                    }
-                    WorkerEntity workerEntity = new WorkerEntity();
-                    workerEntity.setAccId(user.getAccount().getAccId());
-                    workerEntity.setLat(location.getLatitude() + "");
-                    workerEntity.setLon(location.getLongitude() + "");
-                    workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getDistrict()));
-                    //技师上报位置
-                    EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
-                            .upJson(JSONObject.toJSONString(workerEntity))
-                            .execute(new EanfangCallback(this, false, String.class));
-                });
-
+            LocationUtil.location(this, (location) -> {
+                LoginBean user = EanfangApplication.getApplication().getUser();
+                if (user == null || StringUtils.isEmpty(user.getToken())) {
+                    return;
+                }
+                WorkerEntity workerEntity = new WorkerEntity();
+                workerEntity.setAccId(user.getAccount().getAccId());
+                workerEntity.setLat(location.getLatitude() + "");
+                workerEntity.setLon(location.getLongitude() + "");
+                workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getDistrict()));
+                //技师上报位置
+                EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                        .upJson(JSONObject.toJSONString(workerEntity))
+                        .execute(new EanfangCallback(this, false, String.class));
             });
         }).start();
     }
