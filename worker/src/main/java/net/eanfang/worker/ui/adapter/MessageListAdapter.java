@@ -27,12 +27,19 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
 
         helper.setText(R.id.tv_titles, GetConstDataUtils.getNoticeTypeList().get(item.getNoticeType()));
         helper.setText(R.id.tv_content, item.getContent());
+
+        // 0 未读  1 已读
         if (item.getStatus() == 0) {
-            helper.setText(R.id.tv_status, "未读");
+            helper.setTextColor(R.id.tv_titles, Color.parseColor("#FF333333"));
+            helper.setTextColor(R.id.tv_content, Color.parseColor("#FF333333"));
+            helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#FF333333"));
+            helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#FF333333"));
             helper.setVisible(R.id.iv_header, true);
         } else if (item.getStatus() == 1) {
-            helper.setText(R.id.tv_status, "已读");
-            helper.setTextColor(R.id.tv_status, Color.parseColor("#0000ff"));
+            helper.setTextColor(R.id.tv_titles, Color.parseColor("#FF999999"));
+            helper.setTextColor(R.id.tv_content,Color.parseColor("#FF999999"));
+            helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#FF999999"));
+            helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#FF999999"));
             helper.setVisible(R.id.iv_header, false);
         }
 

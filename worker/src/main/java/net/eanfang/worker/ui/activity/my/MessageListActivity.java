@@ -132,6 +132,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
+                messageListAdapter.notifyDataSetChanged();
                 showToast("暂无数据");
             } else {
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
