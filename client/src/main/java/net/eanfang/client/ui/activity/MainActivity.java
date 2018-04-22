@@ -71,7 +71,7 @@ public class MainActivity extends BaseClientActivity {
         initXinGe();
         getBaseData();
         getConst();
-        PermissionUtils.get(this).getStoragePermission(() -> {
+        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
         });
     }
 

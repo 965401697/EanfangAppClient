@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.MessageDetailActivity;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
@@ -84,15 +86,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mDataList.get(position).getId())
-                        .execute(new EanfangCallback<NoticeEntity>(activity, false, NoticeEntity.class, (bean) -> {
-                            new MessageDetailView(MessageListActivity.this, bean, new MessageDetailView.RefreshListener() {
-                                @Override
-                                public void refreshData() {
-                                    getJPushMessage();
-                                }
-                            }).show();
-                        }));
+                startActivity(new Intent(MessageListActivity.this, MessageDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
             }
         });
     }
@@ -130,12 +124,13 @@ public class MessageListActivity extends BaseWorkerActivity implements
 
     @Override
     public void onDataReceived() {
+        messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
                 messageListAdapter.notifyDataSetChanged();
                 showToast("暂无数据");
             } else {
-                messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
+
                 rvList.setAdapter(messageListAdapter);
                 messageListAdapter.notifyDataSetChanged();
                 showToast("已是最新数据");
@@ -147,7 +142,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
             } else {
 //                tvNoData.setVisibility(View.GONE);
 //                msgRefresh.setVisibility(View.VISIBLE);
-                messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
                 messageListAdapter.notifyDataSetChanged();
             }

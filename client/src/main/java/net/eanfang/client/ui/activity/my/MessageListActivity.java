@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.my;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.MessageDetailActivity;
 import net.eanfang.client.ui.adapter.MessageListAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
@@ -81,10 +83,7 @@ public class MessageListActivity extends BaseClientActivity implements
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mDataList.get(position).getId())
-                        .execute(new EanfangCallback<NoticeEntity>(activity, false, NoticeEntity.class, (bean) -> {
-                            new MessageDetailView(MessageListActivity.this, bean, () -> getJPushMessage()).show();
-                        }));
+                startActivity(new Intent(MessageListActivity.this, MessageDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
             }
         });
     }

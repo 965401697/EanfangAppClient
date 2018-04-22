@@ -120,6 +120,25 @@ public class PermissionUtils {
         }
     }
 
+    /**
+     * 请求数据读取  写入权限  位置权限
+     *
+     * @param callBack
+     */
+    public void getStorageAndLocationPermission(PermissionsCallBack callBack) {
+        if (!hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                || !hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                || !hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                || !hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                || !hasPermission(Manifest.permission.READ_PHONE_STATE)) {
+            getPermission(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE}, callBack);
+        } else {
+            callBack.callBack();
+        }
+
+    }
 
 }
 

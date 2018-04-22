@@ -8,13 +8,10 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -22,17 +19,13 @@ import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  * Created by MrHou
@@ -160,31 +153,7 @@ public class LoginActivity extends BaseClientActivity {
 
     }
 
-    /**
-     * 密码登录
-     *
-     * @param phone 电话号
-     * @param pwd   验证码
-     */
-    private void setLogin(String phone, String pwd) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("username", phone);
-            object.put("password", pwd);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        EanfangHttp.post(UserApi.APP_LOGIN)
-                .upJson(object.toJSONString())
-                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, true, LoginBean.class, (bean) -> {
-                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
-                    EanfangHttp.setToken(bean.getToken());
-
-                    goMain();
-                }));
-
-    }
 
     /**
      * 获取验证码
@@ -229,25 +198,7 @@ public class LoginActivity extends BaseClientActivity {
         }
     }
 
-//    @Override
-//    public void onValidationSucceeded() {
-//        //Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    public void onValidationFailed(List<ValidationError> errors) {
-//        for (ValidationError error : errors) {
-//            View view = error.getView();
-//            String message = error.getCollatedErrorMessage(this);
-//
-//            // Display error messages ;)
-//            if (view instanceof EditText) {
-//                ((EditText) view).setError(message);
-//            } else {
-//                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-//            }
-//        }
-//    }
+
 
 
     //跳转首页

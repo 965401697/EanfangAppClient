@@ -1,5 +1,6 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce;
 
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -11,14 +12,14 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
-import net.eanfang.worker.R;
+import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * @author Guanluocang
- * @date on 2018/4/20  11:51
+ * @date on 2018/4/20  13:29
  * @decision 业务通知详情
  */
 public class MessageDetailActivity extends BaseActivity {
@@ -36,21 +37,21 @@ public class MessageDetailActivity extends BaseActivity {
     TextView tvFinishTime;
     @BindView(R.id.tv_detailTime)
     TextView tvDetailTime;
-
     //消息ID
     private Long mInfoId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meaasge_detail);
+        setContentView(R.layout.activity_message_detail);
         ButterKnife.bind(this);
         initView();
         initData();
     }
 
+
     /**
-     * @date on 2018/4/20  11:47
+     * @date on 2018/4/20  13:30
      * @decision 初始化视图
      */
     private void initView() {

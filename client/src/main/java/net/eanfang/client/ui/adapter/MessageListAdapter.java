@@ -28,16 +28,16 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
         helper.setText(R.id.tv_titles, GetConstDataUtils.getNoticeTypeList().get(item.getNoticeType()));
         helper.setText(R.id.tv_content, item.getContent());
         if (item.getStatus() == 0) {
-            helper.setTextColor(R.id.tv_titles, Color.parseColor("#FF333333"));
-            helper.setTextColor(R.id.tv_content, Color.parseColor("#FF333333"));
-            helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#FF333333"));
-            helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#FF333333"));
+            helper.setTextColor(R.id.tv_titles, Color.parseColor("#333333"));
+            helper.setTextColor(R.id.tv_content, Color.parseColor("#333333"));
+            helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#333333"));
+            helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#333333"));
             helper.setVisible(R.id.iv_header, true);
         } else if (item.getStatus() == 1) {
-            helper.setTextColor(R.id.tv_titles, Color.parseColor("#FF999999"));
-            helper.setTextColor(R.id.tv_content,Color.parseColor("#FF999999"));
-            helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#FF999999"));
-            helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#FF999999"));
+            helper.setTextColor(R.id.tv_titles, Color.parseColor("#999999"));
+            helper.setTextColor(R.id.tv_content,Color.parseColor("#999999"));
+            helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#999999"));
+            helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#999999"));
             helper.setVisible(R.id.iv_header, false);
         }
 
