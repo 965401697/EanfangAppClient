@@ -24,6 +24,7 @@ import net.eanfang.worker.ui.widget.MessageStateView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
 
 
 /**
@@ -101,6 +102,7 @@ public class SettingActivity extends BaseWorkerActivity {
     private void signout() {
         EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
+                    RongIM.getInstance().logout();//退出融云
                     showToast("退出成功");
                 }));
     }

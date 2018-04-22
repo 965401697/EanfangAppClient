@@ -238,9 +238,18 @@ public interface UserApi {
      */
     String POST_GROUP_NUM = BuildConfig.API_HOST + "/yaf_im/sysgroupuser/list";
     /**
-     * 群成员移除
+     * /**
+     * 群组详情
      */
-    String POST_GROUP_REMOVE = BuildConfig.API_HOST + "/yaf_im/sysgroup/quit";
+    String POST_GROUP_DETAIL = BuildConfig.API_HOST + "/yaf_im/sysgroup/detail";
+    /**
+     * 退出群组
+     */
+    String POST_GROUP_QUIT = BuildConfig.API_HOST + "/yaf_im/sysgroup/quit";
+    /**
+     * 销毁群组
+     */
+    String POST_GROUP_DELETE = BuildConfig.API_HOST + "/yaf_im/sysgroup/delete";
 
     /**
      * 群成员添加

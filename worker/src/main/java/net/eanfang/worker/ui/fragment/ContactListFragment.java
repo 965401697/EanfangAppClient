@@ -10,22 +10,28 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupsBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.ToastUtil;
 import com.eanfang.util.Var;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
-import net.eanfang.worker.ui.activity.worksapce.MyFriendsListActivity;
+import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
+import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -38,6 +44,9 @@ import q.rorbin.badgeview.QBadgeView;
  */
 
 public class ContactListFragment extends BaseFragment {
+
+    private List<GroupsBean> groupsBeanList = new ArrayList<>();
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -45,7 +54,7 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-
+        initGroupInfo();
     }
 
     @Override
@@ -56,7 +65,7 @@ public class ContactListFragment extends BaseFragment {
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                 .build();
         fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
@@ -128,9 +137,9 @@ public class ContactListFragment extends BaseFragment {
             @Override
             public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
                 if (uiConversation.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
+                    UserInfo userInfo = new UserInfo(uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle(), uiConversation.getIconUrl());
                     Intent intent = new Intent(getActivity(), SystemMessageActivity.class);
-                    intent.putExtra("userId", uiConversation.getConversationTargetId());
-                    intent.putExtra("content", uiConversation.getConversationContent());
+                    intent.putExtra("sendUserInfo", userInfo);
                     startActivity(intent);
                     return true;
                 } else {
@@ -139,7 +148,41 @@ public class ContactListFragment extends BaseFragment {
             }
         });
 
+        /**
+         * 获取群组头像和名称
+         */
+        //提供融云的头像和昵称
+        RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
+            @Override
+            public Group getGroupInfo(String s) {
+                for (GroupsBean b : groupsBeanList) {
+                    if (s.equals(b.getRcloudGroupId())) {
+                        Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse("https://imgcache.cjmx.com/star/201512/20151207142700908.jpg"));
 
+                        RongIM.getInstance().refreshGroupInfoCache(group);
+
+                        return group;
+                    }
+                }
+                return null;
+            }
+
+        }, true);
+
+    }
+
+    private void initGroupInfo() {
+        EanfangHttp.post(UserApi.POST_GET_GROUP)
+                .params("accId", EanfangApplication.get().getAccId())
+                .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
+                    if (list.size() > 0) {
+                        groupsBeanList.addAll(list);
+                        for (int i = 0; i < list.size(); i++) {
+                            GroupsBean groupsBean = (GroupsBean) list.get(i);
+                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
+                        }
+                    }
+                }));
     }
 
     @Override

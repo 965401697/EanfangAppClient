@@ -1,14 +1,12 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.im;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,7 +19,6 @@ import com.eanfang.model.FriendListBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -30,11 +27,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -227,7 +224,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             }
         }
 
-        EanfangHttp.post(UserApi.POST_GROUP_REMOVE)
+        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
                 .params("groupId", groupId)
                 .params("ids", buffer.toString())
 //                .params("ids", userIdList.toString())
@@ -282,6 +279,19 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                                 .params("ids", userId)
                                 .execute(new EanfangCallback<org.json.JSONObject>(MyFriendsListActivity.this, true, org.json.JSONObject.class, (bean) -> {
                                     mFriendsAdapter.remove(position);
+
+                                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, userId, new RongIMClient.ResultCallback<Boolean>() {
+                                        @Override
+                                        public void onSuccess(Boolean aBoolean) {
+
+                                        }
+
+                                        @Override
+                                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                        }
+                                    });
+
                                 }));
                         dialog.dismiss();
                     }

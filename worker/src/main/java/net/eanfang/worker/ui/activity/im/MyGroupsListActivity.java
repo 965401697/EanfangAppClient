@@ -1,34 +1,25 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.im;
 
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupsBean;
-import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.adapter.GroupsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
-import io.rong.imlib.model.UserInfo;
 
 public class MyGroupsListActivity extends BaseWorkerActivity {
 
@@ -55,10 +46,10 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<GroupsBean>(this, true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
                         mGroupsAdapter.setNewData(list);
-                        for (int i = 0; i < list.size(); i++) {
-                            GroupsBean groupsBean = (GroupsBean) list.get(i);
-                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
-                        }
+//                        for (int i = 0; i < list.size(); i++) {
+//                            GroupsBean groupsBean = (GroupsBean) list.get(i);
+//                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
+//                        }
                     }
                 }));
     }
@@ -79,19 +70,6 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
         mGroupsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                //提供融云的头像和昵称
-                RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-                    @Override
-                    public Group getGroupInfo(String s) {
-
-                        GroupsBean groupsBean = (GroupsBean) adapter.getData().get(position);
-                        Group group = new Group(groupsBean.getRcloudGroupId(), groupsBean.getGroupName(), Uri.parse("https://imgcache.cjmx.com/star/201512/20151207142700908.jpg"));
-                        return group;
-
-                    }
-                }, true);
-
 
                 RongIM.getInstance().startConversation(MyGroupsListActivity.this, Conversation.ConversationType.GROUP, ((GroupsBean) adapter.getData().get(position)).getRcloudGroupId(), ((GroupsBean) adapter.getData().get(position)).getGroupName());
 

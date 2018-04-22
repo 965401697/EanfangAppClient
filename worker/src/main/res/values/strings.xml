@@ -62,4 +62,9 @@
     <string name="group_announcement">群公告</string>
     <string name="quit_group">退出群</string>
     <string name="dismiss_group">解散</string>
+    <string name="empty_group_notice">请编辑群公告</string>
+    <string name="clean_message">清除聊天记录</string>
+    <string name="message_notice">消息免打扰</string>
+    <string name="set_top">会话置顶</string>
+    <string name="group_notice_prefix">\@所有人\n</string>
 </resources>

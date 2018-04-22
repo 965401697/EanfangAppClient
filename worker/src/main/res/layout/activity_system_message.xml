@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,22 +10,25 @@
     <include layout="@layout/header" />
 
     <RelativeLayout
+        android:id="@+id/ll_item"
         android:layout_width="wrap_content"
-        android:layout_height="120dp">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_iocn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_launcher" />
+            fresco:placeholderImage="@mipmap/ic_header" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/iv_iocn"
+            android:layout_toRightOf="@+id/iv_icon"
             android:text="名字" />
 
 
@@ -32,8 +36,8 @@
             android:id="@+id/tv_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_iocn"
-            android:layout_toRightOf="@+id/iv_iocn"
+            android:layout_alignBottom="@+id/iv_icon"
+            android:layout_toRightOf="@+id/iv_icon"
             android:text="消息" />
 
         <Button
@@ -43,7 +47,18 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:text="接受" />
+            android:text="同意"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="已同意"
+            android:visibility="visible" />
     </RelativeLayout>
 
 </LinearLayout>

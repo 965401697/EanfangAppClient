@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.MyFriendsListActivity">
+    tools:context="net.eanfang.worker.ui.activity.im.MyFriendsListActivity">
 
     <include layout="@layout/header" />
 

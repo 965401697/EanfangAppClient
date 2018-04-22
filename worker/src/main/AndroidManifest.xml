@@ -222,7 +222,7 @@
 
         <!-- 会话界面 -->
         <activity
-            android:name=".ui.activity.worksapce.ConversationActivity"
+            android:name=".ui.activity.im.ConversationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -236,7 +236,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.worksapce.MyFriendsListActivity" />
+        <activity android:name=".ui.activity.im.MyFriendsListActivity" />
         <!-- 融云配置broadcastReceiver -->
         <receiver
             android:name=".ui.receiver.RongYunNotificationReceiver"
@@ -251,17 +251,16 @@
         </receiver>
 
         <activity android:name=".ui.activity.worksapce.AddFriendActivity" />
-        <activity android:name=".ui.activity.worksapce.GroupCreatActivity" />
-        <activity android:name=".ui.activity.worksapce.MyGroupsListActivity" />
-        <activity android:name=".ui.activity.worksapce.GroupDetailActivity" />
+        <activity android:name=".ui.activity.im.GroupCreatActivity" />
+        <activity android:name=".ui.activity.im.MyGroupsListActivity" />
+        <activity android:name=".ui.activity.im.GroupDetailActivity" />
         <activity android:name=".ui.activity.worksapce.SystemMessageActivity" />
 
-        <!--聚合会话列表-->
+        <!-- 聚合会话列表 -->
         <activity
-            android:name=".ui.activity.worksapce.SubConversationListActivtiy"
+            android:name=".ui.activity.im.SubConversationListActivtiy"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -273,6 +272,8 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
+        <activity android:name=".ui.activity.im.GroupNoticeActivity"></activity>
     </application>
 
 </manifest>

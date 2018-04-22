@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_conversation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,8 +7,8 @@
     <include layout="@layout/header" />
 
     <fragment
-        android:id="@+id/conversation"
-        android:name="io.rong.imkit.fragment.ConversationFragment"
+        android:id="@+id/subconversationlist"
+        android:name="io.rong.imkit.fragment.SubConversationListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
