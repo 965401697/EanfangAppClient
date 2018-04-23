@@ -238,6 +238,10 @@ public interface UserApi {
      */
     String POST_GROUP_NUM = BuildConfig.API_HOST + "/yaf_im/sysgroupuser/list";
     /**
+     * 更新群组信息
+     */
+    String POST_UPDATA_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/update";
+    /**
      * /**
      * 群组详情
      */

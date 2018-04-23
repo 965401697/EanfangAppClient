@@ -250,7 +250,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.worksapce.AddFriendActivity" />
+        <activity android:name=".ui.activity.im.AddFriendActivity" />
         <activity android:name=".ui.activity.im.GroupCreatActivity" />
         <activity android:name=".ui.activity.im.MyGroupsListActivity" />
         <activity android:name=".ui.activity.im.GroupDetailActivity" />
@@ -273,7 +273,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
-        <activity android:name=".ui.activity.im.GroupNoticeActivity"></activity>
+        <activity android:name=".ui.activity.im.GroupNoticeActivity" />
+        <activity android:name=".ui.activity.im.GroupUpdataNameActivity"></activity>
     </application>
 
 </manifest>

@@ -47,6 +47,15 @@ public class GroupDetailBean implements Serializable {
         private int groupId;
         private String groupName;
         private String rcloudGroupId;
+        private String headPortrait;
+
+        public String getHeadPortrait() {
+            return headPortrait;
+        }
+
+        public void setHeadPortrait(String headPortrait) {
+            this.headPortrait = headPortrait;
+        }
 
         public String getCreateTime() {
             return createTime;

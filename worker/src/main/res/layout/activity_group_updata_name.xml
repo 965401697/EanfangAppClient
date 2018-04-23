@@ -4,26 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.im.AddFriendActivity">
+    tools:context="net.eanfang.worker.ui.activity.im.GroupUpdataNameActivity">
+
 
     <include layout="@layout/header" />
 
     <EditText
-        android:id="@+id/et_phone"
+        android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:drawableLeft="@mipmap/ic_contact_search"
         android:drawablePadding="5dp"
-        android:hint="输入好友手机号"
+        android:hint="输入群组的名称"
         android:inputType="number"
-        android:maxEms="11"
         android:padding="10dp" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
- />
 
 </LinearLayout>

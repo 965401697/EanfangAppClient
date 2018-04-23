@@ -18,7 +18,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.AddFriendActivity;
+import net.eanfang.worker.ui.activity.im.AddFriendActivity;
 import net.eanfang.worker.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;

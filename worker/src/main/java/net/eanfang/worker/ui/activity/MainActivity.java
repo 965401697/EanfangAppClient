@@ -327,5 +327,8 @@ public class MainActivity extends BaseActivity {
         RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
 
+
+
+
 }
 

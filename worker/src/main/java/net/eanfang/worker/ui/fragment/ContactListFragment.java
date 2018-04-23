@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -157,7 +158,7 @@ public class ContactListFragment extends BaseFragment {
             public Group getGroupInfo(String s) {
                 for (GroupsBean b : groupsBeanList) {
                     if (s.equals(b.getRcloudGroupId())) {
-                        Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse("https://imgcache.cjmx.com/star/201512/20151207142700908.jpg"));
+                        Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
 
                         RongIM.getInstance().refreshGroupInfoCache(group);
 

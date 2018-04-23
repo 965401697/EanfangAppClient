@@ -16,6 +16,15 @@ public class GroupsBean {
     private String groupName;
     private String groupIcon;
     private String rcloudGroupId;
+    private String headPortrait;
+
+    public String getHeadPortrait() {
+        return headPortrait;
+    }
+
+    public void setHeadPortrait(String headPortrait) {
+        this.headPortrait = headPortrait;
+    }
 
     public int getGroupId() {
         return groupId;

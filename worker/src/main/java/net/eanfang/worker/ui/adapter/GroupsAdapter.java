@@ -1,8 +1,12 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.net.Uri;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.BuildConfig;
 import com.eanfang.model.GroupsBean;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -19,7 +23,7 @@ public class GroupsAdapter extends BaseQuickAdapter<GroupsBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, GroupsBean item) {
-//        ((ImageView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatar()));
+        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getHeadPortrait()));
         helper.setText(R.id.tv_friend_name, item.getGroupName());
     }
 }

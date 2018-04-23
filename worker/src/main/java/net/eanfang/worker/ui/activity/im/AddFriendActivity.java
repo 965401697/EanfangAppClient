@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.im;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

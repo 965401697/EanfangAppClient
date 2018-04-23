@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -33,6 +34,7 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 public class MyFriendsListActivity extends BaseWorkerActivity {
@@ -45,6 +47,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     private ArrayList<FriendListBean> mFriendListBeanArrayList;
     private String groupId;
     private String title;
+    private FriendListBean currentBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +56,10 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
 
         setLeftBack();
-        //1:创建选着好友  2：群组删除还有 3：群组添加好友
+        //1:创建选着好友  2：群组删除还有 3：群组添加好友  4,转让群主
         flag = getIntent().getIntExtra("flag", 0);
         rightTitleOnClick(flag);
         initViews();
-
         initData();
     }
 
@@ -79,6 +81,10 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             setRightTitle("确定");
             groupId = getIntent().getStringExtra("groupId");
             startTransaction(true);
+        } else if (flag == 4) {
+            setTitle("转让群主");
+            setRightTitle("确定");
+            groupId = getIntent().getStringExtra("groupId");
         } else {
             setTitle("我的好友");
         }
@@ -88,13 +94,20 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 if (flag == 1) {
-                    Intent intent = new Intent(MyFriendsListActivity.this, GroupCreatActivity.class);
-                    intent.putStringArrayListExtra("userIdList", userIdList);
-                    startActivity(intent);
+                    if (userIdList.size() == 1) {
+                        //说明单聊
+                        RongIM.getInstance().startPrivateChat(MyFriendsListActivity.this, userIdList.get(0), currentBean.getNickName());
+                    } else {
+                        Intent intent = new Intent(MyFriendsListActivity.this, GroupCreatActivity.class);
+                        intent.putStringArrayListExtra("userIdList", userIdList);
+                        startActivity(intent);
+                    }
                 } else if (flag == 2) {
                     removeNumber();
                 } else if (flag == 3) {
                     AddNumber();
+                } else if (flag == 4) {
+                    transfer();
                 }
             }
         });
@@ -110,8 +123,6 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                         .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                             if (list.size() > 0) {
                                 mFriendsAdapter.setNewData(list);
-
-
                                 //提供融云的头像和昵称
                                 RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                                     @Override
@@ -126,26 +137,27 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                                 }, true);
                             }
                         }));
+            } else if (flag == 4) {
+                //查找群内成员
+                EanfangHttp.post(UserApi.POST_GROUP_NUM)
+                        .params("groupId", groupId)
+                        .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
+                            if (list.size() > 0) {
+                                ArrayList<FriendListBean> friendListBeanArrayList = new ArrayList<>();
+                                for (int i = 0; i < list.size(); i++) {
+                                    if (!(String.valueOf(EanfangApplication.getApplication().getAccId()).equals(list.get(i).getAccId()))) {
+                                        friendListBeanArrayList.add(list.get(i));
+                                    }
+                                }
+                                mFriendsAdapter.setNewData(friendListBeanArrayList);
+                            }
+                        }));
             } else {
                 EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
                         .params("accId", EanfangApplication.get().getAccId())
                         .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                             if (list.size() > 0) {
                                 mFriendsAdapter.setNewData(list);
-
-
-//                                //提供融云的头像和昵称
-//                                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-//                                    @Override
-//                                    public UserInfo getUserInfo(String s) {
-//                                        for (int i = 0; i < list.size(); i++) {
-//                                            FriendListBean friendListBean = (FriendListBean) list.get(i);
-//                                            UserInfo userInfo = new UserInfo(friendListBean.getAccId(), friendListBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + friendListBean.getAvatar()));
-//                                            return userInfo;
-//                                        }
-//                                        return null;
-//                                    }
-//                                }, true);
                             }
                         }));
             }
@@ -199,12 +211,35 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 //创建群组选着好友
                 if (view.getId() == R.id.cb_checked) {
-                    FriendListBean bean = (FriendListBean) adapter.getData().get(position);
-                    if (bean.getFlag() == 1) {
-                        //移除
-                        userIdList.remove(bean.getAccId());
+
+                    if (flag == 4) {
+
+                        if (userIdList.size() == 1) {
+                            ToastUtil.get().showToast(MyFriendsListActivity.this, "只能选择一个好友为群主");
+                            return;
+                        }
+                        FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+                        if (bean.getFlag() == 1) {
+                            //移除
+                            userIdList.remove(bean.getAccId());
+                            bean.setFlag(0);
+                        } else {
+                            userIdList.add(bean.getAccId());
+                            bean.setFlag(1);
+                            currentBean = bean;
+                        }
+
                     } else {
-                        userIdList.add(bean.getAccId());
+                        FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+                        if (bean.getFlag() == 1) {
+                            //移除
+                            userIdList.remove(bean.getAccId());
+                            bean.setFlag(0);
+                        } else {
+                            userIdList.add(bean.getAccId());
+                            bean.setFlag(1);
+                            currentBean = bean;
+                        }
                     }
                 }
             }
@@ -233,6 +268,36 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                     ToastUtil.get().showToast(MyFriendsListActivity.this, "移除成功");
                     endTransaction(true);
                 }));
+    }
+
+    /**
+     * 转让群主
+     */
+    private void transfer() {
+
+        if (userIdList.size() == 0) {
+            ToastUtil.get().showToast(MyFriendsListActivity.this, "必须选择一个还有");
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("groupId", groupId);
+            jsonObject.put("create_user", userIdList.get(0));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //转让群主
+        EanfangHttp.post(UserApi.POST_UPDATA_GROUP)
+                .upJson(jsonObject)
+                .execute(new EanfangCallback<JSONObject>(MyFriendsListActivity.this, true, JSONObject.class, (JSONObject) -> {
+                    ToastUtil.get().showToast(MyFriendsListActivity.this, "转让成功");
+                    setResult(RESULT_OK);
+                    finish();
+                }));
+
     }
 
     /**
