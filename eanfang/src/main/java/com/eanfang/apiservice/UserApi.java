@@ -263,5 +263,13 @@ public interface UserApi {
      * 查询没有在群组的成员
      */
     String POST_GROUP_NOJOIN = BuildConfig.API_HOST + "/yaf_sys/outer2user/findJoin";
+    /**
+     * 全员禁言
+     */
+    String POST_GROUP_GAG = BuildConfig.API_HOST + "/yaf_im/sysgroup/gag";
+    /**
+     * 全员解禁
+     */
+    String POST_GROUP_NOGAG = BuildConfig.API_HOST + "/yaf_im/sysgroup/unGag";
 
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -55,11 +56,12 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-        initGroupInfo();
+
     }
 
     @Override
     protected void initView() {
+
 
         ConversationListFragment fragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
@@ -149,6 +151,7 @@ public class ContactListFragment extends BaseFragment {
             }
         });
 
+
         /**
          * 获取群组头像和名称
          */
@@ -156,15 +159,8 @@ public class ContactListFragment extends BaseFragment {
         RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
             @Override
             public Group getGroupInfo(String s) {
-                for (GroupsBean b : groupsBeanList) {
-                    if (s.equals(b.getRcloudGroupId())) {
-                        Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
 
-                        RongIM.getInstance().refreshGroupInfoCache(group);
-
-                        return group;
-                    }
-                }
+                initGroupInfo();
                 return null;
             }
 
@@ -177,14 +173,20 @@ public class ContactListFragment extends BaseFragment {
                 .params("accId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
-                        groupsBeanList.addAll(list);
-                        for (int i = 0; i < list.size(); i++) {
-                            GroupsBean groupsBean = (GroupsBean) list.get(i);
-                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
+
+                        for (GroupsBean b : list) {
+
+                            Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
+
+                            RongIM.getInstance().refreshGroupInfoCache(group);
+
+                            EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
                         }
                     }
                 }));
+
     }
+
 
     @Override
     protected void setListener() {

@@ -123,18 +123,6 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                         .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                             if (list.size() > 0) {
                                 mFriendsAdapter.setNewData(list);
-                                //提供融云的头像和昵称
-                                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                                    @Override
-                                    public UserInfo getUserInfo(String s) {
-                                        for (int i = 0; i < list.size(); i++) {
-                                            FriendListBean friendListBean = (FriendListBean) list.get(i);
-                                            UserInfo userInfo = new UserInfo(friendListBean.getAccId(), friendListBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + friendListBean.getAvatar()));
-                                            return userInfo;
-                                        }
-                                        return null;
-                                    }
-                                }, true);
                             }
                         }));
             } else if (flag == 4) {

@@ -66,10 +66,14 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     RelativeLayout groupMemberSizeItem;
     @BindView(R.id.ll_group_port)
     LinearLayout llGroupPort;
+    @BindView(R.id.ll_shut_up)
+    LinearLayout ll_shut_up;
     @BindView(R.id.group_transfer)
     LinearLayout group_transfer;
     @BindView(R.id.sw_group_top)
     TextView swGroupTop;
+    @BindView(R.id.group_shutup)
+    TextView group_shutup;
     @BindView(R.id.sw_group_notfaction)
     TextView swGroupNotfaction;
 
@@ -79,7 +83,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private String headPortrait;
     private String id;
     private String groupId;
-    private boolean isChecked;
+    private boolean isCheckedTop;//置顶
+    private boolean isCheckedNo;//免打扰
+    private boolean isCheckedGag;//禁言
     private boolean isOwner;//是不是群主
     private final int HEADER_PIC = 107;
     private String imgKey;
@@ -143,10 +149,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                             isOwner = true;
                             groupQuit.setText("解散并退出");
                             group_transfer.setVisibility(View.VISIBLE);
+                            ll_shut_up.setVisibility(View.VISIBLE);
                         } else {
                             isOwner = false;
                             groupQuit.setText("删除并退出");
                             group_transfer.setVisibility(View.GONE);
+                            ll_shut_up.setVisibility(View.GONE);
                         }
                     }
                 }));
@@ -178,7 +186,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
 
-    @OnClick({R.id.ll_group_port, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.group_quit})
+    @OnClick({R.id.ll_group_port, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.ll_shut_up, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_group_port:
@@ -187,6 +195,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             case R.id.ll_group_name:
                 Intent intent = new Intent(this, GroupUpdataNameActivity.class);
                 startActivityForResult(intent, UPDATA_NAME_REQEST);
+                break;
+            case R.id.ll_shut_up://全员禁言
+                setGagOrNo();
                 break;
             case R.id.group_announcement:
                 Intent tempIntent = new Intent(this, GroupNoticeActivity.class);
@@ -204,26 +215,26 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 startActivityForResult(i, UPDATA_GROUP_OWN);
                 break;
             case R.id.sw_group_top:
-                if (isChecked) {
-                    swGroupTop.setText("置顶群组");
-                    setConversationTop(Conversation.ConversationType.GROUP, groupId, true);
-                    isChecked = false;
-                } else {
+                if (isCheckedTop) {
                     swGroupTop.setText("取消置顶");
                     setConversationTop(Conversation.ConversationType.GROUP, groupId, false);
-                    isChecked = true;
+                    isCheckedTop = false;
+                } else {
+                    swGroupTop.setText("置顶群组");
+                    setConversationTop(Conversation.ConversationType.GROUP, groupId, true);
+                    isCheckedTop = true;
                 }
 
                 break;
             case R.id.sw_group_notfaction:
-                if (isChecked) {
-                    swGroupNotfaction.setText("开启免打扰");
-                    setConverstionNotif(Conversation.ConversationType.GROUP, groupId, true);
-                    isChecked = false;
-                } else {
-                    setConverstionNotif(Conversation.ConversationType.GROUP, groupId, false);
+                if (isCheckedNo) {
                     swGroupNotfaction.setText("关闭免打扰");
-                    isChecked = true;
+                    setConverstionNotif(Conversation.ConversationType.GROUP, groupId, false);
+                    isCheckedNo = false;
+                } else {
+                    setConverstionNotif(Conversation.ConversationType.GROUP, groupId, true);
+                    swGroupNotfaction.setText("开启免打扰");
+                    isCheckedNo = true;
                 }
 
                 break;
@@ -255,17 +266,16 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
     private void quitGroup() {
-        RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, new RongIMClient.ResultCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean aBoolean) {
+        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
+                .params("groupId", groupId)
+                .params("ids", EanfangApplication.get().getAccId())
+//                .params("ids", userIdList.toString())
+                .params("groupName", title)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                    ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功成功");
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
+                }));
 
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
     }
 
     /**
@@ -380,6 +390,26 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 }));
     }
 
+    private void setGagOrNo() {
+        if (isCheckedGag) {
+            EanfangHttp.post(UserApi.POST_GROUP_NOGAG)
+                    .params("groupId", id)
+                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                        ToastUtil.get().showToast(GroupDetailActivity.this, "解禁成功");
+                        group_shutup.setText("开启禁言");
+                        isCheckedGag = false;
+                    }));
+        } else {
+            EanfangHttp.post(UserApi.POST_GROUP_GAG)
+                    .params("groupId", id)
+                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                        ToastUtil.get().showToast(GroupDetailActivity.this, "禁言成功");
+                        group_shutup.setText("禁言成功");
+                        isCheckedGag = true;
+                    }));
+        }
+    }
+
     /**
      * 群组的状态
      *
@@ -399,6 +429,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         });
 
     }
+
 
     @Override
     public void takeSuccess(TResult result) {

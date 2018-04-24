@@ -14,5 +14,6 @@ public class SubConversationListActivtiy extends BaseWorkerActivity {
         setContentView(R.layout.activity_sub_conversation_list_activtiy);
         setTitle("系统消息");
         setLeftBack();
+        startTransaction(true);
     }
 }

@@ -68,4 +68,5 @@
     <string name="set_top">会话置顶</string>
     <string name="group_notice_prefix">\@所有人\n</string>
     <string name="group_transfer">转让群主</string>
+    <string name="group_shutup">全员禁言</string>
 </resources>

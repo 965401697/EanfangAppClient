@@ -94,7 +94,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
                                     });
                             RongIM.getInstance().startConversation(SystemMessageActivity.this, Conversation.ConversationType.PRIVATE, userInfo.getUserId(), userInfo.getName());
 
-                            SystemMessageActivity.this.finish();
+                           endTransaction(true);
 
                         }));
                 break;
