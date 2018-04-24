@@ -274,10 +274,11 @@
         </activity>
         <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
         <activity android:name=".ui.activity.im.GroupNoticeActivity" />
-        <activity android:name=".ui.activity.im.GroupUpdataNameActivity"></activity>
+        <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
         <activity android:name=".ui.activity.worksapce.CustomerServiceActivity" />
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeActivity" />
-        <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.DataStatisticsActivity"></activity>
     </application>
 
 </manifest>

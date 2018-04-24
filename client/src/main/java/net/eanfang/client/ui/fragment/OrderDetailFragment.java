@@ -169,13 +169,13 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_time_limit.setText(V.v(() ->GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
                     tv_address.setText(V.v(() ->Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
                     if (bean.getBookTime() != null) {
-                        tv_time.setText(V.v(() ->Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--")));
+                        tv_time.setText(V.v(() ->Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
                     } else {
                         tv_time.setText("--");
                     }
 
                     tv_number.setText(V.v(() ->bean.getOrderNum()));
-                    tv_feature_time.setText(V.v(() ->GetDateUtils.dateToDateString(bean.getCreateTime())));
+                    tv_feature_time.setText(V.v(() ->GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
                     //      获取：是否电话解决（0：未解决，1：已解决）

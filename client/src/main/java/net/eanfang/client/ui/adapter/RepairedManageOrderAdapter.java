@@ -61,7 +61,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         helper.setText(R.id.tv_person_name, "负责：" + userName);
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
-        helper.setText(R.id.tv_create_time, "下单：" + GetDateUtils.dateToDateString(item.getCreateTime()));
+        helper.setText(R.id.tv_create_time, "下单：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
 //        helper.setText(R.id.tv_count_money, "" + item.getDoorfee());
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 //        helper.setText(R.id.tv_bug_one, "类别：" + Config.getConfig().

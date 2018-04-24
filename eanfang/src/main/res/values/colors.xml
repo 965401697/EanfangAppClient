@@ -82,4 +82,8 @@
     <color name="color_service_tel">#4A83F5</color>
 
     <color name="color_service_deiveder">#CDCDCD</color>
+    <color name="color_data_line">#CBCBCB</color>
+    <color name="color_data_number">#FF9037</color>
+    <color name="color_data_bottom">#000033</color>
+    <color name="color_data_repair">#FF9037</color>
 </resources>

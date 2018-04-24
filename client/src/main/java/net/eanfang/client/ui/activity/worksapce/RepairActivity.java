@@ -115,8 +115,12 @@ public class RepairActivity extends BaseClientActivity {
         //个人客户
         if (user.getAccount().getDefaultUser().getCompanyId() <= 0) {
             name = user.getAccount().getRealName();
-            area = Config.get().getAddressByCode(user.getAccount().getAreaCode());
-            address = user.getAccount().getAddress();
+            if (!StringUtils.isEmpty(user.getAccount().getAreaCode())) {
+                area = Config.get().getAddressByCode(user.getAccount().getAreaCode());
+            }
+            if (!StringUtils.isEmpty(user.getAccount().getAddress())) {
+                address = user.getAccount().getAddress();
+            }
         } else {
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
             //getOrgUnitEntity() 为空

@@ -75,7 +75,7 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
         mShowAsLargeWhenOnlyOne = true;
         mItemCornerRadius = 0;
         mItemWhiteSpacing = BGAPhotoPickerUtil.dp2px(4);
-        mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_dark;
+        mPlaceholderDrawableResId = R.drawable.bga_pp_ic_holder_dark;
         mOtherWhiteSpacing = BGAPhotoPickerUtil.dp2px(100);
         mItemSpanCount = 3;
     }

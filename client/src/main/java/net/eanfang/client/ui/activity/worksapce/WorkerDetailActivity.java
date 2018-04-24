@@ -151,9 +151,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
             toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
             toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
             toRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
-            if (EanfangApplication.getApplication().getCompanyId()==0) {
+            if (EanfangApplication.getApplication().getCompanyId() == 0) {
                 toRepairBean.setStatus(0);
-            }else {
+            } else {
                 toRepairBean.setStatus(1);
             }
             toRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
@@ -251,8 +251,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
         if (bean.getAccountEntity() != null) {
             ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()));
             tvRealname.setText(bean.getAccountEntity().getRealName());
-            String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
-            tvAddress.setText((region != null ? (region + "\r\n") : "") + bean.getAccountEntity().getAddress());
+            if (!StringUtils.isEmpty(bean.getAccountEntity().getAreaCode())) {
+                String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
+                tvAddress.setText((region != null ? (region + "\r\n") : "") + bean.getAccountEntity().getAddress());
+            }
         }
         if (bean.getCompanyEntity() != null) {
             tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
@@ -324,26 +326,26 @@ public class WorkerDetailActivity extends BaseClientActivity {
             String[] urls = bean.getVerifyEntity().getHonorPics().split(",");
 
             if (urls.length >= 1) {
-                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
+                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[1]));
+                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[2]));
+                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);
             }
             if (urls.length >= 4) {
-                ivPic4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER+urls[3]));
+                ivPic4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
                 ivPic4.setVisibility(View.VISIBLE);
             } else {
                 ivPic4.setVisibility(View.GONE);
