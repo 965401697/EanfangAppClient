@@ -6,7 +6,6 @@ import android.view.Gravity;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
@@ -14,6 +13,7 @@ import com.eanfang.util.Var;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.my.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -42,6 +42,7 @@ public class ContactListFragment extends BaseFragment {
     protected void initView() {
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
 
+        findViewById(R.id.ll_system_notice).setOnClickListener(v -> startActivity(new Intent(getActivity(), SystemNoticeActivity.class)));
         if (Var.get("ContactListFragment.messageCount").getVar() > 0) {
             ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("新订单消息");
         } else {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,6 +21,7 @@ import com.eanfang.witget.RollTextView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
+import net.eanfang.worker.ui.activity.worksapce.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.QuotationActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
@@ -57,6 +59,8 @@ public class HomeFragment extends BaseFragment {
     private List<ClientData> clientDataList = new ArrayList<>();
     private HomeDataAdapter homeDataAdapter;
 
+    private RelativeLayout rlAllData;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_home;
@@ -70,6 +74,8 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         rvData = (RecyclerView) findViewById(R.id.rv_data);
+
+        rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
         initIconClick();
         initLoopView();
         initRollTextView();
@@ -141,10 +147,14 @@ public class HomeFragment extends BaseFragment {
      * 统计
      */
     private void initCount() {
+        rlAllData.setOnClickListener((v)->{
+            startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
+        });
         rvData.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                jumpWebview();
+                startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
+//                jumpWebview();
             }
         });
     }

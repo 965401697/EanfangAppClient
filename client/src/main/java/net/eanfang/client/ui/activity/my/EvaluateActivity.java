@@ -13,8 +13,8 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.EvaluateFragment;
-import net.eanfang.client.ui.fragment.GiveEvaluateFragment;
+import net.eanfang.client.ui.fragment.evaluate.EvaluateFragment;
+import net.eanfang.client.ui.fragment.evaluate.GiveEvaluateFragment;
 
 import java.util.ArrayList;
 

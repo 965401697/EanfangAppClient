@@ -15,6 +15,7 @@ import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
+import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
@@ -103,6 +104,10 @@ public class WorkspaceFragment extends BaseFragment {
      * 过程管控
      */
     private void progressCtrl() {
+        findViewById(R.id.tv_work_service).setOnClickListener((v)->{
+            startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
+        });
+
     }
 
     private void helpTools() {

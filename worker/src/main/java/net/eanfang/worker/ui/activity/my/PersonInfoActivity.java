@@ -188,7 +188,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (address != null) {
             etAddress.setText(address);
         }
-        if (!infoBackBean.getAccount().getAreaCode().equals("")||infoBackBean.getAccount().getAreaCode() != null) {
+        if (!StringUtils.isEmpty(infoBackBean.getAccount().getAreaCode())) {
             tvArea.setText(Config.get().getAddressByCode(infoBackBean.getAccount().getAreaCode()));
         }
 
@@ -285,7 +285,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        if (loginBean.getAccount().getAreaCode() == null || loginBean.getAccount().getAreaCode().equals("")) {
+        if (!StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         } else {
             accountEntity.setAreaCode(loginBean.getAccount().getAreaCode());

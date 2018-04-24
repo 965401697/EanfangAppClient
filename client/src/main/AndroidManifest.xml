@@ -200,7 +200,11 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.activity.worksapce.MessageDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.CustomerServiceActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.SystemNoticeActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.DataStatisticsActivity"></activity>
     </application>
 
 </manifest>

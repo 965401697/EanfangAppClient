@@ -38,7 +38,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:padding="2dp"
-            android:src="@mipmap/ic_news_add" />
+                android:src="@mipmap/ic_news_add" />
             <!--android:onClick="noOpen"-->
 
             <TextView
@@ -58,7 +58,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="8dp"
-        android:onClick="noOpen"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
@@ -70,6 +69,7 @@
             android:src="@mipmap/ic_news_system" />
 
         <LinearLayout
+            android:id="@+id/ll_system_notice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"

@@ -65,7 +65,7 @@ public class BGAPhotoPickerAdapter extends BGARecyclerViewAdapter<String> {
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, String model) {
         if (getItemViewType(position) == R.layout.bga_pp_item_photo_picker) {
-            BGAImage.display(helper.getImageView(R.id.iv_item_photo_picker_photo), R.mipmap.bga_pp_ic_holder_dark, model, mImageSize);
+            BGAImage.display(helper.getImageView(R.id.iv_item_photo_picker_photo), R.drawable.bga_pp_ic_holder_dark, model, mImageSize);
 
             if (mSelectedImages.contains(model)) {
                 helper.setImageResource(R.id.iv_item_photo_picker_flag, R.mipmap.bga_pp_ic_cb_checked);

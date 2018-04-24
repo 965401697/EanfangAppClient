@@ -343,7 +343,7 @@
                         app:bga_snpl_itemWidth="0dp"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
@@ -385,7 +385,7 @@
                         app:bga_snpl_itemWidth="0dp"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
@@ -420,7 +420,7 @@
                         app:bga_snpl_itemWidth="0dp"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
@@ -462,7 +462,7 @@
                         app:bga_snpl_itemWidth="0dp"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
@@ -504,7 +504,7 @@
                         app:bga_snpl_itemWidth="0dp"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
@@ -546,7 +546,7 @@
                         app:bga_snpl_itemWidth="0dp"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
