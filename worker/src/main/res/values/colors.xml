@@ -34,4 +34,6 @@
     <color name="work_logo_color">#F8602F</color>
     <color name="color_text_selected">#00ff00</color>
     <color name="color_text_normal">#e6e6e6</color>
+
+    <color name="color_service_title">#33B0FF</color>
 </resources>

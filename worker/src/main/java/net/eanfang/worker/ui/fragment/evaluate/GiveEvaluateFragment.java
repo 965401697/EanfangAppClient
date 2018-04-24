@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.fragment;
+package net.eanfang.worker.ui.fragment.evaluate;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

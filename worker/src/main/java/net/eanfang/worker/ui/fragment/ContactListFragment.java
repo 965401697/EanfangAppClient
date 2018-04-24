@@ -23,6 +23,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +76,9 @@ public class ContactListFragment extends BaseFragment {
         transaction.commit();
 
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
+
+        findViewById(R.id.ll_system_notice).setOnClickListener(v -> startActivity(new Intent(getActivity(), SystemNoticeActivity.class)));
+
 
         if (Var.get("ContactListFragment.messageCount").getVar() > 0) {
             ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("新订单消息");

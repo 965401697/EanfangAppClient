@@ -99,7 +99,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
         mItemCornerRadius = 0;
         mPlusDrawableResId = R.mipmap.bga_pp_ic_plus;
         mItemWhiteSpacing = BGAPhotoPickerUtil.dp2px(4);
-        mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_light;
+        mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_dark;
         mOtherWhiteSpacing = BGAPhotoPickerUtil.dp2px(100);
     }
 
