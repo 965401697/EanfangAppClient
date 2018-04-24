@@ -79,4 +79,7 @@
     <color name="color_contact_create_cancel_back">#c6c6c6</color>
     <color name="color_contact_create_line">#CCC</color>
     <color name="color_messagedeatil_back">#F5F3F3</color>
+    <color name="color_service_tel">#4A83F5</color>
+
+    <color name="color_service_deiveder">#CDCDCD</color>
 </resources>

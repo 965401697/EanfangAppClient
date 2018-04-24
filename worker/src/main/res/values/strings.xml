@@ -67,4 +67,7 @@
     <string name="message_notice">消息免打扰</string>
     <string name="set_top">会话置顶</string>
     <string name="group_notice_prefix">\@所有人\n</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

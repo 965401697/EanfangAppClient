@@ -23,6 +23,7 @@ import com.eanfang.witget.RollTextView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
+import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignActivity;
 import net.eanfang.client.ui.activity.worksapce.InstallActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairActivity;
@@ -162,7 +163,9 @@ public class HomeFragment extends BaseFragment {
         //实时监控
         findViewById(R.id.tv_monitor).setOnClickListener(v -> showToast("暂缓开通"));
         //客服
-        findViewById(R.id.tv_service).setOnClickListener(v -> showToast("暂缓开通"));
+        findViewById(R.id.tv_service).setOnClickListener((v)->{
+            startActivity(new Intent(getActivity(),CustomerServiceActivity.class));
+        });
 
 
         //签到

@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.fragment;
+package net.eanfang.client.ui.fragment.evaluate;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,28 +11,23 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ReceivedEvaluateBean;
+import com.eanfang.model.GiveEvaluateBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.EvaluateAdapter;
-import net.eanfang.worker.ui.widget.EvaluateClientDialog;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.adapter.GiveEvaluateAdapter;
+import net.eanfang.client.ui.widget.EvaluateRevDialog;
 
 import java.util.List;
 
-
-/**
- * 技师端收到的评价
- * Created by Administrator on 2017/6/22.
- */
-
-public class EvaluateFragment extends BaseFragment {
+public class GiveEvaluateFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
 
-    public static EvaluateFragment getInstance() {
-        EvaluateFragment sf = new EvaluateFragment();
+
+    public static GiveEvaluateFragment getInstance() {
+        GiveEvaluateFragment sf = new GiveEvaluateFragment();
         return sf;
     }
 
@@ -42,38 +37,37 @@ public class EvaluateFragment extends BaseFragment {
     }
 
     @Override
+    protected void initData(Bundle arguments) {
+
+    }
+
+    @Override
     protected void onLazyLoad() {
         super.onLazyLoad();
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.setPage(1);
         queryEntry.setSize(5);
         EanfangHttp.post(UserApi.GET_WORKER_EVALUATE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<ReceivedEvaluateBean>(getActivity(), false, ReceivedEvaluateBean.class, (bean) -> {
+                .execute(new EanfangCallback<GiveEvaluateBean>(getActivity(), false, GiveEvaluateBean.class, (bean) -> {
                     initAdapter(bean.getList());
                 }));
     }
 
     @Override
-    protected void initData(Bundle arguments) {
-
-
-    }
-
-    @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_list);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initAdapter(List<ReceivedEvaluateBean.ListBean> mDataList) {
-        BaseQuickAdapter evaluateAdapter = new EvaluateAdapter(R.layout.item_evaluate, mDataList);
+    private void initAdapter(List<GiveEvaluateBean.ListBean> mDataList) {
+        GiveEvaluateAdapter evaluateAdapter = new GiveEvaluateAdapter(R.layout.item_evaluate, mDataList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new EvaluateClientDialog(getActivity(), mDataList.get(position)).show();
+                new EvaluateRevDialog(getActivity(), mDataList.get(position)).show();
             }
         });
         mRecyclerView.setAdapter(evaluateAdapter);

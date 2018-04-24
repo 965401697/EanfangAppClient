@@ -56,4 +56,22 @@
     <string name="text_work_change">变更记录</string>
     <string name="text_work_file">在线文档</string>
     <string name="text_work_talk">面谈员工</string>
+
+    <string name="text_service_title">1.完善个人资料</string>
+    <string name="text_service_join">2.加入/创建企业</string>
+    <string name="text_service_join_content">创建部门，添加人员，以及权限角色匹配</string>
+    <string name="text_service_finish_info">3.完善公司资料</string>
+    <string name="text_service_more">4.使用更多功能</string>
+    <string name="text_service_more_content">支持业务合约模式，支持平台广选模式</string>
+    <string name="text_service_worker_auth">2.技师资格认证</string>
+    <string name="text_service_worker_auth_content">2.认证技师，即可享受平台接单</string>
+    <string name="text_service_join_company">3.加入安防公司或平台</string>
+    <string name="text_service_open_receive">4.开启接单模式</string>
+    <string name="text_service_receive">5.接单</string>
+    <string name="text_service_authentication">5.资质认证</string>
+    <string name="text_service_open_business">6.开通业务功能</string>
+
+    <string name="text_service_content">完善个人资料，如姓名，地址等相关信息，即可享受享受易安防完整平台服务。</string>
+    <string name="text_service_tel">咨询电话:</string>
+    <string name="text_service_telphone">010-5877-8731</string>
 </resources>
