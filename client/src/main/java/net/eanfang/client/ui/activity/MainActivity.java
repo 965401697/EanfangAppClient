@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -129,7 +130,7 @@ public class MainActivity extends BaseClientActivity {
                 .setOnDragStateChangedListener((dragState, badge, targetView) -> {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false));
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
 //                        runOnUiThread(() -> {
 //                            showToast("消息被清空了");
 //                        });

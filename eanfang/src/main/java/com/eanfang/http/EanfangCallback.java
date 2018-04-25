@@ -60,13 +60,12 @@ public class EanfangCallback<T> extends StringCallback {
      * @param activity
      */
     // TODO: 2017/12/7 废弃
-    public EanfangCallback(Activity activity, boolean showDialog) {
-        this.activity = activity;
-        if (showDialog) {
-            loadingDialog = DialogUtil.createLoadingDialog(activity);
-        }
-    }
-
+//    public EanfangCallback(Activity activity, boolean showDialog) {
+//        this.activity = activity;
+//        if (showDialog) {
+//            loadingDialog = DialogUtil.createLoadingDialog(activity);
+//        }
+//    }
     public EanfangCallback(Activity activity, boolean showDialog, Class clazz, ISuccess<T> iSuccess) {
         this.activity = activity;
         this.clazz = clazz;

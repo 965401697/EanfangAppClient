@@ -23,8 +23,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yaf.base.entity.PayLogEntity;
 
@@ -225,7 +229,7 @@ public class PayActivity extends BaseClientActivity {
     private void aliPay() {
         EanfangHttp.post(getAliPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<JSONObject>(PayActivity.this, false) {
+                .execute(new EanfangCallback<JSONObject>(PayActivity.this, false, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
@@ -256,7 +260,7 @@ public class PayActivity extends BaseClientActivity {
     private void wxPay() {
         EanfangHttp.post(getWxPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, false) {
+                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, false, WXPayBean.class) {
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);
@@ -274,7 +278,37 @@ public class PayActivity extends BaseClientActivity {
                         request.nonceStr = wxPayBean.getNoncestr();
                         request.timeStamp = wxPayBean.getTimestamp();
                         request.sign = wxPayBean.getSign();
+                        msgApi.handleIntent(getIntent(), new IWXAPIEventHandler() {
+                            @Override
+                            public void onReq(BaseReq baseReq) {
+                                Log.e("onResp", "onResp: success");
+                            }
+
+                            @Override
+                            public void onResp(BaseResp baseResp) {
+                                if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+                                    int errCode = baseResp.errCode;
+                                    switch (errCode) {
+                                        case 0:
+                                            Log.e("onResp", "onResp: success");
+                                            break;
+                                        case -1:
+//                    ToastUtils.showToastShort(this, "支付失败");
+                                            break;
+                                        case -2:
+//                    ToastUtils.showToastShort(this, "支付取消");
+                                            break;
+                                        default:
+//                    ToastUtils.showToastShort(this, "支付失败");
+                                            break;
+                                    }
+                                    finish();
+                                }
+                            }
+                        });
                         msgApi.sendReq(request);
+
+
                     }
                 });
     }

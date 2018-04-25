@@ -27,6 +27,8 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.MessageDetailView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +124,7 @@ public class MessageListActivity extends BaseClientActivity implements
      * 一键已读
      */
     private void doReadAll() {
-        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false){
+        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class) {
             @Override
             public void onSuccess(Object bean) {
                 super.onSuccess(bean);

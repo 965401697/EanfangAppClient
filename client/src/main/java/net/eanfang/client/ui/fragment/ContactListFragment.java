@@ -15,6 +15,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.my.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
+import org.json.JSONObject;
+
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -58,7 +60,7 @@ public class ContactListFragment extends BaseFragment {
                 .setOnDragStateChangedListener((dragState, badge, targetView) -> {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false));
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
                         showToast("消息被清空了");
 //                        Var.get().setVar(0);
                     }

@@ -126,8 +126,20 @@
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
         <!-- app -->
+
+        <!-- wxpay-->
+        <!--<activity-->
+        <!--android:name=".wxapi.WXPayEntryActivity"-->
+        <!--android:exported="true"-->
+        <!--android:launchMode="singleTop"></activity>-->
+        <!--<receiver-->
+        <!--android:name=".wxapi.AppRegister"-->
+        <!--android:permission="com.tencent.mm.plugin.permission.SEND">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <activity
             android:name=".ui.activity.MainActivity"

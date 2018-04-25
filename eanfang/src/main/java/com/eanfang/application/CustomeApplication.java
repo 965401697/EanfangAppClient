@@ -17,6 +17,7 @@ import com.eanfang.ui.base.IBase;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.eanfang.util.message.J_MessageVerify;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
@@ -29,7 +30,7 @@ import java.io.IOException;
  * CustomeApplication
  *
  * @author hou
- *         Created at 2016/12/1 13:58
+ * Created at 2016/12/1 13:58
  * @desc 程序入口
  */
 
@@ -161,6 +162,14 @@ public abstract class CustomeApplication extends MultiDexApplication {
 
     public Long getCompanyId() {
         return getUser().getAccount().getDefaultUser().getCompanyId();
+    }
+
+    public Long getTopCompanyId() {
+        return getUser().getAccount().getDefaultUser().getTopCompanyId();
+    }
+
+    public String getOrgCode() {
+        return V.v(() -> getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgCode());
     }
 
     public void closeActivity(String... cls) {
