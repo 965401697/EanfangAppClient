@@ -20,6 +20,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 /**
@@ -36,7 +37,7 @@ public class OssService {
     private OSS oss;
     private String bucket;
     private Activity activity;
-    private OSSCallBack ossCallBack;
+    private AtomicReference<OSSCallBack> ossCallBack = new AtomicReference<>();
 
 
     public OssService(Activity activity, OSS oss, String bucket) {
@@ -97,7 +98,8 @@ public class OssService {
             //如果为空  则跳过
             if (put == null) {
                 resultJson.put("code", UPLOAD_SUCCESS);
-                resultJson.put("curr", (ossCallBack.getCurr().get() + 1));
+                int curr = ossCallBack.get().getCurr().get() + 1;
+                resultJson.put("curr", curr);
                 EventBus.getDefault().post(resultJson);
                 return;
             }
@@ -111,48 +113,52 @@ public class OssService {
                 @Override
                 public void onSuccess(PutObjectRequest request, PutObjectResult result) {
                     activity.runOnUiThread(() -> {
-                        ossCallBack.onOssProgress(null, 0, 0);
+                        ossCallBack.get().onOssProgress(null, 0, 0);
                     });
                     resultJson.put("code", UPLOAD_SUCCESS);
-                    resultJson.put("curr", (ossCallBack.getCurr().get() + 1));
+                    int curr = ossCallBack.get().getCurr().get() + 1;
+                    resultJson.put("curr", curr);
                     EventBus.getDefault().post(resultJson);
                 }
 
                 @Override
                 public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
                     resultJson.put("code", UPLOAD_FAILED);
-                    resultJson.put("curr", (ossCallBack.getCurr().get()));
+                    resultJson.put("curr", (ossCallBack.get().getCurr().get()));
                     EventBus.getDefault().post(resultJson);
                 }
             });
         }, (e) -> {
             JSONObject resultJson = new JSONObject();
             resultJson.put("code", UPLOAD_FAILED);
-            resultJson.put("curr", (ossCallBack.getCurr().get()));
+            resultJson.put("curr", (ossCallBack.get().getCurr().get()));
             EventBus.getDefault().post(resultJson);
         });
     }
 
     public void asyncPutImage(String objectKey, String urlPath, OSSCallBack ossCallBack) {
         EventBus.getDefault().register(this);
-        this.ossCallBack = ossCallBack;
+        ossCallBack.getTotal().set(1);
+        this.ossCallBack.set(ossCallBack);
         putImage(objectKey, urlPath);
     }
 
     public void asyncPutImages(final Map<String, String> objectMap, final OSSCallBack callBack) {
-        this.ossCallBack = callBack;
+
+        //初始化 总数
+        callBack.getTotal().set(objectMap.keySet().size());
+        this.ossCallBack.set(callBack);
         EventBus.getDefault().register(this);
         //如果没有了 则成功
         if (objectMap == null || objectMap.size() <= 0 || objectMap.keySet().size() <= 0) {
             activity.runOnUiThread(() -> {
-                ossCallBack.onSuccess(null, null);
+                ossCallBack.get().onSuccess(null, null);
                 EventBus.getDefault().unregister(this);
             });
             return;
         }
         final List<String> keyList = new ArrayList(objectMap.keySet());
-        //初始化 总数
-        ossCallBack.getTotal().set(keyList.size());
+
         for (int i = 0; i < keyList.size(); i++) {
             String objectKey = keyList.get(i);
             String localFileUrl = objectMap.get(objectKey);
@@ -164,26 +170,26 @@ public class OssService {
 
 
     @Subscribe
-    public void onEvent(JSONObject result) {
+    public synchronized void onEvent(JSONObject result) {
 
         //获取当前成功的 数量  赋值给 ossCallBack
         Integer curr = result.getInteger("curr");
         Integer code = result.getInteger("code");
         //code 为 -1 代表失败
         if (code.equals(UPLOAD_FAILED)) {
-            activity.runOnUiThread(()->{
-                ossCallBack.onFailure(null, null, null);
+            activity.runOnUiThread(() -> {
+                ossCallBack.get().onFailure(null, null, null);
             });
             EventBus.getDefault().unregister(this);
             return;
         }
-        ossCallBack.getCurr().set(curr);
+        ossCallBack.get().getCurr().set(curr);
 
         //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
-        Log.e("ossService", "onEvent: total:" + ossCallBack.getCurr().get() + "  curr:" + ossCallBack.getCurr().get());
-        if (ossCallBack.getCurr().get() >= ossCallBack.getTotal().get()) {
+        Log.e("ossService", "onEvent: total:" + ossCallBack.get().getCurr().get() + "  curr:" + ossCallBack.get().getCurr().get());
+        if (ossCallBack.get().getCurr().get() >= ossCallBack.get().getTotal().get()) {
             activity.runOnUiThread(() -> {
-                ossCallBack.onSuccess(null, null);
+                ossCallBack.get().onSuccess(null, null);
             });
             EventBus.getDefault().unregister(this);
         }

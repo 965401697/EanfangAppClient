@@ -172,7 +172,7 @@ public class FaPiaoActivity extends BaseClientActivity {
                 EanfangHttp.post(ApiService.FA_PIAO)
                         .tag(this)
                         .params("json", json.toString())
-                        .execute(new EanfangCallback(FaPiaoActivity.this, false) {
+                        .execute(new EanfangCallback(FaPiaoActivity.this, false, JSONObject.class) {
                             @Override
                             public void onSuccess(Object bean) {
                                 super.onSuccess(bean);
@@ -237,7 +237,7 @@ public class FaPiaoActivity extends BaseClientActivity {
         EanfangHttp.get(ApiService.LOOK_FA_PIAO)
                 .tag(this)
                 .params("json", object.toString())
-                .execute(new EanfangCallback<LookFaPiaoBean>(FaPiaoActivity.this, false) {
+                .execute(new EanfangCallback<LookFaPiaoBean>(FaPiaoActivity.this, false, JSONObject.class) {
                     @Override
                     public void onSuccess(LookFaPiaoBean bean) {
                         super.onSuccess(bean);

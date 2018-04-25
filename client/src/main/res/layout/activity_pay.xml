@@ -63,7 +63,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_fapiao"
@@ -88,7 +89,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -169,7 +171,8 @@
                         android:id="@+id/rb_alipay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:checked="true" />
                 </LinearLayout>
 
 
@@ -193,7 +196,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="微信支付"
+                        android:text="微信支付      (暂缓开通)"
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
 
@@ -201,7 +204,9 @@
                         android:id="@+id/rb_weixin_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:focusable="false"
+                        android:visibility="visible" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -235,7 +240,7 @@
                     android:background="@drawable/bga_adapter_divider_shape"
                     android:padding="10dp"
                     android:paddingTop="20dp"
-                    android:text="上门支付"
+                    android:text="稍后付款"
                     android:textColor="#fff"
                     android:textSize="20sp" />
 

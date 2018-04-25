@@ -263,14 +263,15 @@ public class RepairActivity extends BaseClientActivity {
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
-        bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
+
 
         bean.setRepairContactPhone(etPhone.getText().toString().trim());
         bean.setRepairContacts(etContact.getText().toString().trim());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
-        bean.setOwnerUserId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getUserId());
-        bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getTopCompanyId());
-        bean.setOwnerOrgCode(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgCode());
+        bean.setOwnerUserId(EanfangApplication.getApplication().getUserId());
+        bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
+        bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
+        bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
         bean.setRepairWay(0);
         return bean;
     }

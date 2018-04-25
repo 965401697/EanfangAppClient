@@ -21,11 +21,13 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
+import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
@@ -112,9 +114,10 @@ public class OrderListFragment extends BaseFragment implements
                             showToast("当前订单负责人可以操作");
                             return;
                         }
-                        startActivity(new Intent(getActivity(), PayActivity.class)
-                                .putExtra("ordernum", item.getOrderNum())
-                                .putExtra("orderType", "报修"));
+                        payment(item);
+//                        startActivity(new Intent(getActivity(), PayActivity.class)
+//                                .putExtra("ordernum", item.getOrderNum())
+//                                .putExtra("orderType", "报修"));
                         break;
                     default:
                         break;
@@ -200,6 +203,29 @@ public class OrderListFragment extends BaseFragment implements
                 break;
 
         }
+    }
+
+    /**
+     * 支付
+     *
+     * @param orderEntity
+     */
+    private void payment(RepairOrderEntity orderEntity) {
+
+        PayLogEntity payLogEntity = new PayLogEntity();
+        payLogEntity.setOrderId(orderEntity.getId());
+        payLogEntity.setOrderNum(orderEntity.getOrderNum());
+        payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+        payLogEntity.setAssigneeUserId(orderEntity.getOwnerUserId());
+        payLogEntity.setAssigneeOrgCode(orderEntity.getOwnerOrgCode());
+        payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
+
+        //查询上门费
+        payLogEntity.setOriginPrice(100);
+
+        Intent intent = new Intent(getActivity(), PayActivity.class);
+        intent.putExtra("payLogEntity", payLogEntity);
+        startActivity(intent);
     }
 
     @Override
