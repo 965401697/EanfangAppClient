@@ -101,4 +101,5 @@ dependencies {
     provided 'org.projectlombok:lombok:1.16.18'
     implementation project(':IMKit')
     implementation project(':IMLib')
+    implementation project(':zxing')
 }

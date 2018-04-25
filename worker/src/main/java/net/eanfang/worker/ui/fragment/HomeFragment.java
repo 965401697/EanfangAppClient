@@ -14,10 +14,12 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
+import com.project.eanfang.zxing.activity.CaptureActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -135,19 +137,24 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_sign).setOnClickListener((v) -> {
             new SignCtrlView(getActivity()).show();
         });
+        //扫描二维码
+        findViewById(R.id.iv_scan).setOnClickListener((v) -> {
+
+            startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+        });
+
     }
 
     @Override
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-        findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("稍等一下，我还没准备好"));
     }
 
     /**
      * 统计
      */
     private void initCount() {
-        rlAllData.setOnClickListener((v)->{
+        rlAllData.setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
         });
         rvData.addOnItemTouchListener(new OnItemClickListener() {

@@ -16,11 +16,14 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
+import com.project.eanfang.zxing.activity.CaptureActivity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
@@ -170,6 +173,11 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_service).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
         });
+        //扫描二维码
+        findViewById(R.id.iv_scan).setOnClickListener((v) -> {
+
+            startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+        });
 
 
         //签到
@@ -182,7 +190,7 @@ public class HomeFragment extends BaseFragment {
      * 统计
      */
     private void initCount() {
-        rlAllData.setOnClickListener((v)->{
+        rlAllData.setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
         });
         rvData.addOnItemTouchListener(new OnItemClickListener() {
@@ -261,6 +269,5 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-        findViewById(R.id.iv_scan).setOnClickListener(v -> showToast("暂缓开通"));
     }
 }

@@ -131,6 +131,7 @@
 
         <activity
             android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- <activity android:name=".ui.activLoginClientActivityvity" /> -->
         <activity android:name=".ui.activity.CameraActivity" />
@@ -187,7 +188,8 @@
             android:name=".ui.activity.worksapce.SignActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
-        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -204,7 +206,7 @@
         <activity android:name=".ui.activity.worksapce.CustomerServiceActivity" />
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeActivity" />
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.DataStatisticsActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.DataStatisticsActivity" />
     </application>
 
 </manifest>

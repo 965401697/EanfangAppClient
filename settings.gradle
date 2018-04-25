@@ -1,1 +1,1 @@
-include ':client', ':eanfang', ':worker', ':IMLib', ':IMKit'
+include ':client', ':eanfang', ':worker', ':IMLib', ':IMKit', ':zxing'
