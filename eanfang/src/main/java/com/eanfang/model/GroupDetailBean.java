@@ -48,6 +48,15 @@ public class GroupDetailBean implements Serializable {
         private String groupName;
         private String rcloudGroupId;
         private String headPortrait;
+        private String notice;
+
+        public String getNotice() {
+            return notice;
+        }
+
+        public void setNotice(String notice) {
+            this.notice = notice;
+        }
 
         public String getHeadPortrait() {
             return headPortrait;

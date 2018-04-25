@@ -26,8 +26,8 @@ public class ConversationActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
-        String title = getIntent().getData().getQueryParameter("title").toString();
-        String id = getIntent().getData().getQueryParameter("targetId").toString();
+        String title = getIntent().getData().getQueryParameter("title").toString();//群组名称
+        String id = getIntent().getData().getQueryParameter("targetId").toString();//单聊就是userid 群聊就是groupid
         tvTitle.setText(title);
         setLeftBack();
         endTransaction(false);

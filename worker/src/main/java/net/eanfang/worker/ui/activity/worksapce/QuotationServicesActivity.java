@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.eanfang.model.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
@@ -46,17 +47,52 @@ public class QuotationServicesActivity extends BaseActivity {
     }
 
     private void commit() {
+
+        if (!checkInfo()) {
+            return;
+        }
+
         quoteServicesBean = new QuotationBean.QuoteServicesBean();
         quoteServicesBean.setServiceContent(etServiceContent.getText().toString().trim());
         quoteServicesBean.setServiceName(etServiceName.getText().toString().trim());
         int servicePrice = Integer.valueOf(etServicePrice.getText().toString().trim());
-        quoteServicesBean.setServicePrice(servicePrice*100);
+        quoteServicesBean.setServicePrice(servicePrice * 100);
         int times = Integer.parseInt(etServiceTimes.getText().toString().trim());
         quoteServicesBean.setServiceTime(times);
         quoteServicesBean.setServiceValue(etServiceValue.getText().toString().trim());
 
-        quoteServicesBean.setSum((servicePrice*times)*100);
+        quoteServicesBean.setSum((servicePrice * times) * 100);
         setResult(4, getIntent().putExtra("quoteservices", quoteServicesBean));
         finish();
     }
+
+    public boolean checkInfo() {
+
+
+        if (StringUtils.isEmpty(etServiceName.getText().toString().trim())) {
+            showToast("请输入服务名");
+            return false;
+        }
+        if (StringUtils.isEmpty(etServiceContent.getText().toString().trim())) {
+            showToast("请输入服务内容");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(etServicePrice.getText().toString().trim())) {
+            showToast("请输入服务价格");
+            return false;
+        }
+        if (StringUtils.isEmpty(etServiceTimes.getText().toString().trim())) {
+            showToast("请输入服务次数");
+            return false;
+        }
+        if (StringUtils.isEmpty(etServiceValue.getText().toString().trim())) {
+            showToast("请输入服务标准");
+            return false;
+        }
+
+        return true;
+
+    }
+
 }

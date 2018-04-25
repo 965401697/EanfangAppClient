@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.FriendListBean;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -39,7 +40,7 @@ public class FriendsAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHol
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(true);
         }
 
-        ((ImageView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatar()));
+        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAvatar());
         helper.setText(R.id.tv_friend_name, item.getNickName());
         helper.addOnClickListener(R.id.cb_checked);
     }

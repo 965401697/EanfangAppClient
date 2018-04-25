@@ -29,6 +29,7 @@ import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
@@ -167,7 +168,6 @@ public class ContactListFragment extends BaseFragment {
                 initGroupInfo();
                 return null;
             }
-
         }, true);
 
     }

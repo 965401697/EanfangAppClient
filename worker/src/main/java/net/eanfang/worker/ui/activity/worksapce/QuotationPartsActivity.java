@@ -9,6 +9,7 @@ import com.eanfang.model.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
@@ -59,16 +60,49 @@ public class QuotationPartsActivity extends BaseActivity {
     }
 
     private void commit() {
+
+        if (!checkInfo()) {
+            return;
+        }
+
         quotePartsBean = new QuotationBean.QuotePartsBean();
         int count = Integer.parseInt(etAmount.getText().toString().trim());
         quotePartsBean.setCount(count);
         quotePartsBean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tvUnit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(etPrice.getText().toString().trim());
-        quotePartsBean.setUnitPrice(unitPrice*100);
-        quotePartsBean.setSum((unitPrice*count)*100);
+        quotePartsBean.setUnitPrice(unitPrice * 100);
+        quotePartsBean.setSum((unitPrice * count) * 100);
         quotePartsBean.setPartSpeciication(etPartSpeciication.getText().toString().trim());
         quotePartsBean.setPartName(etPartsName.getText().toString().trim());
         setResult(3, getIntent().putExtra("quoteparts", quotePartsBean));
         finish();
+    }
+
+    public boolean checkInfo() {
+
+
+        if (StringUtils.isEmpty(etPartsName.getText().toString().trim())) {
+            showToast("请输入配件名称");
+            return false;
+        }
+        if (StringUtils.isEmpty(etAmount.getText().toString().trim())) {
+            showToast("请输入数量");
+            return false;
+        }
+        if (tvUnit.getText().toString().trim().equals("请选择")) {
+            showToast("请先选择单位");
+            return false;
+        }
+        if (StringUtils.isEmpty(etPrice.getText().toString().trim())) {
+            showToast("请输入价钱");
+            return false;
+        }
+        if (StringUtils.isEmpty(etPartSpeciication.getText().toString().trim())) {
+            showToast("请输入配件规格");
+            return false;
+        }
+
+        return true;
+
     }
 }

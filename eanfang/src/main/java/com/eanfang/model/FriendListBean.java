@@ -20,6 +20,15 @@ public class FriendListBean implements Serializable {
     private String email;
     private String mobile;
     private int flag;//是否选中的flag
+    private int status;//是不是禁言
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getAccId() {
         return accId;

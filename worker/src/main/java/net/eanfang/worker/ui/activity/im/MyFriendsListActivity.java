@@ -254,6 +254,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                 .params("groupName", title)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                     ToastUtil.get().showToast(MyFriendsListActivity.this, "移除成功");
+                    setResult(RESULT_OK);
                     endTransaction(true);
                 }));
     }
@@ -292,6 +293,12 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
      * 添加成员
      */
     private void AddNumber() {
+
+        if (userIdList.size() == 0) {
+            ToastUtil.get().showToast(MyFriendsListActivity.this, "请选择好友");
+            return;
+        }
+
         JSONArray array = new JSONArray();
         JSONObject object = null;
         for (String s : userIdList) {
@@ -308,6 +315,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                 .upJson(array)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                     ToastUtil.get().showToast(MyFriendsListActivity.this, "添加成功");
+                    setResult(RESULT_OK);
                     endTransaction(true);
                 }));
     }

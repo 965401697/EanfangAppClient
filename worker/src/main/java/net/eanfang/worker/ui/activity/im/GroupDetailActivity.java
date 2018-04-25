@@ -19,7 +19,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
-import com.eanfang.model.GroupCreatBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -33,13 +32,10 @@ import com.jph.takephoto.model.TResult;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.GroupsDetailAdapter;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -74,11 +70,14 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     TextView swGroupTop;
     @BindView(R.id.group_shutup)
     TextView group_shutup;
+    @BindView(R.id.group_notice)
+    TextView group_notice;
     @BindView(R.id.sw_group_notfaction)
     TextView swGroupNotfaction;
 
     private GroupsDetailAdapter mGroupsDetailAdapter;
     private ArrayList<FriendListBean> friendListBeanArrayList = new ArrayList<>();
+    private ArrayList<FriendListBean> mList = new ArrayList<>();
     private String title;
     private String headPortrait;
     private String id;
@@ -88,9 +87,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private boolean isCheckedGag;//禁言
     private boolean isOwner;//是不是群主
     private final int HEADER_PIC = 107;
-    private String imgKey;
 
-    private final int UPDATA_NAME_REQEST = 101;
+    private final int UPDATA_GROUP_NAME = 101;//更新名字
+    private final int UPDATA_GROUP_NOTICE = 103;//更新名字
     private final int UPDATA_GROUP_OWN = 102;//转让群主
 
     @Override
@@ -103,12 +102,8 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         groupId = getIntent().getStringExtra("rongyun_group_id");
         id = EanfangApplication.getApplication().get().get(groupId, 0);
         title = getIntent().getStringExtra("title");
-        initViews();
+
         initData();
-
-//        startTransaction(true);
-
-        getConversationNotificationStatus(groupId);
     }
 
     private void initData() {
@@ -116,6 +111,13 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.POST_GROUP_DETAIL)
                 .params("groupId", id)
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+                    mList = (ArrayList<FriendListBean>) bean.getList();
+                    initViews();
+
+                    if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
+                    if (mGroupsDetailAdapter.getData().size() > 0)
+                        mGroupsDetailAdapter.getData().clear();
+
                     if (bean.getList() != null) {
                         ArrayList<FriendListBean> temp = new ArrayList<>();
                         for (int i = 0; i < bean.getList().size(); i++) {
@@ -123,25 +125,37 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                                 temp.add(0, bean.getList().get(i));
                             } else {
                                 temp.add(bean.getList().get(i));
+                                friendListBeanArrayList.add(bean.getList().get(i));
                             }
                         }
 
 
                         if (bean.getList().size() > 0) {
-                            friendListBeanArrayList.addAll(bean.getList());
+
                             mGroupsDetailAdapter.setNewData(temp);
                             FriendListBean b = new FriendListBean();//填充数据
                             mGroupsDetailAdapter.addData(b);
                             mGroupsDetailAdapter.addData(b);
 
-                            groupMemberSize.setText("全部群成员（" + friendListBeanArrayList.size() + "）");
+                            groupMemberSize.setText("全部群成员（" + bean.getList().size() + "）");
+
+
+                            if (bean.getList().get(0).getStatus() == 0) {
+                                group_shutup.setText("开启禁言");
+                                isCheckedGag = false;
+                            } else {
+                                group_shutup.setText("关闭禁言");
+                                isCheckedGag = true;
+                            }
                         }
                     }
 
                     if (bean.getGroup() != null) {
                         groupName.setText(bean.getGroup().getGroupName());
                         groupHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
-
+                        if (!TextUtils.isEmpty(bean.getGroup().getNotice())) {
+                            group_notice.setText(bean.getGroup().getNotice());
+                        }
                         title = bean.getGroup().getGroupName();
                         headPortrait = bean.getGroup().getHeadPortrait();
 
@@ -158,11 +172,35 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         }
                     }
                 }));
+
+
+        //获取群组的置顶状态
+        Conversation conversation = RongIM.getInstance().getConversation(Conversation.ConversationType.GROUP, groupId);
+        boolean isTop = conversation.isTop();
+        if (isTop) {
+            isCheckedTop = true;
+            swGroupTop.setText("取消置顶");
+        } else {
+            swGroupTop.setText("置顶群组");
+            isCheckedTop = false;
+        }
+
+        //免打扰的状态值
+//        DO_NOT_DISTURB(0),
+//                NOTIFY(1);
+        Conversation.ConversationNotificationStatus status = conversation.getNotificationStatus();
+        if (status.equals(Conversation.ConversationNotificationStatus.NOTIFY)) {
+            isCheckedNo = false;
+            swGroupNotfaction.setText("开启免打扰");
+        } else {
+            isCheckedNo = true;
+            swGroupNotfaction.setText("关闭免打扰");
+        }
     }
 
     private void initViews() {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        mGroupsDetailAdapter = new GroupsDetailAdapter(R.layout.item_group);
+        mGroupsDetailAdapter = new GroupsDetailAdapter(R.layout.item_group, mList);
         mGroupsDetailAdapter.bindToRecyclerView(recyclerView);
         mGroupsDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -173,13 +211,13 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("groupId", id);
                     intent.putExtra("title", title);
                     intent.putExtra("flag", 2);
-                    startActivity(intent);
+                    startActivityForResult(intent, UPDATA_GROUP_OWN);
                 } else if (position == adapter.getData().size() - 1) {
                     Intent intent = new Intent(GroupDetailActivity.this, MyFriendsListActivity.class);
                     intent.putExtra("flag", 3);
                     intent.putExtra("groupId", id);
                     intent.putExtra("title", title);
-                    startActivity(intent);
+                    startActivityForResult(intent, UPDATA_GROUP_OWN);
                 }
             }
         });
@@ -194,7 +232,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 break;
             case R.id.ll_group_name:
                 Intent intent = new Intent(this, GroupUpdataNameActivity.class);
-                startActivityForResult(intent, UPDATA_NAME_REQEST);
+                startActivityForResult(intent, UPDATA_GROUP_NAME);
                 break;
             case R.id.ll_shut_up://全员禁言
                 setGagOrNo();
@@ -203,7 +241,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 Intent tempIntent = new Intent(this, GroupNoticeActivity.class);
                 tempIntent.putExtra("conversationType", Conversation.ConversationType.GROUP.getValue());
                 tempIntent.putExtra("targetId", groupId);
-                startActivity(tempIntent);
+                startActivityForResult(tempIntent, UPDATA_GROUP_NOTICE);
                 break;
             case R.id.group_clean:
                 cleanGroupMsg();
@@ -216,11 +254,11 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 break;
             case R.id.sw_group_top:
                 if (isCheckedTop) {
-                    swGroupTop.setText("取消置顶");
+                    swGroupTop.setText("置顶群组");
                     setConversationTop(Conversation.ConversationType.GROUP, groupId, false);
                     isCheckedTop = false;
                 } else {
-                    swGroupTop.setText("置顶群组");
+                    swGroupTop.setText("取消置顶");
                     setConversationTop(Conversation.ConversationType.GROUP, groupId, true);
                     isCheckedTop = true;
                 }
@@ -228,12 +266,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 break;
             case R.id.sw_group_notfaction:
                 if (isCheckedNo) {
-                    swGroupNotfaction.setText("关闭免打扰");
+                    swGroupNotfaction.setText("开启免打扰");
                     setConverstionNotif(Conversation.ConversationType.GROUP, groupId, false);
                     isCheckedNo = false;
                 } else {
                     setConverstionNotif(Conversation.ConversationType.GROUP, groupId, true);
-                    swGroupNotfaction.setText("开启免打扰");
+                    swGroupNotfaction.setText("关闭免打扰");
                     isCheckedNo = true;
                 }
 
@@ -272,7 +310,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 //                .params("ids", userIdList.toString())
                 .params("groupName", title)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                    ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功成功");
+                    ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
                 }));
 
@@ -296,9 +334,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     ToastUtil.get().showToast(GroupDetailActivity.this, "清除失败");
                 }
             });
-            ;
             RongIMClient.getInstance().cleanRemoteHistoryMessages(Conversation.ConversationType.GROUP, groupId, System.currentTimeMillis(), null);
-
         }
 
 
@@ -359,7 +395,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     /**
      * 更新群组信息
      */
-    public void updataGroupInfo(String title, String imgKey, String transfer) {
+    public void updataGroupInfo(String title, String imgKey, String transfer, String notice) {
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -373,6 +409,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             }
             if (!TextUtils.isEmpty(transfer)) {
                 jsonObject.put("create_user", transfer);
+            }
+            if (!TextUtils.isEmpty(notice)) {
+                jsonObject.put("notice", notice);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -404,32 +443,11 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     .params("groupId", id)
                     .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                         ToastUtil.get().showToast(GroupDetailActivity.this, "禁言成功");
-                        group_shutup.setText("禁言成功");
+                        group_shutup.setText("关闭禁言");
                         isCheckedGag = true;
                     }));
         }
     }
-
-    /**
-     * 群组的状态
-     *
-     * @param targetId
-     */
-    public void getConversationNotificationStatus(String targetId) {
-        RongIM.getInstance().getConversationNotificationStatus(Conversation.ConversationType.GROUP, groupId, new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
-            @Override
-            public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
-                conversationNotificationStatus.getValue();
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        });
-
-    }
-
 
     @Override
     public void takeSuccess(TResult result) {
@@ -439,15 +457,16 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             return;
         }
         TImage image = result.getImage();
-        imgKey = UuidUtil.getUUID() + ".png";
+
+        headPortrait = UuidUtil.getUUID() + ".png";
 
         groupHeader.setImageURI("file://" + image.getOriginalPath());
 
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+        OSSUtils.initOSS(this).asyncPutImage(headPortrait, image.getOriginalPath(), new OSSCallBack(this, true) {
             @Override
             public void onOssSuccess() {
                 super.onOssSuccess();
-                updataGroupInfo(title, imgKey, "");
+                updataGroupInfo(title, headPortrait, "", "");
             }
         });
 
@@ -457,12 +476,17 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == UPDATA_NAME_REQEST) {
+            if (requestCode == UPDATA_GROUP_NAME) {
                 String title = data.getStringExtra("updata_Name").toString();
-                updataGroupInfo(title, headPortrait, "");
+                updataGroupInfo(title, headPortrait, "", "");
                 groupName.setText(title);
                 Group groupInfo = new Group(groupId, title, Uri.parse(BuildConfig.OSS_SERVER + headPortrait));
                 RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+            } else if (requestCode == UPDATA_GROUP_NOTICE) {
+                if (!TextUtils.isEmpty(data.getStringExtra("notice"))) {
+                    group_notice.setText(data.getStringExtra("notice"));
+                    updataGroupInfo(title, headPortrait, "", data.getStringExtra("notice"));
+                }
             } else if (requestCode == UPDATA_GROUP_OWN) {
                 initData();
             }

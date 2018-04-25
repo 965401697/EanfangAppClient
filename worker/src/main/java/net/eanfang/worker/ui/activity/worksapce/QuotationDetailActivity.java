@@ -44,6 +44,10 @@ public class QuotationDetailActivity extends BaseActivity {
     private QuotationBean.QuoteDevicesBean bean = new QuotationBean.QuoteDevicesBean();
     List<QuotationBean.QuoteDevicesBean.ParamsBean> paramsBeanList = new ArrayList<>();
 
+    private final String PLEASE_SELECLT = "请选择";
+    private final String PLEASE_INPUT = "请输入";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,11 +122,12 @@ public class QuotationDetailActivity extends BaseActivity {
         });
         //品牌型号
         rl_brand_model.setOnClickListener((v) -> {
-            String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
-            if (StringUtils.isEmpty(busOneCode)) {
+            List<String> busOneCodeList = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL);
+            if (busOneCodeList.size() == 0) {
                 showToast("请先选择系统类别");
                 return;
             }
+            String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_brand_model.setText(item);
             }));
@@ -166,7 +171,7 @@ public class QuotationDetailActivity extends BaseActivity {
         bean.setProducerName(et_product_company.getText().toString().trim());
         bean.setUnit(GetConstDataUtils.getDeviceUnitList().indexOf(tv_unit.getText().toString().trim()));
         int unitPrice = Integer.valueOf(et_price.getText().toString().trim());
-        bean.setUnitPrice( unitPrice*100);
+        bean.setUnitPrice(unitPrice * 100);
         bean.setSum((unitPrice * count) * 100);
 //        paramsBeanList.addAll(paramsBeanList);
         bean.setParams(paramsBeanList);
@@ -176,18 +181,25 @@ public class QuotationDetailActivity extends BaseActivity {
 
 
     public boolean checkInfo() {
-        if (StringUtils.isEmpty(tv_device_type.getText().toString().trim())) {
+
+        if (tv_business_type.getText().toString().trim().equals(PLEASE_SELECLT)) {
+            showToast("请先选择系统类别");
+            return false;
+        }
+
+        if (tv_device_type.getText().toString().trim().equals(PLEASE_INPUT)) {
             showToast("请选择设备类型");
             return false;
         }
-        if (StringUtils.isEmpty(tv_device_name.getText().toString().trim())) {
+        if (tv_device_name.getText().toString().trim().equals(PLEASE_INPUT)) {
             showToast("请选择设备名称");
             return false;
         }
-        if (StringUtils.isEmpty(tv_brand_model.getText().toString().trim())) {
+        if (tv_brand_model.getText().toString().trim().equals(PLEASE_INPUT)) {
             showToast("请选择品牌型号");
             return false;
         }
+
         if (StringUtils.isEmpty(tv_unit.getText().toString().trim())) {
             showToast("请选择单位");
             return false;
