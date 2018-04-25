@@ -60,4 +60,12 @@ public class EanfangConst {
      * 融云的token
      */
     public static final String RONGY_TOKEN = "rongyu_token";
+
+    /**
+     * 二维码扫描标识
+     */
+    //客户端
+    public static final String QR_CLIENT = "client_code";
+    //技师端
+    public static final String QR_WORKER = "worker_code";
 }

@@ -22,7 +22,7 @@ android {
         ndk {
             // 设置支持的SO库架构
 
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86'
         }
         //信鸽配置
         manifestPlaceholders = [
@@ -86,7 +86,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.android.support:multidex:1.0.2'
-   // implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
+    // implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
     compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
     implementation 'com.android.support:design:26.1.0'
     compile 'com.contrarywind:Android-PickerView:3.1.1'
@@ -96,9 +96,7 @@ dependencies {
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
-//    implementation 'org.greenrobot:greendao:3.2.2' // add library
-
-
-
+    //    implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation project(':zxing')
 }
 
