@@ -99,7 +99,7 @@ public class SettingActivity extends BaseClientActivity {
 
     private void signout() {
         EanfangHttp.get(UserApi.APP_LOGOUT)
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("退出成功");
                 }));
     }

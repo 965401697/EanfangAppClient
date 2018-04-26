@@ -125,6 +125,7 @@ public class PayActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         initData();
         setListener();
+        setTitle("支付中心");
     }
 
     private void initData() {
@@ -229,7 +230,7 @@ public class PayActivity extends BaseClientActivity {
     private void aliPay() {
         EanfangHttp.post(getAliPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<JSONObject>(PayActivity.this, false, JSONObject.class) {
+                .execute(new EanfangCallback<JSONObject>(PayActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
@@ -260,7 +261,7 @@ public class PayActivity extends BaseClientActivity {
     private void wxPay() {
         EanfangHttp.post(getWxPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, false, WXPayBean.class) {
+                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, true, WXPayBean.class) {
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);

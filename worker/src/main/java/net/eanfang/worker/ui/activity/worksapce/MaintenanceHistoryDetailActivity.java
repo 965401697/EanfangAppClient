@@ -81,7 +81,7 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
         Long maintianId = getIntent().getLongExtra("maintianId", 0);
         EanfangHttp.get(NewApiService.MAINTENANCE_HISTORY_DETAIL)
                 .params("id", maintianId)
-                .execute(new EanfangCallback<MainHistoryDetailBean>(MaintenanceHistoryDetailActivity.this, false, MainHistoryDetailBean.class, (bean) -> {
+                .execute(new EanfangCallback<MainHistoryDetailBean>(MaintenanceHistoryDetailActivity.this, true, MainHistoryDetailBean.class, (bean) -> {
                     mainHistoryDetailBean = bean;
                     initAdapter();
                 }));

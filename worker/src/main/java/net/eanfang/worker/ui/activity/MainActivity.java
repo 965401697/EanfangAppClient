@@ -161,7 +161,7 @@ public class MainActivity extends BaseActivity {
                 .setOnDragStateChangedListener((dragState, badge, targetView) -> {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false));
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
                         //  showToast("消息被清空了");
                     }
                 });
@@ -326,8 +326,6 @@ public class MainActivity extends BaseActivity {
         }, true);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
-
-
 
 
 }

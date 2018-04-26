@@ -104,7 +104,7 @@ public class MessageListActivity extends BaseClientActivity implements
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
                 messageListAdapter.notifyDataSetChanged();
-                showToast("已是最新数据");
+               // showToast("已是最新数据");
             }
         } else {
             if (mDataList.size() == 0 || mDataList == null) {
@@ -124,7 +124,7 @@ public class MessageListActivity extends BaseClientActivity implements
      * 一键已读
      */
     private void doReadAll() {
-        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class) {
+        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, true, JSONObject.class) {
             @Override
             public void onSuccess(Object bean) {
                 super.onSuccess(bean);

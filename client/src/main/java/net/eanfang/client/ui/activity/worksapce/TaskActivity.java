@@ -133,7 +133,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                 .tag(this)
                 .params("id", EanfangApplication.getApplication().getUserId())
                 .params("companyId", EanfangApplication.getApplication().getCompanyId())
-                .execute(new EanfangCallback<UserEntity>(TaskActivity.this, false, UserEntity.class, true, (list) -> {
+                .execute(new EanfangCallback<UserEntity>(TaskActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
 
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());

@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1804201
-        versionName "2.1.9"
+        versionCode 1804251
+        versionName "2.2.0"
         multiDexEnabled true
 
 
@@ -19,8 +19,8 @@ android {
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
 //
-//        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
-//        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
+        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
 
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
@@ -28,8 +28,8 @@ android {
 //        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 
-        buildConfigField("String", "HOST", "\"http://192.168.0.16:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.16:8080\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.119:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.119:8080\"")
 
         buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
         buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")

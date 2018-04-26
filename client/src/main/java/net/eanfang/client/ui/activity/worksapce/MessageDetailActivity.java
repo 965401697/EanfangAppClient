@@ -66,7 +66,7 @@ public class MessageDetailActivity extends BaseActivity {
      */
     private void initData() {
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mInfoId)
-                .execute(new EanfangCallback<NoticeEntity>(MessageDetailActivity.this, false, NoticeEntity.class, (bean -> {
+                .execute(new EanfangCallback<NoticeEntity>(MessageDetailActivity.this, true, NoticeEntity.class, (bean -> {
                     runOnUiThread(() -> {
                         tvDetailTitle.setText(GetConstDataUtils.getNoticeTypeList().get(bean.getNoticeType()));
                         String extInfo = null;

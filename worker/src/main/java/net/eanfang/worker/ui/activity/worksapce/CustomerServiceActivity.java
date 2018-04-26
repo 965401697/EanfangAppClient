@@ -47,9 +47,6 @@ public class CustomerServiceActivity extends BaseActivity implements OnTabSelect
         tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
         tabLayout_2.setOnTabSelectListener(this);
         vp.setCurrentItem(0);
-
-        setTitle("评价");
-        setLeftBack();
     }
 
     /**

@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/client" />
             <option value="$PROJECT_DIR$/eanfang" />
             <option value="$PROJECT_DIR$/worker" />
+            <option value="$PROJECT_DIR$/zxing" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

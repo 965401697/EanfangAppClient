@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -99,7 +100,7 @@ public class ContactListFragment extends BaseFragment {
                 .setOnDragStateChangedListener((dragState, badge, targetView) -> {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false));
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), true, JSONObject.class));
                         showToast("消息被清空了");
 //                        Var.get().setVar(0);
                     }
@@ -175,7 +176,7 @@ public class ContactListFragment extends BaseFragment {
     private void initGroupInfo() {
         EanfangHttp.post(UserApi.POST_GET_GROUP)
                 .params("accId", EanfangApplication.get().getAccId())
-                .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
+                .execute(new EanfangCallback<GroupsBean>(getActivity(), true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
 
                         for (GroupsBean b : list) {

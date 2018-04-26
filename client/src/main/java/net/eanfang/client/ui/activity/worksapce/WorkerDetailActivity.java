@@ -196,7 +196,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         jsonObject.put("type", 0);
         EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
                 .upJson(jsonObject.toJSONString())
-                .execute(new EanfangCallback(this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     setRightImageResId(R.mipmap.hearted);
                     PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
                     showToast("收藏成功");
@@ -214,7 +214,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
         EanfangHttp.post(RepairApi.GET_COLLECT_EXISTS)
                 .upJson(jsonObject.toJSONString())
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     boolean isCollect = bean.getBoolean("exists");
                     runOnUiThread(() -> {
                         if (isCollect == false) {
@@ -236,7 +236,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(RepairApi.GET_COLLECT_CANCEL)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback(this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     setRightImageResId(R.mipmap.heart);
                     PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, false);
                     showToast("取消收藏");

@@ -67,7 +67,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private String lon, lat, province, city, zone, contry;
     private String orderID, clientName, clientPhone, assigneeOrgCode;
     private Long oid, topid, assigneeUserId;
-    private int deviceSum, partsSum, serviceSum, posistion;
+    private int deviceSum = 0, partsSum = 0, serviceSum = 0, posistion;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private QuotationDetailAdapter devicesAdapter;
@@ -130,7 +130,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .params("id", EanfangApplication.getApplication().getUserId())
                 .params("companyId", EanfangApplication.getApplication().getCompanyId())
-                .execute(new EanfangCallback<UserEntity>(QuotationActivity.this, false, UserEntity.class, true, (list) -> {
+                .execute(new EanfangCallback<UserEntity>(QuotationActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
                 }));
@@ -148,17 +148,17 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             startActivityForResult(new Intent(QuotationActivity.this, QuotationDetailActivity.class), QUOTAION_REQUEST_DEVICES_CODE);
         });
         iv_add2.setOnClickListener((v) -> {
-            if (devicesBeanList.size() == 0) {
-                showToast("请先完善设备明细");
-                return;
-            }
+//            if (devicesBeanList.size() == 0) {
+//                showToast("请先完善设备明细");
+//                return;
+//            }
             startActivityForResult(new Intent(QuotationActivity.this, QuotationPartsActivity.class), QUOTAION_REQUEST_PARTS_CODE);
         });
         iv_add3.setOnClickListener((v) -> {
-            if (partsBeanList.size() == 0) {
-                showToast("请先完善配件明细");
-                return;
-            }
+//            if (partsBeanList.size() == 0) {
+//                showToast("请先完善配件明细");
+//                return;
+//            }
             startActivityForResult(new Intent(QuotationActivity.this, QuotationServicesActivity.class), QUOTAION_REQUEST_SERVICES_CODE);
         });
         ll_client_name.setOnClickListener(v -> showDependPerson());
@@ -196,6 +196,12 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
      * 责任人
      */
     private void showDependPerson() {
+
+        if (radioClient.isChecked()) {
+            showToast("汇报给客户不需要选择人员");
+            return;
+        }
+
         if (userlist == null || userlist.isEmpty()) {
             showToast("暂无其他员工可选");
             return;
@@ -228,34 +234,43 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             return false;
         }
 
-        if (StringUtils.isEmpty(et_contract.getText().toString().trim())) {
+        if (radioLeader.isChecked() && StringUtils.isEmpty(et_contract.getText().toString().trim())) {
             showToast("请选择联系人");
             return false;
         }
-        if (devicesBeanList.size() == 0) {
-            showToast("请填写设备明细");
+        int detailSum = (devicesBeanList.size() > 0 ? 1 : 0) + (partsBeanList.size() > 0 ? 1 : 0) + (servicesBeanList.size() > 0 ? 1 : 0);
+
+        if (detailSum < 1) {
+            showToast("设备、配件、服务请至少添加一项");
             return false;
         }
-        if (partsBeanList.size() == 0) {
-            showToast("请填写配件明细");
-            return false;
-        }
-        if (servicesBeanList.size() == 0) {
-            showToast("请填写服务明细");
-            return false;
-        }
+//        if (partsBeanList.size() == 0) {
+//            showToast("请填写配件明细");
+//            return false;
+//        }
+//        if (servicesBeanList.size() == 0) {
+//            showToast("请填写服务明细");
+//            return false;
+//        }
         return true;
     }
 
     private void postCommit() {
+        if (radioClient.isChecked()) {
+            if (StringUtils.isEmpty(orderID)) {
+                showToast("汇报给客户需要关联订单");
+                return;
+            }
+        }
+
         EanfangHttp.post(NewApiService.QUOTE_ORDER_INSERT)
                 .upJson(fillbean())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     Intent intent = new Intent(QuotationActivity.this, StateChangeActivity.class);
                     Message message = new Message();
-                    message.setTitle("下单成功");
-                    message.setMsgTitle("你的报价申请已下单成功！");
-                    message.setMsgContent("请等待客户查阅。");
+                    message.setTitle("提交成功");
+                    message.setMsgTitle("你的报价申请已提交成功！");
+                    message.setMsgContent("请等待相关负责人查阅。");
                     message.setShowLogo(true);
                     message.setShowOkBtn(true);
                     intent.putExtra("message", message);
@@ -335,7 +350,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 devicesAdapter.notifyDataSetChanged();
                 List<Integer> devicesSumList = Stream.of(devicesBeanList).map(beans -> beans.getSum()).toList();
                 deviceSum = Stream.of(devicesSumList).mapToInt((x) -> x).sum();
-
+                tv_count_money.setText((((deviceSum + partsSum + serviceSum) / 100)) + "");
                 break;
             case QUOTAION_REQUEST_PARTS_CODE:
                 if (data.getSerializableExtra("quoteparts") == null) {
@@ -346,6 +361,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 partsAdapter.notifyDataSetChanged();
                 List<Integer> partSumList = Stream.of(partsBeanList).map(beans -> beans.getSum()).toList();
                 partsSum = Stream.of(partSumList).mapToInt((x) -> x).sum();
+                tv_count_money.setText((((deviceSum + partsSum + serviceSum) / 100)) + "");
                 break;
             case QUOTAION_REQUEST_SERVICES_CODE:
                 if (data.getSerializableExtra("quoteservices") == null) {

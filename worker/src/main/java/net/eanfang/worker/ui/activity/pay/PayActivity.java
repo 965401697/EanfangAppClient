@@ -118,6 +118,7 @@ public class PayActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_pay);
         initData();
         setListener();
+        setTitle("支付中心");
     }
 
     private void initData() {
@@ -192,7 +193,7 @@ public class PayActivity extends BaseWorkerActivity {
     private void aliPay() {
         EanfangHttp.post(BaseService.BASE_URL + "/" + getAliPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<JSONObject>(PayActivity.this, false) {
+                .execute(new EanfangCallback<JSONObject>(PayActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
@@ -219,7 +220,7 @@ public class PayActivity extends BaseWorkerActivity {
     private void wxPay() {
         EanfangHttp.post(BaseService.BASE_URL + "/" + getWxPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, false) {
+                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);

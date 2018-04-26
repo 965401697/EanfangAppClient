@@ -36,12 +36,11 @@ public class CustomerServiceActivity extends BaseActivity implements OnTabSelect
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_service);
         initView();
+        setTitle("客服帮助");
+        setLeftBack();
     }
 
     private void initView() {
-        setTitle("客服帮助");
-        setLeftBack();
-
         mFragments.add(PersonalServiceFragment.getInstance());
         mFragments.add(CompanyServiceFragment.getInstance());
         View decorView = getWindow().getDecorView();
@@ -53,9 +52,6 @@ public class CustomerServiceActivity extends BaseActivity implements OnTabSelect
         tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
         tabLayout_2.setOnTabSelectListener(this);
         vp.setCurrentItem(0);
-
-        setTitle("评价");
-        setLeftBack();
     }
 
     /**

@@ -180,7 +180,7 @@ public class CheckActivity extends BaseClientActivity {
                 .tag(this)
                 .params("id", EanfangApplication.getApplication().getUserId())
                 .params("companyId", EanfangApplication.getApplication().getCompanyId())
-                .execute(new EanfangCallback<UserEntity>(CheckActivity.this, false, UserEntity.class, true, (list) -> {
+                .execute(new EanfangCallback<UserEntity>(CheckActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
                 }));

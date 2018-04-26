@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1804201
-        versionName "2.1.9"
+        versionCode 1804251
+        versionName "2.2.0"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")

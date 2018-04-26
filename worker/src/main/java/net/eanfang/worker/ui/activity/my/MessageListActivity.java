@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -95,7 +96,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
      * 一键已读
      */
     private void doReadAll() {
-        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false) {
+        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, true, JSONObject.class) {
             @Override
             public void onSuccess(Object bean) {
                 super.onSuccess(bean);
@@ -133,7 +134,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
 
                 rvList.setAdapter(messageListAdapter);
                 messageListAdapter.notifyDataSetChanged();
-                showToast("已是最新数据");
+                //showToast("已是最新数据");
             }
         } else {
             if (mDataList.size() == 0 || mDataList == null) {

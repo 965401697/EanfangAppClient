@@ -56,7 +56,7 @@ public class GiveEvaluateFragment extends BaseFragment {
         queryEntry.setSize(5);
         EanfangHttp.post(UserApi.GET_CILENT_EVALUATE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<GiveEvaluateBean>(getActivity(), false, GiveEvaluateBean.class, (bean) -> {
+                .execute(new EanfangCallback<GiveEvaluateBean>(getActivity(), true, GiveEvaluateBean.class, (bean) -> {
                     initAdapter(bean.getList());
                 }));
     }

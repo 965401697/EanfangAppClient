@@ -79,7 +79,7 @@ public class EvaluateWorkerActivity extends BaseClientActivity {
         evaluateWorkerBean.setOwnerId(assigneeUserId);
         EanfangHttp.post(RepairApi.POST_WORKER_EVALUATE_CREATE)
                 .upJson(JSON.toJSONString(evaluateWorkerBean))
-                .execute(new EanfangCallback<JSONObject>(EvaluateWorkerActivity.this, false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(EvaluateWorkerActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("评价成功");
                     finish();
                 }));

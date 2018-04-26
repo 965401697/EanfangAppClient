@@ -227,7 +227,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 .tag(this)
                 .params("id", EanfangApplication.getApplication().getUserId())
                 .params("companyId", EanfangApplication.getApplication().getCompanyId())
-                .execute(new EanfangCallback<UserEntity>(ReportActivity.this, false, UserEntity.class, true, (list) -> {
+                .execute(new EanfangCallback<UserEntity>(ReportActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
                 }));

@@ -173,7 +173,7 @@ public class WorkInstallListFragment extends BaseFragment
     private void finishWork(List<WorkspaceInstallBean.ListBean> mDataList, int position) {
         EanfangHttp.get(NewApiService.INSTALL_FINISH_WORK)
                 .params("id", mDataList.get(position).getId())
-                .execute(new EanfangCallback<JSONObject>(getActivity(), false, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
                     showToast("成功");
                     getData();
                 }));
