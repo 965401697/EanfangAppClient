@@ -19,10 +19,13 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupsBean;
+import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.Var;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.MainActivity;
+import net.eanfang.worker.ui.activity.im.SelectedFriendsActivity;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
@@ -141,7 +144,7 @@ public class ContactListFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), MyFriendsListActivity.class);
+                intent.setClass(getActivity(), SelectedFriendsActivity.class);
                 intent.putExtra("flag", 1);
                 startActivity(intent);
             }
@@ -188,7 +191,7 @@ public class ContactListFragment extends BaseFragment {
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
             @Override
             public UserInfo getUserInfo(String s) {
-                setUserInfo();
+                setUserInfo(s);
                 return null;
             }
         }, true);
@@ -217,7 +220,7 @@ public class ContactListFragment extends BaseFragment {
                     if (list.size() > 0) {
 //                        for (Conversation c : mList) {
 
-                            for (GroupsBean b : list) {
+                        for (GroupsBean b : list) {
 //
 //                                if (b.getRcloudGroupId().equals(c.getTargetId())) {
 //
@@ -226,11 +229,11 @@ public class ContactListFragment extends BaseFragment {
 //
 //                                }
 
-                                Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
+                            Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
 
-                                RongIM.getInstance().refreshGroupInfoCache(group);
+                            RongIM.getInstance().refreshGroupInfoCache(group);
 
-                                EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
+                            EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
 
 //                                break;
 
@@ -244,22 +247,31 @@ public class ContactListFragment extends BaseFragment {
     /***
      * 设置个人信息内容提供者
      */
-    private void setUserInfo() {
-        EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
-                .params("accId", EanfangApplication.get().getAccId())
-                .execute(new EanfangCallback<FriendListBean>(getActivity(), false, FriendListBean.class, true, (list) -> {
+    private void setUserInfo(String s) {
+//        EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
+//                .params("accId", EanfangApplication.get().getAccId())
+//                .execute(new EanfangCallback<FriendListBean>(getActivity(), false, FriendListBean.class, true, (list) -> {
+//
+//
+//                    if (list.size() > 0) {
+//                        for (FriendListBean b : list) {
+//
+//                            UserInfo userInfo = new UserInfo(b.getAccId(), b.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + b.getAvatar()));
+//
+//                            RongIM.getInstance().refreshUserInfoCache(userInfo);
+//
+//                        }
+//                    }
+//                }));
 
 
-                    if (list.size() > 0) {
-                        for (FriendListBean b : list) {
+        EanfangHttp.get(UserApi.POST_USER_INFO + s)
+                .execute(new EanfangCallback<User>(getActivity(), false, User.class, (bean) -> {
+                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
 
-                            UserInfo userInfo = new UserInfo(b.getAccId(), b.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + b.getAvatar()));
-
-                            RongIM.getInstance().refreshUserInfoCache(userInfo);
-
-                        }
-                    }
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
                 }));
+
     }
 
 
