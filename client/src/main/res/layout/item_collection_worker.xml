@@ -12,7 +12,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_vertical"
-        fresco:placeholderImage="@mipmap/camera" />
+        fresco:placeholderImage="@mipmap/ic_nodata" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="20dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -31,19 +31,48 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="李小宇"
-                android:textColor="#000"
-                android:textSize="16sp" />
+                android:text=""
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_time"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:gravity="right"-->
+            <!--android:text="2016-12-24"-->
+            <!--android:textColor="@color/font_color"-->
+            <!--android:textSize="14sp" />-->
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/rb_star1"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:isIndicator="true"
+                android:maxHeight="20dp"
+                android:minHeight="20dp"
+                android:progressBackgroundTint="@color/font_color"
+                android:progressTint="#FFA53A"
+                android:rating="5"
+                android:secondaryProgressTint="@color/font_color"
+                android:stepSize="0.1" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_companyName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:gravity="right"
-                android:text="2016-12-24"
-                android:textColor="@color/font_color"
-                android:textSize="14sp" />
+                android:text=""
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -52,18 +81,10 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="年龄24"
-                android:textColor="@color/font_color"
-                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -75,17 +96,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="口碑"
-                        android:textColor="@color/font_color"
-                        android:textSize="14sp" />
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
 
                     <TextView
                         android:id="@+id/tv_koubei"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="4.8分"
-                        android:textColor="#FFA53A"
-                        android:textSize="14sp" />
+                        android:text="4.8"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="分"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -99,8 +128,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="好评率"
-                        android:textColor="@color/font_color"
-                        android:textSize="14sp" />
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
 
                     <TextView
                         android:id="@+id/tv_haopinglv"
@@ -109,12 +138,45 @@
                         android:layout_marginLeft="5dp"
                         android:text="98%"
                         android:textColor="#FFA53A"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/textSize_12" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="年限"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+
+                        <TextView
+                            android:id="@+id/tv_workTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="9"
+                            android:textColor="#FFA53A"
+                            android:textSize="@dimen/textSize_12" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="年"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+                    </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
 
+
     </LinearLayout>
-
-
 </LinearLayout>
