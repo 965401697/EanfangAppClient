@@ -706,43 +706,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/rg_dataTiem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <RadioButton
+                        android:id="@+id/rb_dataTimeToday"
                         android:layout_width="@dimen/dimen_128"
                         android:layout_height="@dimen/dimen_60"
                         android:background="@drawable/bg_client_camera_text_back"
+                        android:button="@null"
+                        android:checked="true"
                         android:gravity="center"
                         android:text="@string/text_data_today"
                         android:textColor="@drawable/select_data_date"
                         android:textSize="@dimen/textSize_13" />
 
-                    <TextView
+                    <RadioButton
+                        android:id="@+id/rb_dataTimeMonth"
                         android:layout_width="@dimen/dimen_128"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="@dimen/dimen_30"
                         android:background="@drawable/bg_client_camera_text_back"
+                        android:button="@null"
                         android:gravity="center"
                         android:text="@string/text_data_month"
                         android:textColor="@drawable/select_data_date"
                         android:textSize="@dimen/textSize_13" />
-                </LinearLayout>
+                </RadioGroup>
+
 
                 <TextView
+                    android:id="@+id/tv_dataSelectType"
                     android:layout_width="@dimen/dimen_150"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/dimen_36"
                     android:background="@drawable/select_client_camera_back"
+                    android:drawableRight="@mipmap/arrow_down"
                     android:gravity="center"
+                    android:paddingRight="@dimen/dimen_10"
                     android:text="电视监控"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
+
+
             </RelativeLayout>
 
             <LinearLayout

@@ -76,4 +76,12 @@ public class EanfangConst {
     public static final String QR_CLIENT = "client_code";
     //技师端
     public static final String QR_WORKER = "worker_code";
+    //微信支付 appid 客户端
+    public static final String WX_APPID_CLIENT = "wx11d1a11a2f79200a";
+
+    //微信支付 appid 技师端
+    public static final String WX_APPID_WORKER = "wx5e7969853addd542";
+
+    // 微信支付成功 action
+    public static final String ACTION_WX_PAY_SUCCESS = "net.eanfang.client.action.repair_wx_pay_success";
 }
