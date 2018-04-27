@@ -70,7 +70,7 @@ public class AddFriendActivity extends BaseWorkerActivity {
                 if (s.length() == 11) {
                     EanfangHttp.post(UserApi.POST_FIND_FRIEND)
                             .params("mobile", etPhone.getText().toString().trim())
-//                            .params("email", etPhone.getText().toString().trim())
+//                            .params("email", etPhone.getText().toString().trim())//邮箱也可以加的
                             .execute(new EanfangCallback<FriendListBean>(AddFriendActivity.this, true, FriendListBean.class, true, (list) -> {
                                 if (list.size() > 0) {
                                     mFriendsAdapter.setNewData(list);
@@ -90,6 +90,12 @@ public class AddFriendActivity extends BaseWorkerActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
+
+                if (friendListBean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                    ToastUtil.get().showToast(AddFriendActivity.this, "亲，自己不能加自己为好友");
+                    return;
+                }
+
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("mobile", friendListBean.getMobile());
@@ -127,6 +133,7 @@ public class AddFriendActivity extends BaseWorkerActivity {
                                             .params("senderId", EanfangApplication.get().getAccId())
                                             .params("targetIds", friendListBean.getAccId())
                                             .execute(new EanfangCallback<JSONObject>(AddFriendActivity.this, true, JSONObject.class, (json) -> {
+                                                AddFriendActivity.this.finish();
                                                 ToastUtil.get().showToast(AddFriendActivity.this, "发送成功");
                                             }));
 

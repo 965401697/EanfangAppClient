@@ -86,7 +86,6 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
                 .upJson(jsonObject)
                 .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
                     ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
-
                     Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
                     RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 

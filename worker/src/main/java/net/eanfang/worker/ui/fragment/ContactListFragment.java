@@ -17,6 +17,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.Var;
@@ -34,6 +35,7 @@ import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
@@ -51,6 +53,8 @@ import q.rorbin.badgeview.QBadgeView;
 public class ContactListFragment extends BaseFragment {
 
     private List<GroupsBean> groupsBeanList = new ArrayList<>();
+    private boolean isFrist = true;
+    private List<Conversation> mList;
 
     @Override
     protected int setLayoutResouceId() {
@@ -78,6 +82,27 @@ public class ContactListFragment extends BaseFragment {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();
+
+        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+            @Override
+            public void onSuccess(List<Conversation> conversations) {
+                for (Conversation s : conversations) {
+                    Log.e("zzw", s.getReceivedStatus().getFlag() + "");
+                    Log.e("zzw", s.getTargetId());
+                    Log.e("zzw", s.getLatestMessage().toString());
+                    Log.e("zzw", s.getSentStatus().getValue() + "");
+                }
+
+                mList = conversations;
+
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        }, Conversation.ConversationType.GROUP);
+
 
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
 
@@ -156,8 +181,17 @@ public class ContactListFragment extends BaseFragment {
                 }
             }
         });
+        /**
+         * 获取用户头像和名称
+         */
 
-
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String s) {
+                setUserInfo();
+                return null;
+            }
+        }, true);
         /**
          * 获取群组头像和名称
          */
@@ -166,34 +200,71 @@ public class ContactListFragment extends BaseFragment {
             @Override
             public Group getGroupInfo(String s) {
 
-                initGroupInfo();
+                setGroupInfo();
                 return null;
             }
         }, true);
 
     }
 
-    private void initGroupInfo() {
+    /**
+     * 设置群组信息提供者
+     */
+    private void setGroupInfo() {
         EanfangHttp.post(UserApi.POST_GET_GROUP)
                 .params("accId", EanfangApplication.get().getAccId())
-                .execute(new EanfangCallback<GroupsBean>(getActivity(), true, GroupsBean.class, true, (list) -> {
+                .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
+//                        for (Conversation c : mList) {
 
-                        for (GroupsBean b : list) {
+                            for (GroupsBean b : list) {
+//
+//                                if (b.getRcloudGroupId().equals(c.getTargetId())) {
+//
+//                                } else {
+//
+//
+//                                }
 
-                            Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
+                                Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
 
-                            RongIM.getInstance().refreshGroupInfoCache(group);
+                                RongIM.getInstance().refreshGroupInfoCache(group);
 
-                            EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
+                                EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
+
+//                                break;
+
+//                            }
                         }
                     }
                 }));
 
     }
 
+    /***
+     * 设置个人信息内容提供者
+     */
+    private void setUserInfo() {
+        EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
+                .params("accId", EanfangApplication.get().getAccId())
+                .execute(new EanfangCallback<FriendListBean>(getActivity(), false, FriendListBean.class, true, (list) -> {
+
+
+                    if (list.size() > 0) {
+                        for (FriendListBean b : list) {
+
+                            UserInfo userInfo = new UserInfo(b.getAccId(), b.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + b.getAvatar()));
+
+                            RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                        }
+                    }
+                }));
+    }
+
 
     @Override
+
     protected void setListener() {
 
     }

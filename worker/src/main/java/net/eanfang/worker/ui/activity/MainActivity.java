@@ -28,6 +28,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.model.SystypeBean;
+import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
@@ -75,11 +77,11 @@ public class MainActivity extends BaseActivity {
         initUpdate();
 
         //融云登录
-        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""))) {
+        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
             getRongYToken();
         } else {
             //如果有融云token 就直接登录
-            WorkerApplication.connect(EanfangApplication.get().get(EanfangConst.RONGY_TOKEN, ""));
+            WorkerApplication.connect(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
         }
 
         //阻止底部 菜单拦被软键盘顶起
@@ -91,6 +93,8 @@ public class MainActivity extends BaseActivity {
         });
         submitLocation();
         privoderMy();
+
+        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
     }
 
     /**
@@ -296,7 +300,7 @@ public class MainActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(str)) {
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
-                        EanfangApplication.get().set(EanfangConst.RONGY_TOKEN, token);
+                        EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
                         WorkerApplication.connect(token);
                     }
                 }));
@@ -325,6 +329,32 @@ public class MainActivity extends BaseActivity {
             }
         }, true);
         RongIM.getInstance().setMessageAttachedUserInfo(true);
+    }
+
+    private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
+
+        /**
+         * 收到消息的处理。
+         *
+         * @param message 收到的消息实体。
+         * @param left    剩余未拉取消息数目。
+         * @return 收到消息是否处理完成，true 表示自己处理铃声和后台通知，false 走融云默认处理方式。
+         */
+        @Override
+        public boolean onReceived(Message message, int left) {
+            //开发者根据自己需求自行处理
+
+            if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
+                EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
+                        .execute(new EanfangCallback<User>(MainActivity.this, false, User.class, (bean) -> {
+                            UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+
+                            RongIM.getInstance().refreshUserInfoCache(userInfo);
+                        }));
+            }
+
+            return false;
+        }
     }
 
 

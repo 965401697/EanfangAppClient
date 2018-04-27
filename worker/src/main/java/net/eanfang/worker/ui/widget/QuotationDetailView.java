@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -81,17 +82,17 @@ public class QuotationDetailView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("设备明细");
-        tvBusinessType.setText(v(()->Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1)));
-        tvDeviceType.setText(v(()->Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
-        tvDeviceName.setText(v(()->Config.get().getBusinessCodeByName(quoteDevicesBean.getBusiness_three_code(),2)));
-        tvBrandModel.setText(v(()->Config.get().getModelNameByCode(quoteDevicesBean.getModelCode(),2)));
+        tvBusinessType.setText(v(() -> Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 1)));
+        tvDeviceType.setText(v(() -> Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 2)));
+        tvDeviceName.setText(v(() -> Config.get().getBusinessNameByCode(quoteDevicesBean.getBusiness_three_code(), 3)));
+        tvBrandModel.setText(v(() -> Config.get().getModelNameByCode(quoteDevicesBean.getModelCode(), 2)));
 
-        tvUnit.setText(v(()->GetConstDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit())));
-        etAmount.setText(v(()->quoteDevicesBean.getCount()) + "");
-        etPrice.setText(v(()->(quoteDevicesBean.getUnitPrice()/100)) + "");
-        etFactory.setText(v(()->quoteDevicesBean.getProducerPlace()));
-        etRemark.setText(v(()->quoteDevicesBean.getRemarkInfo()));
-        etProductCompany.setText(v(()->quoteDevicesBean.getProducerName()));
+        tvUnit.setText(v(() -> GetConstDataUtils.getDeviceUnitList().get(quoteDevicesBean.getUnit())));
+        etAmount.setText(v(() -> quoteDevicesBean.getCount()) + "");
+        etPrice.setText(v(() -> (quoteDevicesBean.getUnitPrice() / 100)) + "");
+        etFactory.setText(v(() -> quoteDevicesBean.getProducerPlace()));
+        etRemark.setText(v(() -> quoteDevicesBean.getRemarkInfo()));
+        etProductCompany.setText(v(() -> quoteDevicesBean.getProducerName()));
         paramsBeanList = quoteDevicesBean.getParams();
         if (paramsBeanList.size() != 0) {
             paramAdapter = new DeviceParamAdapter(R.layout.item_deveice_parm, (ArrayList) paramsBeanList);

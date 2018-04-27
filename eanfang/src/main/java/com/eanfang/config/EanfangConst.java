@@ -59,7 +59,15 @@ public class EanfangConst {
     /**
      * 融云的token
      */
-    public static final String RONGY_TOKEN = "rongyu_token";
+    public static final String RONG_YUN_TOKEN = "rong_yun_token";
+    /**
+     * 融云的群组id
+     */
+    public static final String RONG_YUN_ID = "rong_yun_id";
+    /**
+     * 服务器的群组id
+     */
+    public static final String GROUP_ID = "group_id";
 
     /**
      * 二维码扫描标识

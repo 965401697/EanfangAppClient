@@ -46,10 +46,10 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<GroupsBean>(this, true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
                         mGroupsAdapter.setNewData(list);
-//                        for (int i = 0; i < list.size(); i++) {
-//                            GroupsBean groupsBean = (GroupsBean) list.get(i);
-//                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
-//                        }
+                        for (int i = 0; i < list.size(); i++) {
+                            GroupsBean groupsBean = (GroupsBean) list.get(i);
+                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
+                        }
                     }
                 }));
     }
@@ -75,5 +75,14 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mGroupsAdapter != null && mGroupsAdapter.getData().size() > 0) {
+            mGroupsAdapter.getData().clear();
+        }
+        initData();
     }
 }

@@ -271,5 +271,9 @@ public interface UserApi {
      * 全员解禁
      */
     String POST_GROUP_NOGAG = BuildConfig.API_HOST + "/yaf_im/sysgroup/unGag";
+    /**
+     * 全员解禁
+     */
+    String POST_USER_INFO = BuildConfig.API_HOST + "/yaf_sys/account/info/";
 
 }

@@ -6,15 +6,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.config.EanfangConst;
 import com.eanfang.util.SoftHideKeyBoardUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imlib.model.Conversation;
 
 public class ConversationActivity extends BaseWorkerActivity {
 
@@ -34,7 +39,7 @@ public class ConversationActivity extends BaseWorkerActivity {
         startTransaction(true);
 
         String type = getIntent().getData().getLastPathSegment().toUpperCase(Locale.US);
-        if (type.equals("GROUP")) {
+        if (type.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
             setRightTitle("设置");
             setRightTitleOnClickListener(new View.OnClickListener() {
                 @Override
@@ -42,7 +47,7 @@ public class ConversationActivity extends BaseWorkerActivity {
                     Intent intent = new Intent();
                     intent.setClass(ConversationActivity.this, GroupDetailActivity.class);
                     if (!TextUtils.isEmpty(id)) {
-                        intent.putExtra("rongyun_group_id", id);
+                        intent.putExtra(EanfangConst.RONG_YUN_ID, id);
                         intent.putExtra("title", title);
                     }
                     startActivity(intent);
@@ -52,5 +57,4 @@ public class ConversationActivity extends BaseWorkerActivity {
 
         SoftHideKeyBoardUtil.assistActivity(this);
     }
-
 }

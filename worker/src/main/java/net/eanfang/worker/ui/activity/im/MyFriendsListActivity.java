@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -43,11 +44,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     RecyclerView recyclerView;
     private FriendsAdapter mFriendsAdapter;
     private int flag = 0;//显示不显示checkbox的标志位
-    private ArrayList<String> userIdList = new ArrayList<String>();
-    private ArrayList<FriendListBean> mFriendListBeanArrayList;
-    private String groupId;
-    private String title;
-    private FriendListBean currentBean;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,114 +53,29 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
 
         setLeftBack();
-        //1:创建选着好友  2：群组删除还有 3：群组添加好友  4,转让群主
-        flag = getIntent().getIntExtra("flag", 0);
-        rightTitleOnClick(flag);
+        setTitle("我的好友");
         initViews();
         initData();
     }
 
 
-    private void rightTitleOnClick(int flag) {
-        if (flag == 1) {
-            setTitle("选择好友");
-            setRightTitle("下一步");
-            startTransaction(true);
-        } else if (flag == 2) {
-            setTitle("群组移除好友");
-            setRightTitle("确定");
-            mFriendListBeanArrayList = (ArrayList<FriendListBean>) getIntent().getSerializableExtra("list");
-            groupId = getIntent().getStringExtra("groupId");
-            title = getIntent().getStringExtra("title");
-            startTransaction(true);
-        } else if (flag == 3) {
-            setTitle("选择好友");
-            setRightTitle("确定");
-            groupId = getIntent().getStringExtra("groupId");
-            startTransaction(true);
-        } else if (flag == 4) {
-            setTitle("转让群主");
-            setRightTitle("确定");
-            groupId = getIntent().getStringExtra("groupId");
-        } else {
-            setTitle("我的好友");
-        }
-
-        setRightTitleOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (flag == 1) {
-                    if (userIdList.size() == 1) {
-                        //说明单聊
-                        RongIM.getInstance().startPrivateChat(MyFriendsListActivity.this, userIdList.get(0), currentBean.getNickName());
-                    } else {
-                        Intent intent = new Intent(MyFriendsListActivity.this, GroupCreatActivity.class);
-                        intent.putStringArrayListExtra("userIdList", userIdList);
-                        startActivity(intent);
-                    }
-                } else if (flag == 2) {
-                    removeNumber();
-                } else if (flag == 3) {
-                    AddNumber();
-                } else if (flag == 4) {
-                    transfer();
-                }
-            }
-        });
-    }
-
     private void initData() {
-        if (flag != 2) {
-            if (flag == 3) {
-                //查找没有在群组的好友
-                EanfangHttp.post(UserApi.POST_GROUP_NOJOIN)
-                        .params("groupId", groupId)
-                        .params("accId", EanfangApplication.get().getAccId())
-                        .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
-                            if (list.size() > 0) {
-                                mFriendsAdapter.setNewData(list);
-                            }
-                        }));
-            } else if (flag == 4) {
-                //查找群内成员
-                EanfangHttp.post(UserApi.POST_GROUP_NUM)
-                        .params("groupId", groupId)
-                        .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
-                            if (list.size() > 0) {
-                                ArrayList<FriendListBean> friendListBeanArrayList = new ArrayList<>();
-                                for (int i = 0; i < list.size(); i++) {
-                                    if (!(String.valueOf(EanfangApplication.getApplication().getAccId()).equals(list.get(i).getAccId()))) {
-                                        friendListBeanArrayList.add(list.get(i));
-                                    }
-                                }
-                                mFriendsAdapter.setNewData(friendListBeanArrayList);
-                            }
-                        }));
-            } else {
-                EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
-                        .params("accId", EanfangApplication.get().getAccId())
-                        .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
-                            if (list.size() > 0) {
-                                mFriendsAdapter.setNewData(list);
-                            }
-                        }));
-            }
-        } else {
-            mFriendsAdapter.setNewData(mFriendListBeanArrayList);
-        }
+
+        EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
+                .params("accId", EanfangApplication.get().getAccId())
+                .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
+                    if (list.size() > 0) {
+                        mFriendsAdapter.setNewData(list);
+                    }
+                }));
     }
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, flag);
-
         mFriendsAdapter.bindToRecyclerView(recyclerView);
-        if (flag == 0) {
-            startConv();
-        } else {
-            selectFriends();
-        }
+        startConv();
+
 
         //删除好友
         mFriendsAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
@@ -183,141 +95,13 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         mFriendsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
+                RongIM.getInstance().refreshUserInfoCache(userInfo);
                 RongIM.getInstance().startConversation(MyFriendsListActivity.this, Conversation.ConversationType.PRIVATE, ((FriendListBean) adapter.getData().get(position)).getAccId(), ((FriendListBean) adapter.getData().get(position)).getNickName());
 
             }
         });
-    }
-
-    /**
-     * 选择好友
-     */
-    private void selectFriends() {
-        mFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                //创建群组选着好友
-                if (view.getId() == R.id.cb_checked) {
-
-                    if (flag == 4) {
-
-                        if (userIdList.size() == 1) {
-                            ToastUtil.get().showToast(MyFriendsListActivity.this, "只能选择一个好友为群主");
-                            return;
-                        }
-                        FriendListBean bean = (FriendListBean) adapter.getData().get(position);
-                        if (bean.getFlag() == 1) {
-                            //移除
-                            userIdList.remove(bean.getAccId());
-                            bean.setFlag(0);
-                        } else {
-                            userIdList.add(bean.getAccId());
-                            bean.setFlag(1);
-                            currentBean = bean;
-                        }
-
-                    } else {
-                        FriendListBean bean = (FriendListBean) adapter.getData().get(position);
-                        if (bean.getFlag() == 1) {
-                            //移除
-                            userIdList.remove(bean.getAccId());
-                            bean.setFlag(0);
-                        } else {
-                            userIdList.add(bean.getAccId());
-                            bean.setFlag(1);
-                            currentBean = bean;
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    /**
-     * 移除组内成员
-     */
-    private void removeNumber() {
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < userIdList.size(); i++) {
-            if (i == 0) {
-                buffer.append(userIdList.get(i));
-            } else {
-                buffer.append("," + userIdList.get(i));
-            }
-        }
-
-        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
-                .params("groupId", groupId)
-                .params("ids", buffer.toString())
-//                .params("ids", userIdList.toString())
-                .params("groupName", title)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                    ToastUtil.get().showToast(MyFriendsListActivity.this, "移除成功");
-                    setResult(RESULT_OK);
-                    endTransaction(true);
-                }));
-    }
-
-    /**
-     * 转让群主
-     */
-    private void transfer() {
-
-        if (userIdList.size() == 0) {
-            ToastUtil.get().showToast(MyFriendsListActivity.this, "必须选择一个还有");
-            return;
-        }
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("groupId", groupId);
-            jsonObject.put("create_user", userIdList.get(0));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //转让群主
-        EanfangHttp.post(UserApi.POST_UPDATA_GROUP)
-                .upJson(jsonObject)
-                .execute(new EanfangCallback<JSONObject>(MyFriendsListActivity.this, true, JSONObject.class, (JSONObject) -> {
-                    ToastUtil.get().showToast(MyFriendsListActivity.this, "转让成功");
-                    setResult(RESULT_OK);
-                    finish();
-                }));
-
-    }
-
-    /**
-     * 添加成员
-     */
-    private void AddNumber() {
-
-        if (userIdList.size() == 0) {
-            ToastUtil.get().showToast(MyFriendsListActivity.this, "请选择好友");
-            return;
-        }
-
-        JSONArray array = new JSONArray();
-        JSONObject object = null;
-        for (String s : userIdList) {
-            object = new JSONObject();
-            try {
-                object.put("accId", s);
-                object.put("groupId", groupId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        array.put(object);
-        EanfangHttp.post(UserApi.POST_GROUP_JOIN)
-                .upJson(array)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                    ToastUtil.get().showToast(MyFriendsListActivity.this, "添加成功");
-                    setResult(RESULT_OK);
-                    endTransaction(true);
-                }));
     }
 
     private void DialogShow(String userId, String name, int position) {

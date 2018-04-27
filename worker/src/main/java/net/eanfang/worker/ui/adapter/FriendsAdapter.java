@@ -18,7 +18,7 @@ import net.eanfang.worker.R;
  */
 
 public class FriendsAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHolder> {
-    private int flag;
+    private int flag;//多选框的隐藏和显示
 
     public FriendsAdapter(int layoutResId, int flag) {
         super(layoutResId);
@@ -28,7 +28,7 @@ public class FriendsAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHol
     @Override
     protected void convert(BaseViewHolder helper, FriendListBean item) {
 
-        if (flag == 0 ) {
+        if (flag == 0) {
             helper.getView(R.id.cb_checked).setVisibility(View.INVISIBLE);
         } else {
             helper.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
