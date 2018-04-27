@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.camera.util.LogUtil;
+import com.eanfang.config.Constant;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.IBase;
@@ -22,6 +24,8 @@ import com.eanfang.util.message.J_MessageVerify;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.IOException;
 
@@ -30,7 +34,7 @@ import java.io.IOException;
  * CustomeApplication
  *
  * @author hou
- * Created at 2016/12/1 13:58
+ *         Created at 2016/12/1 13:58
  * @desc 程序入口
  */
 
@@ -43,10 +47,21 @@ public abstract class CustomeApplication extends MultiDexApplication {
         return mJCustomeApplication;
     }
 
+    private IWXAPI iwxapi;
+
+    public IWXAPI getIwxapi() {
+        return iwxapi;
+    }
+
+    public void setIwxapi(IWXAPI iwxapi) {
+        this.iwxapi = iwxapi;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         mJCustomeApplication = this;
+        regWeiXin();
     }
 
     public void initConfig() {
@@ -66,6 +81,13 @@ public abstract class CustomeApplication extends MultiDexApplication {
         }
     }
 
+    private void regWeiXin() {
+        // 通过WXAPIFactory工厂,获取IWXAPI的实例
+        iwxapi = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT, true);
+        // 将应用的 appID 注册到微信
+        iwxapi.registerApp(EanfangConst.WX_APPID_CLIENT);
+        setIwxapi(iwxapi);
+    }
 
     /**
      * sharepreference

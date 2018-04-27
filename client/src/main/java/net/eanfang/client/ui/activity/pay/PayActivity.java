@@ -1,6 +1,9 @@
 package net.eanfang.client.ui.activity.pay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +21,7 @@ import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
@@ -37,6 +41,7 @@ import net.eanfang.client.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -125,6 +130,7 @@ public class PayActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         initData();
         setListener();
+        setLeftBack();
         setTitle("支付中心");
     }
 
@@ -161,7 +167,7 @@ public class PayActivity extends BaseClientActivity {
             } else {
                 //微信支付
                 payLogEntity.setPayType(1);
-                wxPay();
+                isWeixinAvilible(PayActivity.this);
             }
         });
 
@@ -294,13 +300,13 @@ public class PayActivity extends BaseClientActivity {
                                             Log.e("onResp", "onResp: success");
                                             break;
                                         case -1:
-//                    ToastUtils.showToastShort(this, "支付失败");
+                                            showToast("支付失败");
                                             break;
                                         case -2:
-//                    ToastUtils.showToastShort(this, "支付取消");
+                                            showToast("支付取消");
                                             break;
                                         default:
-//                    ToastUtils.showToastShort(this, "支付失败");
+                                            showToast("支付失败");
                                             break;
                                     }
                                     finish();
@@ -308,11 +314,33 @@ public class PayActivity extends BaseClientActivity {
                             }
                         });
                         msgApi.sendReq(request);
-
-
                     }
                 });
     }
+
+    /**
+     * 判断手机是否安装微信
+     *
+     * @param mContext
+     * @return
+     */
+    private boolean isWeixinAvilible(Context mContext) {
+        final PackageManager packageManager = mContext.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    wxPay();
+                    return true;
+                }
+            }
+        }
+        //  没有安装微信的
+        showToast("您的手机没有安装微信");
+        return false;
+    }
+
 
     public String getAliPayUrl(int orderType) {
         //报修单

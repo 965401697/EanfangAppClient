@@ -127,20 +127,41 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- app -->
+        <receiver android:name=".wxapi.AppRegister">
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+        <!-- 微信授权的Activity注册 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <!-- wxpay-->
-        <!--<activity-->
-        <!--android:name=".wxapi.WXPayEntryActivity"-->
-        <!--android:exported="true"-->
-        <!--android:launchMode="singleTop"></activity>-->
-        <!--<receiver-->
-        <!--android:name=".wxapi.AppRegister"-->
-        <!--android:permission="com.tencent.mm.plugin.permission.SEND">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />-->
-        <!--</intent-filter>-->
-        <!--</receiver>-->
+                <category android:name="android.intent.category.DEFAULT" />
 
+                <data android:scheme="sdksample" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="sdksample" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
@@ -200,7 +221,8 @@
             android:name=".ui.activity.worksapce.SignActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
-        <activity android:name=".ui.activity.LoginActivity"
+        <activity
+            android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
 
         <provider
