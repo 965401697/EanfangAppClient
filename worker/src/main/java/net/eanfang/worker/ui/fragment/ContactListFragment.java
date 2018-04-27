@@ -83,25 +83,25 @@ public class ContactListFragment extends BaseFragment {
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();
 
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-            @Override
-            public void onSuccess(List<Conversation> conversations) {
-                for (Conversation s : conversations) {
-                    Log.e("zzw", s.getReceivedStatus().getFlag() + "");
-                    Log.e("zzw", s.getTargetId());
-                    Log.e("zzw", s.getLatestMessage().toString());
-                    Log.e("zzw", s.getSentStatus().getValue() + "");
-                }
-
-                mList = conversations;
-
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-            }
-        }, Conversation.ConversationType.GROUP);
+//        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+//            @Override
+//            public void onSuccess(List<Conversation> conversations) {
+//                for (Conversation s : conversations) {
+//                    Log.e("zzw", s.getReceivedStatus().getFlag() + "");
+//                    Log.e("zzw", s.getTargetId());
+//                    Log.e("zzw", s.getLatestMessage().toString());
+//                    Log.e("zzw", s.getSentStatus().getValue() + "");
+//                }
+//
+//                mList = conversations;
+//
+//            }
+//
+//            @Override
+//            public void onError(RongIMClient.ErrorCode errorCode) {
+//
+//            }
+//        }, Conversation.ConversationType.GROUP);
 
 
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
