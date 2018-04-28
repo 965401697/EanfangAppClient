@@ -58,6 +58,7 @@ public class SoftHideKeyBoardUtil {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);
         return (r.bottom);
+//        return (r.bottom - r.top);
 
     }
 

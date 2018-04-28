@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -42,6 +43,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -54,7 +56,10 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.InformationNotificationMessage;
+import io.rong.message.TextMessage;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
@@ -95,6 +100,7 @@ public class MainActivity extends BaseActivity {
         privoderMy();
 
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
+        RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
     }
 
     /**
@@ -192,6 +198,7 @@ public class MainActivity extends BaseActivity {
 
                 mExitTime = System.currentTimeMillis();
             } else {
+                RongIM.getInstance().logout();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
             }
@@ -346,20 +353,94 @@ public class MainActivity extends BaseActivity {
         @Override
         public boolean onReceived(Message message, int left) {
             //开发者根据自己需求自行处理
+            boolean isDelect = false;
+            String type = message.getObjectName();
+            if (type.equals("RC:InfoNtf")) {
+                InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
+                if (msg.getMessage().equals("解散了")) {
+                    isDelect = true;
+                    for (Activity activity : transactionActivities) {
+                        if (activity instanceof ConversationActivity) {
+                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+                                activity.finish();
+                            }
+                        }
+                    }
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+                }
 
-            if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
-                EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
-                        .execute(new EanfangCallback<User>(MainActivity.this, false, User.class, (bean) -> {
-                            UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
-
-                            RongIM.getInstance().refreshUserInfoCache(userInfo);
-                        }));
             }
 
-            return false;
+
+            if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
+                TextMessage messageContent = (TextMessage) message.getContent();
+                if (messageContent.getContent().equals("被删除通知")) {
+
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
+
+                    for (Activity activity : transactionActivities) {
+                        if (activity instanceof ConversationActivity) {
+                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+                                activity.finish();
+                            }
+                        }
+                    }
+
+                } else {
+
+                    EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
+                            .execute(new EanfangCallback<User>(MainActivity.this, false, User.class, (bean) -> {
+                                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+
+                                RongIM.getInstance().refreshUserInfoCache(userInfo);
+                            }));
+                }
+            }
+            return isDelect;
         }
+
     }
 
+    class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
+
+        @Override
+        public void onChanged(ConnectionStatus connectionStatus) {
+
+            switch (connectionStatus) {
+
+                case CONNECTED://连接成功。
+
+                    Log.i("zzw", "--------------------连接成功");
+
+                    break;
+
+                case DISCONNECTED://断开连接。
+
+                    Log.i("zzw", "--------------------断开连接");
+
+                    break;
+
+                case CONNECTING://连接中。
+
+                    Log.i("zzw", "--------------------链接中");
+
+                    break;
+
+                case NETWORK_UNAVAILABLE://网络不可用。
+
+                    Log.i("zzw", "--------------------网络不可用");
+
+                    break;
+
+                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+
+                    Log.i("zzw", "--------------------掉线");
+
+                    break;
+            }
+        }
+
+    }
 
 }
 

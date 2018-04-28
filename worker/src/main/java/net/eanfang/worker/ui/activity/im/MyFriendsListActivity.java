@@ -83,6 +83,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
                 FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
                 DialogShow(friendListBean.getAccId(), friendListBean.getNickName(), position);
+
                 return false;
             }
         });
@@ -124,6 +125,15 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                                 .params("ids", userId)
                                 .execute(new EanfangCallback<org.json.JSONObject>(MyFriendsListActivity.this, true, org.json.JSONObject.class, (bean) -> {
                                     mFriendsAdapter.remove(position);
+
+
+                                    EanfangHttp.post(UserApi.POST_DELETE_FRIEND_PUSH)
+                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("targetIds", userId)
+                                            .execute(new EanfangCallback<JSONObject>(MyFriendsListActivity.this, true, JSONObject.class, (json) -> {
+                                                MyFriendsListActivity.this.finish();
+                                                ToastUtil.get().showToast(MyFriendsListActivity.this, "删除成功");
+                                            }));
 
                                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, userId, new RongIMClient.ResultCallback<Boolean>() {
                                         @Override

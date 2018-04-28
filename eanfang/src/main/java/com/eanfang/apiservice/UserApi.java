@@ -226,6 +226,10 @@ public interface UserApi {
      */
     String POST_DELETE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/delete";
     /**
+     * 删除好友
+     */
+    String POST_DELETE_FRIEND_PUSH = BuildConfig.API_HOST + "/yaf_im/im/deleteFriendPush";
+    /**
      * 创建群组
      */
     String POST_CREAT_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/create";
@@ -272,7 +276,7 @@ public interface UserApi {
      */
     String POST_GROUP_NOGAG = BuildConfig.API_HOST + "/yaf_im/sysgroup/unGag";
     /**
-     * 全员解禁
+     * 根据账户id 查找用户
      */
     String POST_USER_INFO = BuildConfig.API_HOST + "/yaf_sys/account/info/";
 

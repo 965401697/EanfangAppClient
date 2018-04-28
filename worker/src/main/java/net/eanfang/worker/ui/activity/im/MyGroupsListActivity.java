@@ -37,7 +37,7 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
         setTitle("我的群组");
         setLeftBack();
         initViews();
-        initData();
+//        initData();
     }
 
     private void initData() {

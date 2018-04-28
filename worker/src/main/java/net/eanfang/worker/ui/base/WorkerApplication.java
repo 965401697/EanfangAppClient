@@ -39,7 +39,7 @@ public class WorkerApplication extends EanfangApplication {
              */
             @Override
             public void onTokenIncorrect() {
-
+                Log.d("zzw", "融云登录onTokenIncorrect");
             }
 
             /**

@@ -25,6 +25,7 @@ public class ConversationActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    public String mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,8 @@ public class ConversationActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
         String title = getIntent().getData().getQueryParameter("title").toString();//群组名称
-        String id = getIntent().getData().getQueryParameter("targetId").toString();//单聊就是userid 群聊就是groupid
+        //单聊就是userid 群聊就是groupid
+        mId = getIntent().getData().getQueryParameter("targetId").toString();
         tvTitle.setText(title);
         setLeftBack();
         endTransaction(false);
@@ -46,8 +48,8 @@ public class ConversationActivity extends BaseWorkerActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     intent.setClass(ConversationActivity.this, GroupDetailActivity.class);
-                    if (!TextUtils.isEmpty(id)) {
-                        intent.putExtra(EanfangConst.RONG_YUN_ID, id);
+                    if (!TextUtils.isEmpty(mId)) {
+                        intent.putExtra(EanfangConst.RONG_YUN_ID, mId);
                         intent.putExtra("title", title);
                     }
                     startActivity(intent);
@@ -55,6 +57,6 @@ public class ConversationActivity extends BaseWorkerActivity {
             });
         }
 
-        SoftHideKeyBoardUtil.assistActivity(this);
+//        SoftHideKeyBoardUtil.assistActivity(this);
     }
 }

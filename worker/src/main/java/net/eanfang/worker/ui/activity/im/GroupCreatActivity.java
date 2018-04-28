@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.im;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -60,6 +61,17 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
      * 提交群组的名字
      */
     private void submit() {
+
+        if (TextUtils.isEmpty(etGroupName.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "群组名称不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(imgKey)) {
+            ToastUtil.get().showToast(this, "请上传群头像");
+            return;
+        }
+
         ArrayList<String> list = getIntent().getStringArrayListExtra("userIdList");
         list.add(String.valueOf(EanfangApplication.get().getAccId()));
         JSONObject jsonObject = new JSONObject();

@@ -89,7 +89,7 @@ public class BaseActivity extends AppCompatActivity implements
         //Config.get().onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
-        initState();
+//        initState();
         CustomeApplication.get().push(this);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

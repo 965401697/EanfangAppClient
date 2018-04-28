@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -30,6 +31,8 @@ import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,25 +89,35 @@ public class ContactListFragment extends BaseFragment {
         transaction.add(R.id.rong_content, fragment);
         transaction.commit();
 
-//        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-//            @Override
-//            public void onSuccess(List<Conversation> conversations) {
-//                for (Conversation s : conversations) {
-//                    Log.e("zzw", s.getReceivedStatus().getFlag() + "");
-//                    Log.e("zzw", s.getTargetId());
-//                    Log.e("zzw", s.getLatestMessage().toString());
-//                    Log.e("zzw", s.getSentStatus().getValue() + "");
-//                }
-//
-//                mList = conversations;
-//
-//            }
-//
-//            @Override
-//            public void onError(RongIMClient.ErrorCode errorCode) {
-//
-//            }
-//        }, Conversation.ConversationType.GROUP);
+        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+            @Override
+            public void onSuccess(List<Conversation> conversations) {
+
+                if (conversations != null && conversations.size() > 0) {
+
+                    for (Conversation s : conversations) {
+
+                        GroupsBean groupsBean = new GroupsBean();
+
+                        groupsBean.setRcloudGroupId(s.getTargetId());
+
+                        groupsBeanList.add(groupsBean);
+
+                        Log.e("zzw", s.getReceivedStatus().getFlag() + "");
+                        Log.e("zzw", s.getTargetId());
+                        Log.e("zzw", s.getLatestMessage().toString());
+                        Log.e("zzw", s.getSentStatus().getValue() + "");
+                    }
+
+                    mList = conversations;
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        }, Conversation.ConversationType.GROUP);
 
 
         findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
@@ -174,11 +187,17 @@ public class ContactListFragment extends BaseFragment {
             @Override
             public boolean onConversationClick(Context context, View view, UIConversation uiConversation) {
                 if (uiConversation.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
-                    UserInfo userInfo = new UserInfo(uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle(), uiConversation.getIconUrl());
-                    Intent intent = new Intent(getActivity(), SystemMessageActivity.class);
-                    intent.putExtra("sendUserInfo", userInfo);
-                    startActivity(intent);
-                    return true;
+
+                    if (uiConversation.getConversationContent().toString().equals("被删除通知")) {
+                        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
+                        return true;
+                    } else {
+                        UserInfo userInfo = new UserInfo(uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle(), uiConversation.getIconUrl());
+                        Intent intent = new Intent(getActivity(), SystemMessageActivity.class);
+                        intent.putExtra("sendUserInfo", userInfo);
+                        startActivity(intent);
+                        return true;
+                    }
                 } else {
                     return false;
                 }
@@ -263,6 +282,8 @@ public class ContactListFragment extends BaseFragment {
 //                        }
 //                    }
 //                }));
+
+        if (TextUtils.isEmpty(s)) return;
 
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)

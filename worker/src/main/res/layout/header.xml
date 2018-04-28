@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/titles_bar"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="50dp"
     android:background="@mipmap/ic_work_top_back"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/dimen_40">
+     >
 
     <ImageView
         android:id="@+id/iv_left"

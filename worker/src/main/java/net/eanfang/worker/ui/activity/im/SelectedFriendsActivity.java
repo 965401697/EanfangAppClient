@@ -77,7 +77,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     } else {
 
                         if (mUserIdList.size() <= 1) {
-                            ToastUtil.get().showToast(SelectedFriendsActivity.this, "请选择两位或者两位以上的好友");
+                            ToastUtil.get().showToast(SelectedFriendsActivity.this, "请至少选择一位好友开始聊天");
                             return;
                         }
 

@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_main_top_back"
         android:orientation="vertical">
-        <View
+   <!--     <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40" />
+            android:layout_height="@dimen/dimen_40" />-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp">
