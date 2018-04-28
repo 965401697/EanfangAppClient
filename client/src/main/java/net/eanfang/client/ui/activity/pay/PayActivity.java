@@ -273,47 +273,22 @@ public class PayActivity extends BaseClientActivity {
                         super.onSuccess(bean);
                         wxPayBean = bean;
                         // Config.get().setAppId(wxPayBean.getAppid());
+                        new Thread(() -> {
+                            final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
+                            // 将该app注册到微信
+                            msgApi.registerApp(wxPayBean.getAppid());
+                            PayReq request = new PayReq();
+                            request.appId = wxPayBean.getAppid();
+                            request.partnerId = wxPayBean.getPartnerid();
+                            request.prepayId = wxPayBean.getPrepayid();
+                            request.packageValue = wxPayBean.getPackageX();
+                            request.nonceStr = wxPayBean.getNoncestr();
+                            request.timeStamp = wxPayBean.getTimestamp();
+                            request.sign = wxPayBean.getSign();
+                            boolean isOk = msgApi.sendReq(request);
+                            System.err.println(isOk + "------------");
+                        }).start();
 
-                        final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
-                        // 将该app注册到微信
-                        msgApi.registerApp(wxPayBean.getAppid());
-                        PayReq request = new PayReq();
-                        request.appId = wxPayBean.getAppid();
-                        request.partnerId = wxPayBean.getPartnerid();
-                        request.prepayId = wxPayBean.getPrepayid();
-                        request.packageValue = wxPayBean.getPackageX();
-                        request.nonceStr = wxPayBean.getNoncestr();
-                        request.timeStamp = wxPayBean.getTimestamp();
-                        request.sign = wxPayBean.getSign();
-                        msgApi.handleIntent(getIntent(), new IWXAPIEventHandler() {
-                            @Override
-                            public void onReq(BaseReq baseReq) {
-                                Log.e("onResp", "onResp: success");
-                            }
-
-                            @Override
-                            public void onResp(BaseResp baseResp) {
-                                if (baseResp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-                                    int errCode = baseResp.errCode;
-                                    switch (errCode) {
-                                        case 0:
-                                            Log.e("onResp", "onResp: success");
-                                            break;
-                                        case -1:
-                                            showToast("支付失败");
-                                            break;
-                                        case -2:
-                                            showToast("支付取消");
-                                            break;
-                                        default:
-                                            showToast("支付失败");
-                                            break;
-                                    }
-                                    finish();
-                                }
-                            }
-                        });
-                        msgApi.sendReq(request);
                     }
                 });
     }
