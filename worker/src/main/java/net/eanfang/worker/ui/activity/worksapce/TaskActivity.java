@@ -86,7 +86,7 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     }
 
     private void initView() {
-        setTitle("工作任务");
+        setTitle("新建任务");
         setLeftBack();
         btnAddTask.setOnClickListener(this);
         llDependPerson.setOnClickListener(this);

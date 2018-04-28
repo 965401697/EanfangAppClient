@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_30"
-        android:text="资料库"
+        android:text="资源库"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_16"
         android:textStyle="bold" />

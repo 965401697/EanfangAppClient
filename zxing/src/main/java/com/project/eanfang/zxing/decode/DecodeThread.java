@@ -1,4 +1,9 @@
-package com.project.eanfang.zxing.decoding;
+/*
+ * Created by 岱青海蓝信息系统(北京)有限公司 on 17-4-7 上午9:36
+ * Copyright (c) 2017. All rights reserved.
+ */
+
+package com.project.eanfang.zxing.decode;
 
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -18,11 +23,15 @@ import java.util.EnumSet;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-/**
- * Created by admin on 2018/4/25.
- */
+//import com.karics.library.zxing.android.CaptureActivity;
+//import com.karics.library.zxing.android.PreferencesActivity;
 
-public class DecodeThread extends Thread {
+/**
+ * This thread does all the heavy lifting of decoding the images.
+ *
+ * @author dswitkin@google.com (Daniel Switkin)
+ */
+public final class DecodeThread extends Thread {
 
     public static final String BARCODE_BITMAP = "barcode_bitmap";
     public static final String BARCODE_SCALED_FACTOR = "barcode_scaled_factor";
@@ -41,7 +50,7 @@ public class DecodeThread extends Thread {
         this.activity = activity;
         handlerInitLatch = new CountDownLatch(1);
 
-        hints = new EnumMap<>(DecodeHintType.class);
+        hints = new EnumMap<DecodeHintType, Object>(DecodeHintType.class);
         if (baseHints != null) {
             hints.putAll(baseHints);
         }
@@ -94,4 +103,5 @@ public class DecodeThread extends Thread {
         handlerInitLatch.countDown();
         Looper.loop();
     }
+
 }

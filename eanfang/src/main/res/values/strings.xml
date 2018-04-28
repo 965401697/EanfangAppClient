@@ -49,7 +49,7 @@
     <string name="text_work_knowledge">行业知识</string>
     <string name="text_work_report">工作汇报</string>
     <string name="text_work_task">布置任务</string>
-    <string name="text_work_inspect">工作检查</string>
+    <string name="text_work_inspect">设备点检</string>
     <string name="text_work_sign">签到</string>
     <string name="text_work_library">设备库</string>
     <string name="text_work_fault">故障记录</string>

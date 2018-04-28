@@ -1,24 +1,14 @@
 /*
- * Copyright (C) 2008 ZXing authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Created by 岱青海蓝信息系统(北京)有限公司 on 17-4-7 上午9:36
+ * Copyright (c) 2017. All rights reserved.
  */
 
 package com.project.eanfang.zxing.view;
 
-import com.google.zxing.ResultPoint;
-import com.project.eanfang.zxing.R;
-import com.project.eanfang.zxing.camera.CameraManager;
+//import com.example.zxingdemo.R;
+//import com.example.zxingdemo.R.color;
+//import com.google.zxing.ResultPoint;
+//import com.karics.library.zxing.camera.CameraManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -32,12 +22,17 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.google.zxing.ResultPoint;
+import com.project.eanfang.zxing.R;
+import com.project.eanfang.zxing.camera.CameraManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
- * transparency outside it, as well as the laser scanner animation and result points.
+ * This view is overlaid on top of the camera preview. It adds the viewfinder
+ * rectangle and partial transparency outside it, as well as the laser scanner
+ * animation and result points. 这是一个位于相机顶部的预览view,它增加了一个外部部分透明的取景框，以及激光扫描动画和结果组件
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
@@ -61,7 +56,6 @@ public final class ViewfinderView extends View {
     private int scannerAlpha;
     private List<ResultPoint> possibleResultPoints;
     private List<ResultPoint> lastPossibleResultPoints;
-
     // 扫描线移动的y
     private int scanLineTop;
     // 扫描线移动速度
@@ -69,11 +63,11 @@ public final class ViewfinderView extends View {
     // 扫描线
     Bitmap scanLight;
 
-    // This constructor is used when the class is built from an XML resource.
     public ViewfinderView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        // Initialize these once for performance rather than calling them every time in onDraw().
+        // Initialize these once for performance rather than calling them every
+        // time in onDraw().
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         Resources resources = getResources();
         maskColor = resources.getColor(R.color.viewfinder_mask);
@@ -82,7 +76,7 @@ public final class ViewfinderView extends View {
         resultPointColor = resources.getColor(R.color.possible_result_points);
         statusColor = resources.getColor(R.color.status_text);
         scannerAlpha = 0;
-        possibleResultPoints = new ArrayList<>(5);
+        possibleResultPoints = new ArrayList<ResultPoint>(5);
         lastPossibleResultPoints = null;
         scanLight = BitmapFactory.decodeResource(resources,
                 R.drawable.scan_light);
@@ -98,6 +92,8 @@ public final class ViewfinderView extends View {
         if (cameraManager == null) {
             return; // not ready yet, early draw before done configuring
         }
+
+        // frame为取景框
         Rect frame = cameraManager.getFramingRect();
         Rect previewFrame = cameraManager.getFramingRectInPreview();
         if (frame == null || previewFrame == null) {
@@ -107,33 +103,39 @@ public final class ViewfinderView extends View {
         int height = canvas.getHeight();
 
         // Draw the exterior (i.e. outside the framing rect) darkened
+        // 绘制取景框外的暗灰色的表面，分四个矩形绘制
         paint.setColor(resultBitmap != null ? resultColor : maskColor);
         canvas.drawRect(0, 0, width, frame.top, paint);// Rect_1
-        canvas.drawRect(0, frame.top, frame.left, frame.bottom, paint);// Rect_2
-        canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom, paint);// Rect_3
-        canvas.drawRect(0, frame.bottom, width, height, paint);// Rect_4
+        canvas.drawRect(0, frame.top, frame.left, frame.bottom, paint); // Rect_2
+        canvas.drawRect(frame.right, frame.top, width, frame.bottom,
+                paint); // Rect_3
+        canvas.drawRect(0, frame.bottom, width, height, paint); // Rect_4
 
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle
+            // 如果有二维码结果的Bitmap，在扫取景框内绘制不透明的result Bitmap
             paint.setAlpha(CURRENT_POINT_OPACITY);
             canvas.drawBitmap(resultBitmap, null, frame, paint);
         } else {
-
-            // Draw a red "laser scanner" line through the middle to show decoding is active
+            // Draw a red "laser scanner" line through the middle to show
             // decoding is active
             drawFrameBounds(canvas, frame);
             drawStatusText(canvas, frame, width, height);
 
+            // 绘制扫描线
+            // paint.setColor(laserColor);
+            // paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
+            // scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
+            // int middle = frame.height() / 2 + frame.top;
+            // canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1,
+            // middle + 2, paint);
+
             drawScanLight(canvas, frame);
-//      paint.setColor(laserColor);
-//      paint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
-//      scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
-//      int middle = frame.height() / 2 + frame.top;
-//      canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);
 
             float scaleX = frame.width() / (float) previewFrame.width();
             float scaleY = frame.height() / (float) previewFrame.height();
 
+            // 绘制扫描线周围的特征点
             List<ResultPoint> currentPossible = possibleResultPoints;
             List<ResultPoint> currentLast = lastPossibleResultPoints;
             int frameLeft = frame.left;
@@ -141,15 +143,16 @@ public final class ViewfinderView extends View {
             if (currentPossible.isEmpty()) {
                 lastPossibleResultPoints = null;
             } else {
-                possibleResultPoints = new ArrayList<>(5);
+                possibleResultPoints = new ArrayList<ResultPoint>(5);
                 lastPossibleResultPoints = currentPossible;
                 paint.setAlpha(CURRENT_POINT_OPACITY);
                 paint.setColor(resultPointColor);
                 synchronized (currentPossible) {
                     for (ResultPoint point : currentPossible) {
-                        canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
-                                frameTop + (int) (point.getY() * scaleY),
-                                POINT_SIZE, paint);
+                        canvas.drawCircle(frameLeft
+                                        + (int) (point.getX() * scaleX), frameTop
+                                        + (int) (point.getY() * scaleY), POINT_SIZE,
+                                paint);
                     }
                 }
             }
@@ -159,30 +162,20 @@ public final class ViewfinderView extends View {
                 synchronized (currentLast) {
                     float radius = POINT_SIZE / 2.0f;
                     for (ResultPoint point : currentLast) {
-                        canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
-                                frameTop + (int) (point.getY() * scaleY),
-                                radius, paint);
+                        canvas.drawCircle(frameLeft
+                                + (int) (point.getX() * scaleX), frameTop
+                                + (int) (point.getY() * scaleY), radius, paint);
                     }
                 }
             }
 
-            // Request another update at the animation interval, but only repaint the laser line,
+            // Request another update at the animation interval, but only
+            // repaint the laser line,
             // not the entire viewfinder mask.
-            postInvalidateDelayed(ANIMATION_DELAY,
-                    frame.left - POINT_SIZE,
-                    frame.top - POINT_SIZE,
-                    frame.right + POINT_SIZE,
+            postInvalidateDelayed(ANIMATION_DELAY, frame.left - POINT_SIZE,
+                    frame.top - POINT_SIZE, frame.right + POINT_SIZE,
                     frame.bottom + POINT_SIZE);
         }
-    }
-
-    public void drawViewfinder() {
-        Bitmap resultBitmap = this.resultBitmap;
-        this.resultBitmap = null;
-        if (resultBitmap != null) {
-            resultBitmap.recycle();
-        }
-        invalidate();
     }
 
     /**
@@ -282,8 +275,18 @@ public final class ViewfinderView extends View {
         canvas.drawBitmap(scanLight, null, scanRect, paint);
     }
 
+    public void drawViewfinder() {
+        Bitmap resultBitmap = this.resultBitmap;
+        this.resultBitmap = null;
+        if (resultBitmap != null) {
+            resultBitmap.recycle();
+        }
+        invalidate();
+    }
+
     /**
-     * Draw a bitmap with the result points highlighted instead of the live scanning display.
+     * Draw a bitmap with the result points highlighted instead of the live
+     * scanning display.
      *
      * @param barcode An image of the decoded barcode.
      */

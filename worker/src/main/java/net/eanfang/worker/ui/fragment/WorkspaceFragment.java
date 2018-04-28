@@ -7,8 +7,10 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.CheckSignPermission;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
@@ -104,7 +106,7 @@ public class WorkspaceFragment extends BaseFragment {
      * 过程管控
      */
     private void progressCtrl() {
-        findViewById(R.id.tv_work_service).setOnClickListener((v)->{
+        findViewById(R.id.tv_work_service).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
         });
 
@@ -135,18 +137,25 @@ public class WorkspaceFragment extends BaseFragment {
     private void teamWork() {
         //签到
         findViewById(R.id.tv_sign).setOnClickListener((v) -> {
-            new SignCtrlView(getActivity()).show();
+
+            // 检查有无权限
+            List<String> ss = new ArrayList<>();
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                new SignCtrlView(getActivity()).show();
+            } else {
+                showToast("暂无权限");
+            }
         });
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
             new ReportCtrlView(getActivity(), true).show();
         });
 
-        //工作任务
+        //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
             new TaskCtrlView(getActivity(), true).show();
         });
-        //工作检查
+        //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
         });

@@ -107,7 +107,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     }
 
     private void initView() {
-        setTitle("工作汇报");
+        setTitle("新建汇报");
         setLeftBack();
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName() != null) {
             etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());

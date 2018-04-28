@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.eanfang.R;
 import com.eanfang.util.ToastUtil;
+import com.jaeger.library.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -100,7 +101,6 @@ public abstract class BaseFragment extends Fragment implements IBase {
         ToastUtil.get().showToast(getActivity(), message);
 
     }
-
     /**
      * 设置根布局资源id
      *

@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
@@ -29,6 +31,7 @@ import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
+import com.jaeger.library.StatusBarUtil;
 import com.picker.common.util.LogUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -58,7 +61,9 @@ public class MainActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //        initState();
+
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
         setHeaders();
@@ -85,14 +90,6 @@ public class MainActivity extends BaseClientActivity {
         Var.get("MainActivity.initUpdate").setVar(1);
     }
 
-    /**
-     * 沉浸式状态栏
-     */
-    private void initState() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
-        }
-    }
 
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);

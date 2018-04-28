@@ -127,7 +127,9 @@
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- app -->
-        <receiver android:name=".wxapi.AppRegister">
+        <receiver
+            android:name=".wxapi.AppRegister"
+            android:permission="com.tencent.mm.plugin.permission.SEND|com.tencent.mm.permission.MM_MESSAGE">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
@@ -135,19 +137,32 @@
         <!-- 微信授权的Activity注册 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
             android:exported="true"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="sdksample" />
-            </intent-filter>
+            android:launchMode="singleTop">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.VIEW" />-->
+            <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--<data android:scheme="wx11d1a11a2f79200a" />-->
+            <!--</intent-filter>-->
         </activity>
+
+
+        <!--<activity-->
+        <!--android:name=".wxapi.WXPayEntryActivity"-->
+        <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
+        <!--android:exported="true"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
+
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+        <!--<data android:scheme="sdksample" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"

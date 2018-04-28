@@ -224,4 +224,15 @@ public interface NewApiService {
      */
     String INSTALL_FINISH_WORK = BuildConfig.API_HOST + "/yaf_install_order/install/updateFinish";
 
+    /**
+     * 扫描二维码 获取权限
+     * */
+    String QR_CODE = BuildConfig.API_HOST+"/yaf_sys/scan";
+
+    String QR_LOGIN = BuildConfig.API_HOST+"/yaf_sys/toAccredit";
+
+    /**
+     * 个人 二维码
+     * */
+    String PERSONAL_QRCODE = BuildConfig.API_HOST+"/yaf_sys/code/getWokerCode";
 }
