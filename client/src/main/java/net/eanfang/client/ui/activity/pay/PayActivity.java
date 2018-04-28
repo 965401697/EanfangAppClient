@@ -21,7 +21,6 @@ import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
@@ -332,6 +331,8 @@ public class PayActivity extends BaseClientActivity {
                 String pn = pinfo.get(i).packageName;
                 if (pn.equals("com.tencent.mm")) {
                     wxPay();
+//                    WxPaymentUtils wxPaymentUtils = new WxPaymentUtils(this);
+//                    wxPaymentUtils.wxPay(PayActivity.this,payLogEntity);
                     return true;
                 }
             }

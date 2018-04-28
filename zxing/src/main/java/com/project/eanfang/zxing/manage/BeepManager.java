@@ -16,7 +16,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.project.eanfang.zxing.R;
-import com.project.eanfang.zxing.activity.CaptureActivity;
 import com.project.eanfang.zxing.activity.PreferencesActivity;
 
 import java.io.Closeable;
@@ -24,10 +23,10 @@ import java.io.IOException;
 
 
 /**
- * Manages beeps and vibrations for {@link CaptureActivity}. 管理声音和震动
+ * Manages beeps and vibrations for {@link com.project.eanfang.zxing.activity.CaptureActivity}. 管理声音和震动
  */
-public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable {
-
+public final class BeepManager implements MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnErrorListener, Closeable {
 
     private static final String TAG = BeepManager.class.getSimpleName();
 
@@ -46,32 +45,48 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
     }
 
     public synchronized void updatePrefs() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(activity);
         playBeep = shouldBeep(prefs, activity);
         vibrate = prefs.getBoolean(PreferencesActivity.KEY_VIBRATE, false);
         if (playBeep && mediaPlayer == null) {
-            // The volume on STREAM_SYSTEM is not adjustable, and users found it too loud,
+            // The volume on STREAM_SYSTEM is not adjustable, and users found it
+            // too loud,
             // so we now play on the music stream.
+            // 设置activity音量控制键控制的音频流
             activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
             mediaPlayer = buildMediaPlayer(activity);
         }
     }
 
+    /**
+     * 开启响铃和震动
+     */
     public synchronized void playBeepSoundAndVibrate() {
         if (playBeep && mediaPlayer != null) {
             mediaPlayer.start();
         }
         if (vibrate) {
-            Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator vibrator = (Vibrator) activity
+                    .getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(VIBRATE_DURATION);
         }
     }
 
+    /**
+     * 判断是否需要响铃
+     *
+     * @param prefs
+     * @param activity
+     * @return
+     */
     private static boolean shouldBeep(SharedPreferences prefs, Context activity) {
-        boolean shouldPlayBeep = prefs.getBoolean(PreferencesActivity.KEY_PLAY_BEEP, true);
+        boolean shouldPlayBeep = prefs.getBoolean(
+                PreferencesActivity.KEY_PLAY_BEEP, true);
         if (shouldPlayBeep) {
             // See if sound settings overrides this
-            AudioManager audioService = (AudioManager) activity.getSystemService(Context.AUDIO_SERVICE);
+            AudioManager audioService = (AudioManager) activity
+                    .getSystemService(Context.AUDIO_SERVICE);
             if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
                 shouldPlayBeep = false;
             }
@@ -79,13 +94,29 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
         return shouldPlayBeep;
     }
 
+    /**
+     * 创建MediaPlayer
+     *
+     * @param activity
+     * @return
+     */
     private MediaPlayer buildMediaPlayer(Context activity) {
         MediaPlayer mediaPlayer = new MediaPlayer();
-        try (AssetFileDescriptor file = activity.getResources().openRawResourceFd(R.raw.beep)) {
-            mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-            mediaPlayer.setOnErrorListener(this);
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setLooping(false);
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        // 监听是否播放完成
+        mediaPlayer.setOnCompletionListener(this);
+        mediaPlayer.setOnErrorListener(this);
+        // 配置播放资源
+        try {
+            AssetFileDescriptor file = activity.getResources()
+                    .openRawResourceFd(R.raw.beep);
+            try {
+                mediaPlayer.setDataSource(file.getFileDescriptor(),
+                        file.getStartOffset(), file.getLength());
+            } finally {
+                file.close();
+            }
+            // 设置音量
             mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
             mediaPlayer.prepare();
             return mediaPlayer;
@@ -97,13 +128,21 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
     }
 
     @Override
+    public void onCompletion(MediaPlayer mp) {
+        // When the beep has finished playing, rewind to queue up another one.
+        mp.seekTo(0);
+    }
+
+    @Override
     public synchronized boolean onError(MediaPlayer mp, int what, int extra) {
         if (what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-            // we are finished, so put up an appropriate error toast if required and finish
+            // we are finished, so put up an appropriate error toast if required
+            // and finish
             activity.finish();
         } else {
             // possibly media player error, so release and recreate
-            close();
+            mp.release();
+            mediaPlayer = null;
             updatePrefs();
         }
         return true;
@@ -116,6 +155,5 @@ public final class BeepManager implements MediaPlayer.OnErrorListener, Closeable
             mediaPlayer = null;
         }
     }
-
 
 }

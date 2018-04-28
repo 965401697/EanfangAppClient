@@ -1,3 +1,8 @@
+/*
+ * Created by 岱青海蓝信息系统(北京)有限公司 on 17-4-7 上午9:36
+ * Copyright (c) 2017. All rights reserved.
+ */
+
 package com.project.eanfang.zxing.activity;
 
 import android.app.Activity;
@@ -6,8 +11,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -17,6 +22,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.CustomeApplication;
+import com.eanfang.config.Constant;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.device.User;
+import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.ToastUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
@@ -25,21 +42,27 @@ import com.project.eanfang.zxing.camera.CameraManager;
 import com.project.eanfang.zxing.manage.BeepManager;
 import com.project.eanfang.zxing.manage.InactivityTimer;
 import com.project.eanfang.zxing.manage.IntentSource;
-import com.project.eanfang.zxing.manage.Intents;
 import com.project.eanfang.zxing.view.ViewfinderView;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-
-public class CaptureActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
-
-    private static final String TAG = com.project.eanfang.zxing.activity.CaptureActivity.class.getSimpleName();
+import java.util.Timer;
+import java.util.TimerTask;
 
 
+/**
+ * 这个activity打开相机，在后台线程做常规的扫描；它绘制了一个结果view来帮助正确地显示条形码，在扫描的时候显示反馈信息，
+ * 然后在扫描成功的时候覆盖扫描结果
+ */
+public final class CaptureActivity extends Activity implements
+        SurfaceHolder.Callback, View.OnClickListener {
+
+    private static final String TAG = CaptureActivity.class.getSimpleName();
     private ImageView iv_top_back; //左上角返回
     private TextView tv_top_title; //标题
-
+    // 相机控制
     private CameraManager cameraManager;
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
@@ -56,7 +79,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     // 从哪来传输来的  参数
     private String mFromWhere = "";
 
-    ViewfinderView getViewfinderView() {
+    public ViewfinderView getViewfinderView() {
         return viewfinderView;
     }
 
@@ -72,9 +95,16 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         viewfinderView.drawViewfinder();
     }
 
+
+    private String from;//来自哪个操作的扫码
+
+    /**
+     * OnCreate中初始化一些辅助类，如InactivityTimer（休眠）、Beep（声音）以及AmbientLight（闪光灯）
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        // 保持Activity处于唤醒状态
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_capture);
@@ -82,6 +112,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         initView();
         initListener();
     }
+
 
     private void initView() {
         hasSurface = false;
@@ -101,6 +132,7 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
     @Override
     protected void onResume() {
         super.onResume();
+
         // CameraManager必须在这里初始化，而不是在onCreate()中。
         // 这是必须的，因为当我们第一次进入时需要显示帮助页，我们并不想打开Camera,测量屏幕大小
         // 当扫描框的尺寸不正确时会出现bug
@@ -126,6 +158,14 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         characterSet = null;
     }
 
+    private void continuePreview() {
+        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
+        SurfaceHolder surfaceHolder = surfaceView.getHolder();
+        initCamera(surfaceHolder);
+        if (handler != null) {
+            handler.restartPreviewAndDecode();
+        }
+    }
 
     @Override
     protected void onPause() {
@@ -199,8 +239,12 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
              * */
             switch (mFromWhere) {
                 case "client_code":
-                    Log.e("GG", "客户端扫描成功！！！");
-                    finish();
+                    String[] strs = resultString.split("/login/");
+                    String dataStr = strs[1];
+                    String[] data = dataStr.split("/");
+                    String uuid = data[0];
+                    String requestFrom = data[1];
+                    doQRLoginPermission(uuid, requestFrom);
                     break;
                 case "worker_code":
                     break;
@@ -210,6 +254,46 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
 
     }
 
+    /**
+     * 获取登录权限
+     */
+    private void doQRLoginPermission(String uuid, String requestFrom) {
+        EanfangHttp.post(NewApiService.QR_CODE)
+                .params("uuid", uuid)
+                .params("requestFrom", requestFrom)
+                .params("accountId", CustomeApplication.get().getAccId())
+                .execute(new EanfangCallback<JSONObject>(CaptureActivity.this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        super.onSuccess(bean);
+                        String isLogin = (String) bean.get("data");
+                        if ("true".equals(isLogin)) {
+                            // 进行登录
+                            doLogin(uuid);
+                        } else {
+                            showToast("暂无权限");
+                            finish();
+                        }
+                    }
+
+                    public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        showToast("扫描失败");
+                        finish();
+                    }
+                });
+    }
+
+    // 进行登录
+    public void doLogin(String uuid) {
+        EanfangHttp.post(NewApiService.QR_LOGIN)
+                .params("uuid", uuid)
+                .params("accountId", CustomeApplication.get().getAccId())
+                .execute(new EanfangCallback<JSONObject>(CaptureActivity.this, true, JSONObject.class, (bean) -> {
+                    showToast("登录成功");
+                    finish();
+                }));
+    }
 
     private void initCamera(SurfaceHolder surfaceHolder) {
         if (surfaceHolder == null) {
@@ -252,5 +336,9 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback,
         if (i == R.id.iv_top_back) {
             finish();
         }
+    }
+
+    public void showToast(String message) {
+        ToastUtil.get().showToast(this, message);
     }
 }

@@ -5,7 +5,6 @@
     android:background="@color/color_white"
     android:orientation="vertical">
 
-
     <LinearLayout
         android:id="@+id/fl_camera"
         android:layout_width="match_parent"
