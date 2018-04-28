@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.CheckSignPermission;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 import com.project.eanfang.zxing.activity.CaptureActivity;
@@ -135,7 +137,13 @@ public class HomeFragment extends BaseFragment {
         });
         //签到
         findViewById(R.id.tv_sign).setOnClickListener((v) -> {
-            new SignCtrlView(getActivity()).show();
+            // 检查有无权限
+            List<String> ss = new ArrayList<>();
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                new SignCtrlView(getActivity()).show();
+            } else {
+                showToast("暂无权限");
+            }
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {

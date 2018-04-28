@@ -36,8 +36,8 @@ public class ReportCtrlView extends BaseDialog {
     RelativeLayout llMineAccept;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public ReportCtrlView(Activity context, boolean isfull) {
@@ -54,10 +54,8 @@ public class ReportCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("汇报管控");
-        ivRight.setVisibility(View.VISIBLE);
-        ivRight.setImageResource(R.drawable.nav_ic_add_pressed);
-        ivRight.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, ReportActivity.class)));
+        tvTitle.setText("工作汇报");
+        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, ReportActivity.class)));
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));

@@ -107,7 +107,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     }
 
     private void initView() {
-        setTitle("工作汇报");
+        setTitle("新建汇报");
         setLeftBack();
 
         btnAddComplete.setOnClickListener(this);

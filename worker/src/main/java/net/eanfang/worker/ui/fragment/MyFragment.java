@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -20,6 +21,9 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.witget.PersonalQRCodeDialog;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -44,6 +48,9 @@ public class MyFragment extends BaseFragment {
     private RelativeLayout rlWorkingStatus;
     private SimpleDraweeView iv_header;
 
+    private SimpleDraweeView mIvPersonalQRCode;
+    // Dialog
+    private PersonalQRCodeDialog personalQRCodeDialog;
 
     @Override
     protected int setLayoutResouceId() {
@@ -87,6 +94,7 @@ public class MyFragment extends BaseFragment {
         tvVerfiy = (TextView) findViewById(R.id.tv_verfity_status);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
+        mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
         tvWorkerStatus = (TextView) findViewById(R.id.tv_worker_status);
         rlWorkingStatus = (RelativeLayout) findViewById(R.id.rl_working);
         tvWorkerStatus.setText(PrefUtils.getString("status", ""));
@@ -108,7 +116,13 @@ public class MyFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
 
-
+        // 二维码头像
+        Uri uri = Uri.parse(NewApiService.PERSONAL_QRCODE);
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .build();
+        mIvPersonalQRCode.setController(controller);
     }
 
     @Override
@@ -119,7 +133,10 @@ public class MyFragment extends BaseFragment {
                 setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(item));
                 PrefUtils.setString("status", item);
             });
-
+        });
+        mIvPersonalQRCode.setOnClickListener((v) -> {
+            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity());
+            personalQRCodeDialog.show();
         });
     }
 

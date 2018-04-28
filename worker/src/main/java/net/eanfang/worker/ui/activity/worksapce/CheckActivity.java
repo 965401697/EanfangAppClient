@@ -94,7 +94,7 @@ public class CheckActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        setTitle("新建检查工作");
+        setTitle("新建检查");
         setLeftBack();
         getData();
         //截至期限
