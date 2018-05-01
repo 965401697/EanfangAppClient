@@ -396,6 +396,7 @@ public class MainActivity extends BaseActivity {
                             }));
                 }
             }
+            Log.i("zzw", "--------------------isDelect="+isDelect);
             return isDelect;
         }
 

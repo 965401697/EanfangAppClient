@@ -82,6 +82,7 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
         super.onResume();
         if (mGroupsAdapter != null && mGroupsAdapter.getData().size() > 0) {
             mGroupsAdapter.getData().clear();
+            mGroupsAdapter.notifyDataSetChanged();
         }
         initData();
     }
