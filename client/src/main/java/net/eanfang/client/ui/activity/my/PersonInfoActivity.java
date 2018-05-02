@@ -156,17 +156,20 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (infoBackBean == null) {
             return;
         }
+        // 头像
         if (!StringUtils.isEmpty(infoBackBean.getAccount().getAvatar())) {
             ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
         }
+        //昵称
         if (infoBackBean.getAccount().getNickName() != null) {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
         }
-
+        //真实姓名
         if (infoBackBean.getAccount().getRealName() != null && !"待提供".equals(infoBackBean.getAccount().getRealName())) {
             etRealname.setText(infoBackBean.getAccount().getRealName());
             etRealname.setEnabled(false);
         }
+        // 头像
         if (infoBackBean.getAccount().getGender() == null) {
             rbMan.setClickable(true);
             rbWoman.setClickable(true);
@@ -179,6 +182,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             rbWoman.setClickable(false);
             rbWoman.setChecked(true);// 女
         }
+        // 证件号码
         if (infoBackBean.getAccount().getIdCard() != null) {
             etIdcard.setText(infoBackBean.getAccount().getIdCard());
             etIdcard.setEnabled(false);
@@ -285,7 +289,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        if (!StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
+        if (StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         } else {
             accountEntity.setAreaCode(loginBean.getAccount().getAreaCode());

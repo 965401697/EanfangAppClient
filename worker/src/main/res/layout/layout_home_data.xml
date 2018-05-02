@@ -75,7 +75,7 @@
                 android:id="@+id/tv_repairOne"
                 android:layout_width="@dimen/dimen_40"
                 android:layout_height="@dimen/dimen_40"
-                android:background="@drawable/contend_repair_selected"
+                android:background="@drawable/bg_home_data_one"
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@color/white"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3dp"
-                android:text="修复"
+                android:text="三级"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textSize_11" />
 
@@ -104,7 +104,7 @@
                 android:id="@+id/tv_repairTwo"
                 android:layout_width="@dimen/dimen_40"
                 android:layout_height="@dimen/dimen_40"
-                android:background="@drawable/contend_maintenancein_deault"
+                android:background="@drawable/bg_home_data_two"
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@color/white"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3dp"
-                android:text="维修中"
+                android:text="二级"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textSize_11" />
 
@@ -132,7 +132,7 @@
                 android:id="@+id/tv_repairThree"
                 android:layout_width="@dimen/dimen_40"
                 android:layout_height="@dimen/dimen_40"
-                android:background="@drawable/contend_scrap_selected"
+                android:background="@drawable/bg_home_data_three"
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@color/white"
@@ -143,35 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="3dp"
-                android:text="报废"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/textSize_11" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_8"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_repairFour"
-                android:layout_width="@dimen/dimen_40"
-                android:layout_height="@dimen/dimen_40"
-                android:background="@drawable/contend_giveup_selected"
-                android:gravity="center"
-                android:text="1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSize_12" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="3dp"
-                android:text="放弃"
+                android:text="一级"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/textSize_11" />
 

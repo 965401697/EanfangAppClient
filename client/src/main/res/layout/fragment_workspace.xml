@@ -12,9 +12,9 @@
         android:background="@drawable/ic_main_top_back"
         android:orientation="vertical">
 
-    <!--    <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40" />-->
+        <!--    <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_40" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -53,6 +53,16 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/iv_service"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_10"
+                android:src="@mipmap/ic_service" />
 
         </RelativeLayout>
     </LinearLayout>

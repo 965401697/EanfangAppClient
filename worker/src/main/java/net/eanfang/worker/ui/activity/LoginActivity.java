@@ -163,6 +163,7 @@ public class LoginActivity extends BaseActivity {
      * @param pwd   验证码
      */
     private void setVerfiyLogin(String phone, String pwd) {
+        EanfangHttp.setToken("");
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
                 .params("mobile", phone)
                 .params("verifycode", pwd)
@@ -193,7 +194,6 @@ public class LoginActivity extends BaseActivity {
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, false, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-
                     goMain();
                 }));
 

@@ -116,6 +116,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
 
+    private String isAuthen = "";
+
     //edittext拦截器
     InputFilter inputFilter = new InputFilter() {
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]",
@@ -220,8 +222,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitleOnClickListener(v -> setData());
         setRightTitleOnClickListener((v) -> {
             if (workerInfoBean.getStatus() == 0 || workerInfoBean.getStatus() == 3) {
-
-                if (StringUtils.isMobileString(etContactPhone.getText().toString())) {
+                if (!StringUtils.isMobileString(etContactPhone.getText().toString().trim())) {
                     showToast("请输入正确手机号");
                     return;
                 }
@@ -230,14 +231,30 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 jump();
             }
         });
+        // 已经认证成功 无法编辑
+        if (workerInfoBean.getStatus() == 2) {
+            setRightGone();
+            etContactName.setEnabled(false);
+            etContactPhone.setEnabled(false);
+            etPayAccount.setEnabled(false);
+        }
     }
 
     private void fillData() {
+        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
+        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        if (!StringUtils.isEmpty(contactName)) {
+            etContactName.setText(contactName);
+        }
+        if (!StringUtils.isEmpty(mobile)) {
+            etContactPhone.setText(mobile);
+        }
+
         if (workerInfoBean != null) {
-            if (workerInfoBean.getContactName() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getContactName())) {
                 etContactName.setText(workerInfoBean.getContactName());
             }
-            if (workerInfoBean.getContactPhone() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getContactPhone())) {
                 etContactPhone.setText(workerInfoBean.getContactPhone());
             }
             if (workerInfoBean.getWorkingLevel() >= 0) {
@@ -249,32 +266,30 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             if (workerInfoBean.getPayType() >= 0) {
                 tvPayType.setText(GetConstDataUtils.getPayTypeList().get(workerInfoBean.getPayType()));
             }
-            if (workerInfoBean.getPayAccount() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getPayAccount())) {
                 etPayAccount.setText(workerInfoBean.getPayAccount());
             }
-            if (workerInfoBean.getAccidentPics() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getAccidentPics())) {
                 ivAccidentPics.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAccidentPics()));
             }
-            if (workerInfoBean.getIdCardFront() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
                 ivIdCardFront.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()));
             }
-            if (workerInfoBean.getContactPhone() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getContactPhone())) {
                 ivIdCardSide.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()));
             }
-            if (workerInfoBean.getIdCardHand() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
                 ivIdCardHand.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()));
             }
-            if (workerInfoBean.getAvatarPhoto() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
                 ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()));
-                tvUserName.setText(workerInfoBean.getContactName());
-
             }
 
-            if (workerInfoBean.getCrimePic() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getCrimePic())) {
                 ivCrimePic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getCrimePic()));
             }
 
-            if (workerInfoBean.getHonorPics() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getHonorPics())) {
                 String[] prePic = workerInfoBean.getHonorPics().split(",");
                 honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
                 snplMomentAddPhotos.setEditable(false);
@@ -282,20 +297,46 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             }
 
 
-            if (workerInfoBean.getIntro() != null) {
+            if (!StringUtils.isEmpty(workerInfoBean.getIntro())) {
                 etIntro.setText(workerInfoBean.getIntro());
             }
         }
     }
 
     private void setData() {
-        setWorkerInfoBean.setContactName(etContactName.getText().toString().trim());
-        setWorkerInfoBean.setContactPhone(etContactPhone.getText().toString().trim());
+
+        String mContactName = etContactName.getText().toString().trim();
+        String mContactPhone = etContactPhone.getText().toString().trim();
+        String mPayAccount = etPayAccount.getText().toString().trim();
+
+        if (StringUtils.isEmpty(workerInfoBean.getAvatarPhoto()) && StringUtils.isEmpty(setWorkerInfoBean.getAvatarPhoto())) {
+            showToast("请选择技师头像");
+            return;
+        } else if (StringUtils.isEmpty(setWorkerInfoBean.getAvatarPhoto())) {
+            setWorkerInfoBean.setAvatarPhoto(workerInfoBean.getAvatarPhoto());
+        }
+        if (StringUtils.isEmpty(mContactName)) {
+            showToast("请输入姓名");
+            return;
+        } else {
+            setWorkerInfoBean.setContactName(mContactName);
+        }
+        if (StringUtils.isEmpty(mContactPhone)) {
+            showToast("请输入联系电话");
+            return;
+        } else {
+            setWorkerInfoBean.setContactPhone(mContactPhone);
+        }
+        if (StringUtils.isEmpty(mPayAccount)) {
+            showToast("请输入支付账户");
+            return;
+        } else {
+            setWorkerInfoBean.setPayAccount(mPayAccount);
+        }
         setWorkerInfoBean.setContactName(etContactName.getText().toString().trim());
         setWorkerInfoBean.setPayType(GetConstDataUtils.getPayTypeList().indexOf(tvPayType.getText().toString().trim()));
         setWorkerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(tvWorkingLevel.getText().toString().trim()));
         setWorkerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(tvWorkingYear.getText().toString().trim()));
-        setWorkerInfoBean.setPayAccount(etPayAccount.getText().toString().trim());
         setWorkerInfoBean.setAccId(workerInfoBean.getAccId());
         setWorkerInfoBean.setUserId(EanfangApplication.getApplication().getUser().getAccount().getNullUser());
         setWorkerInfoBean.setId(workerInfoBean.getId());

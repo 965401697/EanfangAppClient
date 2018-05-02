@@ -86,6 +86,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     private String path;
     private boolean isUploadHead = false;
     private LoginBean loginBean;
+
+    private AccountEntity accountEntity;
     /**
      * 城市
      */
@@ -184,7 +186,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         }
 
         String address = infoBackBean.getAccount().getAddress();
-
         if (address != null) {
             etAddress.setText(address);
         }
@@ -273,7 +274,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     }
 
     private void submit() {
-        AccountEntity accountEntity = new AccountEntity();
+        accountEntity = new AccountEntity();
         accountEntity.setAvatar(path);
         accountEntity.setRealName(etRealname.getText().toString().trim());
         accountEntity.setNickName(tvNickname.getText().toString().trim());
@@ -285,7 +286,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        if (!StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
+        if (StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         } else {
             accountEntity.setAreaCode(loginBean.getAccount().getAreaCode());
@@ -300,12 +301,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     runOnUiThread(() -> {
                         showToast("成功");
                         LoginBean user = EanfangApplication.get().getUser();
-                        if (!StringUtils.isEmpty(path)) {
-                            user.getAccount().setAvatar(path);
-                        }
-                        if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
-                            user.getAccount().setNickName(tvNickname.getText().toString().trim());
-                        }
+                        user.setAccount(accountEntity);
                         EanfangApplication.get().saveUser(user);
                         finish();
                     });

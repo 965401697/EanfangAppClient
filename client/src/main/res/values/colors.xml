@@ -43,5 +43,10 @@
     <color name="color_contact_create_confim_back">#FE933D</color>
     <color name="color_personal_text">#E16531</color>
     <color name="color_service_title">#FF9037</color>
+    <!-- 首页统计数据四个点的背景色 -->
+    <color name="color_home_data_one">#0A98E7</color>
+    <color name="color_home_data_two">#E6CA0A</color>
+    <color name="color_home_data_three">#D91203</color>
+    <color name="color_home_data_four">#CDCDCD</color>
 
 </resources>
