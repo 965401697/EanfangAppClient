@@ -255,6 +255,11 @@ public interface UserApi {
      */
     String POST_GROUP_QUIT = BuildConfig.API_HOST + "/yaf_im/sysgroup/quit";
     /**
+     * /**
+     * 退出群组
+     */
+    String POST_GROUP_KICKOUT = BuildConfig.API_HOST + "/yaf_im/sysgroup/kickOut";
+    /**
      * 销毁群组
      */
     String POST_GROUP_DELETE = BuildConfig.API_HOST + "/yaf_im/sysgroup/delete";

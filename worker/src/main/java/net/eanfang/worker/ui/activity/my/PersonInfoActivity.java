@@ -42,6 +42,8 @@ import java.text.ParseException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 
 /**
@@ -306,6 +308,18 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
                             user.getAccount().setNickName(tvNickname.getText().toString().trim());
                         }
+
+                        UserInfo userInfo;
+
+                        if (!StringUtils.isEmpty(path)) {
+                            //刷新个人融云的信息
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + path));
+                        } else {
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
+                        }
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+
                         EanfangApplication.get().saveUser(user);
                         finish();
                     });

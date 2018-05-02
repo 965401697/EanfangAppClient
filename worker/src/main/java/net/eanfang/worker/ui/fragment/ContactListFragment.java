@@ -18,7 +18,6 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
@@ -26,20 +25,15 @@ import com.eanfang.util.Var;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.MainActivity;
-import net.eanfang.worker.ui.activity.im.SelectedFriendsActivity;
+import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
-import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
@@ -61,7 +55,6 @@ import q.rorbin.badgeview.QBadgeView;
 public class ContactListFragment extends BaseFragment {
 
     private boolean isFrist = true;
-    private List<Conversation> mList = new ArrayList<>();
     private List<String> invalidList = new ArrayList<>();//无效的会话id
     private Set<String> conversationsId = Sets.newHashSet();
 
@@ -114,8 +107,6 @@ public class ContactListFragment extends BaseFragment {
                         Log.e("zzw", s.getSentStatus().getValue() + "");
                         conversationsId.add(s.getTargetId());
                     }
-
-                    mList = conversations;
                 }
             }
 
@@ -162,10 +153,13 @@ public class ContactListFragment extends BaseFragment {
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), SelectedFriendsActivity.class);
-                intent.putExtra("flag", 1);
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), SelectedFriendsActivity.class);
+//                intent.putExtra("flag", 1);
+//                startActivity(intent);
+
+                MorePopWindow morePopWindow = new MorePopWindow(getActivity());
+                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
             }
         });
 
@@ -195,6 +189,9 @@ public class ContactListFragment extends BaseFragment {
                 if (uiConversation.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
 
                     if (uiConversation.getConversationContent().toString().equals("被删除通知")) {
+                        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
+                        return true;
+                    } else if (uiConversation.getConversationContent().toString().equals("被移除群组通知")) {
                         RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
                         return true;
                     } else {
@@ -243,24 +240,19 @@ public class ContactListFragment extends BaseFragment {
                 .params("accId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
 
-                    if (mList.size() > 0) {
+                    for (GroupsBean b : list) {
 
+                        Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
 
-                        for (GroupsBean b : list) {
+                        RongIM.getInstance().refreshGroupInfoCache(group);
 
-                            Group group = new Group(b.getRcloudGroupId(), b.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + b.getHeadPortrait()));
+                        EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
 
-                            RongIM.getInstance().refreshGroupInfoCache(group);
+                    }
 
-                            EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
-
-                        }
-
-                        if (isFrist) {
-                            delectInvalidGroup(list);
-                            isFrist = false;
-                        }
-
+                    if (isFrist) {
+                        delectInvalidGroup(list);
+                        isFrist = false;
                     }
                 }));
 
@@ -288,6 +280,9 @@ public class ContactListFragment extends BaseFragment {
      */
 
     private void delectInvalidGroup(List<GroupsBean> list) {
+
+        if (conversationsId.size() == 0) return;
+
 
         if (list.size() == 0) {//我的群组为空  删除所有的群组会话
             for (String s : conversationsId) {

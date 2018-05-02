@@ -1,12 +1,17 @@
 package net.eanfang.worker.ui.activity.im;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.device.User;
 import com.eanfang.util.SoftHideKeyBoardUtil;
 
 import net.eanfang.worker.R;
@@ -19,7 +24,9 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 public class ConversationActivity extends BaseWorkerActivity {
 
@@ -55,8 +62,15 @@ public class ConversationActivity extends BaseWorkerActivity {
                     startActivity(intent);
                 }
             });
-        }
+        } else if (type.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
 
+            EanfangHttp.get(UserApi.POST_USER_INFO + mId)
+                    .execute(new EanfangCallback<User>(this, false, User.class, (bean) -> {
+                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                        tvTitle.setText(bean.getNickName());
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+                    }));
+        }
 //        SoftHideKeyBoardUtil.assistActivity(this);
     }
 }

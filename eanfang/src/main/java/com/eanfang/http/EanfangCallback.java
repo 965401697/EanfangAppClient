@@ -208,6 +208,7 @@ public class EanfangCallback<T> extends StringCallback {
                     onServerError(message);
                     break;
                 case ErrorCodeConst.REQUEST_COMMIT_AGAIN:
+                    onCommitAgain();
                     break;
                 case MISSING_LOGIN:
                     onFail(code, message, null);
@@ -223,6 +224,7 @@ public class EanfangCallback<T> extends StringCallback {
             onError("请求失败，请重试");
         }
     }
+
 
     private void updateNoticeCount(JSONObject resultJson) {
         String classMainName = "MainActivity.initMessageCount";
@@ -376,6 +378,13 @@ public class EanfangCallback<T> extends StringCallback {
     public final void onError(Response<String> response) {
         // onError(response.body());
         onFail(0, "哎呀，服务器好像罢工了试", null);
+    }
+
+    /**
+     * 重复请求
+     */
+    public void onCommitAgain() {
+
     }
 
     /**

@@ -56,6 +56,8 @@
     <string name="text_worker_project_finish">竣工项目</string>
     <string name="text_worker_manual_repair">维修手册</string>
     <string name="text_worker_parts_library">配件库</string>
+
+    <!--IM-->
     <string name="all_group_member">全部群成员</string>
     <string name="group_portrait">群头像</string>
     <string name="group_name">群名字</string>
@@ -68,8 +70,10 @@
     <string name="set_top">会话置顶</string>
     <string name="group_notice_prefix">\@所有人\n</string>
     <string name="group_transfer">转让群主</string>
-
     <string name="group_shutup">全员禁言</string>
+    <string name="private_chat">发起聊天</string>
+    <string name="group_chat">创建群组</string>
+    <string name="add_contacts">添加好友</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

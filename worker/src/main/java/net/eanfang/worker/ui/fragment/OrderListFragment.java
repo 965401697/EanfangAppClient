@@ -312,6 +312,12 @@ public class OrderListFragment extends BaseFragment implements
 //                                 });
                              }
 
+
+                             @Override
+                             public void onCommitAgain() {
+                                 refreshLayout.setRefreshing(false);
+                             }
+
                              @Override
                              public void onError(String message) {
                                  //重新加载 页面

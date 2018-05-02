@@ -338,7 +338,7 @@ public class MainActivity extends BaseActivity {
                 return userInfo;
             }
         }, true);
-        RongIM.getInstance().setMessageAttachedUserInfo(true);
+//        RongIM.getInstance().setMessageAttachedUserInfo(true);//有具体场景的
     }
 
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
@@ -386,6 +386,22 @@ public class MainActivity extends BaseActivity {
                         }
                     }
 
+                } else if (messageContent.getContent().equals("被移除群组通知")) {
+
+                    TextMessage textMessage = (TextMessage) message.getContent();
+                    String extra = textMessage.getExtra();
+                    JSONObject object = (JSONObject) JSONObject.parse(extra);
+                    String id = (String) object.get("groupId");
+
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, id, null);
+
+                    for (Activity activity : transactionActivities) {
+                        if (activity instanceof ConversationActivity) {
+                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+                                activity.finish();
+                            }
+                        }
+                    }
                 } else {
 
                     EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
@@ -396,7 +412,7 @@ public class MainActivity extends BaseActivity {
                             }));
                 }
             }
-            Log.i("zzw", "--------------------isDelect="+isDelect);
+            Log.i("zzw", "--------------------isDelect=" + isDelect);
             return isDelect;
         }
 

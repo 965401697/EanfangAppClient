@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
@@ -85,11 +86,11 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
             }
         }
 
-        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
+        EanfangHttp.post(UserApi.POST_GROUP_KICKOUT)
                 .params("groupId", mGroupId)
                 .params("ids", buffer.toString())
-//                .params("ids", userIdList.toString())
                 .params("groupName", mTitle)
+                .params("senderId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                     ToastUtil.get().showToast(SubtractFriendsActivity.this, "移除成功");
                     setResult(RESULT_OK);
