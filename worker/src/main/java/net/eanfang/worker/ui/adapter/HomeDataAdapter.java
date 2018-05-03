@@ -20,20 +20,17 @@ public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, ClientData item) {
-        if (item.getType() == 1) {//报修
-            helper.setText(R.id.tv_title, "当日报修");
-        } else if (item.getType() == 2) {//报装
-            helper.setText(R.id.tv_title, "当日报装");
-        } else if (item.getType() == 3) {//报价
-            helper.setText(R.id.tv_title, "当日报价");
-        } else {
-            helper.setText(R.id.tv_title, "其他");
+        if (item.getType() == 1) {//三级
+            helper.setText(R.id.tv_title, "三级");
+        } else if (item.getType() == 2) {//二级
+            helper.setText(R.id.tv_title, "二级");
+        } else {//一级
+            helper.setText(R.id.tv_title, "一级");
         }
-        helper.setText(R.id.tv_total, item.getTotal()+"");
-        helper.setText(R.id.tv_add, item.getAdded()+"");
-        helper.setText(R.id.tv_repairOne, item.getStatusOne()+"");
-        helper.setText(R.id.tv_repairTwo, item.getStatusTwo()+"");
-        helper.setText(R.id.tv_repairThree, item.getStatusThree()+"");
-        helper.setText(R.id.tv_repairFour, item.getStatusFour()+"");
+        helper.setText(R.id.tv_total, item.getTotal() + "");
+        helper.setText(R.id.tv_add, item.getAdded() + "");
+        helper.setText(R.id.tv_repairOne, item.getStatusOne() + "");
+        helper.setText(R.id.tv_repairTwo, item.getStatusTwo() + "");
+        helper.setText(R.id.tv_repairThree, item.getStatusThree() + "");
     }
 }

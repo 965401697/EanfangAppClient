@@ -32,6 +32,14 @@
                     android:layout_height="80dp"
                     fresco:placeholderImage="@mipmap/ic_header"
                     fresco:roundAsCircle="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="@string/text_change_personal_head"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
 
             <TextView
@@ -198,8 +206,8 @@
                     android:background="@null"
                     android:digits="0123456789Xx"
                     android:gravity="right"
-                    android:maxLength="18"
                     android:hint="请输入证件号码"
+                    android:maxLength="18"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
             </LinearLayout>

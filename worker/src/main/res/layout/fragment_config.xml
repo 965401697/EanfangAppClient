@@ -20,8 +20,7 @@
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_worker_personal_top_back"
                 android:fitsSystemWindows="true"
-                android:orientation="vertical"
-               >
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -141,22 +140,39 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="@dimen/dimen_190"
-                        android:layout_height="@dimen/dimen_190"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_70"
-                        android:background="@mipmap/ic_personal_head_back"
-                        android:gravity="center">
+                        android:orientation="vertical">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
-                            android:id="@+id/iv_user_header"
-                            android:layout_width="@dimen/dimen_155"
-                            android:layout_height="@dimen/dimen_155"
-                            android:layout_marginTop="-2dp"
-                            fresco:placeholderImage="@mipmap/ic_header"
-                            fresco:roundAsCircle="true" />
+                        <LinearLayout
+                            android:layout_width="@dimen/dimen_190"
+                            android:layout_height="@dimen/dimen_190"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_personal_head_back"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.facebook.drawee.view.SimpleDraweeView
+                                android:id="@+id/iv_user_header"
+                                android:layout_width="@dimen/dimen_155"
+                                android:layout_height="@dimen/dimen_155"
+                                android:layout_marginTop="-2dp"
+                                fresco:placeholderImage="@mipmap/ic_header"
+                                fresco:roundAsCircle="true" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:gravity="center"
+                            android:text="@string/text_edit_personal_info"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
                 </RelativeLayout>

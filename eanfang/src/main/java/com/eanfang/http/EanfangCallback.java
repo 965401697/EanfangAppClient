@@ -144,6 +144,7 @@ public class EanfangCallback<T> extends StringCallback {
             }
             //获得响应json
             JSONObject resultJson = null;
+
             Class<T> clazz = getClazz();
             //指定date类型自动格式化
             JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";

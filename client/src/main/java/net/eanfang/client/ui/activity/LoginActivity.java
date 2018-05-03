@@ -138,7 +138,7 @@ public class LoginActivity extends BaseClientActivity {
      * @param pwd   验证码
      */
     private void setVerfiyLogin(String phone, String pwd) {
-
+        EanfangHttp.setToken("");
         EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
                 .params("mobile", phone)
                 .params("verifycode", pwd)
@@ -152,7 +152,6 @@ public class LoginActivity extends BaseClientActivity {
                 }));
 
     }
-
 
 
     /**
@@ -197,8 +196,6 @@ public class LoginActivity extends BaseClientActivity {
             e1.printStackTrace();
         }
     }
-
-
 
 
     //跳转首页

@@ -62,14 +62,23 @@ public class WorkspaceFragment extends BaseFragment {
     @Override
     protected void initView() {
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
-        tvCompanyName.setText(EanfangApplication.getApplication().getUser()
-                .getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        String companyName = EanfangApplication.getApplication().getUser()
+                .getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        if ("个人".equals(companyName)) {
+            tvCompanyName.setText(companyName + "(点击切换公司)");
+        } else {
+            tvCompanyName.setText(companyName);
+        }
         iv_company_logo = findViewById(R.id.iv_company_logo);
         setLogpic();
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
             new CompanyListView(getActivity(), (name, url) -> {
-                tvCompanyName.setText(name);
+                if ("个人".equals(name)) {
+                    tvCompanyName.setText(name + "(点击切换公司)");
+                } else {
+                    tvCompanyName.setText(name);
+                }
                 if (url != null) {
                     iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
                 }
@@ -99,6 +108,10 @@ public class WorkspaceFragment extends BaseFragment {
 //        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
 //            new LeaveBugView(getActivity(), true).show();
 //        });
+// 客服
+        findViewById(R.id.iv_service).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
+        });
 
     }
 

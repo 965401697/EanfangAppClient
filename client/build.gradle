@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1804251
-        versionName "2.2.0"
+        versionCode 1805011
+        versionName "2.2.1"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")

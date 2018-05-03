@@ -85,4 +85,7 @@
     <string name="text_data_analysis">数据分析</string>
     <string name="text_data_today">今日</string>
     <string name="text_data_month">本月</string>
+
+    <string name="text_edit_personal_info">编辑个人资料</string>
+    <string name="text_change_personal_head">点击更换头像</string>
 </resources>

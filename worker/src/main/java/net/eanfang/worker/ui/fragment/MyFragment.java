@@ -45,7 +45,7 @@ import net.eanfang.worker.util.PrefUtils;
 
 public class MyFragment extends BaseFragment {
     private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
-    private RelativeLayout rlWorkingStatus;
+    private RelativeLayout rlWorkingStatus,rlWorkerVerfity;
     private SimpleDraweeView iv_header;
 
     private SimpleDraweeView mIvPersonalQRCode;
@@ -81,16 +81,14 @@ public class MyFragment extends BaseFragment {
         } else if (bean.getStatus() == 3) {
             tvVerfiy.setText("认证失败，请重新认证");
         }
-        tvVerfiy.setOnClickListener((v) -> {
-            Intent intent = new Intent(getActivity(), AuthWorkerInfoActivity.class);
-            intent.putExtra("bean", bean);
-            startActivity(intent);
+        rlWorkerVerfity.setOnClickListener((v) -> {
+            doWorkAuth(bean);
         });
     }
 
-
     @Override
     protected void initView() {
+        rlWorkerVerfity = findViewById(R.id.rl_worker_verfity);
         tvVerfiy = (TextView) findViewById(R.id.tv_verfity_status);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
@@ -165,6 +163,21 @@ public class MyFragment extends BaseFragment {
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
+        }
+
+    }
+
+    // 判断是否认证
+    private void doWorkAuth(WorkerInfoBean bean) {
+        // 技师未认证，提示完善个人资料
+
+        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+            showToast("请先完善个人资料");
+        } else {
+            Intent intent = new Intent(getActivity(), AuthWorkerInfoActivity.class);
+            intent.putExtra("bean", bean);
+            startActivity(intent);
         }
 
     }

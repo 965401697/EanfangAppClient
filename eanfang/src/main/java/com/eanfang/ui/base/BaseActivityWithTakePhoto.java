@@ -152,6 +152,10 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         ((TextView) findViewById(R.id.tv_right)).setText(id);
     }
 
+    public void setRightGone() {
+        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.GONE);
+    }
+
     public void setRightTitleOnClickListener(View.OnClickListener listener) {
         findViewById(R.id.tv_right).setOnClickListener(listener);
     }

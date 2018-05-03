@@ -262,7 +262,6 @@ public class HomeFragment extends BaseFragment {
         clientDataOne.setStatusOne(16);
         clientDataOne.setStatusTwo(2);
         clientDataOne.setStatusThree(1);
-        clientDataOne.setStatusFour(14);
         clientDataList.add(clientDataOne);
         ClientData clientDataTwo = new ClientData();
         clientDataTwo.setType(2);
@@ -271,7 +270,6 @@ public class HomeFragment extends BaseFragment {
         clientDataTwo.setStatusOne(18);
         clientDataTwo.setStatusTwo(9);
         clientDataTwo.setStatusThree(4);
-        clientDataTwo.setStatusFour(2);
         clientDataList.add(clientDataTwo);
         ClientData clientDataThree = new ClientData();
         clientDataThree.setType(3);
@@ -280,7 +278,6 @@ public class HomeFragment extends BaseFragment {
         clientDataThree.setStatusOne(12);
         clientDataThree.setStatusTwo(3);
         clientDataThree.setStatusThree(6);
-        clientDataThree.setStatusFour(8);
         clientDataList.add(clientDataThree);
         ClientData clientDataFour = new ClientData();
         clientDataFour.setType(4);
@@ -289,7 +286,6 @@ public class HomeFragment extends BaseFragment {
         clientDataFour.setStatusOne(13);
         clientDataFour.setStatusTwo(6);
         clientDataFour.setStatusThree(8);
-        clientDataFour.setStatusFour(0);
         clientDataList.add(clientDataFour);
 
         homeDataAdapter = new HomeDataAdapter(clientDataList);
