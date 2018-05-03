@@ -3,20 +3,34 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.LoginBean;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CheckSignPermission;
+import com.eanfang.util.LocationUtil;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.base.entity.WorkerEntity;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
+import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
@@ -30,7 +44,9 @@ import net.eanfang.worker.ui.widget.TakePubCtrlView;
 import net.eanfang.worker.ui.widget.TaskCtrlView;
 import net.eanfang.worker.ui.widget.TaskPubCtrlView;
 import net.eanfang.worker.ui.widget.WorkCheckCtrlView;
+import net.eanfang.worker.ui.widget.WorkSpaceSelectMapPopWindow;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +64,13 @@ public class WorkspaceFragment extends BaseFragment {
 
     private TextView tvCompanyName;
     private SimpleDraweeView iv_company_logo;
+
+    //选择地图Pop
+    private WorkSpaceSelectMapPopWindow selectMapPopWindow;
+    private Double longitude;// 经度
+    private Double latitude;//纬度
+    private String companyName = "";//所在城市
+    private String mSeachRequest = "五金店";
 
     @Override
     protected int setLayoutResouceId() {
@@ -71,18 +94,30 @@ public class WorkspaceFragment extends BaseFragment {
         }
         iv_company_logo = findViewById(R.id.iv_company_logo);
         setLogpic();
-        //切换公司
-        findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-            new CompanyListView(getActivity(), (name, url) -> {
-                if ("个人".equals(name)) {
-                    tvCompanyName.setText(name + "(点击切换公司)");
-                } else {
-                    tvCompanyName.setText(name);
-                }
-                if (url != null) {
-                    iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
-                }
-            }).show();
+        // 选择地图pop
+        selectMapPopWindow = new WorkSpaceSelectMapPopWindow(getActivity(), selectMapListener);
+        selectMapPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                selectMapPopWindow.backgroundAlpha(1.0f);
+            }
+        });
+        // 获取定位
+        getLocation();
+    }
+
+    // 获取当前定位
+    private void getLocation() {
+        LocationUtil.location((MainActivity) getActivity(), (location) -> {
+            LoginBean user = EanfangApplication.getApplication().getUser();
+            if (user == null || StringUtils.isEmpty(user.getToken())) {
+                return;
+            }
+            longitude = location.getLongitude();// 116
+            latitude = location.getLatitude();// 39
+            companyName = location.getCity();
+
+
         });
     }
 
@@ -100,6 +135,7 @@ public class WorkspaceFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+
         progressCtrl();
         helpTools();
         teamWork();
@@ -112,7 +148,19 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.iv_service).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
         });
-
+        //切换公司
+        findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
+            new CompanyListView(getActivity(), (name, url) -> {
+                if ("个人".equals(name)) {
+                    tvCompanyName.setText(name + "(点击切换公司)");
+                } else {
+                    tvCompanyName.setText(name);
+                }
+                if (url != null) {
+                    iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                }
+            }).show();
+        });
     }
 
     /**
@@ -141,6 +189,11 @@ public class WorkspaceFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), WebActivity.class)
                     .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
                     .putExtra("title", "京东安防"));
+        });
+        // 五金店
+        findViewById(R.id.tv_work_hardwareStore).setOnClickListener((v) -> {
+            selectMapPopWindow.showAtLocation(findViewById(R.id.ll_workspace), Gravity.BOTTOM, 0, 0);
+            selectMapPopWindow.backgroundAlpha(0.5f);
         });
     }
 
@@ -172,6 +225,68 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
         });
+    }
+
+    /**
+     * 判断是否安装目标应用
+     *
+     * @param packageName 目标应用安装后的包名
+     * @return 是否已安装目标应用
+     */
+    private boolean isInstallByread(String packageName) {
+        return new File("/data/data/" + packageName).exists();
+    }
+
+    View.OnClickListener selectMapListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.btn_gaodeMap:// 高德地图
+                    doOpenMap("Gaode");
+                    selectMapPopWindow.dismiss();
+                    break;
+                case R.id.btn_baiduMap: // 百度地图
+                    doOpenMap("Baidu");
+                    selectMapPopWindow.dismiss();
+                    break;
+                case R.id.btn_cancel:
+                    selectMapPopWindow.dismiss();
+                    break;
+
+            }
+        }
+    };
+
+    // 打开 第三方 地图
+    public void doOpenMap(String name) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        Uri uri = null;
+        // 判断是否安装高德地图
+        if ("Gaode".equals(name)) {
+            if (isInstallByread("com.autonavi.minimap")) {
+                intent.setPackage("com.autonavi.minimap");
+                uri = Uri.parse("androidamap://poi?sourceApplication=softname&keywords=" + mSeachRequest + "&dev=0");
+            } else {
+                getActivity().startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("url", "http://uri.amap.com/search?keyword=" + mSeachRequest + "&center=" + longitude + "," + latitude + "&src=mypage")
+                        .putExtra("title", "高德地图"));
+            }
+        } else if ("Baidu".equals(name)) {
+            if (isInstallByread("com.baidu.BaiduMap")) {
+                uri = Uri.parse("baidumap://map/place/search?query=" + mSeachRequest + "&location=" + latitude + "，" + longitude);
+            } else {
+                getActivity().startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("url", "http://api.map.baidu.com/place/search?query=" + mSeachRequest + "&location=" + latitude + "," + longitude + "&output=html&src=" + companyName + "|易安防")
+                        .putExtra("title", "百度地图"));
+            }
+        }
+
+        intent.setData(uri);
+        startActivity(intent); //启动调用
+
+
     }
 
 }

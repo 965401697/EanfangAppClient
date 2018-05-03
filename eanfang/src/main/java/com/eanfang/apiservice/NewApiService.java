@@ -231,8 +231,4 @@ public interface NewApiService {
 
     String QR_LOGIN = BuildConfig.API_HOST+"/yaf_sys/toAccredit";
 
-    /**
-     * 个人 二维码
-     * */
-    String PERSONAL_QRCODE = BuildConfig.API_HOST+"/yaf_sys/code/getWokerCode";
 }

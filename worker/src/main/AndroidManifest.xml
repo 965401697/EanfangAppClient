@@ -192,9 +192,15 @@
         <activity android:name=".ui.activity.worksapce.AuthSystemTypeActivity" />
         <activity android:name=".ui.activity.worksapce.AuthBizActivity" />
         <activity android:name=".ui.activity.worksapce.AuthAreaActivity" />
-        <activity android:name=".ui.activity.my.AuthWorkerInfoActivity" />
+        <!-- 技师认证 填写个人资料 照片 等 -->
+        <activity
+            android:name=".ui.activity.my.AuthWorkerInfoActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 技师绑定系统类别 -->
         <activity android:name=".ui.activity.my.AuthWorkerSysTypeActivity" />
+        <!-- 技师绑定业务类型 -->
         <activity android:name=".ui.activity.my.AuthWorkerBizActivity" />
+        <!-- 技师绑定服务地区 -->
         <activity android:name=".ui.activity.my.AuthWorkerAreaActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity" />
         <activity android:name=".ui.activity.AddMaintenanceDetailActivity" />
@@ -272,17 +278,22 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <!-- 业务通知详情 -->
         <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
         <activity android:name=".ui.activity.im.GroupNoticeActivity" />
         <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
+        <!-- 客服 -->
         <activity android:name=".ui.activity.worksapce.CustomerServiceActivity" />
+        <!-- 系统通知 -->
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeActivity" />
+        <!-- 系统通知详情 -->
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
+        <!-- 数据统计 -->
         <activity android:name=".ui.activity.worksapce.DataStatisticsActivity" />
         <activity android:name=".ui.activity.im.TransferOwnActivity" />
         <activity android:name=".ui.activity.im.SelectedFriendsActivity" />
         <activity android:name=".ui.activity.im.SubtractFriendsActivity" />
-        <activity android:name=".ui.activity.im.IMPresonInfoActivity"></activity>
+        <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
     </application>
 
 </manifest>

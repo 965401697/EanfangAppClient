@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_40"
         android:text="辅助工具"
-        android:layout_marginLeft="@dimen/dimen_30"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_16"
         android:textStyle="bold" />
@@ -31,22 +31,22 @@
         <TextView
             android:id="@+id/tv_work_calculate"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_calculate"
+            android:onClick="noOpen"
             android:text="@string/text_work_calculate" />
 
         <TextView
             android:id="@+id/tv_work_answer"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_answer"
+            android:onClick="noOpen"
             android:text="@string/text_work_answer" />
 
         <TextView
             android:id="@+id/tv_work_knowledge"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_client_work_knowledge"
+            android:onClick="noOpen"
             android:text="@string/text_work_knowledge" />
 
 
@@ -71,9 +71,8 @@
             android:text="@string/text_work_jd" />
 
         <TextView
-            android:id="@+id/tv_work_create_project"
+            android:id="@+id/tv_work_hardwareStore"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_work_five_shop"
             android:text="@string/text_worker_five_shop" />
 

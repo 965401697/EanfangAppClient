@@ -45,9 +45,9 @@ import net.eanfang.worker.util.PrefUtils;
 
 public class MyFragment extends BaseFragment {
     private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
-    private RelativeLayout rlWorkingStatus,rlWorkerVerfity;
+    private RelativeLayout rlWorkingStatus, rlWorkerVerfity;
     private SimpleDraweeView iv_header;
-
+    // 二维码头像
     private SimpleDraweeView mIvPersonalQRCode;
     // Dialog
     private PersonalQRCodeDialog personalQRCodeDialog;
@@ -61,6 +61,7 @@ public class MyFragment extends BaseFragment {
     protected void initData(Bundle arguments) {
         getWorkInfo();
     }
+
 
     private void getWorkInfo() {
         EanfangHttp.get(UserApi.GET_WORKER_INFO)
@@ -114,17 +115,11 @@ public class MyFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
 
-        // 二维码头像
-        Uri uri = Uri.parse(NewApiService.PERSONAL_QRCODE);
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
-                .setAutoPlayAnimations(true)
-                .build();
-        mIvPersonalQRCode.setController(controller);
     }
 
     @Override
     protected void setListener() {
+        // 工作状态
         rlWorkingStatus.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(getActivity(), "", GetConstDataUtils.getWorkerStatus(), (index, item) -> {
                 tvWorkerStatus.setText(item);
@@ -132,10 +127,12 @@ public class MyFragment extends BaseFragment {
                 PrefUtils.setString("status", item);
             });
         });
+        // 二维码头像
         mIvPersonalQRCode.setOnClickListener((v) -> {
             personalQRCodeDialog = new PersonalQRCodeDialog(getActivity());
             personalQRCodeDialog.show();
         });
+
     }
 
     /**
@@ -153,6 +150,7 @@ public class MyFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         initDatas();
+        getWorkInfo();
     }
 
     public void initDatas() {
@@ -164,7 +162,8 @@ public class MyFragment extends BaseFragment {
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
         }
-
+        // 二维码头像
+        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +"qr/"+ user.getAccount().getQrCode()));
     }
 
     // 判断是否认证
