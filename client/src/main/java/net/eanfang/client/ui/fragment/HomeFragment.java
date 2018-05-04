@@ -2,11 +2,8 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,8 +16,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 import com.project.eanfang.zxing.activity.CaptureActivity;
@@ -29,22 +24,14 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DataStatisticsActivity;
-import net.eanfang.client.ui.activity.worksapce.DesignActivity;
-import net.eanfang.client.ui.activity.worksapce.InstallActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
 import net.eanfang.client.ui.widget.RepairCtrlView;
-import net.eanfang.client.ui.widget.SignCtrlView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 import static com.eanfang.util.V.v;
 
@@ -175,7 +162,6 @@ public class HomeFragment extends BaseFragment {
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
-
             startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
 

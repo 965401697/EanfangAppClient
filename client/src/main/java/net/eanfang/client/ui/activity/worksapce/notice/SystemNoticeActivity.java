@@ -55,6 +55,7 @@ public class SystemNoticeActivity extends BaseActivity implements
         mRvSystemNotice.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         msgRefresh.setOnRefreshListener(this);
+        // rv 和 scrollview 滑动冲突
         mRvSystemNotice.setNestedScrollingEnabled(false);
 
         mRvSystemNotice.addOnItemTouchListener(new OnItemClickListener() {
