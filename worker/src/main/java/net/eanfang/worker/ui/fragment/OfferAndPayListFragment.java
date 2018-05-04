@@ -51,14 +51,14 @@ public class OfferAndPayListFragment extends BaseFragment implements
     private Long id;
     private static int page = 1;
 
-    public static OfferAndPayListFragment getInstance(String title, String type) {
-        OfferAndPayListFragment sf = new OfferAndPayListFragment();
-        sf.mTitle = title;
-        page = 1;
-        sf.mType = type;
-        return sf;
-
-    }
+//    public static OfferAndPayListFragment getInstance(String title, String type) {
+//        OfferAndPayListFragment sf = new OfferAndPayListFragment();
+//        sf.mTitle = title;
+//        page = 1;
+//        sf.mType = type;
+//        return sf;
+//
+//    }
 
     public String getmTitle() {
         return mTitle;
@@ -86,7 +86,7 @@ public class OfferAndPayListFragment extends BaseFragment implements
     }
 
     private void initAdapter(List<PayOrderListBean.ListBean> mDataList) {
-        mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
+//        mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override

@@ -95,16 +95,8 @@ public class ContactListFragment extends BaseFragment {
 
                     for (Conversation s : conversations) {
 
-//                        GroupsBean groupsBean = new GroupsBean();
-//
-//                        groupsBean.setRcloudGroupId(s.getTargetId());
-//
-//                        groupsBeanList.add(groupsBean);
-//
-                        Log.e("zzw", s.getReceivedStatus().getFlag() + "");
                         Log.e("zzw", s.getTargetId());
-                        Log.e("zzw", s.getLatestMessage().toString());
-                        Log.e("zzw", s.getSentStatus().getValue() + "");
+
                         conversationsId.add(s.getTargetId());
                     }
                 }
@@ -176,7 +168,7 @@ public class ContactListFragment extends BaseFragment {
 
             @Override
             public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
-                return true;
+                return false;
             }
 
             @Override

@@ -48,29 +48,30 @@ public class ConversationActivity extends BaseWorkerActivity {
         startTransaction(true);
 
         String type = getIntent().getData().getLastPathSegment().toUpperCase(Locale.US);
-        if (type.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
-            setRightTitle("设置");
-            setRightTitleOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(ConversationActivity.this, GroupDetailActivity.class);
-                    if (!TextUtils.isEmpty(mId)) {
-                        intent.putExtra(EanfangConst.RONG_YUN_ID, mId);
-                        intent.putExtra("title", title);
-                    }
-                    startActivity(intent);
-                }
-            });
-        } else if (type.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
 
-            EanfangHttp.get(UserApi.POST_USER_INFO + mId)
-                    .execute(new EanfangCallback<User>(this, false, User.class, (bean) -> {
-                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
-                        tvTitle.setText(bean.getNickName());
-                        RongIM.getInstance().refreshUserInfoCache(userInfo);
-                    }));
-        }
-//        SoftHideKeyBoardUtil.assistActivity(this);
+        setRightTitle("设置");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+
+                if (type.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
+
+                    intent.setClass(ConversationActivity.this, GroupDetailActivity.class);
+
+                } else if (type.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
+
+                    intent.setClass(ConversationActivity.this, IMPresonInfoActivity.class);
+
+                }
+
+
+                if (!TextUtils.isEmpty(mId)) {
+                    intent.putExtra(EanfangConst.RONG_YUN_ID, mId);
+                    intent.putExtra("title", title);
+                }
+                startActivity(intent);
+            }
+        });
     }
 }

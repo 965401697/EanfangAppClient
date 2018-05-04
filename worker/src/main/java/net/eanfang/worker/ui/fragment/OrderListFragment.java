@@ -44,7 +44,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * 工作台已报修
  */
 public class OrderListFragment extends BaseFragment implements
-        OnDataReceivedListener, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
     private static int page = 1;
@@ -236,6 +236,7 @@ public class OrderListFragment extends BaseFragment implements
 
     @Override
     protected void initData(Bundle arguments) {
+
     }
 
     protected void getData() {
@@ -376,14 +377,6 @@ public class OrderListFragment extends BaseFragment implements
             startActivity(intent);
         }
     };
-
-
-    @Override
-    public void onDataReceived() {
-//        initView();
-//        initAdapter();
-//        refreshLayout.setRefreshing(false);
-    }
 
     /**
      * 下拉刷新

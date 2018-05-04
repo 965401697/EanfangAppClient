@@ -276,7 +276,9 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     }
 
     private void submit() {
-        accountEntity = new AccountEntity();
+
+        accountEntity = EanfangApplication.get().getUser().getAccount();
+
         accountEntity.setAvatar(path);
         accountEntity.setRealName(etRealname.getText().toString().trim());
         accountEntity.setNickName(tvNickname.getText().toString().trim());
@@ -293,6 +295,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         } else {
             accountEntity.setAreaCode(loginBean.getAccount().getAreaCode());
         }
+
         submitSuccess(JSON.toJSONString(accountEntity));
     }
 
@@ -302,6 +305,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("成功");
+
+
                         LoginBean user = EanfangApplication.get().getUser();
                         user.setAccount(accountEntity);
 
@@ -310,12 +315,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {
                             //刷新个人融云的信息
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + path));
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + path));
                         } else {
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
-                        
+
                         finish();
                     });
                 }));
