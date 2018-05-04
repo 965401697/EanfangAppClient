@@ -51,7 +51,7 @@ import butterknife.ButterKnife;
  *
  * @on 2018/1/30  20:31
  * @email houzhongzhou@yeah.net
- * @desc 技师认证
+ * @desc 技师认证 填写个人资料 照片 等
  */
 public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
@@ -231,14 +231,12 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 jump();
             }
         });
-        // 已经认证成功 无法编辑
-        if (workerInfoBean.getStatus() == 2) {
-            setRightGone();
-            etContactName.setEnabled(false);
-            etContactPhone.setEnabled(false);
-            etPayAccount.setEnabled(false);
+        // 已经认证成功/ 已经提交认证，正在认证中 无法编辑
+        if (workerInfoBean.getStatus() == 2 || workerInfoBean.getStatus() == 1) {
+            doSetGone();
         }
     }
+
 
     private void fillData() {
         String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
@@ -391,7 +389,6 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -409,5 +406,23 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 break;
         }
 
+    }
+
+    // 提交成功 文本不可编辑 图片不可修改
+    private void doSetGone() {
+        setRightGone();
+        etContactName.setEnabled(false);
+        etContactPhone.setEnabled(false);
+        etIntro.setEnabled(false);
+        etPayAccount.setEnabled(false);
+        llWorkingLevel.setEnabled(false);
+        llWorkingYear.setEnabled(false);
+        llPayType.setEnabled(false);
+        ivIdCardFront.setEnabled(false);
+        ivIdCardSide.setEnabled(false);
+        ivIdCardHand.setEnabled(false);
+        ivAccidentPics.setEnabled(false);
+        snplMomentAddPhotos.setEnabled(false);
+        ivCrimePic.setEnabled(false);
     }
 }

@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -40,11 +42,6 @@ public class PersonalQRCodeDialog extends Dialog {
     private void initView(View view) {
         SimpleDraweeView mIvPersonalQRCode = (SimpleDraweeView) view.findViewById(R.id.iv_personalQRCode);
         // 个人二维码
-        Uri uri = Uri.parse(NewApiService.PERSONAL_QRCODE);
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
-                .setAutoPlayAnimations(true)
-                .build();
-        mIvPersonalQRCode.setController(controller);
+        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode()));
     }
 }

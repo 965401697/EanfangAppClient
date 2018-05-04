@@ -127,7 +127,12 @@ public class AccountEntity implements Serializable {
 	@Getter
 	@Setter
 	private String address;
-	
+
+	//个人二维码
+    @Size(min = 0, max = 200)
+    @Getter
+    @Setter
+    private String qrCode;
     /**
      * 设置：账号
      */

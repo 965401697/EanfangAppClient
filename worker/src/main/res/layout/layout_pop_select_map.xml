@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_select_map"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_gaodeMap"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:gravity="center"
+                android:text="高德地图"
+                android:textColor="@color/color_main_worker"
+                android:textSize="@dimen/textSize_15" />
+
+            <View style="@style/style_common_line_gray" />
+
+            <Button
+                android:id="@+id/btn_baiduMap"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:gravity="center"
+                android:text="百度地图"
+                android:textColor="@color/color_main_worker"
+                android:textSize="@dimen/textSize_15" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@drawable/bg_select_map"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

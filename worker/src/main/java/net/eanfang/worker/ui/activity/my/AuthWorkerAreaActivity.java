@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 
@@ -15,6 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.GrantChange;
+import com.eanfang.model.Message;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
@@ -22,6 +24,8 @@ import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
+import net.eanfang.worker.ui.activity.worksapce.CheckActivity;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
 import java.util.ArrayList;
@@ -190,17 +194,33 @@ public class AuthWorkerAreaActivity extends BaseActivity {
     private void commitVerfiy(CommitVerfiyView verfiyView) {
         EanfangHttp.post(UserApi.POST_TECH_WORKER_SEND_VERIFY)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    showToast("已提交认证");
                     verfiyView.dismiss();
                     closeActivity();
+                    doJumpConfirm();
                 }));
+    }
+
+    public void doJumpConfirm() {
+        Intent intent = new Intent(AuthWorkerAreaActivity.this, StateChangeActivity.class);
+        Bundle bundle = new Bundle();
+        Message message = new Message();
+        message.setTitle("认证提交成功");
+        message.setMsgTitle("您的技师认证资料已经提交成功");
+        message.setMsgContent("我们会在72小时内进行审核");
+        message.setMsgHelp("如需修改认证资料");
+        message.setShowOkBtn(true);
+        message.setShowLogo(true);
+        message.setTip("");
+        bundle.putSerializable("message", message);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finishSelf();
     }
 
     private void closeActivity() {
         EanfangApplication.get().closeActivity(AuthWorkerInfoActivity.class.getName());
         EanfangApplication.get().closeActivity(AuthWorkerSysTypeActivity.class.getName());
         EanfangApplication.get().closeActivity(AuthWorkerBizActivity.class.getName());
-        finishSelf();
     }
 
 }

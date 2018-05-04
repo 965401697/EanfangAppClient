@@ -77,12 +77,7 @@ public class MyFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
         // 二维码头像
-        Uri uri = Uri.parse(NewApiService.PERSONAL_QRCODE);
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
-                .setAutoPlayAnimations(true)
-                .build();
-        mIvPersonalQRCode.setController(controller);
+        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode()));
     }
 
     @Override

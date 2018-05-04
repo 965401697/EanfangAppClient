@@ -19,6 +19,11 @@ import net.eanfang.worker.ui.fragment.customservice.PersonalServiceFragment;
 
 import java.util.ArrayList;
 
+/**
+* @date on 2018/5/3  10:23
+* @author Guanluocang
+* @decision  客服
+*/
 public class CustomerServiceActivity extends BaseActivity implements OnTabSelectListener {
     private final String[] mTitles = {
             "个人客户", "企业用户"
