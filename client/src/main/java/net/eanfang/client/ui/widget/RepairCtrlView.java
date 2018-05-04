@@ -1,24 +1,15 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
-import net.eanfang.client.ui.activity.worksapce.InstallActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 
 import butterknife.BindView;

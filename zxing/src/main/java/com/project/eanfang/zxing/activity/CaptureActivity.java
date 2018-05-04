@@ -56,7 +56,7 @@ import java.util.TimerTask;
  * 这个activity打开相机，在后台线程做常规的扫描；它绘制了一个结果view来帮助正确地显示条形码，在扫描的时候显示反馈信息，
  * 然后在扫描成功的时候覆盖扫描结果
  */
-public final class CaptureActivity extends Activity implements
+public final class CaptureActivity extends BaseActivity implements
         SurfaceHolder.Callback, View.OnClickListener {
 
     private static final String TAG = CaptureActivity.class.getSimpleName();
@@ -67,8 +67,6 @@ public final class CaptureActivity extends Activity implements
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
     private boolean hasSurface;
-    private boolean copyToClipboard;
-    private String sourceUrl;
     private Collection<BarcodeFormat> decodeFormats;
     private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
@@ -153,7 +151,6 @@ public final class CaptureActivity extends Activity implements
         }
         beepManager.updatePrefs();
         inactivityTimer.onResume();
-        sourceUrl = null;
         decodeFormats = null;
         characterSet = null;
     }
@@ -269,7 +266,9 @@ public final class CaptureActivity extends Activity implements
                         String isLogin = (String) bean.get("data");
                         if ("true".equals(isLogin)) {
                             // 进行登录
-                            doLogin(uuid);
+                            startActivity(new Intent(CaptureActivity.this, LoginConfirmActivity.class)
+                                    .putExtra("which", requestFrom)
+                                    .putExtra("uuid", uuid));
                         } else {
                             showToast("暂无权限");
                             finish();
@@ -284,16 +283,7 @@ public final class CaptureActivity extends Activity implements
                 });
     }
 
-    // 进行登录
-    public void doLogin(String uuid) {
-        EanfangHttp.post(NewApiService.QR_LOGIN)
-                .params("uuid", uuid)
-                .params("accountId", CustomeApplication.get().getAccId())
-                .execute(new EanfangCallback<JSONObject>(CaptureActivity.this, true, JSONObject.class, (bean) -> {
-                    showToast("登录成功");
-                    finish();
-                }));
-    }
+
 
     private void initCamera(SurfaceHolder surfaceHolder) {
         if (surfaceHolder == null) {

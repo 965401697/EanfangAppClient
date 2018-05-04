@@ -3,7 +3,8 @@
     package="com.project.eanfang.zxing">
 
     <application>
-        <activity android:name=".activity.CaptureActivity"></activity>
+        <activity android:name=".activity.CaptureActivity" />
+        <activity android:name=".activity.LoginConfirmActivity"></activity>
     </application>
 
 </manifest>

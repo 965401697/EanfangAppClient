@@ -78,7 +78,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
 
         //将业务类型的图片显示到列表
-        String imgUrl = V.v(() -> item.getOwnerUser().getAccountEntity().getAvatar());
+        String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
         }

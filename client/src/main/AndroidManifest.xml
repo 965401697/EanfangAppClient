@@ -139,29 +139,31 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.VIEW" />-->
-            <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--<data android:scheme="wx11d1a11a2f79200a" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- <data android:scheme="wx11d1a11a2f79200a" /> -->
+            <!-- </intent-filter> -->
         </activity>
 
+        <!-- <activity -->
+        <!-- android:name=".wxapi.WXPayEntryActivity" -->
+        <!-- android:configChanges="keyboardHidden|screenSize|orientation" -->
+        <!-- android:exported="true" -->
+        <!-- android:launchMode="singleTop" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
 
-        <!--<activity-->
-        <!--android:name=".wxapi.WXPayEntryActivity"-->
-        <!--android:configChanges="keyboardHidden|screenSize|orientation"-->
-        <!--android:exported="true"-->
-        <!--android:launchMode="singleTop"-->
-        <!--android:screenOrientation="portrait"-->
-        <!--android:theme="@android:style/Theme.Translucent.NoTitleBar">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
 
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
 
-        <!--<data android:scheme="sdksample" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
+
+        <!-- <data android:scheme="sdksample" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -189,10 +191,10 @@
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.CollectActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
-        <activity android:name=".ui.activity.worksapce.RepairActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairActivity" />
         <activity android:name=".ui.activity.worksapce.InstallActivity" />
         <activity android:name=".ui.activity.worksapce.DesignActivity" />
-        <activity android:name=".ui.activity.worksapce.AddTroubleActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
         <activity android:name=".ui.activity.worksapce.CheckActivity" />
         <activity android:name=".ui.activity.worksapce.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.TaskActivity" />
@@ -260,6 +262,9 @@
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
         <!-- 数据统计 -->
         <activity android:name=".ui.activity.worksapce.DataStatisticsActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
 
 </manifest>
