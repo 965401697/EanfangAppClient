@@ -1,19 +1,25 @@
 package net.eanfang.worker.ui.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -23,18 +29,19 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
-import com.eanfang.model.SystypeBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -51,12 +58,13 @@ import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
-import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
@@ -459,5 +467,20 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Subscribe
+    public void onEvent(Integer integer) {
+        if ((System.currentTimeMillis() - mExitTime) > 500) {
+
+            ToastUtil.get().showToast(this, "登录失效，请重新登录！");
+
+            mExitTime = System.currentTimeMillis();
+
+            CleanMessageUtil.clearAllCache(EanfangApplication.get());
+            SharePreferenceUtil.get().clear();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            RongIM.getInstance().logout();
+            MainActivity.this.finish();
+        }
+    }
 }
 

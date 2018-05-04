@@ -2,6 +2,9 @@ package com.eanfang.http;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -18,11 +21,8 @@ import com.okgo.model.Response;
 import com.okgo.request.base.Request;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
@@ -212,9 +212,12 @@ public class EanfangCallback<T> extends StringCallback {
                     onCommitAgain();
                     break;
                 case MISSING_LOGIN:
-                    onFail(code, message, null);
-                    //taoken 过期  只弹出toast 没跳转登录页面
-//                    onMissingLogin();
+                case 50012:
+                case 50013:
+                case 50014:
+//                    onFail(code, message, null);
+                    //taoken 过期  只弹出toast
+                    EventBus.getDefault().post(code);
                     break;
                 default:
                     onFail(code, message, null);
@@ -378,7 +381,11 @@ public class EanfangCallback<T> extends StringCallback {
     @Override
     public final void onError(Response<String> response) {
         // onError(response.body());
-        onFail(0, "哎呀，服务器好像罢工了试", null);
+        if (isConnected()) {
+            onFail(0, "哎呀，服务器好像罢工了试", null);
+        } else {
+            ToastUtil.get().showToast(this.activity, "网络中断，请检查网络连接");
+        }
     }
 
     /**
@@ -475,6 +482,18 @@ public class EanfangCallback<T> extends StringCallback {
 //            }
 //        }
 
+    }
+
+    /**
+     * 判断网络是否连接
+     *
+     * @return
+     */
+    public boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     public interface ISuccess<T> {

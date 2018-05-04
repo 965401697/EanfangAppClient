@@ -17,10 +17,13 @@ import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.V;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -30,6 +33,10 @@ import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.PrefUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+
+import io.rong.imkit.RongIM;
 
 
 /**
@@ -127,5 +134,14 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         finishSelf();
     }
 
+    @Subscribe
+    public void onEvent(Integer integer) {
+        isFirst = true;
+        ToastUtil.get().showToast(this, "登录失效，请重新登录！");
+        CleanMessageUtil.clearAllCache(EanfangApplication.get());
+        SharePreferenceUtil.get().clear();
+        startActivity(new Intent(this, LoginActivity.class));
+        finishSelf();
+    }
 
 }

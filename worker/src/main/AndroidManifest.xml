@@ -255,10 +255,13 @@
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
         </receiver>
-
+        <!-- 添加好友 -->
         <activity android:name=".ui.activity.im.AddFriendActivity" />
+        <!-- 群组创建 -->
         <activity android:name=".ui.activity.im.GroupCreatActivity" />
+        <!-- 群组列表 -->
         <activity android:name=".ui.activity.im.MyGroupsListActivity" />
+        <!-- 群组详情界面 -->
         <activity android:name=".ui.activity.im.GroupDetailActivity" />
         <activity android:name=".ui.activity.worksapce.SystemMessageActivity" />
 
@@ -290,9 +293,13 @@
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
         <!-- 数据统计 -->
         <activity android:name=".ui.activity.worksapce.DataStatisticsActivity" />
+        <!-- 转让群主 -->
         <activity android:name=".ui.activity.im.TransferOwnActivity" />
+        <!-- 选择朋友   checkedbox界面 -->
         <activity android:name=".ui.activity.im.SelectedFriendsActivity" />
+        <!-- 群组减少成员 -->
         <activity android:name=".ui.activity.im.SubtractFriendsActivity" />
+        <!-- IM个人设置页面 -->
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
     </application>
 

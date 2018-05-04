@@ -16,8 +16,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.V;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -26,6 +29,8 @@ import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
+
+import org.greenrobot.eventbus.Subscribe;
 
 
 /**
@@ -125,5 +130,14 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         finishSelf();
     }
 
+    @Subscribe
+    public void onEvent(Integer integer) {
+        isFirst = true;
+        ToastUtil.get().showToast(this, "登录失效，请重新登录！");
+        CleanMessageUtil.clearAllCache(EanfangApplication.get());
+        SharePreferenceUtil.get().clear();
+        startActivity(new Intent(this, LoginActivity.class));
+        finishSelf();
+    }
 
 }

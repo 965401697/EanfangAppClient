@@ -26,9 +26,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ExecuteUtils;
 import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
 import com.jaeger.library.StatusBarUtil;
@@ -45,6 +48,8 @@ import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
 import q.rorbin.badgeview.Badge;
@@ -270,5 +275,22 @@ public class MainActivity extends BaseClientActivity {
     public void noOpen(View v) {
         showToast("暂缓开通");
     }
+
+    @Subscribe
+    public void onEvent(Integer integer) {
+        if ((System.currentTimeMillis() - mExitTime) > 500) {
+
+            ToastUtil.get().showToast(this, "登录失效，请重新登录！");
+
+            mExitTime = System.currentTimeMillis();
+
+            CleanMessageUtil.clearAllCache(EanfangApplication.get());
+            SharePreferenceUtil.get().clear();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//            RongIM.getInstance().logout();
+            MainActivity.this.finish();
+        }
+    }
+
 }
 
