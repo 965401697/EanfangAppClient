@@ -48,7 +48,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), com.eanfang.BuildConfig.BUGLY_CLIENT, false);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false);
         init();
 
 

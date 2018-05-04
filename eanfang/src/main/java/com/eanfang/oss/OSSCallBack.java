@@ -28,10 +28,6 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     private Activity activity;
     private boolean showDialog;
     private UploadDialogUtil.UploadDialog uploadDialog;
-    @Getter
-    private AtomicInteger total = new AtomicInteger(0);
-    @Getter
-    private AtomicInteger curr = new AtomicInteger(0);
 
     private Handler handler;
 
@@ -106,7 +102,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     public void onOssProgress(PutObjectRequest request, long currentSize, long totalSize) {
         handler.post(() -> {
             if (uploadDialog != null) {
-                uploadDialog.setTextContent("正在上传（" + curr.get() + "/" + total.get() + "）");
+                uploadDialog.setTextContent("正在上传（" + currentSize + "/" + totalSize + "）");
             }
         });
 

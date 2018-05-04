@@ -18,9 +18,9 @@ android {
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
 
+
         ndk {
             // 设置支持的SO库架构
-
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86'
         }
         //信鸽配置
@@ -44,21 +44,27 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
+
         }
         release {
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //混淆
-            minifyEnabled false
-            //Zipalign优化
-            zipAlignEnabled false
-            // 移除无用的resource文件
-            shrinkResources false
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.release
+
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            //正式的bugly
+            buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
+
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            //混淆
+            minifyEnabled true
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
     }

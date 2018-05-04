@@ -45,21 +45,23 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
         }
         release {
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //混淆
-            minifyEnabled false
-            //Zipalign优化
-            zipAlignEnabled false
-            // 移除无用的resource文件
-            shrinkResources false
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.release
+
+            buildConfigField("String", "BUGLY_WORKER", "\"a6bae9f6ee\"")
+
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            //混淆
+            minifyEnabled true
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
 
     }
@@ -69,6 +71,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // aapt2 问题 png图片问题
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
 }
 
 dependencies {

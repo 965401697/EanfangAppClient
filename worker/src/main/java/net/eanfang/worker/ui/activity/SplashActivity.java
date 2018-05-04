@@ -51,7 +51,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), com.eanfang.BuildConfig.BUGLY_WORKER, false);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false);
         init();
 
     }

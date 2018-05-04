@@ -25,14 +25,12 @@ android {
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
 
-        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 //
-//        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-//        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
-        buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
-        buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
     }
 
     compileOptions {
@@ -50,10 +48,23 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+
         }
         release {
+
+            buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+
+
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //混淆
             minifyEnabled true
+            //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

@@ -109,6 +109,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private ArrayList<String> mDataList2;
     private ArrayList<String> mDataList3;
 
+    private BaseQuickAdapter evaluateAdapter1;
+    private BaseQuickAdapter evaluateAdapter2;
+    private BaseQuickAdapter evaluateAdapter3;
+
     private RepairOrderEntity toRepairBean;
     private WorkerEntity detailsBean;
     private String companyUserId;
@@ -162,8 +166,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
             startActivity(intent);
         });
         llArea.setOnClickListener((v) -> {
+            if (mDataList1 != null && !mDataList1.isEmpty()) {
+                evaluateAdapter1.setNewData(mDataList1);
+                evaluateAdapter1.notifyDataSetChanged();
+            }
             if (rvList1.getVisibility() == View.VISIBLE) {
                 rvList1.setVisibility(View.GONE);
+
                 ivDown.setImageResource(R.mipmap.arrow_down);
             } else {
                 rvList1.setVisibility(View.VISIBLE);
@@ -301,15 +310,16 @@ public class WorkerDetailActivity extends BaseClientActivity {
     }
 
     private void initAdapter() {
-        BaseQuickAdapter evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList1);
+
+        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, new ArrayList());
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList1.setAdapter(evaluateAdapter1);
 
-        BaseQuickAdapter evaluateAdapter2 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList2);
+        evaluateAdapter2 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList2);
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList2.setAdapter(evaluateAdapter2);
 
-        BaseQuickAdapter evaluateAdapter3 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList3);
+        evaluateAdapter3 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList3);
         evaluateAdapter3.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList3.setAdapter(evaluateAdapter3);
     }
