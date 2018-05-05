@@ -62,6 +62,11 @@ public class InviteView extends BaseDialog {
 
     private Uri getImgUri(int curr) {
         int id = 0;
+        if (curr == 1) {
+            id = R.mipmap.client_app_qr_500;
+        } else {
+            id = R.mipmap.worker_app_qr_500;
+        }
         id = R.mipmap.client_app_qr_500;
         Uri uri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/" + id);
         return uri;

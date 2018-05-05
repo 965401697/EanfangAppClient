@@ -89,41 +89,25 @@ public class LoginActivity extends BaseActivity {
         btn_login.setOnClickListener(v -> {
             String userPhone = et_phone.getText().toString().trim();
             String userAulth = et_yanzheng.getText().toString().trim();
-            if (!BuildConfig.LOG_DEBUG) {
-
-                if (StringUtils.isEmpty(userPhone)) {
-                    showToast("手机号不能为空");
-                    return;
-                }
-
-                if (StringUtils.isEmpty(userAulth)) {
-                    showToast("验证码不能为空");
-                    return;
-                }
-                if (!cb.isChecked()) {
-                    showToast("同意易安防会员章程和协议后才可以登陆使用");
-                    return;
-                }
+            if (StringUtils.isEmpty(userPhone)) {
+                showToast("手机号不能为空");
+                return;
             }
 
-            //调试阶段
-            if (BuildConfig.LOG_DEBUG) {
-                if (StringUtils.isEmpty(userPhone)) {
-                    userPhone = "13800138020";
-                }
-                if (StringUtils.isEmpty(userAulth)) {
-                    userAulth = "admin";
-                }
-                if (userAulth.equals("admin")) {
-                    setLogin(userPhone, userAulth);
-                }
-            } else {
-                setVerfiyLogin(userPhone, userAulth);
+            if (StringUtils.isEmpty(userAulth)) {
+                showToast("验证码不能为空");
+                return;
             }
-
+            if (!cb.isChecked()) {
+                showToast("同意易安防会员章程和协议后才可以登陆使用");
+                return;
+            }
+            setVerfiyLogin(userPhone, userAulth);
         });
 
-        tv_yanzheng.setOnClickListener(v -> {
+        tv_yanzheng.setOnClickListener(v ->
+
+        {
             if (StringUtils.isEmpty(et_phone.getText().toString().trim())) {
                 showToast("手机号不能为空");
                 return;
@@ -137,7 +121,9 @@ public class LoginActivity extends BaseActivity {
             v.setEnabled(false);
             timer.start();
         });
-        read.setOnClickListener(v -> {
+        read.setOnClickListener(v ->
+
+        {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("法律声明");
             builder.setMessage(legalText);

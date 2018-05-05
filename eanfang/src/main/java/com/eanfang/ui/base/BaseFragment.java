@@ -101,6 +101,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
         ToastUtil.get().showToast(getActivity(), message);
 
     }
+
     /**
      * 设置根布局资源id
      *

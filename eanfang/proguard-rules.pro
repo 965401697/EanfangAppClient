@@ -68,3 +68,5 @@
 -keepclasseswithmembers class * extends android.databinding.ViewDataBinding{
     <methods>;
 }
+
+-ignorewarnings

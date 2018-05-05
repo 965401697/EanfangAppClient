@@ -29,6 +29,8 @@ import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import lombok.Getter;
+
 
 /**
  * Created by oss on 2015/12/7 0007.
@@ -47,6 +49,7 @@ public class OssService {
 
     private List<OSSAsyncTask<PutObjectResult>> uploadThreads = new ArrayList<>();
 
+    @Getter
     private static AtomicReference<OSSCallBack> ossCallBack = new AtomicReference<>();
 
     private Timer timer;
@@ -111,8 +114,8 @@ public class OssService {
             //如果为空  则跳过
             if (put == null) {
                 resultJson.put("code", UPLOAD_SUCCESS);
-                int curr = getCurrent() + 1;
-                resultJson.put("curr", curr);
+                int curr = this.getOssCallBack().get().getCurrent() + 1;
+                getOssCallBack().get().setCurrent(curr);
                 EventBus.getDefault().post(resultJson);
                 return;
             }
@@ -128,12 +131,14 @@ public class OssService {
                 public void onSuccess(PutObjectRequest request, PutObjectResult result) {
 
                     resultJson.put("code", UPLOAD_SUCCESS);
-                    int curr = getCurrent() + 1;
-                    resultJson.put("curr", curr);
+                    synchronized (getOssCallBack().get()) {
+                        int curr = getOssCallBack().get().getCurrent() + 1;
+                        getOssCallBack().get().setCurrent(curr);
+                    }
                     EventBus.getDefault().post(resultJson);
 
                     activity.runOnUiThread(() -> {
-                        getOssCallBack().get().onOssProgress(null, curr, getTotal());
+                        getOssCallBack().get().onOssProgress(null, getOssCallBack().get().getCurrent(), getOssCallBack().get().getTotal());
                     });
 
                 }
@@ -141,7 +146,6 @@ public class OssService {
                 @Override
                 public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
                     resultJson.put("code", UPLOAD_FAILED);
-                    resultJson.put("curr", (getCurrent()));
                     EventBus.getDefault().post(resultJson);
                 }
             });
@@ -150,7 +154,6 @@ public class OssService {
         }, (e) -> {
             JSONObject resultJson = new JSONObject();
             resultJson.put("code", UPLOAD_FAILED);
-            resultJson.put("curr", (getCurrent()));
             EventBus.getDefault().post(resultJson);
         });
     }
@@ -161,8 +164,7 @@ public class OssService {
         }
         //清空线程
         uploadThreads.clear();
-        setTotal(1);
-        setCurrent(0);
+        this.getOssCallBack().get().setTotal(1);
         this.getOssCallBack().set(ossCallBack);
         putImage(objectKey, urlPath);
         //开始执行检测线程
@@ -172,8 +174,7 @@ public class OssService {
 
     public void asyncPutImages(final Map<String, String> objectMap, final OSSCallBack callBack) {
         //初始化 总数
-        setTotal(objectMap.keySet().size());
-        setCurrent(0);
+        this.getOssCallBack().get().setTotal(objectMap.keySet().size());
         this.getOssCallBack().set(callBack);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -184,7 +185,7 @@ public class OssService {
         //如果没有了 则成功
         if (objectMap == null || objectMap.size() <= 0 || objectMap.keySet().size() <= 0) {
             activity.runOnUiThread(() -> {
-                getOssCallBack().get().onSuccess(null, null);
+                this.getOssCallBack().get().onSuccess(null, null);
                 //取消任务
                 cancelTask();
                 EventBus.getDefault().unregister(this);
@@ -208,23 +209,20 @@ public class OssService {
     public void onEvent(JSONObject result) {
         synchronized (this) {
             //获取当前成功的 数量  赋值给 ossCallBack
-            Integer curr = result.getInteger("curr");
             Integer code = result.getInteger("code");
             //code 为 -1 代表失败
             if (code.equals(UPLOAD_FAILED)) {
                 activity.runOnUiThread(() -> {
-                    getOssCallBack().get().onFailure(null, null, null);
+                    this.getOssCallBack().get().onFailure(null, null, null);
                 });
                 //取消任务
                 cancelTask();
                 EventBus.getDefault().unregister(this);
                 return;
             }
-            setCurrent(curr);
-
             //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
-            Log.e("ossService", "onEvent: total:" + getTotal() + "  curr:" + getCurrent());
-            if (getCurrent() >= getTotal()) {
+            Log.e("ossService", "onEvent: total:" + this.getOssCallBack().get().getTotal() + "  curr:" + this.getOssCallBack().get().getCurrent());
+            if (this.getOssCallBack().get().getCurrent() >= this.getOssCallBack().get().getTotal()) {
                 activity.runOnUiThread(() -> {
                     getOssCallBack().get().onSuccess(null, null);
                 });
@@ -235,30 +233,6 @@ public class OssService {
 
         }
 
-    }
-
-    public synchronized AtomicReference<OSSCallBack> getOssCallBack() {
-        return ossCallBack;
-    }
-
-    public synchronized void setOssCallBack(AtomicReference<OSSCallBack> ossCallBack) {
-        this.ossCallBack = ossCallBack;
-    }
-
-    public synchronized Integer getTotal() {
-        return Var.get(OssService.class.getName() + "total").getVar();
-    }
-
-    public synchronized void setTotal(Integer total) {
-        Var.get(OssService.class.getName() + "total").setVar(total);
-    }
-
-    public synchronized Integer getCurrent() {
-        return Var.get(OssService.class.getName() + "current").getVar();
-    }
-
-    public synchronized void setCurrent(Integer current) {
-        Var.get(OssService.class.getName() + "current").setVar(current);
     }
 
     public void cancelTask() {
@@ -280,7 +254,7 @@ public class OssService {
         task = new TimerTask() {
             @Override
             public void run() {
-                if (getCurrent() < getTotal()) {
+                if (getOssCallBack().get().getCurrent() < getOssCallBack().get().getTotal()) {
                     System.err.println("asyncCheck:---------------");
                     activity.runOnUiThread(() -> {
                         getOssCallBack().get().onFailure(null, null, null);

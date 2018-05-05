@@ -128,8 +128,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
         initView();
         getWorkerDetailData();
         setListener();
-        initAdapter();
-
         setTitle("技师详情");
         setLeftBack();
     }
@@ -166,10 +164,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
             startActivity(intent);
         });
         llArea.setOnClickListener((v) -> {
-            if (mDataList1 != null && !mDataList1.isEmpty()) {
-                evaluateAdapter1.setNewData(mDataList1);
-                evaluateAdapter1.notifyDataSetChanged();
-            }
             if (rvList1.getVisibility() == View.VISIBLE) {
                 rvList1.setVisibility(View.GONE);
 
@@ -287,7 +281,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rbStar5.setRating(bean.getItem5());
 
         mDataList1 = new ArrayList<>();
-        mDataList1.clear();
         if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
             mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
         }
@@ -311,7 +304,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private void initAdapter() {
 
-        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, new ArrayList());
+        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList1);
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList1.setAdapter(evaluateAdapter1);
 

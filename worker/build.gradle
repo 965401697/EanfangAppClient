@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1805011
-        versionName "2.2.1"
+        versionCode 1805051
+        versionName "2.2.2"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
@@ -56,7 +56,7 @@ android {
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources true
+            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件

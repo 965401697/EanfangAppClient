@@ -29,6 +29,9 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     private boolean showDialog;
     private UploadDialogUtil.UploadDialog uploadDialog;
 
+    private static Integer total;
+    private static Integer current;
+
     private Handler handler;
 
     /**
@@ -41,7 +44,25 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
         init();
     }
 
+    public static synchronized Integer getTotal() {
+        return total;
+    }
+
+    public static synchronized void setTotal(Integer total) {
+        OSSCallBack.total = total;
+    }
+
+    public static synchronized Integer getCurrent() {
+        return current;
+    }
+
+    public static synchronized void setCurrent(Integer current) {
+        OSSCallBack.current = current;
+    }
+
     private void init() {
+        setTotal(0);
+        setCurrent(0);
         handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
             if (showDialog) {

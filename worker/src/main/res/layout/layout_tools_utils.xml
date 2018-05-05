@@ -79,8 +79,14 @@
         <TextView
             android:id="@+id/tv_work_service"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_work_five_shop"
-            android:text="客服" />
+            android:text="" />
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_work_service"-->
+        <!--style="@style/style_client_work_meun"-->
+        <!--android:drawableTop="@mipmap/ic_work_five_shop"-->
+        <!--android:text="客服"-->
+        <!--/>-->
     </LinearLayout>
 
 </LinearLayout>

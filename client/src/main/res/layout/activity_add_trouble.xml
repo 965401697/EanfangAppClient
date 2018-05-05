@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="15dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="@dimen/dimen_120"
@@ -181,6 +181,8 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll_deviceBrand"

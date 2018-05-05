@@ -47,7 +47,7 @@ import java.io.File;
  * BaseAppCompatFragmentActivity
  *
  * @author hr
- *         Created at 2016/1/1 11:33
+ * Created at 2016/1/1 11:33
  * @desc activity基类
  */
 
