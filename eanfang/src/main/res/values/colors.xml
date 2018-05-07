@@ -87,6 +87,7 @@
     <color name="color_data_bottom">#000033</color>
     <color name="color_data_repair">#FF9037</color>
 
+    <color name="color_contact_authentication">#D3D3D3</color>
 
 
 </resources>

@@ -1,7 +1,8 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -120,6 +121,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private String itemzone;
     private Long orgid;
     private CommitVerfiyView verfiyView;
+    private String mAssign = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +129,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_auth_company);
         ButterKnife.bind(this);
         initView();
+        initListener();
         initData();
     }
 
@@ -183,7 +186,17 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
+        mAssign = getIntent().getStringExtra("assign");
+        // 完善资料
+        if (mAssign.equals("prefect")) {
+            btnComplete.setText("完善资料");
+        } else {// 认证
+            btnComplete.setText("进行认证");
+        }
         etCompany.setText(orgName);
+    }
+
+    private void initListener() {
         ivUpload.setOnClickListener((v) -> {
             PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
         });
@@ -199,14 +212,48 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "",
                 tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
         btnComplete.setOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
-                setData();
-            } else {
-                showToast("抱歉，您没有权限！");
+            // 完善资料
+            if (mAssign.equals("prefect")) {
+                if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+                    doVerify();
+                } else {
+                    showToast("抱歉，您没有权限！");
+                }
+            } else {// 认证
+                if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+                    commitVerfiy();
+                } else {
+                    showToast("抱歉，您没有权限！");
+                }
             }
-
         });
+    }
 
+    /**
+     * 进行字段的约束判断
+     */
+    public void doVerify() {
+        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+            showToast("请输入单位名称");
+            return;
+        } else if (StringUtils.isEmpty(edCompanyNumber.getText().toString().trim())) {
+            showToast("请输入营业执照号码");
+            return;
+        } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
+            showToast("请输入办公地址");
+            return;
+        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+            showToast("请输入注册资本");
+            return;
+        } else if (StringUtils.isEmpty(etLegalPersion.getText().toString().trim())) {
+            showToast("请输入法人代表");
+            return;
+        } else if (StringUtils.isEmpty(etDesc.getText().toString().trim())) {
+            showToast("请输入单位简介");
+            return;
+        } else {
+            setData();
+        }
     }
 
     /**
@@ -227,32 +274,8 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     }
 
     /**
-     * 图片选择 回调
-     *
-     * @param result
-     * @param resultCode
+     * 提交的数据
      */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
-
-        if (resultCode == LICENSE_CALLBACK_CODE) {
-            infoBean.setLicensePic(imgKey);
-            ivUpload.setImageURI("file://" + image.getOriginalPath());
-        } else if (resultCode == ADPIC_CALLBACK_CODE) {
-            infoBean.setLogoPic(imgKey);
-            ivUpload2.setImageURI("file://" + image.getOriginalPath());
-        }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
-
-    }
-
     private void setData() {
         infoBean.setName(etCompany.getText().toString().trim());
         infoBean.setLicenseCode(edCompanyNumber.getText().toString().trim());
@@ -283,12 +306,41 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         commit(json);
     }
 
+    /**
+     * 图片选择 回调
+     *
+     * @param result
+     * @param resultCode
+     */
+    @Override
+    public void takeSuccess(TResult result, int resultCode) {
+        super.takeSuccess(result, resultCode);
+        if (result == null || result.getImage() == null) {
+            return;
+        }
+        TImage image = result.getImage();
+        String imgKey = UuidUtil.getUUID() + ".png";
+
+        if (resultCode == LICENSE_CALLBACK_CODE) {
+            infoBean.setLicensePic(imgKey);
+            ivUpload.setImageURI("file://" + image.getOriginalPath());
+        } else if (resultCode == ADPIC_CALLBACK_CODE) {
+            infoBean.setLogoPic(imgKey);
+            ivUpload2.setImageURI("file://" + image.getOriginalPath());
+        }
+        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+        });
+
+    }
+
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-                    verfiyView.show();
+                    showToast("资料保存成功");
+                    finishSelf();
+//                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
+//                    verfiyView.show();
                 }));
     }
 
@@ -320,11 +372,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         }
     }
 
-    private void commitVerfiy(CommitVerfiyView verfiyView) {
+    private void commitVerfiy() {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + byNetBean.getOrgId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("已提交认证");
-                    verfiyView.dismiss();
                     finishSelf();
                 }));
     }

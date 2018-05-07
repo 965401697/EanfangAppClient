@@ -28,6 +28,7 @@ import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ExecuteUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
@@ -39,9 +40,11 @@ import com.picker.common.util.LogUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.fragment.ContactListFragment;
 import net.eanfang.client.ui.fragment.ContactsFragment;
@@ -245,21 +248,23 @@ public class MainActivity extends BaseClientActivity {
     private void registerXinGe() {
         //开启信鸽日志输出
 //        XGPushConfig.enableDebug(this, false);
-        //信鸽注册代码
-        XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                Log.d("TPush", "注册成功，设备token为：" + data);
+        if (!StringUtils.isEmpty(user.getAccount().getMobile()) && user.getAccount() != null) {
+            //信鸽注册代码
+            XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object data, int flag) {
+                    Log.d("TPush", "注册成功，设备token为：" + data);
 //                    Var.get("MainActivity.initXinGe").setVar(1);
-            }
+                }
 
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                @Override
+                public void onFail(Object data, int errCode, String msg) {
+                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
 //                    Var.get("MainActivity.initXinGe").setVar(0);
-                registerXinGe();
-            }
-        });
+                    registerXinGe();
+                }
+            });
+        }
     }
 
     public void setHeaders() {
@@ -290,6 +295,13 @@ public class MainActivity extends BaseClientActivity {
 //            RongIM.getInstance().logout();
             MainActivity.this.finish();
         }
+    }
+
+    @Subscribe
+    public void onEventWork(WorkerEntity workerEntity) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("workEntriy",workerEntity);
+        JumpItent.jump(MainActivity.this, WorkerDetailActivity.class,bundle);
     }
 
 }

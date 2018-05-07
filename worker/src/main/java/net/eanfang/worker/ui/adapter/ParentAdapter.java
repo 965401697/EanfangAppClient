@@ -31,7 +31,12 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
+        // 设置
         ImageView imageView = helper.getView(R.id.iv_img);
+        // 认证图标
+        ImageView ivVerify = helper.getView(R.id.iv_verify);
+        // 公司头像
+        SimpleDraweeView ivCompanyHead = helper.getView(R.id.iv_company_logo);
         RelativeLayout rl_father = helper.getView(R.id.rel_company);
         SimpleDraweeView iv_company_logo = helper.getView(R.id.iv_company_logo);
         if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
@@ -47,6 +52,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         imageView.setImageResource(R.drawable.contend_ic_management_default);
         imageView.setTag(false);
         rl_father.setTag(false);
+        ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));
         helper.addOnClickListener(R.id.tv_auth_status);
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");
@@ -54,6 +60,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
             helper.setText(R.id.tv_auth_status, "认证中");
         } else if (item.getVerifyStatus() == 2) {
             helper.setText(R.id.tv_auth_status, "查看");
+            ivVerify.setImageResource(R.mipmap.ic_worker_contact_authentication);
         } else if (item.getVerifyStatus() == 3) {
             helper.setText(R.id.tv_auth_status, "重新认证");
         } else if (item.getVerifyStatus() == 4) {

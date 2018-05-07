@@ -230,7 +230,7 @@
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ConstansActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity" />
         <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
         <activity android:name=".ui.activity.worksapce.SignListActivity" />
@@ -265,6 +265,7 @@
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"></activity>
     </application>
 
 </manifest>
