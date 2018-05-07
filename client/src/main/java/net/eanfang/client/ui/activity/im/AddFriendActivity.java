@@ -1,7 +1,6 @@
-package net.eanfang.worker.ui.activity.im;
+package net.eanfang.client.ui.activity.im;
 
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,9 +20,10 @@ import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.FriendsAdapter;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.adapter.FriendsAdapter;
+import net.eanfang.client.ui.base.BaseClientActivity;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,10 +33,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
-public class AddFriendActivity extends BaseWorkerActivity {
+public class AddFriendActivity extends BaseClientActivity {
 
     @BindView(R.id.et_phone)
     EditText etPhone;

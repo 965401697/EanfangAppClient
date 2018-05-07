@@ -106,5 +106,7 @@ dependencies {
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
     //    implementation 'org.greenrobot:greendao:3.2.2' // add library
     implementation project(':zxing')
+    implementation project(':IMKit')
+    implementation project(':IMLib')
 }
 

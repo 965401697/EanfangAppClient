@@ -18,6 +18,9 @@ import com.eanfang.ui.base.BaseFragment;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.AddFriendActivity;
+import net.eanfang.client.ui.activity.im.MyFriendsListActivity;
+import net.eanfang.client.ui.activity.im.MyGroupsListActivity;
 import net.eanfang.client.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
@@ -135,6 +138,31 @@ public class ContactsFragment extends BaseFragment {
     protected void initView() {
         rl_create_team = (RelativeLayout) findViewById(R.id.rl_create_team);
         tv_noTeam = (TextView) findViewById(R.id.tv_noTeam);
+
+        findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //开启我的好友列表
+                startActivity(new Intent(getActivity(), MyFriendsListActivity.class));
+            }
+        });
+        findViewById(R.id.ll_my_group).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //开启我的群组列表
+                startActivity(new Intent(getActivity(), MyGroupsListActivity.class));
+            }
+        });
+
+        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //添加好友界面
+                startActivity(new Intent(getActivity(), AddFriendActivity.class));
+
+
+            }
+        });
     }
 
     @Override

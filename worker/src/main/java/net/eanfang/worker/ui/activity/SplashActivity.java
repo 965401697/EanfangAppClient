@@ -1,6 +1,9 @@
 package net.eanfang.worker.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
@@ -77,7 +80,13 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                 goLogin();
             } else {
                 EanfangHttp.setToken(user.getToken());
-                loginByToken();
+
+                if (isConnected()) {
+                    loginByToken();
+                } else {
+                    goMain();
+                }
+
             }
         }
     }
@@ -142,6 +151,18 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         SharePreferenceUtil.get().clear();
         startActivity(new Intent(this, LoginActivity.class));
         finishSelf();
+    }
+
+    /**
+     * 判断网络是否连接
+     *
+     * @return
+     */
+    public boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
 }
