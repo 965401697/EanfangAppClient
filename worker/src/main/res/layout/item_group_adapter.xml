@@ -38,12 +38,12 @@
                 android:ellipsize="end"
                 android:maxEms="10"
                 android:singleLine="true"
-                android:text="123444"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_12" />
 
             <ImageView
-                android:id="@+id/iv_v"
+                android:id="@+id/iv_verify"
                 android:layout_width="@dimen/dimen_26"
                 android:layout_height="@dimen/dimen_24"
                 android:layout_centerVertical="true"
@@ -57,12 +57,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/iv_v"
+                android:layout_toRightOf="@id/iv_verify"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="未认证"
-                android:textColor="@color/gray"
-                android:textSize="@dimen/textSize_10"
+                android:textColor="@color/color_contact_authentication"
+                android:textSize="@dimen/textSize_12"
                 android:visibility="visible" />
         </RelativeLayout>
 
@@ -74,7 +74,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:src="@drawable/contend_ic_management_default" />
+            android:src="@mipmap/ic_contact_setting" />
     </RelativeLayout>
 
     <LinearLayout
@@ -83,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,9 +92,9 @@
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/contend_ic_organizationalstructure_default" />
+                android:layout_width="@dimen/dimen_34"
+                android:layout_height="@dimen/dimen_34"
+                android:src="@mipmap/ic_contact_organizate" />
 
             <TextView
                 android:id="@+id/tv_org"
@@ -102,8 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="组织架构"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textSize_12" />
+                android:textColor="@color/roll_content"
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
 
@@ -143,9 +143,9 @@
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/contend_ic_outsourcingunit_default" />
+                android:layout_width="@dimen/dimen_34"
+                android:layout_height="@dimen/dimen_34"
+                android:src="@mipmap/ic_contact_company" />
 
             <TextView
                 android:id="@+id/tv_outside_company"
@@ -153,8 +153,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="外协单位"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textSize_12" />
+                android:textColor="@color/roll_content"
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
         <TextView
@@ -171,9 +171,9 @@
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/contend_ic_cooperativesupplier_default" />
+                android:layout_width="@dimen/dimen_34"
+                android:layout_height="@dimen/dimen_34"
+                android:src="@mipmap/ic_contact_partner" />
 
             <TextView
                 android:id="@+id/tv_parten_company"
@@ -181,8 +181,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="合作供应商"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textSize_12" />
+                android:textColor="@color/roll_content"
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
         <TextView
@@ -198,9 +198,9 @@
             android:padding="5dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/contend_ic_externalcontact_default" />
+                android:layout_width="@dimen/dimen_34"
+                android:layout_height="@dimen/dimen_34"
+                android:src="@mipmap/ic_contact_contact" />
 
             <TextView
                 android:id="@+id/tv_outer_worker"
@@ -208,8 +208,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="外部联系人"
-                android:textColor="@color/black"
-                android:textSize="@dimen/textSize_12" />
+                android:textColor="@color/roll_content"
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
     </LinearLayout>

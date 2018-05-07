@@ -3,21 +3,16 @@ package net.eanfang.client.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -25,7 +20,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
@@ -33,22 +27,21 @@ import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.CleanMessageUtil;
-import com.eanfang.util.ExecuteUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
-import com.jaeger.library.StatusBarUtil;
-import com.picker.common.util.LogUtils;
 import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
+import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
 import net.eanfang.client.ui.fragment.ContactListFragment;
@@ -273,21 +266,23 @@ public class MainActivity extends BaseClientActivity {
     private void registerXinGe() {
         //开启信鸽日志输出
 //        XGPushConfig.enableDebug(this, false);
-        //信鸽注册代码
-        XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                Log.d("TPush", "注册成功，设备token为：" + data);
+        if (!StringUtils.isEmpty(user.getAccount().getMobile()) && user.getAccount() != null) {
+            //信鸽注册代码
+            XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object data, int flag) {
+                    Log.d("TPush", "注册成功，设备token为：" + data);
 //                    Var.get("MainActivity.initXinGe").setVar(1);
-            }
+                }
 
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                @Override
+                public void onFail(Object data, int errCode, String msg) {
+                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
 //                    Var.get("MainActivity.initXinGe").setVar(0);
-                registerXinGe();
-            }
-        });
+                    registerXinGe();
+                }
+            });
+        }
     }
 
     public void setHeaders() {
@@ -473,6 +468,13 @@ public class MainActivity extends BaseClientActivity {
 //            RongIM.getInstance().logout();
             MainActivity.this.finish();
         }
+    }
+
+    @Subscribe
+    public void onEventWork(WorkerEntity workerEntity) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("workEntriy",workerEntity);
+        JumpItent.jump(MainActivity.this, WorkerDetailActivity.class,bundle);
     }
 
 }

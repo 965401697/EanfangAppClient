@@ -115,6 +115,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private RepairOrderEntity toRepairBean;
     private WorkerEntity detailsBean;
+    private WorkerEntity mQRWorkerEntity;
     private String companyUserId;
     private String workerId;
 
@@ -180,6 +181,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
         rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
+
+        mQRWorkerEntity = getIntent().getParcelableExtra("workEntriy");
 
         if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
             setRightImageResId(R.mipmap.heart);

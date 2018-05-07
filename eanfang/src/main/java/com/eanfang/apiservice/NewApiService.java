@@ -226,9 +226,12 @@ public interface NewApiService {
 
     /**
      * 扫描二维码 获取权限
-     * */
-    String QR_CODE = BuildConfig.API_HOST+"/yaf_sys/scan";
+     */
+    String QR_CODE = BuildConfig.API_HOST + "/yaf_sys/scan";
 
-    String QR_LOGIN = BuildConfig.API_HOST+"/yaf_sys/toAccredit";
+    String QR_LOGIN = BuildConfig.API_HOST + "/yaf_sys/toAccredit";
+
+    // 是否是技师 是 则返回个人信息
+    String QR_GETACCOUNT = BuildConfig.API_HOST + "/yaf_sys/code/getAccount";
 
 }

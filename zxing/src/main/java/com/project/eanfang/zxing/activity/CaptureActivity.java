@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -33,6 +34,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -43,6 +45,9 @@ import com.project.eanfang.zxing.manage.BeepManager;
 import com.project.eanfang.zxing.manage.InactivityTimer;
 import com.project.eanfang.zxing.manage.IntentSource;
 import com.project.eanfang.zxing.view.ViewfinderView;
+import com.yaf.base.entity.WorkerEntity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -222,14 +227,17 @@ public final class CaptureActivity extends BaseActivity implements
 
         boolean fromLiveScan = barcode != null;
         if (fromLiveScan) {
-            // Then not from history, so beep/vibrate and we have an image to draw on
             beepManager.playBeepSoundAndVibrate();
         }
         String resultString = rawResult.getText();
-        // FIXME
         if (resultString.equals("")) {
             Toast.makeText(CaptureActivity.this, "扫描失败!", Toast.LENGTH_SHORT)
                     .show();
+            // 扫码个人二维码
+        } else if (resultString.contains("http://eanfang.net/codeLogin.html")) {
+            //如果是true 则 解析扫到的二维码里的字符串 得到account的 ID
+            String accountId = resultString.substring(resultString.indexOf("=") + 1);
+            doGetAccount(accountId);
         } else {
             /**
              * 从哪里传输进来的
@@ -249,6 +257,25 @@ public final class CaptureActivity extends BaseActivity implements
         }
 
 
+    }
+
+    // 获取个人信息
+    private void doGetAccount(String accountId) {
+        EanfangHttp.post(NewApiService.QR_GETACCOUNT)
+                .params("accountId", accountId)
+                .execute(new EanfangCallback<WorkerEntity>(CaptureActivity.this, true, WorkerEntity.class, bean -> {
+                    doGetWorkDetail(bean);
+                }));
+    }
+
+    // 获取技师详情
+    private void doGetWorkDetail(WorkerEntity workerEntity) {
+        EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
+                .params("workerId", workerEntity.getId())
+                .params("userId", workerEntity.getVerifyEntity().getUserId())
+                .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, (bean) -> {
+                    EventBus.getDefault().post(workerEntity);
+                }));
     }
 
     /**
@@ -282,7 +309,6 @@ public final class CaptureActivity extends BaseActivity implements
                     }
                 });
     }
-
 
 
     private void initCamera(SurfaceHolder surfaceHolder) {

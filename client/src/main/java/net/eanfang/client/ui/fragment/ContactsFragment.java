@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -10,22 +11,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.AddFriendActivity;
 import net.eanfang.client.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.client.ui.activity.im.MyGroupsListActivity;
-import net.eanfang.client.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
+import net.eanfang.client.ui.activity.worksapce.contacts.CompanyManagerActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 import net.eanfang.client.ui.widget.CreateTeamView;
 
@@ -46,6 +50,11 @@ public class ContactsFragment extends BaseFragment {
     private RecyclerView rev_list;
     private RelativeLayout rl_create_team;
     private TextView tv_noTeam;
+
+    private View mLinearShow;
+    private boolean isFirstShow = true;
+    //    private boolean isOtherShow = true;
+    private int mOldPosition = 0;
 
     @Override
     protected int setLayoutResouceId() {
@@ -76,6 +85,7 @@ public class ContactsFragment extends BaseFragment {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initAdapter() {
         rev_list = (RecyclerView) findViewById(R.id.rev_list);
         //客户公司
@@ -98,10 +108,63 @@ public class ContactsFragment extends BaseFragment {
                 mDatas.removeAll(firstList);
                 mDatas.addAll(0, firstList);
             }
-            parentAdapter = new ParentAdapter(mDatas);
-            rev_list.setAdapter(parentAdapter);
-            parentAdapter.notifyDataSetChanged();
+            parentAdapter = new ParentAdapter();
+            parentAdapter.setNewData(mDatas);
+//            parentAdapter = new ParentAdapter(mDatas);
+//            rev_list.setAdapter(parentAdapter);
+            parentAdapter.bindToRecyclerView(rev_list);
 
+            parentAdapter.setSelectedPosition(0);
+//            mLinearShow = parentAdapter.mView;
+            rev_list.addOnItemTouchListener(new OnItemClickListener() {
+                @Override
+                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                    parentAdapter.setSelectedPosition(position);
+
+                    if (position == mOldPosition) {
+                        if (isFirstShow) {
+                            mLinearShow.setVisibility(View.GONE);
+                            isFirstShow = false;
+                        } else {
+                            mLinearShow.setVisibility(View.VISIBLE);
+                            isFirstShow = true;
+                        }
+
+                        mLinearShow = view.findViewById(R.id.ll_show);
+                        mOldPosition = position;
+
+                    } else {
+                        mOldPosition = position;
+                        mLinearShow.setVisibility(View.GONE);
+
+                        mLinearShow = view.findViewById(R.id.ll_show);
+                        mLinearShow.setVisibility(View.VISIBLE);
+                        isFirstShow = true;
+                    }
+
+//                    if (position != 0) {
+//                        parentAdapter.mView.setVisibility(View.GONE);
+//                        if (isOtherShow) {
+//                            mLinearShow = view.findViewById(R.id.ll_show);
+//                            mLinearShow.setVisibility(View.VISIBLE);
+//                            isOtherShow = false;
+//                        } else {
+//                            mLinearShow = view.findViewById(R.id.ll_show);
+//                            mLinearShow.setVisibility(View.GONE);
+//                            isOtherShow = true;
+//                        }
+//                    } else if (position == 0) {
+//                        if (isFirstShow) {
+//                            parentAdapter.mView.setVisibility(View.GONE);
+//                            isFirstShow = false;
+//                        } else {
+//                            parentAdapter.mView.setVisibility(View.VISIBLE);
+//                            isFirstShow = true;
+//                        }
+//                    }
+
+                }
+            });
             parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     //组织结构
@@ -122,10 +185,16 @@ public class ContactsFragment extends BaseFragment {
                         startActivity(new Intent(getActivity(), PartnerActivity.class));
                         break;
                     case R.id.tv_auth_status:
-                        startActivity(new Intent(getActivity(), AuthCompanyActivity.class)
-                                .putExtra("orgid", mDatas.get(position).getOrgId())
-                                .putExtra("orgName", mDatas.get(position).getOrgName())
-                        );
+//                        startActivity(new Intent(getActivity(), AuthCompanyActivity.class)
+//                                .putExtra("orgid", mDatas.get(position).getOrgId())
+//                                .putExtra("orgName", mDatas.get(position).getOrgName())
+//                        );
+                        break;
+                    case R.id.iv_setting:
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("orgid", mDatas.get(position).getOrgId());
+                        bundle.putString("orgName", mDatas.get(position).getOrgName());
+                        JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle);
                         break;
                     default:
                         break;
@@ -168,5 +237,6 @@ public class ContactsFragment extends BaseFragment {
     @Override
     protected void setListener() {
         rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), () -> getData()).show());
+
     }
 }

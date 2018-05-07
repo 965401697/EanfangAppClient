@@ -39,7 +39,6 @@
     <color name="color_client_notice_solid">#f0f0f0</color>
     <color name="color_client_data_item_title">#FB973B</color>
     <color name="color_bottom_pressed">#FB973B</color>
-    <color name="color_contact_authentication">#D3D3D3</color>
     <color name="color_contact_create_confim_back">#FE933D</color>
     <color name="color_personal_text">#E16531</color>
     <color name="color_service_title">#FF9037</color>
