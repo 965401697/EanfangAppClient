@@ -1,7 +1,8 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -29,10 +31,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
-import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.util.PrefUtils;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.adapter.WorkerDetailAdapter;
+import net.eanfang.worker.util.PrefUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,14 +46,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-
 /**
- * 技师详情
- * Created by Administrator on 2017/4/8.
- */
-
-public class WorkerDetailActivity extends BaseClientActivity {
-
+* @date on 2018/5/8  13:48
+* @author Guanluocang
+* @decision 技师详情
+*/
+public class WorkDetailActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_header)
@@ -105,8 +104,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
     MaterialRatingBar rbStar4;
     @BindView(R.id.rb_star5)
     MaterialRatingBar rbStar5;
-    @BindView(R.id.tv_select)
-    TextView tvSelect;
     private String id;
 
     private ArrayList<String> mDataList1;
@@ -117,7 +114,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private BaseQuickAdapter evaluateAdapter2;
     private BaseQuickAdapter evaluateAdapter3;
 
-    private RepairOrderEntity toRepairBean;
     private WorkerEntity detailsBean;
     // 扫码二维码进入技师详情页面 传入的entriy
     private WorkerEntity mQRWorkerEntity;
@@ -125,13 +121,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private String companyUserId;
     private String workerId;
 
-    private boolean isCollect;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_worker_detail);
+        setContentView(R.layout.activity_work_detail);
         ButterKnife.bind(this);
         getData();
         initView();
@@ -139,7 +132,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
         setTitle("技师详情");
         setLeftBack();
     }
-
     //获取技师信息
     private void getWorkerDetailData() {
         if (isComeIn) {
@@ -156,34 +148,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
     }
 
     private void setListener() {
-        if (toRepairBean == null) {
-            tvSelect.setVisibility(View.GONE);
-//            return;
-        }
-
-        tvSelect.setOnClickListener((v) -> {
-            toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
-            toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
-            toRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
-            if (EanfangApplication.getApplication().getCompanyId() == 0) {
-                toRepairBean.setStatus(0);
-            } else {
-                toRepairBean.setStatus(1);
-            }
-            toRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
-            Intent intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
-            intent.putExtra("bean", toRepairBean);
-            startActivity(intent);
-        });
         llArea.setOnClickListener((v) -> {
-
             if (evaluateAdapter1.getData().isEmpty() || evaluateAdapter1.getData().size() <= 0) {
                 showToast("稍等一下，我还没准备好。");
                 return;
             }
             if (rvList1.getVisibility() == View.VISIBLE) {
                 rvList1.setVisibility(View.GONE);
-
                 ivDown.setImageResource(R.mipmap.arrow_down);
             } else {
                 rvList1.setVisibility(View.VISIBLE);
@@ -197,85 +168,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
         rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
-        isCollected();
-
         // 客户端扫描二维码获取数据
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
         if (mQRWorkerEntity != null) {
             isComeIn = true;
-            tvSelect.setVisibility(View.GONE);
         }
-
-        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
-            setRightImageResId(R.mipmap.heart);
-        } else {
-            setRightImageResId(R.mipmap.hearted);
-        }
-        setRightImageOnClickListener((v) -> {
-            if (isCollect) {
-                cancelCollected();
-            } else {
-                collected();
-            }
-        });
         getWorkerDetailData();
     }
-
-    private void collected() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("assigneeId", companyUserId);
-        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
-        jsonObject.put("type", 0);
-        EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
-                .upJson(jsonObject.toJSONString())
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    setRightImageResId(R.mipmap.hearted);
-                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
-                    showToast("收藏成功");
-                }));
-    }
-
-    /**
-     * 是否收藏过
-     */
-    private void isCollected() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("assigneeId", companyUserId);
-        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
-        jsonObject.put("type", 0);
-
-        EanfangHttp.post(RepairApi.GET_COLLECT_EXISTS)
-                .upJson(jsonObject.toJSONString())
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-
-                    isCollect = bean.getBoolean("exists");
-                    runOnUiThread(() -> {
-                        if (isCollect) {
-                            setRightImageResId(R.mipmap.hearted);
-                        } else {
-                            setRightImageResId(R.mipmap.heart);
-                        }
-                    });
-                }));
-    }
-
-    /**
-     * 取消收藏
-     */
-    private void cancelCollected() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("assigneeId", companyUserId + "");
-        queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
-        queryEntry.getEquals().put("type", "0");
-        EanfangHttp.post(RepairApi.GET_COLLECT_CANCEL)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    setRightImageResId(R.mipmap.heart);
-                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, false);
-                    showToast("取消收藏");
-                }));
-    }
-
 
     private void setData(WorkerEntity bean) {
         if (bean == null) {
@@ -354,7 +253,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
     }
 
     private void getData() {
-        toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
         companyUserId = V.v(() -> getIntent().getStringExtra("companyUserId"));
         workerId = V.v(() -> getIntent().getStringExtra("workerId"));
     }

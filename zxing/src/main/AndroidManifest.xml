@@ -3,8 +3,9 @@
     package="com.project.eanfang.zxing">
 
     <application>
-        <activity android:name=".activity.CaptureActivity" />
-        <activity android:name=".activity.LoginConfirmActivity"></activity>
+        <activity android:name=".android.CaptureActivity"
+            android:screenOrientation="sensorPortrait"/>
+        <activity android:name=".android.LoginConfirmActivity"></activity>
     </application>
 
 </manifest>

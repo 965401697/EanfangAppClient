@@ -186,7 +186,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="修复(26)"
-                            android:textColor="@color/color_data_repair"
+                            android:textColor="@color/color_data_statics_repairs"
                             android:textSize="@dimen/textSize_15" />
 
                         <TextView
@@ -223,7 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="报废(37)"
-                            android:textColor="@color/color_data_repair"
+                            android:textColor="@color/color_data_statics_repair_two"
                             android:textSize="@dimen/textSize_15" />
 
                     </LinearLayout>
@@ -253,7 +253,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="放弃(82)"
-                            android:textColor="@color/color_data_repair"
+                            android:textColor="@color/color_client_menu"
                             android:textSize="@dimen/textSize_15" />
 
                     </LinearLayout>
@@ -283,7 +283,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="关闭(49)"
-                            android:textColor="@color/color_data_repair"
+                            android:textColor="@color/color_client_menu"
                             android:textSize="@dimen/textSize_15" />
 
                     </LinearLayout>

@@ -18,7 +18,7 @@ import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
-import com.project.eanfang.zxing.activity.CaptureActivity;
+import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;

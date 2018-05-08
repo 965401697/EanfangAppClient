@@ -16,14 +16,14 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.project.eanfang.zxing.R;
-import com.project.eanfang.zxing.activity.PreferencesActivity;
+import com.project.eanfang.zxing.android.PreferencesActivity;
 
 import java.io.Closeable;
 import java.io.IOException;
 
 
 /**
- * Manages beeps and vibrations for {@link com.project.eanfang.zxing.activity.CaptureActivity}. 管理声音和震动
+ * Manages beeps and vibrations for {@link com.project.eanfang.zxing.android.CaptureActivity}. 管理声音和震动
  */
 public final class BeepManager implements MediaPlayer.OnCompletionListener,
         MediaPlayer.OnErrorListener, Closeable {

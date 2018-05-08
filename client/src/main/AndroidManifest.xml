@@ -342,7 +342,10 @@
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
         <!-- 融云的系统消息 -->
         <activity android:name=".ui.activity.im.SystemMessageActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"></activity>
+        <!-- 企业管理 -->
+        <activity
+            android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

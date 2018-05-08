@@ -670,9 +670,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:layout_marginBottom="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/dimen_40"
                 android:paddingLeft="10dp">
 
                 <TextView
@@ -704,7 +704,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="#fff"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_select"
@@ -715,7 +716,8 @@
                     android:padding="10dp"
                     android:text="选择该技师"
                     android:textColor="#fff"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
         </LinearLayout>

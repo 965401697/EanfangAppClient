@@ -14,7 +14,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 
-import com.project.eanfang.zxing.activity.PreferencesActivity;
+import com.project.eanfang.zxing.android.PreferencesActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
