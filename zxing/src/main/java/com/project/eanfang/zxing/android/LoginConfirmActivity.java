@@ -1,7 +1,8 @@
-package com.project.eanfang.zxing.activity;
+package com.project.eanfang.zxing.android;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -12,11 +13,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.project.eanfang.zxing.BuildConfig;
 import com.project.eanfang.zxing.R;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author Guanluocang
@@ -118,5 +115,18 @@ public class LoginConfirmActivity extends BaseActivity {
                     EanfangApplication.get().closeActivity(CaptureActivity.class.getName());
                     finishSelf();
                 }));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            EanfangHttp.post(NewApiService.QR_LOGIN_CANCEL)
+                    .params("uuid", mUuid)
+                    .execute(new EanfangCallback<JSONObject>(LoginConfirmActivity.this, true, JSONObject.class, (bean -> {
+                        finishSelf();
+                    })));
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

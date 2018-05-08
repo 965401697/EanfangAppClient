@@ -267,7 +267,6 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
 
-
         <!-- 融云FileProvider -->
         <provider
             android:name=".ui.provider.RongYunFileProvider"
@@ -342,8 +341,10 @@
         <!-- IM个人设置页面 -->
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
 
-
-        <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"></activity>
+        <!-- 企业管理 -->
+        <activity
+            android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

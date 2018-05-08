@@ -37,6 +37,7 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
@@ -51,6 +52,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
+import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -481,6 +483,13 @@ public class MainActivity extends BaseActivity {
             RongIM.getInstance().logout();
             MainActivity.this.finish();
         }
+    }
+
+    @Subscribe
+    public void onEventWork(WorkerEntity workerEntity) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("workEntriy", workerEntity);
+        JumpItent.jump(MainActivity.this, WorkDetailActivity.class, bundle);
     }
 }
 

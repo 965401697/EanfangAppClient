@@ -16,7 +16,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 
-import com.project.eanfang.zxing.activity.PreferencesActivity;
+import com.project.eanfang.zxing.android.PreferencesActivity;
 
 import java.lang.reflect.Method;
 

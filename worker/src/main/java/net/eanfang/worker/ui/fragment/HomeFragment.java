@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,15 +20,12 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CheckSignPermission;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
-import com.project.eanfang.zxing.activity.CaptureActivity;
+import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.DataStatisticsActivity;
-import net.eanfang.worker.ui.activity.worksapce.QuotationActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
-import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
-import net.eanfang.worker.ui.activity.worksapce.TaskPublishActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 import net.eanfang.worker.ui.widget.InstallCtrlView;

@@ -38,9 +38,9 @@ import java.util.List;
  */
 public final class ViewfinderView extends View {
 
-    private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192,
-            128, 64};
-    private static final long ANIMATION_DELAY = 30L;
+    private static final int[] SCANNER_ALPHA = { 0, 64, 128, 192, 255, 192,
+            128, 64 };
+    private static final long ANIMATION_DELAY = 80L;
     private static final int CURRENT_POINT_OPACITY = 0xA0;
     private static final int MAX_RESULT_POINTS = 20;
     private static final int POINT_SIZE = 6;
@@ -79,7 +79,7 @@ public final class ViewfinderView extends View {
         possibleResultPoints = new ArrayList<ResultPoint>(5);
         lastPossibleResultPoints = null;
         scanLight = BitmapFactory.decodeResource(resources,
-                R.drawable.scan_light);
+                R.drawable.scan_light);//扫描线
     }
 
     public void setCameraManager(CameraManager cameraManager) {
@@ -106,10 +106,10 @@ public final class ViewfinderView extends View {
         // 绘制取景框外的暗灰色的表面，分四个矩形绘制
         paint.setColor(resultBitmap != null ? resultColor : maskColor);
         canvas.drawRect(0, 0, width, frame.top, paint);// Rect_1
-        canvas.drawRect(0, frame.top, frame.left, frame.bottom, paint); // Rect_2
-        canvas.drawRect(frame.right, frame.top, width, frame.bottom,
+        canvas.drawRect(0, frame.top, frame.left, frame.bottom + 1, paint); // Rect_2
+        canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1,
                 paint); // Rect_3
-        canvas.drawRect(0, frame.bottom, width, height, paint); // Rect_4
+        canvas.drawRect(0, frame.bottom + 1, width, height, paint); // Rect_4
 
         if (resultBitmap != null) {
             // Draw the opaque result bitmap over the scanning rectangle
@@ -120,7 +120,7 @@ public final class ViewfinderView extends View {
             // Draw a red "laser scanner" line through the middle to show
             // decoding is active
             drawFrameBounds(canvas, frame);
-            drawStatusText(canvas, frame, width, height);
+            drawStatusText(canvas, frame, width);
 
             // 绘制扫描线
             // paint.setColor(laserColor);
@@ -192,12 +192,16 @@ public final class ViewfinderView extends View {
 
         canvas.drawRect(frame, paint);
 
-        paint.setColor(Color.BLUE);
+		paint.setColor(Color.BLUE);
+//        paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
 
         int corWidth = 5;
         int corLength = 45;
 
+//		Resources r = this.getContext().getResources();
+//		Bitmap bmp=BitmapFactory.decodeResource(r, R.mipmap.saoyiao_bg);
+//		canvas.setBitmap(bmp);
         // 左上角
         canvas.drawRect(frame.left - corWidth, frame.top, frame.left, frame.top
                 + corLength, paint);
@@ -227,30 +231,23 @@ public final class ViewfinderView extends View {
      * @param frame
      * @param width
      */
-    private void drawStatusText(Canvas canvas, Rect frame, int width, int height) {
+    private void drawStatusText(Canvas canvas, Rect frame, int width) {
 
-//        String statusText1 = getResources().getString(R.string.viewfinderview_status_text1);
-        String statusText2 = getResources().getString(
-                R.string.txt_put_qr_code);
-
-        float ratioWidth = (float) width / 480;
-        float ratioHeight = (float) height / 800;
-        float RATIO = Math.min(ratioWidth, ratioHeight);
-//        Dlog.e("ratio-------" + RATIO);
-
-        int statusTextSize = Math.round(20 * RATIO);
-        int statusPaddingTop = 120;
+        String statusText1 = "";
+        String statusText2 = "";
+        int statusTextSize = 45;
+        int statusPaddingTop = 180;
 
         paint.setColor(statusColor);
         paint.setTextSize(statusTextSize);
 
-//        int textWidth1 = (int) paint.measureText(statusText1);
-//        canvas.drawText(statusText1, (width - textWidth1) / 2, frame.top
-//                - statusPaddingTop, paint);
+        int textWidth1 = (int) paint.measureText(statusText1);
+        canvas.drawText(statusText1, (width - textWidth1) / 2, frame.top
+                - statusPaddingTop, paint);
 
         int textWidth2 = (int) paint.measureText(statusText2);
-        canvas.drawText(statusText2, (width - textWidth2) / 2, frame.bottom
-                + statusPaddingTop, paint);
+        canvas.drawText(statusText2, (width - textWidth2) / 2, frame.top
+                - statusPaddingTop + 60, paint);
     }
 
     /**
@@ -288,7 +285,8 @@ public final class ViewfinderView extends View {
      * Draw a bitmap with the result points highlighted instead of the live
      * scanning display.
      *
-     * @param barcode An image of the decoded barcode.
+     * @param barcode
+     *            An image of the decoded barcode.
      */
     public void drawResultBitmap(Bitmap barcode) {
         resultBitmap = barcode;
@@ -308,3 +306,4 @@ public final class ViewfinderView extends View {
     }
 
 }
+

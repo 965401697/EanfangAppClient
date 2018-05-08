@@ -3,7 +3,7 @@
  * Copyright (c) 2017. All rights reserved.
  */
 
-package com.project.eanfang.zxing.activity;
+package com.project.eanfang.zxing.android;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -34,6 +34,7 @@ import com.project.eanfang.zxing.R;
 import com.project.eanfang.zxing.camera.CameraManager;
 import com.project.eanfang.zxing.manage.BeepManager;
 import com.project.eanfang.zxing.manage.InactivityTimer;
+import com.project.eanfang.zxing.manage.IntentSource;
 import com.project.eanfang.zxing.view.ViewfinderView;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -59,6 +60,7 @@ public final class CaptureActivity extends BaseActivity implements
     private CaptureActivityHandler handler;
     private ViewfinderView viewfinderView;
     private boolean hasSurface;
+    private IntentSource source;
     private Collection<BarcodeFormat> decodeFormats;
     private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
@@ -85,8 +87,6 @@ public final class CaptureActivity extends BaseActivity implements
         viewfinderView.drawViewfinder();
     }
 
-
-    private String from;//来自哪个操作的扫码
 
     /**
      * OnCreate中初始化一些辅助类，如InactivityTimer（休眠）、Beep（声音）以及AmbientLight（闪光灯）
@@ -143,17 +143,10 @@ public final class CaptureActivity extends BaseActivity implements
         }
         beepManager.updatePrefs();
         inactivityTimer.onResume();
+
+        source = IntentSource.NONE;
         decodeFormats = null;
         characterSet = null;
-    }
-
-    private void continuePreview() {
-        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
-        SurfaceHolder surfaceHolder = surfaceView.getHolder();
-        initCamera(surfaceHolder);
-        if (handler != null) {
-            handler.restartPreviewAndDecode();
-        }
     }
 
     @Override
@@ -213,6 +206,7 @@ public final class CaptureActivity extends BaseActivity implements
         inactivityTimer.onActivity();
 
         boolean fromLiveScan = barcode != null;
+        //这里处理解码完成后的结果，此处将参数回传到Activity处理
         if (fromLiveScan) {
             beepManager.playBeepSoundAndVibrate();
         }
