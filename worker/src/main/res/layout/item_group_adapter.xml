@@ -68,12 +68,13 @@
 
 
         <ImageView
-            android:id="@+id/iv_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:id="@+id/iv_setting"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="@dimen/dimen_60"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:padding="@dimen/dimen_10"
             android:src="@mipmap/ic_contact_setting" />
     </RelativeLayout>
 
@@ -83,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"

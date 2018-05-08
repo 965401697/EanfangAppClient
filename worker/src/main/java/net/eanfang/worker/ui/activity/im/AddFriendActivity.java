@@ -22,7 +22,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
-import com.project.eanfang.zxing.activity.CaptureActivity;
+import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;

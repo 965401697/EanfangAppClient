@@ -38,8 +38,8 @@ import java.util.List;
  */
 public final class ViewfinderView extends View {
 
-    private static final int[] SCANNER_ALPHA = { 0, 64, 128, 192, 255, 192,
-            128, 64 };
+    private static final int[] SCANNER_ALPHA = {0, 64, 128, 192, 255, 192,
+            128, 64};
     private static final long ANIMATION_DELAY = 80L;
     private static final int CURRENT_POINT_OPACITY = 0xA0;
     private static final int MAX_RESULT_POINTS = 20;
@@ -120,7 +120,7 @@ public final class ViewfinderView extends View {
             // Draw a red "laser scanner" line through the middle to show
             // decoding is active
             drawFrameBounds(canvas, frame);
-            drawStatusText(canvas, frame, width);
+            drawStatusText(canvas, frame, width,height);
 
             // 绘制扫描线
             // paint.setColor(laserColor);
@@ -192,7 +192,7 @@ public final class ViewfinderView extends View {
 
         canvas.drawRect(frame, paint);
 
-		paint.setColor(Color.BLUE);
+        paint.setColor(Color.BLUE);
 //        paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.FILL);
 
@@ -223,7 +223,6 @@ public final class ViewfinderView extends View {
         canvas.drawRect(frame.right - corLength, frame.bottom, frame.right
                 + corWidth, frame.bottom + corWidth, paint);
     }
-
     /**
      * 绘制提示文字
      *
@@ -231,23 +230,29 @@ public final class ViewfinderView extends View {
      * @param frame
      * @param width
      */
-    private void drawStatusText(Canvas canvas, Rect frame, int width) {
+    private void drawStatusText(Canvas canvas, Rect frame, int width, int height) {
 
-        String statusText1 = "";
-        String statusText2 = "";
-        int statusTextSize = 45;
-        int statusPaddingTop = 180;
+        String statusText2 = getResources().getString(
+                R.string.txt_put_qr_code);
+
+        float ratioWidth = (float) width / 480;
+        float ratioHeight = (float) height / 800;
+        float RATIO = Math.min(ratioWidth, ratioHeight);
+//        Dlog.e("ratio-------" + RATIO);
+
+        int statusTextSize = Math.round(20 * RATIO);
+        int statusPaddingTop = 120;
 
         paint.setColor(statusColor);
         paint.setTextSize(statusTextSize);
 
-        int textWidth1 = (int) paint.measureText(statusText1);
-        canvas.drawText(statusText1, (width - textWidth1) / 2, frame.top
-                - statusPaddingTop, paint);
+//        int textWidth1 = (int) paint.measureText(statusText1);
+//        canvas.drawText(statusText1, (width - textWidth1) / 2, frame.top
+//                - statusPaddingTop, paint);
 
         int textWidth2 = (int) paint.measureText(statusText2);
-        canvas.drawText(statusText2, (width - textWidth2) / 2, frame.top
-                - statusPaddingTop + 60, paint);
+        canvas.drawText(statusText2, (width - textWidth2) / 2, frame.bottom
+                + statusPaddingTop, paint);
     }
 
     /**
@@ -285,8 +290,7 @@ public final class ViewfinderView extends View {
      * Draw a bitmap with the result points highlighted instead of the live
      * scanning display.
      *
-     * @param barcode
-     *            An image of the decoded barcode.
+     * @param barcode An image of the decoded barcode.
      */
     public void drawResultBitmap(Bitmap barcode) {
         resultBitmap = barcode;

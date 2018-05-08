@@ -110,6 +110,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setPage(page);
         queryEntry.setSize(10);
+        queryEntry.getEquals().put("noticeClasses", "1");
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

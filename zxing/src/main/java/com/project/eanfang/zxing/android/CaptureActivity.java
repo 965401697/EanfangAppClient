@@ -220,7 +220,7 @@ public final class CaptureActivity extends BaseActivity implements
             Toast.makeText(CaptureActivity.this, "扫描失败!", Toast.LENGTH_SHORT)
                     .show();
             // 扫码个人二维码
-        } else if (resultString.contains("http://eanfang.net/codeLogin.html")) {
+        } else if (resultString.contains("?_account=")) {
             //如果是true 则 解析扫到的二维码里的字符串 得到account的 ID
             String accountId = resultString.substring(resultString.indexOf("=") + 1);
             if (!TextUtils.isEmpty(mAddFriend)) {
@@ -229,12 +229,13 @@ public final class CaptureActivity extends BaseActivity implements
             } else {
                 doGetAccount(accountId);
             }
-        } else {
+        } else if (resultString.contains("/login/")) {
             /**
              * 从哪里传输进来的
              * */
             switch (mFromWhere) {
                 case "client_code":
+                    // 登录web端
                     String[] strs = resultString.split("/login/");
                     String dataStr = strs[1];
                     String[] data = dataStr.split("/");
@@ -245,6 +246,8 @@ public final class CaptureActivity extends BaseActivity implements
                 case "worker_code":
                     break;
             }
+        } else {
+            showToast("二维码无效");
         }
     }
 

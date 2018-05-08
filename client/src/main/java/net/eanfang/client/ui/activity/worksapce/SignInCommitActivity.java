@@ -36,6 +36,9 @@ import butterknife.ButterKnife;
  */
 
 public class SignInCommitActivity extends BaseActivity {
+
+    private static final int SIGN_SUCCESS = 200;
+
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.tv_address)
@@ -85,9 +88,12 @@ public class SignInCommitActivity extends BaseActivity {
         EanfangHttp.post(UserApi.GET_SIGN_ADD)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    startAnimActivity(new Intent(SignInCommitActivity.this, SignActivity.class)
-                            .putExtra("title", title)
-                            .putExtra("status", status));
+                    Intent intent = new Intent();
+                    intent.putExtra("title", title);
+                    intent.putExtra("status", status);
+                    setResult(SIGN_SUCCESS, intent);
+                    showToast("签到成功");
+                    finishSelf();
                 }));
     }
 

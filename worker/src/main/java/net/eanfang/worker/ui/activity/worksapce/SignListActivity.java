@@ -57,9 +57,7 @@ public class SignListActivity extends BaseActivity {
         status = getIntent().getIntExtra("status", 0);
         setTitle("足迹");
         setLeftBack();
-        llSignLayout.setOnClickListener(v -> startActivity(new Intent(SignListActivity.this, SignActivity.class)
-                .putExtra("title", title)
-                .putExtra("status", status)));
+        llSignLayout.setOnClickListener(v ->finishSelf());
         initData();
     }
 

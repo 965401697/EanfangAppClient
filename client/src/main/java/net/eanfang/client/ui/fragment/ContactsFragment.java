@@ -30,6 +30,7 @@ import net.eanfang.client.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
+import net.eanfang.client.ui.activity.worksapce.contacts.AuthCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.contacts.CompanyManagerActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 import net.eanfang.client.ui.widget.CreateTeamView;
@@ -52,7 +53,7 @@ public class ContactsFragment extends BaseFragment {
     private RelativeLayout rl_create_team;
     private TextView tv_noTeam;
 
-
+    // 通讯录点击展开
     private boolean isFirstShow = true;
     private int mOldPosition = 0;
     private OrgEntity mOrgEntity;
