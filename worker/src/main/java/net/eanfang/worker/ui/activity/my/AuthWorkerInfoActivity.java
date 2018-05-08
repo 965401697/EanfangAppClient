@@ -202,7 +202,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitle("下一步");
         //设置表情过滤，最多输入字数为100
         etIntro.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(100)});
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+        //snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("bean");
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         fillData();
@@ -273,7 +273,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             if (!StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
                 ivIdCardFront.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()));
             }
-            if (!StringUtils.isEmpty(workerInfoBean.getContactPhone())) {
+            if (!StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
                 ivIdCardSide.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()));
             }
             if (!StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
@@ -290,8 +290,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             if (!StringUtils.isEmpty(workerInfoBean.getHonorPics())) {
                 String[] prePic = workerInfoBean.getHonorPics().split(",");
                 honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-                snplMomentAddPhotos.setEditable(false);
                 snplMomentAddPhotos.setData(honorList);
+
             }
 
 
@@ -368,26 +368,26 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 }));
     }
 
-    /**
-     * 初始化存储图片用的List集合
-     */
-    private void initImgUrlList() {
-
-        //修改小bug 图片读取问题
-        if (StringUtils.isValid(setWorkerInfoBean.getHonorPics())) {
-            String[] prePic = setWorkerInfoBean.getHonorPics().split(",");
-            honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-        }
-
-    }
-
-    private void initNinePhoto() {
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
-        snplMomentAddPhotos.setData(honorList);
-        snplMomentAddPhotos.setEditable(false);
-
-
-    }
+//    /**
+//     * 初始化存储图片用的List集合
+//     */
+//    private void initImgUrlList() {
+//
+//        //修改小bug 图片读取问题
+//        if (StringUtils.isValid(setWorkerInfoBean.getHonorPics())) {
+//            String[] prePic = setWorkerInfoBean.getHonorPics().split(",");
+//            honorList.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+//        }
+//
+//    }
+//
+//    private void initNinePhoto() {
+//        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+//        snplMomentAddPhotos.setData(honorList);
+//        snplMomentAddPhotos.setEditable(false);
+//
+//
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -423,6 +423,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         ivIdCardHand.setEnabled(false);
         ivAccidentPics.setEnabled(false);
         snplMomentAddPhotos.setEnabled(false);
+        snplMomentAddPhotos.setEditable(false);
         ivCrimePic.setEnabled(false);
     }
 }
