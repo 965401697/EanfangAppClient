@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class ContactsFragment extends BaseFragment {
     private boolean isFirstShow = true;
     //    private boolean isOtherShow = true;
     private int mOldPosition = 0;
+    private OrgEntity mOrgEntity;
 
     @Override
     protected int setLayoutResouceId() {
@@ -109,17 +111,28 @@ public class ContactsFragment extends BaseFragment {
                 mDatas.addAll(0, firstList);
             }
             parentAdapter = new ParentAdapter();
+            parentAdapter.bindToRecyclerView(rev_list);
             parentAdapter.setNewData(mDatas);
 //            parentAdapter = new ParentAdapter(mDatas);
 //            rev_list.setAdapter(parentAdapter);
-            parentAdapter.bindToRecyclerView(rev_list);
+
 
             parentAdapter.setSelectedPosition(0);
-//            mLinearShow = parentAdapter.mView;
+            parentAdapter.setOnFristItemView(new ParentAdapter.OnFristItemView() {
+                @Override
+                public void setOnFristItemView(View view) {
+
+                    ContactsFragment.this.mLinearShow = view;
+                    Log.e("zzw", "ContactsFragment.this.mLinearShow = view;");
+
+                }
+            });
+
             rev_list.addOnItemTouchListener(new OnItemClickListener() {
                 @Override
                 public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                    parentAdapter.setSelectedPosition(position);
+
+                    OrgEntity bean = (OrgEntity) adapter.getData().get(position);
 
                     if (position == mOldPosition) {
                         if (isFirstShow) {
@@ -131,17 +144,25 @@ public class ContactsFragment extends BaseFragment {
                         }
 
                         mLinearShow = view.findViewById(R.id.ll_show);
+//                        mLinearShow.setTag(isFirstShow);
+                        bean.setFlag(isFirstShow);
                         mOldPosition = position;
 
                     } else {
                         mOldPosition = position;
                         mLinearShow.setVisibility(View.GONE);
+//                        mLinearShow.setTag(false);
+                        bean.setFlag(false);
 
                         mLinearShow = view.findViewById(R.id.ll_show);
+
                         mLinearShow.setVisibility(View.VISIBLE);
+//                        mLinearShow.setTag(true);
+                        bean.setFlag(true);
+
                         isFirstShow = true;
                     }
-
+//                    parentAdapter.notifyDataSetChanged();
 //                    if (position != 0) {
 //                        parentAdapter.mView.setVisibility(View.GONE);
 //                        if (isOtherShow) {
