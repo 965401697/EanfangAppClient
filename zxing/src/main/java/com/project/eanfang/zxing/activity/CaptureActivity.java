@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.CustomeApplication;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -68,6 +70,8 @@ public final class CaptureActivity extends BaseActivity implements
     private BeepManager beepManager;
     // 从哪来传输来的  参数
     private String mFromWhere = "";
+    //添加朋友
+    private String mAddFriend = "";
 
     public ViewfinderView getViewfinderView() {
         return viewfinderView;
@@ -99,6 +103,7 @@ public final class CaptureActivity extends BaseActivity implements
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_capture);
         mFromWhere = getIntent().getStringExtra("from");
+        mAddFriend = getIntent().getStringExtra(EanfangConst.QR_ADD_FRIEND);
         initView();
         initListener();
     }
@@ -224,7 +229,12 @@ public final class CaptureActivity extends BaseActivity implements
         } else if (resultString.contains("http://eanfang.net/codeLogin.html")) {
             //如果是true 则 解析扫到的二维码里的字符串 得到account的 ID
             String accountId = resultString.substring(resultString.indexOf("=") + 1);
-            doGetAccount(accountId);
+            if (!TextUtils.isEmpty(mAddFriend)) {
+                EventBus.getDefault().post(accountId);
+                finishSelf();
+            } else {
+                doGetAccount(accountId);
+            }
         } else {
             /**
              * 从哪里传输进来的
@@ -245,7 +255,6 @@ public final class CaptureActivity extends BaseActivity implements
     }
 
     /**
-     *
      * 获取个人信息
      */
     private void doGetAccount(String accountId) {
@@ -257,8 +266,7 @@ public final class CaptureActivity extends BaseActivity implements
     }
 
     /**
-     *
-     *  获取技师详情
+     * 获取技师详情
      */
     private void doGetWorkDetail(WorkerEntity workerEntity) {
         EventBus.getDefault().post(workerEntity);

@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.im;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,17 +15,24 @@ import android.widget.EditText;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
+import com.project.eanfang.zxing.activity.CaptureActivity;
+import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.MainActivity;
+import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,17 +49,12 @@ public class AddFriendActivity extends BaseClientActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private FriendsAdapter mFriendsAdapter;
-    private String mId;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
         ButterKnife.bind(this);
-
-        //用户id
-        mId = getIntent().getStringExtra("id");
 
         initViews();
         setTitle("添加好友");
@@ -61,6 +64,9 @@ public class AddFriendActivity extends BaseClientActivity {
             @Override
             public void onClick(View v) {
                 //跳转扫码页面
+                Intent intent = new Intent(AddFriendActivity.this, CaptureActivity.class);
+                intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
+                startActivity(intent);
             }
         });
     }
@@ -70,11 +76,6 @@ public class AddFriendActivity extends BaseClientActivity {
         // 0:我的好友列表没有checkbox  1:创建群组需要checkbox
         mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, 0);
         mFriendsAdapter.bindToRecyclerView(recyclerView);
-
-        if (!TextUtils.isEmpty(mId)) {
-            etPhone.setVisibility(View.GONE);
-            initIdData();
-        }
 
         etPhone.addTextChangedListener(new TextWatcher() {
             @Override
@@ -122,14 +123,18 @@ public class AddFriendActivity extends BaseClientActivity {
         });
     }
 
-    private void initIdData() {
-        EanfangHttp.get(UserApi.POST_USER_INFO + mId)
+    private void initIdData(String id) {
+        EanfangHttp.get(UserApi.POST_USER_INFO + id)
                 .execute(new EanfangCallback<User>(this, false, User.class, (bean) -> {
                     List<FriendListBean> friendListBeanList = new ArrayList<>();
                     FriendListBean friendListBean = new FriendListBean();
+
                     friendListBean.setAvatar(bean.getAvatar());
                     friendListBean.setNickName(bean.getNickName());
                     friendListBean.setAccId(bean.getAccId());
+                    friendListBean.setMobile(bean.getMobile());
+                    friendListBean.setEmail(bean.getEmail());
+
                     friendListBeanList.add(friendListBean);
 
                     mFriendsAdapter.setNewData(friendListBeanList);
@@ -153,6 +158,12 @@ public class AddFriendActivity extends BaseClientActivity {
                         ToastUtil.get().showToast(AddFriendActivity.this, "没有搜索到好友");
                     }
                 }));
+    }
+
+    @Subscribe
+    public void onEventId(String id) {
+        etPhone.setVisibility(View.GONE);
+        initIdData(id);
     }
 
     private void DialogShow(JSONObject jsonObject, FriendListBean friendListBean, String name) {

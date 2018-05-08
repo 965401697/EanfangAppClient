@@ -263,7 +263,7 @@
         <activity android:name=".ui.activity.im.MyGroupsListActivity" />
         <!-- 群组详情界面 -->
         <activity android:name=".ui.activity.im.GroupDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.SystemMessageActivity" />
+        <activity android:name=".ui.activity.im.SystemMessageActivity" />
 
         <!-- 聚合会话列表 -->
         <activity

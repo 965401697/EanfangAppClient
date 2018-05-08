@@ -27,7 +27,7 @@ import com.facebook.common.internal.Sets;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
-import net.eanfang.worker.ui.activity.worksapce.SystemMessageActivity;
+import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;

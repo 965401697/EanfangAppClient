@@ -68,7 +68,10 @@ public class EanfangConst {
      * 服务器的群组id
      */
     public static final String GROUP_ID = "group_id";
-
+    /**
+     * 二维码扫描添加好友标识
+     */
+    public static final String QR_ADD_FRIEND = "scan_frind_code";
     /**
      * 二维码扫描标识
      */
