@@ -33,7 +33,6 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
     }
 
-
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
         // 设置
@@ -43,9 +42,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         // 公司头像
         SimpleDraweeView ivCompanyHead = helper.getView(R.id.iv_company_logo);
 
-        RelativeLayout rl_father = helper.getView(R.id.rel_company);
         LinearLayout ll_show = helper.getView(R.id.ll_show);
-        TextView rel = helper.getView(R.id.tv_company_name);
         helper.addOnClickListener(R.id.tv_org);
         helper.addOnClickListener(R.id.tv_child_company);
         helper.addOnClickListener(R.id.tv_outside_company);
@@ -53,11 +50,10 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         helper.addOnClickListener(R.id.iv_setting);
         helper.setText(R.id.tv_company_name, item.getOrgName());
         imageView.setImageResource(R.mipmap.ic_contact_setting);
-        imageView.setTag(false);
-        rl_father.setTag(false);
         helper.addOnClickListener(R.id.tv_auth_status);
 
-        ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));
+        if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
+        ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));}
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");
             ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);

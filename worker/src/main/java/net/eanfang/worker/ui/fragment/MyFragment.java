@@ -162,8 +162,6 @@ public class MyFragment extends BaseFragment {
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
         }
-        // 二维码头像
-        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +"qr/"+ user.getAccount().getQrCode()));
     }
 
     // 判断是否认证

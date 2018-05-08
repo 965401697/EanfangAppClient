@@ -31,6 +31,7 @@ import com.eanfang.model.SignCountBean;
 import com.eanfang.model.SigninBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -47,6 +48,10 @@ import butterknife.ButterKnife;
  */
 
 public class SignActivity extends BaseActivity implements LocationSource, AMapLocationListener {
+
+
+    private static final int SIGN_REQUEST = 100;
+    private static final int SIGN_RESULT = 200;
 
     public static final String TAG = SignActivity.class.getSimpleName();
     private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
@@ -139,10 +144,11 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         signinBean.setVisitorName(etVisitName.getText().toString().trim());
         signinBean.setZoneCode(Config.get().getAreaCodeByName(cityAddress, contry));
         signinBean.setStatus(status);
-        startAnimActivity(new Intent(SignActivity.this, SignInCommitActivity.class)
-                .putExtra("bean", signinBean)
-                .putExtra("title", title)
-                .putExtra("status", status));
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
+        bundle.putInt("status", status);
+        bundle.putSerializable("bean", signinBean);
+        JumpItent.jump(SignActivity.this, SignInCommitActivity.class, bundle, SIGN_REQUEST);
     }
 
     private void initMap() {
@@ -333,5 +339,21 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         mlocationClient = null;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        if (requestCode == SIGN_REQUEST && resultCode == SIGN_RESULT) {
+            title = data.getStringExtra("title");
+            status = data.getIntExtra("status", 0);
+            tvSignHadTime.setText("你已经" + title);
+            tvSignOrSignout.setText(title);
+            tvSignName.setText(title);
+            etVisitName.setText("");
+            signCount();
+        }
+    }
 
 }

@@ -76,8 +76,6 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
-        // 二维码头像
-        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode()));
     }
 
     @Override

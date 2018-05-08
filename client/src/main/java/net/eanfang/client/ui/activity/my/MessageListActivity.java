@@ -54,7 +54,6 @@ public class MessageListActivity extends BaseClientActivity implements
 //    TextView tvNoData;
     @BindView(R.id.msg_refresh)
     SwipyRefreshLayout msgRefresh;
-    private Activity activity = this;
     private int page = 1;
     @BindView(R.id.tv_right)
     TextView tvRight;
@@ -80,7 +79,8 @@ public class MessageListActivity extends BaseClientActivity implements
         rvList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         msgRefresh.setOnRefreshListener(this);
-
+        // rv 和 scrollview 滑动冲突
+        rvList.setNestedScrollingEnabled(false);
 
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -95,24 +95,17 @@ public class MessageListActivity extends BaseClientActivity implements
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
-//                tvNoData.setVisibility(View.VISIBLE);
-//                rvList.setVisibility(View.GONE);
                 showToast("暂无数据");
             } else {
-//                tvNoData.setVisibility(View.GONE);
-//                rvList.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 rvList.setAdapter(messageListAdapter);
                 messageListAdapter.notifyDataSetChanged();
-               // showToast("已是最新数据");
             }
         } else {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
             } else {
-//                tvNoData.setVisibility(View.GONE);
-//                rvList.setVisibility(View.VISIBLE);
                 messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 messageListAdapter.notifyDataSetChanged();
                 rvList.setAdapter(messageListAdapter);
@@ -137,6 +130,7 @@ public class MessageListActivity extends BaseClientActivity implements
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setPage(page);
         queryEntry.setSize(10);
+        queryEntry.getEquals().put("noticeClasses","1");
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

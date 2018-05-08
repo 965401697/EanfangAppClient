@@ -10,11 +10,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
@@ -26,6 +29,7 @@ import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.worker.ui.activity.worksapce.SubcompanyActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CompanyManagerActivity;
 import net.eanfang.worker.ui.adapter.ParentAdapter;
 import net.eanfang.worker.ui.widget.CreateTeamView;
 
@@ -47,6 +51,10 @@ public class ContactsFragment extends BaseFragment {
     private RecyclerView rev_list;
     private RelativeLayout rl_create_team;
     private TextView tv_noTeam;
+    // 通讯录点击展开
+    private boolean isFirstShow = true;
+    private int mOldPosition = 0;
+    private OrgEntity mOrgEntity;
 
     @Override
     protected int setLayoutResouceId() {
@@ -98,10 +106,41 @@ public class ContactsFragment extends BaseFragment {
                 mDatas.removeAll(firstList);
                 mDatas.addAll(0, firstList);
             }
-            parentAdapter = new ParentAdapter(mDatas);
-            rev_list.setAdapter(parentAdapter);
-            parentAdapter.notifyDataSetChanged();
+            parentAdapter = new ParentAdapter();
+            parentAdapter.bindToRecyclerView(rev_list);
+            parentAdapter.setNewData(mDatas);
 
+            //重置数据
+            isFirstShow = true;
+            mOldPosition = 0;
+            if (parentAdapter.getData().size() > 0) {
+                mOrgEntity = parentAdapter.getData().get(0);
+                mOrgEntity.setFlag(true);
+            }
+
+            rev_list.addOnItemTouchListener(new OnItemClickListener() {
+                @Override
+                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    OrgEntity bean = (OrgEntity) adapter.getData().get(position);
+
+                    if (position == mOldPosition) {
+                        if (isFirstShow) {
+                            isFirstShow = false;
+                        } else {
+                            isFirstShow = true;
+                        }
+                    } else {
+                        mOrgEntity.setFlag(false);
+                        isFirstShow = true;
+                    }
+
+                    bean.setFlag(isFirstShow);
+                    mOrgEntity = bean;
+                    parentAdapter.notifyItemChanged(mOldPosition);
+                    mOldPosition = position;
+                    parentAdapter.notifyItemChanged(position);
+                }
+            });
             parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     //组织结构
@@ -122,10 +161,16 @@ public class ContactsFragment extends BaseFragment {
                         startActivity(new Intent(getActivity(), PartnerActivity.class));
                         break;
                     case R.id.tv_auth_status:
-                        startActivity(new Intent(getActivity(), AuthCompanyActivity.class)
-                                .putExtra("orgid", mDatas.get(position).getOrgId())
-                                .putExtra("orgName", mDatas.get(position).getOrgName())
-                        );
+//                        startActivity(new Intent(getActivity(), AuthCompanyActivity.class)
+//                                .putExtra("orgid", mDatas.get(position).getOrgId())
+//                                .putExtra("orgName", mDatas.get(position).getOrgName())
+//                        );
+                        break;
+                    case R.id.iv_setting:
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("orgid", mDatas.get(position).getOrgId());
+                        bundle.putString("orgName", mDatas.get(position).getOrgName());
+                        JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle);
                         break;
                     default:
                         break;
