@@ -119,7 +119,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private RepairOrderEntity toRepairBean;
     private WorkerEntity detailsBean;
+    // 扫码二维码进入技师详情页面 传入的entriy
     private WorkerEntity mQRWorkerEntity;
+    private boolean isComeIn = false;
     private String companyUserId;
     private String workerId;
 
@@ -133,7 +135,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         getData();
         initView();
-        getWorkerDetailData();
         setListener();
         setTitle("技师详情");
         setLeftBack();
@@ -141,6 +142,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     //获取技师信息
     private void getWorkerDetailData() {
+        if (isComeIn) {
+            workerId = String.valueOf(mQRWorkerEntity.getId());
+            companyUserId = String.valueOf(mQRWorkerEntity.getVerifyEntity().getUserId());
+        }
         EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
                 .params("workerId", workerId)
                 .params("userId", companyUserId)
@@ -192,8 +197,19 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
         rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
-        mQRWorkerEntity = getIntent().getParcelableExtra("workEntriy");
         isCollected();
+
+        // 客户端扫描二维码获取数据
+        mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
+        if (mQRWorkerEntity != null) {
+            isComeIn = true;
+        }
+
+        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
+            setRightImageResId(R.mipmap.heart);
+        } else {
+            setRightImageResId(R.mipmap.hearted);
+        }
         setRightImageOnClickListener((v) -> {
             if (isCollect) {
                 cancelCollected();
@@ -201,7 +217,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 collected();
             }
         });
-
+        getWorkerDetailData();
     }
 
     private void collected() {
@@ -355,7 +371,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI( Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
+                ivPic2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
@@ -367,7 +383,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 ivPic3.setVisibility(View.GONE);
             }
             if (urls.length >= 4) {
-                ivPic4.setImageURI( Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
+                ivPic4.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
                 ivPic4.setVisibility(View.VISIBLE);
             } else {
                 ivPic4.setVisibility(View.GONE);

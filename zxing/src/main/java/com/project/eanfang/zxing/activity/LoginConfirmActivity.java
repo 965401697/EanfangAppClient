@@ -91,11 +91,24 @@ public class LoginConfirmActivity extends BaseActivity {
         });
         //取消登录
         tvCancelLogin.setOnClickListener((v) -> {
-            finishSelf();
+            doCancelLogin(mUuid);
         });
     }
 
-    // 进行登录
+    /**
+     * 取消登录
+     */
+    private void doCancelLogin(String uuid) {
+        EanfangHttp.post(NewApiService.QR_LOGIN_CANCEL)
+                .params("uuid", uuid)
+                .execute(new EanfangCallback<JSONObject>(LoginConfirmActivity.this, true, JSONObject.class, (bean -> {
+                    finishSelf();
+                })));
+    }
+
+    /**
+     * 进行登录
+     */
     public void doLogin(String uuid) {
         EanfangHttp.post(NewApiService.QR_LOGIN)
                 .params("uuid", uuid)
