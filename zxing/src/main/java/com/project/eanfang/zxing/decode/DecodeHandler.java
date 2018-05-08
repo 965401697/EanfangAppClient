@@ -20,7 +20,7 @@ import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.project.eanfang.zxing.R;
-import com.project.eanfang.zxing.activity.CaptureActivity;
+import com.project.eanfang.zxing.android.CaptureActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Map;

@@ -14,8 +14,8 @@ import android.util.Log;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.ResultPointCallback;
-import com.project.eanfang.zxing.activity.CaptureActivity;
-import com.project.eanfang.zxing.activity.PreferencesActivity;
+import com.project.eanfang.zxing.android.CaptureActivity;
+import com.project.eanfang.zxing.android.PreferencesActivity;
 
 import java.util.Collection;
 import java.util.EnumMap;

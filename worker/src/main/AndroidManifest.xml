@@ -301,6 +301,7 @@
         <activity android:name=".ui.activity.im.SubtractFriendsActivity" />
         <!-- IM个人设置页面 -->
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.WorkDetailActivity"></activity>
     </application>
 
 </manifest>

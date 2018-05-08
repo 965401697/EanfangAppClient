@@ -3,7 +3,7 @@
  * Copyright (c) 2017. All rights reserved.
  */
 
-package com.project.eanfang.zxing.activity;
+package com.project.eanfang.zxing.android;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -142,7 +142,6 @@ public final class CaptureActivityHandler extends Handler {
 
         }
     }
-
     /**
      * 完全退出
      */

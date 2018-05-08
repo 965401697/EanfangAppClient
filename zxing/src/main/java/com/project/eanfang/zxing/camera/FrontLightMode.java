@@ -17,7 +17,7 @@
 package com.project.eanfang.zxing.camera;
 
 import android.content.SharedPreferences;
-import com.project.eanfang.zxing.activity.PreferencesActivity;
+import com.project.eanfang.zxing.android.PreferencesActivity;
 
 /**
  * Enumerates settings of the preference controlling the front light.
