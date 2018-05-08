@@ -34,6 +34,10 @@ import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,6 +123,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private String companyUserId;
     private String workerId;
 
+    private boolean isCollect;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +171,11 @@ public class WorkerDetailActivity extends BaseClientActivity {
             startActivity(intent);
         });
         llArea.setOnClickListener((v) -> {
+
+            if (evaluateAdapter1.getData().isEmpty() || evaluateAdapter1.getData().size() <= 0) {
+                showToast("稍等一下，我还没准备好。");
+                return;
+            }
             if (rvList1.getVisibility() == View.VISIBLE) {
                 rvList1.setVisibility(View.GONE);
 
@@ -181,16 +192,14 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
         rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
-
         mQRWorkerEntity = getIntent().getParcelableExtra("workEntriy");
-
-        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
-            setRightImageResId(R.mipmap.heart);
-        } else {
-            setRightImageResId(R.mipmap.hearted);
-        }
+        isCollected();
         setRightImageOnClickListener((v) -> {
-            isCollected();
+            if (isCollect) {
+                cancelCollected();
+            } else {
+                collected();
+            }
         });
 
     }
@@ -221,12 +230,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
         EanfangHttp.post(RepairApi.GET_COLLECT_EXISTS)
                 .upJson(jsonObject.toJSONString())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    boolean isCollect = bean.getBoolean("exists");
+
+                    isCollect = bean.getBoolean("exists");
                     runOnUiThread(() -> {
-                        if (isCollect == false) {
-                            collected();
+                        if (isCollect) {
+                            setRightImageResId(R.mipmap.hearted);
                         } else {
-                            cancelCollected();
+                            setRightImageResId(R.mipmap.heart);
                         }
                     });
                 }));
@@ -284,9 +294,15 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rbStar5.setRating(bean.getItem5());
 
         mDataList1 = new ArrayList<>();
-        if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
-            mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
-        }
+        new Thread(() -> {
+            if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
+                mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+            }
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("isOk", true);
+            EventBus.getDefault().post(jsonObject);
+        }).start();
+
 
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
@@ -332,26 +348,26 @@ public class WorkerDetailActivity extends BaseClientActivity {
             String[] urls = bean.getVerifyEntity().getHonorPics().split(",");
 
             if (urls.length >= 1) {
-                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+                ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
+                ivPic2.setImageURI( Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
+                ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);
             }
             if (urls.length >= 4) {
-                ivPic4.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
+                ivPic4.setImageURI( Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
                 ivPic4.setVisibility(View.VISIBLE);
             } else {
                 ivPic4.setVisibility(View.GONE);
@@ -359,5 +375,29 @@ public class WorkerDetailActivity extends BaseClientActivity {
         }
 
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(JSONObject jsonObject) {
+        if (jsonObject.containsKey("isOk") && jsonObject.getBoolean("isOk")) {
+            evaluateAdapter1.setNewData(mDataList1);
+            evaluateAdapter1.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

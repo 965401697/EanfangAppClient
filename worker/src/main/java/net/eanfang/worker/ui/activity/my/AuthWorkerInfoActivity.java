@@ -350,9 +350,9 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                     runOnUiThread(() -> submitSuccess(json));
                 }
             });
+        } else {
+            submitSuccess(json);
         }
-        submitSuccess(json);
-
     }
 
     private void jump() {
