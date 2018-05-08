@@ -56,6 +56,13 @@ public class AddFriendActivity extends BaseClientActivity {
         initViews();
         setTitle("添加好友");
         setLeftBack();
+        setRightImageResId(R.mipmap.ic_main_top_qrcode);
+        setRightImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转扫码页面
+            }
+        });
     }
 
     private void initViews() {

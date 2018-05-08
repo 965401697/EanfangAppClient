@@ -115,9 +115,12 @@ public class ContactsFragment extends BaseFragment {
             parentAdapter.setNewData(mDatas);
 
             //重置数据
+            isFirstShow = true;
             mOldPosition = 0;
-            mOrgEntity = parentAdapter.getData().get(0);
-            mOrgEntity.setFlag(true);
+            if (parentAdapter.getData().size() > 0) {
+                mOrgEntity = parentAdapter.getData().get(0);
+                mOrgEntity.setFlag(true);
+            }
 
             rev_list.addOnItemTouchListener(new OnItemClickListener() {
                 @Override
