@@ -5,13 +5,11 @@
 
 package com.project.eanfang.zxing.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -23,18 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.DecodeHintType;
@@ -43,7 +34,6 @@ import com.project.eanfang.zxing.R;
 import com.project.eanfang.zxing.camera.CameraManager;
 import com.project.eanfang.zxing.manage.BeepManager;
 import com.project.eanfang.zxing.manage.InactivityTimer;
-import com.project.eanfang.zxing.manage.IntentSource;
 import com.project.eanfang.zxing.view.ViewfinderView;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -51,10 +41,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -255,11 +242,12 @@ public final class CaptureActivity extends BaseActivity implements
                     break;
             }
         }
-
-
     }
 
-    // 获取个人信息
+    /**
+     *
+     * 获取个人信息
+     */
     private void doGetAccount(String accountId) {
         EanfangHttp.post(NewApiService.QR_GETACCOUNT)
                 .params("accountId", accountId)
@@ -268,14 +256,13 @@ public final class CaptureActivity extends BaseActivity implements
                 }));
     }
 
-    // 获取技师详情
+    /**
+     *
+     *  获取技师详情
+     */
     private void doGetWorkDetail(WorkerEntity workerEntity) {
-        EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
-                .params("workerId", workerEntity.getId())
-                .params("userId", workerEntity.getVerifyEntity().getUserId())
-                .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, (bean) -> {
-                    EventBus.getDefault().post(workerEntity);
-                }));
+        EventBus.getDefault().post(workerEntity);
+        finishSelf();
     }
 
     /**

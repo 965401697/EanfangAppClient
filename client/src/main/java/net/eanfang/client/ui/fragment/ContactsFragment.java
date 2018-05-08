@@ -116,7 +116,6 @@ public class ContactsFragment extends BaseFragment {
 //            parentAdapter = new ParentAdapter(mDatas);
 //            rev_list.setAdapter(parentAdapter);
 
-
             parentAdapter.setSelectedPosition(0);
             parentAdapter.setOnFristItemView(new ParentAdapter.OnFristItemView() {
                 @Override

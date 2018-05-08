@@ -229,7 +229,15 @@ public interface NewApiService {
      */
     String QR_CODE = BuildConfig.API_HOST + "/yaf_sys/scan";
 
+    /**
+     * 确认登录
+     */
     String QR_LOGIN = BuildConfig.API_HOST + "/yaf_sys/toAccredit";
+
+    /**
+     * 取消登录
+     */
+    String QR_LOGIN_CANCEL = BuildConfig.API_HOST + "/yaf_sys/toCancel";
 
     // 是否是技师 是 则返回个人信息
     String QR_GETACCOUNT = BuildConfig.API_HOST + "/yaf_sys/code/getAccount";
