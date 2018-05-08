@@ -52,9 +52,8 @@ public class ContactsFragment extends BaseFragment {
     private RelativeLayout rl_create_team;
     private TextView tv_noTeam;
 
-    private View mLinearShow;
+
     private boolean isFirstShow = true;
-    //    private boolean isOtherShow = true;
     private int mOldPosition = 0;
     private OrgEntity mOrgEntity;
 
@@ -79,6 +78,7 @@ public class ContactsFragment extends BaseFragment {
                     if (list != null && !list.isEmpty()) {
                         //排除默认公司
                         mDatas = Stream.of(list).filter(bean -> bean.getOrgId() != 0).toList();
+
                     } else {
                         mDatas = Collections.EMPTY_LIST;
                     }
@@ -113,20 +113,11 @@ public class ContactsFragment extends BaseFragment {
             parentAdapter = new ParentAdapter();
             parentAdapter.bindToRecyclerView(rev_list);
             parentAdapter.setNewData(mDatas);
-//            parentAdapter = new ParentAdapter(mDatas);
-//            rev_list.setAdapter(parentAdapter);
 
-
-            parentAdapter.setSelectedPosition(0);
-            parentAdapter.setOnFristItemView(new ParentAdapter.OnFristItemView() {
-                @Override
-                public void setOnFristItemView(View view) {
-
-                    ContactsFragment.this.mLinearShow = view;
-                    Log.e("zzw", "ContactsFragment.this.mLinearShow = view;");
-
-                }
-            });
+            //重置数据
+            mOldPosition = 0;
+            mOrgEntity = parentAdapter.getData().get(0);
+            mOrgEntity.setFlag(true);
 
             rev_list.addOnItemTouchListener(new OnItemClickListener() {
                 @Override
@@ -136,56 +127,24 @@ public class ContactsFragment extends BaseFragment {
 
                     if (position == mOldPosition) {
                         if (isFirstShow) {
-                            mLinearShow.setVisibility(View.GONE);
                             isFirstShow = false;
                         } else {
-                            mLinearShow.setVisibility(View.VISIBLE);
                             isFirstShow = true;
                         }
-
-                        mLinearShow = view.findViewById(R.id.ll_show);
-//                        mLinearShow.setTag(isFirstShow);
-                        bean.setFlag(isFirstShow);
-                        mOldPosition = position;
-
                     } else {
-                        mOldPosition = position;
-                        mLinearShow.setVisibility(View.GONE);
-//                        mLinearShow.setTag(false);
-                        bean.setFlag(false);
-
-                        mLinearShow = view.findViewById(R.id.ll_show);
-
-                        mLinearShow.setVisibility(View.VISIBLE);
-//                        mLinearShow.setTag(true);
-                        bean.setFlag(true);
-
+                        mOrgEntity.setFlag(false);
                         isFirstShow = true;
                     }
-//                    parentAdapter.notifyDataSetChanged();
-//                    if (position != 0) {
-//                        parentAdapter.mView.setVisibility(View.GONE);
-//                        if (isOtherShow) {
-//                            mLinearShow = view.findViewById(R.id.ll_show);
-//                            mLinearShow.setVisibility(View.VISIBLE);
-//                            isOtherShow = false;
-//                        } else {
-//                            mLinearShow = view.findViewById(R.id.ll_show);
-//                            mLinearShow.setVisibility(View.GONE);
-//                            isOtherShow = true;
-//                        }
-//                    } else if (position == 0) {
-//                        if (isFirstShow) {
-//                            parentAdapter.mView.setVisibility(View.GONE);
-//                            isFirstShow = false;
-//                        } else {
-//                            parentAdapter.mView.setVisibility(View.VISIBLE);
-//                            isFirstShow = true;
-//                        }
-//                    }
 
+                    bean.setFlag(isFirstShow);
+                    mOrgEntity = bean;
+                    parentAdapter.notifyItemChanged(mOldPosition);
+                    mOldPosition = position;
+                    parentAdapter.notifyItemChanged(position);
                 }
             });
+
+
             parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     //组织结构
@@ -254,6 +213,7 @@ public class ContactsFragment extends BaseFragment {
             }
         });
     }
+
 
     @Override
     protected void setListener() {

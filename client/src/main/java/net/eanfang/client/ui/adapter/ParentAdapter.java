@@ -29,19 +29,8 @@ import java.util.List;
 public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
     public ParentAdapter() {
-//    public ParentAdapter(List data) {
         super(R.layout.item_group_adapter);
 
-    }
-
-    private int selectedPosition = -1; //选中位置
-
-    public View mView;
-
-    private OnFristItemView mOnFristItemView;
-
-    public void setSelectedPosition(int selectedPosition) {
-        this.selectedPosition = selectedPosition;
     }
 
 
@@ -83,16 +72,6 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         } else if (item.getVerifyStatus() == 5) {
             helper.setText(R.id.tv_auth_status, "已删除");
         }
-        if (helper.getAdapterPosition() == 0) {
-            ll_show.setVisibility(View.VISIBLE);
-            item.setFlag(true);
-        } else {
-            item.setFlag(false);
-        }
-        if (helper.getLayoutPosition() == 0) {
-//            mView = ll_show;
-            mOnFristItemView.setOnFristItemView(ll_show);
-        }
 
         if (item.isFlag()) {
             ll_show.setVisibility(View.VISIBLE);
@@ -100,48 +79,5 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
             ll_show.setVisibility(View.GONE);
         }
 
-//        rl_father.setOnClickListener(v -> {
-//            boolean flag = (boolean) rl_father.getTag();//未被点击过
-//            if (!flag) {
-//                if (selectedPosition == helper.getAdapterPosition()) {
-//                    ll_show.setVisibility(View.VISIBLE);
-//                    rl_father.setTag(true);
-//                } else {
-//                    ll_show.setVisibility(View.GONE);
-//                    rl_father.setTag(false);
-//                }
-//            } else {
-//                if (selectedPosition == helper.getAdapterPosition()) {
-//                    ll_show.setVisibility(View.GONE);
-//                    rl_father.setTag(false);
-//                } else {
-//                    ll_show.setVisibility(View.VISIBLE);
-//                    rl_father.setTag(true);
-//                }
-//            }
-//        });
-        //当点击时先进行判断
-//        rel.setOnClickListener(v -> {
-//            boolean flag = (boolean) imageView.getTag();
-//            //未被点击过
-//            if (!flag) {
-//                imageView.setImageResource(R.drawable.contend_ic_management_default);
-//                ll_show.setVisibility(View.VISIBLE);
-//                imageView.setTag(true);
-//            } else {
-//                imageView.setImageResource(R.drawable.contend_ic_management_default);
-//                ll_show.setVisibility(View.GONE);
-//                imageView.setTag(false);
-//            }
-//        });
-    }
-
-    public interface OnFristItemView {
-        public void setOnFristItemView(View view);
-    }
-
-    public void setOnFristItemView(OnFristItemView onFristItemView) {
-        this.mOnFristItemView = onFristItemView;
-//        onFristItemView.setOnFristItemView(mView);
     }
 }
