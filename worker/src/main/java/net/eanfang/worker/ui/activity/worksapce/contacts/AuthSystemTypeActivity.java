@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MultipleChoiceAdapter;
+import net.eanfang.worker.ui.adapter.ParentAdapter;
 
 import java.util.List;
 
@@ -37,12 +38,16 @@ public class AuthSystemTypeActivity extends BaseActivity {
     @BindView(R.id.rev_list)
     RecyclerView revList;
 
-    private Long orgid,adminUserId;
+    private Long orgid, adminUserId;
     private int status;
+    private String mAssign = "";
 
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
+    // 获取系统类别
     List<BaseDataEntity> businessOneList = Config.get().getBusinessList(1);
+
+    private MultipleChoiceAdapter multipleChoiceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,23 +85,23 @@ public class AuthSystemTypeActivity extends BaseActivity {
         orgid = getIntent().getLongExtra("orgid", 0);
         status = getIntent().getIntExtra("accid", 0);
         adminUserId = getIntent().getLongExtra("adminUserId", 0);
+        mAssign = getIntent().getStringExtra("assign");
         revList.setLayoutManager(new LinearLayoutManager(this));
-
+        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        multipleChoiceAdapter = new MultipleChoiceAdapter(this);
+        revList.setAdapter(multipleChoiceAdapter);
+        if ((status != 0 && status != 3) || mAssign.equals("auth")) {
+            multipleChoiceAdapter.isAuth = true;
+        }
     }
 
     private void initAdapter() {
-
-        MultipleChoiceAdapter adapter = new MultipleChoiceAdapter(this, businessOneList);
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        revList.setAdapter(adapter);
-        adapter.setOnItemClickListener((view, position, id) -> {
+        multipleChoiceAdapter.refreshData(businessOneList);
+        multipleChoiceAdapter.setOnItemClickListener((view, position, id) -> {
             businessOneList.get(position).setCheck(!businessOneList.get(position).isCheck());
-
         });
-
         setRightTitleOnClickListener((v) -> {
-            if (status==0||status==3) {
+            if (status == 0 || status == 3) {
                 commit();
             } else {
                 jump();
@@ -117,13 +122,20 @@ public class AuthSystemTypeActivity extends BaseActivity {
                                 .filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
                 .map(beans -> beans.getDataId()).toList();
 
-        grantChange.setAddIds(checkList);
-        grantChange.setDelIds(unCheckList);
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_SYS + orgid)
-                .upJson(JSONObject.toJSONString(grantChange))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    jump();
-                }));
+        for (int i = 0; i < businessOneList.size(); i++) {
+            if (businessOneList.get(i).isCheck()) {
+                grantChange.setAddIds(checkList);
+                grantChange.setDelIds(unCheckList);
+                EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_SYS + orgid)
+                        .upJson(JSONObject.toJSONString(grantChange))
+                        .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                            jump();
+                        }));
+                break;
+            }
+            showToast("请选择一种业务类别");
+        }
+
     }
 
     private void jump() {
@@ -131,6 +143,7 @@ public class AuthSystemTypeActivity extends BaseActivity {
         intent.putExtra("orgid", orgid);
         intent.putExtra("accid", status);
         intent.putExtra("adminUserId", adminUserId);
+        intent.putExtra("assign", mAssign);
         startActivity(intent);
     }
 }

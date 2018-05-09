@@ -47,21 +47,11 @@ public abstract class CustomeApplication extends MultiDexApplication {
         return mJCustomeApplication;
     }
 
-    private IWXAPI iwxapi;
-
-    public IWXAPI getIwxapi() {
-        return iwxapi;
-    }
-
-    public void setIwxapi(IWXAPI iwxapi) {
-        this.iwxapi = iwxapi;
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         mJCustomeApplication = this;
-        regWeiXin();
     }
 
     public void initConfig() {
@@ -79,14 +69,6 @@ public abstract class CustomeApplication extends MultiDexApplication {
             IBase j = mJIBaseArrayMap.get(j_iBase.getClass().getName());
             j.finishSelf();
         }
-    }
-
-    private void regWeiXin() {
-        // 通过WXAPIFactory工厂,获取IWXAPI的实例
-        iwxapi = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT, true);
-        // 将应用的 appID 注册到微信
-        iwxapi.registerApp(EanfangConst.WX_APPID_CLIENT);
-        setIwxapi(iwxapi);
     }
 
     /**

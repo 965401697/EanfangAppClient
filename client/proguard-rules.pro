@@ -82,5 +82,10 @@
 -keep class com.alipay.tscenter.** { *; }
 -keep class com.ta.utdid2.** { *;}
 -keep class com.ut.device.** { *;}
-
+##  eventbus
+-keep class de.greenrobot.event.** {*;}
+-keepclassmembers class ** {
+    public void onEvent*(**);
+    void onEvent*(**);
+}
 -ignorewarnings

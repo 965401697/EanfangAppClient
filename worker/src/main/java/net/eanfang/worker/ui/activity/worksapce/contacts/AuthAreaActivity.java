@@ -1,12 +1,15 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -21,6 +24,9 @@ import com.yaf.sys.entity.BaseDataEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,18 +56,42 @@ public class AuthAreaActivity extends BaseActivity {
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
-    private CommitVerfiyView verfiyView;
 
+    private String mAssign = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_auth);
         ButterKnife.bind(this);
+        doLoadArea();
         initView();
         initArea();
         initData();
         // initArea();
+    }
+
+    private void doLoadArea() {
+        new Thread(() -> {
+            //获得全部 地区数据
+            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
+            for (int i = 0; i < areaListBean.size(); i++) {
+                BaseDataEntity provinceEntity = areaListBean.get(i);
+                //处理当前省下的所有市
+                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+                //查询出来后，移除，以增加效率
+                allAreaList.removeAll(cityList);
+                for (int j = 0; j < cityList.size(); j++) {
+                    BaseDataEntity cityEntity = cityList.get(j);
+                    //处理当前市下所有区县
+                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                    //查询出来后，移除，以增加效率
+                    allAreaList.removeAll(countyList);
+                    cityList.get(j).setChildren(countyList);
+                }
+                areaListBean.get(i).setChildren(cityList);
+            }
+        }).start();
     }
 
     private void initArea() {
@@ -74,25 +104,6 @@ public class AuthAreaActivity extends BaseActivity {
 //                        initData();
 //                    }
 //                }));
-        //获得全部 地区数据
-        List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
-        for (int i = 0; i < areaListBean.size(); i++) {
-            BaseDataEntity provinceEntity = areaListBean.get(i);
-            //处理当前省下的所有市
-            List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
-            //查询出来后，移除，以增加效率
-            allAreaList.removeAll(cityList);
-            for (int j = 0; j < cityList.size(); j++) {
-                BaseDataEntity cityEntity = cityList.get(j);
-                //处理当前市下所有区县
-                List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
-                //查询出来后，移除，以增加效率
-                allAreaList.removeAll(countyList);
-                cityList.get(j).setChildren(countyList);
-            }
-            areaListBean.get(i).setChildren(cityList);
-        }
-
     }
 
     private void initData() {
@@ -101,8 +112,6 @@ public class AuthAreaActivity extends BaseActivity {
                     byNetGrant = bean;
                     fillData();
                 }));
-
-
     }
 
 
@@ -115,16 +124,27 @@ public class AuthAreaActivity extends BaseActivity {
 
     private void initView() {
         setTitle("选择服务区域");
-        setRightTitle("提交");
+        setRightTitle("完善");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         status = getIntent().getIntExtra("accid", 0);
+        mAssign = getIntent().getStringExtra("assign");
+
     }
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
         elvArea.setAdapter(mAdapter);
-
+        if ((status != 0 && status != 3) || mAssign.equals("auth")) {
+            //  当状态为已认证状态时， 设置为不可点击不可点击
+            mAdapter.isAuth = true;
+            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                    return true;
+                }
+            });
+        }
         setRightTitleOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
@@ -183,21 +203,28 @@ public class AuthAreaActivity extends BaseActivity {
         unCheckListId = getListData(areaListBean, false);
         grantChange.setAddIds(checkListId);
         grantChange.setDelIds(unCheckListId);
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
-                .upJson(JSONObject.toJSONString(grantChange))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-                    verfiyView.show();
+        for (int i = 0; i < areaListBean.size(); i++) {
+            if (areaListBean.get(i).isCheck()) {
+                EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
+                        .upJson(JSONObject.toJSONString(grantChange))
+                        .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                            showToast("资料保存成功");
+                            closeActivity();
+                            finishSelf();
+//                        verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
+//                        verfiyView.show();
 
-                }));
+                        }));
+                break;
+            }
+            showToast("请至少选择一个服务区域");
+        }
     }
 
-    private void commitVerfiy(CommitVerfiyView verfiyView) {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + orgid)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    showToast("已提交认证");
-                    verfiyView.dismiss();
-                }));
+    private void closeActivity() {
+        EanfangApplication.get().closeActivity(AuthCompanyActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthSystemTypeActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthBizActivity.class.getName());
     }
 
 }

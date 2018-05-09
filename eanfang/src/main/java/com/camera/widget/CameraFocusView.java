@@ -53,6 +53,7 @@ public class CameraFocusView extends View {
 
     public void setmIAutoFocus(IAutoFocus mIAutoFocus) {
         this.mIAutoFocus = mIAutoFocus;
+//        doAutoFous(mScreenWidth / 2, mScreenHeight / 2);
     }
 
     private void init() {
@@ -86,23 +87,26 @@ public class CameraFocusView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
-                int x = (int) event.getX();
-                int y = (int) event.getY();
-                lastValue = 0;
-                mPaint.setColor(Color.WHITE);
-                radius = (int) (mScreenWidth * 0.1);
-                centerPoint = null;
-                if (y > TOP_CONTROL_HEIGHT && y < ScreenSizeUtil.getScreenHeight() - BETTOM_CONTROL_HEIGHT) {//状态栏和底部禁止点击获取焦点（显示体验不好）
-                    centerPoint = new Point(x, y);
-                    showAnimView();
-                    //开始对焦
-                    if (mIAutoFocus != null) {
-                        mIAutoFocus.autoFocus(event.getX(), event.getY());
-                    }
-                }
+                doAutoFous(event.getX(), event.getY());
                 break;
         }
         return true;
+    }
+
+    public void doAutoFous(float x, float y) {
+        lastValue = 0;
+        mPaint.setColor(Color.WHITE);
+        radius = (int) (mScreenWidth * 0.1);
+        centerPoint = null;
+        if (y > TOP_CONTROL_HEIGHT && y < ScreenSizeUtil.getScreenHeight() - BETTOM_CONTROL_HEIGHT) {
+            //状态栏和底部禁止点击获取焦点（显示体验不好）
+            centerPoint = new Point((int) x, (int) y);
+            showAnimView();
+            //开始对焦
+            if (mIAutoFocus != null) {
+                mIAutoFocus.autoFocus(x, y);
+            }
+        }
     }
 
     private void showAnimView() {

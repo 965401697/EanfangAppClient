@@ -30,6 +30,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
     private LayoutInflater mInflate;
     private Context context;
     public int firstPostion;
+    public boolean isAuth = false;
 
     public GroupAdapter(Context context, List<BaseDataEntity> mListData) {
         this.mListData = mListData;
@@ -90,22 +91,24 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         }
         holder.tv.setText(mListData.get(groupPosition).getDataName());
 
-
         final FirstHolder finalHolder = holder;
-        finalHolder.cb.setOnClickListener(v -> {
-
-            boolean isChecked = finalHolder.cb.isChecked();
-            mListData.get(groupPosition).setCheck(isChecked);
-            for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
-                BaseDataEntity secondModel = mListData.get(groupPosition).getChildren().get(i);
-                secondModel.setCheck(isChecked);
-                for (int j = 0; j < secondModel.getChildren().size(); j++) {
-                    BaseDataEntity thirdModel = secondModel.getChildren().get(j);
-                    thirdModel.setCheck(isChecked);
+        if (isAuth) {
+            finalHolder.cb.setEnabled(false);
+        } else {
+            finalHolder.cb.setOnClickListener(v -> {
+                boolean isChecked = finalHolder.cb.isChecked();
+                mListData.get(groupPosition).setCheck(isChecked);
+                for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
+                    BaseDataEntity secondModel = mListData.get(groupPosition).getChildren().get(i);
+                    secondModel.setCheck(isChecked);
+                    for (int j = 0; j < secondModel.getChildren().size(); j++) {
+                        BaseDataEntity thirdModel = secondModel.getChildren().get(j);
+                        thirdModel.setCheck(isChecked);
+                    }
                 }
-            }
-            notifyDataSetChanged();
-        });
+                notifyDataSetChanged();
+            });
+        }
         finalHolder.cb.setChecked(mListData.get(groupPosition).isCheck());
 
         return convertView;

@@ -43,6 +43,8 @@ public class AuthWorkerBizActivity extends BaseActivity {
     List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
     private int status;
 
+    private MultipleChoiceAdapter multipleChoiceAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,9 @@ public class AuthWorkerBizActivity extends BaseActivity {
         status = getIntent().getIntExtra("status", status);
         revList.setLayoutManager(new LinearLayoutManager(this));
 
+        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        multipleChoiceAdapter = new MultipleChoiceAdapter(this);
+        revList.setAdapter(multipleChoiceAdapter);
     }
 
     private void fillData() {
@@ -82,12 +87,8 @@ public class AuthWorkerBizActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-
-        MultipleChoiceAdapter adapter = new MultipleChoiceAdapter(this, bizTypeList);
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        revList.setAdapter(adapter);
-        adapter.setOnItemClickListener((view, position, id) -> {
+        multipleChoiceAdapter.refreshData(bizTypeList);
+        multipleChoiceAdapter.setOnItemClickListener((view, position, id) -> {
             bizTypeList.get(position).setCheck(!bizTypeList.get(position).isCheck());
         });
 
