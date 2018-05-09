@@ -393,6 +393,7 @@ public class DateTimePicker extends WheelPicker {
         if (timeMode != NONE && hours.size() == 0) {
             LogUtils.verbose(this, "init hours before make view");
             initHourData();
+//            changeHourData(DateUtils.trimZero(getSelectedDay()));
         }
         if (timeMode != NONE && minutes.size() == 0) {
             LogUtils.verbose(this, "init minutes before make view");
@@ -497,6 +498,11 @@ public class DateTimePicker extends WheelPicker {
                     if (onWheelListener != null) {
                         onWheelListener.onDayWheeled(selectedDayIndex, days.get(selectedDayIndex));
                     }
+
+                    LogUtils.verbose(this, "change hour after day wheeled");
+                    changeHourData(Integer.parseInt(days.get(selectedDayIndex)));
+                    hourView.setItems(hours, selectedHour);
+
                 }
             });
             layout.addView(dayView);
@@ -506,6 +512,7 @@ public class DateTimePicker extends WheelPicker {
                 labelView.setText(dayLabel);
                 layout.addView(labelView);
             }
+
         }
 
         if (timeMode != NONE) {
@@ -748,6 +755,43 @@ public class DateTimePicker extends WheelPicker {
         }
     }
 
+    /**
+     * 改变日子 选择时间
+     *
+     * @param selectedDay
+     */
+    private void changeHourData(int selectedDay) {
+        hours.clear();
+        if (startDay == endDay) {
+            if (startHour > endHour) {
+                int temp = startHour;
+                startHour = endHour;
+                endHour = temp;
+            }
+            for (int i = startHour; i <= endHour; i++) {
+                hours.add(DateUtils.fillZero(i));
+            }
+        } else if (selectedDay == startDay) {
+            for (int i = startHour; i <= 24; i++) {
+                hours.add(DateUtils.fillZero(i));
+            }
+        } else if (selectedDay == endDay) {
+            for (int i = 0; i <= endHour; i++) {
+                hours.add(DateUtils.fillZero(i));
+            }
+        } else {
+            for (int i = 0; i <= 24; i++) {
+                hours.add(DateUtils.fillZero(i));
+            }
+        }
+
+        if (hours.indexOf(selectedHour) == -1 || selectedDay == -1) {
+            //当前设置的分钟不在指定范围，则默认选中范围开始的分钟
+            selectedHour = hours.get(0);
+        }
+    }
+
+
     private void changeMinuteData(int selectedHour) {
         minutes.clear();
         if (startHour == endHour) {
@@ -772,7 +816,7 @@ public class DateTimePicker extends WheelPicker {
                 minutes.add(DateUtils.fillZero(i));
             }
         }
-        if (minutes.indexOf(selectedMinute) == -1) {
+        if (minutes.indexOf(selectedMinute) == -1 || selectedHour == -1) {
             //当前设置的分钟不在指定范围，则默认选中范围开始的分钟
             selectedMinute = minutes.get(0);
         }
