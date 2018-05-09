@@ -68,5 +68,10 @@
 -keepclasseswithmembers class * extends android.databinding.ViewDataBinding{
     <methods>;
 }
-
+##  eventbus
+-keep class de.greenrobot.event.** {*;}
+-keepclassmembers class ** {
+    public void onEvent*(**);
+    void onEvent*(**);
+}
 -ignorewarnings

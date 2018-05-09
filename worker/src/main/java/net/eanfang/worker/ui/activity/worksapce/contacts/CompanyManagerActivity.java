@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -9,7 +8,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.AuthCompanyActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

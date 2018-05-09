@@ -417,4 +417,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
             EventBus.getDefault().unregister(this);
         }
     }
+
+    @Subscribe
+    public void onEventMainThread() {
+
+    }
 }

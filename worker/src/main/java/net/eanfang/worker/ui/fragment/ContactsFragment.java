@@ -22,7 +22,6 @@ import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.AddFriendActivity;
-import net.eanfang.worker.ui.activity.worksapce.AuthCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
@@ -65,12 +64,6 @@ public class ContactsFragment extends BaseFragment {
     protected void initData(Bundle arguments) {
         getData();
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();3
-//        getData();
-//    }
 
     private void getData() {
         EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)

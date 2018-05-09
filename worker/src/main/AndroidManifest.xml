@@ -188,10 +188,10 @@
         <activity android:name=".ui.activity.worksapce.SignListActivity" />
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
         <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthSystemTypeActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthBizActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthAreaActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthSystemTypeActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthBizActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthAreaActivity" />
         <!-- 技师认证 填写个人资料 照片 等 -->
         <activity
             android:name=".ui.activity.my.AuthWorkerInfoActivity"

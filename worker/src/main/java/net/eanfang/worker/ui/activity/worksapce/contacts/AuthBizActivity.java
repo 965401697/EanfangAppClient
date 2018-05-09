@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,11 +36,15 @@ import butterknife.ButterKnife;
 public class AuthBizActivity extends BaseActivity {
     @BindView(R.id.rev_list)
     RecyclerView revList;
-    private Long orgid,adminUserId;
+    private Long orgid, adminUserId;
     private int status;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
+
+    private String mAssign = "";
+
+    private MultipleChoiceAdapter multipleChoiceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +70,14 @@ public class AuthBizActivity extends BaseActivity {
         orgid = getIntent().getLongExtra("orgid", 0);
         status = getIntent().getIntExtra("accid", 0);
         adminUserId = getIntent().getLongExtra("adminUserId", 0);
+        mAssign = getIntent().getStringExtra("assign");
         revList.setLayoutManager(new LinearLayoutManager(this));
-
+        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        multipleChoiceAdapter = new MultipleChoiceAdapter(this);
+        revList.setAdapter(multipleChoiceAdapter);
+        if ((status != 0 && status != 3) || mAssign.equals("auth")) {
+            multipleChoiceAdapter.isAuth = true;
+        }
     }
 
     private void fillData() {
@@ -82,18 +92,13 @@ public class AuthBizActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-
-        MultipleChoiceAdapter adapter = new MultipleChoiceAdapter(this, bizTypeList);
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        revList.setAdapter(adapter);
-        adapter.setOnItemClickListener((view, position, id) -> {
+        multipleChoiceAdapter.refreshData(bizTypeList);
+        multipleChoiceAdapter.setOnItemClickListener((view, position, id) -> {
             bizTypeList.get(position).setCheck(!bizTypeList.get(position).isCheck());
         });
 
-
         setRightTitleOnClickListener((v) -> {
-            if (status==0||status==3) {
+            if (status == 0 || status == 3) {
                 commit();
             } else {
                 jump();
@@ -112,12 +117,17 @@ public class AuthBizActivity extends BaseActivity {
 
         grantChange.setAddIds(checkList);
         grantChange.setDelIds(unCheckList);
-
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_BIZ + orgid)
-                .upJson(JSONObject.toJSONString(grantChange))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    jump();
-                }));
+        for (int i = 0; i < bizTypeList.size(); i++) {
+            if (bizTypeList.get(i).isCheck()) {
+                EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_BIZ + orgid)
+                        .upJson(JSONObject.toJSONString(grantChange))
+                        .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                            jump();
+                        }));
+                break;
+            }
+            showToast("请至少选择一种业务类别");
+        }
     }
 
     private void jump() {
@@ -125,6 +135,7 @@ public class AuthBizActivity extends BaseActivity {
         intent.putExtra("orgid", orgid);
         intent.putExtra("accid", status);
         intent.putExtra("adminUserId", adminUserId);
+        intent.putExtra("assign", mAssign);
         startActivity(intent);
     }
 }

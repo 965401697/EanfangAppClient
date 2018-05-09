@@ -62,5 +62,10 @@
 -keep class com.tencent.android.tpush.** {* ;}
 -keep class com.tencent.mid.** {* ;}
 -keep public class * extends com.qq.taf.jce.JceStruct{*;}
-
+##  eventbus
+-keep class de.greenrobot.event.** {*;}
+-keepclassmembers class ** {
+    public void onEvent*(**);
+    void onEvent*(**);
+}
 -ignorewarnings

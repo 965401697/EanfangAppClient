@@ -44,6 +44,8 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
     private GrantChange grantChange = new GrantChange();
     List<BaseDataEntity> businessOneList = Config.get().getBusinessList(1);
 
+    private MultipleChoiceAdapter multipleChoiceAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,18 +81,15 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
         status = getIntent().getIntExtra("status", 0);
         setLeftBack();
         revList.setLayoutManager(new LinearLayoutManager(this));
-
+        multipleChoiceAdapter = new MultipleChoiceAdapter(this);
+        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        revList.setAdapter(multipleChoiceAdapter);
     }
 
     private void initAdapter() {
-
-        MultipleChoiceAdapter adapter = new MultipleChoiceAdapter(this, businessOneList);
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        revList.setAdapter(adapter);
-        adapter.setOnItemClickListener((view, position, id) -> {
+        multipleChoiceAdapter.refreshData(businessOneList);
+        multipleChoiceAdapter.setOnItemClickListener((view, position, id) -> {
             businessOneList.get(position).setCheck(!businessOneList.get(position).isCheck());
-
         });
 
         setRightTitleOnClickListener(v -> commit());
@@ -109,7 +108,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
                 && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
                 .map(beans -> beans.getDataId()).distinct().toList();
         List<Integer> unCheckList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == false
-                && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals( beans.getDataId())).count() > 0)
+                && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
                 .map(beans -> beans.getDataId()).distinct().toList();
 
         grantChange.setAddIds(checkList);

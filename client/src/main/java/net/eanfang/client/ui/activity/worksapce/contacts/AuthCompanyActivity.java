@@ -120,7 +120,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private String itemcity;
     private String itemzone;
     private Long orgid;
-    private CommitVerfiyView verfiyView;
     private String mAssign = "";
 
     @Override

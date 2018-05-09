@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.camera.model.CameraModel;
 import com.camera.model.PermissionsModel;
+import com.camera.util.ScreenSizeUtil;
 import com.camera.widget.CameraFocusView;
 import com.camera.widget.CameraSurfaceView;
 import com.eanfang.R;
