@@ -192,7 +192,7 @@
         <activity android:name=".ui.activity.my.CollectActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairActivity" />
-        <activity android:name=".ui.activity.worksapce.InstallActivity" />
+        <activity android:name=".ui.activity.worksapce.install.InstallActivity" />
         <activity android:name=".ui.activity.worksapce.DesignActivity" />
         <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
         <activity android:name=".ui.activity.worksapce.CheckActivity" />
@@ -222,7 +222,7 @@
         <activity android:name=".ui.activity.worksapce.AddReportPlanActivity" />
         <activity android:name=".ui.activity.worksapce.AddWorkTaskDeitailActivity" />
         <activity android:name=".ui.activity.worksapce.AddWorkCheckDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.InstallOrderActivity" />
+        <activity android:name=".ui.activity.worksapce.install.InstallOrderActivity" />
         <activity android:name=".ui.activity.worksapce.OfferAndPayOrderActivity" />
         <activity android:name=".ui.activity.worksapce.PayOrderDetailActivity" />
         <activity android:name=".ui.activity.worksapce.PersonOfferAndPayOrderActivity" />
@@ -261,11 +261,10 @@
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeActivity" />
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
         <!-- 数据统计 -->
-        <activity android:name=".ui.activity.worksapce.DataStatisticsActivity" />
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataStatisticsActivity" />
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
 
         <!-- 融云FileProvider -->
         <provider
@@ -346,7 +345,14 @@
         <activity
             android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"
             android:screenOrientation="portrait" />
-
+        <!-- 报价订单详情 -->
+        <activity
+            android:name=".ui.activity.worksapce.install.InstallOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 数据统计列表 -->
+        <activity
+            android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

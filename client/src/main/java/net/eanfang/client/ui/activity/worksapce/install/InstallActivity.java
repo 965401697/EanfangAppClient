@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.install;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +32,7 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;

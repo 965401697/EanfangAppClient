@@ -1,6 +1,5 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.datastatistics;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.witget.DataSelectPopWindow;
 
-import net.eanfang.worker.R;
+import net.eanfang.client.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +38,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     // 类型选择下拉Pop
     private DataSelectPopWindow dataSelectPopWindow;
     private List<String> mDataType = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +56,9 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initView() {
         setTitle("数据统计");
         setLeftBack();
+
     }
+
     /**
      * @date on 2018/4/26  11:44
      * @decision 初始化数据

@@ -52,8 +52,8 @@ public class OrderProgressFragment extends BaseFragment {
         EanfangHttp.post(RepairApi.GET_REPAIR_FLOW)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<OrderProgressBean>(getActivity(), true, OrderProgressBean.class, true, (list) -> {
-                    mDataList=  Stream.of(list).sorted((o1, o2)->-Integer.compare(o1.getNodeCode(),o2.getNodeCode())).toList();
-                    mDataList=list;
+                    mDataList = Stream.of(list).sorted((o1, o2) -> -Integer.compare(o1.getNodeCode(), o2.getNodeCode())).toList();
+//                    mDataList=list;
                     initAdapter();
                 }));
     }

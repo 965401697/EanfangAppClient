@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.install;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

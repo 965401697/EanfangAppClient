@@ -68,7 +68,7 @@ public class InstallCtrlItemView extends BaseDialog {
     private Long id;
     private Activity mContext;
 
-    public InstallCtrlItemView(Activity context,boolean isFull, Long id) {
+    public InstallCtrlItemView(Activity context, boolean isFull, Long id) {
         super(context, isFull);
         this.mContext = context;
         this.id = id;
@@ -111,8 +111,9 @@ public class InstallCtrlItemView extends BaseDialog {
         if (bean.getConnector() != null) {
             tvWorkerName.setText(bean.getConnector());
         }
-
-        tvWorkerCompany.setText(bean.getCompanyEntity().getName());
+        if (bean.getCompanyEntity() != null) {
+            tvWorkerCompany.setText(bean.getCompanyEntity().getName());
+        }
         if (bean.getCompanyEntity().getLogoPic() != null) {
             ivPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()));
         }

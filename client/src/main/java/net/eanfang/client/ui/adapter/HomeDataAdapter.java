@@ -1,5 +1,8 @@
 package net.eanfang.client.ui.adapter;
 
+import android.view.LayoutInflater;
+import android.view.View;
+
 import com.amap.api.interfaces.IText;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -14,8 +17,9 @@ import java.util.List;
  */
 
 public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder> {
-    public HomeDataAdapter(List data) {
-        super(R.layout.layout_home_data, data);
+
+    public HomeDataAdapter(int layoutResId, List data) {
+        super(layoutResId, data);
     }
 
     @Override
@@ -25,15 +29,19 @@ public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder
         } else if (item.getType() == 2) {//报装
             helper.setText(R.id.tv_title, "当日报装");
         } else if (item.getType() == 3) {//报价
-            helper.setText(R.id.tv_title, "当日报价");
+            helper.setText(R.id.tv_title, "当日设计");
         } else {
             helper.setText(R.id.tv_title, "其他");
         }
-        helper.setText(R.id.tv_total, item.getTotal()+"");
-        helper.setText(R.id.tv_add, item.getAdded()+"");
-        helper.setText(R.id.tv_repairOne, item.getStatusOne()+"");
-        helper.setText(R.id.tv_repairTwo, item.getStatusTwo()+"");
-        helper.setText(R.id.tv_repairThree, item.getStatusThree()+"");
-        helper.setText(R.id.tv_repairFour, item.getStatusFour()+"");
+        if (item.getTotal() == 0) {
+            helper.getView(R.id.ll_num).setVisibility(View.GONE);
+        } else {
+            helper.setText(R.id.tv_total, item.getTotal() + "");
+            helper.setText(R.id.tv_add, item.getAdded() + "");
+            helper.setText(R.id.tv_repairOne, item.getStatusOne() + "");
+            helper.setText(R.id.tv_repairTwo, item.getStatusTwo() + "");
+            helper.setText(R.id.tv_repairThree, item.getStatusThree() + "");
+            helper.setText(R.id.tv_repairFour, item.getStatusFour() + "");
+        }
     }
 }

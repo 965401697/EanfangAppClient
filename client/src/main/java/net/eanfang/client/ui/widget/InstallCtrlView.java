@@ -3,18 +3,15 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.V;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.DesignActivity;
-import net.eanfang.client.ui.activity.worksapce.InstallActivity;
-import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.install.InstallActivity;
+import net.eanfang.client.ui.activity.worksapce.install.InstallOrderActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
