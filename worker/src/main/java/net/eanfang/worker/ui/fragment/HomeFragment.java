@@ -24,7 +24,8 @@ import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
-import net.eanfang.worker.ui.activity.worksapce.DataStatisticsActivity;
+import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
+import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
@@ -159,7 +160,7 @@ public class HomeFragment extends BaseFragment {
      */
     private void initCount() {
         rlAllData.setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
+            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
         });
         rvData.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -284,7 +285,7 @@ public class HomeFragment extends BaseFragment {
         clientDataFour.setStatusThree(8);
         clientDataList.add(clientDataFour);
 
-        homeDataAdapter = new HomeDataAdapter(clientDataList);
+        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data,clientDataList);
         rvData.setAdapter(homeDataAdapter);
     }
 }

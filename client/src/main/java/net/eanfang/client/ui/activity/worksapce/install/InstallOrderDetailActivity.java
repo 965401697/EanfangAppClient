@@ -1,7 +1,7 @@
-package net.eanfang.client.ui.widget;
+package net.eanfang.client.ui.activity.worksapce.install;
 
-import android.app.Activity;
 import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +14,7 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkspaceInstallDetailBean;
-import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -25,14 +25,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by MrHou
- *
- * @on 2017/11/21  11:23
- * @email houzhongzhou@yeah.net
- * @desc 报装详情
+ * @author Guanluocang
+ * @date on 2018/5/10  16:53
+ * @decision 报装详情
  */
+public class InstallOrderDetailActivity extends BaseActivity {
 
-public class InstallCtrlItemView extends BaseDialog {
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
     @BindView(R.id.tv_contract)
@@ -65,36 +63,24 @@ public class InstallCtrlItemView extends BaseDialog {
     TextView tvFeatureTime;
     @BindView(R.id.ll_company_info)
     LinearLayout llCompanyInfo;
-    private Long id;
-
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    private Activity mContext;
-
-    public InstallCtrlItemView(Activity context, Long id) {
-        super(context);
-        this.mContext = context;
-        this.id = id;
-
-    }
+    private Long orderId;
 
     @Override
-    protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.view_install_ctrl_item);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_install_order_detail);
         ButterKnife.bind(this);
-        ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("报装详情");
+        setLeftBack();
+        setTitle("报装详情");
         initData();
     }
 
-
     private void initData() {
+        orderId = getIntent().getLongExtra("orderId", 0);
         EanfangHttp.get(NewApiService.GET_WORK_INSTALL_INFO)
                 .tag(this)
-                .params("id", id)
-                .execute(new EanfangCallback<WorkspaceInstallDetailBean>(context, false, WorkspaceInstallDetailBean.class, (bean) -> {
+                .params("id", orderId)
+                .execute(new EanfangCallback<WorkspaceInstallDetailBean>(this, false, WorkspaceInstallDetailBean.class, (bean) -> {
                     setData(bean);
                 }));
     }
@@ -117,11 +103,10 @@ public class InstallCtrlItemView extends BaseDialog {
             llCompanyInfo.setVisibility(View.VISIBLE);
             tvWorkerName.setText(bean.getAssignessUser().getAccountEntity().getRealName());
             tvContractPhone.setTag(bean.getAssignessUser().getAccountEntity().getMobile());
-            ivPhone.setOnClickListener(v -> CallUtils.call(mContext, tvContractPhone.getTag().toString()));
+            ivPhone.setOnClickListener(v -> CallUtils.call(this, tvContractPhone.getTag().toString()));
             tvWorkerCompany.setText(bean.getCompanyEntity().getName());
             ivPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()));
         }
 
     }
-
 }

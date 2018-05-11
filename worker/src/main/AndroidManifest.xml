@@ -292,7 +292,7 @@
         <!-- 系统通知详情 -->
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
         <!-- 数据统计 -->
-        <activity android:name=".ui.activity.worksapce.DataStatisticsActivity" />
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataStatisticsActivity" />
         <!-- 转让群主 -->
         <activity android:name=".ui.activity.im.TransferOwnActivity" />
         <!-- 选择朋友   checkedbox界面 -->
@@ -305,6 +305,9 @@
         <activity android:name=".ui.activity.im.GroupShutupMberActivity"></activity>
         <activity android:name=".ui.activity.worksapce.WorkDetailActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity" />
+
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"></activity>
+
     </application>
 
 </manifest>

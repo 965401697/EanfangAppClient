@@ -16,6 +16,7 @@ import com.eanfang.model.WorkspaceInstallBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
@@ -131,7 +132,7 @@ public class InstallOrderListActivity extends BaseActivity implements SwipyRefre
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new InstallCtrlItemView(InstallOrderListActivity.this, true,mDataList.get(position).getId()).show();
+                new InstallCtrlItemView(InstallOrderListActivity.this, true, mDataList.get(position).getId()).show();
             }
         });
     }

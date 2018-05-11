@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.ClientData;
@@ -14,8 +16,8 @@ import java.util.List;
  */
 
 public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder> {
-    public HomeDataAdapter(List data) {
-        super(R.layout.layout_home_data, data);
+    public HomeDataAdapter(int layoutResId, List data) {
+        super(layoutResId, data);
     }
 
     @Override
@@ -27,10 +29,14 @@ public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder
         } else {//一级
             helper.setText(R.id.tv_title, "一级");
         }
-        helper.setText(R.id.tv_total, item.getTotal() + "");
-        helper.setText(R.id.tv_add, item.getAdded() + "");
-        helper.setText(R.id.tv_repairOne, item.getStatusOne() + "");
-        helper.setText(R.id.tv_repairTwo, item.getStatusTwo() + "");
-        helper.setText(R.id.tv_repairThree, item.getStatusThree() + "");
+        if (item.getTotal() == 0) {
+            helper.getView(R.id.ll_num).setVisibility(View.GONE);
+        } else {
+            helper.setText(R.id.tv_total, item.getTotal() + "");
+            helper.setText(R.id.tv_add, item.getAdded() + "");
+            helper.setText(R.id.tv_repairOne, item.getStatusOne() + "");
+            helper.setText(R.id.tv_repairTwo, item.getStatusTwo() + "");
+            helper.setText(R.id.tv_repairThree, item.getStatusThree() + "");
+        }
     }
 }

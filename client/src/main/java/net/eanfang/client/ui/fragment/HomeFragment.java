@@ -23,7 +23,8 @@ import com.project.eanfang.zxing.android.CaptureActivity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
-import net.eanfang.client.ui.activity.worksapce.DataStatisticsActivity;
+import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
+import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 import net.eanfang.client.ui.widget.DesignCtrlView;
@@ -105,7 +106,7 @@ public class HomeFragment extends BaseFragment {
         clientDataList.add(clientDataOne);
         ClientData clientDataTwo = new ClientData();
         clientDataTwo.setType(2);
-        clientDataTwo.setTotal(16);
+        clientDataTwo.setTotal(0);
         clientDataTwo.setAdded(7);
         clientDataTwo.setStatusOne(18);
         clientDataTwo.setStatusTwo(9);
@@ -114,7 +115,7 @@ public class HomeFragment extends BaseFragment {
         clientDataList.add(clientDataTwo);
         ClientData clientDataThree = new ClientData();
         clientDataThree.setType(3);
-        clientDataThree.setTotal(37);
+        clientDataThree.setTotal(0);
         clientDataThree.setAdded(3);
         clientDataThree.setStatusOne(12);
         clientDataThree.setStatusTwo(3);
@@ -131,7 +132,7 @@ public class HomeFragment extends BaseFragment {
         clientDataFour.setStatusFour(0);
         clientDataList.add(clientDataFour);
 
-        homeDataAdapter = new HomeDataAdapter(clientDataList);
+        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data,clientDataList);
         rvData.setAdapter(homeDataAdapter);
     }
 
@@ -177,7 +178,7 @@ public class HomeFragment extends BaseFragment {
      */
     private void initCount() {
         rlAllData.setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
+            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
         });
         rvData.addOnItemTouchListener(new OnItemClickListener() {
             @Override

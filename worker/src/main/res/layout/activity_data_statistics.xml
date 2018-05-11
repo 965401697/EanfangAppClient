@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_white"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.DataStatisticsActivity">
+    tools:context="net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity">
 
     <include layout="@layout/header" />
 

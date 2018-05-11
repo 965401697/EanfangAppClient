@@ -16,10 +16,12 @@ import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.install.InstallOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.install.InstallOrderDetailActivity;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.InstallCtrlItemView;
@@ -102,7 +104,9 @@ public class WorkInstallListFragment extends BaseFragment
                     if (mDataList.get(position).getStatus() == 2) {
                         finishWork(mDataList, position);
                     } else {
-                        new InstallCtrlItemView(getActivity(), mDataList.get(position).getId()).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("orderId", mDataList.get(position).getId());
+                        JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
                     }
                     break;
                 default:
