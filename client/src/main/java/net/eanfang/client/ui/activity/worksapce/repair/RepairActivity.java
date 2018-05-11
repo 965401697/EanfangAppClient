@@ -31,7 +31,9 @@ import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
+import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.adapter.ToRepairAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -90,6 +92,10 @@ public class RepairActivity extends BaseClientActivity {
     private String address;
     private ToRepairAdapter evaluateAdapter = null;
 
+    // 扫码选择技师 传递的值
+    private RepairOrderEntity repairOrderEntity;
+    private String isScan = "";
+
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -140,6 +146,9 @@ public class RepairActivity extends BaseClientActivity {
             etPhone.setText(user.getAccount().getMobile());
         }
 
+        // 扫码 报修
+        repairOrderEntity = (RepairOrderEntity) getIntent().getSerializableExtra("repairbean");
+        isScan = getIntent().getStringExtra("qrcode");
     }
 
     private void registerListener() {
@@ -174,10 +183,17 @@ public class RepairActivity extends BaseClientActivity {
         if (!checkInfo()) {
             return;
         }
-        Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
-        intent.putExtra("bean", fillBean());
-        intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
-        startActivity(intent);
+        // 扫码已经选择完技师 ，直接确认
+        if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
+            Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
+            intent_scan.putExtra("bean", doQrFillBean());
+            startActivity(intent_scan);
+        } else {
+            Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
+            intent.putExtra("bean", fillBean());
+            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
+            startActivity(intent);
+        }
     }
 
     private void giveUp() {
@@ -264,8 +280,6 @@ public class RepairActivity extends BaseClientActivity {
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(etCompanyName.getText().toString().trim());
-
-
         bean.setRepairContactPhone(etPhone.getText().toString().trim());
         bean.setRepairContacts(etContact.getText().toString().trim());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
@@ -275,6 +289,26 @@ public class RepairActivity extends BaseClientActivity {
         bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
         bean.setRepairWay(0);
         return bean;
+    }
+
+    private RepairOrderEntity doQrFillBean() {
+        // 扫码已经选择完技师 ，直接确认
+        repairOrderEntity.setBugEntityList(beanList);
+        repairOrderEntity.setLatitude(latitude);
+        repairOrderEntity.setLongitude(longitude);
+        repairOrderEntity.setAddress(etDetailAddress.getText().toString().trim());
+        repairOrderEntity.setPlaceCode(Config.get().getAreaCodeByName(city, county));
+        repairOrderEntity.setPlaceId(Config.get().getBaseIdByCode(repairOrderEntity.getPlaceCode(), 3, Constant.AREA) + "");
+        repairOrderEntity.setRepairCompany(etCompanyName.getText().toString().trim());
+        repairOrderEntity.setRepairContactPhone(etPhone.getText().toString().trim());
+        repairOrderEntity.setRepairContacts(etContact.getText().toString().trim());
+        repairOrderEntity.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
+        repairOrderEntity.setOwnerUserId(EanfangApplication.getApplication().getUserId());
+        repairOrderEntity.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
+        repairOrderEntity.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
+        repairOrderEntity.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
+        repairOrderEntity.setRepairWay(0);
+        return repairOrderEntity;
     }
 
     @Override
@@ -321,6 +355,7 @@ public class RepairActivity extends BaseClientActivity {
     /**
      * 到达时限
      */
+
     public void onArriveTimeOptionPicker(View view) {
         PickerSelectUtil.singleTextPicker(this, "到达时限", tvTime, GetConstDataUtils.getArriveList());
     }
