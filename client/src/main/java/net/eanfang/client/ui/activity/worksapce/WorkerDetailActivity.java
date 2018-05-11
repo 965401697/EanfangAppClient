@@ -22,6 +22,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -30,6 +31,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -122,8 +124,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 扫码二维码进入技师详情页面 传入的entriy
     private WorkerEntity mQRWorkerEntity;
     private boolean isComeIn = false;
-    private String companyUserId;
-    private String workerId;
+    private RepairOrderEntity mScanRepairBean;
+    private String companyUserId = "";
+    private String workerId = "";
 
     private boolean isCollect;
 
@@ -133,26 +136,52 @@ public class WorkerDetailActivity extends BaseClientActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_worker_detail);
         ButterKnife.bind(this);
-        getData();
         initView();
+        initData();
         setListener();
+    }
+
+    private void initView() {
+        rvList1.setLayoutManager(new GridLayoutManager(this, 2));
+        rvList2.setLayoutManager(new GridLayoutManager(this, 2));
+        rvList3.setLayoutManager(new GridLayoutManager(this, 2));
+
+        // 正常报修流程 获取数据
+        toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
+        companyUserId = V.v(() -> getIntent().getStringExtra("companyUserId"));
+        workerId = V.v(() -> getIntent().getStringExtra("workerId"));
+
+        // 客户端扫描二维码获取数据
+        mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
+        if (mQRWorkerEntity != null) {
+            isComeIn = true;
+        }
+        // 获取workid  userid
+        if (isComeIn) {
+            companyUserId = String.valueOf(mQRWorkerEntity.getVerifyEntity().getUserId());
+            workerId = String.valueOf(mQRWorkerEntity.getId());
+        }
+
+        // 获取是否收藏
+        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
+            setRightImageResId(R.mipmap.heart);
+        } else {
+            setRightImageResId(R.mipmap.hearted);
+        }
+        setRightImageOnClickListener((v) -> {
+            if (isCollect) {
+                cancelCollected();
+            } else {
+                collected();
+            }
+        });
         setTitle("技师详情");
         setLeftBack();
     }
 
-    //获取技师信息
-    private void getWorkerDetailData() {
-        if (isComeIn) {
-            workerId = String.valueOf(mQRWorkerEntity.getId());
-            companyUserId = String.valueOf(mQRWorkerEntity.getVerifyEntity().getUserId());
-        }
-        EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
-                .params("workerId", workerId)
-                .params("userId", companyUserId)
-                .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, (bean) -> {
-                    detailsBean = bean;
-                    setData(bean);
-                }));
+    private void initData() {
+        isCollected();
+        getWorkerDetailData();
     }
 
     private void setListener() {
@@ -160,21 +189,48 @@ public class WorkerDetailActivity extends BaseClientActivity {
             tvSelect.setVisibility(View.GONE);
 //            return;
         }
-
+        if (isComeIn) {
+            tvSelect.setVisibility(View.VISIBLE);
+        }
+        // 选择该技师
         tvSelect.setOnClickListener((v) -> {
-            toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
-            toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
-            toRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
-            if (EanfangApplication.getApplication().getCompanyId() == 0) {
-                toRepairBean.setStatus(0);
+            // 扫码进入
+            if (isComeIn) {
+                mScanRepairBean = new RepairOrderEntity();
+                mScanRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
+                mScanRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
+                mScanRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
+                if (EanfangApplication.getApplication().getCompanyId() == 0) {
+                    mScanRepairBean.setStatus(0);
+                } else {
+                    mScanRepairBean.setStatus(1);
+                }
+                mScanRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
             } else {
-                toRepairBean.setStatus(1);
+                toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
+                toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
+                toRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
+                if (EanfangApplication.getApplication().getCompanyId() == 0) {
+                    toRepairBean.setStatus(0);
+                } else {
+                    toRepairBean.setStatus(1);
+                }
+                toRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
             }
-            toRepairBean.setAssigneeOrgCode(detailsBean.getDepartmentEntity().getOrgCode());
-            Intent intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
-            intent.putExtra("bean", toRepairBean);
+            Intent intent;
+            // 直接进入报修页面
+            if (isComeIn) {
+                intent = new Intent(WorkerDetailActivity.this, RepairActivity.class);
+                intent.putExtra("qrcode", "scaning");
+                intent.putExtra("repairbean", mScanRepairBean);
+            } else {
+                intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
+                intent.putExtra("bean", toRepairBean);
+            }
             startActivity(intent);
+
         });
+        // 区域
         llArea.setOnClickListener((v) -> {
 
             if (evaluateAdapter1.getData().isEmpty() || evaluateAdapter1.getData().size() <= 0) {
@@ -193,45 +249,16 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     }
 
-    private void initView() {
-        rvList1.setLayoutManager(new GridLayoutManager(this, 2));
-        rvList2.setLayoutManager(new GridLayoutManager(this, 2));
-        rvList3.setLayoutManager(new GridLayoutManager(this, 2));
-        isCollected();
 
-        // 客户端扫描二维码获取数据
-        mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
-        if (mQRWorkerEntity != null) {
-            isComeIn = true;
-            tvSelect.setVisibility(View.GONE);
-        }
+    //获取技师信息
+    private void getWorkerDetailData() {
 
-        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
-            setRightImageResId(R.mipmap.heart);
-        } else {
-            setRightImageResId(R.mipmap.hearted);
-        }
-        setRightImageOnClickListener((v) -> {
-            if (isCollect) {
-                cancelCollected();
-            } else {
-                collected();
-            }
-        });
-        getWorkerDetailData();
-    }
-
-    private void collected() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("assigneeId", companyUserId);
-        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
-        jsonObject.put("type", 0);
-        EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
-                .upJson(jsonObject.toJSONString())
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    setRightImageResId(R.mipmap.hearted);
-                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
-                    showToast("收藏成功");
+        EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
+                .params("workerId", workerId)
+                .params("userId", companyUserId)
+                .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, (bean) -> {
+                    detailsBean = bean;
+                    setData(bean);
                 }));
     }
 
@@ -260,6 +287,24 @@ public class WorkerDetailActivity extends BaseClientActivity {
     }
 
     /**
+     * 进行收藏
+     */
+    private void collected() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("assigneeId", companyUserId);
+        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
+        jsonObject.put("type", 0);
+        EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
+                .upJson(jsonObject.toJSONString())
+                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    setRightImageResId(R.mipmap.hearted);
+                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
+                    showToast("收藏成功");
+                    isCollect = true;
+                }));
+    }
+
+    /**
      * 取消收藏
      */
     private void cancelCollected() {
@@ -273,6 +318,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                     setRightImageResId(R.mipmap.heart);
                     PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, false);
                     showToast("取消收藏");
+                    isCollect = false;
                 }));
     }
 
@@ -351,12 +397,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
         evaluateAdapter3 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList3);
         evaluateAdapter3.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList3.setAdapter(evaluateAdapter3);
-    }
-
-    private void getData() {
-        toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
-        companyUserId = V.v(() -> getIntent().getStringExtra("companyUserId"));
-        workerId = V.v(() -> getIntent().getStringExtra("workerId"));
     }
 
 
