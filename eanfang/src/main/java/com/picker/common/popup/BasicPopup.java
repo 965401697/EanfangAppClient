@@ -199,7 +199,7 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
             params = new ViewGroup.LayoutParams(width, height);
         } else {
             params.width = width;
-            params.height = height;
+            params.height = (int) (ScreenUtils.heightPixels(activity) / 2.5f);//高度为屏幕的一半 -子武
         }
         contentLayout.setLayoutParams(params);
     }

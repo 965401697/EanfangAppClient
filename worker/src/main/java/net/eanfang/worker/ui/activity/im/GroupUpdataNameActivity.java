@@ -30,6 +30,7 @@ public class GroupUpdataNameActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("修改群组名称");
         setRightTitle("确定");
+        setLeftBack();
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

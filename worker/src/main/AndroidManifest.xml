@@ -301,8 +301,10 @@
         <activity android:name=".ui.activity.im.SubtractFriendsActivity" />
         <!-- IM个人设置页面 -->
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
+        <!--群内成员禁言-->
+        <activity android:name=".ui.activity.im.GroupShutupMberActivity"></activity>
         <activity android:name=".ui.activity.worksapce.WorkDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity" />
     </application>
 
 </manifest>

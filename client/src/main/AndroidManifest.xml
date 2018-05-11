@@ -342,6 +342,8 @@
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
         <!-- 融云的系统消息 -->
         <activity android:name=".ui.activity.im.SystemMessageActivity" />
+        <!--群内成员禁言-->
+        <activity android:name=".ui.activity.im.GroupShutupMberActivity"/>
         <!-- 企业管理 -->
         <activity
             android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"

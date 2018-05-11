@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RadioButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
@@ -13,6 +12,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -68,11 +68,13 @@ public class TransferOwnActivity extends BaseWorkerActivity {
         //查找群内成员
         EanfangHttp.post(UserApi.POST_GROUP_NUM)
                 .params("groupId", mGroupId)
-                .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
+                .execute(new EanfangCallback<GroupDetailBean.ListBean>(this, true, GroupDetailBean.ListBean.class, true, (list) -> {
                     if (list.size() > 0) {
-                        ArrayList<FriendListBean> friendListBeanArrayList = new ArrayList<>();
+                        ArrayList<GroupDetailBean.ListBean> friendListBeanArrayList = new ArrayList<>();
                         for (int i = 0; i < list.size(); i++) {
-                            if (!(String.valueOf(EanfangApplication.getApplication().getAccId()).equals(list.get(i).getAccId()))) {
+
+
+                            if (!(String.valueOf(EanfangApplication.getApplication().getAccId()).equals(list.get(i).getAccountEntity().getAccId()))) {
                                 friendListBeanArrayList.add(list.get(i));
                             }
                         }
@@ -85,7 +87,7 @@ public class TransferOwnActivity extends BaseWorkerActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, final View view, int position) {
                 if (view.getId() == R.id.rb_checked) {
-                    FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+                    GroupDetailBean.ListBean bean = ( GroupDetailBean.ListBean) adapter.getData().get(position);
 
                     if (mOldPosition == -1) {
                         mOldPosition = position;

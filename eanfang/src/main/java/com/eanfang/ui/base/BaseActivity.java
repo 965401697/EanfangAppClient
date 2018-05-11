@@ -144,6 +144,17 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     /**
+     * 返回监听
+     *
+     * @param listener
+     */
+    public void setLeftBack(View.OnClickListener listener) {
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left.setVisibility(View.VISIBLE);
+        iv_left.setOnClickListener(listener);
+    }
+
+    /**
      * 返回键被按下执行的操作
      */
     protected void onNavigationOnClicked() {

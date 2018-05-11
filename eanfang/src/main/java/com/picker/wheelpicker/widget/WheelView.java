@@ -55,7 +55,7 @@ public class WheelView extends View {
     public static final int DIVIDER_COLOR = 0XFF83CDE6;
     public static final int DIVIDER_ALPHA = 220;
     public static final float DIVIDER_THICK = 2f;//px
-    public static final int ITEM_OFF_SET = 3;
+    public static final int ITEM_OFF_SET = 4;//设置转轴的高度 --子武
     private static final float ITEM_PADDING = 13f;//px,480X800的手机边距不能太大
     private static final int ACTION_CLICK = 1;//点击
     private static final int ACTION_FLING = 2;//滑翔

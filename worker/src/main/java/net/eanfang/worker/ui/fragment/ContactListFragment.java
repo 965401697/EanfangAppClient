@@ -26,6 +26,7 @@ import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
+import net.eanfang.worker.ui.activity.im.MyConversationListFragment;
 import net.eanfang.worker.ui.activity.my.MessageListActivity;
 import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
@@ -72,7 +73,7 @@ public class ContactListFragment extends BaseFragment {
     protected void initView() {
 
 
-        ConversationListFragment fragment = new ConversationListFragment();
+        MyConversationListFragment fragment = new MyConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示

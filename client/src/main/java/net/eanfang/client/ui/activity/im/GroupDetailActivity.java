@@ -20,7 +20,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -45,6 +44,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -70,6 +70,8 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     LinearLayout ll_shut_up;
     @BindView(R.id.group_transfer)
     LinearLayout group_transfer;
+    @BindView(R.id.group_shutup_mber)
+    LinearLayout group_shutup_mber;
     @BindView(R.id.sw_group_top)
     TextView swGroupTop;
     @BindView(R.id.group_shutup)
@@ -80,8 +82,8 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     TextView swGroupNotfaction;
 
     private GroupsDetailAdapter mGroupsDetailAdapter;
-    private ArrayList<FriendListBean> friendListBeanArrayList = new ArrayList<>();
-    private ArrayList<FriendListBean> mList = new ArrayList<>();
+    private ArrayList<GroupDetailBean.ListBean> friendListBeanArrayList = new ArrayList<>();
+    private ArrayList<GroupDetailBean.ListBean> mList = new ArrayList<>();
     private String title;
     private String headPortrait;
     private String id;
@@ -95,6 +97,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private final int UPDATA_GROUP_NAME = 101;//更新名字
     private final int UPDATA_GROUP_OWN = 102;//转让群主
     private final int UPDATA_GROUP_NOTICE = 103;//更新名字
+    private final int UPDATA_GROUP_SHUTUP_MBER = 104;//更新禁言人的状态
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,17 +118,19 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.POST_GROUP_DETAIL)
                 .params("groupId", id)
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
-                    mList = (ArrayList<FriendListBean>) bean.getList();
+                    mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
 
                     if (String.valueOf(EanfangApplication.getApplication().getAccId()).equals(bean.getGroup().getCreateUser())) {
                         isOwner = true;
                         groupQuit.setText("解散并退出");
                         group_transfer.setVisibility(View.VISIBLE);
+                        group_shutup_mber.setVisibility(View.VISIBLE);
                         ll_shut_up.setVisibility(View.VISIBLE);
                     } else {
                         isOwner = false;
                         groupQuit.setText("删除并退出");
                         group_transfer.setVisibility(View.GONE);
+                        group_shutup_mber.setVisibility(View.GONE);
                         ll_shut_up.setVisibility(View.GONE);
                     }
 
@@ -136,7 +141,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         mGroupsDetailAdapter.getData().clear();
 
                     if (bean.getList() != null) {
-                        ArrayList<FriendListBean> temp = new ArrayList<>();
+                        ArrayList<GroupDetailBean.ListBean> temp = new ArrayList<>();
                         for (int i = 0; i < bean.getList().size(); i++) {
                             if (bean.getList().get(i).getAccId().equals(bean.getGroup().getCreateUser())) {
                                 temp.add(0, bean.getList().get(i));
@@ -150,7 +155,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         if (bean.getList().size() > 0) {
 
                             mGroupsDetailAdapter.setNewData(temp);
-                            FriendListBean b = new FriendListBean();//填充数据
+                            GroupDetailBean.ListBean b = new GroupDetailBean.ListBean();//填充数据
                             mGroupsDetailAdapter.addData(b);
                             mGroupsDetailAdapter.addData(b);
 
@@ -231,7 +236,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
 
-    @OnClick({R.id.ll_group_port, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.ll_shut_up, R.id.group_quit})
+    @OnClick({R.id.ll_group_port, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.group_shutup_mber, R.id.ll_shut_up, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_group_port:
@@ -257,6 +262,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 Intent i = new Intent(GroupDetailActivity.this, TransferOwnActivity.class);
                 i.putExtra("groupId", id);
                 startActivityForResult(i, UPDATA_GROUP_OWN);
+                break;
+            case R.id.group_shutup_mber://成员禁言
+                Intent in = new Intent(GroupDetailActivity.this, GroupShutupMberActivity.class);
+                in.putExtra("list", friendListBeanArrayList);
+                in.putExtra("groupId", id);
+                startActivityForResult(in, UPDATA_GROUP_SHUTUP_MBER);
                 break;
             case R.id.sw_group_top:
                 if (isCheckedTop) {
@@ -441,7 +452,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 .upJson(jsonObject)
                 .execute(new EanfangCallback<JSONObject>(GroupDetailActivity.this, true, JSONObject.class, (JSONObject) -> {
                     ToastUtil.get().showToast(GroupDetailActivity.this, "修改成功");
-                    Group groupInfo = new Group(groupId, title, Uri.parse(BuildConfig.OSS_SERVER + imgKey));
+                    Group groupInfo = new Group(groupId, title, Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
                     RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
                 }));
@@ -455,6 +466,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         ToastUtil.get().showToast(GroupDetailActivity.this, "解禁成功");
                         group_shutup.setText("开启禁言");
                         isCheckedGag = false;
+                        shuttpAll(0);
                     }));
         } else {
             EanfangHttp.post(UserApi.POST_GROUP_GAG)
@@ -463,7 +475,23 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         ToastUtil.get().showToast(GroupDetailActivity.this, "禁言成功");
                         group_shutup.setText("关闭禁言");
                         isCheckedGag = true;
+                        shuttpAll(1);
                     }));
+        }
+    }
+
+    /**
+     * 重置禁言的状态
+     *
+     * @param status
+     */
+    private void shuttpAll(int status) {
+        for (GroupDetailBean.ListBean b : friendListBeanArrayList) {
+            if (status == 1) {
+                b.setStatus(1);
+            } else {
+                b.setStatus(0);
+            }
         }
     }
 
@@ -507,6 +535,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 }
             } else if (requestCode == UPDATA_GROUP_OWN) {
                 initData();
+            } else if (requestCode == UPDATA_GROUP_SHUTUP_MBER) {
+                friendListBeanArrayList.clear();
+                ArrayList<GroupDetailBean.ListBean> list = (ArrayList<GroupDetailBean.ListBean>) data.getSerializableExtra("list");
+                if (list != null) {
+                    friendListBeanArrayList.addAll(list);
+                }
             }
         }
     }

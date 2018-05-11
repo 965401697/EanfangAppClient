@@ -10,6 +10,7 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,6 +29,7 @@ public class GroupUpdataNameActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("修改群组名称");
         setRightTitle("确定");
+        setLeftBack();
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

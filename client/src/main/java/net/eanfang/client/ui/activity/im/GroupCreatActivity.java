@@ -65,10 +65,10 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
             return;
         }
 
-//        if (TextUtils.isEmpty(imgKey)) {
-//            ToastUtil.get().showToast(this, "请上传群头像");
-//            return;
-//        }
+        if (TextUtils.isEmpty(imgKey)) {
+            ToastUtil.get().showToast(this, "请上传群头像");
+            return;
+        }
 
         ArrayList<String> list = getIntent().getStringArrayListExtra("userIdList");
         list.add(String.valueOf(EanfangApplication.get().getAccId()));

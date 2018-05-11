@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.im;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,11 +10,10 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
@@ -29,9 +27,9 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private FriendsAdapter mFriendsAdapter;
+    private GroupFriendsAdapter mGroupFriendsAdapter;
 
-    private ArrayList<FriendListBean> mFriendListBeanArrayList;
+    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
     private String mGroupId;
     private String mTitle;
     private ArrayList<String> mUserIdList = new ArrayList<String>();
@@ -44,7 +42,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
         setTitle("群组移除好友");
         setRightTitle("确定");
         setLeftBack();
-        mFriendListBeanArrayList = (ArrayList<FriendListBean>) getIntent().getSerializableExtra("list");
+        mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
         mGroupId = getIntent().getStringExtra("groupId");
         mTitle = getIntent().getStringExtra("title");
         startTransaction(true);
@@ -60,10 +58,10 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, 1);//标志位 就是为了显示checkbox
-        mFriendsAdapter.bindToRecyclerView(recyclerView);
+        mGroupFriendsAdapter = new GroupFriendsAdapter(R.layout.item_friend_list);//标志位 就是为了显示checkbox
+        mGroupFriendsAdapter.bindToRecyclerView(recyclerView);
 
-        mFriendsAdapter.setNewData(mFriendListBeanArrayList);
+        mGroupFriendsAdapter.setNewData(mFriendListBeanArrayList);
         selectFriends();
     }
 
@@ -102,13 +100,13 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
      * 选择好友
      */
     private void selectFriends() {
-        mFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mGroupFriendsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 //创建群组选着好友
                 if (view.getId() == R.id.cb_checked) {
 
-                    FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+                    GroupDetailBean.ListBean bean = (GroupDetailBean.ListBean) adapter.getData().get(position);
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());

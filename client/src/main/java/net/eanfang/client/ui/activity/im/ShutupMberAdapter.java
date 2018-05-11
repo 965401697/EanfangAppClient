@@ -1,31 +1,29 @@
-package net.eanfang.worker.ui.adapter;
+package net.eanfang.client.ui.activity.im;
 
 import android.net.Uri;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import net.eanfang.worker.R;
+import net.eanfang.client.R;
 
 /**
- * Created by O u r on 2018/4/26.
+ * Created by O u r on 2018/5/10.
  */
 
-public class TransferOwnAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
-    public TransferOwnAdapter(int layoutResId) {
+public class ShutupMberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
+    public ShutupMberAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean item) {
 
-        if (item.getFlag() == 0) {
+        if (item.getStatus() == 0) {
             ((RadioButton) helper.getView(R.id.rb_checked)).setChecked(false);
         } else {
             ((RadioButton) helper.getView(R.id.rb_checked)).setChecked(true);
@@ -36,3 +34,4 @@ public class TransferOwnAdapter extends BaseQuickAdapter<GroupDetailBean.ListBea
         helper.addOnClickListener(R.id.rb_checked);
     }
 }
+
