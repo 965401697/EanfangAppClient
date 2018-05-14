@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/rel_company"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="@dimen/dimen_100">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_company_logo"
@@ -73,8 +73,8 @@
             android:layout_height="@dimen/dimen_60"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:padding="@dimen/dimen_10"
             android:layout_marginRight="@dimen/dimen_34"
+            android:padding="@dimen/dimen_10"
             android:src="@mipmap/ic_contact_setting" />
     </RelativeLayout>
 
@@ -83,6 +83,7 @@
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_20"
         android:layout_marginLeft="@dimen/dimen_120"
         android:orientation="vertical"
         android:visibility="gone">
@@ -92,7 +93,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_20">
@@ -142,7 +144,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_20">
@@ -169,7 +172,8 @@
         <LinearLayout
             android:id="@+id/ll_part_company"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_20">
@@ -195,7 +199,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_20">
