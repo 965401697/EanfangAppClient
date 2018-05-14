@@ -248,6 +248,7 @@ public final class CaptureActivity extends BaseActivity implements
             }
         } else {
             showToast("二维码无效");
+            finishSelf();
         }
     }
 
