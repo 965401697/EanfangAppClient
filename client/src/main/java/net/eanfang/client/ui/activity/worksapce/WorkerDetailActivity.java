@@ -155,10 +155,11 @@ public class WorkerDetailActivity extends BaseClientActivity {
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
         if (mQRWorkerEntity != null) {
             isComeIn = true;
+            tvSelect.setText("选他报修");
         }
         // 获取workid  userid
         if (isComeIn) {
-            companyUserId = String.valueOf(mQRWorkerEntity.getVerifyEntity().getUserId());
+            companyUserId = String.valueOf(mQRWorkerEntity.getCompanyUserId());
             workerId = String.valueOf(mQRWorkerEntity.getId());
         }
 
@@ -196,6 +197,11 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvSelect.setOnClickListener((v) -> {
             // 扫码进入
             if (isComeIn) {
+                if (StringUtils.isEmpty(companyUserId) || companyUserId.equals("0")) {
+                    showToast("当前技师缺少公司，无法报修。");
+                    return;
+                }
+
                 mScanRepairBean = new RepairOrderEntity();
                 mScanRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
                 mScanRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());

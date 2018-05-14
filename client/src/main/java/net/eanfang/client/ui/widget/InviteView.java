@@ -67,7 +67,6 @@ public class InviteView extends BaseDialog {
         } else {
             id = R.mipmap.worker_app_qr_500;
         }
-        id = R.mipmap.client_app_qr_500;
         Uri uri = Uri.parse("android.resource://" + mContext.getApplicationContext().getPackageName() + "/" + id);
         return uri;
     }

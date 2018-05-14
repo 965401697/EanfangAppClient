@@ -25,6 +25,16 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_16" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:text="@string/text_service_nav"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +60,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_36"
                 android:layout_marginTop="@dimen/dimen_28"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:text="@string/text_service_join_content_nav"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
                 android:text="@string/text_service_join_content"
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
@@ -61,6 +80,16 @@
                 android:text="@string/text_service_finish_info"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:text="@string/text_service_finish_info_nav"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,6 +134,7 @@
                     android:textSize="@dimen/textSize_15" />
 
                 <TextView
+                    android:id="@+id/tv_service_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_36"
