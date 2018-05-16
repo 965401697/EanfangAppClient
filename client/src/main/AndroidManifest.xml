@@ -193,7 +193,7 @@
         <activity android:name=".ui.activity.worksapce.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectWorkerActivity" />
-        <activity android:name=".ui.activity.worksapce.RepairCtrlActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairCtrlActivity" />
         <activity android:name=".ui.activity.pay.PayActivity" />
         <activity android:name=".ui.activity.worksapce.StateChangeActivity" />
         <activity android:name=".ui.activity.worksapce.FaPiaoActivity" />
@@ -335,8 +335,8 @@
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
         <!-- 融云的系统消息 -->
         <activity android:name=".ui.activity.im.SystemMessageActivity" />
-        <!--群内成员禁言-->
-        <activity android:name=".ui.activity.im.GroupShutupMberActivity"/>
+        <!-- 群内成员禁言 -->
+        <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
         <!-- 企业管理 -->
         <activity
             android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"
@@ -349,6 +349,9 @@
         <activity
             android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"
             android:screenOrientation="portrait" />
+        <!-- 报修选择页面  我要报修/报修管控 -->
+        <activity android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

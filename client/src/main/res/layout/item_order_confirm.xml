@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:background="@drawable/bg_ll_selctor"
     android:orientation="vertical">
 
@@ -19,21 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1.电视监控-摄像采集-模拟球机"
-            android:textColor="@color/font_color"
-            android:textSize="16sp" />
+            android:text="电视监控-摄像采集-模拟球机"
+            android:textColor="@color/color_repair_fault_num"
+            android:textSize="@dimen/textSize_13" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent"
             android:src="@mipmap/arrow_right" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/font_color" />
+    <View style="@style/style_common_line_gray" />
 
     <LinearLayout
         android:id="@+id/second_item"
@@ -66,26 +61,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="品牌型号：大华-DS-859034535"
-                    android:textColor="@color/font_color"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
 
                 <TextView
                     android:id="@+id/tv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/dimen_22"
                     android:text="故障位置：奶粉排面"
-                    android:textColor="@color/font_color"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
 
                 <TextView
                     android:id="@+id/tv_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/dimen_22"
                     android:text="设备编号：5452545"
-                    android:textColor="@color/font_color"
-                    android:textSize="14sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
         </LinearLayout>
 
@@ -94,13 +89,28 @@
             android:layout_height="1px"
             android:background="@color/font_color" />
 
-        <TextView
-            android:id="@+id/tv_desc"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="故障描述：附近的酸辣粉简单来说交付鼎折覆餗解放路的大书法家李发简历到"
-            android:textColor="@color/font_color"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="故障描述："
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                android:id="@+id/tv_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="附近的酸辣粉简单来说交付鼎折覆餗解放路的大书法家李发简历到"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

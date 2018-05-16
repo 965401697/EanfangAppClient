@@ -108,5 +108,6 @@ dependencies {
     implementation project(':zxing')
     implementation project(':IMKit')
     implementation project(':IMLib')
+    implementation 'com.google.android:flexbox:0.2.2'
 }
 

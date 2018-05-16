@@ -32,9 +32,9 @@ public class DataSelectPopWindow extends PopupWindow {
     private List<String> list;
 
     public DataSelectPopWindow(Activity context, List<String> list, AdapterView.OnItemClickListener listener) {
-        this.context = context;
-        this.list = list;
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
+            this.context = context;
+            this.list = list;
+            View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
 
         mLvType = (ListView) view.findViewById(R.id.lv_type);
         MyAdapter adapter = new MyAdapter(context, list);

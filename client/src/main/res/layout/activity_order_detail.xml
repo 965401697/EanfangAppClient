@@ -18,10 +18,10 @@
         app:tl_divider_width="@dimen/dimen_1"
         app:tl_underline_color="@color/color_service_deiveder"
         app:tl_underline_height="@dimen/dimen_1"
-        tl:tl_indicator_color="@color/client"
+        tl:tl_indicator_color="@color/colorPrimary"
         tl:tl_tab_padding="0dp"
         tl:tl_tab_space_equal="true"
-        tl:tl_textSelectColor="@color/client"
+        tl:tl_textSelectColor="@color/colorPrimary"
         tl:tl_textUnselectColor="@color/font_color"
         tl:tl_textsize="15sp" />
 

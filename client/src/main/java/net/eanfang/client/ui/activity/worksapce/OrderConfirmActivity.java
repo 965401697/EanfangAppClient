@@ -194,7 +194,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
-        finish();
+        finishSelf();
     }
 
 }

@@ -90,6 +90,8 @@
     <color name="color_data_statics_repair_two">#F5584D</color>
 
     <color name="color_contact_authentication">#D3D3D3</color>
+    <color name="color_order_status_line">#EFF0F0</color>
+    <color name="color_pop_line">#DADADA</color>
 
 
 </resources>

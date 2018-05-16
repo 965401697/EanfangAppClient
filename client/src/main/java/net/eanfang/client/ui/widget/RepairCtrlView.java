@@ -10,7 +10,7 @@ import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

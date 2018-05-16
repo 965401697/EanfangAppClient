@@ -7,9 +7,11 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
         <LinearLayout
@@ -65,45 +67,66 @@
 
     <com.github.vipulasri.timelineview.TimelineView
         android:id="@+id/time_marker"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dimen_65"
         android:layout_height="match_parent"
-        app:line="@color/font_color"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:visibility="visible"
+        app:line="@color/color_order_status_line"
         app:lineSize="1dp"
         app:marker="@drawable/ic_agree"
-        app:markerSize="20dp" />
+        app:markerSize="@dimen/dimen_30" />
+
+    <LinearLayout
+        android:id="@+id/ll_orderFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_120"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_orderFinish"
+                android:layout_width="@dimen/dimen_65"
+                android:layout_height="@dimen/dimen_20"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_order_finish"
+                android:visibility="visible" />
+
+            <View style="@style/style_order_line_vertical_gray" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="@dimen/dimen_28"
+            android:text="已下单，待支付"
+            android:textColor="@color/color_camera_input_radiobutton_stoke"
+            android:textSize="@dimen/textSize_14" />
 
-            <TextView
-                android:id="@+id/tv_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_28"
-                android:text="已下单，待支付"
-                android:textColor="@color/color_camera_input_radiobutton_stoke"
-                android:textSize="@dimen/textSize_14" />
-
-            <TextView
-                android:id="@+id/tv_progressTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_28"
-                android:layout_marginTop="@dimen/dimen_12"
-                android:text="已下单，待支付"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_12" />
-
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_progressTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_28"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:text="(月月时间：2018-02-09)"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_12" />
     </LinearLayout>
 
 

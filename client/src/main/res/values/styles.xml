@@ -101,4 +101,15 @@
         <item name="android:windowEnterAnimation">@anim/fade_in</item>
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
+
+    <style name="style_work_detail_type">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/dimen_20</item>
+        <item name="android:textColor">@color/roll_content</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
+        <item name="android:background">@drawable/bg_client_worker_detail_type</item>
+        <item name="android:layout_margin">@dimen/dimen_10</item>
+    </style>
 </resources>

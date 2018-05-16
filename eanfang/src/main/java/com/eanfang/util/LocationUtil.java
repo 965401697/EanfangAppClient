@@ -18,6 +18,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
@@ -136,7 +137,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
         //设置小蓝点的锚点
         // myLocationStyle.anchor(int,int)
 //         设置圆形的边框粗细
-        myLocationStyle.strokeWidth(0f);
+        myLocationStyle.strokeWidth(10f);
         myLocationStyle.anchor(0.5f, 0.7f);
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
         myLocationStyle.showMyLocation(true);

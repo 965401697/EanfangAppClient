@@ -165,9 +165,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
         // 获取是否收藏
         if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
-            setRightImageResId(R.mipmap.heart);
+            setRightImageResId(R.mipmap.ic_worker_collect);
         } else {
-            setRightImageResId(R.mipmap.hearted);
+            setRightImageResId(R.mipmap.ic_worker_collect_pressed);
         }
         setRightImageOnClickListener((v) -> {
             if (isCollect) {
@@ -284,9 +284,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
                     isCollect = bean.getBoolean("exists");
                     runOnUiThread(() -> {
                         if (isCollect) {
-                            setRightImageResId(R.mipmap.hearted);
+                            setRightImageResId(R.mipmap.ic_worker_collect_pressed);
                         } else {
-                            setRightImageResId(R.mipmap.heart);
+                            setRightImageResId(R.mipmap.ic_worker_collect);
                         }
                     });
                 }));
@@ -303,7 +303,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
                 .upJson(jsonObject.toJSONString())
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    setRightImageResId(R.mipmap.hearted);
+                    setRightImageResId(R.mipmap.ic_worker_collect_pressed);
                     PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
                     showToast("收藏成功");
                     isCollect = true;
@@ -321,7 +321,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         EanfangHttp.post(RepairApi.GET_COLLECT_CANCEL)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    setRightImageResId(R.mipmap.heart);
+                    setRightImageResId(R.mipmap.ic_worker_collect);
                     PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, false);
                     showToast("取消收藏");
                     isCollect = false;

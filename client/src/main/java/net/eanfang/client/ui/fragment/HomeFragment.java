@@ -16,6 +16,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.ClientData;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 import com.project.eanfang.zxing.android.CaptureActivity;
@@ -26,6 +27,7 @@ import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
@@ -132,7 +134,7 @@ public class HomeFragment extends BaseFragment {
         clientDataFour.setStatusFour(0);
         clientDataList.add(clientDataFour);
 
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data,clientDataList);
+        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data, clientDataList);
         rvData.setAdapter(homeDataAdapter);
     }
 
@@ -143,7 +145,7 @@ public class HomeFragment extends BaseFragment {
     private void initIconClick() {
         //我要报修
         findViewById(R.id.tv_reparir).setOnClickListener((v) -> {
-            new RepairCtrlView(getActivity(), true).show();
+            JumpItent.jump(getActivity(), RepairTypeActivity.class);
         });
         //我要报装
         findViewById(R.id.tv_install).setOnClickListener((v) -> {

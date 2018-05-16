@@ -36,7 +36,7 @@ public class RepairOrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity,
                 .setText(R.id.tv_model, "品牌型号:" + Config.get().getModelNameByCode(item.getModelCode(), 1))
                 .setText(R.id.tv_location, "故障位置:" + item.getBugPosition())
                 .setText(R.id.tv_number, "设备编号:" + item.getDeviceNo())
-                .setText(R.id.tv_desc, "故障描述:" + item.getBugDescription());
+                .setText(R.id.tv_desc, item.getBugDescription());
         SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {
 //            Log.e("fresco", item.getPictures());
