@@ -49,5 +49,6 @@
     <color name="color_home_data_four">#CDCDCD</color>
     <color name="color_repair_fault_num">#F35D3F</color>
     <color name="color_worker_detail_type">#F2F2F2</color>
+    <color name="color_service_deiveder">#CDCDCD</color>
 
 </resources>

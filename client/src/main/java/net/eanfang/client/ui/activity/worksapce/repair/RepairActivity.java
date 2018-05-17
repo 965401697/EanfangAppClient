@@ -321,7 +321,11 @@ public class RepairActivity extends BaseClientActivity {
         bean.setAddress(etDetailAddress.getText().toString().trim());
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
-        bean.setRepairCompany(etCompanyName.getText().toString().trim());
+        if (mIsCompany) {
+            bean.setRepairCompany(etCompanyName.getText().toString().trim());
+        } else {
+            bean.setRepairCompany(tvRepairCompanyName.getText().toString().trim());
+        }
         bean.setRepairContactPhone(etPhone.getText().toString().trim());
         bean.setRepairContacts(etContact.getText().toString().trim());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Optional;
@@ -59,16 +60,28 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_feature_time;
     private TextView tv_money;
     private TextView tv_alipay;
+
+    // 电话解决 布局
+    private LinearLayout llResolvePhone;
+    // 支付布局
+    private LinearLayout llPay;
+    // 确认布局
+    private LinearLayout llFinish;
+    // 底部右边 按钮
+    private TextView tvBottomRight;
+
     private Long id;
+    private String title;
     //2017年7月26日
     /**
      * 是否电话解决
      */
     private TextView tv_phone_solve;
 
-    public static OrderDetailFragment getInstance(Long id) {
+    public static OrderDetailFragment getInstance(Long id, String title) {
         OrderDetailFragment sf = new OrderDetailFragment();
         sf.id = id;
+        sf.title = title;
         return sf;
     }
 
@@ -104,6 +117,28 @@ public class OrderDetailFragment extends BaseFragment {
         tv_money = findViewById(R.id.tv_money);
         tv_alipay = findViewById(R.id.tv_alipay);
         tv_phone_solve = findViewById(R.id.tv_phone_solve);
+        llResolvePhone = findViewById(R.id.ll_resolvePhone);
+        llPay = findViewById(R.id.ll_pay);
+        llFinish = findViewById(R.id.ll_finish);
+        tvBottomRight = findViewById(R.id.tv_bottom_right);
+        if ("待付款".equals(title)) {
+            llResolvePhone.setVisibility(View.GONE);
+            llPay.setVisibility(View.GONE);
+            llFinish.setVisibility(View.GONE);
+        } else if ("待确认".equals(title)) {
+            llFinish.setVisibility(View.VISIBLE);
+            llResolvePhone.setVisibility(View.GONE);
+            llPay.setVisibility(View.GONE);
+        } else if ("已报修".equals(title)) {
+            llFinish.setVisibility(View.VISIBLE);
+            llResolvePhone.setVisibility(View.GONE);
+            llPay.setVisibility(View.GONE);
+            tvBottomRight.setText("立即评价");
+        } else {
+            llFinish.setVisibility(View.GONE);
+            llResolvePhone.setVisibility(View.GONE);
+            llPay.setVisibility(View.GONE);
+        }
 
     }
 
@@ -163,19 +198,19 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-                    tv_company_name.setText(V.v(() ->bean.getRepairCompany()));//单位名称
-                    tv_contract_name.setText(V.v(() ->bean.getRepairContacts()));//联系人
-                    tv_contract_phone.setText(V.v(() ->bean.getRepairContactPhone()));
-                    tv_time_limit.setText(V.v(() ->GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
-                    tv_address.setText(V.v(() ->Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
+                    tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
+                    tv_contract_name.setText(V.v(() -> bean.getRepairContacts()));//联系人
+                    tv_contract_phone.setText(V.v(() -> bean.getRepairContactPhone()));
+                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
+                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
                     if (bean.getBookTime() != null) {
-                        tv_time.setText(V.v(() ->Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
+                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
                     } else {
                         tv_time.setText("--");
                     }
 
-                    tv_number.setText(V.v(() ->bean.getOrderNum()));
-                    tv_feature_time.setText(V.v(() ->GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
+                    tv_number.setText(V.v(() -> bean.getOrderNum()));
+                    tv_feature_time.setText(V.v(() -> GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
                     //      获取：是否电话解决（0：未解决，1：已解决）
@@ -188,9 +223,9 @@ public class OrderDetailFragment extends BaseFragment {
                     //客户端
                     if (bean.getAssigneeUser() != null) {
                         iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
-                        tv_worker_name.setText(V.v(() ->bean.getAssigneeUser().getAccountEntity().getRealName()));
-                        tv_worker_company.setText(V.v(() ->bean.getAssigneeOrg().getBelongCompany().getOrgName()));
-                        iv_phone.setTag(V.v(() ->bean.getAssigneeUser().getAccountEntity().getMobile()));
+                        tv_worker_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
+                        tv_worker_company.setText(V.v(() -> bean.getAssigneeOrg().getBelongCompany().getOrgName()));
+                        iv_phone.setTag(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));
                     }
 
                     mDataList = bean.getBugEntityList();

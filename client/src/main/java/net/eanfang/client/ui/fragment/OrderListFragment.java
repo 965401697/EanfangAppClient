@@ -50,6 +50,7 @@ public class OrderListFragment extends BaseFragment implements
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
+            intent.putExtra("title", mTitle);
             startActivity(intent);
         }
     };
