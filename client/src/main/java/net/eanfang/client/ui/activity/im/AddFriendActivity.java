@@ -218,6 +218,7 @@ public class AddFriendActivity extends BaseClientActivity {
                 Intent in = new Intent(AddFriendActivity.this, CaptureActivity.class);
                 in.putExtra("from", "client");
                 startActivity(in);
+                finish();
                 break;
         }
     }
