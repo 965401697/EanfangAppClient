@@ -56,6 +56,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         setTitle("我的好友");
         initViews();
         initData();
+        startTransaction(true);
     }
 
 

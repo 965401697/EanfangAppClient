@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
@@ -20,17 +22,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.project.eanfang.zxing.android.CaptureActivity;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.MainActivity;
-import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
-
 
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
@@ -41,6 +38,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AddFriendActivity extends BaseClientActivity {
 
@@ -48,6 +46,12 @@ public class AddFriendActivity extends BaseClientActivity {
     EditText etPhone;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.rl_scan_friend)
+    RelativeLayout rlScanFriend;
+    @BindView(R.id.rl_scan_Group)
+    RelativeLayout rlScanGroup;
+    @BindView(R.id.ll_input)
+    LinearLayout llInput;
     private FriendsAdapter mFriendsAdapter;
 
     @Override
@@ -57,18 +61,17 @@ public class AddFriendActivity extends BaseClientActivity {
         ButterKnife.bind(this);
 
         initViews();
-        setTitle("添加好友");
+        String addFriend = getIntent().getStringExtra("add_friend");
+        if (!TextUtils.isEmpty(addFriend)) {
+            setTitle("添加好友");
+            rlScanGroup.setVisibility(View.INVISIBLE);
+        } else {
+            setTitle("添加群组");
+            rlScanFriend.setVisibility(View.GONE);
+            llInput.setVisibility(View.GONE);
+        }
+
         setLeftBack();
-        setRightImageResId(R.mipmap.ic_main_top_qrcode);
-        setRightImageOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转扫码页面
-                Intent intent = new Intent(AddFriendActivity.this, CaptureActivity.class);
-                intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
-                startActivity(intent);
-            }
-        });
     }
 
     private void initViews() {
@@ -199,5 +202,23 @@ public class AddFriendActivity extends BaseClientActivity {
                     }
                 }).create();
         dialog.show();
+    }
+
+    @OnClick({R.id.rl_scan_friend, R.id.rl_scan_Group})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_scan_friend:
+                //跳转扫码页面
+                Intent intent = new Intent(AddFriendActivity.this, CaptureActivity.class);
+                intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
+                startActivity(intent);
+                break;
+            case R.id.rl_scan_Group:
+                //跳转扫码页面
+                Intent in = new Intent(AddFriendActivity.this, CaptureActivity.class);
+                in.putExtra("from", "client");
+                startActivity(in);
+                break;
+        }
     }
 }

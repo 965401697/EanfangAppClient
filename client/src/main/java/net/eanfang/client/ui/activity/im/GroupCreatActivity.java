@@ -2,7 +2,10 @@ package net.eanfang.client.ui.activity.im;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -17,11 +20,14 @@ import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
+import com.eanfang.util.compound.CompoundHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.base.BaseClientActivity;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +52,26 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
     private final int HEADER_PIC = 107;
     private String imgKey;
 
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String path = (String) msg.obj;
+
+            if (!TextUtils.isEmpty(path)) {
+                ivIcon.setImageURI("file://" + path);
+
+                imgKey = UuidUtil.getUUID() + ".png";
+                OSSUtils.initOSS(GroupCreatActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(GroupCreatActivity.this, false) {
+                });
+                Log.e("zzw", "合成成功");
+            }
+
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +79,12 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         setTitle("创建群组");
         setLeftBack();
+
+        ArrayList<String> userIconList = getIntent().getStringArrayListExtra("userIconList");
+        userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+        //合成头像
+
+        CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片
     }
 
     /**

@@ -22,6 +22,7 @@ import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.AddFriendActivity;
+import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
@@ -195,9 +196,10 @@ public class ContactsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //添加好友界面
-                startActivity(new Intent(getActivity(), AddFriendActivity.class));
+//                startActivity(new Intent(getActivity(), AddFriendActivity.class));
 
-
+                MorePopWindow morePopWindow = new MorePopWindow(getActivity());
+                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
             }
         });
     }

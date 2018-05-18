@@ -249,6 +249,11 @@ public interface UserApi {
      * /**
      * 群组详情
      */
+    String POST_GROUP_DETAIL_RY = BuildConfig.API_HOST + "/yaf_im/sysgroup/detail/ry";
+    /**
+     * /**
+     * 群组详情
+     */
     String POST_GROUP_DETAIL = BuildConfig.API_HOST + "/yaf_im/sysgroup/detail";
     /**
      * 退出群组

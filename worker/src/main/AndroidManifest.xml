@@ -301,13 +301,22 @@
         <activity android:name=".ui.activity.im.SubtractFriendsActivity" />
         <!-- IM个人设置页面 -->
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
-        <!--群内成员禁言-->
-        <activity android:name=".ui.activity.im.GroupShutupMberActivity"></activity>
+        <!-- 群内成员禁言 -->
+        <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
         <activity android:name=".ui.activity.worksapce.WorkDetailActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity" />
+        <!-- 视频文件选择 -->
+        <activity android:name=".ui.activity.im.VideoSelectedActivity" />
+        <!-- 申请进群 -->
+        <activity android:name=".ui.activity.im.AddGroupActivity">
+            <intent-filter>
+                <action android:name="worker_group" />
 
-        <activity android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"></activity>
-
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.im.IMCardActivity"></activity>
     </application>
 
 </manifest>

@@ -77,7 +77,6 @@
 
 
             </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/ll_group_name"
                 android:layout_width="match_parent"
@@ -114,6 +113,34 @@
                     android:maxLines="1"
                     android:textColor="#999"
                     android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_group_qr"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/group_qrt"
+                    android:textSize="16sp" />
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/group_qr"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    fresco:placeholderImage="@mipmap/ic_personal_qrcode" />
 
 
             </LinearLayout>

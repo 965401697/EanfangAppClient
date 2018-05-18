@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.CustomeApplication;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -45,6 +46,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 /**
@@ -246,6 +248,17 @@ public final class CaptureActivity extends BaseActivity implements
                 case "worker_code":
                     break;
             }
+        } else if (isInteger(resultString)) {//如果是纯数字 就说明是加群
+            //申请进群
+            Intent intent = new Intent();
+            if (!TextUtils.isEmpty(mFromWhere)) {
+                intent.setAction("client_group");
+            } else {
+                intent.setAction("worker_group");
+            }
+            intent.putExtra("groupId", resultString);
+            startActivity(intent);
+            finishSelf();
         } else {
             showToast("二维码无效");
         }
@@ -344,6 +357,17 @@ public final class CaptureActivity extends BaseActivity implements
         if (i == R.id.iv_top_back) {
             finish();
         }
+    }
+
+    /*方法二：推荐，速度最快
+  * 判断是否为整数
+  * @param str 传入的字符串
+  * @return 是整数返回true,否则返回false
+*/
+
+    private boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
     }
 
     public void showToast(String message) {

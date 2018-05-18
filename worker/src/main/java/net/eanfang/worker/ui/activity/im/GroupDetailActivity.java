@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -20,7 +23,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -29,6 +31,8 @@ import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
+import com.eanfang.util.compound.CompoundHelper;
+import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
@@ -44,11 +48,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.eventbus.EventBus;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+
 
 public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
@@ -56,16 +60,18 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     RecyclerView recyclerView;
     @BindView(R.id.group_member_size)
     TextView groupMemberSize;
-    @BindView(R.id.group_header)
-    SimpleDraweeView groupHeader;
+    @BindView(R.id.group_qr)
+    SimpleDraweeView groupQR;
     @BindView(R.id.group_name)
     TextView groupName;
     @BindView(R.id.group_quit)
     Button groupQuit;
     @BindView(R.id.group_member_size_item)
     RelativeLayout groupMemberSizeItem;
-    @BindView(R.id.ll_group_port)
-    LinearLayout llGroupPort;
+    @BindView(R.id.group_header)
+    SimpleDraweeView groupHeader;
+    @BindView(R.id.ll_group_qr)
+    LinearLayout llGroupQR;
     @BindView(R.id.ll_shut_up)
     LinearLayout ll_shut_up;
     @BindView(R.id.group_transfer)
@@ -86,6 +92,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private ArrayList<GroupDetailBean.ListBean> mList = new ArrayList<>();
     private String title;
     private String headPortrait;
+    private String qrCode;
     private String id;
     private String groupId;
     private boolean isCheckedTop;//置顶
@@ -113,11 +120,14 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         initData();
     }
 
+
     private void initData() {
 
-        EanfangHttp.post(UserApi.POST_GROUP_DETAIL)
-                .params("groupId", id)
+        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+//                .params("groupId", id)
+                .params("ryGroupId", groupId)
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+
                     mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
 
                     if (String.valueOf(EanfangApplication.getApplication().getAccId()).equals(bean.getGroup().getCreateUser())) {
@@ -139,6 +149,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
                     if (mGroupsDetailAdapter.getData().size() > 0)
                         mGroupsDetailAdapter.getData().clear();
+
 
                     if (bean.getList() != null) {
                         ArrayList<GroupDetailBean.ListBean> temp = new ArrayList<>();
@@ -178,11 +189,13 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         if (!TextUtils.isEmpty(bean.getGroup().getNotice())) {
                             group_notice.setText(bean.getGroup().getNotice());
                         }
+                        qrCode = bean.getGroup().getQrCode();
                         title = bean.getGroup().getGroupName();
                         headPortrait = bean.getGroup().getHeadPortrait();
 
 
                     }
+
                 }));
 
 
@@ -223,12 +236,16 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     Intent intent = new Intent(GroupDetailActivity.this, SubtractFriendsActivity.class);
                     intent.putExtra("list", friendListBeanArrayList);
                     intent.putExtra("groupId", id);
+                    intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("title", title);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
                 } else if (position == adapter.getData().size() - 2) {
                     Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
                     intent.putExtra("flag", 2);
                     intent.putExtra("groupId", id);
+                    intent.putExtra("title", title);
+                    intent.putExtra("ryGroupId", groupId);
+                    intent.putExtra("list", friendListBeanArrayList);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
                 }
             }
@@ -236,11 +253,17 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
 
-    @OnClick({R.id.ll_group_port, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.group_shutup_mber, R.id.ll_shut_up, R.id.group_quit})
+    @OnClick({R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.group_shutup_mber, R.id.ll_shut_up, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_group_port:
                 PermissionUtils.get(this).getCameraPermission(() -> takePhoto(GroupDetailActivity.this, HEADER_PIC));
+                break;
+            case R.id.ll_group_qr:
+
+                PersonalQRCodeDialog personalQRCodeDialog = new PersonalQRCodeDialog(this, "qr/" + qrCode);
+                personalQRCodeDialog.show();
+
                 break;
             case R.id.ll_group_name:
                 Intent intent = new Intent(this, GroupUpdataNameActivity.class);
@@ -515,6 +538,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 updataGroupInfo(title, headPortrait, "", "");
             }
         });
+
 
     }
 

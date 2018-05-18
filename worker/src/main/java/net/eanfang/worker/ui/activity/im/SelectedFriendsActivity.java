@@ -1,10 +1,14 @@
 package net.eanfang.worker.ui.activity.im;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -13,7 +17,12 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.model.GroupDetailBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.UuidUtil;
+import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
@@ -28,6 +37,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 
 public class SelectedFriendsActivity extends BaseWorkerActivity {
 
@@ -35,9 +45,38 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
     RecyclerView recyclerView;
     private FriendsAdapter mFriendsAdapter;
     private ArrayList<String> mUserIdList = new ArrayList<String>();
-    private int mFlag;
-    private String mGroupId;
+    private ArrayList<String> mUserIconList = new ArrayList<String>();
     private FriendListBean mCurrentBean;
+
+    private int mFlag;
+    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private String mGroupId;
+    private String mRYGroupId;
+    private String mTitle;
+
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String path = (String) msg.obj;
+
+            if (!TextUtils.isEmpty(path)) {
+                String inageKey = UuidUtil.getUUID() + ".png";
+                OSSUtils.initOSS(SelectedFriendsActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SelectedFriendsActivity.this, false) {
+
+                    @Override
+                    public void onOssSuccess() {
+//                        super.onOssSuccess();
+                        updataGroupInfo(mTitle, inageKey, "", "");
+                    }
+                });
+                SelectedFriendsActivity.this.setResult(RESULT_OK);
+                SelectedFriendsActivity.this.endTransaction(true);
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +103,9 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
         } else {
             setRightTitle("确定");
             mGroupId = getIntent().getStringExtra("groupId");
+            mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+            mRYGroupId = getIntent().getStringExtra("ryGroupId");
+            mTitle = getIntent().getStringExtra("title");
         }
 
         setRightTitleOnClickListener(new View.OnClickListener() {
@@ -83,6 +125,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
 
                         Intent intent = new Intent(SelectedFriendsActivity.this, GroupCreatActivity.class);
                         intent.putStringArrayListExtra("userIdList", mUserIdList);
+                        intent.putStringArrayListExtra("userIconList", mUserIconList);
                         startActivity(intent);
                     }
                 } else {
@@ -137,6 +180,13 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
             return;
         }
 
+        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+            mUserIconList.add(bean.getAccountEntity().getAvatar());
+        }
+        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        CompoundHelper.getInstance().sendBitmap(this, handler, mUserIconList);//生成图片
+
+
         JSONArray array = new JSONArray();
         JSONObject object = null;
         for (String s : mUserIdList) {
@@ -172,9 +222,11 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
+                        mUserIconList.remove(bean.getAvatar());
                         bean.setFlag(0);
                     } else {
                         mUserIdList.add(bean.getAccId());
+                        mUserIconList.add(bean.getAvatar());
                         bean.setFlag(1);
                         mCurrentBean = bean;
                     }
@@ -182,5 +234,40 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 更新群组信息
+     */
+    public void updataGroupInfo(String title, String imgKey, String transfer, String notice) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("groupId", mGroupId);
+
+            if (!TextUtils.isEmpty(title)) {
+                jsonObject.put("groupName", title);
+            }
+            if (!TextUtils.isEmpty(imgKey)) {
+                jsonObject.put("headPortrait", imgKey);
+            }
+            if (!TextUtils.isEmpty(transfer)) {
+                jsonObject.put("create_user", transfer);
+            }
+            if (!TextUtils.isEmpty(notice)) {
+                jsonObject.put("notice", notice);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //创建群组
+        EanfangHttp.post(UserApi.POST_UPDATA_GROUP)
+                .upJson(jsonObject)
+                .execute(new EanfangCallback<JSONObject>(SelectedFriendsActivity.this, false, JSONObject.class, (JSONObject) -> {
+                    Group groupInfo = new Group(mRYGroupId, title, Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+                    RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+
+                }));
     }
 }
