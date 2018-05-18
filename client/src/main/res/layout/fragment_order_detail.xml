@@ -383,7 +383,7 @@
                         android:visibility="visible" />
 
                     <TextView
-                        android:id="@+id/tv_count_money"
+                        android:id="@+id/tv_orderMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -395,7 +395,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_do_second"
+                    android:id="@+id/tv_doPay"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -430,6 +430,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_bottomLeft"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -441,7 +442,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_bottom_right"
+                    android:id="@+id/tv_bottomRight"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

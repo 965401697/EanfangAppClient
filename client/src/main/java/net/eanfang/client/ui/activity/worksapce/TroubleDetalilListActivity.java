@@ -93,15 +93,14 @@ public class TroubleDetalilListActivity extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("故障处理");
-        tvRight.setText("23233");
         listTrouble.setLayoutManager(new LinearLayoutManager(mContext));
     }
 
     private void jump(int position) {
         if (isPhoneSolve == 0) {
-            intent = new Intent(mContext, TroubleDetailActivity.class);
+            intent = new Intent(mContext, TroubleDetailActivity.class);// 电话未解决
         } else {
-            intent = new Intent(mContext, PsTroubleDetailActivity.class);
+            intent = new Intent(mContext, PsTroubleDetailActivity.class);// 电话解决
         }
         intent.putExtra("orderId", mDataList.get(position).getId());
         intent.putExtra("repairOrderId", mDataList.get(position).getBusRepairOrderId());
