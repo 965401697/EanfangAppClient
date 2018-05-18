@@ -33,8 +33,11 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeUserEntity().getAccountEntity().getAvatar()));
         }
         // 公司名称
-        helper.setText(R.id.tv_companyName, item.getWorkerEntity().getCompanyEntity().getOrgName());
-        helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
+        if (item.getWorkerEntity() != null) {
+            helper.setText(R.id.tv_companyName, item.getWorkerEntity().getCompanyEntity().getOrgName());
+            helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
+        }
+
 //        helper.setText(R.id.tv_time, item.getCreateTime());
         if (item.getWorkerEntity() != null) {
             if (item.getWorkerEntity().getPublicPraise() != 0) {

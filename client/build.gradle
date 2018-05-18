@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1805051
-        versionName "2.2.2"
+        versionCode 1805111
+        versionName "2.2.4"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
@@ -108,5 +108,6 @@ dependencies {
     implementation project(':zxing')
     implementation project(':IMKit')
     implementation project(':IMLib')
+    implementation 'com.google.android:flexbox:0.2.2'
 }
 

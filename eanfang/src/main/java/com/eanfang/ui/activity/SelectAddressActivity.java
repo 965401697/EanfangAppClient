@@ -48,8 +48,6 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     RecyclerView mRecyclerView;
     @BindView(R2.id.atv_text)
     TextView atvText;
-    @BindView(R2.id.btn_search)
-    ImageButton btnSearch;
     @BindView(R2.id.map)
     MapView mMapView;
 
@@ -90,19 +88,19 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     private void initView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        atv_text.setOnClickListener(this);
-        btnSearch.setOnClickListener((view) -> {
-
-            InputMethodManager imm = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            String keyword = atvText.getText().toString().trim();
-            if (keyword.length() > 0) {
-                isSearch = true;
-                doSearchQuery(keyword, null);
-            } else {
-                showToast("请输入要查找的地址");
-            }
-        });
+//        btnSearch.setOnClickListener((view) -> {
+//
+//            InputMethodManager imm = (InputMethodManager)
+//                    getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//            String keyword = atvText.getText().toString().trim();
+//            if (keyword.length() > 0) {
+//                isSearch = true;
+//                doSearchQuery(keyword, null);
+//            } else {
+//                showToast("请输入要查找的地址");
+//            }
+//        });
 //        btnFuwei.setOnClickListener(v -> {
 //            locationUtil.startOnce();
 //        });

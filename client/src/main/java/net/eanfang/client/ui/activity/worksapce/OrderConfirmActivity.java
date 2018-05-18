@@ -76,14 +76,52 @@ public class OrderConfirmActivity extends BaseClientActivity {
         initData();
         initAdapter();
         registerListener();
-        setLeftBack();
 
+    }
+
+    private void initView() {
+        llm = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(llm);
+        scrollView.smoothScrollTo(0, 20);
+        setLeftBack();
         setTitle("订单确认");
+
+    }
+
+    private void initData() {
+        tvContact.setText(repairOrderEntity.getRepairContacts());
+        tvPhone.setText(repairOrderEntity.getRepairContactPhone());
+        tvCompany.setText(repairOrderEntity.getRepairCompany());
+        if (repairOrderEntity.getArriveTimeLimit() >= 0) {
+            tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
+        }
+        tvAddress.setText(Config.get().getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
+
+        mDataList = (ArrayList<RepairBugEntity>) repairOrderEntity.getBugEntityList();
+    }
+
+    private void initAdapter() {
+        BaseQuickAdapter evaluateAdapter = new RepairOrderConfirmAdapter(R.layout.item_order_confirm, mDataList);
+        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.ll_item) {
+                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+                    if (secondItem.getVisibility() == View.VISIBLE) {
+                        secondItem.setVisibility(View.GONE);
+                    } else {
+                        secondItem.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+        mRecyclerView.setAdapter(evaluateAdapter);
     }
 
     private void getData() {
         Intent intent = getIntent();
-        repairOrderEntity = V.v(()->(RepairOrderEntity) intent.getSerializableExtra("bean"));
+        repairOrderEntity = V.v(() -> (RepairOrderEntity) intent.getSerializableExtra("bean"));
     }
 
     private void registerListener() {
@@ -156,46 +194,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
-        finish();
-    }
-
-
-    private void initView() {
-        llm = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(llm);
-        scrollView.smoothScrollTo(0, 20);
-
-    }
-
-    private void initData() {
-        tvContact.setText(repairOrderEntity.getRepairContacts());
-        tvPhone.setText(repairOrderEntity.getRepairContactPhone());
-        tvCompany.setText(repairOrderEntity.getRepairCompany());
-        if (repairOrderEntity.getArriveTimeLimit() >= 0) {
-            tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
-        }
-        tvAddress.setText(Config.get().getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
-
-        mDataList = (ArrayList<RepairBugEntity>) repairOrderEntity.getBugEntityList();
-    }
-
-    private void initAdapter() {
-        BaseQuickAdapter evaluateAdapter = new RepairOrderConfirmAdapter(R.layout.item_order_confirm, mDataList);
-        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        });
-        mRecyclerView.setAdapter(evaluateAdapter);
+        finishSelf();
     }
 
 }

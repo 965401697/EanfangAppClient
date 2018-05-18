@@ -10,17 +10,16 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1805051
-        versionName "2.2.2"
+        versionCode 1805111
+        versionName "2.2.4"
         multiDexEnabled true
-
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
 
-//        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
-//        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
+        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
 
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
@@ -28,11 +27,8 @@ android {
 //        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 //
-//        buildConfigField("String", "HOST", "\"http://192.168.0.220:8080\"")
-//        buildConfigField("String", "API_HOST", "\"http://192.168.0.220:8080\"")
-
-        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.119:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.119:8080\"")
 
     }
 
@@ -59,6 +55,7 @@ android {
             buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
+
 
             //Zipalign优化
             zipAlignEnabled true

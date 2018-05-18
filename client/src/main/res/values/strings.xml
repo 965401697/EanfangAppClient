@@ -42,8 +42,15 @@
     <string name="private_chat">发起聊天</string>
     <string name="group_chat">创建群组</string>
     <string name="add_contacts">添加好友</string>
-
+    <string name="group_qrt">群二维码</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="group_qrt">群二维码</string>
+
+    <string name="text_repair_personalinfo">用户信息</string>
+    <string name="text_repair_contactslinfo">联系人信息</string>
+    <string name="text_repair_selectlocation">选择定位</string>
+    <string name="text_repair_arrivetime">到达时限:</string>
+    <string name="text_next">下一步</string>
+    <string name="text_fault">故障</string>
+    <string name="text_worker_detail_see_more_type">查看更多业务标签</string>
 </resources>

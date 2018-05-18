@@ -27,9 +27,8 @@ import com.yaf.base.entity.RepairOrderEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
-import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
@@ -51,6 +50,7 @@ public class OrderListFragment extends BaseFragment implements
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
+            intent.putExtra("title", mTitle);
             startActivity(intent);
         }
     };

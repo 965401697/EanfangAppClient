@@ -1,8 +1,10 @@
 package net.eanfang.client.ui.fragment.customservice;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.CallUtils;
 
 import net.eanfang.client.R;
 
@@ -12,6 +14,8 @@ import net.eanfang.client.R;
  * @decision 企业用户
  */
 public class CompanyServiceFragment extends BaseFragment {
+
+    private TextView tvServicePhone;
 
     public static CompanyServiceFragment getInstance() {
         CompanyServiceFragment companyServiceFragment = new CompanyServiceFragment();
@@ -31,11 +35,11 @@ public class CompanyServiceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        tvServicePhone = findViewById(R.id.tv_service_phone);
     }
 
     @Override
     protected void setListener() {
-
+        tvServicePhone.setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
     }
 }

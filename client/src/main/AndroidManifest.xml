@@ -42,14 +42,8 @@
 
     <!-- 生成快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
-    <!-- 用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 用于获取运营商信息，用于支持提供运营商信息相关的接口 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于申请调用A-GPS模块 -->
@@ -199,7 +193,7 @@
         <activity android:name=".ui.activity.worksapce.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectWorkerActivity" />
-        <activity android:name=".ui.activity.worksapce.RepairCtrlActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairCtrlActivity" />
         <activity android:name=".ui.activity.pay.PayActivity" />
         <activity android:name=".ui.activity.worksapce.StateChangeActivity" />
         <activity android:name=".ui.activity.worksapce.FaPiaoActivity" />
@@ -341,6 +335,7 @@
         <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
         <!-- 融云的系统消息 -->
         <activity android:name=".ui.activity.im.SystemMessageActivity" />
+
         <!--群内成员禁言-->
         <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
         <!--视频文件选择-->
@@ -364,6 +359,9 @@
         <activity
             android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"
             android:screenOrientation="portrait" />
+        <!-- 报修选择页面  我要报修/报修管控 -->
+        <activity android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

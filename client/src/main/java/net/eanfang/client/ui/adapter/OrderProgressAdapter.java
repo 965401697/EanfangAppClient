@@ -1,12 +1,17 @@
 package net.eanfang.client.ui.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.OrderProgressBean;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import net.eanfang.client.R;
@@ -23,6 +28,7 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
     private TimelineView timelineView;
     private OrderProgressBean orderProgressBean;
     private String tempText;
+    private LinearLayout mOrderFinish;
 
     public OrderProgressAdapter(int layoutResId, List<OrderProgressBean> data) {
         super(layoutResId, data);
@@ -35,6 +41,7 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
                 .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
                 .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
         timelineView = helper.getView(R.id.time_marker);
+        mOrderFinish = helper.getView(R.id.ll_orderFinish);
         Drawable marker = mContext.getResources().getDrawable(R.drawable.ic_check);
         Drawable unmarker = mContext.getResources().getDrawable(R.drawable.ic_up_backs);
 
@@ -73,6 +80,8 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
             case 5:
                 helper.setText(R.id.tv_progress, " 订单完成");
                 helper.setText(R.id.tv_progressTime, tempText);
+                mOrderFinish.setVisibility(View.VISIBLE);
+                timelineView.setVisibility(View.GONE);
                 break;
             case 6:
                 helper.setText(R.id.tv_progress, "订单已取消");
