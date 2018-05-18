@@ -38,7 +38,6 @@ public class OrderDetailActivity extends BaseClientActivity implements OnTabSele
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private Long id;
-    private String title = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +46,8 @@ public class OrderDetailActivity extends BaseClientActivity implements OnTabSele
         //loading加载动画
         loadingDialog.show();
         id = getIntent().getLongExtra("id", 0);
-        title = getIntent().getStringExtra("title");
 
-        mFragments.add(OrderDetailFragment.getInstance(id, title));
+        mFragments.add(OrderDetailFragment.getInstance(id));
         mFragments.add(OrderProgressFragment.getInstance(id));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);

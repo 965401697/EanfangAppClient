@@ -166,6 +166,13 @@ public class OrderListFragment extends BaseFragment implements
                         }
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认").show();
                         break;
+                    case R.id.tv_finish:
+                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
+                        break;
                     default:
                         break;
                 }

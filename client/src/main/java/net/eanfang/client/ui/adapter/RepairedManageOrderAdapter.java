@@ -27,7 +27,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             false, false, false, false, true, true, false
     };
     private String[] doSomethingClient = {
-            "立即支付", "联系技师", "联系技师",
+            "立即付款", "联系技师", "联系技师",
             "联系技师", "确认完工", "评价技师", "联系技师"
     };
     private String[] doSomething;
@@ -64,15 +64,17 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
 //        helper.setText(R.id.tv_count_money, "" + item.getDoorfee());
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
-//        helper.setText(R.id.tv_bug_one, "类别：" + Config.getConfig().
-//                getBusinessName(item.getBugEntityList().get(helper.getPosition()).getBusinessThreeCode()));
-        helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
-        helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);
 
-        if (item.getStatus() == 2) {
-            helper.setText(R.id.tv_do_first, "改约");
+        helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);
+        helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
+
+        // 待验收
+        if (item.getStatus() == 4) {
+            helper.setVisible(R.id.tv_finish, true);
+
+            helper.setVisible(R.id.tv_do_first, false);
         } else if (item.getStatus() == 5) {
-            helper.setText(R.id.tv_do_first, "查看故障处理");
+            helper.setText(R.id.tv_do_first, "完工报告");
             if (item.getWorkerEvaluateId() == null || item.getWorkerEvaluateId().longValue() <= 0) {
                 helper.setVisible(R.id.tv_do_second, true);
             } else {
@@ -92,6 +94,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         }
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);
+        helper.addOnClickListener(R.id.tv_finish);
 
     }
 }
