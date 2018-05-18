@@ -1,10 +1,12 @@
 package com.eanfang.model.device;
 
+import java.io.Serializable;
+
 /**
  * Created by O u r on 2018/4/27.
  */
 
-public class User {
+public class User implements Serializable {
 
     /**
      * accId : 983165293854535681
@@ -40,7 +42,16 @@ public class User {
     private String rcloudToken;
     private String realName;
     private String regTime;
+    private String areaCode;
     private int status;
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
 
     public String getAccId() {
         return accId;

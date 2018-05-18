@@ -1,67 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.im.IMPresonInfoActivity">
 
     <include layout="@layout/header" />
 
     <RelativeLayout
+        android:id="@+id/rl_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_20">
+        android:layout_height="@dimen/dimen_140"
+        android:background="@color/white">
 
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_header"
-            android:layout_width="@dimen/dimen_120"
-            android:layout_height="@dimen/dimen_120"
-            fresco:placeholderImage="@mipmap/ic_launcher" />
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_36"
+            fresco:placeholderImage="@mipmap/ic_header"
+            fresco:roundAsCircle="true" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_marginTop="@dimen/dimen_30"
             android:layout_toRightOf="@+id/iv_header"
-            android:text="名字" />
+            android:text="名字"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
 
         <TextView
             android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name"
-            android:layout_marginLeft="@dimen/dimen_20"
-            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_14"
             android:layout_toRightOf="@+id/iv_header"
-            android:text="13001011991" />
+            android:text="13001011991"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_14" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_chat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_20"
-        android:gravity="center"
-        android:padding="@dimen/dimen_20"
-        android:background="@mipmap/ic_work_top_back"
-        android:textColor="@android:color/white"
-        android:text="发起会话" />
 
     <TextView
         android:id="@+id/tv_clear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_20"
-        android:background="@mipmap/ic_work_top_back"
-        android:gravity="center"
-        android:padding="@dimen/dimen_20"
-        android:textColor="@android:color/white"
-        android:text="清除聊天记录" />
+        android:layout_height="@dimen/dimen_90"
+        android:layout_marginTop="@dimen/dimen_38"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_34"
+        android:text="清除聊天记录"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_15" />
 
 </LinearLayout>

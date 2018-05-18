@@ -24,10 +24,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
  */
 public class PersonalQRCodeDialog extends Dialog {
     private Context context;
+    private String mPath;
 
-    public PersonalQRCodeDialog(Context context) {
+    public PersonalQRCodeDialog(Context context, String path) {
         super(context, R.style.CustomDialog);
         this.context = context;
+        this.mPath = path;
     }
 
     @Override
@@ -36,12 +38,12 @@ public class PersonalQRCodeDialog extends Dialog {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.layout_personal_qrcode, null);
         setContentView(view);
-        initView(view);
+        initView(view, mPath);
     }
 
-    private void initView(View view) {
+    private void initView(View view, String path) {
         SimpleDraweeView mIvPersonalQRCode = (SimpleDraweeView) view.findViewById(R.id.iv_personalQRCode);
         // 个人二维码
-        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode()));
+        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + path));
     }
 }

@@ -129,7 +129,7 @@ public class MyFragment extends BaseFragment {
         });
         // 二维码头像
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity());
+            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(),"qr/" + EanfangApplication.get().getUser().getAccount().getQrCode());
             personalQRCodeDialog.show();
         });
 

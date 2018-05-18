@@ -51,6 +51,15 @@ public class GroupDetailBean implements Serializable {
         private String headPortrait;
         private String rcloudGroupId;
         private String notice;
+        private String qrCode;
+
+        public String getQrCode() {
+            return qrCode;
+        }
+
+        public void setQrCode(String qrCode) {
+            this.qrCode = qrCode;
+        }
 
         public String getNotice() {
             return notice;

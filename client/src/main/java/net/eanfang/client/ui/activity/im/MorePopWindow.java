@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
+import com.project.eanfang.zxing.android.CaptureActivity;
+
 import net.eanfang.client.R;
 
 
@@ -49,6 +51,7 @@ public class MorePopWindow extends PopupWindow {
         RelativeLayout re_addfriends = (RelativeLayout) content.findViewById(R.id.re_addfriends);
         RelativeLayout re_chatroom = (RelativeLayout) content.findViewById(R.id.re_chatroom);
         RelativeLayout re_scanner = (RelativeLayout) content.findViewById(R.id.re_scanner);
+        RelativeLayout re_group = (RelativeLayout) content.findViewById(R.id.re_group);
         re_addfriends.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -71,6 +74,16 @@ public class MorePopWindow extends PopupWindow {
 
         });
         re_scanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(new Intent(context, AddFriendActivity.class));
+                intent.putExtra("add_friend", "add_friend");
+                context.startActivity(intent);
+                MorePopWindow.this.dismiss();
+            }
+        });
+
+        re_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, AddFriendActivity.class));

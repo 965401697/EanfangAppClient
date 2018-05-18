@@ -1,18 +1,16 @@
 package net.eanfang.worker.ui.activity.im;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -36,12 +34,11 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
     TextView tvName;
     @BindView(R.id.tv_phone)
     TextView tvPhone;
-    @BindView(R.id.tv_chat)
-    TextView tvChat;
     @BindView(R.id.tv_clear)
     TextView tvClear;
     private String mUserId;
     private String mTitle;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,32 +51,33 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
         setTitle(mTitle);
         setLeftBack();
         initData();
+        startTransaction(true);
     }
 
     private void initData() {
         EanfangHttp.get(UserApi.POST_USER_INFO + mUserId)
                 .execute(new EanfangCallback<User>(IMPresonInfoActivity.this, false, User.class, (bean) -> {
-
+                    mUser = bean;
                     ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
                     tvName.setText(bean.getNickName());
                     tvPhone.setText(bean.getMobile());
 
-                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
                 }));
     }
 
-    @OnClick({R.id.tv_chat, R.id.tv_clear})
+    @OnClick({R.id.tv_clear, R.id.rl_info})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_chat:
-
-                finish();
-
-                break;
             case R.id.tv_clear:
 
                 cleanGroupMsg();
+                break;
+            case R.id.rl_info:
+                Intent intent = new Intent(IMPresonInfoActivity.this, IMCardActivity.class);
+                intent.putExtra("user", mUser);
+                startActivity(intent);
                 break;
         }
     }
@@ -108,4 +106,5 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
 
 
     }
+
 }
