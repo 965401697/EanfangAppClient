@@ -66,7 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:padding="5dp"
-            android:text="预约上门时间" />
+            android:text="预约上门时间"
+            android:textColor="@color/font_color" />
 
         <LinearLayout
             android:id="@+id/ll_door_time"

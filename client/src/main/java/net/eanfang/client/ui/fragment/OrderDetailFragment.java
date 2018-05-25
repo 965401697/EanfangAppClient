@@ -180,7 +180,7 @@ public class OrderDetailFragment extends BaseFragment {
             mFaultNum.setVisibility(View.GONE);
             return;
         }
-        mFaultNum.setText(mDataList.size());
+        mFaultNum.setText(mDataList.size() + "");
         BaseQuickAdapter evaluateAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -264,7 +264,7 @@ public class OrderDetailFragment extends BaseFragment {
                     if (bean.getOwnerUserId() <= 0) {
                         mLlOrderMoney.setVisibility(View.VISIBLE);
                         mLlOrderPay.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         mLlOrderMoney.setVisibility(View.GONE);
                         mLlOrderPay.setVisibility(View.GONE);
                     }
