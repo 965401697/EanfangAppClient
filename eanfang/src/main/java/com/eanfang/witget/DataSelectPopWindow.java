@@ -30,23 +30,26 @@ public class DataSelectPopWindow extends PopupWindow {
     private Activity context;
     private ListView mLvType;
     private List<String> list;
+    private TextView mTitle;
 
     public DataSelectPopWindow(Activity context, List<String> list, AdapterView.OnItemClickListener listener) {
-            this.context = context;
-            this.list = list;
-            View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
+        this.context = context;
+        this.list = list;
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
 
         mLvType = (ListView) view.findViewById(R.id.lv_type);
         MyAdapter adapter = new MyAdapter(context, list);
         mLvType.setAdapter(adapter);
         mLvType.setOnItemClickListener(listener);
+        mTitle = view.findViewById(R.id.tv_title);
 
+        mTitle.setText("请选择类型");
         setBackgroundDrawable(new ColorDrawable(0x70000000));
 
-        int width = (int) (ScreenUtils.widthPixels(context) * 0.7);
-        int height = (int) (ScreenUtils.heightPixels(context) * 0.4);
-        setWidth(width);
-        setHeight(height);
+//        int width = (int) (ScreenUtils.widthPixels(context) * 0.7);
+//        int height = (int) (ScreenUtils.heightPixels(context) * 0.4);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setFocusable(true);
         setOutsideTouchable(true);
         setContentView(view);

@@ -27,6 +27,7 @@ import net.eanfang.worker.ui.adapter.PublishTakeListAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.TaskPublishDetailView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
@@ -46,7 +47,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;
     PublishTakeListAdapter adapter;
-    private List<MineTaskListBean.ListBean> mDataList;
+    private List<MineTaskListBean.ListBean> mDataList = new ArrayList<>();
     private String mTitle;
     private int mType;
 
@@ -87,7 +88,9 @@ public class MineTakePublishListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-        mDataList = ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList();
+        if (((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList() != null) {
+            mDataList = ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList();
+        }
         adapter = new PublishTakeListAdapter(mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.addOnItemTouchListener(new OnItemClickListener() {
@@ -136,7 +139,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
                     break;
             }
         });
-            rvList.setAdapter(adapter);
+        rvList.setAdapter(adapter);
     }
 
 

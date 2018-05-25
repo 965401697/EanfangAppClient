@@ -110,6 +110,23 @@
         <item name="android:textColor">@color/roll_content</item>
         <item name="android:textSize">@dimen/textSize_12</item>
         <item name="android:background">@drawable/bg_client_worker_detail_type</item>
-        <item name="android:layout_margin">@dimen/dimen_10</item>
+    </style>
+
+    <style name="style_worker_detail_order">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_worker_detail_order_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dimen_28</item>
+        <item name="android:textColor">@color/color_client_neworder</item>
+        <item name="android:textSize">@dimen/textSize_13</item>
     </style>
 </resources>

@@ -372,6 +372,7 @@
         <activity
             android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
             android:screenOrientation="portrait" />
+
         <!-- 开店日志 -->
         <activity android:name=".ui.activity.worksapce.OpenShopLogActivity" />
         <!-- 开店日志详情 -->
@@ -384,6 +385,17 @@
         <activity android:name=".ui.activity.worksapce.DefendLogWriteAndDetailActivity" />
         <!--布防日志的二级填写和展示详情-->
         <activity android:name=".ui.activity.worksapce.DefendLogItemWriteAndDetailActivity" />
+
+        <!-- 扫码界面 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.ScanCodeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 登录确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity"></activity>
+
     </application>
 
 </manifest>

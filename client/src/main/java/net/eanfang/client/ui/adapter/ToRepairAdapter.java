@@ -35,7 +35,7 @@ public class ToRepairAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewH
         String bugThreeName = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
 
         helper.setText(R.id.tv_name, bugThreeName);
-        helper.setText(R.id.tv_num, helper.getPosition() + 1 + "");
+        helper.setText(R.id.tv_num, helper.getAdapterPosition() + 1 + "");
         helper.setText(R.id.tv_devicesNum, item.getDeviceNo());// 设备编号
         helper.setText(R.id.tv_devicesAdress, item.getBugPosition());
         helper.addOnClickListener(R.id.tv_delete);

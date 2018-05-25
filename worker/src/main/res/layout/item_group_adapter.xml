@@ -40,7 +40,7 @@
                 android:singleLine="true"
                 android:text=""
                 android:textColor="@color/black"
-                android:textSize="@dimen/textSize_12" />
+                android:textSize="@dimen/textSize_15" />
 
             <ImageView
                 android:id="@+id/iv_verify"

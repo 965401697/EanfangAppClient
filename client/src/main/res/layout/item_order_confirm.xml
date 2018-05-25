@@ -56,31 +56,97 @@
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_model"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="品牌型号：大华-DS-859034535"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_13" />
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tv_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_22"
-                    android:text="故障位置：奶粉排面"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_13" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备名称:"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
 
-                <TextView
-                    android:id="@+id/tv_number"
+                    <TextView
+                        android:id="@+id/tv_model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_22"
-                    android:text="设备编号：5452545"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_13" />
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备位置"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="维保状态:"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_deviceStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="维修历史:"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_devicesHistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

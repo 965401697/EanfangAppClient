@@ -181,7 +181,7 @@ public class OrderListFragment extends BaseFragment implements
             case 5:
                 switch (view.getId()) {
 
-                    case R.id.tv_do_first:
+                    case R.id.tv_do_first://  完工报告
                         if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
                             showToast("当前订单负责人可以操作");
                             return;
@@ -189,7 +189,7 @@ public class OrderListFragment extends BaseFragment implements
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
 
                         break;
-                    case R.id.tv_do_second:
+                    case R.id.tv_do_second:// 评价技师
                         if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
                             showToast("当前订单负责人可以操作");
                             return;

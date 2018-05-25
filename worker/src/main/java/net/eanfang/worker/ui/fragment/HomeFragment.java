@@ -20,7 +20,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CheckSignPermission;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
-import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -28,6 +27,7 @@ import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsLi
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
+import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 import net.eanfang.worker.ui.widget.InstallCtrlView;
 import net.eanfang.worker.ui.widget.MaintainCtrlView;
@@ -145,7 +145,7 @@ public class HomeFragment extends BaseFragment {
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
 
-            startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+            startActivity(new Intent(getActivity(), ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
 
     }
@@ -285,7 +285,7 @@ public class HomeFragment extends BaseFragment {
         clientDataFour.setStatusThree(8);
         clientDataList.add(clientDataFour);
 
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data,clientDataList);
+        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data, clientDataList);
         rvData.setAdapter(homeDataAdapter);
     }
 }

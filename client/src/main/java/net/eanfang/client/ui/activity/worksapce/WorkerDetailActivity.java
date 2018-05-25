@@ -1,13 +1,18 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -22,10 +27,11 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.witget.ArcProgressView;
+import com.eanfang.witget.CustomRadioGroup;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
@@ -46,7 +52,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
-
 
 /**
  * 技师详情
@@ -81,10 +86,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
     LinearLayout llArea;
     @BindView(R.id.rv_list1)
     RecyclerView rvList1;
-    @BindView(R.id.rv_list2)
-    RecyclerView rvList2;
-    @BindView(R.id.rv_list3)
-    RecyclerView rvList3;
     @BindView(R.id.iv_pic1)
     SimpleDraweeView ivPic1;
     @BindView(R.id.iv_pic2)
@@ -109,15 +110,45 @@ public class WorkerDetailActivity extends BaseClientActivity {
     MaterialRatingBar rbStar5;
     @BindView(R.id.tv_select)
     TextView tvSelect;
+    // 业务类型 动态view
+    @BindView(R.id.rg_type)
+    CustomRadioGroup rgType;
+    @BindView(R.id.rl_allType)
+    RelativeLayout rlAllType;
+    // 业务领域 动态view
+    @BindView(R.id.rg_area)
+    CustomRadioGroup rgArea;
+    @BindView(R.id.rl_allArea)
+    RelativeLayout rlAllArea;
+    // 头部好评率
+    @BindView(R.id.arcprogressview)
+    ArcProgressView arcprogressview;
+    // 口碑分
+    @BindView(R.id.tv_mouthGrade)
+    TextView tvMouthGrade;
+    // 好评率分
+    @BindView(R.id.tv_goodGrade)
+    TextView tvGoodGrade;
+    // 业务类型查看更多
+    @BindView(R.id.iv_workerDetaiTypelDown)
+    ImageView ivWorkerDetaiTypelDown;
+    private boolean isTypeMore = false;
+    // 业务领域查看更多
+    @BindView(R.id.iv_workerDetailAreaDown)
+    ImageView ivWorkerDetailAreaDown;
+    private boolean isAreaMore = false;
     private String id;
 
+    // 服务区域
     private ArrayList<String> mDataList1;
+    // 服务类型
     private ArrayList<String> mDataList2;
+    private ArrayList<String> mTypeSmall = new ArrayList<>();
+    // 业务类型
     private ArrayList<String> mDataList3;
+    private ArrayList<String> mAreaSmall = new ArrayList<>();
 
     private BaseQuickAdapter evaluateAdapter1;
-    private BaseQuickAdapter evaluateAdapter2;
-    private BaseQuickAdapter evaluateAdapter3;
 
     private RepairOrderEntity toRepairBean;
     private WorkerEntity detailsBean;
@@ -129,6 +160,11 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private String workerId = "";
 
     private boolean isCollect;
+
+    // 传到下个页面 头像 名称 公司名
+    private String headUrl = "";
+    private String workerName = "";
+    private String comapnyName = "";
 
 
     @Override
@@ -143,8 +179,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private void initView() {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
-        rvList2.setLayoutManager(new GridLayoutManager(this, 2));
-        rvList3.setLayoutManager(new GridLayoutManager(this, 2));
 
         // 正常报修流程 获取数据
         toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
@@ -155,7 +189,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
         if (mQRWorkerEntity != null) {
             isComeIn = true;
-            tvSelect.setText("选他报修");
+            tvSelect.setText("选择该技师");
         }
         // 获取workid  userid
         if (isComeIn) {
@@ -232,6 +266,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
             } else {
                 intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
                 intent.putExtra("bean", toRepairBean);
+                intent.putExtra("headUrl", headUrl);
+                intent.putExtra("workName", workerName);
+                intent.putExtra("companyName", comapnyName);
             }
             startActivity(intent);
 
@@ -250,6 +287,49 @@ public class WorkerDetailActivity extends BaseClientActivity {
             } else {
                 rvList1.setVisibility(View.VISIBLE);
                 ivDown.setImageResource(R.mipmap.arrow_up);
+            }
+        });
+
+        // 业务类型查看更多
+        rlAllType.setOnClickListener((v) -> {
+            if (mDataList2.size() <= 4) {
+                showToast("暂无更多");
+                return;
+            }
+            if (!isTypeMore) {// 显示更多 默认不显示更多
+                addView(WorkerDetailActivity.this, rgType, mDataList2);
+                ivWorkerDetaiTypelDown.setImageResource(R.mipmap.ic_worker_detail_type_up);
+                isTypeMore = true;
+            } else {
+                mTypeSmall.clear();
+                mTypeSmall.add(mDataList2.get(0));
+                mTypeSmall.add(mDataList2.get(1));
+                mTypeSmall.add(mDataList2.get(2));
+                mTypeSmall.add(mDataList2.get(3));
+                addView(WorkerDetailActivity.this, rgType, mTypeSmall);
+                ivWorkerDetaiTypelDown.setImageResource(R.mipmap.ic_worker_detail_type_down);
+                isTypeMore = false;
+            }
+        });
+        // 业务领域查看更多
+        rlAllArea.setOnClickListener((v) -> {
+            if (mDataList3.size() <= 4) {
+                showToast("暂无更多");
+                return;
+            }
+            if (!isAreaMore) {// 显示更多 默认不显示更多
+                addView(WorkerDetailActivity.this, rgArea, mDataList3);
+                ivWorkerDetailAreaDown.setImageResource(R.mipmap.ic_worker_detail_type_up);
+                isAreaMore = true;
+            } else {
+                mAreaSmall.clear();
+                mAreaSmall.add(mDataList3.get(0));
+                mAreaSmall.add(mDataList3.get(1));
+                mAreaSmall.add(mDataList3.get(2));
+                mAreaSmall.add(mDataList3.get(3));
+                addView(WorkerDetailActivity.this, rgArea, mAreaSmall);
+                ivWorkerDetailAreaDown.setImageResource(R.mipmap.ic_worker_detail_type_down);
+                isAreaMore = false;
             }
         });
 
@@ -335,6 +415,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
         }
         if (bean.getAccountEntity() != null) {
             ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()));
+            headUrl = bean.getAccountEntity().getAvatar();
+            workerName = bean.getAccountEntity().getRealName();
+            comapnyName = bean.getCompanyEntity().getOrgName();
             tvRealname.setText(bean.getAccountEntity().getRealName());
             if (!StringUtils.isEmpty(bean.getAccountEntity().getAreaCode())) {
                 String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
@@ -342,6 +425,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             }
         }
         if (bean.getCompanyEntity() != null) {
+            comapnyName = bean.getCompanyEntity().getOrgName();
             tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
         }
         tvNumber.setText(V.v(() -> bean.getRepairCount()) + "单");
@@ -350,7 +434,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
             tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
             tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
+        // 技师编号
         tvCode.setText(V.v(() -> bean.getWorkerNumber()) + "");
+        // 口碑
+        tvMouthGrade.setText(V.v(() -> bean.getPublicPraise() + "分"));
+        // 好评率
+        tvGoodGrade.setText(V.v(() -> bean.getGoodRate() + "%"));
+        arcprogressview.setProgress(90);
 
         if (bean.getGoodRate() != 0) {
             tvHaopinglv.setText(bean.getGoodRate() + "%");
@@ -362,6 +452,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rbStar4.setRating(bean.getItem4());
         rbStar5.setRating(bean.getItem5());
 
+        // 服务区域
         mDataList1 = new ArrayList<>();
         new Thread(() -> {
             if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
@@ -372,20 +463,42 @@ public class WorkerDetailActivity extends BaseClientActivity {
             EventBus.getDefault().post(jsonObject);
         }).start();
 
-
+        // 服务类型
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
         List<Integer> serviceList = bean.getServiceList();
         if (serviceList != null && !serviceList.isEmpty()) {
             mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
+            if (mDataList2.size() <= 4) {
+                addView(WorkerDetailActivity.this, rgType, mDataList2);
+            } else {
+                mTypeSmall.add(mDataList2.get(0));
+                mTypeSmall.add(mDataList2.get(1));
+                mTypeSmall.add(mDataList2.get(2));
+                mTypeSmall.add(mDataList2.get(3));
+                addView(WorkerDetailActivity.this, rgType, mTypeSmall);
+            }
+//
         }
 
+        // 业务类型
         List<Integer> businessType = bean.getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
         if (businessType != null && !businessType.isEmpty()) {
             mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
+            if (mDataList3.size() <= 4) {
+                addView(WorkerDetailActivity.this, rgArea, mDataList3);
+            } else {
+                mAreaSmall.add(mDataList3.get(0));
+                mAreaSmall.add(mDataList3.get(1));
+                mAreaSmall.add(mDataList3.get(2));
+                mAreaSmall.add(mDataList3.get(3));
+                addView(WorkerDetailActivity.this, rgArea, mAreaSmall);
+            }
+
         }
+
         initAdapter();
         initHonor(bean);
     }
@@ -395,14 +508,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
         evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList1);
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         rvList1.setAdapter(evaluateAdapter1);
-
-        evaluateAdapter2 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList2);
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        rvList2.setAdapter(evaluateAdapter2);
 
-        evaluateAdapter3 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList3);
-        evaluateAdapter3.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        rvList3.setAdapter(evaluateAdapter3);
     }
 
 
@@ -467,5 +574,39 @@ public class WorkerDetailActivity extends BaseClientActivity {
     @Subscribe
     public void onEventMainThread() {
 
+    }
+
+    public static void addView(final Context context, CustomRadioGroup parent, List<String> list) {
+        parent.removeAllViews();
+        LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < list.size(); i++) {
+            final TextView textView = new TextView(context);
+            pa.setMargins(22, 22, 22, 30);
+            textView.setLayoutParams(pa);
+            textView.setText(list.get(i));
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextSize(12);
+            textView.setPadding(20, 20, 20, 20);
+            textView.setTextColor(Color.parseColor("#666666"));
+            textView.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
+            parent.addView(textView);
+        }
+    }
+
+    public static void addViewTwo(final Context context, CustomRadioGroup parent) {
+        parent.removeAllViews();
+        LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < 12; i++) {
+            final TextView textView = new TextView(context);
+            pa.setMargins(30, 12, 30, 12);
+            textView.setLayoutParams(pa);
+            textView.setText("发的");
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextSize(12);
+            textView.setPadding(30, 20, 30, 20);
+            textView.setTextColor(Color.parseColor("#666666"));
+            textView.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
+            parent.addView(textView);
+        }
     }
 }

@@ -12,9 +12,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.eanfang.config.EanfangConst;
-import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 
 /**
  * Created by O u r on 2018/5/2.
@@ -85,7 +85,7 @@ public class MorePopWindow extends PopupWindow {
             @Override
             public void onClick(View v) {
                 //跳转扫码页面
-                Intent intent = new Intent(context, CaptureActivity.class);
+                Intent intent = new Intent(context, ScanCodeActivity.class);
                 context.startActivity(intent);
                 MorePopWindow.this.dismiss();
             }

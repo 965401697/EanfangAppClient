@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
@@ -66,6 +68,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     private LocationUtil locationUtil;
 
     private boolean isSearch = false;
+    private LatLng mLatlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +107,31 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
 //        btnFuwei.setOnClickListener(v -> {
 //            locationUtil.startOnce();
 //        });
+        atvText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(SelectAddressActivity.this.getCurrentFocus().getWindowToken(), 0);
+                String keyword = atvText.getText().toString().trim();
+                if (keyword.length() > 0) {
+                    isSearch = true;
+                    doSearchQuery(keyword, mLatlng);
+                } else {
+                    showToast("请输入要查找的地址");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     private void initAdapter() {
@@ -124,6 +152,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
             }
         });
         locationUtil.onChanged = (keywords, latLng) -> {
+            mLatlng = latLng;
             locationUtil.setMarket(latLng);
             doSearchQuery("", latLng);
             // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系

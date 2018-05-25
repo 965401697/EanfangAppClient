@@ -318,6 +318,7 @@
         </activity>
         <!--个人群名片-->
         <activity android:name=".ui.activity.im.IMCardActivity"></activity>
+
         <!--打开文件-->
         <activity android:name=".ui.activity.im.FilePreviewExActivity">
             <intent-filter>
@@ -325,6 +326,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <!-- 扫码界面 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.ScanCodeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 登录确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

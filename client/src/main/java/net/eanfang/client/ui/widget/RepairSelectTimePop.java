@@ -29,6 +29,7 @@ public class RepairSelectTimePop extends PopupWindow {
     private Activity mContext;
     private ListView mLvType;
     private List<String> mTimeList;
+    private TextView mTitle;
 
     public RepairSelectTimePop(Activity context, List<String> list, AdapterView.OnItemClickListener listener) {
         this.mContext = context;
@@ -36,10 +37,11 @@ public class RepairSelectTimePop extends PopupWindow {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
 
         mLvType = (ListView) view.findViewById(R.id.lv_type);
+        mTitle = view.findViewById(R.id.tv_title);
         MyAdapter adapter = new MyAdapter(context, list);
         mLvType.setAdapter(adapter);
         mLvType.setOnItemClickListener(listener);
-
+        mTitle.setText("请选择到达时限");
         setBackgroundDrawable(new ColorDrawable(0x70000000));
 
 //        int width = (int) (ScreenUtils.widthPixels(context) * 0.9);
