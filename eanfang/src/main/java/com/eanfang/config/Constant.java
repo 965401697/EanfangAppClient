@@ -211,7 +211,19 @@ public interface Constant {
      */
     String WORK_STATUS = "WorkStatus";
     /**
-     * 31.推送类型
+     * 31.误报的报警原因
+     */
+    String FALSE_CAUSE = "FalseCause";
+    /**
+     * 32.旁路的报警原因
+     */
+    String BYPASS_CAUSE = "BypassCause";
+    /**
+     * 33.闯防的报警原因
+     */
+    String THROUGH_CAUSE = "ThroughCause";
+    /**
+     * 34.推送类型
      */
     String PUSH_TYPE = "PushType";
 

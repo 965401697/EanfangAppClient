@@ -22,6 +22,8 @@ import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
+import net.eanfang.client.ui.widget.DefendLogView;
+import net.eanfang.client.ui.widget.OpenShopLogView;
 import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.SignCtrlView;
 import net.eanfang.client.ui.widget.TaskCtrlView;
@@ -70,7 +72,7 @@ public class WorkspaceFragment extends BaseFragment {
             new CompanyListView(getActivity(), (name, url) -> {
                 if ("个人".equals(name)) {
                     tvCompanyName.setText(name + "(点击切换公司)");
-                }else{
+                } else {
                     tvCompanyName.setText(name);
                 }
                 if (url != null) {
@@ -190,6 +192,23 @@ public class WorkspaceFragment extends BaseFragment {
             new WorkCheckCtrlView(getActivity(), true).show();
         });
 
+        //开店日志
+        findViewById(R.id.tv_shop_log).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                new OpenShopLogView(getActivity(), true).show();
+            } else {
+                showToast("暂无权限");
+            }
+        });
+
+        //布防日志
+        findViewById(R.id.tv_defend_log).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                new DefendLogView(getActivity(), true).show();
+            } else {
+                showToast("暂无权限");
+            }
+        });
 
     }
 

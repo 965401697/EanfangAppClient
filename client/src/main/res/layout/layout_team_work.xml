@@ -66,9 +66,21 @@
             android:onClick="noOpen"
             android:text="@string/text_work_talk" />
 
-        <TextView style="@style/style_client_work_meun" />
+        <TextView
+            android:id="@+id/tv_shop_log"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_talk"
+            android:text="@string/text_opne_shop" />
 
-        <TextView style="@style/style_client_work_meun" />
+        <TextView
+            android:id="@+id/tv_defend_log"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_client_work_talk"
+            android:text="@string/text_defend_log" />
+
+<!--        <TextView style="@style/style_client_work_meun" />
+
+        <TextView style="@style/style_client_work_meun" />-->
 
     </LinearLayout>
 

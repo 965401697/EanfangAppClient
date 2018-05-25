@@ -18,8 +18,8 @@ android {
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
 
-        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
-        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+//        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
+//        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
 
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
@@ -27,8 +27,8 @@ android {
 //        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 //
-//        buildConfigField("String", "HOST", "\"http://192.168.0.119:8080\"")
-//        buildConfigField("String", "API_HOST", "\"http://192.168.0.119:8080\"")
+        buildConfigField("String", "HOST", "\"http://192.168.0.220:8080\"")
+        buildConfigField("String", "API_HOST", "\"http://192.168.0.220:8080\"")
 
     }
 
@@ -78,6 +78,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     //noinspection GradleCompatible
     compile 'com.android.support:support-v4:26.1.0'
     compile 'com.android.support:appcompat-v7:26.1.0'
@@ -177,6 +178,7 @@ dependencies {
     implementation files('libs/validation-api-1.0.0.GA.jar')
     implementation files('libs/hibernate-validator-4.2.0.Final.jar')
     compile 'com.jaeger.statusbarutil:library:1.4.0'
+    implementation files('libs/tbs_sdk_thirdapp_v3.2.0.1104_43200_sharewithdownload_withfilereader_withoutGame_obfs_20170609_115346.jar')
 }
 
 

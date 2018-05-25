@@ -336,14 +336,23 @@
         <!-- 融云的系统消息 -->
         <activity android:name=".ui.activity.im.SystemMessageActivity" />
 
-        <!--群内成员禁言-->
+        <!-- 群内成员禁言 -->
         <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
-        <!--视频文件选择-->
+        <!-- 视频文件选择 -->
         <activity android:name=".ui.activity.im.VideoSelectedActivity" />
-        <!--申请进群-->
+        <!-- 申请进群 -->
         <activity android:name=".ui.activity.im.AddGroupActivity">
             <intent-filter>
                 <action android:name="client_group" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 打开文件 -->
+        <activity android:name=".ui.activity.im.FilePreviewExActivity">
+            <intent-filter>
+                <action android:name="io.rong.imkit.intent.action.openfile" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -360,8 +369,21 @@
             android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"
             android:screenOrientation="portrait" />
         <!-- 报修选择页面  我要报修/报修管控 -->
-        <activity android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 开店日志 -->
+        <activity android:name=".ui.activity.worksapce.OpenShopLogActivity" />
+        <!-- 开店日志详情 -->
+        <activity android:name=".ui.activity.worksapce.OpenShopLogDetailActivity" />
+        <!-- 填写开店日志 -->
+        <activity android:name=".ui.activity.worksapce.OpenShopLogWriteActivity" />
+        <!--布防日志-->
+        <activity android:name=".ui.activity.worksapce.DefendLogActivity" />
+        <!--布防日志的填写和展示详情-->
+        <activity android:name=".ui.activity.worksapce.DefendLogWriteAndDetailActivity" />
+        <!--布防日志的二级填写和展示详情-->
+        <activity android:name=".ui.activity.worksapce.DefendLogItemWriteAndDetailActivity" />
     </application>
 
 </manifest>

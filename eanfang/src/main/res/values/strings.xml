@@ -56,6 +56,8 @@
     <string name="text_work_change">变更记录</string>
     <string name="text_work_file">在线文档</string>
     <string name="text_work_talk">面谈员工</string>
+    <string name="text_opne_shop">开店日志</string>
+    <string name="text_defend_log">布放日志</string>
 
     <string name="text_service_title">1.完善个人资料</string>
     <string name="text_service_join">2.加入/创建企业</string>
@@ -94,4 +96,5 @@
 
     <string name="text_edit_personal_info">编辑个人资料</string>
     <string name="text_change_personal_head">点击更换头像</string>
+    <string name="text_personal_head">头像</string>
 </resources>

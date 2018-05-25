@@ -241,5 +241,34 @@ public interface NewApiService {
 
     // 是否是技师 是 则返回个人信息
     String QR_GETACCOUNT = BuildConfig.API_HOST + "/yaf_sys/code/getAccount";
+    /**
+     * 开店日志提交数据
+     */
+    String OA_SUB_OPEN_SHOP = BuildConfig.API_HOST + "/yaf_oa/oaopenshoplog/insert";
+    /**
+     * 开店日志列表
+     */
+    String OA_OPEN_SHOP_LIST = BuildConfig.API_HOST + "/yaf_oa/oaopenshoplog/list";
+    /**
+     * 开店日志详情
+     */
+    String OA_OPEN_SHOP_DETAIL = BuildConfig.API_HOST + "/yaf_oa/oaopenshoplog/info";
+    /**
+     * 布防日志列表
+     */
+    String OA_DEFEND_LOG_LIST = BuildConfig.API_HOST + "/yaf_oa/protectionlog/list";
+    /**
+     * 提交布防日志
+     */
+    String OA_SUB_DEFEND_LOG = BuildConfig.API_HOST + "/yaf_oa/protectionlog/insert";
+    /**
+     * 布防日志详情
+     */
+    String OA_DEFEND_LOG_DETAIL = BuildConfig.API_HOST + "/yaf_oa/protectionlog/detail";
+    /**
+     * 布防日志状态更新
+     */
+    String OA__DEFEND_LOG_UPDATE = BuildConfig.API_HOST + "/yaf_oa/protectionlog/update";
+
 
 }

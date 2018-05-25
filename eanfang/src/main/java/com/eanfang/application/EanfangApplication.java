@@ -1,5 +1,7 @@
 package com.eanfang.application;
 
+import android.util.Log;
+
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.BarUtil.BarUtils;
@@ -17,6 +19,7 @@ import com.okgo.cookie.store.DBCookieStore;
 import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
+import com.tencent.smtt.sdk.QbSdk;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -43,7 +46,6 @@ public class EanfangApplication extends CustomeApplication {
     }
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -56,7 +58,18 @@ public class EanfangApplication extends CustomeApplication {
 //        mManager = DaoManager.getInstance();
 //        mManager.init(this);
         CameraApplication.init(this, true);
+        //初始换tbs
+        QbSdk.initX5Environment(this, new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
+                Log.e("zzw", "onCoreInitFinished");
+            }
 
+            @Override
+            public void onViewInitFinished(boolean b) {
+                Log.e("zzw", "onViewInitFinished= " + b);
+            }
+        });
     }
 
 

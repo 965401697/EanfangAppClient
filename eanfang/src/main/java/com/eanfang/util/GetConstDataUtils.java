@@ -121,6 +121,18 @@ public class GetConstDataUtils {
     private static List<String> noticeTypeList;
 
     private static List<String> dataList;//数据库查询数据集合
+    /**
+     * 误报的报警原因
+     */
+    private static List<String> flaseCauseList;
+    /**
+     * 旁路的报警原因
+     */
+    private static List<String> bypassCauseList;
+    /**
+     * 闯防的报警原因
+     */
+    private static List<String> throughCauseList;
 
     /**
      * 报修订单状态
@@ -640,5 +652,55 @@ public class GetConstDataUtils {
         return noticeTypeList;
     }
 
+    /**
+     * 旁路报警
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getBypassCause() {
+        if (bypassCauseList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (bypassCauseList == null) {
+                    bypassCauseList = Config.get().getConstBean().getData().getConst().get(Constant.BYPASS_CAUSE);
+                }
+            }
+        }
+        return bypassCauseList;
+    }
+
+    /**
+     * 闯防的报警原因
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getThroughCause() {
+        if (throughCauseList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (throughCauseList == null) {
+                    throughCauseList = Config.get().getConstBean().getData().getConst().get(Constant.THROUGH_CAUSE);
+                }
+            }
+        }
+        return throughCauseList;
+    }
+
+    /**
+     * .误报的报警原因
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getFlaseCause() {
+        if (flaseCauseList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (flaseCauseList == null) {
+                    flaseCauseList = Config.get().getConstBean().getData().getConst().get(Constant.FALSE_CAUSE);
+                }
+            }
+        }
+        return flaseCauseList;
+    }
 
 }
