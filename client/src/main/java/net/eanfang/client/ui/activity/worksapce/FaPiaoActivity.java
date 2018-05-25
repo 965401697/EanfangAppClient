@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.ApiService;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LookFaPiaoBean;
@@ -169,7 +169,7 @@ public class FaPiaoActivity extends BaseClientActivity {
                     json = JSON.toJSONString(zhuanPiaoBean);
                 }
 
-                EanfangHttp.post(ApiService.FA_PIAO)
+                EanfangHttp.post(NewApiService.FA_PIAO)
                         .tag(this)
                         .params("json", json.toString())
                         .execute(new EanfangCallback(FaPiaoActivity.this, true, JSONObject.class) {
@@ -234,7 +234,7 @@ public class FaPiaoActivity extends BaseClientActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        EanfangHttp.get(ApiService.LOOK_FA_PIAO)
+        EanfangHttp.get(NewApiService.LOOK_FA_PIAO)
                 .tag(this)
                 .params("json", object.toString())
                 .execute(new EanfangCallback<LookFaPiaoBean>(FaPiaoActivity.this, true, JSONObject.class) {

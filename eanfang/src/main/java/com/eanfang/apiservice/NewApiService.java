@@ -2,6 +2,8 @@ package com.eanfang.apiservice;
 
 import com.eanfang.BuildConfig;
 
+import static com.eanfang.apiservice.BaseService.BASE_URL;
+
 /**
  * Created by MrHou
  *
@@ -140,6 +142,11 @@ public interface NewApiService {
     String GET_PUSH_MSG_INFO = BuildConfig.API_HOST + "/yaf_sys/notice/info/";
     //推送消息  全部阅读
     String GET_PUSH_READ_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/readall/";
+    /**
+     * 获取推送消息数量
+     */
+    String GET_PUSH_COUNT = BuildConfig.API_HOST + "/yaf_sys/notice/count/sysBiz";
+
 
     /**
      * 新增报装
@@ -270,5 +277,36 @@ public interface NewApiService {
      */
     String OA__DEFEND_LOG_UPDATE = BuildConfig.API_HOST + "/yaf_oa/protectionlog/update";
 
+
+    /**
+     * 报装单确认
+     * post
+     */
+    String INSTALL_ORDER_CONFIRM = BASE_URL + "/installorderconfirm";
+    /**
+     * 收藏公司
+     * post
+     */
+
+    String COLLECTION_COMPANY_WORK = BASE_URL + "/collectinstallcompany";
+    /**
+     * 公司详情
+     * get
+     */
+
+    String COMPANY_DETAIL = BASE_URL + "/getworkcompanydetail";
+
+
+    /**
+     * 查看发票
+     * get
+     */
+    String LOOK_FA_PIAO = BASE_URL + "/getinvoicebyordernum";
+
+    /**
+     * 发票
+     * post
+     */
+    String FA_PIAO = BASE_URL + "/addinvoice";
 
 }

@@ -10,13 +10,13 @@
         android:layout_height="wrap_content"
         android:background="@mipmap/ic_work_top_back"
         android:orientation="vertical">
-<!--
+        <!--
 
-        <TextView
-            android:id="@+id/tv_homeTitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40" />
--->
+                <TextView
+                    android:id="@+id/tv_homeTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_40" />
+        -->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,19 +26,19 @@
                 android:id="@+id/iv_camera"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
 
             <ImageView
                 android:id="@+id/iv_add"
                 android:layout_width="@dimen/dimen_40"
                 android:layout_height="@dimen/dimen_40"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:padding="2dp"
                 android:src="@mipmap/ic_news_add" />
             <!--android:onClick="noOpen"-->
@@ -46,9 +46,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/iv_add"
                 android:layout_toRightOf="@id/iv_camera"
+                android:layout_centerVertical="true"
                 android:gravity="center"
                 android:text="消息"
                 android:textColor="@color/white"
@@ -74,23 +74,26 @@
             android:id="@+id/ll_system_notice"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="13dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_sys_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingEnd="20dp"
                 android:text="系统通知"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 
             <TextView
+                android:id="@+id/tv_sys_msg_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[打卡提醒]"
+                android:text=""
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_12" />
 
@@ -99,8 +102,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
+            android:layout_gravity="center_vertical"
             android:text="15:38"
             android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_12" />
@@ -127,8 +130,8 @@
             android:id="@+id/ll_msg_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="13dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="vertical">
@@ -155,8 +158,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginRight="12dp"
+            android:layout_gravity="center_vertical"
             android:text="15:38"
             android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_12" />

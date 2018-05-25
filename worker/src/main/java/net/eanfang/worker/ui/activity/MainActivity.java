@@ -173,11 +173,11 @@ public class MainActivity extends BaseActivity {
     private void initMessageCount(View indicator) {
         Badge qBadgeView = new QBadgeView(this)
                 .bindTarget(indicator.findViewById(R.id.tabImg))
-                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getVar())
+                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getVar() > 0 ? -1 : 0)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(-2, -2, true)
-                .setBadgeTextSize(10, true)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(14, true)
                 .setOnDragStateChangedListener((dragState, badge, targetView) -> {
                     //清除成功
                     if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity {
         //变量监听
         Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
             runOnUiThread(() -> {
-                qBadgeView.setBadgeNumber(var);
+                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
             });
         });
     }

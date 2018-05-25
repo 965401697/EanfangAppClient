@@ -15,7 +15,6 @@ import net.eanfang.client.R;
  */
 public class CompanyServiceFragment extends BaseFragment {
 
-    private TextView tvServicePhone;
 
     public static CompanyServiceFragment getInstance() {
         CompanyServiceFragment companyServiceFragment = new CompanyServiceFragment();
@@ -35,11 +34,10 @@ public class CompanyServiceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvServicePhone = findViewById(R.id.tv_service_phone);
     }
 
     @Override
     protected void setListener() {
-        tvServicePhone.setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
+        findViewById(R.id.tv_service_phone).setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
     }
 }
