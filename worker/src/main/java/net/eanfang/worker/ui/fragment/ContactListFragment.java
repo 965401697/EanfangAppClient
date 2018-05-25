@@ -114,34 +114,7 @@ public class ContactListFragment extends BaseFragment {
 
         findViewById(R.id.ll_system_notice).setOnClickListener(v -> startActivity(new Intent(getActivity(), SystemNoticeActivity.class)));
 
-
-        if (Var.get("ContactListFragment.messageCount").getVar() > 0) {
-            ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("新订单消息");
-        } else {
-            ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
-        }
-
-        Badge qBadgeView = new QBadgeView(getActivity())
-                .bindTarget(findViewById(R.id.tv_bus_msg))
-                .setBadgeNumber(Var.get("ContactListFragment.messageCount").getVar())
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true)
-                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-                    //清除成功
-                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), true, JSONObject.class));
-                        showToast("消息被清空了");
-//                        Var.get().setVar(0);
-                    }
-                });
-//        变量监听
-        Var.get("ContactListFragment.messageCount").setChangeListener((var) -> {
-            getActivity().runOnUiThread(() -> {
-                qBadgeView.setBadgeNumber(var);
-            });
-        });
+        doHttpNoticeCount();
 
         findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,6 +197,68 @@ public class ContactListFragment extends BaseFragment {
         }, true);
 
     }
+
+    private void doHttpNoticeCount() {
+        EanfangHttp.get(NewApiService.GET_PUSH_COUNT).execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
+            if (bean == null) {
+                return;
+            }
+            if (bean.containsKey("sys")) {
+                initSysCount(bean.getInteger("sys"));
+            }
+            if (bean.containsKey("biz")) {
+                initBizCount(bean.getInteger("biz"));
+            }
+        }));
+    }
+
+    private void initBizCount(Integer biz) {
+
+        if (biz > 0) {
+            ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("新消息");
+        } else {
+            ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
+        }
+        new QBadgeView(getActivity())
+                .bindTarget(findViewById(R.id.tv_bus_msg))
+                .setBadgeNumber(biz)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(11, true)
+                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+                    //清除成功
+                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
+                        showToast("消息被清空了");
+//                        Var.get().setVar(0);
+                    }
+                });
+    }
+
+    private void initSysCount(Integer sys) {
+        if (sys > 0) {
+            ((TextView) findViewById(R.id.tv_sys_msg_info)).setText("新消息");
+        } else {
+            ((TextView) findViewById(R.id.tv_sys_msg_info)).setText("没有新消息");
+        }
+        new QBadgeView(getActivity())
+                .bindTarget(findViewById(R.id.tv_sys_msg))
+                .setBadgeNumber(sys)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(11, true)
+                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+                    //清除成功
+                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
+                        showToast("消息被清空了");
+//                        Var.get().setVar(0);
+                    }
+                });
+    }
+
 
     /**
      * 设置群组信息提供者

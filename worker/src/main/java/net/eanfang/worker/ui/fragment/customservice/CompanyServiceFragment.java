@@ -21,11 +21,11 @@ import net.eanfang.worker.R;
  */
 public class CompanyServiceFragment extends BaseFragment {
 
-    private TextView tvServicePhone;
     public static CompanyServiceFragment getInstance() {
         CompanyServiceFragment companyServiceFragment = new CompanyServiceFragment();
         return companyServiceFragment;
     }
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_company;
@@ -38,12 +38,11 @@ public class CompanyServiceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvServicePhone = findViewById(R.id.tv_service_phone);
     }
 
     @Override
     protected void setListener() {
-        tvServicePhone.setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
+        findViewById(R.id.tv_server_phone).setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
     }
 
 }

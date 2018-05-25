@@ -18,9 +18,9 @@
         android:id="@+id/tabImg"
         android:layout_width="@dimen/dimen_36"
         android:layout_height="@dimen/dimen_36"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_12"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/main_tab_contact_selector" />
 
     <TextView
