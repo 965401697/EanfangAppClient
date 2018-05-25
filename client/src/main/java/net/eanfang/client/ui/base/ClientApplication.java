@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 
+import net.eanfang.client.ui.activity.im.SampleExtensionModule;
+
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
@@ -19,6 +22,8 @@ public class ClientApplication extends EanfangApplication {
         super.onCreate();
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
+
+            RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
         }
     }
 
