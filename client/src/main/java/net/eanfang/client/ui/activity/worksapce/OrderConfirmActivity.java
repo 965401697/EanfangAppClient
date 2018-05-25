@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -22,6 +24,7 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.V;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -60,11 +63,22 @@ public class OrderConfirmActivity extends BaseClientActivity {
     Button btnComplete;
     @BindView(R.id.sv)
     ScrollView scrollView;
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_realname)
+    TextView tvRealname;
+    @BindView(R.id.tv_company_name)
+    TextView tvCompanyName;
     private ArrayList<RepairBugEntity> mDataList = new ArrayList<>();
     private LinearLayoutManager llm;
 
     private RepairOrderEntity repairOrderEntity;
     private PayLogEntity payLogEntity;
+
+    //  头像 名称 公司名
+    private String headUrl = "";
+    private String workerName = "";
+    private String comapnyName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,13 +99,18 @@ public class OrderConfirmActivity extends BaseClientActivity {
         scrollView.smoothScrollTo(0, 20);
         setLeftBack();
         setTitle("订单确认");
-
+        headUrl = getIntent().getStringExtra("headUrl");
+        workerName = getIntent().getStringExtra("workName");
+        comapnyName = getIntent().getStringExtra("companyName");
     }
 
     private void initData() {
         tvContact.setText(repairOrderEntity.getRepairContacts());
         tvPhone.setText(repairOrderEntity.getRepairContactPhone());
         tvCompany.setText(repairOrderEntity.getRepairCompany());
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + headUrl));
+        tvRealname.setText(workerName);
+        tvCompanyName.setText(comapnyName);
         if (repairOrderEntity.getArriveTimeLimit() >= 0) {
             tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
         }

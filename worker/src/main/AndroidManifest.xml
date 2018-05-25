@@ -317,6 +317,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.im.IMCardActivity"></activity>
+        <!-- 扫码界面 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.ScanCodeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 登录确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

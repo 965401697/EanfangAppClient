@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.client.R;
 

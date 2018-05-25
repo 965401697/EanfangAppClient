@@ -336,14 +336,15 @@
         <!-- 融云的系统消息 -->
         <activity android:name=".ui.activity.im.SystemMessageActivity" />
 
-        <!--群内成员禁言-->
+        <!-- 群内成员禁言 -->
         <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
-        <!--视频文件选择-->
+        <!-- 视频文件选择 -->
         <activity android:name=".ui.activity.im.VideoSelectedActivity" />
-        <!--申请进群-->
+        <!-- 申请进群 -->
         <activity android:name=".ui.activity.im.AddGroupActivity">
             <intent-filter>
                 <action android:name="client_group" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -360,8 +361,18 @@
             android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"
             android:screenOrientation="portrait" />
         <!-- 报修选择页面  我要报修/报修管控 -->
-        <activity android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.worksapce.repair.RepairTypeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 扫码界面 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.ScanCodeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 登录确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity"></activity>
     </application>
 
 </manifest>

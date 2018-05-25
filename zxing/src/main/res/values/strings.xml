@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">zxing</string>
-    <string name="txt_put_qr_code">将二维码放入框内,即可自动扫描</string>
-    <string name="button_ok">OK</string>
-    <string name="msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
-</resources>

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
@@ -23,9 +24,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
-import com.project.eanfang.zxing.android.CaptureActivity;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+import com.journeyapps.barcodescanner.CaptureActivity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -42,6 +46,7 @@ import butterknife.OnClick;
 
 public class AddFriendActivity extends BaseClientActivity {
 
+    public final int CUSTOMIZED_REQUEST_CODE = 0x0000ffff;
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.recycler_view)
@@ -209,17 +214,32 @@ public class AddFriendActivity extends BaseClientActivity {
         switch (view.getId()) {
             case R.id.rl_scan_friend:
                 //跳转扫码页面
-                Intent intent = new Intent(AddFriendActivity.this, CaptureActivity.class);
+                Intent intent = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
                 intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
                 startActivity(intent);
                 break;
             case R.id.rl_scan_Group:
                 //跳转扫码页面
-                Intent in = new Intent(AddFriendActivity.this, CaptureActivity.class);
+                Intent in = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
                 in.putExtra("from", "client");
                 startActivity(in);
                 finish();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != CUSTOMIZED_REQUEST_CODE && requestCode != IntentIntegrator.REQUEST_CODE) {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
+        if (result.getContents() == null) {
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,26 +20,29 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
+import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.TroubleDetailAdapter;
+import net.eanfang.client.ui.adapter.TroubleHangListAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by MrHou
  *
  * @on 2017/11/24  10:52
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话未解决
  */
 
 public class TroubleDetailActivity extends BaseClientActivity {
@@ -51,9 +55,22 @@ public class TroubleDetailActivity extends BaseClientActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
+    // 录像机存储时限
+    @BindView(R.id.tv_videoStorage)
+    TextView tvVideoStorage;
+    //设备时间同步
+    @BindView(R.id.tv_deviceTime)
+    TextView tvDeviceTime;
+    // 报警打印机
+    @BindView(R.id.tv_policePriter)
+    TextView tvPolicePriter;
+    // 远传功能
+    @BindView(R.id.tv_policeDeliver)
+    TextView tvPoliceDeliver;
+    // 挂单记录
+    @BindView(R.id.rv_hangList)
+    RecyclerView rvHangList;
     private RecyclerView rv_trouble;
-    private TextView tv_over_time;
-    private TextView tv_repair_time;
     /**
      * 电视墙/操作台正面全貌 (3张)
      */
@@ -74,26 +91,19 @@ public class TroubleDetailActivity extends BaseClientActivity {
 
     private TextView tv_complete;
     private TextView tv_complaint;
-    //录像机天数
-    private TextView tv_store_time;
-    //报警打印功能
-    private TextView tv_print_on_alarm;
-    //所有设备时间同步
-    private TextView tv_time_right;
-    //各类设备数据远传功能
-    private TextView tv_machine_data_remote;
-    //遗留问题
-    private TextView tv_remain_question;
     //2017年7月21日
     //协助人员
     private TextView tv_team_worker;
-    private ImageView iv_left;
 
     private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
     private BughandleConfirmEntity bughandleConfirmEntity;
     private Long id, repairOrderId;
     private String status;
+
+    // 挂单List
+    private List<TransferLogEntity> transferLogEntityList = new ArrayList<>();
+    private TroubleHangListAdapter troubleHangListAdapter;
     /**
      * 电视墙/操作台正面全貌 (3张)
      */
@@ -115,12 +125,12 @@ public class TroubleDetailActivity extends BaseClientActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_fill_repair_info);
+        ButterKnife.bind(this);
 
         id = getIntent().getLongExtra("orderId", 0);
         repairOrderId = getIntent().getLongExtra("repairOrderId", 0);
         status = getIntent().getStringExtra("status");
         initView();
-        setTitle("故障处理");
         initData();
     }
 
@@ -134,29 +144,16 @@ public class TroubleDetailActivity extends BaseClientActivity {
     }
 
     private void initView() {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
-        iv_left.setVisibility(View.VISIBLE);
+        setTitle("完工报告");
+        setLeftBack();
         rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
-        tv_over_time = (TextView) findViewById(R.id.tv_over_time);
-        tv_repair_time = (TextView) findViewById(R.id.tv_repair_time);
         snpl_moment_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_moment_add_photos);
         snpl_monitor_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_monitor_add_photos);
         snpl_tools_package_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_tools_package_add_photos);
         snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
-        //2017年7月20日
         //两个操作按钮
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_complaint = (TextView) findViewById(R.id.tv_complaint);
-        //录像机天数
-        tv_store_time = (TextView) findViewById(R.id.tv_store_time);
-        //报警打印功能
-        tv_print_on_alarm = (TextView) findViewById(R.id.tv_print_on_alarm);
-        //所有设备时间同步
-        tv_time_right = (TextView) findViewById(R.id.tv_time_right);
-        //各类设备数据远传功能
-        tv_machine_data_remote = (TextView) findViewById(R.id.tv_machine_data_remote);
-        //遗留问题
-        tv_remain_question = (TextView) findViewById(R.id.tv_remain_question);
         //协作人员
         tv_team_worker = (TextView) findViewById(R.id.tv_team_worker);
 
@@ -169,7 +166,6 @@ public class TroubleDetailActivity extends BaseClientActivity {
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "010-5877-8731");
         });
-        iv_left.setOnClickListener((v) -> finishSelf());
     }
 
     private void flowConfirm() {
@@ -181,35 +177,46 @@ public class TroubleDetailActivity extends BaseClientActivity {
                 }));
     }
 
+    @SuppressLint("ResourceAsColor")
     private void setData() {
-        if (bughandleConfirmEntity.getOverTime()!=null) {
-            tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
-        }
-        if (bughandleConfirmEntity.getWorkHour()!=null) {
-            tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
-        }
         //录像机天数
-        tv_store_time.setText(GetConstDataUtils.getStoreDayList().get(bughandleConfirmEntity.getStoreDays()));
+        if ("".equals(bughandleConfirmEntity.getStoreDays())) {
+            tvVideoStorage.setBackgroundResource(R.drawable.bg_client_trouble_type);
+            tvVideoStorage.setTextColor(R.color.color_client_neworder);
+        } else {
+            tvVideoStorage.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
+            tvVideoStorage.setTextColor(R.color.color_white);
+        }
         //报警打印功能
-        if (bughandleConfirmEntity.getIsAlarmPrinter()!=null) {
-            tv_print_on_alarm.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsAlarmPrinter()));
+        if (bughandleConfirmEntity.getIsAlarmPrinter() == null) {
+            tvPolicePriter.setBackgroundResource(R.drawable.bg_client_trouble_type);
+            tvPolicePriter.setTextColor(R.color.color_client_neworder);
+        } else {
+            tvPolicePriter.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
+            tvPolicePriter.setTextColor(R.color.color_white);
         }
         //所有设备时间同步
-        if (bughandleConfirmEntity.getIsTimeRight()!=null) {
-            tv_time_right.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsTimeRight()));
+        if (bughandleConfirmEntity.getIsTimeRight() == null) {
+            tvDeviceTime.setBackgroundResource(R.drawable.bg_client_trouble_type);
+            tvDeviceTime.setTextColor(R.color.color_client_neworder);
+        } else {
+            tvDeviceTime.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
+            tvDeviceTime.setTextColor(R.color.color_white);
         }
         //各类设备数据远传功能
-        if (bughandleConfirmEntity.getIsMachineDataRemote()!=null) {
-            tv_machine_data_remote.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsMachineDataRemote()));
-        }
-        //遗留问题
-        if (bughandleConfirmEntity.getLeftoverProblem()!=null) {
-            tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
+        if (bughandleConfirmEntity.getIsMachineDataRemote() == null) {
+            tvPoliceDeliver.setBackgroundResource(R.drawable.bg_client_trouble_type);
+            tvPoliceDeliver.setTextColor(R.color.color_client_neworder);
+        } else {
+            tvPoliceDeliver.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
+            tvPoliceDeliver.setTextColor(R.color.color_white);
         }
         //协作人员
-        if (bughandleConfirmEntity.getTeamWorker()!=null) {
-            tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
-        }
+        // 目前先获取技师
+        tv_team_worker.setText(bughandleConfirmEntity.getCreateUserEntity().getAccountEntity().getRealName());
+//        if (bughandleConfirmEntity.getTeamWorker() != null) {
+//            tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
+//        }
         initAdapter();
 
         if (bughandleConfirmEntity.getFrontPictures() != null) {
@@ -237,7 +244,8 @@ public class TroubleDetailActivity extends BaseClientActivity {
 
     private void initAdapter() {
         mDataList = bughandleConfirmEntity.getDetailEntityList();
-        quotationDetailAdapter = new TroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
+        transferLogEntityList = bughandleConfirmEntity.getTransferLogEntityList();
+        quotationDetailAdapter = new TroubleDetailAdapter(R.layout.layout_trouble_adapter_item, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rv_trouble.setLayoutManager(new LinearLayoutManager(this));
@@ -250,6 +258,11 @@ public class TroubleDetailActivity extends BaseClientActivity {
                 startActivity(intent);
             }
         });
+        troubleHangListAdapter = new TroubleHangListAdapter(R.layout.layout_trouble_hanglist_item, transferLogEntityList);
+        rvHangList.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rvHangList.setLayoutManager(new LinearLayoutManager(this));
+        rvHangList.setAdapter(troubleHangListAdapter);
     }
 
     private void initNinePhoto() {

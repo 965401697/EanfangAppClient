@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.datastatistics;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
@@ -90,7 +91,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
                 dataSelectPopWindow.backgroundAlpha(1.0f);
             }
         });
-        dataSelectPopWindow.showAsDropDown(tvDataSelectType);
+        dataSelectPopWindow.showAtLocation(findViewById(R.id.ll_datastatistics), Gravity.BOTTOM, 0, 0);
     }
 
     /**

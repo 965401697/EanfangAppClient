@@ -52,9 +52,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_company_name;
     private TextView tv_contract_name;
     private TextView tv_contract_phone;
-    private TextView tv_time_limit;
     private TextView tv_address;
-    private TextView tv_time;
     private android.support.v7.widget.RecyclerView rv_list;
     private com.facebook.drawee.view.SimpleDraweeView iv_pic;
     private TextView tv_worker_name;
@@ -62,11 +60,7 @@ public class OrderDetailFragment extends BaseFragment {
     private ImageView iv_phone;
     private TextView tv_number;
     private TextView tv_feature_time;
-    private TextView tv_money;
-    private TextView tv_alipay;
 
-    // 电话解决 布局
-    private LinearLayout llResolvePhone;
     // 支付布局
     private LinearLayout llPay;
     // 去支付
@@ -90,11 +84,15 @@ public class OrderDetailFragment extends BaseFragment {
     private Long mAssigneeUserId;
 
     private Long id;
-    //2017年7月26日
-    /**
-     * 是否电话解决
-     */
-    private TextView tv_phone_solve;
+    // 保修人
+    private TextView repairContacts;
+    // 保修人电话
+    private TextView repairContactsPhone;
+    // 故障数量
+    private TextView mFaultNum;
+    // 個人订单
+    private LinearLayout mLlOrderPay;
+    private LinearLayout mLlOrderMoney;
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -121,27 +119,24 @@ public class OrderDetailFragment extends BaseFragment {
         tv_company_name = findViewById(R.id.tv_company_name);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
-        tv_time_limit = findViewById(R.id.tv_time_limit);
         tv_address = findViewById(R.id.tv_address);
-        tv_time = findViewById(R.id.tv_time);
-        rv_list = findViewById(R.id.rv_list);
         iv_pic = findViewById(R.id.iv_pic);
         tv_worker_name = findViewById(R.id.tv_worker_name);
         tv_worker_company = findViewById(R.id.tv_worker_company);
         iv_phone = findViewById(R.id.iv_phone);
         tv_number = findViewById(R.id.tv_number);
         tv_feature_time = findViewById(R.id.tv_feature_time);
-        tv_money = findViewById(R.id.tv_money);
-        tv_alipay = findViewById(R.id.tv_alipay);
-        tv_phone_solve = findViewById(R.id.tv_phone_solve);
-        llResolvePhone = findViewById(R.id.ll_resolvePhone);
         llPay = findViewById(R.id.ll_pay);
         llFinish = findViewById(R.id.ll_finish);
         tvBottomRight = findViewById(R.id.tv_bottomRight);
         tv_bottomLeft = findViewById(R.id.tv_bottomLeft);
         tvDoPay = findViewById(R.id.tv_doPay);
         tvOrderMoney = findViewById(R.id.tv_orderMoney);
-
+        repairContacts = findViewById(R.id.tv_repairContacts);
+        repairContactsPhone = findViewById(R.id.tv_repairContactPhone);
+        mFaultNum = findViewById(R.id.tv_faultNum);
+        mLlOrderPay = findViewById(R.id.ll_orderPay);
+        mLlOrderMoney = findViewById(R.id.ll_orderMoney);
     }
 
 
@@ -182,9 +177,10 @@ public class OrderDetailFragment extends BaseFragment {
 
     private void initAdapter() {
         if (mDataList.size() == 0) {
+            mFaultNum.setVisibility(View.GONE);
             return;
         }
-
+        mFaultNum.setText(mDataList.size());
         BaseQuickAdapter evaluateAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -233,32 +229,45 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
                     tv_contract_name.setText(V.v(() -> bean.getRepairContacts()));//联系人
                     tv_contract_phone.setText(V.v(() -> bean.getRepairContactPhone()));
-                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
+                    // 回复时效
+//                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
                     tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
-                    if (bean.getBookTime() != null) {
-                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
-                    } else {
-                        tv_time.setText("--");
-                    }
+//                    if (bean.getBookTime() != null) {
+//                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
+//                    } else {
+//                        tv_time.setText("--");
+//                    }
 
                     // 支付金额
-//                    tvOrderMoney.setText(V.v(()->bean.get));
+//                    tvOrderMoney.setText(V.v(() -> bean.getTotalfee() + ""));
+                    repairContacts.setText(V.v(() -> bean.getRepairContacts()));
+                    repairContactsPhone.setText(V.v(() -> bean.getRepairContactPhone()));
                     tv_number.setText(V.v(() -> bean.getOrderNum()));
                     tv_feature_time.setText(V.v(() -> GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
+
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
+
                     //      获取：是否电话解决（0：未解决，1：已解决）
-                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
-                        tv_phone_solve.setText("否");
-                    } else {
-                        tv_phone_solve.setText("是");
-                    }
+//                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
+//                        tv_phone_solve.setText("否");
+//                    } else {
+//                        tv_phone_solve.setText("是");
+//                    }
                     mUserId = bean.getOwnerUserId();
                     mItemId = bean.getId();
                     mIsPhoneSolve = bean.getIsPhoneSolve();
                     mOrderStatus = bean.getStatus();
                     mOrderNum = bean.getOrderNum();
                     mAssigneeUserId = bean.getAssigneeUserId();
+                    // 大于0 是公司  小于0 是个人
+                    if (bean.getOwnerUserId() <= 0) {
+                        mLlOrderMoney.setVisibility(View.VISIBLE);
+                        mLlOrderPay.setVisibility(View.VISIBLE);
+                    }else{
+                        mLlOrderMoney.setVisibility(View.GONE);
+                        mLlOrderPay.setVisibility(View.GONE);
+                    }
                     //客户端
                     if (bean.getAssigneeUser() != null) {
                         iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
@@ -267,21 +276,17 @@ public class OrderDetailFragment extends BaseFragment {
                         iv_phone.setTag(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));
                     }
                     if (mOrderStatus == 0) {// 待付款
-                        llResolvePhone.setVisibility(View.GONE);
                         llPay.setVisibility(View.VISIBLE);
                         llFinish.setVisibility(View.GONE);
                     } else if (mOrderStatus == 4) {// 待确认
                         llFinish.setVisibility(View.VISIBLE);
-                        llResolvePhone.setVisibility(View.GONE);
                         llPay.setVisibility(View.GONE);
                     } else if (mOrderStatus == 5) {// 订单完成
                         llFinish.setVisibility(View.VISIBLE);
-                        llResolvePhone.setVisibility(View.GONE);
                         llPay.setVisibility(View.GONE);
                         tvBottomRight.setText("立即评价");
                     } else {
                         llFinish.setVisibility(View.GONE);
-                        llResolvePhone.setVisibility(View.GONE);
                         llPay.setVisibility(View.GONE);
                     }
                     mDataList = bean.getBugEntityList();

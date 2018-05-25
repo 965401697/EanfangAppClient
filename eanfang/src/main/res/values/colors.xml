@@ -92,6 +92,8 @@
     <color name="color_contact_authentication">#D3D3D3</color>
     <color name="color_order_status_line">#EFF0F0</color>
     <color name="color_pop_line">#DADADA</color>
+    <color name="color_pop_title_back">#FAE9CE</color>
+    <color name="color_pop_title">#D1A060</color>
 
 
 </resources>

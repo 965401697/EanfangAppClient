@@ -68,7 +68,7 @@ public class CustomRadioGroup extends RadioGroup {
                 //重置宽度
                 lineWidth = deltaX;
                 //累加高度
-                totalHeight += oldHeight * 2;
+                totalHeight += oldHeight;
                 //重置行高,当前这个View，属于下一行，因此当前最大行高为这个child的高度加上margin
                 maxLineHeight = child.getMeasuredHeight() + params.topMargin + params.bottomMargin;
 
@@ -89,7 +89,7 @@ public class CustomRadioGroup extends RadioGroup {
 
         //加上当前容器的padding值
         maxWidth += getPaddingLeft() + getPaddingRight();
-        totalHeight += getPaddingTop() + getPaddingBottom()*2;
+        totalHeight += getPaddingTop() + getPaddingBottom();
         setMeasuredDimension(widthMode == MeasureSpec.EXACTLY ? widthSize : maxWidth,
                 heightMode == MeasureSpec.EXACTLY ? heightSize : totalHeight);
 

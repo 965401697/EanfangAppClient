@@ -52,5 +52,5 @@
     <string name="text_repair_arrivetime">到达时限:</string>
     <string name="text_next">下一步</string>
     <string name="text_fault">故障</string>
-    <string name="text_worker_detail_see_more_type">查看更多业务标签</string>
+    <string name="text_worker_detail_see_more_type">查看所有标签</string>
 </resources>

@@ -51,7 +51,8 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
             // 好评率
             helper.setText(R.id.tv_haopinglv, item.getGoodRate() + "%" + "");
         }
-        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;
-        helper.setRating(R.id.rb_star1, stars);
+
+//        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;
+//        helper.setRating(R.id.rb_star1, stars);
     }
 }

@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
+import com.eanfang.witget.ArcProgressView;
 
 import net.eanfang.client.R;
 

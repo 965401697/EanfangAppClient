@@ -20,7 +20,6 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
-import com.eanfang.util.GetDateUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -31,7 +30,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,14 +37,12 @@ import java.util.List;
  *
  * @on 2017/11/24  10:53
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc  电话解决
  */
 
 public class PsTroubleDetailActivity extends BaseClientActivity /*implements View.OnClickListener */ {
 
     private RecyclerView rv_trouble;
-    private TextView tv_over_time;
-    private TextView tv_repair_time;
     private TextView tv_complete;
     private TextView tv_complaint;
     /**
@@ -54,8 +50,6 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
      */
     private BGASortableNinePhotoLayout snpl_form_photos;
 
-    //遗留问题
-    private TextView tv_remain_question;
     private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
     private BughandleConfirmEntity bughandleConfirmEntity;
@@ -84,7 +78,7 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
         repairOrderId = getIntent().getLongExtra("repairOrderId", 0);
         status = getIntent().getStringExtra("status");
         initView();
-        setTitle("故障处理");
+        setTitle("电话解决");
         initData();
 
 
@@ -103,14 +97,10 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_left.setVisibility(View.VISIBLE);
         rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
-        tv_over_time = (TextView) findViewById(R.id.tv_over_time);
-        tv_repair_time = (TextView) findViewById(R.id.tv_repair_time);
         snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
         //两个操作按钮
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_complaint = (TextView) findViewById(R.id.tv_complaint);
-        //遗留问题
-        tv_remain_question = (TextView) findViewById(R.id.tv_remain_question);
 
         //非单确认状态 隐藏确认按钮
         if (!status.equals("待确认")) {
@@ -133,11 +123,7 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
     }
 
     private void setData() {
-        tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
-        tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
 
-        //遗留问题
-        tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
         initAdapter();
         initNinePhoto();
         picList4 = new ArrayList<>();
@@ -151,7 +137,7 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
 
     private void initAdapter() {
         mDataList = bughandleConfirmEntity.getDetailEntityList();
-        quotationDetailAdapter = new TroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
+        quotationDetailAdapter = new TroubleDetailAdapter(R.layout.layout_trouble_adapter_item, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rv_trouble.setLayoutManager(new LinearLayoutManager(this));

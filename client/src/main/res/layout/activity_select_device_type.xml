@@ -22,9 +22,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4"
+            android:divider="@color/color_white"
             android:dividerHeight="0dp"
             android:scrollbars="none" />
 
+        <View style="@style/style_common_line_vertical_gray" />
         <!--<com.eanfang.swipefresh.SwipyRefreshLayout-->
         <!--android:id="@+id/sp_deviceRight"-->
         <!--android:layout_width="0dp"-->
@@ -42,6 +44,7 @@
                 android:id="@+id/rv_deviceTypeRight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_15"
                 android:scrollbars="none" />
         </RelativeLayout>
 

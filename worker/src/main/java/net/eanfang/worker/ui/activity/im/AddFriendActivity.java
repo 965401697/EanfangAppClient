@@ -22,9 +22,9 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
-import com.project.eanfang.zxing.android.CaptureActivity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -62,7 +62,7 @@ public class AddFriendActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 //跳转扫码页面
-                Intent intent = new Intent(AddFriendActivity.this, CaptureActivity.class);
+                Intent intent = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
                 intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
                 startActivity(intent);
             }

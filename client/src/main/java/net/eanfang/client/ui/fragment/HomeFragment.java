@@ -19,11 +19,12 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
-import com.project.eanfang.zxing.android.CaptureActivity;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
+import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
@@ -31,7 +32,6 @@ import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 import net.eanfang.client.ui.widget.DesignCtrlView;
 import net.eanfang.client.ui.widget.InstallCtrlView;
-import net.eanfang.client.ui.widget.RepairCtrlView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,9 @@ import static com.eanfang.util.V.v;
  */
 
 public class HomeFragment extends BaseFragment {
+
+
+    public final int CUSTOMIZED_REQUEST_CODE = 0x0000ffff;
     private BannerView bannerView;
 
     private RollTextView rollTextView;
@@ -165,7 +168,7 @@ public class HomeFragment extends BaseFragment {
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), CaptureActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+            startActivity(new Intent(getActivity(), ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
 
 
@@ -275,4 +278,5 @@ public class HomeFragment extends BaseFragment {
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
     }
+
 }
