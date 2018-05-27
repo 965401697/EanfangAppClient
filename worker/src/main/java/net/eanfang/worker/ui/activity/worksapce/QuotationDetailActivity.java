@@ -208,8 +208,16 @@ public class QuotationDetailActivity extends BaseActivity {
             showToast("请输入数量");
             return false;
         }
+        if (et_amount.getText().toString().trim().length()>5) {
+            showToast("数量超过最大值9999");
+            return false;
+        }
         if (StringUtils.isEmpty(et_price.getText().toString().trim())) {
             showToast("请输入单价");
+            return false;
+        }
+        if (et_price.getText().toString().trim().length()>6) {
+            showToast("单价超过最大值99999");
             return false;
         }
 

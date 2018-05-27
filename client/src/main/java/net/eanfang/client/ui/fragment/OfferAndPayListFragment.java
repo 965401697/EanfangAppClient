@@ -29,6 +29,7 @@ import net.eanfang.client.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
@@ -88,7 +89,11 @@ public class OfferAndPayListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-        mDataList = ((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
+        if (((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean() != null) {
+            mDataList = ((OfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
+        } else {
+            mDataList = new ArrayList<>();
+        }
         mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.addOnItemTouchListener(new OnItemClickListener() {
