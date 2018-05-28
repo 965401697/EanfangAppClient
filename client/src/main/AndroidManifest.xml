@@ -379,11 +379,11 @@
         <activity android:name=".ui.activity.worksapce.OpenShopLogDetailActivity" />
         <!-- 填写开店日志 -->
         <activity android:name=".ui.activity.worksapce.OpenShopLogWriteActivity" />
-        <!--布防日志-->
+        <!-- 布防日志 -->
         <activity android:name=".ui.activity.worksapce.DefendLogActivity" />
-        <!--布防日志的填写和展示详情-->
+        <!-- 布防日志的填写和展示详情 -->
         <activity android:name=".ui.activity.worksapce.DefendLogWriteAndDetailActivity" />
-        <!--布防日志的二级填写和展示详情-->
+        <!-- 布防日志的二级填写和展示详情 -->
         <activity android:name=".ui.activity.worksapce.DefendLogItemWriteAndDetailActivity" />
 
         <!-- 扫码界面 -->
@@ -394,8 +394,14 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity"></activity>
-
+        <!-- 技师故障处理 查看照片 -->
+        <activity
+            android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 故障库 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.FaultLibraryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

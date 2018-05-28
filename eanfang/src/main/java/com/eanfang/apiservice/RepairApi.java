@@ -172,7 +172,11 @@ public interface RepairApi {
      */
     String GET_SHOP_DEVICE_LIST = BuildConfig.API_HOST + "/yaf_device/shopDevice/deviceList";
     /**
-     * 遗留故障列表
+     * 32.遗留故障列表
      */
     String GET_LEAVE_BUG_LIST = BuildConfig.API_HOST + "/yaf_repair/failure/record/list";
+    /**
+     * 33.故障库列表
+     */
+    String GET_FAULT_LIST = BuildConfig.API_HOST + "/yaf_device/headdevicefailure/deviceFailurelist";
 }
