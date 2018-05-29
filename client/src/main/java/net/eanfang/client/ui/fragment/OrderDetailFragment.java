@@ -146,16 +146,16 @@ public class OrderDetailFragment extends BaseFragment {
         // 确认完工  立即评价
         tvBottomRight.setOnClickListener((v) -> {
             if (mOrderStatus == 4) {// 确认完工
-                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-                    showToast("当前订单负责人可以操作");
-                    return;
-                }
+//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
+//                    showToast("当前订单负责人可以操作");
+//                    return;
+//                }
                 new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认").show();
             } else if (mOrderStatus == 5) {//立即评价
-                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-                    showToast("当前订单负责人可以操作");
-                    return;
-                }
+//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
+//                    showToast("当前订单负责人可以操作");
+//                    return;
+//                }
                 startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                         .putExtra("flag", 0)
                         .putExtra("ordernum", mOrderNum)
@@ -166,10 +166,10 @@ public class OrderDetailFragment extends BaseFragment {
         });
         // 查看完工报告
         tv_bottomLeft.setOnClickListener((v) -> {
-            if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-                showToast("当前订单负责人可以操作");
-                return;
-            }
+//            if (!mUserId.equals(EanfangApplication.get().getUserId())) {
+//                showToast("当前订单负责人可以操作");
+//                return;
+//            }
             new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成").show();
         });
 
