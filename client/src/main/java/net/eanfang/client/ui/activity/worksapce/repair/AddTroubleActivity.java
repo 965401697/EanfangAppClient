@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -34,7 +34,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -58,8 +57,8 @@ public class AddTroubleActivity extends BaseClientActivity {
 
 
     // 故障信息 RequestCode
-    private static final int REQUEST_FAULTDESINFO = 100;
-    private static final int RESULT_FAULTDESCODE = 200;
+    private static final int REQUEST_FAULTDESINFO = 1000;
+    private static final int RESULT_FAULTDESCODE = 2000;
 
     //故障设备名称
     @BindView(R.id.tv_faultDeviceName)
@@ -121,9 +120,15 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etFaultNum;
     @BindView(R.id.ll_faultInfo)
     LinearLayout llFaultInfo;
+    // 位置编号
+    @BindView(R.id.tv_deviceLocationNum)
+    TextView tvDeviceLocationNum;
     private Map<String, String> uploadMap = new HashMap<>();
 
+    // 设备code 设备id
     private String dataCode = "";
+    private Long dataId;
+    //   系统类别
     private String businessOneCode = "";
 
     @Override
@@ -142,12 +147,12 @@ public class AddTroubleActivity extends BaseClientActivity {
     private void initView() {
         setTitle("新增故障");
         setLeftBack();
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
 
         //个人客户 不显示设备库选择
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
             llDeviceHouse.setVisibility(View.GONE);
         }
+        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
     }
 
     /**
@@ -160,11 +165,14 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
         RepairBugEntity bean = new RepairBugEntity();
         bean.setBusinessThreeCode(dataCode);
-        bean.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));
-        bean.setBugPosition(etDeviceLocation.getText().toString().trim());
-        bean.setDeviceNo(etDeviceNum.getText().toString().trim());
-        bean.setBugDescription(evFaultDescripte.getText().toString().trim());
-        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
+        bean.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));// 设备品牌
+        bean.setBugPosition(etDeviceLocation.getText().toString().trim());// 故障位置
+        bean.setDeviceNo(etDeviceNum.getText().toString().trim());// 故障编号
+        bean.setBugDescription(evFaultDescripte.getText().toString().trim());// 故障详细描述
+        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
+        bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
+        bean.setHeadDeviceFailureId(dataId);// 故障id
+        bean.setLocationNumber(tvDeviceLocationNum.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
@@ -229,9 +237,11 @@ public class AddTroubleActivity extends BaseClientActivity {
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
             String mGetImgs = data.getStringExtra("faultImgs");
+            dataId = Long.valueOf(data.getStringExtra("datasId"));
             String[] imgs = mGetImgs.split(",");
-            List<String> arrImg = Arrays.asList(imgs);
-            snplMomentAddPhotos.setData((ArrayList<String>) arrImg);
+            ArrayList<String> arrayImgList = new ArrayList<String>();
+            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
+            snplMomentAddPhotos.setData(arrayImgList);
         }
     }
 

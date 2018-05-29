@@ -37,7 +37,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  */
 public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
 
-    private static final int RESULT_DATACODE = 200;
+    private static final int RESULT_DATACODE = 2000;
     @BindView(R.id.rv_faultList)
     RecyclerView rvFaultList;
     @BindView(R.id.swiprefresh)
@@ -87,9 +87,17 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, true, FaultListBean.class, bean -> {
                     if (bean != null) {
-                        swiprefresh.setRefreshing(false);
-                        mFaultListBeanList = bean.getList();
-                        faultLibraryAdapter.addData(mFaultListBeanList);
+                        if (page == 1) {
+                            mFaultListBeanList.clear();
+                            swiprefresh.setRefreshing(false);
+                            mFaultListBeanList = bean.getList();
+                            faultLibraryAdapter.setNewData(mFaultListBeanList);
+                        } else {
+                            swiprefresh.setRefreshing(false);
+                            mFaultListBeanList = bean.getList();
+                            faultLibraryAdapter.addData(mFaultListBeanList);
+                        }
+
                     }
 
                 }));
@@ -102,6 +110,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
                 Intent intent = new Intent();
                 intent.putExtra("faultDes", mFaultListBeanList.get(position).getDescription());
                 intent.putExtra("faultImgs", mFaultListBeanList.get(position).getPictures());
+                intent.putExtra("datasId", mFaultListBeanList.get(position).getId());
                 setResult(RESULT_DATACODE, intent);
                 finishSelf();
             }
@@ -127,12 +136,6 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
         switch (option) {
             case TOP_REFRESH:
                 //下拉刷新
-//                page--;
-//                if (page <= 0) {
-//                    page = 1;
-//                }
-
-                page = 1;//下拉永远第一页
                 initData();
                 break;
             case BOTTOM_REFRESH:
