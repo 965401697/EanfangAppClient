@@ -5,276 +5,240 @@ import java.util.List;
 
 /**
  * 描述：
- *  故障库实体类
+ * 故障库实体类
+ *
  * @author Guanluocang
  * @date on 2018/5/28$  13:37$
  */
 public class FaultListBean implements Serializable {
 
     /**
-     * cacheKey : 8698621cffa0ad9e995a31fd2b2ee679
-     * code : 20000
-     * data : {"currPage":1,"list":[{"businessOneCode":"1.1","createTime":"2018-05-24 16:21:23","createUserId":"994780876913541122","description":"故障描述故障描述故障描述故障描述","deviceName":"HNB监控","failureNo":"FL1805241621761","failureTypeId":"6.1","headDeviceId":"949163877705711618","id":"999566013136412674","level":1,"modelCode":"5.5.6","pictures":"1_1.jpg,1_2.jpg","proneBackground":"故障易发背景","remarkInfo":"备注","sketch":"故障简述","status":1,"title":"故障标题"}],"pageSize":10,"totalCount":1,"totalPage":1}
-     * noticeCount : 0
+     * currPage : 1
+     * list : [{"businessOneCode":"1.1","createTime":"2018-05-24 16:21:23","createUserId":"994780876913541122","description":"故障描述故障描述故障描述故障描述","deviceName":"HNB监控","failureNo":"FL1805241621761","failureTypeId":"6.1","headDeviceId":"949163877705711618","id":"999566013136412674","level":1,"modelCode":"5.5.6","pictures":"1_1.jpg,1_2.jpg","proneBackground":"故障易发背景","remarkInfo":"备注","sketch":"故障简述","status":1,"title":"故障标题"}]
+     * pageSize : 10
+     * totalCount : 1
+     * totalPage : 1
      */
 
-    private int code;
-    private DataBean data;
-    private int noticeCount;
+    private int currPage;
+    private int pageSize;
+    private int totalCount;
+    private int totalPage;
+    private List<ListBean> list;
 
-    public int getCode() {
-        return code;
+    public int getCurrPage() {
+        return currPage;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setCurrPage(int currPage) {
+        this.currPage = currPage;
     }
 
-    public DataBean getData() {
-        return data;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setData(DataBean data) {
-        this.data = data;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
-    public int getNoticeCount() {
-        return noticeCount;
+    public int getTotalCount() {
+        return totalCount;
     }
 
-    public void setNoticeCount(int noticeCount) {
-        this.noticeCount = noticeCount;
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
     }
 
-    public static class DataBean {
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public static class ListBean {
         /**
-         * currPage : 1
-         * list : [{"businessOneCode":"1.1","createTime":"2018-05-24 16:21:23","createUserId":"994780876913541122","description":"故障描述故障描述故障描述故障描述","deviceName":"HNB监控","failureNo":"FL1805241621761","failureTypeId":"6.1","headDeviceId":"949163877705711618","id":"999566013136412674","level":1,"modelCode":"5.5.6","pictures":"1_1.jpg,1_2.jpg","proneBackground":"故障易发背景","remarkInfo":"备注","sketch":"故障简述","status":1,"title":"故障标题"}]
-         * pageSize : 10
-         * totalCount : 1
-         * totalPage : 1
+         * businessOneCode : 1.1
+         * createTime : 2018-05-24 16:21:23
+         * createUserId : 994780876913541122
+         * description : 故障描述故障描述故障描述故障描述
+         * deviceName : HNB监控
+         * failureNo : FL1805241621761
+         * failureTypeId : 6.1
+         * headDeviceId : 949163877705711618
+         * id : 999566013136412674
+         * level : 1
+         * modelCode : 5.5.6
+         * pictures : 1_1.jpg,1_2.jpg
+         * proneBackground : 故障易发背景
+         * remarkInfo : 备注
+         * sketch : 故障简述
+         * status : 1
+         * title : 故障标题
          */
 
-        private int currPage;
-        private int pageSize;
-        private int totalCount;
-        private int totalPage;
-        private List<ListBean> list;
+        private String businessOneCode;
+        private String createTime;
+        private String createUserId;
+        private String description;
+        private String deviceName;
+        private String failureNo;
+        private String failureTypeId;
+        private String headDeviceId;
+        private String id;
+        private int level;
+        private String modelCode;
+        private String pictures;
+        private String proneBackground;
+        private String remarkInfo;
+        private String sketch;
+        private int status;
+        private String title;
 
-        public int getCurrPage() {
-            return currPage;
+        public String getBusinessOneCode() {
+            return businessOneCode;
         }
 
-        public void setCurrPage(int currPage) {
-            this.currPage = currPage;
+        public void setBusinessOneCode(String businessOneCode) {
+            this.businessOneCode = businessOneCode;
         }
 
-        public int getPageSize() {
-            return pageSize;
+        public String getCreateTime() {
+            return createTime;
         }
 
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
         }
 
-        public int getTotalCount() {
-            return totalCount;
+        public String getCreateUserId() {
+            return createUserId;
         }
 
-        public void setTotalCount(int totalCount) {
-            this.totalCount = totalCount;
+        public void setCreateUserId(String createUserId) {
+            this.createUserId = createUserId;
         }
 
-        public int getTotalPage() {
-            return totalPage;
+        public String getDescription() {
+            return description;
         }
 
-        public void setTotalPage(int totalPage) {
-            this.totalPage = totalPage;
+        public void setDescription(String description) {
+            this.description = description;
         }
 
-        public List<ListBean> getList() {
-            return list;
+        public String getDeviceName() {
+            return deviceName;
         }
 
-        public void setList(List<ListBean> list) {
-            this.list = list;
+        public void setDeviceName(String deviceName) {
+            this.deviceName = deviceName;
         }
 
-        public static class ListBean {
-            /**
-             * businessOneCode : 1.1
-             * createTime : 2018-05-24 16:21:23
-             * createUserId : 994780876913541122
-             * description : 故障描述故障描述故障描述故障描述
-             * deviceName : HNB监控
-             * failureNo : FL1805241621761
-             * failureTypeId : 6.1
-             * headDeviceId : 949163877705711618
-             * id : 999566013136412674
-             * level : 1
-             * modelCode : 5.5.6
-             * pictures : 1_1.jpg,1_2.jpg
-             * proneBackground : 故障易发背景
-             * remarkInfo : 备注
-             * sketch : 故障简述
-             * status : 1
-             * title : 故障标题
-             */
+        public String getFailureNo() {
+            return failureNo;
+        }
 
-            private String businessOneCode;
-            private String createTime;
-            private String createUserId;
-            private String description;
-            private String deviceName;
-            private String failureNo;
-            private String failureTypeId;
-            private String headDeviceId;
-            private String id;
-            private int level;
-            private String modelCode;
-            private String pictures;
-            private String proneBackground;
-            private String remarkInfo;
-            private String sketch;
-            private int status;
-            private String title;
+        public void setFailureNo(String failureNo) {
+            this.failureNo = failureNo;
+        }
 
-            public String getBusinessOneCode() {
-                return businessOneCode;
-            }
+        public String getFailureTypeId() {
+            return failureTypeId;
+        }
 
-            public void setBusinessOneCode(String businessOneCode) {
-                this.businessOneCode = businessOneCode;
-            }
+        public void setFailureTypeId(String failureTypeId) {
+            this.failureTypeId = failureTypeId;
+        }
 
-            public String getCreateTime() {
-                return createTime;
-            }
+        public String getHeadDeviceId() {
+            return headDeviceId;
+        }
 
-            public void setCreateTime(String createTime) {
-                this.createTime = createTime;
-            }
+        public void setHeadDeviceId(String headDeviceId) {
+            this.headDeviceId = headDeviceId;
+        }
 
-            public String getCreateUserId() {
-                return createUserId;
-            }
+        public String getId() {
+            return id;
+        }
 
-            public void setCreateUserId(String createUserId) {
-                this.createUserId = createUserId;
-            }
+        public void setId(String id) {
+            this.id = id;
+        }
 
-            public String getDescription() {
-                return description;
-            }
+        public int getLevel() {
+            return level;
+        }
 
-            public void setDescription(String description) {
-                this.description = description;
-            }
+        public void setLevel(int level) {
+            this.level = level;
+        }
 
-            public String getDeviceName() {
-                return deviceName;
-            }
+        public String getModelCode() {
+            return modelCode;
+        }
 
-            public void setDeviceName(String deviceName) {
-                this.deviceName = deviceName;
-            }
+        public void setModelCode(String modelCode) {
+            this.modelCode = modelCode;
+        }
 
-            public String getFailureNo() {
-                return failureNo;
-            }
+        public String getPictures() {
+            return pictures;
+        }
 
-            public void setFailureNo(String failureNo) {
-                this.failureNo = failureNo;
-            }
+        public void setPictures(String pictures) {
+            this.pictures = pictures;
+        }
 
-            public String getFailureTypeId() {
-                return failureTypeId;
-            }
+        public String getProneBackground() {
+            return proneBackground;
+        }
 
-            public void setFailureTypeId(String failureTypeId) {
-                this.failureTypeId = failureTypeId;
-            }
+        public void setProneBackground(String proneBackground) {
+            this.proneBackground = proneBackground;
+        }
 
-            public String getHeadDeviceId() {
-                return headDeviceId;
-            }
+        public String getRemarkInfo() {
+            return remarkInfo;
+        }
 
-            public void setHeadDeviceId(String headDeviceId) {
-                this.headDeviceId = headDeviceId;
-            }
+        public void setRemarkInfo(String remarkInfo) {
+            this.remarkInfo = remarkInfo;
+        }
 
-            public String getId() {
-                return id;
-            }
+        public String getSketch() {
+            return sketch;
+        }
 
-            public void setId(String id) {
-                this.id = id;
-            }
+        public void setSketch(String sketch) {
+            this.sketch = sketch;
+        }
 
-            public int getLevel() {
-                return level;
-            }
+        public int getStatus() {
+            return status;
+        }
 
-            public void setLevel(int level) {
-                this.level = level;
-            }
+        public void setStatus(int status) {
+            this.status = status;
+        }
 
-            public String getModelCode() {
-                return modelCode;
-            }
+        public String getTitle() {
+            return title;
+        }
 
-            public void setModelCode(String modelCode) {
-                this.modelCode = modelCode;
-            }
-
-            public String getPictures() {
-                return pictures;
-            }
-
-            public void setPictures(String pictures) {
-                this.pictures = pictures;
-            }
-
-            public String getProneBackground() {
-                return proneBackground;
-            }
-
-            public void setProneBackground(String proneBackground) {
-                this.proneBackground = proneBackground;
-            }
-
-            public String getRemarkInfo() {
-                return remarkInfo;
-            }
-
-            public void setRemarkInfo(String remarkInfo) {
-                this.remarkInfo = remarkInfo;
-            }
-
-            public String getSketch() {
-                return sketch;
-            }
-
-            public void setSketch(String sketch) {
-                this.sketch = sketch;
-            }
-
-            public int getStatus() {
-                return status;
-            }
-
-            public void setStatus(int status) {
-                this.status = status;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
+        public void setTitle(String title) {
+            this.title = title;
         }
     }
 }
