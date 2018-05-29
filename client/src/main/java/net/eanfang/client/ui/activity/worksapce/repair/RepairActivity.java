@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,8 +59,7 @@ import butterknife.OnClick;
  * @email houzhongzhou@yeah.net
  * @desc 我要报修
  */
-
-public class RepairActivity extends BaseClientActivity {
+public class RepairActivity extends BaseClientActivity implements RadioGroup.OnCheckedChangeListener {
 
     //报修地址回调 code
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
@@ -135,6 +135,8 @@ public class RepairActivity extends BaseClientActivity {
     // 判断是否是个人还是公司用户
     private boolean mIsCompany = true;
 
+    // 选择性别 默认是男
+    private String mSex = "1";
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -185,6 +187,7 @@ public class RepairActivity extends BaseClientActivity {
         tvSelectAdress.setOnClickListener(new MultiClickListener(this, () -> {
             address();
         }));
+        rgSex.setOnCheckedChangeListener(this);
     }
 
     private void initAdapter() {
@@ -333,6 +336,7 @@ public class RepairActivity extends BaseClientActivity {
         bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
         bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
         bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
+        bean.setSex(mSex);
         bean.setRepairWay(0);
         return bean;
     }
@@ -442,6 +446,18 @@ public class RepairActivity extends BaseClientActivity {
                 break;
             case R.id.tv_next:
                 goSelectWorker();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case R.id.rb_man:
+                mSex = "1";
+                break;
+            case R.id.rb_woman:
+                mSex = "0";
                 break;
         }
     }

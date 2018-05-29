@@ -56,8 +56,8 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
         String bugOne = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
         String bugTwo = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
         String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
-        helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + bugThree)
-                .setText(R.id.tv_model, Config.get().getModelNameByCode(item.getModelCode(), 1))
+        helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + item.getSketch())
+                .setText(R.id.tv_model, bugThree)
                 .setText(R.id.tv_location, item.getBugPosition())
                 .setText(R.id.tv_desc, item.getBugDescription());
         SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);

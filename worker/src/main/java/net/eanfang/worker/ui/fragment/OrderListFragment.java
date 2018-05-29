@@ -134,7 +134,7 @@ public class OrderListFragment extends BaseFragment implements
                         break;
                 }
                 break;
-            case 2:
+            case 2:// 待上门 签到
                 switch (view.getId()) {
                     case R.id.tv_do_first:
                         //只有当前登陆人为订单负责人才可以操作

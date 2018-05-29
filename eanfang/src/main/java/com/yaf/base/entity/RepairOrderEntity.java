@@ -127,6 +127,9 @@ public class RepairOrderEntity implements Serializable {
     //订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
     //@TableField(value = "status")
     private Integer status;
+    //性别(（0：女，1：男）)
+    private String sex;
+
 
     private Long ownerCompanyId;
     private Long assigneeCompanyId;

@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -30,6 +31,8 @@ import com.yaf.base.entity.RepairBugEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,10 +51,15 @@ import butterknife.OnClick;
 public class AddTroubleActivity extends BaseClientActivity {
 
     private static final int CLIENT_ADD_TROUBLE = 2;
-    // 故障信息 RequestCode
+    // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
-
     private static final int RESULT_DATACODE = 200;
+
+
+    // 故障信息 RequestCode
+    private static final int REQUEST_FAULTDESINFO = 1000;
+    private static final int RESULT_FAULTDESCODE = 2000;
+
     //故障设备名称
     @BindView(R.id.tv_faultDeviceName)
     TextView tvFaultDeviceName;
@@ -110,9 +118,18 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etDeviceLocation;
     @BindView(R.id.et_faultNum)
     EditText etFaultNum;
+    @BindView(R.id.ll_faultInfo)
+    LinearLayout llFaultInfo;
+    // 位置编号
+    @BindView(R.id.tv_deviceLocationNum)
+    TextView tvDeviceLocationNum;
     private Map<String, String> uploadMap = new HashMap<>();
 
+    // 设备code 设备id
     private String dataCode = "";
+    private Long dataId;
+    //   系统类别
+    private String businessOneCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,12 +147,12 @@ public class AddTroubleActivity extends BaseClientActivity {
     private void initView() {
         setTitle("新增故障");
         setLeftBack();
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
 
         //个人客户 不显示设备库选择
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
             llDeviceHouse.setVisibility(View.GONE);
         }
+        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
     }
 
     /**
@@ -148,11 +165,14 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
         RepairBugEntity bean = new RepairBugEntity();
         bean.setBusinessThreeCode(dataCode);
-        bean.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));
-        bean.setBugPosition(etDeviceLocation.getText().toString().trim());
-        bean.setDeviceNo(etDeviceNum.getText().toString().trim());
-        bean.setBugDescription(evFaultDescripte.getText().toString().trim());
-        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));
+        bean.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));// 设备品牌
+        bean.setBugPosition(etDeviceLocation.getText().toString().trim());// 故障位置
+        bean.setDeviceNo(etDeviceNum.getText().toString().trim());// 故障编号
+        bean.setBugDescription(evFaultDescripte.getText().toString().trim());// 故障详细描述
+        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
+        bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
+        bean.setHeadDeviceFailureId(dataId);// 故障id
+        bean.setLocationNumber(tvDeviceLocationNum.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
@@ -212,12 +232,21 @@ public class AddTroubleActivity extends BaseClientActivity {
             snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
             dataCode = data.getStringExtra("dataCode");
+            businessOneCode = data.getStringExtra("businessOneCode");
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
+        } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
+            tvFaultDescripte.setText(data.getStringExtra("faultDes"));
+            String mGetImgs = data.getStringExtra("faultImgs");
+            dataId = Long.valueOf(data.getStringExtra("datasId"));
+            String[] imgs = mGetImgs.split(",");
+            ArrayList<String> arrayImgList = new ArrayList<String>();
+            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
+            snplMomentAddPhotos.setData(arrayImgList);
         }
     }
 
 
-    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.rl_confirmDevice})
+    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.rl_confirmDevice, R.id.ll_faultInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //故障设备名称
@@ -245,9 +274,16 @@ public class AddTroubleActivity extends BaseClientActivity {
             case R.id.ll_devicesModel:
                 break;
             // 故障简述
-            case R.id.rl_confirmDevice:
-
+            case R.id.ll_faultInfo:
+                if (!StringUtils.isEmpty(dataCode)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("businessOneCode", businessOneCode);
+                    JumpItent.jump(AddTroubleActivity.this, FaultLibraryActivity.class, bundle, REQUEST_FAULTDESINFO);
+                } else {
+                    showToast("请选择故障设备");
+                }
                 break;
         }
     }
+
 }

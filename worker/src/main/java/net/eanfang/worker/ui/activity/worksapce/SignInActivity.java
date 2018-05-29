@@ -15,6 +15,7 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
@@ -62,6 +63,12 @@ public class SignInActivity extends BaseWorkerActivity {
     private GeocodeSearch geocoderSearch;
     private Long orderId;
     private LocationUtil locationUtil;
+    // 纬度
+    private double mLatitude;
+    // 经度
+    private double mLongitude;
+    // 是否在签到范围内
+    private String mSignScope = "";
 
 
     @Override
@@ -99,6 +106,9 @@ public class SignInActivity extends BaseWorkerActivity {
             // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
             RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latLng.latitude, latLng.longitude), 200, AMAP);
             locationUtil.geocoderSearch.getFromLocationAsyn(query);
+            // 获取技师当前经纬度
+            mLatitude = latLng.latitude;
+            mLongitude = latLng.longitude;
         };
         locationUtil.onSearched = (regeocodeResult, i) -> {
             regeocodeResult.getRegeocodeAddress();
@@ -112,13 +122,22 @@ public class SignInActivity extends BaseWorkerActivity {
     public void onViewClicked() {
         //修改可签到范围偏差
         if (distance >= 1000 || distance < 0) {
-            showToast("不在可签到范围内" + distance);
-            return;
+            mSignScope = "1";
+            singNotAround();
+        } else {
+            mSignScope = "0";
+            doHttp(orderId);
         }
-
-        doHttp(orderId);
     }
 
+    /**
+     * 不在范围内的签到
+     */
+    private void singNotAround() {
+        new TrueFalseDialog(this, "当前不在签到范围内", "是否继续签到", () -> {
+            doHttp(orderId);
+        }).showDialog();
+    }
 
     @Override
     protected void onStart() {
@@ -170,6 +189,9 @@ public class SignInActivity extends BaseWorkerActivity {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("orderId", orderId + "");
         queryEntry.getEquals().put("signInTime", tvTime.getText().toString().trim());
+        queryEntry.getEquals().put("signLongitude", mLongitude + "");
+        queryEntry.getEquals().put("signLatitude", mLatitude + "");
+        queryEntry.getEquals().put("signScope", mSignScope);
         EanfangHttp.post(RepairApi.POST_FLOW_SIGNIN)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
