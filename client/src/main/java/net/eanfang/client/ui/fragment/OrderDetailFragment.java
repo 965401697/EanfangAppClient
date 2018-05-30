@@ -241,7 +241,11 @@ public class OrderDetailFragment extends BaseFragment {
 
                     // 支付金额
                     if (bean.getPayLogEntity() != null) {
-                        tvOrderMoney.setText("¥" + V.v(() -> bean.getPayLogEntity().getPayPrice()/ 100.0));
+                        if (bean.getPayLogEntity().getPayPrice() != null) {
+                            tvOrderMoney.setText("¥" + V.v(() -> bean.getPayLogEntity().getPayPrice() / 100.0));
+                        }
+                    } else {
+                        llPay.setVisibility(View.GONE);
                     }
                     repairContacts.setText(V.v(() -> bean.getRepairContacts()));
                     repairContactsPhone.setText(V.v(() -> bean.getRepairContactPhone()));

@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.view.Gravity;
 
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -64,7 +65,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
         if (item.getPayLogEntity() != null) {
-            helper.setText(R.id.tv_count_money, "¥" + item.getPayLogEntity().getPayPrice() / 100.0);
+            if (item.getPayLogEntity().getPayPrice() != null) {
+                helper.setText(R.id.tv_count_money, "¥" + item.getPayLogEntity().getPayPrice() / 100.0);
+            }
+        } else {
+            helper.setVisible(R.id.ll_pay, false);
         }
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 
