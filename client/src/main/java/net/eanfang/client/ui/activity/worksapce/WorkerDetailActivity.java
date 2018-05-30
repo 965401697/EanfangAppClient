@@ -269,6 +269,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 intent.putExtra("headUrl", headUrl);
                 intent.putExtra("workName", workerName);
                 intent.putExtra("companyName", comapnyName);
+                intent.putExtra("doorFee", getIntent().getIntExtra("doorFee", 0));
             }
             startActivity(intent);
 

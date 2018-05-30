@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -62,7 +63,9 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
-//        helper.setText(R.id.tv_count_money, "" + item.getDoorfee());
+        if (item.getPayLogEntity() != null) {
+            helper.setText(R.id.tv_count_money, "¥" + item.getPayLogEntity().getPayPrice() / 100.0);
+        }
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 
         helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);

@@ -52,13 +52,15 @@ public class ServicedWorkerFragment extends BaseFragment {
 
     private RepairOrderEntity toRepairBean;
     private ArrayList<String> businessIds = new ArrayList<>();
+    private int mDoorFee;
     private SelectWorkerAdapter selectWorkerAdapter;
 
-    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds) {
+    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee) {
         ServicedWorkerFragment servicedWorkerFragment = new ServicedWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
+        bundle.putInt("doorFee", doorfee);
         servicedWorkerFragment.setArguments(bundle);
         return servicedWorkerFragment;
     }
@@ -73,6 +75,7 @@ public class ServicedWorkerFragment extends BaseFragment {
         Bundle bundle = getArguments();
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
         businessIds = bundle.getStringArrayList("bussinsList");
+        mDoorFee = bundle.getInt("doorFee", 0);
     }
 
     @Override
@@ -97,6 +100,7 @@ public class ServicedWorkerFragment extends BaseFragment {
                 intent.putExtra("toRepairBean", toRepairBean);
                 intent.putExtra("companyUserId", selectWorkerList.get(position).getCompanyUserId()+ "");
                 intent.putExtra("workerId", selectWorkerList.get(position).getId()+ "");
+                intent.putExtra("doorFee", mDoorFee);
                 startActivity(intent);
             }
         });

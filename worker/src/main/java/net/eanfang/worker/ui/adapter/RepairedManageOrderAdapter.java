@@ -58,9 +58,10 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_person_name, "技师：" + item.getAssigneeUser().getAccountEntity().getRealName());
         }
         if (item.getOrderNum() != null) {
-            helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
+            helper.setText(R.id.tv_order_id, "订单编号：" + item.getOrderNum() + str);
         }
-        helper.setText(R.id.tv_create_time, "下单：" + GetDateUtils.dateToDateString(item.getCreateTime()));
+        helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateString(item.getCreateTime()));
+        helper.setText(R.id.tv_arriveTime, "到达时限：" + item.getArriveTimeLimit());
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
         helper.setVisible(R.id.tv_do_first, isShowFirstBtn[item.getStatus()]);

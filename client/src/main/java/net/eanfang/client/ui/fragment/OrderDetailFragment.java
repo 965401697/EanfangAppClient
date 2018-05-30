@@ -23,6 +23,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -239,7 +240,9 @@ public class OrderDetailFragment extends BaseFragment {
 //                    }
 
                     // 支付金额
-//                    tvOrderMoney.setText(V.v(() -> bean.getTotalfee() + ""));
+                    if (bean.getPayLogEntity() != null) {
+                        tvOrderMoney.setText("¥" + V.v(() -> bean.getPayLogEntity().getPayPrice()/ 100.0));
+                    }
                     repairContacts.setText(V.v(() -> bean.getRepairContacts()));
                     repairContactsPhone.setText(V.v(() -> bean.getRepairContactPhone()));
                     tv_number.setText(V.v(() -> bean.getOrderNum()));

@@ -77,10 +77,8 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(getTitle())) {
-            queryEntry.getEquals().put("businessOneCode", businessOneCode);
-            queryEntry.getEquals().put("headDeviceId", "");
-        }
+        queryEntry.getEquals().put("businessOneCode", businessOneCode);
+        queryEntry.getEquals().put("headDeviceId", "");
         queryEntry.setSize(7);
         queryEntry.setPage(page);
         EanfangHttp.post(RepairApi.GET_FAULT_LIST)

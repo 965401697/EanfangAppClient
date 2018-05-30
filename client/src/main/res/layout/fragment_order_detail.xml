@@ -518,7 +518,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="¥100"
+                        android:text=""
                         android:textColor="@color/color_service_title"
                         android:textSize="@dimen/textSize_15"
                         android:visibility="visible" />

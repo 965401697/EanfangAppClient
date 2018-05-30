@@ -9,15 +9,15 @@
     <RelativeLayout
         android:id="@+id/rel_company"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="@dimen/dimen_100">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_company_logo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/dimen_70"
+            android:layout_height="@dimen/dimen_70"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dimen_36"
             fresco:placeholderImage="@drawable/contend_ic_thenameofthecompany_default"
             fresco:roundAsCircle="true" />
 
@@ -25,7 +25,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/dimen_28"
             android:layout_toRightOf="@+id/iv_company_logo"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -45,7 +45,7 @@
             <ImageView
                 android:id="@+id/iv_verify"
                 android:layout_width="@dimen/dimen_26"
-                android:layout_height="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_26"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/tv_company_name"
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_20"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="@dimen/dimen_120"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -92,7 +92,8 @@
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
 
             <ImageView
                 android:layout_width="@dimen/dimen_34"
@@ -103,7 +104,7 @@
                 android:id="@+id/tv_org"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dimen_44"
                 android:text="组织架构"
                 android:textColor="@color/roll_content"
                 android:textSize="@dimen/textSize_14" />
@@ -133,10 +134,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f2f2f2" />
+        <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
@@ -144,7 +142,8 @@
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
 
             <ImageView
                 android:layout_width="@dimen/dimen_34"
@@ -155,16 +154,13 @@
                 android:id="@+id/tv_outside_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dimen_44"
                 android:text="外协单位"
                 android:textColor="@color/roll_content"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f2f2f2" />
+        <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
@@ -173,7 +169,8 @@
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
 
             <ImageView
                 android:layout_width="@dimen/dimen_34"
@@ -190,10 +187,7 @@
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#f2f2f2" />
+        <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
@@ -201,7 +195,8 @@
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="5dp">
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
 
             <ImageView
                 android:layout_width="@dimen/dimen_34"

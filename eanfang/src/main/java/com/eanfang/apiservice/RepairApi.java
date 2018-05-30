@@ -179,4 +179,12 @@ public interface RepairApi {
      * 33.故障库列表
      */
     String GET_FAULT_LIST = BuildConfig.API_HOST + "/yaf_device/headdevicefailure/deviceFailurelist";
+    /**
+     * 34.保修单支付记录
+     */
+    String GET_REPAIR_PAY_RECORD = BuildConfig.API_HOST + "/yaf_sys/payLog/create";
+    /**
+     * 35.查找上门费 并查询所在城市是否开通
+     */
+    String GET_REAPIR_PAY_PRICE = BuildConfig.API_HOST + "/yaf_sys/openArea/getInfo";
 }
