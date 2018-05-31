@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -270,7 +270,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -383,8 +384,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:paddingLeft="@dimen/dimen_30">
+                android:paddingLeft="@dimen/dimen_30"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -448,12 +449,31 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_costList"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    android:scrollbars="none" />
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="上门费:"
+                        android:textColor="@color/roll_content"
+                        android:textSize="@dimen/textSize_13" />
+
+
+                    <TextView
+                        android:id="@+id/tv_doorFee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dimen_28"
+                        android:text=""
+                        android:textColor="@color/roll_content"
+                        android:textSize="@dimen/textSize_13" />
+
+                </RelativeLayout>
 
                 <View style="@style/style_common_line_gray" />
 
@@ -481,6 +501,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_50"
+                            android:text="￥"
+                            android:textColor="@color/color_repair_fault_num"
+                            android:textSize="@dimen/textSize_15" />
+
+                        <TextView
+                            android:id="@+id/tv_orderAllPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/color_repair_fault_num"
                             android:textSize="@dimen/textSize_15" />

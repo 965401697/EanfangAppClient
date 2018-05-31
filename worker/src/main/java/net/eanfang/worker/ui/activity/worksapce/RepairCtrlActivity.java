@@ -7,8 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -41,9 +44,9 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
-
-        mTitles = new String[mTitlesWorker.size()];
-        mTitlesWorker.toArray(mTitles);
+        final List<String> mFilterWorkerTitle = Stream.of(mTitlesWorker).filter(bean -> !"待付款".equals(bean)).collect(Collectors.toList());
+        mTitles = new String[mFilterWorkerTitle.size()];
+        mFilterWorkerTitle.toArray(mTitles);
 
 
         for (String title : mTitles) {

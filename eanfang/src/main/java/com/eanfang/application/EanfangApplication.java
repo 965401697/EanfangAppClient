@@ -58,18 +58,8 @@ public class EanfangApplication extends CustomeApplication {
 //        mManager = DaoManager.getInstance();
 //        mManager.init(this);
         CameraApplication.init(this, true);
-        //初始换tbs
-        QbSdk.initX5Environment(this, new QbSdk.PreInitCallback() {
-            @Override
-            public void onCoreInitFinished() {
-                Log.e("zzw", "onCoreInitFinished");
-            }
-
-            @Override
-            public void onViewInitFinished(boolean b) {
-                Log.e("zzw", "onViewInitFinished= " + b);
-            }
-        });
+        //初始换tbs 不需要 callback 的可以传入 null
+        QbSdk.initX5Environment(getApplicationContext(),null);
     }
 
 

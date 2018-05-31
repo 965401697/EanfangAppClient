@@ -30,7 +30,7 @@ public class ArcProgressView extends View {
 
     private int colorStart = Color.parseColor("#FFFFFF");
     private int colorEnd = Color.parseColor("#FFFFFF");
-    private int colorEmpty = Color.parseColor("#FFFFFF");
+    private int colorEmpty = Color.parseColor("#6da0f7");
 
     private int mWidth; // 控件的宽高
     private int mHeight;

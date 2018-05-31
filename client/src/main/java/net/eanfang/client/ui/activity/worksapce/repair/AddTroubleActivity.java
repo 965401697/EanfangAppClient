@@ -121,8 +121,8 @@ public class AddTroubleActivity extends BaseClientActivity {
     @BindView(R.id.ll_faultInfo)
     LinearLayout llFaultInfo;
     // 位置编号
-    @BindView(R.id.tv_deviceLocationNum)
-    TextView tvDeviceLocationNum;
+    @BindView(R.id.et_deviceLocationNum)
+    EditText etDeviceLocationNum;
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -172,7 +172,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
         bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
         bean.setHeadDeviceFailureId(dataId);// 故障id
-        bean.setLocationNumber(tvDeviceLocationNum.getText().toString().trim());
+        bean.setLocationNumber(etDeviceLocationNum.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 

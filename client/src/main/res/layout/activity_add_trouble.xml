@@ -159,19 +159,8 @@
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <TextView
-                        android:id="@+id/tv_deviceLocationNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13"
-                        android:visibility="gone" />
-
                     <EditText
-                        android:id="@+id/et_deviceNum"
+                        android:id="@+id/et_deviceLocationNum"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dimen_36"

@@ -66,7 +66,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
         if (item.getPayLogEntity() != null) {
             if (item.getPayLogEntity().getPayPrice() != null) {
-                helper.setText(R.id.tv_count_money, "¥" + item.getPayLogEntity().getPayPrice() / 100.0);
+                helper.setText(R.id.tv_count_money, "¥" + NumberUtil.getEndTwoNum(item.getPayLogEntity().getPayPrice() / 100.00));
             }
         } else {
             helper.setVisible(R.id.ll_pay, false);

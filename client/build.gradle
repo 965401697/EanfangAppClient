@@ -107,7 +107,6 @@ dependencies {
     //    implementation 'org.greenrobot:greendao:3.2.2' // add library
     implementation project(':IMKit')
     implementation project(':IMLib')
-    implementation 'com.google.android:flexbox:0.2.2'
     implementation project(':zxing')
 }
 
