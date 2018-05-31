@@ -251,10 +251,10 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
             showToast("请输入故障描述");
             return false;
         }
-        if (StringUtils.isEmpty(tv_repair_conclusion.getText().toString().trim())) {
-            showToast("请选择是否误报");
-            return false;
-        }
+//        if (StringUtils.isEmpty(tv_repair_conclusion.getText().toString().trim())) {
+//            showToast("请选择是否误报");
+//            return false;
+//        }
         if (StringUtils.isEmpty(et_trouble_reason.getText().toString().trim())) {
             showToast("请输入原因");
             return false;
