@@ -22,89 +22,104 @@
             <LinearLayout
                 android:id="@+id/ll_header"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="@dimen/dimen_130"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:layout_weight="1"
+                    android:text="@string/text_personal_head"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_user_header"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/dimen_80"
+                    android:layout_height="@dimen/dimen_80"
+                    android:layout_marginRight="@dimen/dimen_24"
                     fresco:placeholderImage="@mipmap/ic_header"
                     fresco:roundAsCircle="true" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:text="@string/text_change_personal_head"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="个人信息(标*信息一经填写不可更改)"
-                android:textColor="@color/font_color"
-                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
                     android:text="昵称"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
                 <EditText
                     android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_30"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
                     android:hint="请输入昵称"
-                    android:inputType="text"
-                    android:maxLength="8"
+                    android:inputType="textPersonName"
+                    android:maxLength="6"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="真实姓名*"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="所在单位"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
                 <EditText
-                    android:id="@+id/et_realname"
+                    android:id="@+id/et_departmentname"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_30"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="right"
-                    android:hint="请输入真实姓名"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入所在单位名称"
+                    android:inputType="textPersonName"
                     android:maxLength="6"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
@@ -112,55 +127,170 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_area"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="所在单位"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_departmentname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请输入所在单位名称"
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="性别*"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="所在城市"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择所在区域"
+                    android:inputType="textPersonName"
+                    android:maxLength="6"
+                    android:textColor="@color/font_color"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_address"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="详细地址"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_76"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入详细地址"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/font_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_78"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen_36"
+                android:text="注意：以下身份信息一经填写不可更改"
+                android:textColor="@color/color_data_number"
+                android:textSize="@dimen/textSize_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="真实姓名"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <EditText
+                    android:id="@+id/et_realname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_76"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入真实姓名"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/font_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="证件号码"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <EditText
+                    android:id="@+id/et_idcard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_76"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入证件号码"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/font_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="性别"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
                 <RadioGroup
                     android:id="@+id/rg_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_76"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:orientation="horizontal">
@@ -181,102 +311,6 @@
                 </RadioGroup>
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="证件号码*"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_idcard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:digits="0123456789Xx"
-                    android:gravity="right"
-                    android:hint="请输入证件号码"
-                    android:maxLength="18"
-                    android:textColor="@color/font_color"
-                    android:textSize="14sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_area"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="所在城市"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_area"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请选择所在区域"
-                    android:textColor="@color/font_color"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" "
-                    android:textColor="@color/font_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="right"
-                    android:hint="请输入详细地址"
-                    android:textColor="@color/font_color"
-                    android:textSize="14sp" />
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

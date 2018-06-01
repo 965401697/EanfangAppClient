@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.media.ThumbnailUtils;
 
+import com.eanfang.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,13 @@ import java.util.List;
 public class CombineBitmapTools {
 
 
+    private static Context mContext;
+
     public static Bitmap combimeBitmap(Context context, int combineWidth,
                                        int combineHeight, List<Bitmap> bitmaps) {
+
+        mContext = context;
+
         if (bitmaps == null || bitmaps.size() == 0)
             return null;
 
@@ -73,6 +80,7 @@ public class CombineBitmapTools {
         Bitmap newBitmap = Bitmap.createBitmap(first.getWidth(),
                 first.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas cv = new Canvas(newBitmap);
+        cv.drawColor(mContext.getResources().getColor(R.color.color_gray));//设置图片背景颜色
         cv.drawBitmap(first, 0, 0, null);
         cv.drawBitmap(second, fromPoint.x, fromPoint.y, null);
         cv.save(Canvas.ALL_SAVE_FLAG);

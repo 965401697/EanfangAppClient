@@ -308,5 +308,25 @@ public interface NewApiService {
      * post
      */
     String FA_PIAO = BASE_URL + "/addinvoice";
+    /**
+     * 设置管理员
+     * post
+     */
+    String SET_TRANS_ADMIN = BASE_URL + "/yaf_sys/account/transadmin";
+    /**
+     * 创建部门
+     * post
+     */
+    String CREAT_SECTION = BASE_URL + "/yaf_sys/org/insertdepartment";
+    /**
+     * 当前登录人可以访问的角色
+     * post
+     */
+    String MY_LIST_ROLE = BASE_URL + "/yaf_sys/role/listmyrole";
+    /**
+     * 添加员工
+     * post
+     */
+    String ADD_STAFF = BASE_URL + "/yaf_sys/staff/insert";
 
 }

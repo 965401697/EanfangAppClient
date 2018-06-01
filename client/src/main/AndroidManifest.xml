@@ -338,6 +338,10 @@
 
         <!-- 群内成员禁言 -->
         <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
+        <!-- 更新群名字 -->
+        <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
+        <!-- 群公告 -->
+        <activity android:name=".ui.activity.im.GroupNoticeActivity" />
         <!-- 视频文件选择 -->
         <activity android:name=".ui.activity.im.VideoSelectedActivity" />
         <!-- 申请进群 -->
@@ -379,11 +383,11 @@
         <activity android:name=".ui.activity.worksapce.OpenShopLogDetailActivity" />
         <!-- 填写开店日志 -->
         <activity android:name=".ui.activity.worksapce.OpenShopLogWriteActivity" />
-        <!--布防日志-->
+        <!-- 布防日志 -->
         <activity android:name=".ui.activity.worksapce.DefendLogActivity" />
-        <!--布防日志的填写和展示详情-->
+        <!-- 布防日志的填写和展示详情 -->
         <activity android:name=".ui.activity.worksapce.DefendLogWriteAndDetailActivity" />
-        <!--布防日志的二级填写和展示详情-->
+        <!-- 布防日志的二级填写和展示详情 -->
         <activity android:name=".ui.activity.worksapce.DefendLogItemWriteAndDetailActivity" />
 
         <!-- 扫码界面 -->
@@ -394,8 +398,13 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity"></activity>
-
+        <activity android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity" />
+        <activity android:name=".ui.activity.worksapce.AdministratorSetActivity" />
+        <activity android:name=".ui.activity.worksapce.CreatSectionActivity" />
+        <activity android:name=".ui.activity.worksapce.AddStaffActivity" />
+        <activity android:name=".ui.activity.worksapce.AddStaffNextActivity" />
+        <activity android:name=".ui.activity.worksapce.PermissionManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.AolltRoleActivity"></activity>
     </application>
 
 </manifest>

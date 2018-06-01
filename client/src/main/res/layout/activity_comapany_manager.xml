@@ -73,6 +73,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_admin_set"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -98,6 +99,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_creat_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -123,6 +125,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_add_staff"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -148,6 +151,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_permission"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">

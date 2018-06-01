@@ -7,8 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
@@ -17,14 +15,17 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.witget.SideBar;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-
 import org.json.JSONObject;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,8 @@ public class MyFriendsListActivity extends BaseClientActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.side_bar)
+    SideBar sideBar;
     private FriendsAdapter mFriendsAdapter;
     private int flag = 0;//显示不显示checkbox的标志位
 
@@ -60,6 +63,17 @@ public class MyFriendsListActivity extends BaseClientActivity {
                 .params("accId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                     if (list.size() > 0) {
+
+                        for (FriendListBean bean : list) {
+                            // 根据姓名获取拼音
+                            bean.setPinyin(bean.getNickName());
+                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
+                            if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                                bean.setFirstLetter("#");
+                            }
+                        }
+
+                        Collections.sort(list);
                         mFriendsAdapter.setNewData(list);
                     }
                 }));
@@ -80,6 +94,17 @@ public class MyFriendsListActivity extends BaseClientActivity {
                 DialogShow(friendListBean.getAccId(), friendListBean.getNickName(), position);
 
                 return false;
+            }
+        });
+        sideBar.setOnStrSelectCallBack(new SideBar.ISideBarSelectCallBack() {
+            @Override
+            public void onSelectStr(int index, String selectStr) {
+                for (int i = 0; i < mFriendsAdapter.getData().size(); i++) {
+                    if (selectStr.equalsIgnoreCase(mFriendsAdapter.getData().get(i).getFirstLetter())) {
+                        recyclerView.scrollToPosition(i); // 选择到首字母出现的位置
+                        return;
+                    }
+                }
             }
         });
     }

@@ -10,11 +10,16 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupsBean;
+import com.eanfang.util.Cn2Spell;
+import com.eanfang.witget.SideBar;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.GroupsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +32,8 @@ public class MyGroupsListActivity extends BaseClientActivity {
     RecyclerView recyclerView;
     private GroupsAdapter mGroupsAdapter;
     private int flag = 0;//显示不显示checkbox的标志位
-
+    @BindView(R.id.side_bar)
+    SideBar sideBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,11 +51,19 @@ public class MyGroupsListActivity extends BaseClientActivity {
                 .params("accId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(this, true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
-                        mGroupsAdapter.setNewData(list);
-                        for (int i = 0; i < list.size(); i++) {
-                            GroupsBean groupsBean = (GroupsBean) list.get(i);
-                            EanfangApplication.get().set(groupsBean.getRcloudGroupId(), groupsBean.getGroupId());
+
+                        for (GroupsBean bean : list) {
+                            // 根据姓名获取拼音
+                            bean.setPinyin(bean.getGroupName());
+                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
+                            if (!Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                                bean.setFirstLetter("#");
+                            }
+                            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                         }
+
+                        Collections.sort(list);
+                        mGroupsAdapter.setNewData(list);
                     }
                 }));
     }
@@ -59,6 +73,18 @@ public class MyGroupsListActivity extends BaseClientActivity {
         mGroupsAdapter = new GroupsAdapter(R.layout.item_friend_list);
 
         mGroupsAdapter.bindToRecyclerView(recyclerView);
+
+        sideBar.setOnStrSelectCallBack(new SideBar.ISideBarSelectCallBack() {
+            @Override
+            public void onSelectStr(int index, String selectStr) {
+                for (int i = 0; i < mGroupsAdapter.getData().size(); i++) {
+                    if (selectStr.equalsIgnoreCase(mGroupsAdapter.getData().get(i).getFirstLetter())) {
+                        recyclerView.scrollToPosition(i); // 选择到首字母出现的位置
+                        return;
+                    }
+                }
+            }
+        });
 
         startConv();
     }

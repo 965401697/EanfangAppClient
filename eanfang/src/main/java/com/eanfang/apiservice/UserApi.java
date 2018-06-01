@@ -75,6 +75,16 @@ public interface UserApi {
      */
     String GET_BRANCH_OFFICE_LIST = BuildConfig.API_HOST + "/yaf_sys/org/company/listtopall";
     /**
+     * 获取 我管理和归属的的所有公司
+     */
+    String GET_BRANCH_OFFICE_LIST_ALL = BuildConfig.API_HOST + "/yaf_sys/org/company/listtopallmananger";
+
+
+    /**
+     * 获得某个公司下  所有的 部门树  包括员工
+     */
+    String GET_BRANCH_OFFICE_LIST_TREE_ALL = BuildConfig.API_HOST + "/yaf_sys/org/departmentByCompany/listtreeall";
+    /**
      * 外协单位
      */
     String GET_STAFFTEMP_OUTER_LIST = BuildConfig.API_HOST + "/yaf_sys/stafftemp/load_outer_assist";

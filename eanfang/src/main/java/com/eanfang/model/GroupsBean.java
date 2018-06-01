@@ -1,10 +1,12 @@
 package com.eanfang.model;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by O u r on 2018/4/18.
  */
 
-public class GroupsBean {
+public class GroupsBean implements Comparable<GroupsBean> {
 
     /**
      * groupId : 24
@@ -17,6 +19,10 @@ public class GroupsBean {
     private String groupIcon;
     private String rcloudGroupId;
     private String headPortrait;
+
+    private String nickName;   // 姓名
+    private String pinyin; // 姓名对应的拼音
+    private String firstLetter; // 拼音的首字母
 
     public String getHeadPortrait() {
         return headPortrait;
@@ -56,5 +62,40 @@ public class GroupsBean {
 
     public void setRcloudGroupId(String rcloudGroupId) {
         this.rcloudGroupId = rcloudGroupId;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
+    }
+
+    public String getFirstLetter() {
+        return firstLetter;
+    }
+
+    public void setFirstLetter(String firstLetter) {
+        this.firstLetter = firstLetter;
+    }
+
+    @Override
+    public int compareTo(@NonNull GroupsBean o) {
+        if (firstLetter.equals("#") && !o.getFirstLetter().equals("#")) {
+            return 1;
+        } else if (!firstLetter.equals("#") && o.getFirstLetter().equals("#")) {
+            return -1;
+        } else {
+            return pinyin.compareToIgnoreCase(o.getPinyin());
+        }
     }
 }

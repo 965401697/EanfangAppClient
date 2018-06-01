@@ -1,13 +1,11 @@
 package net.eanfang.worker.ui.activity.im;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,25 +15,23 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.witget.SideBar;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
 public class MyFriendsListActivity extends BaseWorkerActivity {
@@ -44,7 +40,8 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     RecyclerView recyclerView;
     private FriendsAdapter mFriendsAdapter;
     private int flag = 0;//显示不显示checkbox的标志位
-
+    @BindView(R.id.side_bar)
+    SideBar sideBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +63,18 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                 .params("accId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                     if (list.size() > 0) {
+
+                        for (FriendListBean bean : list) {
+                            // 根据姓名获取拼音
+                            bean.setPinyin(bean.getNickName());
+                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
+                            if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                                bean.setFirstLetter("#");
+                            }
+                        }
+
+                        Collections.sort(list);
+
                         mFriendsAdapter.setNewData(list);
                     }
                 }));
@@ -86,6 +95,18 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                 DialogShow(friendListBean.getAccId(), friendListBean.getNickName(), position);
 
                 return false;
+            }
+        });
+
+        sideBar.setOnStrSelectCallBack(new SideBar.ISideBarSelectCallBack() {
+            @Override
+            public void onSelectStr(int index, String selectStr) {
+                for (int i = 0; i < mFriendsAdapter.getData().size(); i++) {
+                    if (selectStr.equalsIgnoreCase(mFriendsAdapter.getData().get(i).getFirstLetter())) {
+                        recyclerView.scrollToPosition(i); // 选择到首字母出现的位置
+                        return;
+                    }
+                }
             }
         });
     }
