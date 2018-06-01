@@ -25,7 +25,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
-import net.eanfang.worker.ui.activity.worksapce.RepairCtrlActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;

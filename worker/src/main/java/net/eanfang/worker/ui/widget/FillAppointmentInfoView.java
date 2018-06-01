@@ -2,13 +2,9 @@ package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -33,29 +29,25 @@ import butterknife.ButterKnife;
  * @desc 上门签到
  */
 
-public class FillAppointmentInfoView extends BaseDialog implements RadioGroup.OnCheckedChangeListener {
-    @BindView(R.id.rb_yes)
-    AppCompatRadioButton rbYes;
-    @BindView(R.id.rb_no)
-    AppCompatRadioButton rbNo;
-    @BindView(R.id.rg_phone)
-    RadioGroup rgPhone;
-    @BindView(R.id.tv_indoor_time)
-    TextView tvIndoorTime;
-    @BindView(R.id.btn_commit)
-    Button btnCommit;
-    @BindView(R.id.ll_appointment_time)
-    LinearLayout llAppointmentTime;
+public class FillAppointmentInfoView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
-    @BindView(R.id.ll_door_time)
-    LinearLayout llDoorTime;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.tv_phone)
-    TextView tvPhone;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    // 上门时间
+    @BindView(R.id.tv_doorTime)
+    TextView tvDoorTime;
+    @BindView(R.id.ll_doorTime)
+    LinearLayout llDoorTime;
+    // 具体时间
+    @BindView(R.id.tv_specificTime)
+    TextView tvSpecificTime;
+    @BindView(R.id.ll_specificTime)
+    LinearLayout llSpecificTime;
+
     private Long orderId;
-    private boolean isReAppointment = false;
     private Activity mContext;
 
     public FillAppointmentInfoView(Activity context, boolean isfull, Long orderId) {
@@ -64,50 +56,37 @@ public class FillAppointmentInfoView extends BaseDialog implements RadioGroup.On
         this.mContext = context;
     }
 
-    public FillAppointmentInfoView(Activity context, boolean isfull, Long orderId, boolean isReAppointment) {
-        super(context, isfull);
-        this.mContext = context;
-        this.orderId = orderId;
-        this.isReAppointment = isReAppointment;
-
-    }
-
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_fill_appointment);
+        setContentView(R.layout.layout_appoint);
         ButterKnife.bind(this);
         initView();
-
+        initListener();
     }
 
+
     private void initView() {
-        rgPhone.setOnCheckedChangeListener(this);
-        tvTitle.setText("电话筛查");
-        if (isReAppointment) {
-            rbNo.setChecked(true);
-            rbYes.setClickable(false);
-            rgPhone.setEnabled(false);
-        }
-        btnCommit.setOnClickListener((v) -> {
+        tvTitle.setText("预约上门时间");
+        tvRight.setText("确认");
+        //增加预约时间不能为空验证
 
-            if (rgPhone.getCheckedRadioButtonId() == R.id.rb_no) {
-                //增加预约时间不能为空验证
-                String contract = tvIndoorTime.getText().toString().trim();
-                if (TextUtils.isEmpty(contract)) {
-                    showToast("预约时间不能为空");
-                    return;
-                }
-                doHttp(0, contract);
+        llDoorTime.setOnClickListener(v -> PickerSelectUtil.onYearMonthDayTimePicker(mContext, "上门日期", tvDoorTime));
+//        llSpecificTime.setOnClickListener(v -> PickerSelectUtil.onHourTimePicker(mContext, "上门日期", tvSpecificTime));
+    }
 
-            } else {
-//                showToast("请到待完工页面继续填写故障处理。");
-                doHttp(1, null);
-            }
-        });
+    private void initListener() {
         ivLeft.setOnClickListener((V) -> {
             dismiss();
         });
-        llDoorTime.setOnClickListener(v -> PickerSelectUtil.onYearMonthDayTimePicker(mContext, "开始时间", tvIndoorTime));
+        tvRight.setOnClickListener((v) -> {
+            String contract_door = tvDoorTime.getText().toString().trim();
+//            String contract_specific = tvSpecificTime.getText().toString().trim();
+            if (TextUtils.isEmpty(contract_door)) {
+                showToast("预约时间不能为空");
+                return;
+            }
+            doHttp(0, contract_door);
+        });
     }
 
     /**
@@ -127,19 +106,5 @@ public class FillAppointmentInfoView extends BaseDialog implements RadioGroup.On
 
     }
 
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_no:
-                llAppointmentTime.setVisibility(View.VISIBLE);
-                break;
-            case R.id.rb_yes:
-                llAppointmentTime.setVisibility(View.GONE);
-                break;
-            default:
-                break;
-        }
-    }
 }
 

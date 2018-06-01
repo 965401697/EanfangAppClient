@@ -12,7 +12,8 @@
     <ScrollView
         android:id="@+id/sv_worker_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +25,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_worker_detail_top_back"
                 android:orientation="horizontal"
-                android:padding="5dp"
+                android:paddingBottom="@dimen/dimen_30"
+                android:paddingLeft="@dimen/dimen_30"
+                android:paddingRight="@dimen/dimen_10"
+                android:paddingTop="@dimen/dimen_30"
                 android:visibility="visible">
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -38,8 +42,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -79,11 +83,12 @@
                             android:paddingLeft="@dimen/dimen_15"
                             android:paddingRight="@dimen/dimen_15"
                             android:paddingTop="@dimen/dimen_8"
-                            android:text="资质"
+                            android:text="技师"
                             android:textColor="@color/color_white"
                             android:textSize="@dimen/textSize_11" />
 
                         <TextView
+                            android:id="@+id/tv_workerQualification"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_16"
@@ -92,11 +97,12 @@
                             android:paddingLeft="@dimen/dimen_15"
                             android:paddingRight="@dimen/dimen_15"
                             android:paddingTop="@dimen/dimen_8"
-                            android:text="认证"
+                            android:text="资质"
                             android:textColor="@color/color_white"
                             android:textSize="@dimen/textSize_11" />
 
                         <TextView
+                            android:id="@+id/tv_workerTrain"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_16"
@@ -141,7 +147,7 @@
                             android:id="@+id/tv_mouthGrade"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="123"
+                            android:text=""
                             android:textColor="@color/color_worker_detail_top_grade"
                             android:textSize="@dimen/textSize_12" />
 
@@ -171,7 +177,7 @@
                             android:id="@+id/tv_goodGrade"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="30%"
+                            android:text=""
                             android:textColor="@color/color_white"
                             android:textSize="@dimen/textSize_12" />
                     </LinearLayout>
@@ -186,7 +192,7 @@
                 android:background="@color/color_white"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/dimen_10">
+                android:paddingTop="@dimen/dimen_20">
 
                 <LinearLayout style="@style/style_worker_detail_order">
 
@@ -302,6 +308,7 @@
                         android:id="@+id/tv_company_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:layout_marginTop="10dp"
                         android:text=""
                         android:textColor="@color/color_client_neworder"
@@ -353,8 +360,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_26"
                         android:layout_marginBottom="@dimen/dimen_26"
+                        android:layout_marginTop="@dimen/dimen_26"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -367,8 +374,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_30"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/dimen_30"
                             android:orientation="vertical">
 
                             <TextView
@@ -394,8 +401,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_26"
                         android:layout_marginBottom="@dimen/dimen_26"
+                        android:layout_marginTop="@dimen/dimen_26"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -408,8 +415,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_30"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/dimen_30"
                             android:orientation="vertical">
 
                             <TextView
@@ -455,8 +462,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_26"
                         android:layout_marginBottom="@dimen/dimen_26"
+                        android:layout_marginTop="@dimen/dimen_26"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -468,8 +475,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_30"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/dimen_30"
                             android:orientation="vertical">
 
                             <TextView
@@ -493,9 +500,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_marginLeft="@dimen/dimen_50"
                         android:layout_marginTop="@dimen/dimen_26"
-                        android:layout_marginBottom="@dimen/dimen_26"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -507,8 +514,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_30"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/dimen_30"
                             android:orientation="vertical">
 
                             <TextView
@@ -717,8 +724,8 @@
                         android:id="@+id/iv_down"
                         android:layout_width="18dp"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/dimen_46"
                         android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_46"
                         android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
@@ -729,7 +736,6 @@
                     android:layout_gravity="right"
                     android:visibility="gone" />
             </LinearLayout>
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -766,8 +772,8 @@
                         android:id="@+id/iv_pic2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -775,8 +781,8 @@
                         android:id="@+id/iv_pic3"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -784,8 +790,8 @@
                         android:id="@+id/iv_pic4"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
                 </LinearLayout>
@@ -811,8 +817,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -827,9 +833,9 @@
                         android:id="@+id/iv_haopinglv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:visibility="gone"
                         custom:progress_current="100"
@@ -842,9 +848,9 @@
                         android:id="@+id/tv_haopinglv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_10"
                         android:layout_marginRight="@dimen/dimen_46"
-                        android:layout_gravity="center_vertical"
                         android:text="100%"
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_12" />
@@ -1035,23 +1041,22 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white">
-
-                <TextView
-                    android:id="@+id/tv_select"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_worker_detail_confirm"
-                    android:gravity="center"
-                    android:text="选择该技师"
-                    android:textColor="@color/color_white"
-                    android:textSize="@dimen/textSize_14" />
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white">
+
+        <TextView
+            android:id="@+id/tv_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_worker_detail_confirm"
+            android:gravity="center"
+            android:text="选择该技师"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/textSize_14" />
+    </LinearLayout>
 </LinearLayout>

@@ -73,7 +73,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //订单金额
         if (item.getPayLogEntity() != null) {
             if (item.getPayLogEntity().getPayPrice() != null) {
-                helper.setText(R.id.tv_count_money, item.getPayLogEntity().getPayPrice());
+//                helper.setText(R.id.tv_count_money, item.getPayLogEntity().getPayPrice());
             }
         }
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
