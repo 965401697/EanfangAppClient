@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.apiservice.RepairApi;

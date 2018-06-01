@@ -53,6 +53,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
+import static com.eanfang.util.V.v;
+
 /**
  * 技师详情
  * Created by Administrator on 2017/4/8.
@@ -132,6 +134,24 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 业务类型查看更多
     @BindView(R.id.iv_workerDetaiTypelDown)
     ImageView ivWorkerDetaiTypelDown;
+    // 技师资质
+    @BindView(R.id.tv_workerQualification)
+    TextView tvWorkerQualification;
+    // 技师培训
+    @BindView(R.id.tv_workerTrain)
+    TextView tvWorkerTrain;
+    // 设计订单
+    @BindView(R.id.tv_designOrder)
+    TextView tvDesignOrder;
+    // 维修订单
+    @BindView(R.id.tv_repairOrder)
+    TextView tvRepairOrder;
+    // 施工订单
+    @BindView(R.id.tv_workOrder)
+    TextView tvWorkOrder;
+    // 评价订单
+    @BindView(R.id.tv_evaluteOrder)
+    TextView tvEvaluteOrder;
     private boolean isTypeMore = false;
     // 业务领域查看更多
     @BindView(R.id.iv_workerDetailAreaDown)
@@ -181,9 +201,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
 
         // 正常报修流程 获取数据
-        toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
-        companyUserId = V.v(() -> getIntent().getStringExtra("companyUserId"));
-        workerId = V.v(() -> getIntent().getStringExtra("workerId"));
+        toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
+        companyUserId = v(() -> getIntent().getStringExtra("companyUserId"));
+        workerId = v(() -> getIntent().getStringExtra("workerId"));
 
         // 客户端扫描二维码获取数据
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
@@ -429,23 +449,50 @@ public class WorkerDetailActivity extends BaseClientActivity {
             comapnyName = bean.getCompanyEntity().getOrgName();
             tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
         }
-        tvNumber.setText(V.v(() -> bean.getRepairCount()) + "单");
-        tvKoubei.setText(V.v(() -> bean.getPublicPraise() / 100) + "分");
+        tvNumber.setText(v(() -> bean.getRepairCount()) + "单");
+        tvKoubei.setText(v(() -> bean.getPublicPraise() / 100) + "分");
         if (bean.getVerifyEntity() != null) {
             tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
             tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
         // 技师编号
-        tvCode.setText(V.v(() -> bean.getWorkerNumber()) + "");
+        tvCode.setText(v(() -> bean.getWorkerNumber()) + "");
         // 口碑
-        tvMouthGrade.setText(V.v(() -> bean.getPublicPraise() + "分"));
+        tvMouthGrade.setText(v(() -> bean.getPublicPraise() + "分"));
         // 好评率
-        tvGoodGrade.setText(V.v(() -> bean.getGoodRate() + "%"));
-        arcprogressview.setProgress(90);
-
+        tvGoodGrade.setText(v(() -> bean.getGoodRate() + "%"));
+        arcprogressview.setProgress(bean.getGoodRate() + 20);
+        // 资质  0否，1是
+        if (v(() -> bean.getQualification()) != null && bean.getQualification() == 0) {
+            tvWorkerQualification.setVisibility(View.GONE);
+        } else if (v(() -> bean.getQualification()) != null && bean.getQualification() == 1) {
+            tvWorkerQualification.setVisibility(View.VISIBLE);
+        }
+        //  培训状态 （0否，1是）
+        if (v(() -> bean.getTrainStatus()) != null && bean.getTrainStatus() == 0) {
+            tvWorkerTrain.setVisibility(View.GONE);
+        } else if (v(() -> bean.getTrainStatus()) != null && bean.getTrainStatus() == 1) {
+            tvWorkerTrain.setVisibility(View.VISIBLE);
+        }
         if (bean.getGoodRate() != 0) {
             tvHaopinglv.setText(bean.getGoodRate() + "%");
             ivHaopinglv.setProgress(bean.getGoodRate());
+        }
+        // 设计订单
+        if (v(() -> bean.getDesignNum()) != null) {
+            tvDesignOrder.setText(bean.getDesignNum() + "");
+        }
+        // 维修订单
+        if (v(() -> bean.getRepairCount()) != null) {
+            tvRepairOrder.setText(v(() -> bean.getRepairCount()) + "");
+        }
+        // 施工订单
+        if (v(() -> bean.getInstallNum()) != null) {
+            tvWorkOrder.setText(v(() -> bean.getInstallNum()) + "");
+        }
+        // 评价订单
+        if (v(() -> bean.getEvaluateNum()) != null) {
+            tvEvaluteOrder.setText(v(() -> bean.getEvaluateNum()) + "");
         }
         rbStar1.setRating(bean.getItem1());
         rbStar2.setRating(bean.getItem2());

@@ -152,12 +152,13 @@
             android:id="@+id/ll_orderOrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="合计"
+                android:text="合计："
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
 

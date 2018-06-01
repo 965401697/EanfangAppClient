@@ -8,7 +8,7 @@
     <include layout="@layout/view_title_bar" />
 
     <RelativeLayout
-        android:id="@id/rg_phone"
+        android:id="@+id/rg_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
