@@ -398,7 +398,7 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
- 
+
         <activity android:name=".ui.activity.worksapce.AdministratorSetActivity" />
         <activity android:name=".ui.activity.worksapce.CreatSectionActivity" />
         <activity android:name=".ui.activity.worksapce.AddStaffActivity" />
