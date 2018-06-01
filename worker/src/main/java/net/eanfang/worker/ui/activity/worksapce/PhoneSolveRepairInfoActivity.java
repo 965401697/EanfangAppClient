@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.pickerview.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -41,7 +42,9 @@ import com.yaf.base.entity.RepairFailureEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.util.ImagePerviewUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -62,11 +65,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_CHOOSE_PHOTO_4 = 4;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
     private final Activity activity = this;
-    private TextView tv_detail_name;
     private RecyclerView rv_trouble;
-    private TextView tv_over_time;
-    private LinearLayout ll_over_time;
-    private TextView et_repair_time;
     /*
      * 单据照片 (3张)
      */
@@ -75,19 +74,12 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private List<BughandleDetailEntity> mDataList;
     private FillTroubleDetailAdapter quotationDetailAdapter;
     private HashMap<String, String> uploadMap = new HashMap<>();
-    private TimePickerView pvEndTime;
     private String companyName;
     private Long companyId;
-    //2017年7月20日 当前订单的签到时间
-    private String markdowntime;
     /*
      * 遗留问题
      */
     private EditText et_remain_question;
-    /*
-     * 协助人员
-     */
-    private LinearLayout ll_team_worker;
     private BughandleConfirmEntity bughandleConfirmEntity;
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
@@ -100,7 +92,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
             intent.putExtra("position", position);
             intent.putExtra("companyName", companyName);
             startActivityForResult(intent, REQUEST_CODE_UPDATE_TROUBLE);
-            ((BaseViewHolder) rv_trouble.getChildViewHolder(rv_trouble.getChildAt(position))).setText(R.id.tv_detai_status, "");
+//            ((BaseViewHolder) rv_trouble.getChildViewHolder(rv_trouble.getChildAt(position))).setText(R.id.tv_detai_status, "");
         }
     };
     private Long id;
@@ -120,14 +112,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        tv_detail_name = (TextView) findViewById(R.id.tv_detail_name);
         rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
-        // = (TextView) findViewById(R.id.textView15);
-        tv_over_time = (TextView) findViewById(R.id.tv_over_time);
-        ll_over_time = (LinearLayout) findViewById(R.id.ll_over_time);
-        et_repair_time = (TextView) findViewById(R.id.et_repair_time);
-        //协助人员
-        ll_team_worker = (LinearLayout) findViewById(R.id.ll_team_worker);
         et_remain_question = (EditText) findViewById(R.id.et_remain_question);
         snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
         tv_commit = (TextView) findViewById(R.id.tv_commit);
@@ -141,11 +126,29 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
                 submit();
             }).showDialog();
         }));
-
-
-        ll_over_time.setOnClickListener(v -> pvEndTime.show());
-
-
+        rv_trouble.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.iv_pic) {
+                    ArrayList<String> picList = new ArrayList<String>();
+                    String[] urls = mDataList.get(position).getFailureEntity().getPictures().split(",");
+                    if (urls.length >= 1) {
+                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[0]);
+                    }
+                    if (urls.length >= 2) {
+                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[1]);
+                    }
+                    if (urls.length >= 3) {
+                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[2]);
+                    }
+                    if (picList.size() == 0) {
+//                        showToast("当前没有图片");
+                        return;
+                    }
+                    ImagePerviewUtil.perviewImage(PhoneSolveRepairInfoActivity.this, picList);
+                }
+            }
+        });
     }
 
     private void initData() {
@@ -169,7 +172,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
 
     private void initAdapter() {
         mDataList = bughandleConfirmEntity.getDetailEntityList();
-        quotationDetailAdapter = new FillTroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
+        quotationDetailAdapter = new FillTroubleDetailAdapter(R.layout.layout_trouble_detail, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rv_trouble.setLayoutManager(new LinearLayoutManager(this));
@@ -197,11 +200,11 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     }
 
     private boolean checkInfo() {
-        String overTime = tv_over_time.getText().toString().trim();
-        if (StringUtils.isEmpty(overTime)) {
-            showToast("请填写完工时间");
-            return false;
-        }
+//        String overTime = tv_over_time.getText().toString().trim();
+//        if (StringUtils.isEmpty(overTime)) {
+//            showToast("请填写完工时间");
+//            return false;
+//        }
 
         String remainQuestion = et_remain_question.getText().toString().trim();
         if (StringUtils.isEmpty(remainQuestion)) {
@@ -224,9 +227,8 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private BughandleConfirmEntity fillBean() {
         bughandleConfirmEntity.setBusRepairOrderId(id);
 
-        bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(tv_over_time.getText().toString().trim()));
-        String repairTime = et_repair_time.getText().toString().trim();
-        bughandleConfirmEntity.setWorkHour(repairTime);
+//        bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(tv_over_time.getText().toString().trim()));
+//        bughandleConfirmEntity.setWorkHour(repairTime);
         bughandleConfirmEntity.setLeftoverProblem(et_remain_question.getText().toString().trim());
 //        uploadMap.clear();
         //单据照片 （3张）
@@ -319,40 +321,40 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         endDate.set(2099, 11, 28);
         //修改时间选择器  增加  小时 和 分钟选择
         //时间选择器
-        pvEndTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-                tv_over_time.setText(GetDateUtils.dateToDateTimeString(date));
-
-                //计算维修工时
-                if (StringUtils.isEmpty(markdowntime)) {
-                    et_repair_time.setText("0小时0分钟");
-                    return;
-                }
-                long day = GetDateUtils.getTimeDiff(date, GetDateUtils.getDate(markdowntime), "day");
-                long hours = GetDateUtils.getTimeDiff(date, GetDateUtils.getDate(markdowntime), "hours");
-                long minutes = GetDateUtils.getTimeDiff(date, GetDateUtils.getDate(markdowntime), "minutes");
-                if (day < 0) {
-                    day = 0;
-                }
-                if (hours < 0) {
-                    hours = 0;
-                }
-                if (minutes < 0) {
-                    minutes = 0;
-                }
-                et_repair_time.setText((day * 24 + hours) + "小时" + minutes + "分钟");
-            }
-        })
-                .setTitleText("结束时间")
-                .setType(TimePickerView.Type.ALL)
-                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setDividerColor(Color.DKGRAY)
-                .setContentSize(20)
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
-                .build();
+//        pvEndTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+//                tv_over_time.setText(GetDateUtils.dateToDateTimeString(date));
+//
+//                //计算维修工时
+//                if (StringUtils.isEmpty(markdowntime)) {
+//                    et_repair_time.setText("0小时0分钟");
+//                    return;
+//                }
+//                long day = GetDateUtils.getTimeDiff(date, GetDateUtils.getDate(markdowntime), "day");
+//                long hours = GetDateUtils.getTimeDiff(date, GetDateUtils.getDate(markdowntime), "hours");
+//                long minutes = GetDateUtils.getTimeDiff(date, GetDateUtils.getDate(markdowntime), "minutes");
+//                if (day < 0) {
+//                    day = 0;
+//                }
+//                if (hours < 0) {
+//                    hours = 0;
+//                }
+//                if (minutes < 0) {
+//                    minutes = 0;
+//                }
+//                et_repair_time.setText((day * 24 + hours) + "小时" + minutes + "分钟");
+//            }
+//        })
+//                .setTitleText("结束时间")
+//                .setType(TimePickerView.Type.ALL)
+//                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
+//                .setDividerColor(Color.DKGRAY)
+//                .setContentSize(20)
+//                .setDate(selectedDate)
+//                .setRangDate(startDate, endDate)
+//                .build();
     }
 
     @Override

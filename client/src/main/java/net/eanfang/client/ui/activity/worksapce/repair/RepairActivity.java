@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,14 +20,19 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.LoginBean;
+import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
@@ -58,8 +64,7 @@ import butterknife.OnClick;
  * @email houzhongzhou@yeah.net
  * @desc 我要报修
  */
-
-public class RepairActivity extends BaseClientActivity {
+public class RepairActivity extends BaseClientActivity implements RadioGroup.OnCheckedChangeListener {
 
     //报修地址回调 code
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
@@ -135,6 +140,10 @@ public class RepairActivity extends BaseClientActivity {
     // 判断是否是个人还是公司用户
     private boolean mIsCompany = true;
 
+    // 选择性别 默认是男
+    private int mSex = 1;
+    // 区县ID
+    private int mAreaId;
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -185,6 +194,7 @@ public class RepairActivity extends BaseClientActivity {
         tvSelectAdress.setOnClickListener(new MultiClickListener(this, () -> {
             address();
         }));
+        rgSex.setOnCheckedChangeListener(this);
     }
 
     private void initAdapter() {
@@ -208,17 +218,31 @@ public class RepairActivity extends BaseClientActivity {
         if (!checkInfo()) {
             return;
         }
-        // 扫码已经选择完技师 ，直接确认
-        if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
-            Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
-            intent_scan.putExtra("bean", doQrFillBean());
-            startActivity(intent_scan);
-        } else {
-            Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
-            intent.putExtra("bean", fillBean());
-            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(bean -> Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 1) + "").distinct().toList());
-            startActivity(intent);
-        }
+        // 查找上门费 判断当前城市是否开通  如果没有开通，提示 您报修的城市暂未开通服务。不能继续选技师
+        EanfangHttp.post(RepairApi.GET_REAPIR_PAY_PRICE)
+                .params("baseDataId", mAreaId)
+                .execute(new EanfangCallback<RepairOpenAreaBean>(RepairActivity.this, true, RepairOpenAreaBean.class, bean -> {
+                    /**
+                     * status   0：停用，1启用
+                     * */
+                    if (bean.getStatus() == 1) {
+                        // 扫码已经选择完技师 ，直接确认
+                        if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
+                            Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
+                            intent_scan.putExtra("bean", doQrFillBean());
+                            intent_scan.putExtra("doorFee", bean.getDoorFee());
+                            startActivity(intent_scan);
+                        } else {
+                            Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
+                            intent.putExtra("bean", fillBean());
+                            intent.putExtra("doorFee", bean.getDoorFee());
+                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
+                            startActivity(intent);
+                        }
+                    } else {
+                        showToast("所在城市暂未开通服务");
+                    }
+                }));
     }
 
     /**
@@ -333,6 +357,7 @@ public class RepairActivity extends BaseClientActivity {
         bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
         bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
         bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
+        bean.setSex(mSex);
         bean.setRepairWay(0);
         return bean;
     }
@@ -356,6 +381,7 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
         repairOrderEntity.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
         repairOrderEntity.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
+        repairOrderEntity.setSex(mSex);
         repairOrderEntity.setRepairWay(0);
         return repairOrderEntity;
     }
@@ -387,14 +413,15 @@ public class RepairActivity extends BaseClientActivity {
                 city = item.getCity();
                 county = item.getAddress();
                 address = item.getName();
+                mAreaId = Config.get().getBaseIdByCode(Config.get().getAreaCodeByName(item.getCity(), item.getAddress()), 3, Constant.AREA);
                 tvAddress.setText(province + "-" + city + "-" + county);
+
                 //将选择的地址 取 显示值
                 etDetailAddress.setText(address);
                 break;
             case ADD_TROUBLE_CALLBACK_CODE:
                 RepairBugEntity repairBugEntity = (RepairBugEntity) data.getSerializableExtra("bean");
                 beanList.add(repairBugEntity);
-
                 evaluateAdapter.notifyDataSetChanged();
 //                initData();
                 break;
@@ -442,6 +469,18 @@ public class RepairActivity extends BaseClientActivity {
                 break;
             case R.id.tv_next:
                 goSelectWorker();
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case R.id.rb_man:
+                mSex = 1;
+                break;
+            case R.id.rb_woman:
+                mSex = 0;
                 break;
         }
     }

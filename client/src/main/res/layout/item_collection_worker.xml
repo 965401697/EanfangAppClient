@@ -45,13 +45,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_client_select_worker_able"
-                    android:paddingBottom="@dimen/dimen_5"
-                    android:paddingLeft="@dimen/dimen_15"
-                    android:paddingRight="@dimen/dimen_15"
-                    android:paddingTop="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_3"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:paddingTop="@dimen/dimen_3"
                     android:text="认证"
                     android:textColor="@color/color_service_title"
-                    android:textSize="@dimen/textSize_13" />
+                    android:textSize="@dimen/textSize_11" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -59,25 +59,25 @@
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:layout_marginRight="@dimen/dimen_20"
                     android:background="@drawable/bg_client_select_worker_able"
-                    android:paddingBottom="@dimen/dimen_5"
-                    android:paddingLeft="@dimen/dimen_15"
-                    android:paddingRight="@dimen/dimen_15"
-                    android:paddingTop="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_3"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:paddingTop="@dimen/dimen_3"
                     android:text="培训"
                     android:textColor="@color/color_service_title"
-                    android:textSize="@dimen/textSize_13" />
+                    android:textSize="@dimen/textSize_11" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_client_select_worker_able"
-                    android:paddingBottom="@dimen/dimen_5"
-                    android:paddingLeft="@dimen/dimen_15"
-                    android:paddingRight="@dimen/dimen_15"
-                    android:paddingTop="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_3"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:paddingTop="@dimen/dimen_3"
                     android:text="资质"
                     android:textColor="@color/color_service_title"
-                    android:textSize="@dimen/textSize_13" />
+                    android:textSize="@dimen/textSize_11" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
+                android:textSize="@dimen/textSize_12" />
 
         </LinearLayout>
 

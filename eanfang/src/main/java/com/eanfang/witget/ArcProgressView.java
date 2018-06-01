@@ -30,7 +30,7 @@ public class ArcProgressView extends View {
 
     private int colorStart = Color.parseColor("#FFFFFF");
     private int colorEnd = Color.parseColor("#FFFFFF");
-    private int colorEmpty = Color.parseColor("#FFFFFF");
+    private int colorEmpty = Color.parseColor("#6DA0f7");
 
     private int mWidth; // 控件的宽高
     private int mHeight;
@@ -151,7 +151,7 @@ public class ArcProgressView extends View {
         LinearGradient linearGradient = new LinearGradient(0, 0, mWidth, 0, colors,
                 null, LinearGradient.TileMode.CLAMP);
         mPaint.setShader(linearGradient);
-        canvas.drawArc(rect, 130, mProgress, false, mPaint);
+        canvas.drawArc(rect, 160, mProgress, false, mPaint);
 //        drawText(canvas);
 
 //        drawProgressText(canvas, mProgress);

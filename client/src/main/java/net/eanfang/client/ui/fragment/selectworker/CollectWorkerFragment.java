@@ -51,13 +51,15 @@ public class CollectWorkerFragment extends BaseFragment {
 
     private RepairOrderEntity toRepairBean;
     private ArrayList<String> businessIds = new ArrayList<>();
+    private int mDoorFee;
     private SelectWorkerAdapter selectWorkerAdapter;
 
-    public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds) {
+    public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee) {
         CollectWorkerFragment collectWorkerFragment = new CollectWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
+        bundle.putInt("doorFee", doorfee);
         collectWorkerFragment.setArguments(bundle);
         return collectWorkerFragment;
     }
@@ -72,6 +74,7 @@ public class CollectWorkerFragment extends BaseFragment {
         Bundle bundle = getArguments();
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
         businessIds = bundle.getStringArrayList("bussinsList");
+        mDoorFee = bundle.getInt("doorFee", 0);
     }
 
     @Override

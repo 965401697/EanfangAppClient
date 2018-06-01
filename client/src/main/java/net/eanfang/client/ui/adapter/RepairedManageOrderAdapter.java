@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.view.Gravity;
 
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -8,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -49,20 +51,36 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         String orgName = "";
         if (item.getAssigneeOrg() != null && item.getAssigneeOrg().getBelongCompany() != null) {
             orgName = Optional.ofNullable(item.getAssigneeOrg().getBelongCompany().getOrgName()).orElseGet(() -> "");
+
         }
-        if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
-            orgName += " " + Optional.ofNullable(item.getAssigneeUser().getAccountEntity().getRealName()).orElseGet(() -> "");
+//        if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
+//            orgName += " " + Optional.ofNullable(item.getAssigneeUser().getAccountEntity().getRealName()).orElseGet(() -> "");
+//        }
+//        helper.setText(R.id.tv_company_name, orgName);
+
+        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
+            helper.setText(R.id.tv_company_name, item.getOwnerOrg().getBelongCompany().getOrgName()
+                    + "  (" + item.getOwnerUser().getAccountEntity().getRealName() + ")");
+        } else if (item.getOwnerOrg() == null) {
+            helper.setText(R.id.tv_company_name, item.getOwnerUser().getAccountEntity().getRealName());
         }
-        helper.setText(R.id.tv_company_name, orgName);
-        String userName = "";
-        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
-            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
-        }
-        helper.setText(R.id.tv_person_name, "负责：" + userName);
+
+//        String userName = "";
+//        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
+//            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
+//        }
+
+        helper.setText(R.id.tv_person_name, "负责：" + orgName);
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
-//        helper.setText(R.id.tv_count_money, "" + item.getDoorfee());
+        if (item.getPayLogEntity() != null) {
+            if (item.getPayLogEntity().getPayPrice() != null) {
+                helper.setText(R.id.tv_count_money, "¥" + NumberUtil.getEndTwoNum(item.getPayLogEntity().getPayPrice() / 100.00));
+            }
+        } else {
+            helper.setVisible(R.id.ll_pay, false);
+        }
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 
         helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);

@@ -79,51 +79,19 @@ public class WorkerEntity implements Serializable {
     //技师最新上报位置，区域编码 （基础数据）
     //@TableField(value = "place_code")
     private String placeCode;
-    /**
-     * 当前技师所在的公司中userId
-     */
+    //筛选技师时，数据行的编号，禁止排重用
     @TableField(exist = false)
-    private Long companyUserId;
-    /**
-     * 所属的account
-     */
-    @TableField(exist = false)
-    private AccountEntity accountEntity;
-    /**
-     * 当前worker对应的最新 verify
-     */
-    @TableField(exist = false)
-    private WorkerVerifyEntity verifyEntity;
-    /**
-     * 技师服务的 业务类型 id
-     */
-    @TableField(exist = false)
-    private List<Integer> businessList;
-    /**
-     * 技师的 服务类型 id
-     */
-    @TableField(exist = false)
-    private List<Integer> serviceList;
-    /**
-     * 技师服务的 区域 id
-     */
-    @TableField(exist = false)
-    private List<Integer> regionList;
-    /**
-     * 筛选时技师所在的公司
-     */
-    @TableField(exist = false)
-    private OrgEntity companyEntity;
-    /**
-     * 被此用户 收藏的id
-     */
-    @TableField(exist = false)
-    private Long collectId;
-    /**
-     * 筛选时技师所在的部门
-     */
-    @TableField(exist = false)
-    private OrgEntity departmentEntity;
+    private Integer i;
+
+    private Integer qualification;
+
+    private Integer trainStatus;
+
+    private Integer designNum;
+
+    private Integer installNum;
+
+    private Integer evaluateNum;
 
     /**
      * 获取：主键自增
@@ -244,20 +212,13 @@ public class WorkerEntity implements Serializable {
         return item2;
     }
 
-
-
-    /*
-     *===================================================================================================================================================
-     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
-     *===================================================================================================================================================
-     */
-
     /**
      * 设置：
      */
     public void setItem2(Integer item2) {
         this.item2 = item2;
     }
+
 
     /**
      * 获取：
@@ -316,4 +277,60 @@ public class WorkerEntity implements Serializable {
     }
 
 
+
+    /*
+     *===================================================================================================================================================
+     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
+     *===================================================================================================================================================
+     */
+
+    /**
+     * 当前技师所在的公司中userId
+     */
+    @TableField(exist = false)
+    private Long companyUserId;
+
+    /**
+     * 所属的account
+     */
+    @TableField(exist = false)
+    private AccountEntity accountEntity;
+    /**
+     * 当前worker对应的最新 verify
+     */
+    @TableField(exist = false)
+    private WorkerVerifyEntity verifyEntity;
+    /**
+     * 技师服务的 业务类型 id
+     */
+    @TableField(exist = false)
+    private List<Integer> businessList;
+    /**
+     * 技师的 服务类型 id
+     */
+    @TableField(exist = false)
+    private List<Integer> serviceList;
+    /**
+     * 技师服务的 区域 id
+     */
+    @TableField(exist = false)
+    private List<Integer> regionList;
+    /**
+     * 筛选时技师所在的公司
+     */
+    @TableField(exist = false)
+    private OrgEntity companyEntity;
+    /**
+     * 被此用户 收藏的id
+     */
+    @TableField(exist = false)
+    private Long collectId;
+    /**
+     * 筛选时技师所在的部门
+     */
+    @TableField(exist = false)
+    private OrgEntity departmentEntity;
+
+
 }
+

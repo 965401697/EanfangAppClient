@@ -108,6 +108,8 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 intent.putExtra("dataCode", rightDataList.get(position).getDataCode());
+                String businessOneCode = Config.get().getBaseCodeByLevel(rightDataList.get(position).getDataCode(), 1);
+                intent.putExtra("businessOneCode", businessOneCode);
                 setResult(RESULT_DATACODE, intent);
                 finishSelf();
             }

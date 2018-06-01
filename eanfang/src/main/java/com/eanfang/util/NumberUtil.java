@@ -179,6 +179,13 @@ public class NumberUtil {
         return nums;
     }
 
+    /**
+     * 取一位整数和两位小数
+     */
+    public static String getEndTwoNum(double a) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(a);
+    }
 
     /**
      * @return int[]

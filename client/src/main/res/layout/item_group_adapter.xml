@@ -139,7 +139,7 @@
         </LinearLayout>
 
 
-        <TextView style="@style/style_common_line_gray" />
+        <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
@@ -166,7 +166,7 @@
         </LinearLayout>
 
 
-        <TextView style="@style/style_common_line_gray" />
+        <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
@@ -194,7 +194,7 @@
         </LinearLayout>
 
 
-        <TextView style="@style/style_common_line_gray" />
+        <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout

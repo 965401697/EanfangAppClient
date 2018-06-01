@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="电视监控-摄像采集-模拟球机"
+            android:text=""
             android:textColor="@color/color_repair_fault_num"
             android:textSize="@dimen/textSize_13" />
 

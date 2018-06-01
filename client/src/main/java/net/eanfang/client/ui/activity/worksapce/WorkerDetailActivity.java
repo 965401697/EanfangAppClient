@@ -3,16 +3,21 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -52,6 +57,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
+
+import static com.eanfang.util.V.v;
 
 /**
  * 技师详情
@@ -132,6 +139,24 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 业务类型查看更多
     @BindView(R.id.iv_workerDetaiTypelDown)
     ImageView ivWorkerDetaiTypelDown;
+    // 技师资质
+    @BindView(R.id.tv_workerQualification)
+    TextView tvWorkerQualification;
+    // 技师培训
+    @BindView(R.id.tv_workerTrain)
+    TextView tvWorkerTrain;
+    // 设计订单
+    @BindView(R.id.tv_designOrder)
+    TextView tvDesignOrder;
+    // 维修订单
+    @BindView(R.id.tv_repairOrder)
+    TextView tvRepairOrder;
+    // 施工订单
+    @BindView(R.id.tv_workOrder)
+    TextView tvWorkOrder;
+    // 评价订单
+    @BindView(R.id.tv_evaluteOrder)
+    TextView tvEvaluteOrder;
     private boolean isTypeMore = false;
     // 业务领域查看更多
     @BindView(R.id.iv_workerDetailAreaDown)
@@ -166,6 +191,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private String workerName = "";
     private String comapnyName = "";
 
+    private int regionSize = 30;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,9 +208,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
 
         // 正常报修流程 获取数据
-        toRepairBean = V.v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
-        companyUserId = V.v(() -> getIntent().getStringExtra("companyUserId"));
-        workerId = V.v(() -> getIntent().getStringExtra("workerId"));
+        toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
+        companyUserId = v(() -> getIntent().getStringExtra("companyUserId"));
+        workerId = v(() -> getIntent().getStringExtra("workerId"));
 
         // 客户端扫描二维码获取数据
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
@@ -269,6 +296,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 intent.putExtra("headUrl", headUrl);
                 intent.putExtra("workName", workerName);
                 intent.putExtra("companyName", comapnyName);
+                intent.putExtra("doorFee", getIntent().getIntExtra("doorFee", 0));
             }
             startActivity(intent);
 
@@ -276,16 +304,17 @@ public class WorkerDetailActivity extends BaseClientActivity {
         // 区域
         llArea.setOnClickListener((v) -> {
 
-            if (evaluateAdapter1.getData().isEmpty() || evaluateAdapter1.getData().size() <= 0) {
+            if (mDataList1.isEmpty()) {
                 showToast("稍等一下，我还没准备好。");
                 return;
             }
             if (rvList1.getVisibility() == View.VISIBLE) {
                 rvList1.setVisibility(View.GONE);
-
                 ivDown.setImageResource(R.mipmap.arrow_down);
+                evaluateAdapter1.setNewData(new ArrayList());
             } else {
                 rvList1.setVisibility(View.VISIBLE);
+                fillRegionData();
                 ivDown.setImageResource(R.mipmap.arrow_up);
             }
         });
@@ -428,23 +457,50 @@ public class WorkerDetailActivity extends BaseClientActivity {
             comapnyName = bean.getCompanyEntity().getOrgName();
             tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
         }
-        tvNumber.setText(V.v(() -> bean.getRepairCount()) + "单");
-        tvKoubei.setText(V.v(() -> bean.getPublicPraise() / 100) + "分");
+        tvNumber.setText(v(() -> bean.getRepairCount()) + "单");
+        tvKoubei.setText(v(() -> bean.getPublicPraise() / 100) + "分");
         if (bean.getVerifyEntity() != null) {
             tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
             tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
         // 技师编号
-        tvCode.setText(V.v(() -> bean.getWorkerNumber()) + "");
+        tvCode.setText(v(() -> bean.getWorkerNumber()) + "");
         // 口碑
-        tvMouthGrade.setText(V.v(() -> bean.getPublicPraise() + "分"));
+        tvMouthGrade.setText(v(() -> bean.getPublicPraise() + "分"));
         // 好评率
-        tvGoodGrade.setText(V.v(() -> bean.getGoodRate() + "%"));
-        arcprogressview.setProgress(90);
-
+        tvGoodGrade.setText(v(() -> bean.getGoodRate() + "%"));
+        arcprogressview.setProgress(bean.getGoodRate() + 20);
+        // 资质  0否，1是
+        if (v(() -> bean.getQualification()) != null && bean.getQualification() == 0) {
+            tvWorkerQualification.setVisibility(View.GONE);
+        } else if (v(() -> bean.getQualification()) != null && bean.getQualification() == 1) {
+            tvWorkerQualification.setVisibility(View.VISIBLE);
+        }
+        //  培训状态 （0否，1是）
+        if (v(() -> bean.getTrainStatus()) != null && bean.getTrainStatus() == 0) {
+            tvWorkerTrain.setVisibility(View.GONE);
+        } else if (v(() -> bean.getTrainStatus()) != null && bean.getTrainStatus() == 1) {
+            tvWorkerTrain.setVisibility(View.VISIBLE);
+        }
         if (bean.getGoodRate() != 0) {
             tvHaopinglv.setText(bean.getGoodRate() + "%");
             ivHaopinglv.setProgress(bean.getGoodRate());
+        }
+        // 设计订单
+        if (v(() -> bean.getDesignNum()) != null) {
+            tvDesignOrder.setText(bean.getDesignNum() + "");
+        }
+        // 维修订单
+        if (v(() -> bean.getRepairCount()) != null) {
+            tvRepairOrder.setText(v(() -> bean.getRepairCount()) + "");
+        }
+        // 施工订单
+        if (v(() -> bean.getInstallNum()) != null) {
+            tvWorkOrder.setText(v(() -> bean.getInstallNum()) + "");
+        }
+        // 评价订单
+        if (v(() -> bean.getEvaluateNum()) != null) {
+            tvEvaluteOrder.setText(v(() -> bean.getEvaluateNum()) + "");
         }
         rbStar1.setRating(bean.getItem1());
         rbStar2.setRating(bean.getItem2());
@@ -458,9 +514,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
             if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
                 mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
             }
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("isOk", true);
-            EventBus.getDefault().post(jsonObject);
         }).start();
 
         // 服务类型
@@ -505,10 +558,41 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private void initAdapter() {
 
-        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList1);
+        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, new ArrayList());
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        rvList1.setAdapter(evaluateAdapter1);
-        evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+
+        evaluateAdapter1.bindToRecyclerView(rvList1);
+
+        rvList1.setNestedScrollingEnabled(false);
+
+        findViewById(R.id.sv_worker_detail).setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int width, height;
+                Point p = new Point();
+                getWindowManager().getDefaultDisplay().getSize(p);
+                width = p.x;
+                height = p.y;
+                Rect rect = new Rect(0, 0, width, height);
+                //如果荣誉证书在屏幕可见范围
+                if (ivPic1.getLocalVisibleRect(rect)) {
+                    //并且 服务区域是打开状态
+                    if (rvList1.getVisibility() == View.VISIBLE) {
+                        //加载服务区域
+                        fillRegionData();
+                    }
+                }
+            }
+            return false;
+        });
+    }
+
+    private void fillRegionData() {
+        List<String> dataList = Stream.of(mDataList1).filter(data -> !evaluateAdapter1.getData().contains(data)).limit(regionSize).toList();
+        evaluateAdapter1.addData(dataList);
+        evaluateAdapter1.loadMoreComplete();
+        if (dataList.size() < regionSize) {
+            evaluateAdapter1.loadMoreEnd();
+        }
 
     }
 
@@ -544,39 +628,22 @@ public class WorkerDetailActivity extends BaseClientActivity {
             }
         }
 
-
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(JSONObject jsonObject) {
-        if (jsonObject.containsKey("isOk") && jsonObject.getBoolean("isOk")) {
-            evaluateAdapter1.setNewData(mDataList1);
-            evaluateAdapter1.notifyDataSetChanged();
-        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
-    @Subscribe
-    public void onEventMainThread() {
 
     }
 
-    public static void addView(final Context context, CustomRadioGroup parent, List<String> list) {
+    public static void addView(final Context context, CustomRadioGroup
+            parent, List<String> list) {
         parent.removeAllViews();
         LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {

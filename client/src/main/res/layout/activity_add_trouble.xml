@@ -146,6 +146,44 @@
                 <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
+                    android:id="@+id/ll_deviceLocatinNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请输入位置编号"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/tv_deviceLocationNum"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_36"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text=""-->
+                    <!--android:textColor="@color/color_client_neworder"-->
+                    <!--android:textSize="@dimen/textSize_13"-->
+                    <!--android:visibility="gone" />-->
+
+                    <EditText
+                        android:id="@+id/et_deviceLocationNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
                     android:id="@+id/ll_deviceLocaltion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,7 +194,7 @@
                         android:id="@+id/tv_deviceLocationHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="请输入设备位置"
+                        android:text="请输入故障位置"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
@@ -225,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="15dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_deviceModelHint"
@@ -275,6 +313,7 @@
                     android:textSize="@dimen/textSize_15" />
 
                 <LinearLayout
+                    android:id="@+id/ll_faultInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -298,6 +337,22 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13"
                         android:visibility="visible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="right"
+                        android:text="前往故障库"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_16"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/ic_icon_right" />
 
                     <!--<EditText-->
                     <!--android:id="@+id/et_faultDescripte"-->

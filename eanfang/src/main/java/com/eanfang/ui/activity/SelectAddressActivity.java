@@ -25,6 +25,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.adapter.SelectAddressAdapter;
@@ -147,6 +148,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
                     mDataList.get(position).setName(address);
                 }
                 intent.putExtra("data", mDataList.get(position));
+
                 setResult(RESULT_CODE, intent);
                 finishSelf();
             }

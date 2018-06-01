@@ -41,7 +41,8 @@ public class ToRepairAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewH
         helper.addOnClickListener(R.id.tv_delete);
         SimpleDraweeView faultPic = helper.getView(R.id.iv_faultImg);
         if (!StringUtils.isEmpty(item.getPictures())) {
-            faultPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPictures()));
+            String[] imgs = item.getPictures().split(",");
+            faultPic.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgs[0]));
         }
 
     }

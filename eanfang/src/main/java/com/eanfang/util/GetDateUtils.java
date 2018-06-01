@@ -281,6 +281,17 @@ public class GetDateUtils {
         return null;
     }
 
+    public static Date getDateHour(String hour, String minute, String second) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String date = hour + ":" + minute + ":" + second;
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * 转化你字符串为Date

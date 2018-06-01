@@ -94,6 +94,7 @@
     <color name="color_pop_line">#DADADA</color>
     <color name="color_pop_title_back">#FAE9CE</color>
     <color name="color_pop_title">#D1A060</color>
+    <color name="color_order_list_price">#F35D3F</color>
 
 
 </resources>

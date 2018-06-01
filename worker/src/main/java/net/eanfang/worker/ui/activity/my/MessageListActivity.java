@@ -87,6 +87,9 @@ public class MessageListActivity extends BaseWorkerActivity implements
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDataList.size() < position) {
+                    return;
+                }
                 startActivity(new Intent(MessageListActivity.this, MessageDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
             }
         });

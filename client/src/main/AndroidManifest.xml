@@ -398,13 +398,23 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity" />
+ 
         <activity android:name=".ui.activity.worksapce.AdministratorSetActivity" />
         <activity android:name=".ui.activity.worksapce.CreatSectionActivity" />
         <activity android:name=".ui.activity.worksapce.AddStaffActivity" />
         <activity android:name=".ui.activity.worksapce.AddStaffNextActivity" />
         <activity android:name=".ui.activity.worksapce.PermissionManagerActivity" />
         <activity android:name=".ui.activity.worksapce.AolltRoleActivity"></activity>
+
+        <!-- 技师故障处理 查看照片 -->
+        <activity
+            android:name=".ui.activity.worksapce.TroubleDetailLookPhotoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 故障库 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.FaultLibraryActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

@@ -1,12 +1,11 @@
 package com.yaf.base.entity;
 
+import java.io.Serializable;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
-
-import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -77,6 +76,50 @@ public class RepairBugEntity implements Serializable {
     //修改时间
     //@TableField(value = "edit_time")
     private Date editTime;
+    //故障简述
+    //@TableField(value = "sketch")
+    private String sketch;
+    //位置编号
+    //@TableField(value = "location_number")
+    private String locationNumber;
+    //维保状态
+    //@TableField(value = "maintenance_status")
+    private Integer maintenanceStatus;
+    //维修次数
+    //@TableField(value = "repair_count")
+    private Integer repairCount;
+
+    public String getSketch() {
+        return sketch;
+    }
+
+    public void setSketch(String sketch) {
+        this.sketch = sketch;
+    }
+
+    public String getLocationNumber() {
+        return locationNumber;
+    }
+
+    public void setLocationNumber(String locationNumber) {
+        this.locationNumber = locationNumber;
+    }
+
+    public Integer getMaintenanceStatus() {
+        return maintenanceStatus;
+    }
+
+    public void setMaintenanceStatus(Integer maintenanceStatus) {
+        this.maintenanceStatus = maintenanceStatus;
+    }
+
+    public Integer getRepairCount() {
+        return repairCount;
+    }
+
+    public void setRepairCount(Integer repairCount) {
+        this.repairCount = repairCount;
+    }
 
     /**
      * 获取：主键

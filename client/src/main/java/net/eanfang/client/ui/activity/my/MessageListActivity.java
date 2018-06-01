@@ -85,6 +85,9 @@ public class MessageListActivity extends BaseClientActivity implements
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mDataList.size() < position) {
+                    return;
+                }
                 startActivity(new Intent(MessageListActivity.this, MessageDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
             }
         });
@@ -130,7 +133,7 @@ public class MessageListActivity extends BaseClientActivity implements
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setPage(page);
         queryEntry.setSize(10);
-        queryEntry.getEquals().put("noticeClasses","1");
+        queryEntry.getEquals().put("noticeClasses", "1");
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
