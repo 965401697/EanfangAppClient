@@ -51,16 +51,26 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         String orgName = "";
         if (item.getAssigneeOrg() != null && item.getAssigneeOrg().getBelongCompany() != null) {
             orgName = Optional.ofNullable(item.getAssigneeOrg().getBelongCompany().getOrgName()).orElseGet(() -> "");
+
         }
-        if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
-            orgName += " " + Optional.ofNullable(item.getAssigneeUser().getAccountEntity().getRealName()).orElseGet(() -> "");
+//        if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
+//            orgName += " " + Optional.ofNullable(item.getAssigneeUser().getAccountEntity().getRealName()).orElseGet(() -> "");
+//        }
+//        helper.setText(R.id.tv_company_name, orgName);
+
+        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
+            helper.setText(R.id.tv_company_name, item.getOwnerOrg().getBelongCompany().getOrgName()
+                    + "  (" + item.getOwnerUser().getAccountEntity().getRealName() + ")");
+        } else if (item.getOwnerOrg() == null) {
+            helper.setText(R.id.tv_company_name, item.getOwnerUser().getAccountEntity().getRealName());
         }
-        helper.setText(R.id.tv_company_name, orgName);
-        String userName = "";
-        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
-            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
-        }
-        helper.setText(R.id.tv_person_name, "负责：" + userName);
+
+//        String userName = "";
+//        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
+//            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
+//        }
+
+        helper.setText(R.id.tv_person_name, "负责：" + orgName);
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));

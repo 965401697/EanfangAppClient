@@ -10,6 +10,7 @@
     <include layout="@layout/header" />
 
     <ScrollView
+        android:id="@+id/sv_worker_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -37,8 +38,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -352,8 +353,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_marginTop="@dimen/dimen_26"
+                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -366,8 +367,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_30"
+                            android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
                             <TextView
@@ -393,8 +394,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_marginTop="@dimen/dimen_26"
+                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal">
@@ -407,8 +408,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_30"
+                            android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
                             <TextView
@@ -454,8 +455,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_marginTop="@dimen/dimen_26"
+                        android:layout_marginBottom="@dimen/dimen_26"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -467,8 +468,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_30"
+                            android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
                             <TextView
@@ -492,9 +493,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dimen_26"
                         android:layout_marginLeft="@dimen/dimen_50"
                         android:layout_marginTop="@dimen/dimen_26"
+                        android:layout_marginBottom="@dimen/dimen_26"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -506,8 +507,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_30"
+                            android:layout_gravity="center_vertical"
                             android:orientation="vertical">
 
                             <TextView
@@ -716,20 +717,18 @@
                         android:id="@+id/iv_down"
                         android:layout_width="18dp"
                         android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_46"
+                        android:layout_centerVertical="true"
                         android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
-
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_list1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:visibility="gone" />
             </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_list1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:visibility="gone" />
 
 
             <TextView
@@ -767,8 +766,8 @@
                         android:id="@+id/iv_pic2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -776,8 +775,8 @@
                         android:id="@+id/iv_pic3"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -785,8 +784,8 @@
                         android:id="@+id/iv_pic4"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
                 </LinearLayout>
@@ -812,8 +811,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
+                    android:layout_alignParentRight="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -828,9 +827,9 @@
                         android:id="@+id/iv_haopinglv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="10dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:visibility="gone"
                         custom:progress_current="100"
@@ -843,9 +842,9 @@
                         android:id="@+id/tv_haopinglv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_10"
                         android:layout_marginRight="@dimen/dimen_46"
+                        android:layout_gravity="center_vertical"
                         android:text="100%"
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_12" />

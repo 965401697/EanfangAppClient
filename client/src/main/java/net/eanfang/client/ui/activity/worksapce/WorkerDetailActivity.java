@@ -3,16 +3,21 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -166,6 +171,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private String workerName = "";
     private String comapnyName = "";
 
+    private int regionSize = 30;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,16 +284,17 @@ public class WorkerDetailActivity extends BaseClientActivity {
         // 区域
         llArea.setOnClickListener((v) -> {
 
-            if (evaluateAdapter1.getData().isEmpty() || evaluateAdapter1.getData().size() <= 0) {
+            if (mDataList1.isEmpty()) {
                 showToast("稍等一下，我还没准备好。");
                 return;
             }
             if (rvList1.getVisibility() == View.VISIBLE) {
                 rvList1.setVisibility(View.GONE);
-
                 ivDown.setImageResource(R.mipmap.arrow_down);
+                evaluateAdapter1.setNewData(new ArrayList());
             } else {
                 rvList1.setVisibility(View.VISIBLE);
+                fillRegionData();
                 ivDown.setImageResource(R.mipmap.arrow_up);
             }
         });
@@ -459,9 +467,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
             if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
                 mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
             }
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("isOk", true);
-            EventBus.getDefault().post(jsonObject);
         }).start();
 
         // 服务类型
@@ -506,10 +511,41 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private void initAdapter() {
 
-        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, mDataList1);
+        evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, new ArrayList());
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        rvList1.setAdapter(evaluateAdapter1);
-        evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+
+        evaluateAdapter1.bindToRecyclerView(rvList1);
+
+        rvList1.setNestedScrollingEnabled(false);
+
+        findViewById(R.id.sv_worker_detail).setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int width, height;
+                Point p = new Point();
+                getWindowManager().getDefaultDisplay().getSize(p);
+                width = p.x;
+                height = p.y;
+                Rect rect = new Rect(0, 0, width, height);
+                //如果荣誉证书在屏幕可见范围
+                if (ivPic1.getLocalVisibleRect(rect)) {
+                    //并且 服务区域是打开状态
+                    if (rvList1.getVisibility() == View.VISIBLE) {
+                        //加载服务区域
+                        fillRegionData();
+                    }
+                }
+            }
+            return false;
+        });
+    }
+
+    private void fillRegionData() {
+        List<String> dataList = Stream.of(mDataList1).filter(data -> !evaluateAdapter1.getData().contains(data)).limit(regionSize).toList();
+        evaluateAdapter1.addData(dataList);
+        evaluateAdapter1.loadMoreComplete();
+        if (dataList.size() < regionSize) {
+            evaluateAdapter1.loadMoreEnd();
+        }
 
     }
 
@@ -545,39 +581,22 @@ public class WorkerDetailActivity extends BaseClientActivity {
             }
         }
 
-
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(JSONObject jsonObject) {
-        if (jsonObject.containsKey("isOk") && jsonObject.getBoolean("isOk")) {
-            evaluateAdapter1.setNewData(mDataList1);
-            evaluateAdapter1.notifyDataSetChanged();
-        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
-    @Subscribe
-    public void onEventMainThread() {
 
     }
 
-    public static void addView(final Context context, CustomRadioGroup parent, List<String> list) {
+    public static void addView(final Context context, CustomRadioGroup
+            parent, List<String> list) {
         parent.removeAllViews();
         LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {
