@@ -5,7 +5,9 @@ import com.eanfang.config.Constant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class GetConstDataUtils {
@@ -68,6 +70,16 @@ public class GetConstDataUtils {
      * 故障处理明细状态
      */
     private static List<String> bugDetailList;
+
+    /**
+     * 故障明细状态二级 的 key
+     */
+    private static List<String> bugDetailKeyList;
+
+    /**
+     * 故障明细 二级
+     */
+    private static Map<String, List<String>> bugDetailTwoList;
     /**
      * 到达时限
      */
@@ -133,6 +145,7 @@ public class GetConstDataUtils {
      * 闯防的报警原因
      */
     private static List<String> throughCauseList;
+
 
     /**
      * 报修订单状态
@@ -419,11 +432,21 @@ public class GetConstDataUtils {
             synchronized (GetConstDataUtils.class) {
                 if (bugDetailList == null) {
                     bugDetailList = Config.get().getConstBean().getData().getRepairConstant().get(Constant.BUGHANDLE_DETAIL_STATUS);
+                    bugDetailKeyList = Config.get().getConstBean().getData().getRepairConstant().get(Constant.BUGHANDLE_DETAIL_STATUS_KEY);
+                    bugDetailTwoList = new HashMap<>();
+                    for (int i = 0; i < bugDetailKeyList.size(); i++) {
+                        bugDetailTwoList.put(bugDetailKeyList.get(i), Config.get().getConstBean().getData().getRepairConstant().get(bugDetailKeyList.get(i)));
+                    }
                 }
             }
         }
         return bugDetailList;
     }
+
+    public static List<String> getBugDetailTwoList(int oneIndex) {
+        return bugDetailTwoList.get(bugDetailKeyList.get(oneIndex));
+    }
+
 
     /**
      * 到达时限
