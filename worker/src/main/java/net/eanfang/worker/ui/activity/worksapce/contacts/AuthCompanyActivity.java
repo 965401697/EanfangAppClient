@@ -2,6 +2,8 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -109,6 +111,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     LinearLayout llCompanyScale;
     @BindView(R.id.et_desc)
     EditText etDesc;
+
+    @BindView(R.id.btn_complete)
+    Button btnComplete;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private AuthCompanyBaseInfoBean byNetBean;
     private String firstTraed, secondTraed;
@@ -119,7 +124,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private Long orgid;
 
     // 区别
-    private String mAssign = "";
+    //  private String mAssign = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,13 +142,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
-        mAssign = getIntent().getStringExtra("assign");
+        // mAssign = getIntent().getStringExtra("assign");
+
         // 完善资料
-        if (mAssign.equals("prefect")) {
-            setRightTitle("下一步");
-        } else {// 认证
-            setRightTitle("进行认证");
-        }
+        btnComplete.setText("保存资料");
         etCompany.setText(orgName);
 
     }
@@ -163,29 +165,14 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         llType.setOnClickListener(v -> showTradType());
         llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "",
                 tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
-//        } else {
-//
-//        }
-        setRightTitleOnClickListener((v) -> {
-            // 完善资料
-            if (mAssign.equals("prefect")) {
-                // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
-                if (byNetBean.getStatus() == 0 || byNetBean.getStatus() == 3) {
-                    doVerify();
-                } else {
-                    jump();
-                }
-            } else {// 认证
-                // 0 草稿 3  认证拒绝
-                if (byNetBean.getStatus() == 0 || byNetBean.getStatus() == 3) {
-                    commitVerfiy();
-                } else if (byNetBean.getStatus() == 1) {
-                    showToast("您已经提交认证，审核中。。");
-                } else if (byNetBean.getStatus() == 2) {
-                    showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
-                }
-            }
 
+        btnComplete.setOnClickListener((v) -> {
+            // 完善资料
+            if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+                doVerify();
+            } else {
+                showToast("抱歉，您没有权限！");
+            }
         });
     }
 
@@ -224,11 +211,14 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         } else if (StringUtils.isEmpty(edCompanyNumber.getText().toString().trim())) {
             showToast("请输入营业执照号码");
             return;
+        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+            showToast("请输入注册资本");
+            return;
         } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
             return;
-        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
-            showToast("请输入注册资本");
+        } else if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
+            showToast("请选择行业类型");
             return;
         } else if (StringUtils.isEmpty(etLegalPersion.getText().toString().trim())) {
             showToast("请输入法人代表");
@@ -275,21 +265,17 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         commit(json);
     }
 
-    private void jump() {
-        Intent intent = new Intent(AuthCompanyActivity.this, AuthSystemTypeActivity.class);
-        intent.putExtra("orgid", orgid);
-        intent.putExtra("accid", byNetBean.getStatus());
-        intent.putExtra("adminUserId", byNetBean.getAdminUserId());
-        intent.putExtra("assign", mAssign);
-        startActivity(intent);
-    }
-
     /**
      * 初始化  填充数据
      */
     private void fillData() {
+
+        //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
+        if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
+            btnComplete.setVisibility(View.GONE);
+        }
         // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
-        if ((byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) || mAssign.equals("auth")) {
+        if ((byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3)) {
             ivUpload.setEnabled(false);
             ivUpload2.setEnabled(false);
             etCompany.setEnabled(false);
@@ -346,7 +332,8 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    jump();
+                    showToast("保存成功");
+                    finishSelf();
                 }));
     }
 
@@ -404,11 +391,5 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         }
     }
 
-    private void commitVerfiy() {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + orgid)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    showToast("已提交认证");
-                    finishSelf();
-                }));
-    }
+
 }

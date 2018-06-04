@@ -23,7 +23,7 @@ import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 public class MorePopWindow extends PopupWindow {
 
     @SuppressLint("InflateParams")
-    public MorePopWindow(final Activity context) {
+    public MorePopWindow(final Activity context, boolean isVisable) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View content = inflater.inflate(R.layout.popu_add, null);
@@ -50,6 +50,10 @@ public class MorePopWindow extends PopupWindow {
 
         RelativeLayout re_addfriends = (RelativeLayout) content.findViewById(R.id.re_addfriends);
         RelativeLayout re_chatroom = (RelativeLayout) content.findViewById(R.id.re_chatroom);
+        if (isVisable) {
+            re_addfriends.setVisibility(View.GONE);
+            re_chatroom.setVisibility(View.GONE);
+        }
         RelativeLayout re_scanner = (RelativeLayout) content.findViewById(R.id.re_scanner);
         RelativeLayout re_group = (RelativeLayout) content.findViewById(R.id.re_group);
         re_addfriends.setOnClickListener(new View.OnClickListener() {

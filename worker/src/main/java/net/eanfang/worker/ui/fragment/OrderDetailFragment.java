@@ -175,7 +175,7 @@ public class OrderDetailFragment extends BaseFragment {
                     }
 
                     tv_number.setText(bean.getOrderNum());
-                    tv_feature_time.setText(GetDateUtils.dateToDateString(bean.getCreateTime()));
+                    tv_feature_time.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
                     //      获取：是否电话解决（0：未解决，1：已解决）

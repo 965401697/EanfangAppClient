@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseDialog;
@@ -17,6 +18,7 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,6 +104,7 @@ public class FillAppointmentInfoView extends BaseDialog {
                 .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
                     dismiss();
+                    EanfangApplication.get().closeActivity(SolveModeActivity.class.getName());
                 }));
 
     }
