@@ -56,7 +56,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         } else if (item.getVerifyStatus() == 1) {
             helper.setText(R.id.tv_auth_status, "认证中");
         } else if (item.getVerifyStatus() == 2) {
-            helper.setText(R.id.tv_auth_status, "查看");
+            helper.setText(R.id.tv_auth_status, "认证通过");
             ivVerify.setImageResource(R.mipmap.ic_worker_contact_authentication);
         } else if (item.getVerifyStatus() == 3) {
             helper.setText(R.id.tv_auth_status, "重新认证");

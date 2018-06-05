@@ -130,6 +130,11 @@ public interface Constant {
      */
 
     String BUGHANDLE_DETAIL_STATUS = "BughandleDetailStatus";
+
+    /**
+     * 故障明细状态 二级的key
+     */
+    String BUGHANDLE_DETAIL_STATUS_KEY = "BughandleDetailStatusKey";
     /**
      * 14.正常/不正常
      */

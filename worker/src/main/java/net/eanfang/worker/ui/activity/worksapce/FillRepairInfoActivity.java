@@ -110,57 +110,57 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     @BindView(R.id.ll_print_on_alarm)
     LinearLayout llPrintOnAlarm;
     /*
-    * 所有设备时间同步
-    */
+     * 所有设备时间同步
+     */
     @BindView(R.id.tv_time_right)
     TextView tvTimeRight;
     @BindView(R.id.ll_time_right)
     LinearLayout llTimeRight;
     /*
-    * 各类设备数据远传功能
-    */
+     * 各类设备数据远传功能
+     */
     @BindView(R.id.tv_machine_data_remote)
     TextView tvMachineDataRemote;
     @BindView(R.id.ll_machine_data_remote)
     LinearLayout llMachineDataRemote;
     /*
-  * 遗留问题
-  */
+     * 遗留问题
+     */
     @BindView(R.id.et_remain_question)
     EditText etRemainQuestion;
     @BindView(R.id.ll_remain_question)
     LinearLayout llRemainQuestion;
     /*
-    * 协助人员
-    */
+     * 协助人员
+     */
     @BindView(R.id.et_team_worker)
     EditText etTeamWorker;
     @BindView(R.id.ll_team_worker)
     LinearLayout llTeamWorker;
     /*
-    * 电视墙/操作台正面全貌 (3张)
-    */
+     * 电视墙/操作台正面全貌 (3张)
+     */
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.ll_tv_bg)
     LinearLayout llTvBg;
     /*
-   * 电视墙/操作台背面全照(3张)
-   */
+     * 电视墙/操作台背面全照(3张)
+     */
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snplMonitorAddPhotos;
     @BindView(R.id.ll_tv_bg_b)
     LinearLayout llTvBgB;
     /*
-   * 机柜正面/背面 (3张)
-   */
+     * 机柜正面/背面 (3张)
+     */
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
     @BindView(R.id.ll_gui_bg)
     LinearLayout llGuiBg;
     /*
-       * 单据照片 (3张)
-       */
+     * 单据照片 (3张)
+     */
     @BindView(R.id.snpl_form_photos)
     BGASortableNinePhotoLayout snplFormPhotos;
     @BindView(R.id.ll_form_pic)
@@ -291,7 +291,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         DetailEntityList = bughandleConfirmEntity.getDetailEntityList();
 
         businessIdLis = Stream.of(DetailEntityList).map(bean -> Config.get().getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(), 3) + "").toList();
-        fillTroubleDetailAdapter = new FillTroubleDetailAdapter(R.layout.item_quotation_detail, DetailEntityList);
+        fillTroubleDetailAdapter = new FillTroubleDetailAdapter(R.layout.layout_trouble_detail, DetailEntityList);
         rvTrouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rvTrouble.setLayoutManager(new LinearLayoutManager(this));
@@ -304,7 +304,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 intent.putExtra("failureId", DetailEntityList.get(position).getBusRepairFailureId());
                 intent.putExtra("position", position);
                 startActivityForResult(intent, REQUEST_CODE_UPDATE_TROUBLE);
-                ((BaseViewHolder) rvTrouble.getChildViewHolder(rvTrouble.getChildAt(position))).setText(R.id.tv_detai_status, "");
+                //((BaseViewHolder) rvTrouble.getChildViewHolder(rvTrouble.getChildAt(position))).setText(R.id.tv_detai_status, "");
             }
         });
     }
@@ -408,7 +408,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 }
             });
             return;
-        }else {
+        } else {
             //代表不需要挂单Z
             String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
             doHttp(requestJson);

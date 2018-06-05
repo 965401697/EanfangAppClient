@@ -191,7 +191,15 @@ public class OrderDetailFragment extends BaseFragment {
                     // 订单状态
                     mOrderStatus = bean.getStatus();
                     tv_number.setText(bean.getOrderNum());
-                    tv_feature_time.setText(GetDateUtils.dateToDateString(bean.getCreateTime()));
+                    tv_feature_time.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+//                    tv_money.setText(bean.getTotalfee() + "");
+//                    tv_alipay.setText(bean.getPaytype());
+                    //      获取：是否电话解决（0：未解决，1：已解决）
+//                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
+//                        tv_phone_solve.setText("否");
+//                    } else {
+//                        tv_phone_solve.setText("是");
+//                    }
 
                     //技师端
                     if (bean.getOwnerUser() != null) {

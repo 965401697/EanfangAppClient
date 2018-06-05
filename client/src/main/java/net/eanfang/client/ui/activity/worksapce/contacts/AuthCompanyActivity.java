@@ -34,6 +34,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.BaseDataEntity;
+import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.widget.CommitVerfiyView;
@@ -120,7 +121,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private String itemcity;
     private String itemzone;
     private Long orgid;
-    private String mAssign = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +178,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 infoBean.setLicensePic(byNetBean.getLogoPic());
             }
         }
+        //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
+        if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
+            btnComplete.setVisibility(View.GONE);
+        }
     }
 
     private void initView() {
@@ -185,13 +189,8 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
-        mAssign = getIntent().getStringExtra("assign");
         // 完善资料
-        if (mAssign.equals("prefect")) {
-            btnComplete.setText("完善资料");
-        } else {// 认证
-            btnComplete.setText("进行认证");
-        }
+        btnComplete.setText("进行认证");
         etCompany.setText(orgName);
     }
 
@@ -212,19 +211,18 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
         btnComplete.setOnClickListener((v) -> {
             // 完善资料
-            if (mAssign.equals("prefect")) {
-                if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
-                    doVerify();
-                } else {
-                    showToast("抱歉，您没有权限！");
-                }
-            } else {// 认证
-                if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
-                    commitVerfiy();
-                } else {
-                    showToast("抱歉，您没有权限！");
-                }
+            if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+                doVerify();
+            } else {
+                showToast("抱歉，您没有权限！");
             }
+//            else {// 认证
+//                if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+//                    commitVerfiy();
+//                } else {
+//                    showToast("抱歉，您没有权限！");
+//                }
+//            }
         });
     }
 
@@ -238,11 +236,14 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         } else if (StringUtils.isEmpty(edCompanyNumber.getText().toString().trim())) {
             showToast("请输入营业执照号码");
             return;
+        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+            showToast("请输入注册资本");
+            return;
         } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
             return;
-        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
-            showToast("请输入注册资本");
+        } else if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
+            showToast("请选择行业类型");
             return;
         } else if (StringUtils.isEmpty(etLegalPersion.getText().toString().trim())) {
             showToast("请输入法人代表");
@@ -335,11 +336,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
                 .upJson(json)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    showToast("资料保存成功");
-                    finishSelf();
-//                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-//                    verfiyView.show();
+                .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
+                    //保存成功后，提交认证
+                    byNetBean = new AuthCompanyBaseInfoBean();
+                    byNetBean.setOrgId(bean.getOrgId());
+                    commitVerfiy();
                 }));
     }
 

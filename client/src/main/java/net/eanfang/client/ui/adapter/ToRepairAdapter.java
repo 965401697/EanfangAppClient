@@ -30,13 +30,13 @@ public class ToRepairAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewH
     protected void convert(BaseViewHolder helper, RepairBugEntity item) {
 
         // 故障层级
-        String bugOneName = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
-        String bugTwoName = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
+        //String bugOneName = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
+        // String bugTwoName = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
         String bugThreeName = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
 
-        helper.setText(R.id.tv_name, bugThreeName);
+        helper.setText(R.id.tv_name, item.getSketch());
         helper.setText(R.id.tv_num, helper.getAdapterPosition() + 1 + "");
-        helper.setText(R.id.tv_devicesNum, item.getDeviceNo());// 设备编号
+        helper.setText(R.id.tv_devicesNum, bugThreeName);// 设备编号
         helper.setText(R.id.tv_devicesAdress, item.getBugPosition());
         helper.addOnClickListener(R.id.tv_delete);
         SimpleDraweeView faultPic = helper.getView(R.id.iv_faultImg);

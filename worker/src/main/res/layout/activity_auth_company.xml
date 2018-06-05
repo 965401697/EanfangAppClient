@@ -538,6 +538,17 @@
                     android:padding="15dp" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btn_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_ll_btn"
+                android:padding="10dp"
+                android:text="确定"
+                android:textColor="@color/color_white"
+                android:textSize="20sp" />
+
 
         </LinearLayout>
     </ScrollView>

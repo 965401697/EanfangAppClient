@@ -50,14 +50,13 @@ public class AuthAreaActivity extends BaseActivity {
     List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     private GroupAdapter mAdapter;
     private Long orgid;
-    private int status;
+    private int verifyStatus;
     private List<Integer> checkListId;
     private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
 
-    private String mAssign = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,15 +126,14 @@ public class AuthAreaActivity extends BaseActivity {
         setRightTitle("完善");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
-        status = getIntent().getIntExtra("accid", 0);
-        mAssign = getIntent().getStringExtra("assign");
+        verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
 
     }
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
         elvArea.setAdapter(mAdapter);
-        if ((status != 0 && status != 3) || mAssign.equals("auth")) {
+        if ((verifyStatus != 0 && verifyStatus != 3)) {
             //  当状态为已认证状态时， 设置为不可点击不可点击
             mAdapter.isAuth = true;
             elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -146,11 +144,11 @@ public class AuthAreaActivity extends BaseActivity {
             });
         }
         setRightTitleOnClickListener((v) -> {
-            if (status == 0 || status == 3) {
+            if (verifyStatus == 0 || verifyStatus == 3) {
                 commit();
-            } else if (status == 1) {
+            } else if (verifyStatus == 1) {
                 showToast("您已经提交认证，审核中。。");
-            } else if (status == 2) {
+            } else if (verifyStatus == 2) {
                 showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
 
@@ -205,20 +203,29 @@ public class AuthAreaActivity extends BaseActivity {
         grantChange.setDelIds(unCheckListId);
         for (int i = 0; i < areaListBean.size(); i++) {
             if (areaListBean.get(i).isCheck()) {
+
                 EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
                         .upJson(JSONObject.toJSONString(grantChange))
                         .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                            showToast("资料保存成功");
+                            showToast("认证资料提交成功");
+                            commitVerfiy();
                             closeActivity();
                             finishSelf();
-//                        verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-//                        verfiyView.show();
 
                         }));
                 break;
             }
             showToast("请至少选择一个服务区域");
         }
+    }
+
+
+    private void commitVerfiy() {
+        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + orgid)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    showToast("已提交认证");
+                    finishSelf();
+                }));
     }
 
     private void closeActivity() {

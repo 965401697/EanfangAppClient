@@ -12,9 +12,11 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AuthCompanyBaseInfoBean;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -38,9 +40,8 @@ public class AuthSystemTypeActivity extends BaseActivity {
     @BindView(R.id.rev_list)
     RecyclerView revList;
 
-    private Long orgid, adminUserId;
-    private int status;
-    private String mAssign = "";
+    private Long orgid;
+    private int verifyStatus;
 
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
@@ -59,6 +60,23 @@ public class AuthSystemTypeActivity extends BaseActivity {
     }
 
     private void initData() {
+
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
+                .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
+                    if (beans == null || StringUtils.isEmpty(beans.getLicenseCode())) {
+                        showToast("请先完善企业资料");
+                        finishSelf();
+                        return;
+                    }
+                    verifyStatus = beans.getStatus();
+                    if ((verifyStatus != 0 && verifyStatus != 3)) {
+                        multipleChoiceAdapter.isAuth = true;
+                    }
+                    initSystemData();
+                }));
+    }
+
+    private void initSystemData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/SYS_TYPE")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;
@@ -83,16 +101,13 @@ public class AuthSystemTypeActivity extends BaseActivity {
         setRightTitle("下一步");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
-        status = getIntent().getIntExtra("accid", 0);
-        adminUserId = getIntent().getLongExtra("adminUserId", 0);
-        mAssign = getIntent().getStringExtra("assign");
+
         revList.setLayoutManager(new LinearLayoutManager(this));
         revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         multipleChoiceAdapter = new MultipleChoiceAdapter(this);
         revList.setAdapter(multipleChoiceAdapter);
-        if ((status != 0 && status != 3) || mAssign.equals("auth")) {
-            multipleChoiceAdapter.isAuth = true;
-        }
+
+
     }
 
     private void initAdapter() {
@@ -101,7 +116,7 @@ public class AuthSystemTypeActivity extends BaseActivity {
             businessOneList.get(position).setCheck(!businessOneList.get(position).isCheck());
         });
         setRightTitleOnClickListener((v) -> {
-            if (status == 0 || status == 3) {
+            if (verifyStatus == 0 || verifyStatus == 3) {
                 commit();
             } else {
                 jump();
@@ -135,15 +150,12 @@ public class AuthSystemTypeActivity extends BaseActivity {
             }
             showToast("请选择一种业务类别");
         }
-
     }
 
     private void jump() {
         Intent intent = new Intent(AuthSystemTypeActivity.this, AuthBizActivity.class);
         intent.putExtra("orgid", orgid);
-        intent.putExtra("accid", status);
-        intent.putExtra("adminUserId", adminUserId);
-        intent.putExtra("assign", mAssign);
+        intent.putExtra("verifyStatus", verifyStatus);
         startActivity(intent);
     }
 }
