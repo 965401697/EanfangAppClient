@@ -8,16 +8,15 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -46,10 +45,6 @@ import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +140,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 技师培训
     @BindView(R.id.tv_workerTrain)
     TextView tvWorkerTrain;
+    // 技师认证
+    @BindView(R.id.tv_auth)
+    TextView tvAuth;
     // 设计订单
     @BindView(R.id.tv_designOrder)
     TextView tvDesignOrder;
@@ -157,6 +155,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 评价订单
     @BindView(R.id.tv_evaluteOrder)
     TextView tvEvaluteOrder;
+
     private boolean isTypeMore = false;
     // 业务领域查看更多
     @BindView(R.id.iv_workerDetailAreaDown)
@@ -475,6 +474,12 @@ public class WorkerDetailActivity extends BaseClientActivity {
             tvWorkerQualification.setVisibility(View.GONE);
         } else if (v(() -> bean.getQualification()) != null && bean.getQualification() == 1) {
             tvWorkerQualification.setVisibility(View.VISIBLE);
+        }
+        // 认证
+        if (v(() -> bean.getVerifyEntity().getStatus()) != null && bean.getVerifyEntity().getStatus() == 2) {
+            tvAuth.setVisibility(View.VISIBLE);
+        } else {
+            tvAuth.setVisibility(View.GONE);
         }
         //  培训状态 （0否，1是）
         if (v(() -> bean.getTrainStatus()) != null && bean.getTrainStatus() == 0) {

@@ -78,6 +78,8 @@ public class BughandleDetailEntity implements Serializable {
     private String presentationPictures;
     //工具及蓝布照片
     private String toolPictures;
+    //使用建议
+    private String useAdvice;
     /**
      * 当前故障处理明细对应的 真实故障
      */

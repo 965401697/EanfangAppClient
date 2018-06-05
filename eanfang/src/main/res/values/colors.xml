@@ -95,6 +95,7 @@
     <color name="color_pop_title_back">#FAE9CE</color>
     <color name="color_pop_title">#D1A060</color>
     <color name="color_order_list_price">#F35D3F</color>
+    <color name="color_repair_fault_num">#F35D3F</color>
 
 
 </resources>

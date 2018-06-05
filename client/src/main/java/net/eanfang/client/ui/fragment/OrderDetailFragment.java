@@ -93,7 +93,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView repairContactsPhone;
     // 故障数量
     private TextView mFaultNum;
-    // 個人订单
+    // 个人订单
     private LinearLayout mLlOrderPay;
     private LinearLayout mLlOrderMoney;
     // 支付方式
@@ -243,11 +243,11 @@ public class OrderDetailFragment extends BaseFragment {
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
-                    tv_contract_name.setText(V.v(() -> bean.getRepairContacts()));//联系人
-                    tv_contract_phone.setText(V.v(() -> bean.getRepairContactPhone()));
+                    tv_contract_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));//联系人
+                    tv_contract_phone.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));// 联系人手机号
                     // 回复时效
 //                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
-                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
+                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
 //                    if (bean.getBookTime() != null) {
 //                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
 //                    } else {

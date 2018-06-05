@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Optional;
@@ -20,6 +21,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -47,9 +49,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_company_name;
     private TextView tv_contract_name;
     private TextView tv_contract_phone;
-    private TextView tv_time_limit;
     private TextView tv_address;
-    private TextView tv_time;
     private android.support.v7.widget.RecyclerView rv_list;
     private com.facebook.drawee.view.SimpleDraweeView iv_pic;
     private TextView tv_worker_name;
@@ -57,14 +57,28 @@ public class OrderDetailFragment extends BaseFragment {
     private ImageView iv_phone;
     private TextView tv_number;
     private TextView tv_feature_time;
-    private TextView tv_money;
-    private TextView tv_alipay;
+    // 故障明细数量
+    private TextView mTvFaultNum;
+    // 保修人
+    private TextView repairContacts;
+    // 保修人电话
+    private TextView repairContactsPhone;
+    // 个人订单
+    private LinearLayout mLlOrderPay;
+    private LinearLayout mLlOrderMoney;
+    // 支付方式
+    private TextView mTvPayType;
+    // 支付时间
+    private TextView mTvPayTime;
+    private String mPayType = "";
+    // 上门费
+    private TextView mTvDoorFee;
+    // 订单金额
+    private TextView mTvOrderAllPrice;
+
+    // 订单状态
+    private int mOrderStatus;
     private Long id;
-    //2017年7月26日
-    /**
-     * 是否电话解决
-     */
-    private TextView tv_phone_solve;
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -91,9 +105,7 @@ public class OrderDetailFragment extends BaseFragment {
         tv_company_name = findViewById(R.id.tv_company_name);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
-        tv_time_limit = findViewById(R.id.tv_time_limit);
         tv_address = findViewById(R.id.tv_address);
-        tv_time = findViewById(R.id.tv_time);
         rv_list = findViewById(R.id.rv_list);
         iv_pic = findViewById(R.id.iv_pic);
         tv_worker_name = findViewById(R.id.tv_worker_name);
@@ -101,10 +113,15 @@ public class OrderDetailFragment extends BaseFragment {
         iv_phone = findViewById(R.id.iv_phone);
         tv_number = findViewById(R.id.tv_number);
         tv_feature_time = findViewById(R.id.tv_feature_time);
-        tv_money = findViewById(R.id.tv_money);
-        tv_alipay = findViewById(R.id.tv_alipay);
-        tv_phone_solve = findViewById(R.id.tv_phone_solve);
-
+        mTvFaultNum = findViewById(R.id.tv_faultNum);
+        repairContacts = findViewById(R.id.tv_repairContacts);
+        repairContactsPhone = findViewById(R.id.tv_repairContactPhone);
+        mLlOrderPay = findViewById(R.id.ll_orderPay);
+        mLlOrderMoney = findViewById(R.id.ll_orderMoney);
+        mTvPayType = findViewById(R.id.tv_payType);
+        mTvPayTime = findViewById(R.id.tv_payTime);
+        mTvDoorFee = findViewById(R.id.tv_doorFee);
+        mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
     }
 
 
@@ -164,26 +181,17 @@ public class OrderDetailFragment extends BaseFragment {
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
-                    tv_contract_name.setText(V.v(() -> bean.getRepairContacts()));//联系人
-                    tv_contract_phone.setText(V.v(() -> bean.getRepairContactPhone()));
-                    tv_time_limit.setText(GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit()));
+                    tv_contract_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));//联系人
+                    tv_contract_phone.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));
                     tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
-                    if (bean.getBookTime() != null) {
-                        tv_time.setText(Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--"));
-                    } else {
-                        tv_time.setText("--");
-                    }
-
+                    // 现场联系人
+                    repairContacts.setText(V.v(() -> bean.getRepairContacts()));
+                    // 联系人手机号
+                    repairContactsPhone.setText(V.v(() -> bean.getRepairContactPhone()));
+                    // 订单状态
+                    mOrderStatus = bean.getStatus();
                     tv_number.setText(bean.getOrderNum());
                     tv_feature_time.setText(GetDateUtils.dateToDateString(bean.getCreateTime()));
-//                    tv_money.setText(bean.getTotalfee() + "");
-//                    tv_alipay.setText(bean.getPaytype());
-                    //      获取：是否电话解决（0：未解决，1：已解决）
-                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
-                        tv_phone_solve.setText("否");
-                    } else {
-                        tv_phone_solve.setText("是");
-                    }
 
                     //技师端
                     if (bean.getOwnerUser() != null) {
@@ -195,8 +203,45 @@ public class OrderDetailFragment extends BaseFragment {
                         }
                         iv_phone.setTag(bean.getRepairContactPhone());
                     }
+                    // 大于0 是公司  小于0 是个人
+                    if (bean.getOwnerCompanyId() <= 0) {
+                        mLlOrderMoney.setVisibility(View.VISIBLE);
+                        mLlOrderPay.setVisibility(View.VISIBLE);
+                    } else {
+                        mLlOrderMoney.setVisibility(View.GONE);
+                        mLlOrderPay.setVisibility(View.GONE);
+                    }
+                    // 支付金额  GetConstDataUtils.getPayTypeList().get(0);
+                    if (bean.getPayLogEntity() != null) {
+                        // 支付金额
+                        if (bean.getPayLogEntity().getPayPrice() != null) {
+//                            tvOrderMoney.setText("¥" + NumberUtil.getEndTwoNum(bean.getPayLogEntity().getPayPrice() / 100.00));
+                            mTvDoorFee.setText(NumberUtil.getEndTwoNum(bean.getPayLogEntity().getPayPrice() / 100.00));
+                            mTvOrderAllPrice.setText(NumberUtil.getEndTwoNum(bean.getPayLogEntity().getPayPrice() / 100.00));
+                        }
+                        // 支付方式
+                        if (bean.getPayLogEntity().getPayType() != null) {
+                            mPayType = GetConstDataUtils.getPayTypeList().get(bean.getPayLogEntity().getPayType());
+                            mTvPayType.setText(mPayType);
+                        }
+                        // 支付时间
+                        if (bean.getPayLogEntity().getPayTime() != null) {
+                            mTvPayTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                        }
+                    }
+//                    else {
+//                        llPay.setVisibility(View.GONE);
+//                    }
+                    if (mOrderStatus == 0) {// 待付款
+                        // 支付方式布局
+                        mLlOrderPay.setVisibility(View.GONE);
+                        mLlOrderMoney.setVisibility(View.GONE);
+                    }
 
                     mDataList = bean.getBugEntityList();
+                    if (mDataList != null && mDataList.size() > 0) {
+                        mTvFaultNum.setText(mDataList.size());
+                    }
                     initAdapter();
                 }));
     }

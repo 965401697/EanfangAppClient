@@ -273,7 +273,7 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -281,6 +281,7 @@
                     android:padding="@dimen/dimen_30">
 
                     <TextView
+                        android:id="@+id/tv_fault"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@mipmap/ic_repair_fault"
@@ -294,12 +295,20 @@
                         android:layout_width="@dimen/dimen_36"
                         android:layout_height="@dimen/dimen_36"
                         android:layout_marginLeft="@dimen/dimen_30"
+                        android:layout_toRightOf="@id/tv_fault"
                         android:background="@drawable/bg_repair_fault_num"
                         android:gravity="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/textSize_10"
                         android:visibility="visible" />
-                </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/arrow_up" />
+                </RelativeLayout>
 
                 <View style="@style/style_common_line_gray" />
 
@@ -307,7 +316,6 @@
                     android:id="@+id/rv_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:background="#fff"
                     android:padding="5dp" />

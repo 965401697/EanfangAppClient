@@ -68,7 +68,7 @@
             android:id="@+id/iv_upload"
             android:layout_width="@dimen/dimen_180"
             android:layout_height="@dimen/dimen_170"
-            fresco:placeholderImage="@mipmap/camera" />
+            fresco:placeholderImage="@mipmap/ic_nodata" />
 
         <LinearLayout
             android:layout_width="match_parent"

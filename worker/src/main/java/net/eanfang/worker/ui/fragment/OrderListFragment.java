@@ -164,6 +164,9 @@ public class OrderListFragment extends BaseFragment implements
 
             case 3:
                 switch (view.getId()) {
+                    case R.id.tv_do_first:
+
+                        break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");

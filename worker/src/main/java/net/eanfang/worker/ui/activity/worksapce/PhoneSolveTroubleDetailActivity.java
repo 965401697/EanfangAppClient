@@ -44,29 +44,22 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/25  16:37
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话解决 完善故障处理
  */
 
 public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     public static final String TAG = PhoneSolveTroubleDetailActivity.class.getSimpleName();
-    //2017年9月29日
-    @BindView(R.id.ll_device_failure_solution)
-    LinearLayout ll_device_failure_solution;
-    @BindView(R.id.tv_device_failure_solution)
-    TextView tv_device_failure_solution;
-    @BindView(R.id.ll_deviceFailure)
-    LinearLayout ll_deviceFailure;
+    // 使用建议
+    @BindView(R.id.et_trouble_useAdvace)
+    EditText etTroubleUseAdvace;
     private Context context = this;
     private TextView tv_trouble_device;
     private RelativeLayout rl_trouble_device;
-    private TextView tv_brand_model;
     private RelativeLayout rl_brand_model;
     private TextView tv_device_no;
     private RelativeLayout rl_device_no;
     private TextView tv_device_location;
     private RelativeLayout rl_device_location;
-    private TextView tv_add;
-    private RecyclerView rcy_parameter;
     private EditText et_trouble_desc;
     private EditText et_trouble_point;
     private EditText et_trouble_reason;
@@ -124,14 +117,11 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
     private void initView() {
         tv_trouble_device = (TextView) findViewById(R.id.tv_trouble_device);
         rl_trouble_device = (RelativeLayout) findViewById(R.id.rl_trouble_device);
-        tv_brand_model = (TextView) findViewById(R.id.tv_brand_model);
         rl_brand_model = (RelativeLayout) findViewById(R.id.rl_brand_model);
         tv_device_no = (TextView) findViewById(R.id.tv_device_no);
         rl_device_no = (RelativeLayout) findViewById(R.id.rl_device_no);
         tv_device_location = (TextView) findViewById(R.id.tv_device_location);
         rl_device_location = (RelativeLayout) findViewById(R.id.rl_device_location);
-        tv_add = (TextView) findViewById(R.id.tv_add);
-        rcy_parameter = (RecyclerView) findViewById(R.id.rcy_parameter);
         et_trouble_desc = (EditText) findViewById(R.id.et_trouble_desc);
         et_trouble_point = (EditText) findViewById(R.id.et_trouble_point);
         et_trouble_reason = (EditText) findViewById(R.id.et_trouble_reason);
@@ -168,55 +158,22 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
 
 
     private void initListener() {
-        ll_deviceFailure.setOnClickListener((v) -> {
-//            if (failureOptionBean == null) {
-//                showToast("暂时没有参考内容");
-//                return;
-//            }
-//            List<String> opts = Stream.of(failureOptionBean.getBean()).map(bean -> bean.getTitle()).toList();
-//            PickerSelectUtil.singleTextPicker(this, "参考设备故障", opts, (index, item) -> {
-//                et_trouble_desc.setText(failureOptionBean.getBean().get(index).getDescription());
-//                //修改bean中设备uid
-//                bean.setDeviceUid(failureOptionBean.getBean().get(index).getDeviceUid());
-//                bean.setDeviceFailureUid(failureOptionBean.getBean().get(index).getUid());
-//                doHttpSolution();
-//            });
-        });
 
-        ll_device_failure_solution.setOnClickListener((v) -> {
-//            if (solutionOptionBean == null) {
-//                showToast("暂时没有参考内容");
-//                return;
-//            }
-//            List<String> opts = Stream.of(solutionOptionBean.getBean()).map(bean -> bean.getTitle()).toList();
-//            PickerSelectUtil.singleTextPicker(this, "参考解决方案", opts, (index, item) -> {
-//                tv_device_failure_solution.setText(item);
-//                et_trouble_point.setText(solutionOptionBean.getBean().get(index).getCheckInfo());
-//                et_trouble_reason.setText(solutionOptionBean.getBean().get(index).getCauseInfo());
-//                et_trouble_deal.setText(solutionOptionBean.getBean().get(index).getDisposeInfo());
-//            });
-        });
 
         ll_repair_conclusion.setOnClickListener(v -> {
             showRepairConslusion();
         });
-        tv_add.setOnClickListener(v -> {
-            showOptions();
-        });
-
         btn_add_trouble.setOnClickListener(v -> submit());
-
-
     }
 
 
     private void initAdapter() {
 
-        paramAdapter = new ParamAdapter(R.layout.item_parm, (ArrayList) bughandleDetailEntity.getParamEntityList());
-        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
-        rcy_parameter.setAdapter(paramAdapter);
+//        paramAdapter = new ParamAdapter(R.layout.item_parm, (ArrayList) bughandleDetailEntity.getParamEntityList());
+//        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
+//                DividerItemDecoration.VERTICAL));
+//        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
+//        rcy_parameter.setAdapter(paramAdapter);
     }
 
     private void showRepairConslusion() {
@@ -233,7 +190,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
             tv_trouble_title.setText("");
         }
         //品牌型号
-        tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
+//        tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
 
         //故障设备
         tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
@@ -310,8 +267,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity {
             BughandleParamEntity param = new BughandleParamEntity();
             param.setParamName(item);
             bughandleDetailEntity.getParamEntityList().add(param);
-            paramAdapter.notifyDataSetChanged();
-
+//            paramAdapter.notifyDataSetChanged();
         });
     }
 

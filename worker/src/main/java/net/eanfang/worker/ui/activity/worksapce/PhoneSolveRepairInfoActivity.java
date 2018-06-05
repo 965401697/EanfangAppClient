@@ -55,7 +55,7 @@ import java.util.List;
  *
  * @on 2017/11/25  16:35
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话解决
  */
 
 public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
@@ -108,7 +108,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         setListener();
         initData();
         supprotToolbar();
-        setTitle("填写信息");
+        setTitle("电话解决");
     }
 
     private void initView() {
