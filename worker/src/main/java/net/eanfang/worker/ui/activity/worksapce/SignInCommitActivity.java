@@ -13,6 +13,8 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SigninBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -57,6 +59,7 @@ public class SignInCommitActivity extends BaseActivity {
     private Map<String, String> uploadMap = new HashMap<>();
     private String title;
     private int status;
+    private String ursStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,17 +80,42 @@ public class SignInCommitActivity extends BaseActivity {
         tvAddress.setText(signinBean.getDetailPlace());
         tvName.setText(signinBean.getVisitorName());
         tvCompany.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        tvCommit.setOnClickListener(v -> commit());
+        tvCommit.setOnClickListener(v -> oss());
     }
 
-    private void commit() {
+    private void oss() {
+
+
+        if (snplMomentAddPhotos.getData().size() > 1) {
+            ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true).split(",")[0];
+        } else {
+            ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        }
+
+        if (snplMomentAddPhotos.getData().size() >= 1) {
+
+            OSSUtils.initOSS(this).asyncPutImage(ursStr, snplMomentAddPhotos.getData().get(0), new OSSCallBack(SignInCommitActivity.this, true) {
+                @Override
+                public void onFinish() {
+                    commit(ursStr);
+                }
+            });
+
+        } else {
+            commit(ursStr);
+        }
+
+
+    }
+
+
+    private void commit(String ursStr) {
         signinBean.setRemarkInfo(etRemark.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         signinBean.setPictures(ursStr);
         String json = JSONObject.toJSONString(signinBean);
         EanfangHttp.post(UserApi.GET_SIGN_ADD)
                 .upJson(json)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(SignInCommitActivity.this, true, JSONObject.class, (bean) -> {
                     Intent intent = new Intent();
                     intent.putExtra("title", title);
                     intent.putExtra("status", status);

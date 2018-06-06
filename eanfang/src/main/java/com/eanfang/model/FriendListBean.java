@@ -5,12 +5,13 @@ import android.support.annotation.NonNull;
 import com.eanfang.util.Cn2Spell;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Created by O u r on 2018/4/12.
  */
 
-public class FriendListBean implements Serializable, Comparable<FriendListBean> {
+public class FriendListBean implements Serializable, Comparator<FriendListBean> {
 
     /**
      * accId : 937871078913511425
@@ -121,13 +122,14 @@ public class FriendListBean implements Serializable, Comparable<FriendListBean> 
     }
 
     @Override
-    public int compareTo(@NonNull FriendListBean o) {
-        if (firstLetter.equals("#") && !o.getFirstLetter().equals("#")) {
-            return 1;
-        } else if (!firstLetter.equals("#") && o.getFirstLetter().equals("#")) {
+    public int compare(FriendListBean o1, FriendListBean o2) {
+        //这里主要是用来对数据里面的数据根据ABCDEFG...来排序
+        if (o2.getFirstLetter().equals("#")) {
             return -1;
+        } else if (o1.getFirstLetter().equals("#")) {
+            return 1;
         } else {
-            return pinyin.compareToIgnoreCase(o.getPinyin());
+            return o1.getFirstLetter().compareTo(o2.getFirstLetter());
         }
     }
 }

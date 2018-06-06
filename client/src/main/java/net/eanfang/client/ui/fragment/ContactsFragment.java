@@ -222,13 +222,13 @@ public class ContactsFragment extends BaseFragment {
     @Override
     protected void setListener() {
         rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), () -> getData()).show());
-        rl_create_team.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent("com.eanfang.intent.action.SELECTCONTACT");
-                startActivity(intent);
-            }
-        });
+//        rl_create_team.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent("com.eanfang.intent.action.SELECTCONTACT");
+//                startActivity(intent);
+//            }
+//        });
 
     }
 }

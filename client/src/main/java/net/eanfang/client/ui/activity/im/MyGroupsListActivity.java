@@ -11,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.witget.SideBar;
@@ -20,10 +21,13 @@ import net.eanfang.client.ui.adapter.GroupsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.mention.MemberMentionedActivity;
 import io.rong.imlib.model.Conversation;
 
 public class MyGroupsListActivity extends BaseClientActivity {
@@ -34,6 +38,7 @@ public class MyGroupsListActivity extends BaseClientActivity {
     private int flag = 0;//显示不显示checkbox的标志位
     @BindView(R.id.side_bar)
     SideBar sideBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +67,12 @@ public class MyGroupsListActivity extends BaseClientActivity {
                             EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                         }
 
-                        Collections.sort(list);
-                        mGroupsAdapter.setNewData(list);
+
+                        List<GroupsBean> groupsBeanList = list;
+
+                        Collections.sort(groupsBeanList, new GroupsBean());
+
+                        mGroupsAdapter.setNewData(groupsBeanList);
                     }
                 }));
     }

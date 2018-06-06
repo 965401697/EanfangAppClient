@@ -189,13 +189,16 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
             showToast("请输入任务标题");
             return;
         }
+        if (maintenanceDetailAdapter.getData().size() == 0) {
+            showToast("请添加任务明细");
+            return;
+        }
+        if (TextUtils.isEmpty(tvDependPerson.getText().toString().trim())) {
+            showToast("请选择责任人");
+            return;
+        }
         workTaskBean.setTitle(task_title);
 
-        String receiveUser = tvDependPerson.getText().toString().trim();
-//        if (TextUtils.isEmpty(receiveUser)) {
-//            showToast("请选择联系人");
-//            return;
-//        }
         workTaskBean.setAssigneeUserId(assigneeUserId);
         workTaskBean.setAssigneeOrgCode(assigneeOrgCode);
         workTaskBean.setWorkTaskDetails(beanList);

@@ -15,6 +15,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.model.GroupsBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
@@ -26,6 +27,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import org.json.JSONObject;
 
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,9 +74,10 @@ public class MyFriendsListActivity extends BaseClientActivity {
                                 bean.setFirstLetter("#");
                             }
                         }
+                        List<FriendListBean> friendListBeanList = list;
 
-                        Collections.sort(list);
-                        mFriendsAdapter.setNewData(list);
+                        Collections.sort(friendListBeanList, new FriendListBean());
+                        mFriendsAdapter.setNewData(friendListBeanList);
                     }
                 }));
     }

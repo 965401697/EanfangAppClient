@@ -1,34 +1,21 @@
 package net.eanfang.worker.ui.fragment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.WorkTaskListAdapter;
-import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.WorkTaskInfoView;
-
-import java.util.List;
-
-import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
-import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 
 /**
@@ -39,12 +26,9 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc
  */
 
-public class WorkTaskListFragment extends BaseFragment
-        implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+public class WorkTaskListFragment extends TemplateItemListFragment {
 
-    private static int page = 1;
-    RecyclerView rvList;
-    SwipyRefreshLayout swiprefresh;
+
     private String mTitle;
     private String mType;
     private WorkTaskListAdapter mAdapter;
@@ -52,7 +36,6 @@ public class WorkTaskListFragment extends BaseFragment
     public static WorkTaskListFragment getInstance(String title, String type) {
         WorkTaskListFragment sf = new WorkTaskListFragment();
         sf.mTitle = title;
-        page = 1;
         sf.mType = type;
         return sf;
 
@@ -62,56 +45,30 @@ public class WorkTaskListFragment extends BaseFragment
         return mTitle;
     }
 
-    @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_work_task_list;
-    }
 
     @Override
-    protected void initData(Bundle arguments) {
-        getData(page);
-    }
+    protected void initAdapter() {
 
-    @Override
-    protected void initView() {
-        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
-        swiprefresh.setOnRefreshListener(this);
-        rvList = (RecyclerView) findViewById(R.id.rv_list);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
+        mAdapter = new WorkTaskListAdapter();
+        mAdapter.bindToRecyclerView(mRecyclerView);
+        mAdapter.setOnLoadMoreListener(this);
 
-    @Override
-    protected void setListener() {
-    }
-
-    private void initAdapter(List<WorkTaskListBean.ListBean> mDataList) {
-
-        OnItemClickListener onItemClickListener = new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mDataList.get(position).getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-                    getFirstLookData(mDataList, position);
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                WorkTaskListBean.ListBean bean = (WorkTaskListBean.ListBean) adapter.getData().get(position);
+
+                if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
+                    getFirstLookData(bean.getId());
                 }
-                new WorkTaskInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+                new WorkTaskInfoView(getActivity(), true, bean.getId()).show();
             }
-        };
-
-        mAdapter = new WorkTaskListAdapter(mDataList);
-        rvList.addOnItemTouchListener(onItemClickListener);
-        rvList.setAdapter(mAdapter);
-
+        });
     }
-
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    /**
-     * 获取工作任务列表
-     */
-    private void getData(int page) {
+    protected void getData() {
         String status = "";
         if (!mTitle.equals("全部")) {
             status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
@@ -129,70 +86,73 @@ public class WorkTaskListFragment extends BaseFragment
             queryEntry.getEquals().put("status", status);
         }
 
-        queryEntry.setPage(page);
-        queryEntry.setSize(50);
+        queryEntry.setPage(mPage);
+        queryEntry.setSize(10);
+
 
         EanfangHttp.post(NewApiService.GET_WORK_TASK_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkTaskListBean>(getActivity(), true, WorkTaskListBean.class, (bean) -> {
-                            getActivity().runOnUiThread(() -> {
-                                initAdapter(bean.getList());
-                                onDataReceived();
-                            });
-                        })
-                );
+                .execute(new EanfangCallback<WorkTaskListBean>(getActivity(), true, WorkTaskListBean.class) {
+
+                    @Override
+                    public void onSuccess(WorkTaskListBean bean) {
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+
+                });
+
     }
+
 
     /**
      * 首次阅读，更新状态
      */
-    private void getFirstLookData(List<WorkTaskListBean.ListBean> mDataList, int position) {
+    private void getFirstLookData(Long id) {
         EanfangHttp.get(NewApiService.WORK_TASK_FIRST_READ)
-                .params("id", mDataList.get(position).getId())
+                .params("id", id)
                 .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
 
                 }));
-    }
-
-    /**
-     * 刷新
-     */
-    @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
-
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                getData(page);
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                getData(page);
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    @Override
-    public void onDataReceived() {
-//        initView();
-//        initAdapter();
-        swiprefresh.setRefreshing(false);
     }
 }

@@ -1,22 +1,33 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.AMapGestureListener;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.services.geocoder.GeocodeSearch;
+import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.NumberUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by MrHou
@@ -30,8 +41,8 @@ public class SignListDetailActivity extends BaseActivity {
     public static final String TAG = SignListDetailActivity.class.getSimpleName();
     @BindView(R.id.mapView)
     MapView mapView;
-    @BindView(R.id.tv_first_name)
-    TextView tvFirstName;
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_company_name)
@@ -40,6 +51,12 @@ public class SignListDetailActivity extends BaseActivity {
     TextView tvTime;
     @BindView(R.id.tv_address)
     TextView tvAddress;
+    @BindView(R.id.tv_visit_name)
+    TextView tvVisitName;
+    @BindView(R.id.tv_remark)
+    TextView tvRemark;
+    @BindView(R.id.sdv_pic)
+    SimpleDraweeView sdvPic;
     private AMap aMap;
     private Marker marker;
     private LatLng latLng2;
@@ -49,6 +66,8 @@ public class SignListDetailActivity extends BaseActivity {
     private String title;
     private int status;
     private LocationUtil locationUtil;
+
+    private ArrayList<String> imageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +81,8 @@ public class SignListDetailActivity extends BaseActivity {
         }
         initView();
         locationUtil = LocationUtil.get(this, mapView);
+        //禁止拖拽
+        locationUtil.mAMap.getUiSettings().setAllGesturesEnabled(false);
         initLocation();
     }
 
@@ -76,17 +97,29 @@ public class SignListDetailActivity extends BaseActivity {
         tvAddress.setText(listBean.getDetailPlace());
         tvCompanyName.setText(listBean.getCompany().getOrgName());
         tvName.setText(listBean.getCreateUser().getAccountEntity().getRealName());
-        if (listBean.getCreateUser().getAccountEntity().getRealName() != null) {
-            String first_name = listBean.getCreateUser().getAccountEntity().getRealName();
-            if (first_name.length() == 2) {
-                tvFirstName.setText(first_name);
-            } else if (first_name.length() == 3) {
-                first_name = first_name.substring(1, 2);
-                tvFirstName.setText(first_name);
-            } else if (first_name.length() == 4) {
-                first_name = first_name.substring(2, 3);
-                tvFirstName.setText(first_name);
-            }
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar()));
+
+
+        if (!TextUtils.isEmpty(listBean.getVisitorName())) {
+            tvVisitName.setText(listBean.getVisitorName());
+        } else {
+            tvVisitName.setVisibility(View.GONE);
+        }
+
+
+        if (!TextUtils.isEmpty(listBean.getRemarkInfo())) {
+            tvRemark.setText(listBean.getRemarkInfo());
+        } else {
+            tvRemark.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(listBean.getPictures())) {
+            String[] urls = listBean.getPictures().split(",");
+            sdvPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            imageList = new ArrayList<>();
+            imageList.add(BuildConfig.OSS_SERVER + urls[0]);
+        } else {
+            sdvPic.setVisibility(View.GONE);
         }
     }
 
@@ -123,6 +156,11 @@ public class SignListDetailActivity extends BaseActivity {
         super.onDestroy();
         locationUtil.stop();
         mapView.onDestroy();
+    }
+
+    @OnClick(R.id.sdv_pic)
+    public void onViewClicked() {
+        ImagePerviewUtil.perviewImage(this, imageList);
     }
 
 //    @Override

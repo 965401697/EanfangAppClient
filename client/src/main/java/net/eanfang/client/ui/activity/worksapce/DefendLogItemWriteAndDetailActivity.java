@@ -31,6 +31,8 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
     EditText etDefendNext;
     @BindView(R.id.tv_reason)
     TextView tvDefendReason;
+    @BindView(R.id.tv_cause)
+    TextView tvCause;
     @BindView(R.id.ev_defend_desc)
     EditText evDefendDesc;
     @BindView(R.id.ll_comit)
@@ -40,6 +42,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
 
     private int mPosition;
     private DefendLogDetailBean.ListBean dataBean;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +50,13 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
         setContentView(R.layout.activity_defend_log_item_write);
         ButterKnife.bind(this);
 //        (0-旁路,1-闯防,2-误报)
-        String title = getIntent().getStringExtra("title");
+        title = getIntent().getStringExtra("title");
         mPosition = getIntent().getIntExtra("position", 0);
         dataBean = (DefendLogDetailBean.ListBean) getIntent().getSerializableExtra("bean");
         setTitle(title + "详情");
+
+        tvCause.setText(title + "报警原因");
+
         setLeftBack();
         initViews();
     }

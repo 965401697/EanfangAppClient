@@ -45,10 +45,12 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
             helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#0000ff"));
         }
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
-        if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
-            String[] urls = item.getWorkReportDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
-        }
 
+        if (item.getWorkReportDetail() != null) {
+            if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
+                String[] urls = item.getWorkReportDetail().getPictures().split(",");
+                head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            }
+        }
     }
 }

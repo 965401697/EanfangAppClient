@@ -60,6 +60,9 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
         viewHolder.getView(R.id.tv_unit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (data.getChildren() == null) return;
+
                 Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
                 intent.putExtra("flag", 2);
                 intent.putExtra("bean", data);

@@ -67,7 +67,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_section:
-                Intent intent = new Intent("com.eanfang.intent.action.ORG");
+                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 intent.putExtra("isRadio", "isRadio");//是否是单选
                 startActivity(intent);
                 break;

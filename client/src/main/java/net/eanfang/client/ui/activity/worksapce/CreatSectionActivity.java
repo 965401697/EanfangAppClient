@@ -78,7 +78,7 @@ public class CreatSectionActivity extends BaseClientActivity {
                 break;
             case R.id.ll_section:
 
-                Intent intent = new Intent("com.eanfang.intent.action.ORG");
+                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 intent.putExtra("isRadio", "isRadio");//是否是单选
                 startActivity(intent);
 

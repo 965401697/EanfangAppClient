@@ -67,7 +67,7 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
     private void initView() {
         setLeftBack();
         setTitle("工作计划");
-        setRightTitle("完成");
+        setRightTitle("提交");
         llDependPerson.setOnClickListener(this);
         bean = new WorkAddReportBean.WorkReportDetailsBean();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));

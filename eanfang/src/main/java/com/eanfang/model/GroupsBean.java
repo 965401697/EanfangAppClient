@@ -2,11 +2,13 @@ package com.eanfang.model;
 
 import android.support.annotation.NonNull;
 
+import java.util.Comparator;
+
 /**
  * Created by O u r on 2018/4/18.
  */
 
-public class GroupsBean implements Comparable<GroupsBean> {
+public class GroupsBean implements Comparator<GroupsBean> {
 
     /**
      * groupId : 24
@@ -88,14 +90,16 @@ public class GroupsBean implements Comparable<GroupsBean> {
         this.firstLetter = firstLetter;
     }
 
+
     @Override
-    public int compareTo(@NonNull GroupsBean o) {
-        if (firstLetter.equals("#") && !o.getFirstLetter().equals("#")) {
-            return 1;
-        } else if (!firstLetter.equals("#") && o.getFirstLetter().equals("#")) {
+    public int compare(GroupsBean o1, GroupsBean o2) {
+        //这里主要是用来对数据里面的数据根据ABCDEFG...来排序
+        if (o2.getFirstLetter().equals("#")) {
             return -1;
+        } else if (o1.getFirstLetter().equals("#")) {
+            return 1;
         } else {
-            return pinyin.compareToIgnoreCase(o.getPinyin());
+            return o1.getFirstLetter().compareTo(o2.getFirstLetter());
         }
     }
 }

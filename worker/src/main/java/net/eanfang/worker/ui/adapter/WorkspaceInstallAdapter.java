@@ -19,8 +19,8 @@ import static com.eanfang.util.V.v;
  */
 
 public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBean.ListBean, BaseViewHolder> {
-    public WorkspaceInstallAdapter(List<WorkspaceInstallBean.ListBean> data) {
-        super(R.layout.item_workspace_install_list, data);
+    public WorkspaceInstallAdapter() {
+        super(R.layout.item_workspace_install_list);
     }
 
     @Override

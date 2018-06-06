@@ -38,6 +38,10 @@ public class OrgSelectGroupItem extends TreeItemGroup<TemplateBean> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
+
+//        if (data == null || data.getPresons() == null) return;
+
+
         viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + ")");
 
         viewHolder.getView(R.id.tv_all_checked).setOnClickListener(new View.OnClickListener() {

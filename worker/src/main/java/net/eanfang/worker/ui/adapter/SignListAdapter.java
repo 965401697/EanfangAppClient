@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.SignListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -32,20 +33,12 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean.ListBean, Bas
         ivPic3 = helper.getView(R.id.iv_pic3);
         helper.setText(R.id.tv_sign_time, item.getSignTime());
         helper.setText(R.id.tv_address, item.getDetailPlace());
-        helper.setText(R.id.tv_visit_name, item.getVisitorName());
-        helper.setText(R.id.tv_remark, item.getRemarkInfo());
-        if (item.getVisitorName() != null) {
-            String first_name = item.getVisitorName();
-            if (first_name.length() == 2) {
-                helper.setText(R.id.tv_first_name, first_name);
-            } else if (first_name.length() == 3) {
-                first_name = first_name.substring(1, 2);
-                helper.setText(R.id.tv_first_name, first_name);
-            } else if (first_name.length() == 4) {
-                first_name = first_name.substring(2, 3);
-                helper.setText(R.id.tv_first_name, first_name);
-            }
-        }
+//        helper.setText(R.id.tv_visit_name, item.getVisitorName());
+//        helper.setText(R.id.tv_remark, item.getRemarkInfo());
+
+        ((SimpleDraweeView) helper.getView(R.id.iv_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar()));
+        helper.setText(R.id.tv_visit_name, EanfangApplication.get().getUser().getAccount().getRealName());
+
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
 

@@ -94,6 +94,7 @@
                     android:background="@null"
                     android:gravity="right"
                     android:hint="请输入防区次数"
+                    android:inputType="number"
                     android:textColor="@color/font_color"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -107,6 +108,7 @@
                 android:padding="20dp">
 
                 <TextView
+                    android:id="@+id/tv_cause"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

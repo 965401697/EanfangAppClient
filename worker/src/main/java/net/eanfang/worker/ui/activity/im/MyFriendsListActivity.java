@@ -26,6 +26,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import org.json.JSONObject;
 
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,7 +74,9 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                             }
                         }
 
-                        Collections.sort(list);
+                        List<FriendListBean> friendListBeanList = list;
+
+                        Collections.sort(friendListBeanList, new FriendListBean());
 
                         mFriendsAdapter.setNewData(list);
                     }

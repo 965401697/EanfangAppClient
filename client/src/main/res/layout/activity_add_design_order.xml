@@ -346,6 +346,24 @@
                 android:background="@color/background" />
 
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:id="@+id/tv_sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@mipmap/ic_next_background"
+                    android:gravity="center"
+                    android:text="提交"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/textSize_13" />
+            </RelativeLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

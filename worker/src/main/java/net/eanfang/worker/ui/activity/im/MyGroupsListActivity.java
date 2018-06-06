@@ -19,6 +19,7 @@ import net.eanfang.worker.ui.adapter.GroupsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +63,9 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
                             EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                         }
 
-                        Collections.sort(list);
+                        List<GroupsBean> groupsBeanList = list;
+
+                        Collections.sort(groupsBeanList, new GroupsBean());
                         mGroupsAdapter.setNewData(list);
 
                     }
