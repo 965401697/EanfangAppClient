@@ -183,6 +183,8 @@ dependencies {
 
     //三级折叠
     compile 'com.github.Jlanglang:TreeRecyclerView:v1.0.0'
+    // 时间选择器
+    compile 'com.contrarywind:Android-PickerView:4.1.3'
 }
 
 

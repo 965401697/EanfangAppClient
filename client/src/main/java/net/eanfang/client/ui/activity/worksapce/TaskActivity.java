@@ -15,7 +15,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -156,7 +157,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
             showToast("请选择联系人");
             return;
         }
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+        pvOptions_NoLink = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
             posistion = options1;
             etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
             tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());

@@ -14,13 +14,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.location.AMapLocationListener;
 import com.annimon.stream.Stream;
+import com.camera.util.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.eanfang.BuildConfig;
@@ -360,7 +363,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 isAreaMore = false;
             }
         });
-
     }
 
 
@@ -652,33 +654,19 @@ public class WorkerDetailActivity extends BaseClientActivity {
         parent.removeAllViews();
         LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {
-            final TextView textView = new TextView(context);
+            final RadioButton radioButton = new RadioButton(context);
             pa.setMargins(22, 22, 22, 30);
-            textView.setLayoutParams(pa);
-            textView.setText(list.get(i));
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(12);
-            textView.setPadding(20, 20, 20, 20);
-            textView.setTextColor(Color.parseColor("#666666"));
-            textView.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
-            parent.addView(textView);
-        }
-    }
-
-    public static void addViewTwo(final Context context, CustomRadioGroup parent) {
-        parent.removeAllViews();
-        LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < 12; i++) {
-            final TextView textView = new TextView(context);
-            pa.setMargins(30, 12, 30, 12);
-            textView.setLayoutParams(pa);
-            textView.setText("发的");
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(12);
-            textView.setPadding(30, 20, 30, 20);
-            textView.setTextColor(Color.parseColor("#666666"));
-            textView.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
-            parent.addView(textView);
+            radioButton.setLayoutParams(pa);
+            radioButton.setText(list.get(i));
+            radioButton.setTag(i);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setTextSize(12);
+            radioButton.setPadding(20, 20, 20, 20);
+            radioButton.setBackground(null);
+            radioButton.setButtonDrawable(null);
+            radioButton.setTextColor(Color.parseColor("#666666"));
+            radioButton.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
+            parent.addView(radioButton);
         }
     }
 }

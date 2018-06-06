@@ -10,10 +10,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.widget.FillAppointmentInfoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +60,9 @@ public class SolveModeActivity extends BaseActivity {
                 break;
             // 预约上门
             case R.id.tv_solveAppoint:
-                new FillAppointmentInfoView(SolveModeActivity.this, true, orderId).show();
+                Bundle bundle = new Bundle();
+                bundle.putLong("orderId", orderId);
+                JumpItent.jump(SolveModeActivity.this, RepairAppointTimeActivity.class, bundle);
                 break;
         }
     }

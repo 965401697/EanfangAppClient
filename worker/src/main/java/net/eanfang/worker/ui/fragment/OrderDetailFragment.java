@@ -248,7 +248,7 @@ public class OrderDetailFragment extends BaseFragment {
 
                     mDataList = bean.getBugEntityList();
                     if (mDataList != null && mDataList.size() > 0) {
-                        mTvFaultNum.setText(mDataList.size());
+                        mTvFaultNum.setText(mDataList.size() + "");
                     }
                     initAdapter();
                 }));

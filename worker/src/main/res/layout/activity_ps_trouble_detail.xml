@@ -5,7 +5,7 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/view_title_bar" />
+    <include layout="@layout/header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -55,6 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:text=""
+                        android:background="@null"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
@@ -185,7 +186,8 @@
                 android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/dimen_32">
+                android:paddingBottom="@dimen/dimen_32"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -363,27 +365,17 @@
                     android:textColor="@color/color_worker_data_item_title"
                     android:textSize="@dimen/textSize_15" />
 
-                <LinearLayout
-                    android:id="@+id/ll_repair_conclusion"
+                <View style="@style/style_common_line_gray" />
+
+                <com.eanfang.witget.CustomRadioGroup
+                    android:id="@+id/rg_repairResultOne"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_30"
                     android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="维修结果"
-                        android:textColor="@color/worker_form_title_color"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_repair_conclusion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+                    android:paddingLeft="@dimen/dimen_30"
+                    android:paddingRight="@dimen/dimen_30" />
 
                 <View style="@style/style_common_line_gray" />
 
@@ -392,11 +384,20 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/dimen_16"
                     android:padding="@dimen/dimen_30"
-                    android:text="请选择维修结果"
+                    android:text="请选择修复方式"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 
-                <View style="@style/style_common_line_gray" />
+                <com.eanfang.witget.CustomRadioGroup
+                    android:id="@+id/rg_repairResultTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_30"
+                    android:paddingRight="@dimen/dimen_30" />
+
             </LinearLayout>
 
 

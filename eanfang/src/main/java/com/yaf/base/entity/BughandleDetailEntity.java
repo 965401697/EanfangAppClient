@@ -59,9 +59,12 @@ public class BughandleDetailEntity implements Serializable {
     //设备回装照片（多张图片地址用逗号分割）
     //@TableField(value = "device_return_install_pictures")
     private String deviceReturnInstallPictures;
-    //状态（0：维修完成，1：报价更换，2：未解决）
-    //@TableField(value = "status")
-    private Integer status;
+    //维修结果1（0:维修完成;1:维修中;2:设备报废;3:设备报废;4:关单）
+    //@TableField(value = "status_one")
+    private Integer statusOne;
+    //维修结果2(详情查看RepairConstant里的常量)
+    //@TableField(value = "status_two")
+    private Integer statusTwo;
     //创建人
     //@TableField(value = "create_user_id")
     private Long createUserId;
@@ -226,14 +229,14 @@ public class BughandleDetailEntity implements Serializable {
      * 获取：状态（0：维修完成，1：报价更换，2：未解决）
      */
     public Integer getStatus() {
-        return status;
+        return statusOne;
     }
 
     /**
      * 设置：状态（0：维修完成，1：报价更换，2：未解决）
      */
     public void setStatus(Integer status) {
-        this.status = status;
+        this.statusOne = status;
     }
 
     /**
