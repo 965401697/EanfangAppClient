@@ -198,7 +198,7 @@ public class ContactsFragment extends BaseFragment {
                 //添加好友界面
 //                startActivity(new Intent(getActivity(), AddFriendActivity.class));
 
-                MorePopWindow morePopWindow = new MorePopWindow(getActivity());
+                MorePopWindow morePopWindow = new MorePopWindow(getActivity(), true);
                 morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
             }
         });

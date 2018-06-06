@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -189,7 +191,7 @@ public class TaskPublishActivity extends BaseActivity {
         bean.setLongitude(longitude);
         bean.setType(GetConstDataUtils.getTaskPublishTypeList().indexOf(tvProjectType.getText().toString().trim()));
         bean.setBusinessOneCode(Config.get().getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
-        bean.setBusiness_one_id(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
+        bean.setBusiness_one_id(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(), 1)));
         bean.setPredicttime(GetConstDataUtils.getPredictList().indexOf(tvProjectTime.getText().toString().trim()));
         bean.setBudget(GetConstDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
         bean.setToDoorTime(tvLoginTime.getText().toString().trim());
@@ -277,7 +279,7 @@ public class TaskPublishActivity extends BaseActivity {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 11, 31);
         //时间选择器
-        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
@@ -285,10 +287,10 @@ public class TaskPublishActivity extends BaseActivity {
             }
         })
                 .setTitleText("踏勘时间")
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)
+                .setType(new boolean[]{true, true, true, true, true, true})
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
-                .setContentSize(20)
+                .setContentTextSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .build();

@@ -17,7 +17,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -206,7 +207,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             showToast("暂无其他员工可选");
             return;
         }
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, (options1, options2, options3, v) -> {
+        pvOptions_NoLink = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
             posistion = options1;
             et_contract_phone.setText(userlist.get(posistion).getAccountEntity().getMobile());
             et_contract.setText(userlist.get(posistion).getAccountEntity().getRealName());

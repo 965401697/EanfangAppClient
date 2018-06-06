@@ -53,7 +53,8 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         helper.addOnClickListener(R.id.tv_auth_status);
 
         if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
-        ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));}
+            ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));
+        }
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");
             ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
@@ -61,7 +62,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
             helper.setText(R.id.tv_auth_status, "认证中");
             ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
         } else if (item.getVerifyStatus() == 2) {
-            helper.setText(R.id.tv_auth_status, "查看");
+            helper.setText(R.id.tv_auth_status, "认证通过");
             ivVerify.setImageResource(R.mipmap.ic_contact_authentication);
         } else if (item.getVerifyStatus() == 3) {
             helper.setText(R.id.tv_auth_status, "重新认证");

@@ -15,7 +15,10 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -72,7 +75,7 @@ public class CheckActivity extends BaseWorkerActivity {
     LinearLayout llPhoneNum;
     @BindView(R.id.tv_depend_person)
     TextView tvDependPerson;
-    private static final int REQUEST_ADD_CODE=1;
+    private static final int REQUEST_ADD_CODE = 1;
 
     private OptionsPickerView pvOptions_NoLink;
     private int posistion;
@@ -195,7 +198,7 @@ public class CheckActivity extends BaseWorkerActivity {
             showToast("暂无其他员工可选");
             return;
         }
-        pvOptions_NoLink = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
+        pvOptions_NoLink = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 posistion = options1;
@@ -203,7 +206,6 @@ public class CheckActivity extends BaseWorkerActivity {
                 tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
                 assigneeUserId = userlist.get(posistion).getUserId();
                 assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
-
             }
         }).build();
         pvOptions_NoLink.setPicker(userNameList);

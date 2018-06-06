@@ -42,6 +42,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_auth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_client_select_worker_able"
@@ -54,6 +55,7 @@
                     android:textSize="@dimen/textSize_11" />
 
                 <TextView
+                    android:id="@+id/tv_train"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_20"
@@ -68,6 +70,7 @@
                     android:textSize="@dimen/textSize_11" />
 
                 <TextView
+                    android:id="@+id/tv_qualification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_client_select_worker_able"

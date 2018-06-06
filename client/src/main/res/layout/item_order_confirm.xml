@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingLeft="@dimen/dimen_30"
+        android:paddingRight="@dimen/dimen_20"
+        android:paddingTop="@dimen/dimen_10">
 
         <TextView
             android:id="@+id/tv_name"
@@ -40,7 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingBottom="@dimen/dimen_10"
+            android:paddingLeft="@dimen/dimen_30"
+            android:paddingRight="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_10">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_pic"
@@ -155,12 +161,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen_10"
+            android:paddingLeft="@dimen/dimen_30"
+            android:paddingRight="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_10">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:text="故障描述："
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />

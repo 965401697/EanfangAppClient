@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -14,6 +15,8 @@ import net.eanfang.client.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.eanfang.util.V.v;
 
 /**
  * Created by admin on 2018/4/27.
@@ -50,6 +53,25 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         if (item.getGoodRate() != 0) {
             // 好评率
             helper.setText(R.id.tv_haopinglv, item.getGoodRate() + "%" + "");
+        }
+
+        // 认证
+        if (v(() -> item.getVerifyEntity().getStatus()) != null && item.getVerifyEntity().getStatus() == 2) {
+            helper.getView(R.id.tv_auth).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_auth).setVisibility(View.GONE);
+        }
+        //  培训状态 （0否，1是）
+        if (v(() -> item.getTrainStatus()) != null && item.getTrainStatus() == 0) {
+            helper.getView(R.id.tv_train).setVisibility(View.GONE);
+        } else if (v(() -> item.getTrainStatus()) != null && item.getTrainStatus() == 1) {
+            helper.getView(R.id.tv_train).setVisibility(View.VISIBLE);
+        }
+        // 资质  0否，1是
+        if (v(() -> item.getQualification()) != null && item.getQualification() == 0) {
+            helper.getView(R.id.tv_qualification).setVisibility(View.GONE);
+        } else if (v(() -> item.getQualification()) != null && item.getQualification() == 1) {
+            helper.getView(R.id.tv_qualification).setVisibility(View.VISIBLE);
         }
 
 //        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;

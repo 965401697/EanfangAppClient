@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -55,7 +54,7 @@ import java.util.List;
  *
  * @on 2017/11/25  16:35
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话解决
  */
 
 public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
@@ -108,7 +107,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         setListener();
         initData();
         supprotToolbar();
-        setTitle("填写信息");
+        setTitle("电话解决");
     }
 
     private void initView() {

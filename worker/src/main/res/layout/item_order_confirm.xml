@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     android:background="@drawable/bg_ll_selctor"
     android:orientation="vertical">
 
@@ -11,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingLeft="@dimen/dimen_30"
+        android:paddingTop="@dimen/dimen_10">
 
         <TextView
             android:id="@+id/tv_name"
@@ -29,10 +30,6 @@
             android:src="@mipmap/arrow_right" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/font_color" />
 
     <LinearLayout
         android:id="@+id/second_item"

@@ -27,7 +27,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
 
     private final boolean[] isShowFirstBtnWorker = {
-            false, false, true, false, false, true, false
+            false, false, true, true, false, true, false
     };
     private String[] doSomethingWorker = {
             "联系客户", "马上回电", "签到"

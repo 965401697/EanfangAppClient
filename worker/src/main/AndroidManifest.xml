@@ -336,7 +336,9 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.repair.SolveModeActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.repair.SolveModeActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairAppointTimeActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.DeviceParameterActivity"></activity>
     </application>
 
 </manifest>

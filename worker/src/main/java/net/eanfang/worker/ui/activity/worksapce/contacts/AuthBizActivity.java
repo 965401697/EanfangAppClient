@@ -36,13 +36,11 @@ import butterknife.ButterKnife;
 public class AuthBizActivity extends BaseActivity {
     @BindView(R.id.rev_list)
     RecyclerView revList;
-    private Long orgid, adminUserId;
-    private int status;
+    private Long orgid;
+    private int verifyStatus;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
-
-    private String mAssign = "";
 
     private MultipleChoiceAdapter multipleChoiceAdapter;
 
@@ -68,14 +66,12 @@ public class AuthBizActivity extends BaseActivity {
         setRightTitle("下一步");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
-        status = getIntent().getIntExtra("accid", 0);
-        adminUserId = getIntent().getLongExtra("adminUserId", 0);
-        mAssign = getIntent().getStringExtra("assign");
+        verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
         revList.setLayoutManager(new LinearLayoutManager(this));
         revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         multipleChoiceAdapter = new MultipleChoiceAdapter(this);
         revList.setAdapter(multipleChoiceAdapter);
-        if ((status != 0 && status != 3) || mAssign.equals("auth")) {
+        if ((verifyStatus != 0 && verifyStatus != 3)) {
             multipleChoiceAdapter.isAuth = true;
         }
     }
@@ -98,7 +94,7 @@ public class AuthBizActivity extends BaseActivity {
         });
 
         setRightTitleOnClickListener((v) -> {
-            if (status == 0 || status == 3) {
+            if (verifyStatus == 0 || verifyStatus == 3) {
                 commit();
             } else {
                 jump();
@@ -133,9 +129,7 @@ public class AuthBizActivity extends BaseActivity {
     private void jump() {
         Intent intent = new Intent(AuthBizActivity.this, AuthAreaActivity.class);
         intent.putExtra("orgid", orgid);
-        intent.putExtra("accid", status);
-        intent.putExtra("adminUserId", adminUserId);
-        intent.putExtra("assign", mAssign);
+        intent.putExtra("verifyStatus", verifyStatus);
         startActivity(intent);
     }
 }

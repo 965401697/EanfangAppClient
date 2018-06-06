@@ -124,7 +124,7 @@ public class ContactListFragment extends BaseFragment {
 //                intent.putExtra("flag", 1);
 //                startActivity(intent);
 
-                MorePopWindow morePopWindow = new MorePopWindow(getActivity());
+                MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
                 morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
             }
         });

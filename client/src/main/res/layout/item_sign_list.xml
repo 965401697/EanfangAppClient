@@ -9,14 +9,16 @@
     android:orientation="horizontal"
     android:padding="5dp">
 
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_header"
         android:layout_width="@dimen/dimen_80"
         android:layout_height="@dimen/dimen_80"
-        android:layout_marginRight="@dimen/dimen_24"
         android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/dimen_24"
         fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,16 +44,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="12sp"
-            android:textColor="@color/common_ext_color" />
+            android:textColor="@color/common_ext_color"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_remark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:visibility="gone"
-            android:textColor="@color/common_ext_color" />
+            android:textColor="@color/common_ext_color"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_image"

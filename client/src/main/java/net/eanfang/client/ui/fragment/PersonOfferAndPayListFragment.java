@@ -90,7 +90,7 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-        mDataList = ((PersonOfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
+         mDataList = ((PersonOfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
         mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
         rvList.setLayoutManager(new LinearLayoutManager(getContext()));
         rvList.addOnItemTouchListener(new OnItemClickListener() {

@@ -8,20 +8,22 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.location.AMapLocationListener;
 import com.annimon.stream.Stream;
+import com.camera.util.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.eanfang.BuildConfig;
@@ -46,10 +48,6 @@ import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +143,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 技师培训
     @BindView(R.id.tv_workerTrain)
     TextView tvWorkerTrain;
+    // 技师认证
+    @BindView(R.id.tv_auth)
+    TextView tvAuth;
     // 设计订单
     @BindView(R.id.tv_designOrder)
     TextView tvDesignOrder;
@@ -157,6 +158,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 评价订单
     @BindView(R.id.tv_evaluteOrder)
     TextView tvEvaluteOrder;
+
     private boolean isTypeMore = false;
     // 业务领域查看更多
     @BindView(R.id.iv_workerDetailAreaDown)
@@ -361,7 +363,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 isAreaMore = false;
             }
         });
-
     }
 
 
@@ -475,6 +476,12 @@ public class WorkerDetailActivity extends BaseClientActivity {
             tvWorkerQualification.setVisibility(View.GONE);
         } else if (v(() -> bean.getQualification()) != null && bean.getQualification() == 1) {
             tvWorkerQualification.setVisibility(View.VISIBLE);
+        }
+        // 认证
+        if (v(() -> bean.getVerifyEntity().getStatus()) != null && bean.getVerifyEntity().getStatus() == 2) {
+            tvAuth.setVisibility(View.VISIBLE);
+        } else {
+            tvAuth.setVisibility(View.GONE);
         }
         //  培训状态 （0否，1是）
         if (v(() -> bean.getTrainStatus()) != null && bean.getTrainStatus() == 0) {
@@ -647,33 +654,19 @@ public class WorkerDetailActivity extends BaseClientActivity {
         parent.removeAllViews();
         LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {
-            final TextView textView = new TextView(context);
+            final RadioButton radioButton = new RadioButton(context);
             pa.setMargins(22, 22, 22, 30);
-            textView.setLayoutParams(pa);
-            textView.setText(list.get(i));
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(12);
-            textView.setPadding(20, 20, 20, 20);
-            textView.setTextColor(Color.parseColor("#666666"));
-            textView.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
-            parent.addView(textView);
-        }
-    }
-
-    public static void addViewTwo(final Context context, CustomRadioGroup parent) {
-        parent.removeAllViews();
-        LayoutParams pa = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < 12; i++) {
-            final TextView textView = new TextView(context);
-            pa.setMargins(30, 12, 30, 12);
-            textView.setLayoutParams(pa);
-            textView.setText("发的");
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextSize(12);
-            textView.setPadding(30, 20, 30, 20);
-            textView.setTextColor(Color.parseColor("#666666"));
-            textView.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
-            parent.addView(textView);
+            radioButton.setLayoutParams(pa);
+            radioButton.setText(list.get(i));
+            radioButton.setTag(i);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setTextSize(12);
+            radioButton.setPadding(20, 20, 20, 20);
+            radioButton.setBackground(null);
+            radioButton.setButtonDrawable(null);
+            radioButton.setTextColor(Color.parseColor("#666666"));
+            radioButton.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
+            parent.addView(radioButton);
         }
     }
 }

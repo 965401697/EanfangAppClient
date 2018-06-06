@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
