@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
@@ -81,6 +82,11 @@ public class ContactsFragment extends BaseFragment {
 
     private void initAdapter() {
         rev_list = (RecyclerView) findViewById(R.id.rev_list);
+        rev_list.setHasFixedSize(true);
+        rev_list.setNestedScrollingEnabled(false);
+        //设置布局样式
+        rev_list.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
+        rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         //只显示 安防公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 3).toList();
         if (mDatas.size() <= 0 || mDatas == null) {

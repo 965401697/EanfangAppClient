@@ -24,6 +24,5 @@ public class ETimeUtils {
     public static String getTimeByHourMinSec(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         return format.format(date);
-
     }
 }

@@ -61,6 +61,7 @@ import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -485,8 +486,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Subscribe
-    public void onEventWork(WorkerEntity workerEntity) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventAddTroublePic(WorkerEntity workerEntity) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("workEntriy", workerEntity);
         JumpItent.jump(MainActivity.this, WorkDetailActivity.class, bundle);
