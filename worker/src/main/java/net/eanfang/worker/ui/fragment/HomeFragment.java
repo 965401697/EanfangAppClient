@@ -144,7 +144,6 @@ public class HomeFragment extends BaseFragment {
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
-
             startActivity(new Intent(getActivity(), ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
 

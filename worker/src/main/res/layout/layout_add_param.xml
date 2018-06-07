@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_100"
+    android:background="@color/color_white"
+    android:paddingLeft="@dimen/dimen_38"
+    android:paddingRight="@dimen/dimen_38">
+
+    <TextView
+        android:id="@+id/tv_param_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text=""
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_14" />
+
+    <TextView
+        android:id="@+id/tv_param_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_50"
+        android:layout_toRightOf="@id/tv_param_name"
+        android:text=""
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_14" />
+
+    <ImageView
+        android:id="@+id/iv_param_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/dimen_20"
+        android:paddingRight="@dimen/dimen_20"
+        android:src="@mipmap/ic_addparam_delete" />
+
+
+</RelativeLayout>

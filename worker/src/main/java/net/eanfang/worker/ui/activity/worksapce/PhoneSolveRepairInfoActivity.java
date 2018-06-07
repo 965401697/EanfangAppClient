@@ -80,6 +80,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
      */
     private EditText et_remain_question;
     private BughandleConfirmEntity bughandleConfirmEntity;
+
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {

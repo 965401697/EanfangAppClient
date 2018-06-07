@@ -189,7 +189,6 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         setListener();
         supprotToolbar();
         setTitle("填写信息");
-        setRightTitle("添加");
     }
 
     public void setListener() {
