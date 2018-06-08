@@ -75,8 +75,6 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
-
         MyConversationListFragment fragment = new MyConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
@@ -210,6 +208,12 @@ public class ContactListFragment extends BaseFragment {
             }
         }, true);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        doHttpNoticeCount();
     }
 
     private void doHttpNoticeCount() {

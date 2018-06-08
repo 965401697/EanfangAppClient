@@ -20,6 +20,7 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.MineTakePublishListActivity;
@@ -88,7 +89,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
     }
 
     private void initAdapter() {
-        if (((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList() != null) {
+        if (V.v(() -> ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList()) != null) {
             mDataList = ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList();
         }
         adapter = new PublishTakeListAdapter(mDataList);

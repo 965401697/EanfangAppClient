@@ -204,6 +204,12 @@ public class ContactListFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        doHttpNoticeCount();
+    }
+
     private void doHttpNoticeCount() {
         EanfangHttp.get(NewApiService.GET_PUSH_COUNT).execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
             if (bean == null) {

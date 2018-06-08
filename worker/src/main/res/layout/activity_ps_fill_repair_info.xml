@@ -37,6 +37,7 @@
                     android:textSize="@dimen/textSize_15" />
 
                 <TextView
+                    android:id="@+id/tv_add_fault"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"

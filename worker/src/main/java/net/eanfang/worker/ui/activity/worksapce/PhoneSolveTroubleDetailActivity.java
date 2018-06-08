@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.Gravity;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,7 +19,7 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.CustomRadioGroup;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -26,10 +28,12 @@ import com.yaf.base.entity.BughandleUseDeviceEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.ParamAdapter;
+import net.eanfang.worker.ui.activity.worksapce.repair.DeviceParameterActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,7 +48,10 @@ import butterknife.ButterKnife;
  */
 
 public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implements RadioGroup.OnCheckedChangeListener {
+
     public static final String TAG = PhoneSolveTroubleDetailActivity.class.getSimpleName();
+    public static final int ADD_DEVICE_PARAM_REQUEST = 100;
+    public static final int ADD_DEVICE_PARAM_RESULT = 1000;
     // 使用建议
     @BindView(R.id.et_trouble_useAdvace)
     EditText etTroubleUseAdvace;
@@ -85,9 +92,12 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     //设备名称
     @BindView(R.id.tv_trouble_title)
     TextView tvTroubleTitle;
+    // 添加设备参数
+    @BindView(R.id.rl_add_device_param)
+    RelativeLayout rlAddDeviceParam;
     private BughandleDetailEntity bughandleDetailEntity;
-    private ParamAdapter paramAdapter;
-
+    // 设备参数List
+    private List<BughandleParamEntity> paramEntityList = new ArrayList<>();
     //2017年7月20日
     //维修结果
     private int position;
@@ -103,7 +113,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     // 维修结果二级
     private int mReapirTwoStauts = 200;
     // 是否误报
-    private int mIsRepairError = 0;
+    private String mIsRepairError = "否";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +137,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
 
     private void initView() {
         setTitle("故障明细");
+        setLeftBack();
     }
 
     private void initData() {
@@ -167,22 +178,20 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
                 mReapirTwoStauts = (Integer) tempButton.getTag();
             }
         });
+        rlAddDeviceParam.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
+            JumpItent.jump(this, DeviceParameterActivity.class, bundle, ADD_DEVICE_PARAM_REQUEST);
+        });
     }
 
-    private void initAdapter() {
-//        paramAdapter = new ParamAdapter(R.layout.item_parm, (ArrayList) bughandleDetailEntity.getParamEntityList());
-//        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
-//                DividerItemDecoration.VERTICAL));
-//        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
-//        rcy_parameter.setAdapter(paramAdapter);
-    }
 
     public void fillData() {
         if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
             String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
             String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
             String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
-            tvTroubleTitle.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+            tvTroubleTitle.setText(bugThree);
         } else {
             tvTroubleTitle.setText("");
         }
@@ -196,61 +205,85 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         tvDeviceLocation.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
         //故障描述
         etTroubleDesc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
-
+        //添加维修结论
         addView(PhoneSolveTroubleDetailActivity.this, rgRepairResultOne, GetConstDataUtils.getBugDetailList());
 
     }
 
     private boolean checkData() {
-
         if (StringUtils.isEmpty(etTroubleDesc.getText().toString().trim())) {
-            showToast("请输入故障描述");
+            showToast("请输入故障简述");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
+            showToast("请输入原因判断");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroublePoint.getText().toString().trim())) {
+            showToast("请输入 过程和方法");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroubleDeal.getText().toString().trim())) {
+            showToast("请输入处理方法");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
+            showToast("请输入使用建议");
             return false;
         }
         if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
             showToast("请输入原因");
             return false;
         }
-
+        if (mReapirOneStauts == 100) {
+            showToast("请选择维修结果");
+            return false;
+        }
+        if (mReapirTwoStauts == 200) {
+            showToast("请选择修复方式");
+            return false;
+        }
+        if (paramEntityList.size() == 0) {
+            showToast("请选择设备参数");
+            return false;
+        }
         return true;
     }
 
     private void submit() {
-
         if (!checkData()) {
             return;
         }
-
         // 故障描述
         bughandleDetailEntity.getFailureEntity().setBugDescription(etTroubleDesc.getText().toString().trim());
 //        bughandleDetailEntity.getFailureEntity().setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_trouble_device.getText().toString().trim(), 3));
         //设备编号
-//        bughandleDetailEntity.getFailureEntity().setDeviceNo(tvDeviceNo.getText().toString().trim());
+        bughandleDetailEntity.getFailureEntity().setDeviceNo(tvDeviceNo.getText().toString().trim());
         // 设备位置
-//        bughandleDetailEntity.getFailureEntity().setBugPosition(tvDeviceLocation.getText().toString().trim());
-//        bughandleDetailEntity.getFailureEntity().setDeviceName("");
+        bughandleDetailEntity.getFailureEntity().setBugPosition(tvDeviceLocation.getText().toString().trim());
+        // 设备名称
+        bughandleDetailEntity.getFailureEntity().setDeviceName("");
         // 原因判断
         bughandleDetailEntity.setCause(etTroubleReason.getText().toString().trim());
         // 处理方法
         bughandleDetailEntity.setHandle(etTroubleDeal.getText().toString().trim());
         // 过程和方法
         bughandleDetailEntity.setCheckProcess(etTroublePoint.getText().toString().trim());
+
         bughandleDetailEntity.setBusBughandleConfirmId(confirmId);
+        //   使用建议
+        bughandleDetailEntity.setUseAdvice(etTroubleUseAdvace.getText().toString().trim());
+        //是否误报(0：否，1：是)
+        bughandleDetailEntity.getFailureEntity().setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(mIsRepairError));
         //维修结果
-        if (mReapirOneStauts == 100) {
-            showToast("请选择维修结果");
-            return;
-        } else {
-            bughandleDetailEntity.setStatusOne(mReapirOneStauts);
-        }
-        //维修结果
-        if (mReapirTwoStauts == 200) {
-            showToast("请选择修复方式");
-            return;
-        } else {
-            bughandleDetailEntity.setStatusTwo(mReapirTwoStauts);
-        }
+        bughandleDetailEntity.setStatus(mReapirOneStauts);
+        //修復方式
+        bughandleDetailEntity.setStatusTwo(mReapirTwoStauts);
+        //设备参数
+        bughandleDetailEntity.setParamEntityList(paramEntityList);
+
         doHttpSubmit();
+
     }
 
     private void doHttpSubmit() {
@@ -269,23 +302,15 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
 
     }
 
-    private void showOptions() {
-        PickerSelectUtil.singleTextPicker(this, "参数", GetConstDataUtils.getDeviceParamList(), (index, item) -> {
-            BughandleParamEntity param = new BughandleParamEntity();
-            param.setParamName(item);
-            bughandleDetailEntity.getParamEntityList().add(param);
-//            paramAdapter.notifyDataSetChanged();
-        });
-    }
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (group.getCheckedRadioButtonId()) {
             case R.id.rg_yes:
-                mIsRepairError = 1;
+                mIsRepairError = "是";
                 break;
             case R.id.rg_no:
-                mIsRepairError = 0;
+                mIsRepairError = "否";
                 break;
             default:
                 break;
@@ -293,6 +318,17 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_DEVICE_PARAM_REQUEST && resultCode == ADD_DEVICE_PARAM_RESULT) {
+            paramEntityList = (List<BughandleParamEntity>) data.getSerializableExtra("addParam");
+        }
+    }
+
+    /**
+     * 动态添加维修结果
+     */
     public static void addView(final Context context, CustomRadioGroup
             parent, List<String> list) {
         parent.removeAllViews();

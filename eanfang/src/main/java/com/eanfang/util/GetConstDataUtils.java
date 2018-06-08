@@ -443,6 +443,12 @@ public class GetConstDataUtils {
         return bugDetailList;
     }
 
+    /**
+     * 故障处理明细 二级
+     *
+     * @param oneIndex 故障明细 1级 下标
+     * @return
+     */
     public static List<String> getBugDetailTwoList(int oneIndex) {
         return bugDetailTwoList.get(bugDetailKeyList.get(oneIndex));
     }

@@ -20,6 +20,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
@@ -92,6 +93,12 @@ public class ContactsFragment extends BaseFragment {
     @SuppressLint("ClickableViewAccessibility")
     private void initAdapter() {
         rev_list = (RecyclerView) findViewById(R.id.rev_list);
+        rev_list.setHasFixedSize(true);
+        rev_list.setNestedScrollingEnabled(false);
+
+        //设置布局样式
+        rev_list.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
+        rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         //客户公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 2).toList();
         if (mDatas.size() <= 0 || mDatas == null) {
@@ -101,9 +108,6 @@ public class ContactsFragment extends BaseFragment {
             //显示与隐藏
             tv_noTeam.setVisibility(View.GONE);
             rev_list.setVisibility(View.VISIBLE);
-            //设置布局样式
-            rev_list.setLayoutManager(new LinearLayoutManager(getContext()));
-            rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
             Long companyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
             // 获取默认公司 进行排序和添加到第一个item

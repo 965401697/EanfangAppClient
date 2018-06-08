@@ -56,11 +56,8 @@ public class SignInActivity extends BaseWorkerActivity {
     TextView tvAddress;
     @BindView(R.id.btn_sign_in)
     Button btnSignIn;
-    private AMap aMap;
-    private Marker marker;
     private LatLng latLng2;
     private float distance = -1;
-    private GeocodeSearch geocoderSearch;
     private Long orderId;
     private LocationUtil locationUtil;
     // 纬度
@@ -113,9 +110,7 @@ public class SignInActivity extends BaseWorkerActivity {
         locationUtil.onSearched = (regeocodeResult, i) -> {
             regeocodeResult.getRegeocodeAddress();
             tvAddress.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
-
         };
-
 
     }
 

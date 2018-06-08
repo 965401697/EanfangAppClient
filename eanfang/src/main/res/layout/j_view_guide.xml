@@ -7,20 +7,20 @@
     android:gravity="bottom|center_horizontal"
     android:orientation="horizontal">
 
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/button_bg_green"
-        android:paddingBottom="10dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingTop="10dp"
-        android:text="立即体验"
-        android:textColor="#ffffff"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        android:paddingBottom="50dp"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:paddingTop="50dp"
+        android:text=""
+        android:textColor="#ffffff" />
 
 
 </LinearLayout>

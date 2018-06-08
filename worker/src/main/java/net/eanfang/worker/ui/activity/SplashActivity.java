@@ -52,7 +52,7 @@ import io.rong.imkit.RongIM;
 
 public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
     private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_worker = {R.mipmap.worker0, R.mipmap.worker1, R.mipmap.worker2, R.mipmap.worker3};
+    int[] drawables_worker = {R.mipmap.worker0, R.mipmap.worker1, R.mipmap.worker2};
 
     private boolean isFirst = true;
 

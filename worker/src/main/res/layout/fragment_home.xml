@@ -11,9 +11,9 @@
         android:background="@mipmap/ic_work_top_back"
         android:orientation="vertical">
 
-<!--        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40" />-->
+        <!--        <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_40" />-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,7 +55,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"

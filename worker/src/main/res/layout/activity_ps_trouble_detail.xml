@@ -54,8 +54,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_36"
-                        android:text=""
                         android:background="@null"
+                        android:text=""
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
@@ -155,6 +155,7 @@
 
 
             <RelativeLayout
+                android:id="@+id/rl_add_device_param"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
@@ -339,6 +340,7 @@
                         android:layout_marginLeft="20dp"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
+                        android:checked="true"
                         android:gravity="center"
                         android:text="否"
                         android:textColor="@drawable/select_camera_text_back"

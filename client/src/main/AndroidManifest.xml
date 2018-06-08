@@ -256,6 +256,7 @@
         <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
         <!-- 数据统计 -->
         <activity android:name=".ui.activity.worksapce.datastatistics.DataStatisticsActivity" />
+        <!-- 设备类别 -->
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />

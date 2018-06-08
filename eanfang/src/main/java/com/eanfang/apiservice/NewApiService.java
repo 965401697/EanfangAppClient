@@ -147,6 +147,11 @@ public interface NewApiService {
      */
     String GET_PUSH_COUNT = BuildConfig.API_HOST + "/yaf_sys/notice/count/sysBiz";
 
+    /**
+     * app首页 获取最新通知
+     */
+    String GET_PUSH_NEWS = BuildConfig.API_HOST + "/yaf_sys/notice/news";
+
 
     /**
      * 新增报装

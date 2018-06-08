@@ -19,37 +19,48 @@ import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.worker.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by MrHou
  *
  * @on 2017/11/25  16:32
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话未解决 添加耗材
  */
 
-public class AddMaterialActivity extends BaseActivity implements View.OnClickListener {
+public class AddMaterialActivity extends BaseActivity {
 
+    private static final int RESULT_ADD_MATERIAL = 2000;
 
-    private LinearLayout ll_business;
-    private TextView tv_business;
-    private LinearLayout ll_equipment;
-    private TextView tv_equipment;
-    private LinearLayout ll_model;
-    private TextView tv_model;
-    private LinearLayout ll_location;
-    private EditText et_location;
-    private LinearLayout ll_code;
-    private EditText et_code;
-    private TextView tv_right;
-    private EditText et_desc;
-    private Button btn_add;
-    private String bugOneCode;
+    @BindView(R.id.ll_business)
+    LinearLayout llBusiness;
+    @BindView(R.id.ll_equipment)
+    LinearLayout llEquipment;
+    @BindView(R.id.ll_model)
+    LinearLayout llModel;
+    @BindView(R.id.tv_business)
+    TextView tvBusiness;
+    @BindView(R.id.tv_equipment)
+    TextView tvEquipment;
+    @BindView(R.id.tv_model)
+    TextView tvModel;
+    @BindView(R.id.et_num)
+    EditText etNum;
+    @BindView(R.id.et_remarks)
+    EditText etRemarks;
+    @BindView(R.id.btn_add)
+    Button btnAdd;
+
+    private String bugOneCode = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_material);
+        ButterKnife.bind(this);
         initView();
         setListener();
 
@@ -63,24 +74,22 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         //二级
-        ll_business.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bean -> bean.getDataCode().startsWith(bugOneCode)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
-                tv_business.setText(item);
-                tv_equipment.setText("");
-                tv_model.setText("");
-            });
+        PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bean -> bean.getDataCode().startsWith(bugOneCode)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
+            tvBusiness.setText(item);
+            tvEquipment.setText("");
+            tvModel.setText("");
         });
     }
 
     private void showEquipmentName() {
-        String busTwoCode = Config.get().getBusinessCodeByName(tv_business.getText().toString().trim(), 2);
+        String busTwoCode = Config.get().getBusinessCodeByName(tvBusiness.getText().toString().trim(), 2);
         if (StringUtils.isEmpty(busTwoCode)) {
             showToast("请先选择设备类别");
             return;
         }
         PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
-            tv_equipment.setText(item);
-            tv_model.setText("");
+            tvEquipment.setText(item);
+            tvModel.setText("");
         }));
     }
 
@@ -92,13 +101,9 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(modelOne)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
-            tv_model.setText(item);
+            tvModel.setText(item);
         }));
 
-    }
-
-    private void initModel() {
-        showModel();
     }
 
     private void initEquipmentName() {
@@ -106,89 +111,74 @@ public class AddMaterialActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initView() {
-        ll_business = (LinearLayout) findViewById(R.id.ll_business);
-        tv_business = (TextView) findViewById(R.id.tv_business);
-        ll_equipment = (LinearLayout) findViewById(R.id.ll_equipment);
-        tv_equipment = (TextView) findViewById(R.id.tv_equipment);
-        ll_model = (LinearLayout) findViewById(R.id.ll_model);
-        tv_model = (TextView) findViewById(R.id.tv_model);
-        ll_location = (LinearLayout) findViewById(R.id.ll_location);
-        et_location = (EditText) findViewById(R.id.et_location);
-        ll_code = (LinearLayout) findViewById(R.id.ll_code);
-        et_code = (EditText) findViewById(R.id.et_code);
-        btn_add = (Button) findViewById(R.id.btn_add);
         setTitle("添加耗材");
         setLeftBack();
     }
 
     private void setListener() {
-        ll_business.setOnClickListener(this);
-        ll_equipment.setOnClickListener(this);
-        ll_model.setOnClickListener(this);
-        btn_add.setOnClickListener(this);
+
+        llBusiness.setOnClickListener((v) -> {
+            showBusinessSmallType();
+        });
+
+        llEquipment.setOnClickListener((v) -> {
+            if (tvBusiness.getText().toString().isEmpty()) {
+                ToastUtil.get().showToast(this, "请先选择设备类别");
+                return;
+            }
+            initEquipmentName();
+        });
+        llModel.setOnClickListener((v) -> {
+            if (tvEquipment.getText().toString().isEmpty()) {
+                ToastUtil.get().showToast(this, "请先选择设备名称");
+                return;
+            }
+            showModel();
+        });
+        btnAdd.setOnClickListener((v) -> {
+            doSubmit();
+        });
+
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ll_business:
-                showBusinessSmallType();
-                break;
-            case R.id.ll_equipment:
-                if (tv_business.getText().toString().isEmpty()) {
-                    ToastUtil.get().showToast(this, "请先选择设备类别");
-                    return;
-                }
-                initEquipmentName();
-                break;
-            case R.id.ll_model:
-                if (tv_equipment.getText().toString().isEmpty()) {
-                    ToastUtil.get().showToast(this, "请先选择设备名称");
-                    return;
-                }
-                initModel();
-                break;
-            case R.id.btn_add:
-                if (!checkInfo()) {
-                    return;
-                }
-
-                BughandleUseDeviceEntity bean = new BughandleUseDeviceEntity();
-                bean.setCount(Integer.parseInt(et_location.getText().toString()));
-                bean.setRemarkInfo(et_code.getText().toString());
-                bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tv_equipment.getText().toString(), 3));
-                bean.setModelCode(Config.get().getBaseCodeByName(tv_model.getText().toString(), 2, Constant.MODEL).get(0));
-                bean.setDeviceName(tv_equipment.getText().toString());
-                bean.setBusinessThreeId(Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 3));
-
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", bean);
-                intent.putExtras(bundle);
-                setResult(435554, intent);
-                finish();
-                break;
-            default:
-                break;
+    public void doSubmit() {
+        if (!checkInfo()) {
+            return;
         }
+        BughandleUseDeviceEntity bean = new BughandleUseDeviceEntity();
+        bean.setCount(Integer.parseInt(etNum.getText().toString()));
+        bean.setRemarkInfo(etRemarks.getText().toString());
+        bean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvEquipment.getText().toString(), 3));
+        bean.setModelCode(Config.get().getBaseCodeByName(tvModel.getText().toString(), 2, Constant.MODEL).get(0));
+        bean.setDeviceName(tvEquipment.getText().toString());
+        bean.setBusinessThreeId(Config.get().getBusinessIdByCode(bean.getBusinessThreeCode(), 3));
+
+        Intent intent = new Intent();
+        intent.putExtra("bean", bean);
+        setResult(RESULT_ADD_MATERIAL, intent);
+        finishSelf();
     }
 
     public boolean checkInfo() {
-        if (tv_business.getText().toString().isEmpty()) {
+        if (tvBusiness.getText().toString().isEmpty()) {
             ToastUtil.get().showToast(this, "请选择设备类别");
             return false;
         }
-        if (tv_equipment.getText().toString().isEmpty()) {
+        if (tvEquipment.getText().toString().isEmpty()) {
             ToastUtil.get().showToast(this, "请选择设备名称");
             return false;
         }
 
-        if (et_location.getText().toString().isEmpty()) {
-            ToastUtil.get().showToast(this, "请选输入耗材数量");
+        if (etNum.getText().toString().isEmpty()) {
+            ToastUtil.get().showToast(this, "请输入耗材数量");
             return false;
         }
-        if (Long.parseLong(et_location.getText().toString()) > 999) {
+        if (Long.parseLong(etNum.getText().toString()) > 999) {
             ToastUtil.get().showToast(this, "已超过最大数量999");
+            return false;
+        }
+        if (etRemarks.getText().toString().isEmpty()) {
+            ToastUtil.get().showToast(this, "请输入备注");
             return false;
         }
 

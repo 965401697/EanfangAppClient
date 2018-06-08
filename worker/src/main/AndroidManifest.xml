@@ -125,7 +125,7 @@
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
-        <activity android:name=".ui.activity.worksapce.AddTroubleActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
         <activity android:name=".ui.activity.worksapce.CheckActivity" />
         <activity android:name=".ui.activity.worksapce.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.TaskActivity" />
@@ -151,11 +151,18 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.PutUpOrderActivity" />
         <activity android:name=".ui.activity.worksapce.PutUpSelectWorkerActivity" />
-        <activity android:name=".ui.activity.worksapce.AddTroubleDetailActivity" />
+        <!-- 电话未解决完善故障处理 -->
+        <activity
+            android:name=".ui.activity.worksapce.AddTroubleDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.AddMaterialActivity" />
         <activity android:name=".ui.activity.worksapce.MaterialInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneSolveTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"  />
+        <!-- 电话解决完善故障处理 -->
+        <activity
+            android:name=".ui.activity.worksapce.PhoneSolveTroubleDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.EvaluateClientActivity" />
         <activity
             android:name=".ui.activity.worksapce.QuotationActivity"
@@ -351,8 +358,18 @@
         <activity android:name=".ui.activity.worksapce.contacts.AolltRoleActivity"></activity>
 
         <activity android:name=".ui.activity.worksapce.repair.SolveModeActivity" />
+        <!-- 预约上门时间 -->
         <activity android:name=".ui.activity.worksapce.repair.RepairAppointTimeActivity" />
-        <activity android:name=".ui.activity.worksapce.repair.DeviceParameterActivity"></activity>
+        <!-- 设备参数 -->
+        <activity android:name=".ui.activity.worksapce.repair.DeviceParameterActivity" />
+        <!-- 电话未解决 完善故障 增加照片 -->
+        <activity android:name=".ui.activity.worksapce.repair.AddTroubleAddPictureActivity" />
+        <!-- 故障库 -->
+        <activity android:name=".ui.activity.worksapce.repair.FaultLibraryActivity" />
+        <!-- 设备类别 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
 
 </manifest>

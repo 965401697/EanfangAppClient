@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:text="- -"
+                android:text=""
                 android:textColor="@color/color_order_list_price"
                 android:textSize="@dimen/textSize_15" />
         </LinearLayout>

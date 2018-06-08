@@ -80,8 +80,6 @@ public class AddTroubleActivity extends BaseClientActivity {
     @BindView(R.id.ll_deviceLocaltion)
     LinearLayout llDeviceLocaltion;
     // 故障设备品牌
-    @BindView(R.id.tv_deviceBrandHint)
-    TextView tvDeviceBrandHint;
     @BindView(R.id.tv_deviceBrand)
     TextView tvDeviceBrand;
     @BindView(R.id.ll_deviceBrand)
@@ -118,6 +116,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etDeviceLocation;
     @BindView(R.id.et_faultNum)
     EditText etFaultNum;
+    // 故障信息
     @BindView(R.id.ll_faultInfo)
     LinearLayout llFaultInfo;
     // 位置编号
@@ -172,7 +171,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
         bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
         bean.setHeadDeviceFailureId(dataId);// 故障id
-        bean.setLocationNumber(etDeviceLocationNum.getText().toString().trim());
+        bean.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
@@ -236,17 +235,17 @@ public class AddTroubleActivity extends BaseClientActivity {
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
-            String mGetImgs = data.getStringExtra("faultImgs");
+//            String mGetImgs = data.getStringExtra("faultImgs");
             dataId = Long.valueOf(data.getStringExtra("datasId"));
-            String[] imgs = mGetImgs.split(",");
-            ArrayList<String> arrayImgList = new ArrayList<String>();
-            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
-            snplMomentAddPhotos.setData(arrayImgList);
+//            String[] imgs = mGetImgs.split(",");
+//            ArrayList<String> arrayImgList = new ArrayList<String>();
+//            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
+//            snplMomentAddPhotos.setData(arrayImgList);
         }
     }
 
 
-    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.rl_confirmDevice, R.id.ll_faultInfo})
+    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //故障设备名称

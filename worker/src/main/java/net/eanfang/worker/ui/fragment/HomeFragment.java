@@ -12,12 +12,17 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ClientData;
+import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CheckSignPermission;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 
@@ -79,13 +84,13 @@ public class HomeFragment extends BaseFragment {
         rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
         initIconClick();
         initLoopView();
-        initRollTextView();
         //设置布局样式
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvData.setLayoutManager(linearLayoutManager);
         initCount();
         initFalseData();
+        doHttpNews();
     }
 
     @Override
@@ -144,7 +149,6 @@ public class HomeFragment extends BaseFragment {
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
-
             startActivity(new Intent(getActivity(), ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
 
@@ -188,7 +192,7 @@ public class HomeFragment extends BaseFragment {
      */
     private void initLoopView() {
         bannerView = findViewById(R.id.bv_loop);
-        int[] images = {R.drawable.banner, R.drawable.banner, R.drawable.banner, R.drawable.banner};
+        int[] images = {R.mipmap.ic_worker_banner_1, R.mipmap.ic_worker_banner_2, R.mipmap.ic_worker_banner_3, R.mipmap.ic_worker_banner_4, R.mipmap.ic_worker_banner_5};
         List<View> viewList = new ArrayList<>();
         for (int i = 0; i < images.length; i++) {
             ImageView image = new ImageView(getActivity());
@@ -205,38 +209,49 @@ public class HomeFragment extends BaseFragment {
     /**
      * 初始化rolltext显示的文本
      */
-    private void initRollTextView() {
+    private void initRollTextView(List<NoticeEntity> list) {
         rollTextView = findViewById(R.id.home_recommand_ad_text);
+        List<View> views = new ArrayList<>();
         List<String> data = new ArrayList<>();
         List<String> titleList = new ArrayList<>();
-        List<View> views = new ArrayList<>();
-        data.add("通过易安防进行了报修。");
-        data.add("通过易安防接到了一个报修单。");
-        data.add("通过易安防进行了报修。");
-        data.add("通过易安防接了一个报修单。");
-        data.add("通过易安防接到了一个报装单。");
-        data.add("通过易安防进行了报装。");
-        data.add("通过易安防接到了一个免费设计。");
-        data.add("通过易安防接到了一个报修。");
-        data.add("通过易安防进行了免费设计。");
-        data.add("通过易安防接到了一个报装。");
-        data.add("通过易安防进行了免费设计。");
-        data.add("通过易安防接到了一个免费设计。");
-        data.add("通过易安防接到了一个报修。");
 
-        titleList.add("孙*");
-        titleList.add("张技师");
-        titleList.add("李*");
-        titleList.add("李技师");
-        titleList.add("刘技师");
-        titleList.add("刘**");
-        titleList.add("孙技师");
-        titleList.add("吴技师");
-        titleList.add("刘**");
-        titleList.add("张技师");
-        titleList.add("张*");
-        titleList.add("梁技师");
-        titleList.add("邓技师");
+        String repairStr = "通过易安防进行了报修。";
+        String installStr = "通过易安防提交了一个报装需求";
+        String quoteStr = "通过易安防获得了一次免费报价";
+        String applyStr = "通过易安防接到了一个活儿";
+        String designStr = "通过易安防获得了进行了免费设计";
+
+        if (list != null && !list.isEmpty()) {
+            for (int i = 0; i < list.size(); i++) {
+                NoticeEntity noticeEntity = list.get(i);
+                if (noticeEntity.getNoticeType() == 12) {
+                    data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                } else if (noticeEntity.getNoticeType() == 27) {
+                    data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                } else if (noticeEntity.getNoticeType() == 29) {
+                    data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                } else if (noticeEntity.getNoticeType() == 33) {
+                    data.add(applyStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                } else if (noticeEntity.getNoticeType() == 37) {
+                    data.add(designStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                }
+                String realName = noticeEntity.getReciveAccEntity().getRealName();
+                StringBuilder showName = new StringBuilder();
+                if (realName.length() >= 1) {
+                    showName.append(realName.charAt(0));
+                }
+                if (realName.length() >= 2) {
+                    showName.append("*");
+                }
+                if (realName.length() >= 3) {
+                    showName.append(realName.charAt(2));
+                }
+                titleList.add(showName + "先生");
+            }
+
+        }
+
+
         for (int i = 0; i < data.size(); i++) {
             View view = View.inflate(getContext(), R.layout.rolltext_item, null);
             TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
@@ -247,11 +262,19 @@ public class HomeFragment extends BaseFragment {
         }
         rollTextView.setViews(views);
         rollTextView.setOnItemClickListener((position, view) -> {
-            showToast("暂无可点");
+//            showToast("暂无可点");
         });
     }
 
+    public void doHttpNews() {
+        EanfangHttp.get(NewApiService.GET_PUSH_NEWS).execute(new EanfangCallback<NoticeEntity>(getActivity(), true, NoticeEntity.class, true, (list -> {
+            initRollTextView(list);
+        })));
+
+    }
+
     private void initFalseData() {
+        clientDataList = new ArrayList<>();
         ClientData clientDataOne = new ClientData();
         clientDataOne.setType(1);
         clientDataOne.setTotal(23);
