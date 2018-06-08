@@ -23,11 +23,13 @@ public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder
     @Override
     protected void convert(BaseViewHolder helper, ClientData item) {
         if (item.getType() == 1) {//三级
-            helper.setText(R.id.tv_title, "三级");
+            helper.setText(R.id.tv_title, "当日报修");
         } else if (item.getType() == 2) {//二级
-            helper.setText(R.id.tv_title, "二级");
+            helper.setText(R.id.tv_title, "当日报装");
+        } else if (item.getType() == 3) {//一级
+            helper.setText(R.id.tv_title, "当日设计");
         } else {//一级
-            helper.setText(R.id.tv_title, "一级");
+            helper.setText(R.id.tv_title, "其他");
         }
         if (item.getTotal() == 0) {
             helper.getView(R.id.ll_num).setVisibility(View.GONE);
