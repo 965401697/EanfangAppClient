@@ -32,6 +32,7 @@ import net.eanfang.worker.ui.activity.worksapce.repair.DeviceParameterActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -279,6 +280,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         bughandleDetailEntity.setStatusTwo(mReapirTwoStauts);
         //设备参数
         bughandleDetailEntity.setParamEntityList(paramEntityList);
+
         doHttpSubmit();
 
     }

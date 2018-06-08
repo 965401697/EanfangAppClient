@@ -107,7 +107,9 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     }
 
     private void setData() {
-        tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
+        if (bughandleConfirmEntity.getOverTime() != null) {
+            tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
+        }
         tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
 
         //遗留问题

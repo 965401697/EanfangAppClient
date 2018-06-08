@@ -65,14 +65,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     public static final int ADD_DEVICE_PARAM_REQUEST = 100;
     public static final int ADD_DEVICE_PARAM_RESULT = 1000;
 
-    @BindView(R.id.tv_right)
-    TextView tvRight;
-    @BindView(R.id.iv_title)
-    ImageView ivTitle;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.tv_trouble_title)
     TextView tvTroubleTitle;
     @BindView(R.id.tv_device_no)

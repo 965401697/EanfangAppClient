@@ -1,8 +1,10 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
@@ -28,11 +32,13 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.LocationUtil;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -51,9 +57,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imageloader.utils.L;
+
+import static com.amap.api.services.geocoder.GeocodeSearch.AMAP;
 
 /**
  * Created by MrHou
@@ -87,78 +97,32 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     Toolbar toolbar;
     @BindView(R.id.rv_trouble)
     RecyclerView rvTrouble;
-    @BindView(R.id.tv_over_time)
-    TextView tvOverTime;
-    @BindView(R.id.ll_over_time)
-    LinearLayout llOverTime;
-    @BindView(R.id.et_repair_time)
-    TextView etRepairTime;
-    @BindView(R.id.ll_repair_time)
-    LinearLayout llRepairTime;
     /**
-     * 录像机天数
-     */
-    @BindView(R.id.tv_store_time)
-    TextView tvStoreTime;
-    @BindView(R.id.ll_store_time)
-    LinearLayout llStoreTime;
-    /**
-     * 报警打印机
-     */
-    @BindView(R.id.tv_print_on_alarm)
-    TextView tvPrintOnAlarm;
-    @BindView(R.id.ll_print_on_alarm)
-    LinearLayout llPrintOnAlarm;
-    /*
-     * 所有设备时间同步
-     */
-    @BindView(R.id.tv_time_right)
-    TextView tvTimeRight;
-    @BindView(R.id.ll_time_right)
-    LinearLayout llTimeRight;
-    /*
-     * 各类设备数据远传功能
-     */
-    @BindView(R.id.tv_machine_data_remote)
-    TextView tvMachineDataRemote;
-    @BindView(R.id.ll_machine_data_remote)
-    LinearLayout llMachineDataRemote;
-    /*
      * 遗留问题
      */
     @BindView(R.id.et_remain_question)
     EditText etRemainQuestion;
     @BindView(R.id.ll_remain_question)
     LinearLayout llRemainQuestion;
-    /*
+    /**
      * 协助人员
      */
-    @BindView(R.id.et_team_worker)
-    EditText etTeamWorker;
-    @BindView(R.id.ll_team_worker)
-    LinearLayout llTeamWorker;
-    /*
+    /**
      * 电视墙/操作台正面全貌 (3张)
      */
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
-    @BindView(R.id.ll_tv_bg)
-    LinearLayout llTvBg;
-    /*
+    /**
      * 电视墙/操作台背面全照(3张)
      */
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snplMonitorAddPhotos;
-    @BindView(R.id.ll_tv_bg_b)
-    LinearLayout llTvBgB;
-    /*
+    /**
      * 机柜正面/背面 (3张)
      */
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
-    @BindView(R.id.ll_gui_bg)
-    LinearLayout llGuiBg;
-    /*
+    /**
      * 单据照片 (3张)
      */
     @BindView(R.id.snpl_form_photos)
@@ -169,6 +133,36 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     TextView tvCommit;
     @BindView(R.id.tv_up)
     TextView tvUp;
+    /**
+     * 录像存储权限
+     */
+    @BindView(R.id.tv_videoStorage)
+    TextView tvVideoStorage;
+    private boolean isVideoStroage = false;
+    /**
+     * 所有设备时间同步
+     */
+    @BindView(R.id.tv_deviceTime)
+    TextView tvDeviceTime;
+    private boolean isDeviceTime = false;
+    /**
+     * 报警打印机
+     */
+    @BindView(R.id.tv_policePriter)
+    TextView tvPolicePriter;
+    private boolean isPolicePriter = false;
+    /**
+     * 各类设备数据远传功能
+     */
+    @BindView(R.id.tv_policeDeliver)
+    TextView tvPoliceDeliver;
+    private boolean isPoliceDeliver = false;
+    //团队成员
+    @BindView(R.id.tv_team_worker)
+    TextView tvTeamWorker;
+    // 添加故障
+    @BindView(R.id.tv_add_fault)
+    TextView tvAddFault;
 
     private List<BughandleDetailEntity> DetailEntityList;
     private FillTroubleDetailAdapter fillTroubleDetailAdapter;
@@ -179,21 +173,51 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private Long orderId;
     private List<String> businessIdLis;
 
+    private int mInspect = 1;
+
+    // 地址
+    private String mAddress = "";
+    private String mAddressCode = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_repair_info);
         ButterKnife.bind(this);
+        initView();
         initData();
         initNinePhoto();
         setListener();
-        supprotToolbar();
-        setTitle("填写信息");
     }
 
+    private void initView() {
+        setTitle("填写信息");
+        setLeftBack();
+        rvTrouble.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rvTrouble.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+    private void initData() {
+        orderId = getIntent().getLongExtra("orderId", 0);
+        companyName = getIntent().getStringExtra("companyName");
+        companyId = getIntent().getLongExtra("companyUid", 0);
+        new Thread(() -> {
+            // 获取经纬度
+            LocationUtil.location(this, (location) -> {
+                mAddress = location.getCity() + location.getDistrict();
+                mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
+            });
+        }).start();
+
+        doHttpOrderDetail(orderId);
+    }
+
+    @SuppressLint("ResourceAsColor")
     public void setListener() {
-        //新增
-        setRightTitleOnClickListener(v -> {
+        //添加故障
+        tvAddFault.setOnClickListener(v -> {
             Intent intent = new Intent(FillRepairInfoActivity.this, AddTroubleActivity.class);
             intent.putExtra("repaid", orderId);
             startActivityForResult(intent, 10003);
@@ -212,68 +236,57 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 putUpOrder();
             }).showDialog();
         }));
-        //结束时间
-        llOverTime.setOnClickListener(v -> {
-            String currDateStr = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
-            Calendar startDate = Calendar.getInstance();
-            //startDate.set(2017, 5, 24);
-            //修改完成时间选择限制，不能早过当前时间
-            startDate.set(GetDateUtils.getYear(currDateStr), GetDateUtils.getMonth(currDateStr), GetDateUtils.getDay(currDateStr), GetDateUtils.getHour(currDateStr), GetDateUtils.getMinute(currDateStr));
-            Calendar endDate = Calendar.getInstance();
-            endDate.set(2099, 11, 28, 23, 59, 59);
-
-            PickerSelectUtil.onYearMonthDayTimePicker(this, "完工时间", startDate, endDate, (year1, month1, day1, hour1, minute1, startSecond) -> {
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-                tvOverTime.setText(year1 + "-" + month1 + "-" + day1 + " " + hour1 + ":" + minute1 + ":" + startSecond);
-
-                //计算维修工时
-                if (GetDateUtils.dateToDateString(bughandleConfirmEntity.getSingInTime()) == null) {
-                    etRepairTime.setText("0小时0分钟");
-                    return;
-                }
-
-                Date finishDay = GetDateUtils.getDate(year1, month1, day1, hour1, minute1, startSecond);
-                long day = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "day");
-                long hours = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "hours");
-                long minutes = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "minutes");
-                if (day < 0) {
-                    day = 0;
-                }
-                if (hours < 0) {
-                    hours = 0;
-                }
-                if (minutes < 0) {
-                    minutes = 0;
-                }
-                etRepairTime.setText((day * 24 + hours) + "小时" + minutes + "分钟");
-            });
+        // 录像存储权限
+        tvVideoStorage.setOnClickListener(v -> {
+            if (!isVideoStroage) {
+                isVideoStroage = true;
+                tvVideoStorage.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvVideoStorage.setTextColor(ContextCompat.getColor(this, R.color.color_white));
+            } else {
+                isVideoStroage = false;
+                tvVideoStorage.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvVideoStorage.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            }
         });
-
-        //录像机天数
-        llStoreTime.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvStoreTime, GetConstDataUtils.getStoreDayList());
+        // 所有设备时间同步
+        tvDeviceTime.setOnClickListener(v -> {
+            if (!isDeviceTime) {
+                isDeviceTime = true;
+                tvDeviceTime.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvDeviceTime.setTextColor(ContextCompat.getColor(this, R.color.color_white));
+            } else {
+                isDeviceTime = false;
+                tvDeviceTime.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvDeviceTime.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            }
         });
-        //报警打印机
-        llPrintOnAlarm.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvPrintOnAlarm, GetConstDataUtils.getIsNormalList());
+        // 报警打印机
+        tvPolicePriter.setOnClickListener(v -> {
+            if (!isPolicePriter) {
+                isPolicePriter = true;
+                tvPolicePriter.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvPolicePriter.setTextColor(ContextCompat.getColor(this, R.color.color_white));
+            } else {
+                isPolicePriter = false;
+                tvPolicePriter.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvPolicePriter.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            }
         });
-        //数据远传
-        llMachineDataRemote.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvMachineDataRemote, GetConstDataUtils.getIsNormalList());
-        });
-        //时间
-        llTimeRight.setOnClickListener(v -> {
-            PickerSelectUtil.singleTextPicker(this, "", tvTimeRight, GetConstDataUtils.getIsNormalList());
+        // 各类设备数据远传功能
+        tvPoliceDeliver.setOnClickListener(v -> {
+            if (!isPoliceDeliver) {
+                isPoliceDeliver = true;
+                tvPoliceDeliver.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_white));
+            } else {
+                isPoliceDeliver = false;
+                tvPoliceDeliver.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            }
         });
 
     }
 
-    private void initData() {
-        orderId = getIntent().getLongExtra("orderId", 0);
-        companyName = getIntent().getStringExtra("companyName");
-        companyId = getIntent().getLongExtra("companyUid", 0);
-        doHttpOrderDetail(orderId);
-    }
 
     private void doHttpOrderDetail(Long orderId) {
         QueryEntry queryEntry = new QueryEntry();
@@ -291,9 +304,6 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         businessIdLis = Stream.of(DetailEntityList).map(bean -> Config.get().getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(), 3) + "").toList();
         fillTroubleDetailAdapter = new FillTroubleDetailAdapter(R.layout.layout_trouble_detail, DetailEntityList);
-        rvTrouble.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rvTrouble.setLayoutManager(new LinearLayoutManager(this));
         rvTrouble.setAdapter(fillTroubleDetailAdapter);
         rvTrouble.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -315,32 +325,11 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         snplFormPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
     }
 
+    /**
+     * 判断是否填写完毕
+     */
     private boolean checkInfo() {
-        String overTime = tvOverTime.getText().toString().trim();
-        if (StringUtils.isEmpty(overTime)) {
-            showToast("请填写完工时间");
-            return false;
-        }
-        String storetime = tvStoreTime.getText().toString().trim();
-        if (StringUtils.isEmpty(storetime)) {
-            showToast("请检查录像机天数");
-            return false;
-        }
-        String printOnAlarm = tvPrintOnAlarm.getText().toString().trim();
-        if (StringUtils.isEmpty(printOnAlarm)) {
-            showToast("请检查报警打印机");
-            return false;
-        }
-        String timeRight = tvTimeRight.getText().toString().trim();
-        if (StringUtils.isEmpty(timeRight)) {
-            showToast("请检查设备时间同步");
-            return false;
-        }
-        String machineDataRemote = tvMachineDataRemote.getText().toString().trim();
-        if (StringUtils.isEmpty(machineDataRemote)) {
-            showToast("请检查各类设备数据远传功能");
-            return false;
-        }
+
         String remainQuestion = etRemainQuestion.getText().toString().trim();
         if (StringUtils.isEmpty(remainQuestion)) {
             showToast("请填写遗留问题");
@@ -363,15 +352,43 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         bughandleConfirmEntity.setBusRepairOrderId(orderId);
 
-        bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(tvOverTime.getText().toString().trim()));
-        bughandleConfirmEntity.setWorkHour(etRepairTime.getText().toString().trim());
-        bughandleConfirmEntity.setStoreDays(GetConstDataUtils.getStoreDayList().indexOf(tvStoreTime.getText().toString().trim()));
-        bughandleConfirmEntity.setIsAlarmPrinter(GetConstDataUtils.getIsNormalList().indexOf(tvPrintOnAlarm.getText().toString().trim()));
-        bughandleConfirmEntity.setIsTimeRight(GetConstDataUtils.getIsNormalList().indexOf(tvTimeRight.getText().toString().trim()));
-        bughandleConfirmEntity.setIsMachineDataRemote(GetConstDataUtils.getIsNormalList().indexOf(tvMachineDataRemote.getText().toString().trim()));
+        // 完成时间 维修工时  根据当前时间进行计算 并提交
+        bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
+        Date finishDay = GetDateUtils.getDate(Calendar.YEAR + "", Calendar.MONTH + "", Calendar.DATE + "", Calendar.HOUR + "", Calendar.MINUTE + "", Calendar.SECOND + "");
+        long day = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "day");
+        long hours = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "hours");
+        long minutes = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "minutes");
+        if (day < 0) {
+            day = 0;
+        }
+        if (hours < 0) {
+            hours = 0;
+        }
+        if (minutes < 0) {
+            minutes = 0;
+        }
+        if (GetDateUtils.dateToDateString(bughandleConfirmEntity.getSingInTime()) == null) {
+            bughandleConfirmEntity.setWorkHour("0小时0分钟");
+        } else {
+            bughandleConfirmEntity.setWorkHour((day * 24 + hours) + "小时" + minutes + "分钟");
+        }
+
+        if (isVideoStroage) {
+            bughandleConfirmEntity.setStoreDays(mInspect);
+        }
+        if (isPoliceDeliver) {
+            bughandleConfirmEntity.setIsMachineDataRemote(mInspect);
+        }
+        if (isPolicePriter) {
+            bughandleConfirmEntity.setIsAlarmPrinter(mInspect);
+        }
+        if (isDeviceTime) {
+            bughandleConfirmEntity.setIsTimeRight(mInspect);
+        }
+
         bughandleConfirmEntity.setLeftoverProblem(etRemainQuestion.getText().toString().trim());
         //协作人员
-        bughandleConfirmEntity.setTeamWorker(etTeamWorker.getText().toString().trim());
+//        bughandleConfirmEntity.setTeamWorker(etTeamWorker.getText().toString().trim());
 //        uploadMap.clear();
         //电视墙/操作台正面全貌 （3张）
         String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
@@ -389,6 +406,11 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         String afterHandlePic = PhotoUtils.getPhotoUrl(snplFormPhotos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
+        // 签退时间
+        bughandleConfirmEntity.setSignOutTime(new Date(System.currentTimeMillis()));
+        //签退地点
+        bughandleConfirmEntity.setSignOutAddress(mAddress);
+        bughandleConfirmEntity.setSignOutCode(mAddressCode);
 
         return bughandleConfirmEntity;
     }
