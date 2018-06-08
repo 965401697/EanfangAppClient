@@ -17,9 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.maps.AMapUtils;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -33,11 +30,9 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ETimeUtils;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -49,6 +44,7 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -57,13 +53,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.rong.imageloader.utils.L;
-
-import static com.amap.api.services.geocoder.GeocodeSearch.AMAP;
 
 /**
  * Created by MrHou

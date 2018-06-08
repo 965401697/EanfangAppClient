@@ -1,10 +1,9 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -33,8 +32,6 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.repair.FaultLibraryActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -191,12 +188,12 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
-            String mGetImgs = data.getStringExtra("faultImgs");
+//            String mGetImgs = data.getStringExtra("faultImgs");
             dataId = Long.valueOf(data.getStringExtra("datasId"));
-            String[] imgs = mGetImgs.split(",");
+//            String[] imgs = mGetImgs.split(",");
             ArrayList<String> arrayImgList = new ArrayList<String>();
-            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
-            snplMomentAddPhotos.setData(arrayImgList);
+//            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
+//            snplMomentAddPhotos.setData(arrayImgList);
         }
     }
 

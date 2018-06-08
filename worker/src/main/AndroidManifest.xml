@@ -125,7 +125,7 @@
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
-        <activity android:name=".ui.activity.worksapce.AddTroubleActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
         <activity android:name=".ui.activity.worksapce.CheckActivity" />
         <activity android:name=".ui.activity.worksapce.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.TaskActivity" />

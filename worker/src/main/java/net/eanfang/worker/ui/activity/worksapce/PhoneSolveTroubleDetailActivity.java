@@ -31,6 +31,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.DeviceParameterActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -179,7 +180,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         });
         rlAddDeviceParam.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bughandleDetailEntity", bughandleDetailEntity);
+            bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
             JumpItent.jump(this, DeviceParameterActivity.class, bundle, ADD_DEVICE_PARAM_REQUEST);
         });
     }

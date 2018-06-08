@@ -235,12 +235,12 @@ public class AddTroubleActivity extends BaseClientActivity {
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
-            String mGetImgs = data.getStringExtra("faultImgs");
+//            String mGetImgs = data.getStringExtra("faultImgs");
             dataId = Long.valueOf(data.getStringExtra("datasId"));
-            String[] imgs = mGetImgs.split(",");
-            ArrayList<String> arrayImgList = new ArrayList<String>();
-            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
-            snplMomentAddPhotos.setData(arrayImgList);
+//            String[] imgs = mGetImgs.split(",");
+//            ArrayList<String> arrayImgList = new ArrayList<String>();
+//            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
+//            snplMomentAddPhotos.setData(arrayImgList);
         }
     }
 

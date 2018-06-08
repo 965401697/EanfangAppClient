@@ -29,6 +29,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.CustomRadioGroup;
 import com.yaf.base.entity.BughandleDetailEntity;
+import com.yaf.base.entity.BughandleParamEntity;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
@@ -137,6 +138,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     private List<BughandleUseDeviceEntity> useDeviceEntityList = new ArrayList<>();
 
     private HashMap<String, String> uploadMap = new HashMap<>();
+
+    // 设备参数List
+    private List<BughandleParamEntity> paramEntityList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,6 +326,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         detailEntity.setBusBughandleConfirmId(confirmId);
         // 设备耗材
         detailEntity.setUseDeviceEntityList(useDeviceEntityList);
+
+        //设备参数
+        detailEntity.setParamEntityList(paramEntityList);
+
         doHttpSubmit();
 
     }
@@ -346,6 +354,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         }
         if (StringUtils.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
             showToast("请输入使用建议");
+            return false;
+        }
+        if (paramEntityList.size() == 0) {
+            showToast("请选择设备参数");
             return false;
         }
         return true;
@@ -389,6 +401,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
             useDeviceEntityList.add((BughandleUseDeviceEntity) data.getSerializableExtra("bean"));
             materialAdapter.notifyDataSetChanged();
 
+        } else if (requestCode == ADD_DEVICE_PARAM_REQUEST && resultCode == ADD_DEVICE_PARAM_RESULT) {
+            paramEntityList = (List<BughandleParamEntity>) data.getSerializableExtra("addParam");
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

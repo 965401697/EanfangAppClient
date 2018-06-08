@@ -63,7 +63,6 @@ public class DeviceParameterActivity extends BaseActivity {
     LinearLayout llAddParam;
 
 
-    private BughandleDetailEntity bughandleDetailEntity;
     private List<BughandleParamEntity> paramEntityList = new ArrayList<>();
     private AddParamAdapter paramAdapter;
 
@@ -81,8 +80,7 @@ public class DeviceParameterActivity extends BaseActivity {
         setTitle("设备参数");
         setRightTitle("确认");
         setLeftBack();
-        bughandleDetailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("bughandleDetailEntity");
-        paramEntityList = bughandleDetailEntity.getParamEntityList();
+        paramEntityList = (List<BughandleParamEntity>) getIntent().getSerializableExtra("paramEntityList");
     }
 
     private void initListener() {
