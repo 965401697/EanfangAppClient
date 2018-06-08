@@ -1,10 +1,12 @@
 package com.eanfang.ui.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
 import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
@@ -31,7 +33,8 @@ public class OrganizationContactActivity extends BaseActivity {
 
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-
+    @BindView(R2.id.tv_sure)
+    TextView tv_sure;
     TreeRecyclerAdapter treeRecyclerAdapter = new TreeRecyclerAdapter();
 
     private int i = 0;
@@ -84,6 +87,13 @@ public class OrganizationContactActivity extends BaseActivity {
     }
 
     private void initViews() {
+
+        Uri uri = getIntent().getData();
+        String str = uri.getHost();
+        if (!TextUtils.isEmpty(str)) {
+            tv_sure.setBackgroundColor(getResources().getColor(R.color.color_main_worker));
+        }
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         initData();

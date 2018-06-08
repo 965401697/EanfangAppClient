@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.ui.activity.OrganizationContactActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
@@ -77,8 +79,11 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
 
                 break;
             case R.id.ll_transfer:
-                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-//                intent.putExtra("isRadio", "isRadio");//是否是单选
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                Intent intent = new Intent(this, OrganizationContactActivity.class);
+                Uri uri = Uri.parse("worker://yeah!");
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                intent.setData(uri);
                 startActivity(intent);
                 break;
         }

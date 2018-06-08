@@ -111,11 +111,7 @@
         </activity>
         <!--组织结构-->
         <activity android:name=".ui.activity.OrganizationContactActivity">
-            <intent-filter>
-                <action android:name="com.eanfang.intent.action.ORG" />
-                <action android:name="com.eanfang.intent.action.ORG1" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+
         </activity>
         <!--二级折叠选择-->
         <activity android:name=".ui.activity.OrganizationLevelActivity"></activity>

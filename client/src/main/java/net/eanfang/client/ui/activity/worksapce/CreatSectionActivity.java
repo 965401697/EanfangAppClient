@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.ui.activity.OrganizationContactActivity;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -84,7 +86,11 @@ public class CreatSectionActivity extends BaseClientActivity {
                 break;
             case R.id.ll_section:
 
-                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                Intent intent = new Intent(this, OrganizationContactActivity.class);
+                Uri uri = Uri.parse("worker://");
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                intent.setData(uri);
                 intent.putExtra("isRadio", "isRadio");//是否是单选
                 startActivity(intent);
 

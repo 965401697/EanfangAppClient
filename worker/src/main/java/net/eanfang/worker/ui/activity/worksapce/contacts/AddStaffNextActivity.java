@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.RoleBean;
 import com.eanfang.model.SectionBean;
+import com.eanfang.ui.activity.OrganizationContactActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -67,7 +69,10 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_section:
-                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                Intent intent = new Intent(this, OrganizationContactActivity.class);
+                Uri uri = Uri.parse("worker://yeah!");
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                intent.setData(uri);
                 intent.putExtra("isRadio", "isRadio");//是否是单选
                 startActivity(intent);
                 break;

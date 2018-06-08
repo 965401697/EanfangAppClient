@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -84,8 +85,12 @@ public class AdministratorSetActivity extends BaseClientActivity {
 
                 break;
             case R.id.ll_transfer:
-                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                Intent intent = new Intent(this, OrganizationContactActivity.class);
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
 //                intent.putExtra("isRadio", "isRadio");//是否是单选
+                Uri uri = Uri.parse("worker://");
+//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
+                intent.setData(uri);
                 startActivity(intent);
                 break;
         }
