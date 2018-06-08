@@ -16,6 +16,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupsBean;
@@ -26,6 +27,8 @@ import com.eanfang.util.Var;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.GroupDetailActivity;
+import net.eanfang.client.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
@@ -131,6 +134,15 @@ public class ContactListFragment extends BaseFragment {
 
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
+                if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
+                    Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
+                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
+                    startActivity(intent);
+                } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
+                    Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
+                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
+                    startActivity(intent);
+                }
                 return true;
             }
 

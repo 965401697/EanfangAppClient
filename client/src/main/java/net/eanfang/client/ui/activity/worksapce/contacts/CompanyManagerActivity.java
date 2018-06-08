@@ -77,8 +77,6 @@ public class CompanyManagerActivity extends BaseActivity {
                 break;
             case R.id.rl_permission:
                 JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
-
-
                 break;
         }
     }

@@ -28,8 +28,27 @@ public class SectionBean extends BaseItemData implements Serializable {
     private String orgId;
     private String orgName;
     private String parentOrgId;
+    private int flag;//是否是单选  和一些业务的选择
+    private boolean isChecked;// 选中
     private List<ChildrenBean> children;
     private List<StaffBeanX> staff;
+
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 
     public int getCountStaff() {
         return countStaff;
@@ -115,6 +134,16 @@ public class SectionBean extends BaseItemData implements Serializable {
         private ParentEntityBean parentEntity;
         private String parentOrgId;
         private List<StaffBean> staff;
+        private int flag;//是否是单选  和一些业务的选择
+
+
+        public int getFlag() {
+            return flag;
+        }
+
+        public void setFlag(int flag) {
+            this.flag = flag;
+        }
 
         public int getCountStaff() {
             return countStaff;

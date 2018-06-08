@@ -35,9 +35,18 @@ public class OrganizationBean extends BaseItemData {
     private String updateTime;
     private String updateUser;
     private int verifyStatus;
+    private int flag;// 是否是单选  一些逻辑的判断
+    private boolean isChecked;// 选中
 
     private List<SectionBean> sectionBeanList;
 
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public List<SectionBean> getSectionBeanList() {
         return sectionBeanList;
@@ -45,6 +54,14 @@ public class OrganizationBean extends BaseItemData {
 
     public void setSectionBeanList(List<SectionBean> sectionBeanList) {
         this.sectionBeanList = sectionBeanList;
+    }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
     }
 
     public String getCompanyId() {

@@ -15,14 +15,18 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DefendLogDetailBean;
+import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
@@ -34,6 +38,8 @@ import net.eanfang.client.ui.adapter.DefendLogItemAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,6 +89,8 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
     private int flag = 1;//1是添加操作
     private String mIsAdd;
 
+    private TimePickerView mTimeYearMonthDayHMS;
+    private TextView currentTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,18 +151,55 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
             }
         });
 
-
+        doSelectYearMonthDayHMS();
     }
 
+
+    /**
+     * 选择年月日时分秒
+     */
+    public void doSelectYearMonthDayHMS() {
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        startDate.set(2000, 0, 1, 0, 0, 0);
+        endDate.set(2040, 11, 31, 0, 0, 0);
+        mTimeYearMonthDayHMS = new TimePickerBuilder(DefendLogWriteAndDetailActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
+            }
+        })
+                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setContentTextSize(18)//滚轮文字大小
+                .setTitleSize(20)//标题文字大小
+                .setTitleText(" ")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_open_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(DefendLogWriteAndDetailActivity.this, "", tvOpenTime);
+
+                currentTextView = tvOpenTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
+
                 break;
             case R.id.ll_close_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(DefendLogWriteAndDetailActivity.this, "", tvCloseTime);
+
+                currentTextView = tvCloseTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
+
                 break;
             case R.id.ll_depend_person:
                 showDependPerson();

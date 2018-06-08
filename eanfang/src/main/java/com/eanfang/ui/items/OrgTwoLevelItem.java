@@ -7,7 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
@@ -44,6 +46,15 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
+
+        if (data.getChildren() != null) {
+            for (SectionBean.ChildrenBean childrenBean : data.getChildren()) {
+                if (data.getFlag() == 1) {
+                    childrenBean.setFlag(1);
+                }
+            }
+        }
+
         if (data.getCountStaff() == 0) {
             viewHolder.setText(R.id.tv_company_name, data.getOrgName());
         } else {
@@ -57,17 +68,36 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
             viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_two_close));
         }
 
-        viewHolder.getView(R.id.tv_unit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (data.getChildren() == null) return;
-
-                Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
-                intent.putExtra("flag", 2);
-                intent.putExtra("bean", data);
-                viewHolder.getView(R.id.tv_unit).getContext().startActivity(intent);
+        //说明是单选
+        if (data.getFlag() == 1) {
+            viewHolder.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
+            if (data.isChecked()) {
+                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setChecked(true);
+            } else {
+                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setChecked(false);
             }
-        });
+
+        } else {
+
+            if (data.getCountStaff() != 0) {
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+            }
+            viewHolder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (data.getChildren() == null) return;
+
+                    Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
+                    intent.putExtra("flag", 2);
+                    intent.putExtra("bean", data);
+                    viewHolder.getView(R.id.tv_unit).getContext().startActivity(intent);
+                }
+            });
+        }
+
     }
+
 }

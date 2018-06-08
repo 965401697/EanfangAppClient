@@ -128,7 +128,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_auth_company);
         ButterKnife.bind(this);
         initView();
-        initListener();
         initData();
     }
 
@@ -181,6 +180,17 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
         if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
             btnComplete.setVisibility(View.GONE);
+
+            setOnFouse(etCompany);
+            setOnFouse(edCompanyNumber);
+            setOnFouse(etMoney);
+            setOnFouse(etDetailAddress);
+            setOnFouse(etLegalPersion);
+            setOnFouse(etDetailOfficeAddress);
+            setOnFouse(etPhone);
+            setOnFouse(etDesc);
+        } else {
+            initListener();
         }
     }
 
@@ -193,6 +203,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         btnComplete.setText("进行认证");
         etCompany.setText(orgName);
     }
+
+    private void setOnFouse(EditText editText) {
+        editText.setEnabled(false);
+    }
+
 
     private void initListener() {
         ivUpload.setOnClickListener((v) -> {

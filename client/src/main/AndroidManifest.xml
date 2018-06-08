@@ -342,6 +342,8 @@
         <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
         <!-- 群公告 -->
         <activity android:name=".ui.activity.im.GroupNoticeActivity" />
+        <!-- 個人信息 -->
+        <activity android:name=".ui.activity.im.IMCardActivity" />
         <!-- 视频文件选择 -->
         <activity android:name=".ui.activity.im.VideoSelectedActivity" />
         <!-- 申请进群 -->
@@ -398,12 +400,17 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
-
+        <!--管理员设置-->
         <activity android:name=".ui.activity.worksapce.AdministratorSetActivity" />
+        <!--创建部门-->
         <activity android:name=".ui.activity.worksapce.CreatSectionActivity" />
+        <!--添加员工-->
         <activity android:name=".ui.activity.worksapce.AddStaffActivity" />
+        <!--添加员工下一步-->
         <activity android:name=".ui.activity.worksapce.AddStaffNextActivity" />
+        <!--权限设置-->
         <activity android:name=".ui.activity.worksapce.PermissionManagerActivity" />
+        <!--角色分配-->
         <activity android:name=".ui.activity.worksapce.AolltRoleActivity"></activity>
 
         <!-- 技师故障处理 查看照片 -->

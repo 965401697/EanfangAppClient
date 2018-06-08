@@ -8,12 +8,16 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
@@ -25,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,6 +71,9 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
 
+    private TimePickerView mTimeYearMonthDayHMS;
+    private TextView currentTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +89,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         etSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
         getData();
+        doSelectYearMonthDayHMS();
     }
 
 
@@ -87,22 +97,34 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_staff_in_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(OpenShopLogWriteActivity.this, "开始时间", tvStaffInTime);
+                currentTextView = tvStaffInTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_staff_out_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(OpenShopLogWriteActivity.this, "开始时间", tvStaffOutTime);
+                currentTextView = tvStaffOutTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_client_in_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(OpenShopLogWriteActivity.this, "开始时间", tvClientInTime);
+                currentTextView = tvClientInTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_client_out_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(OpenShopLogWriteActivity.this, "开始时间", tvClientOutTime);
+                currentTextView = tvClientOutTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_open_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(OpenShopLogWriteActivity.this, "开始时间", tvOpenTime);
+                currentTextView = tvOpenTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_close_time:
-                PickerSelectUtil.onYearMonthDayTimePicker(OpenShopLogWriteActivity.this, "开始时间", tvCloseTime);
+                currentTextView = tvCloseTime;
+                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_depend_person:
                 showDependPerson();
@@ -112,6 +134,37 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
                 break;
         }
     }
+
+
+    /**
+     * 选择年月日时分秒
+     */
+    public void doSelectYearMonthDayHMS() {
+        Calendar selectedDate = Calendar.getInstance();
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        startDate.set(2000, 0, 1, 0, 0, 0);
+        endDate.set(2040, 11, 31, 0, 0, 0);
+        mTimeYearMonthDayHMS = new TimePickerBuilder(OpenShopLogWriteActivity.this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
+            }
+        })
+                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
+                .setCancelText("取消")//取消按钮文字
+                .setSubmitText("确定")//确认按钮文字
+                .setContentTextSize(18)//滚轮文字大小
+                .setTitleSize(20)//标题文字大小
+                .setTitleText(" ")//标题文字
+                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate, endDate)//起始终止年月日设定
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .isDialog(false)//是否显示为对话框样式
+                .build();
+    }
+
 
     /**
      * 提交数据

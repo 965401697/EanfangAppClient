@@ -29,26 +29,49 @@
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_14" />
 
-
-        <ImageView
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
+        <LinearLayout
+            android:id="@+id/ll_staff"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dimen_12"
-            android:layout_toLeftOf="@+id/tv_unit"
-            android:src="@drawable/ic_all" />
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_24"
+                android:layout_height="@dimen/dimen_24"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_12"
+                android:layout_toLeftOf="@+id/tv_unit"
+                android:src="@drawable/ic_all" />
 
 
-        <TextView
-            android:id="@+id/tv_unit"
+            <TextView
+                android:id="@+id/tv_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_26"
+                android:text="全部员工"
+                android:textColor="@color/color_client_data_item_title"
+                android:textSize="@dimen/textSize_12" />
+
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cb_checked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_26"
-            android:text="部门员工"
-            android:textColor="@color/color_client_data_item_title"
-            android:textSize="@dimen/textSize_12" />
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
     <View

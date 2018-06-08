@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
@@ -53,6 +54,11 @@ public class CreatSectionActivity extends BaseClientActivity {
         switch (v.getId()) {
             case R.id.tv_created:
 
+
+                if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
+                    parentOrgId = String.valueOf(EanfangApplication.get().getCompanyId());
+                }
+
                 if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
                     ToastUtil.get().showToast(CreatSectionActivity.this, "请输入部门名称");
                     return;
@@ -88,10 +94,15 @@ public class CreatSectionActivity extends BaseClientActivity {
     }
 
     @Subscribe
-    public void onEvent(SectionBean sectionBean) {
+    public void onEvent(Object o) {
 
-        if (sectionBean != null) {
-            tvCreated.setVisibility(View.VISIBLE);
+        if (o instanceof OrganizationBean) {
+            OrganizationBean organizationBean = (OrganizationBean) o;
+            tvSectionName.setText(organizationBean.getOrgName());
+            parentOrgId = organizationBean.getCompanyId();
+
+        } else if (o instanceof SectionBean) {
+            SectionBean sectionBean = (SectionBean) o;
             tvSectionName.setText(sectionBean.getOrgName());
             parentOrgId = sectionBean.getParentOrgId();
         }

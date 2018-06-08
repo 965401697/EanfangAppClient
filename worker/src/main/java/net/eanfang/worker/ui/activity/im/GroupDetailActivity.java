@@ -11,7 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +34,9 @@ import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
+import com.eanfang.witget.MyGridView;
 import com.eanfang.witget.PersonalQRCodeDialog;
+import com.eanfang.witget.SwitchButton;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
@@ -56,8 +60,8 @@ import io.rong.imlib.model.Group;
 
 public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    @BindView(R.id.grid_view)
+    MyGridView gridView;
     @BindView(R.id.group_member_size)
     TextView groupMemberSize;
     @BindView(R.id.group_qr)
@@ -78,17 +82,18 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     LinearLayout group_transfer;
     @BindView(R.id.group_shutup_mber)
     LinearLayout group_shutup_mber;
-    @BindView(R.id.sw_group_top)
-    TextView swGroupTop;
-    @BindView(R.id.group_shutup)
-    TextView group_shutup;
+    @BindView(R.id.sb_group_top)
+    SwitchButton swGroupTop;
+    @BindView(R.id.sb_group_shutup)
+    SwitchButton group_shutup;
     @BindView(R.id.group_notice)
     TextView group_notice;
-    @BindView(R.id.sw_group_notfaction)
-    TextView swGroupNotfaction;
+    @BindView(R.id.sb_group_notfaction)
+    SwitchButton swGroupNotfaction;
 
     private GroupsDetailAdapter mGroupsDetailAdapter;
     private ArrayList<GroupDetailBean.ListBean> friendListBeanArrayList = new ArrayList<>();
+    private ArrayList<GroupDetailBean.ListBean> temp = new ArrayList<>();
     private ArrayList<GroupDetailBean.ListBean> mList = new ArrayList<>();
     private String title;
     private String headPortrait;
@@ -128,6 +133,11 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 .params("ryGroupId", groupId)
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
 
+                    if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
+                    if (temp.size() > 0)
+                        temp.clear();
+
+
                     mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
 
                     if (String.valueOf(EanfangApplication.getApplication().getAccId()).equals(bean.getGroup().getCreateUser())) {
@@ -144,15 +154,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         ll_shut_up.setVisibility(View.GONE);
                     }
 
-                    initViews();
-
-                    if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
-                    if (mGroupsDetailAdapter.getData().size() > 0)
-                        mGroupsDetailAdapter.getData().clear();
-
 
                     if (bean.getList() != null) {
-                        ArrayList<GroupDetailBean.ListBean> temp = new ArrayList<>();
+
                         for (int i = 0; i < bean.getList().size(); i++) {
                             if (bean.getList().get(i).getAccId().equals(bean.getGroup().getCreateUser())) {
                                 temp.add(0, bean.getList().get(i));
@@ -165,23 +169,32 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
                         if (bean.getList().size() > 0) {
 
-                            mGroupsDetailAdapter.setNewData(temp);
+//                            mGroupsDetailAdapter.setNewData(temp);
                             GroupDetailBean.ListBean b = new GroupDetailBean.ListBean();//填充数据
-                            mGroupsDetailAdapter.addData(b);
-                            mGroupsDetailAdapter.addData(b);
+//                            mGroupsDetailAdapter.addData(b);
+//                            mGroupsDetailAdapter.addData(b);
+
+                            if (isOwner) {
+                                temp.add(b);
+                                temp.add(b);
+                            } else {
+                                temp.add(b);
+                            }
 
                             groupMemberSize.setText("全部群成员（" + bean.getList().size() + "）");
 
 
                             if (bean.getList().get(0).getStatus() == 0) {
-                                group_shutup.setText("开启禁言");
+                                group_shutup.setChecked(false);
                                 isCheckedGag = false;
                             } else {
-                                group_shutup.setText("关闭禁言");
+                                group_shutup.setChecked(true);
                                 isCheckedGag = true;
                             }
                         }
                     }
+
+                    initViews();
 
                     if (bean.getGroup() != null) {
                         groupName.setText(bean.getGroup().getGroupName());
@@ -205,11 +218,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             boolean isTop = conversation.isTop();
             if (isTop) {
                 isCheckedTop = true;
-                swGroupTop.setText("取消置顶");
+                swGroupTop.setChecked(true);
             } else {
-                swGroupTop.setText("置顶群组");
+                swGroupTop.setChecked(false);
                 isCheckedTop = false;
             }
+
 
             //免打扰的状态值
 //        DO_NOT_DISTURB(0),
@@ -217,29 +231,31 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             Conversation.ConversationNotificationStatus status = conversation.getNotificationStatus();
             if (status.equals(Conversation.ConversationNotificationStatus.NOTIFY)) {
                 isCheckedNo = false;
-                swGroupNotfaction.setText("开启免打扰");
+                swGroupNotfaction.setChecked(false);
             } else {
                 isCheckedNo = true;
-                swGroupNotfaction.setText("关闭免打扰");
+                swGroupNotfaction.setChecked(true);
             }
         }
     }
 
     private void initViews() {
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        mGroupsDetailAdapter = new GroupsDetailAdapter(R.layout.item_group, mList, isOwner);
-        mGroupsDetailAdapter.bindToRecyclerView(recyclerView);
-        mGroupsDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//        gridView.setLayoutManager(new GridLayoutManager(this, 5));
+        mGroupsDetailAdapter = new GroupsDetailAdapter(this, temp, isOwner);
+        gridView.setAdapter(mGroupsDetailAdapter);
+//        mGroupsDetailAdapter.bindToRecyclerView(gridView);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (position == adapter.getData().size() - 1) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                if (position == temp.size() - 1 && isOwner) {
                     Intent intent = new Intent(GroupDetailActivity.this, SubtractFriendsActivity.class);
                     intent.putExtra("list", friendListBeanArrayList);
                     intent.putExtra("groupId", id);
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("title", title);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
-                } else if (position == adapter.getData().size() - 2) {
+                } else if (position == temp.size() - 2 && isOwner || position == temp.size() - 1 && !isOwner) {
                     Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
                     intent.putExtra("flag", 2);
                     intent.putExtra("groupId", id);
@@ -247,13 +263,62 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("list", friendListBeanArrayList);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
+
                 }
+//                else {
+//                    Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
+//                    intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
+//                    startActivity(intent);
+//
+//                }
             }
         });
+
+
+        swGroupTop.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                setConversationTop(Conversation.ConversationType.GROUP, groupId, isChecked);
+            }
+        });
+        group_shutup.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                setGagOrNo(isChecked);
+            }
+        });
+        swGroupNotfaction.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                setConverstionNotif(Conversation.ConversationType.GROUP, groupId, isChecked);
+            }
+        });
+
+//        mGroupsDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                if (position == adapter.getData().size() - 1) {
+//                    Intent intent = new Intent(GroupDetailActivity.this, SubtractFriendsActivity.class);
+//                    intent.putExtra("list", friendListBeanArrayList);
+//                    intent.putExtra("groupId", id);
+//                    intent.putExtra("ryGroupId", groupId);
+//                    intent.putExtra("title", title);
+//                    startActivityForResult(intent, UPDATA_GROUP_OWN);
+//                } else if (position == adapter.getData().size() - 2) {
+//                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
+//                    intent.putExtra("flag", 2);
+//                    intent.putExtra("groupId", id);
+//                    intent.putExtra("title", title);
+//                    intent.putExtra("ryGroupId", groupId);
+//                    intent.putExtra("list", friendListBeanArrayList);
+//                    startActivityForResult(intent, UPDATA_GROUP_OWN);
+//                }
+//            }
+//        });
     }
 
 
-    @OnClick({R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.sw_group_top, R.id.sw_group_notfaction, R.id.group_transfer, R.id.group_shutup_mber, R.id.ll_shut_up, R.id.group_quit})
+    @OnClick({R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_group_port:
@@ -269,9 +334,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 Intent intent = new Intent(this, GroupUpdataNameActivity.class);
                 startActivityForResult(intent, UPDATA_GROUP_NAME);
                 break;
-            case R.id.ll_shut_up://全员禁言
-                setGagOrNo();
-                break;
+
             case R.id.group_announcement:
                 Intent tempIntent = new Intent(this, GroupNoticeActivity.class);
                 tempIntent.putExtra("conversationType", Conversation.ConversationType.GROUP.getValue());
@@ -291,30 +354,6 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 in.putExtra("list", friendListBeanArrayList);
                 in.putExtra("groupId", id);
                 startActivityForResult(in, UPDATA_GROUP_SHUTUP_MBER);
-                break;
-            case R.id.sw_group_top:
-                if (isCheckedTop) {
-                    swGroupTop.setText("置顶群组");
-                    setConversationTop(Conversation.ConversationType.GROUP, groupId, false);
-                    isCheckedTop = false;
-                } else {
-                    swGroupTop.setText("取消置顶");
-                    setConversationTop(Conversation.ConversationType.GROUP, groupId, true);
-                    isCheckedTop = true;
-                }
-
-                break;
-            case R.id.sw_group_notfaction:
-                if (isCheckedNo) {
-                    swGroupNotfaction.setText("开启免打扰");
-                    setConverstionNotif(Conversation.ConversationType.GROUP, groupId, false);
-                    isCheckedNo = false;
-                } else {
-                    setConverstionNotif(Conversation.ConversationType.GROUP, groupId, true);
-                    swGroupNotfaction.setText("关闭免打扰");
-                    isCheckedNo = true;
-                }
-
                 break;
             case R.id.group_quit:
                 if (isOwner) {
@@ -405,12 +444,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             RongIM.getInstance().setConversationToTop(conversationType, targetId, state, new RongIMClient.ResultCallback<Boolean>() {
                 @Override
                 public void onSuccess(Boolean aBoolean) {
-                    ToastUtil.get().showToast(GroupDetailActivity.this, "设置成功");
+//                    ToastUtil.get().showToast(GroupDetailActivity.this, "设置成功");
                 }
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    ToastUtil.get().showToast(GroupDetailActivity.this, "设置失败");
+//                    ToastUtil.get().showToast(GroupDetailActivity.this, "设置失败");
                 }
             });
         }
@@ -481,14 +520,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 }));
     }
 
-    private void setGagOrNo() {
-        if (isCheckedGag) {
+    private void setGagOrNo(boolean b) {
+        if (!b) {
             EanfangHttp.post(UserApi.POST_GROUP_NOGAG)
                     .params("groupId", id)
                     .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                         ToastUtil.get().showToast(GroupDetailActivity.this, "解禁成功");
-                        group_shutup.setText("开启禁言");
-                        isCheckedGag = false;
                         shuttpAll(0);
                     }));
         } else {
@@ -496,8 +533,6 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     .params("groupId", id)
                     .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                         ToastUtil.get().showToast(GroupDetailActivity.this, "禁言成功");
-                        group_shutup.setText("关闭禁言");
-                        isCheckedGag = true;
                         shuttpAll(1);
                     }));
         }

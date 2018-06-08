@@ -72,6 +72,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_admin_set"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -82,6 +83,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_admin"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="管理员设置"
                 android:textColor="@color/color_client_neworder"
@@ -97,6 +100,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_creat_section"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -107,6 +111,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_section"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="创建部门"
                 android:textColor="@color/color_client_neworder"
@@ -122,6 +128,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_add_staff"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -132,6 +139,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_add_preson"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="添加人员"
                 android:textColor="@color/color_client_neworder"
@@ -147,6 +156,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_permission"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:background="@color/color_white">
@@ -157,6 +167,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_presion"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="权限管理"
                 android:textColor="@color/color_client_neworder"
@@ -190,6 +202,8 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_cooperation"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="合作关系"
                 android:textColor="@color/color_client_neworder"

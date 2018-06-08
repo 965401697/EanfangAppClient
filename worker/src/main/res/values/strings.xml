@@ -60,7 +60,7 @@
     <!--IM-->
     <string name="all_group_member">全部群成员</string>
     <string name="group_qrt">群二维码</string>
-    <string name="group_name">群名字</string>
+    <string name="group_name">群名称</string>
     <string name="group_announcement">群公告</string>
     <string name="quit_group">退出群</string>
     <string name="dismiss_group">解散</string>

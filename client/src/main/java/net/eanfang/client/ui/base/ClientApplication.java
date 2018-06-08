@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 
+import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 
 import io.rong.imkit.RongExtensionManager;
@@ -24,6 +25,7 @@ public class ClientApplication extends EanfangApplication {
             RongIM.init(this);
 
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
+            RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
         }
     }
 

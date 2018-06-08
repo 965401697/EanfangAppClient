@@ -10,7 +10,6 @@ import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
 import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
-import com.baozi.treerecyclerview.item.TreeItem;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
@@ -20,11 +19,13 @@ import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.items.OrgOneLevelItem;
+import com.eanfang.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrganizationContactActivity extends BaseActivity {
 
@@ -34,7 +35,12 @@ public class OrganizationContactActivity extends BaseActivity {
     TreeRecyclerAdapter treeRecyclerAdapter = new TreeRecyclerAdapter();
 
     private int i = 0;
+
     private String isRadio;
+
+    private OrganizationBean mOrganizationBean;
+    private SectionBean mSectionBean;
+    private Object mOldObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +64,12 @@ public class OrganizationContactActivity extends BaseActivity {
 
                     for (OrganizationBean organizationBean : list) {
 
+                        if (!TextUtils.isEmpty(isRadio)) {
+                            organizationBean.setFlag(1);//单选
+                        }
+
                         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
                                 .params("companyId", organizationBean.getCompanyId())
-//                                .params("orgCode", organizationBean.getOrgCode())
                                 .execute(new EanfangCallback<SectionBean>(OrganizationContactActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
 
                                     organizationBean.setSectionBeanList(sectionBeanList);
@@ -79,17 +88,58 @@ public class OrganizationContactActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         initData();
 
-        if (!TextUtils.isEmpty(isRadio)) {
-            treeRecyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(ViewHolder viewHolder, int i) {
-                    if (i != 0) {
-                        SectionBean bean = (SectionBean) treeRecyclerAdapter.getData(i).getData();
-                        EventBus.getDefault().post(bean);
-                        finishSelf();
+        if (TextUtils.isEmpty(isRadio)) return;
+
+        treeRecyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ViewHolder viewHolder, int i) {
+
+                if (i == 2) return;
+
+                Object o = treeRecyclerAdapter.getData(i).getData();
+
+                if (mOldObj == null) {
+                    mOldObj = o;
+                }
+
+                if (mOldObj != o) {
+                    if (mOldObj instanceof OrganizationBean) {
+                        mOrganizationBean = (OrganizationBean) mOldObj;
+                        mOrganizationBean.setChecked(false);
+
+
+                    } else if (mOldObj instanceof SectionBean) {
+                        mSectionBean = (SectionBean) mOldObj;
+                        mSectionBean.setChecked(false);
                     }
                 }
-            });
+
+
+                if (o instanceof OrganizationBean) {
+                    mOrganizationBean = (OrganizationBean) o;
+                    mOrganizationBean.setChecked(true);
+
+
+                } else if (o instanceof SectionBean) {
+                    mSectionBean = (SectionBean) o;
+                    mSectionBean.setChecked(true);
+                }
+
+                mOldObj = o;
+
+            }
+        });
+    }
+
+    @OnClick(R2.id.tv_sure)
+    public void onViewClicked() {
+
+        if (mOldObj == null) {
+            ToastUtil.get().showToast(this, "请选择一个部门");
+            return;
         }
+
+        EventBus.getDefault().post(mOldObj);
+        finishSelf();
     }
 }

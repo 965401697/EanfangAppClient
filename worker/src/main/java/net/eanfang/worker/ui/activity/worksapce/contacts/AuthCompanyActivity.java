@@ -287,6 +287,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             etLegalPersion.setEnabled(false);
             llCompanyScale.setEnabled(false);
             etPhone.setEnabled(false);
+            etDetailOfficeAddress.setEnabled(false);
             etDesc.setEnabled(false);
         }
         if (byNetBean != null) {

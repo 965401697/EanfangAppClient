@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,18 +15,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="30dp">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+
+            <com.eanfang.witget.MyGridView
+                android:id="@+id/grid_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:gravity="start"
+                android:layout_height="match_parent"
+                android:background="@color/white"
                 android:listSelector="@android:color/transparent"
-                android:numColumns="4"
-                android:padding="14dp" />
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="@dimen/dimen_20"
+                android:numColumns="5"
+                android:paddingBottom="@dimen/dimen_40"
+                android:paddingLeft="@dimen/dimen_36"
+                android:paddingRight="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_40"
+                android:verticalSpacing="10dp" />
 
 
             <RelativeLayout
@@ -35,6 +41,12 @@
                 android:background="@color/white"
                 android:clickable="true">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/content_bg" />
+
                 <TextView
                     android:id="@+id/group_member_size"
                     android:layout_width="wrap_content"
@@ -42,15 +54,24 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="14dp"
                     android:text="@string/all_group_member"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
 
             </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/ll_group_port"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="@dimen/dimen_126"
+                android:layout_marginTop="@dimen/dimen_14"
                 android:background="@color/white"
                 android:orientation="horizontal">
 
@@ -63,24 +84,39 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="@string/group_portrait"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/group_header"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    fresco:placeholderImage="@mipmap/ic_launcher" />
+                    android:layout_width="@dimen/dimen_80"
+                    android:layout_height="@dimen/dimen_80"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    fresco:placeholderImage="@mipmap/ic_header"
+                    fresco:roundAsCircle="true" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
 
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
             <LinearLayout
                 android:id="@+id/ll_group_name"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_90"
                 android:background="@color/white"
                 android:orientation="horizontal">
 
@@ -96,7 +132,8 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/group_name"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
                 <TextView
                     android:id="@+id/group_name"
@@ -105,22 +142,35 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginRight="@dimen/dimen_24"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:gravity="right"
                     android:maxLines="1"
+                    android:text=" "
                     android:textColor="#999"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textSize_13" />
 
-
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:id="@+id/ll_group_qr"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_90"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <TextView
@@ -132,7 +182,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="@string/group_qrt"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -140,48 +191,78 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center"
-                    fresco:placeholderImage="@mipmap/ic_personal_qrcode" />
+                    android:layout_marginRight="@dimen/dimen_24"
+                    fresco:placeholderImage="@mipmap/ic_group_code" />
 
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:id="@+id/group_announcement"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_128"
                 android:background="@color/white"
                 android:clickable="true"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="0.5"
-                    android:text="@string/group_announcement"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/group_notice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginTop="10dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="right"
-                    android:text="赶快去设置群公告"
-                    android:textColor="#999"
-                    android:textSize="14sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:paddingTop="@dimen/dimen_24"
+                        android:text="@string/group_announcement"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/group_notice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/dimen_26"
+                        android:layout_marginLeft="16dp"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="赶快去设置群公告"
+                        android:textColor="#999"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:id="@+id/group_transfer"
@@ -201,9 +282,22 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="@string/group_transfer"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:id="@+id/group_shutup_mber"
@@ -223,10 +317,23 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="成员禁言"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:id="@+id/ll_shut_up"
@@ -247,51 +354,30 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/group_shutup"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
-                <TextView
-                    android:id="@+id/group_shutup"
-                    android:layout_width="0dp"
+                <com.eanfang.witget.SwitchButton
+                    android:id="@+id/sb_group_shutup"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:gravity="right"
-                    android:maxLines="1"
-                    android:text="开启禁言"
-                    android:textColor="#999"
-                    android:textSize="14sp" />
+                    android:layout_marginRight="@dimen/dimen_34"
+                    app:sb_background="@color/background"
+                    app:sb_button_color="@color/color_white"
+                    app:sb_checked_color="#32cd32"
+                    app:sb_checkline_color="@color/white"
+                    app:sb_uncheckcircle_color="#32cd32" />
 
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/group_clean"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@color/white"
-                android:clickable="true"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/clean_message"
-                    android:textSize="16sp" />
-
-
-            </LinearLayout>
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -310,16 +396,28 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="@string/set_top"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/sw_group_top"
+                <com.eanfang.witget.SwitchButton
+                    android:id="@+id/sb_group_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="置顶群组" />
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    app:sb_background="@color/background"
+                    app:sb_button_color="@color/color_white"
+                    app:sb_checked_color="#32cd32"
+                    app:sb_checkline_color="@color/white"
+                    app:sb_uncheckcircle_color="#32cd32" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -337,27 +435,71 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="@string/message_notice"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
 
-                <TextView
-                    android:id="@+id/sw_group_notfaction"
+
+                <com.eanfang.witget.SwitchButton
+                    android:id="@+id/sb_group_notfaction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="开启免打扰" />
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    app:sb_background="@color/background"
+                    app:sb_button_color="@color/color_white"
+                    app:sb_checked_color="#32cd32"
+                    app:sb_checkline_color="@color/white"
+                    app:sb_uncheckcircle_color="#32cd32" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/group_clean"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="343dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/clean_message"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+
             </LinearLayout>
 
             <Button
                 android:id="@+id/group_quit"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginRight="14dp"
-                android:layout_marginTop="30dp"
-                android:background="@android:color/holo_red_light"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="#ffff5d3d"
                 android:text="@string/quit_group"
-                android:textColor="#FFF"
-                android:textSize="16sp" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14" />
 
         </LinearLayout>
     </ScrollView>

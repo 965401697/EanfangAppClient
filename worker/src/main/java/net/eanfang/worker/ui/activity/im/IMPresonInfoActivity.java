@@ -47,7 +47,6 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         mUserId = getIntent().getStringExtra(EanfangConst.RONG_YUN_ID);
         mTitle = getIntent().getStringExtra("title");
-
         setTitle(mTitle);
         setLeftBack();
         initData();
@@ -61,7 +60,7 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
                     ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
                     tvName.setText(bean.getNickName());
                     tvPhone.setText(bean.getMobile());
-
+                    setTitle(bean.getNickName());
                     UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
                 }));

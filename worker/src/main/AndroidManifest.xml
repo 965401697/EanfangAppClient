@@ -336,6 +336,20 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
+
+        <!--管理员设置-->
+        <activity android:name=".ui.activity.worksapce.contacts.AdministratorSetActivity" />
+        <!--创建部门-->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatSectionActivity" />
+        <!--添加员工-->
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffActivity" />
+        <!--添加员工下一步-->
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffNextActivity" />
+        <!--权限设置-->
+        <activity android:name=".ui.activity.worksapce.contacts.PermissionManagerActivity" />
+        <!--角色分配-->
+        <activity android:name=".ui.activity.worksapce.contacts.AolltRoleActivity"></activity>
+
         <activity android:name=".ui.activity.worksapce.repair.SolveModeActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairAppointTimeActivity" />
         <activity android:name=".ui.activity.worksapce.repair.DeviceParameterActivity"></activity>

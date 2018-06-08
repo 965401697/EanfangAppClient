@@ -27,21 +27,34 @@ public class OrgThreeLevelItem extends TreeItem<SectionBean.ChildrenBean> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder) {
-        if (data.getCountStaff() == 0) {
-            holder.setText(R.id.tv_company_name, data.getOrgName());
-        } else {
-            holder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
-        }
 
-        holder.getView(R.id.tv_unit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
-                intent.putExtra("flag", 3);
-                intent.putExtra("bean", data);
-                holder.getView(R.id.tv_unit).getContext().startActivity(intent);
+
+        if (data.getFlag() == 1) {
+            holder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+            if (data.getCountStaff() == 0) {
+                holder.setText(R.id.tv_company_name, data.getOrgName());
+            } else {
+                holder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
             }
-        });
+        } else {
+            if (data.getCountStaff() == 0) {
+                holder.setText(R.id.tv_company_name, data.getOrgName());
+                holder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+            } else {
+                holder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
+                holder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
+            }
+
+            holder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
+                    intent.putExtra("flag", 3);
+                    intent.putExtra("bean", data);
+                    holder.getView(R.id.tv_unit).getContext().startActivity(intent);
+                }
+            });
+        }
 
     }
 }

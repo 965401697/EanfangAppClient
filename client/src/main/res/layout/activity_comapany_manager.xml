@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dimen_20"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/dimen_20"
             android:drawableLeft="@mipmap/ic_client_prefect_info"
             android:drawablePadding="@dimen/dimen_22"
             android:gravity="center_vertical"
@@ -30,9 +30,9 @@
         <ImageView
             android:layout_width="@dimen/dimen_12"
             android:layout_height="@dimen/dimen_24"
-            android:layout_marginRight="@dimen/dimen_40"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_40"
             android:src="@mipmap/ic_icon_right" />
     </RelativeLayout>
 
@@ -82,8 +82,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_admin"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="管理员设置"
                 android:textColor="@color/color_client_neworder"
@@ -92,9 +94,9 @@
             <ImageView
                 android:layout_width="@dimen/dimen_12"
                 android:layout_height="@dimen/dimen_24"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:src="@mipmap/ic_icon_right" />
         </RelativeLayout>
 
@@ -108,8 +110,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_section"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="创建部门"
                 android:textColor="@color/color_client_neworder"
@@ -118,9 +122,9 @@
             <ImageView
                 android:layout_width="@dimen/dimen_12"
                 android:layout_height="@dimen/dimen_24"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:src="@mipmap/ic_icon_right" />
         </RelativeLayout>
 
@@ -134,8 +138,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_add_preson"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="添加人员"
                 android:textColor="@color/color_client_neworder"
@@ -144,9 +150,9 @@
             <ImageView
                 android:layout_width="@dimen/dimen_12"
                 android:layout_height="@dimen/dimen_24"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:src="@mipmap/ic_icon_right" />
         </RelativeLayout>
 
@@ -160,8 +166,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_presion"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="权限管理"
                 android:textColor="@color/color_client_neworder"
@@ -170,9 +178,9 @@
             <ImageView
                 android:layout_width="@dimen/dimen_12"
                 android:layout_height="@dimen/dimen_24"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:src="@mipmap/ic_icon_right" />
         </RelativeLayout>
 
@@ -193,8 +201,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="12dp"
                 android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:drawableLeft="@mipmap/ic_cooperation"
+                android:drawablePadding="@dimen/dimen_22"
                 android:gravity="center_vertical"
                 android:text="合作关系"
                 android:textColor="@color/color_client_neworder"
@@ -203,9 +213,9 @@
             <ImageView
                 android:layout_width="@dimen/dimen_12"
                 android:layout_height="@dimen/dimen_24"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:src="@mipmap/ic_icon_right" />
         </RelativeLayout>
 
