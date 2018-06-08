@@ -32,8 +32,8 @@ public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEn
         String bugThree = Config.get().getBusinessNameByCode(item.getFailureEntity().getBusinessThreeCode(), 3);
 
         // 故障简述
-        if (item.getFailureEntity().getSketch() != null){
-            helper.setText(R.id.tv_name, "故障" + (helper.getAdapterPosition() + 1) + "   " + item.getFailureEntity().getSketch());
+        if (item.getFailureEntity().getSketch() != null) {
+            helper.setText(R.id.tv_name, "故障" + (helper.getAdapterPosition() + 1) + "." + item.getFailureEntity().getSketch());
         }
 
         helper.setText(R.id.tv_model, bugThree);

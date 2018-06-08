@@ -312,6 +312,8 @@
                     android:textColor="@color/color_bottom_pressed"
                     android:textSize="@dimen/textSize_15" />
 
+                <View style="@style/style_common_line_gray" />
+
                 <LinearLayout
                     android:id="@+id/ll_faultInfo"
                     android:layout_width="match_parent"
@@ -319,6 +321,50 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen_30"
                     android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="@dimen/dimen_120"
+                        android:layout_height="@dimen/dimen_50"
+                        android:background="@drawable/bg_client_camera_text_back_pressed"
+                        android:gravity="center"
+                        android:text="故障简述"
+                        android:textColor="@color/color_white"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="前往故障库"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dimen_16"
+                        android:src="@mipmap/ic_icon_right" />
+
+                    <!--<EditText-->
+                    <!--android:id="@+id/et_faultDescripte"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_36"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@null"-->
+                    <!--android:textColor="@color/color_client_neworder"-->
+                    <!--android:textSize="@dimen/textSize_13" />-->
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -337,35 +383,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13"
                         android:visibility="visible" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:gravity="right"
-                        android:text="前往故障库"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_16"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_icon_right" />
-
-                    <!--<EditText-->
-                    <!--android:id="@+id/et_faultDescripte"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="@dimen/dimen_36"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@null"-->
-                    <!--android:textColor="@color/color_client_neworder"-->
-                    <!--android:textSize="@dimen/textSize_13" />-->
                 </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -469,7 +487,7 @@
                     android:layout_margin="@dimen/dimen_30"
                     android:text="@string/text_fault_description"
                     android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_15" />
+                    android:textSize="@dimen/textSize_13" />
 
                 <EditText
                     android:id="@+id/ev_faultDescripte"

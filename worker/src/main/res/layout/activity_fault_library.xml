@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.worker.ui.activity.worksapce.repair.FaultLibraryActivity">
+
+    <include layout="@layout/header" />
+
+    <include layout="@layout/layout_search" />
+
+    <com.eanfang.swipefresh.SwipyRefreshLayout
+        android:id="@+id/swiprefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        my:direction="both">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_faultList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.eanfang.swipefresh.SwipyRefreshLayout>
+</LinearLayout>
