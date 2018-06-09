@@ -52,8 +52,7 @@ public class SelectContactActivity extends BaseActivity {
         findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-                Intent intent = new Intent(SelectContactActivity.this, OrganizationContactActivity.class);
+                Intent intent = new Intent(SelectContactActivity.this, SelectOrganizationContactActivity.class);
                 startActivity(intent);
             }
         });

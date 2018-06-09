@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eanfang.ui.activity.OrganizationContactActivity">
+    tools:context="com.eanfang.ui.activity.SelectOrganizationContactActivity">
 
     <include layout="@layout/view_title_bar" />
 

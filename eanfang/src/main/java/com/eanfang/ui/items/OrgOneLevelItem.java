@@ -1,5 +1,6 @@
 package com.eanfang.ui.items;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,8 +15,10 @@ import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
+import com.eanfang.ui.activity.OrganizationLevelActivity;
 import com.eanfang.util.V;
 
 import java.util.List;
@@ -83,7 +86,10 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
             viewHolder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+//                    Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
+//                    intent.putExtra("flag", 1);
+//                    intent.putExtra("bean", data);
+//                    viewHolder.getView(R.id.tv_unit).getContext().startActivity(intent);
                 }
             });
         }

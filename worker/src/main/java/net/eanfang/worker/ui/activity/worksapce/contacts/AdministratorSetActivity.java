@@ -13,7 +13,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.OrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
@@ -70,8 +70,6 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
 
                                 logout();
 
-                                // TODO: 2018/6/1  重登陆
-
                             }));
 
                 }).showDialog();
@@ -79,8 +77,9 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
 
                 break;
             case R.id.ll_transfer:
+                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
 //                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-                Intent intent = new Intent(this, OrganizationContactActivity.class);
+//                intent.putExtra("isRadio", "isRadio");//是否是单选
                 Uri uri = Uri.parse("worker://yeah!");
 //                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 intent.setData(uri);

@@ -14,8 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
-import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.OrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -24,8 +23,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +84,7 @@ public class CreatSectionActivity extends BaseClientActivity {
             case R.id.ll_section:
 
 //                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-                Intent intent = new Intent(this, OrganizationContactActivity.class);
+                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
                 Uri uri = Uri.parse("worker://");
 //                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 intent.setData(uri);

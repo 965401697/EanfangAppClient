@@ -4,19 +4,19 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
+import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.ui.items.OrgSelectGroupItem;
+import com.eanfang.ui.items.OrgSelectGroupMultipleItem;
+import com.eanfang.ui.items.OrgSelectGroupSingleItem;
 import com.eanfang.ui.items.OrgSelectItem;
 import com.eanfang.util.ToastUtil;
 
@@ -39,12 +39,10 @@ public class OrganizationLevelActivity extends BaseActivity {
     TextView tvSure;
 
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
-
-
-    private ArrayList<SectionBean.ChildrenBean> mThreeDataList;
-    private ArrayList<SectionBean> mSecondDataList;
     private List<TemplateBean> mTemplateBeanList = new ArrayList<>();
     private TreeRecyclerAdapter mTreeRecyclerAdapter;
+
+    private int mFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +50,8 @@ public class OrganizationLevelActivity extends BaseActivity {
         setContentView(R.layout.activity_organization_level);
         ButterKnife.bind(this);
         supprotToolbar();
-        int flag = getIntent().getIntExtra("flag", 0);
-        if (flag == 2) {
+        mFlag = getIntent().getIntExtra("flag", 0);
+        if (mFlag == 2) {
 //            mSecondDataList = (ArrayList<SectionBean>) getIntent().getSerializableExtra("list");
             SectionBean sectionBean = (SectionBean) getIntent().getSerializableExtra("bean");
             setTitle(sectionBean.getOrgName());
@@ -81,7 +79,7 @@ public class OrganizationLevelActivity extends BaseActivity {
 //            }
 
 
-        } else if (flag == 3) {
+        } else if (mFlag == 3) {
             SectionBean.ChildrenBean childrenBean = (SectionBean.ChildrenBean) getIntent().getSerializableExtra("bean");
             setTitle(childrenBean.getOrgName());
 //            for (SectionBean.ChildrenBean bean : mThreeDataList) {
@@ -94,6 +92,7 @@ public class OrganizationLevelActivity extends BaseActivity {
                 preson.setName(staffBean.getAccountEntity().getNickName());
                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                 preson.setMobile(staffBean.getAccountEntity().getMobile());
+                preson.setDepartmentId(staffBean.getDepartmentId());
                 staffBeanList.add(preson);
             }
             templateBean.setPresons(staffBeanList);
@@ -110,27 +109,38 @@ public class OrganizationLevelActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mTreeRecyclerAdapter = new TreeRecyclerAdapter();
-        mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupItem.class, null));
+        if (mFlag != 0) {//多选
+            mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupSingleItem.class, null));
+        } else {//单选
+            mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null));
+        }
         recyclerView.setAdapter(mTreeRecyclerAdapter);
     }
 
     @OnClick(R2.id.tv_sure)
     public void onViewClicked() {
-
+        List<TreeItem> treeItems = new ArrayList<>();
         List<TreeItem> list = mTreeRecyclerAdapter.getDatas();
         for (TreeItem tree : list) {
-            if (tree instanceof OrgSelectItem) {
-                TemplateBean.Preson preson = ((OrgSelectItem) tree).getData();
-                if (preson.isChecked()) {
-                    presonList.add(preson);
-                }
+
+            TreeItemGroup parentItem = tree.getParentItem();
+            if (parentItem instanceof OrgSelectGroupMultipleItem) {
+                treeItems = ((OrgSelectGroupMultipleItem) parentItem).getSelectItems();
+            } else if (parentItem instanceof OrgSelectGroupSingleItem) {
+                treeItems = ((OrgSelectGroupSingleItem) parentItem).getSelectItems();
             }
+        }
+
+        for (TreeItem t : treeItems) {
+            TemplateBean.Preson preson = ((OrgSelectItem) t).getData();
+            presonList.add(preson);
         }
 
         if (presonList.size() == 0) {
             ToastUtil.get().showToast(this, "你还没有选择人员");
             return;
         }
+        // TODO: 2018/6/9 多选可能还要处理业务
         EventBus.getDefault().post(presonList);
         endTransaction(true);
     }

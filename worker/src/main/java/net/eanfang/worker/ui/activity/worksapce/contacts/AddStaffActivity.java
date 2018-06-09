@@ -43,6 +43,7 @@ public class AddStaffActivity extends BaseWorkerActivity {
         setTitle("添加员工");
         setLeftBack();
         initViews();
+        startTransaction(true);
     }
 
     private void initViews() {

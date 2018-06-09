@@ -80,6 +80,7 @@ public class AolltRoleActivity extends BaseClientActivity {
                 if (oldPositon == -1) {
                     oldPositon = position;
                     bean.setChecked(true);
+                    adapter.notifyDataSetChanged();
                     return;
                 }
 
@@ -92,7 +93,7 @@ public class AolltRoleActivity extends BaseClientActivity {
 
                     bean.setChecked(true);
                 }
-                adapter.notifyItemChanged(oldPositon);
+                adapter.notifyDataSetChanged();
 
             }
         });
@@ -111,9 +112,9 @@ public class AolltRoleActivity extends BaseClientActivity {
         @Override
         protected void convert(BaseViewHolder helper, RoleBean item) {
 
-            if(item.isChecked()){
+            if (item.isChecked()) {
                 helper.getView(R.id.iv_checked).setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 helper.getView(R.id.iv_checked).setVisibility(View.INVISIBLE);
             }
 

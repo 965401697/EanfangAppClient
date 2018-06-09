@@ -109,12 +109,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--组织结构-->
-        <activity android:name=".ui.activity.OrganizationContactActivity">
-
-        </activity>
-        <!--二级折叠选择-->
-        <activity android:name=".ui.activity.OrganizationLevelActivity"></activity>
+        <!-- 组织结构 -->
+        <activity android:name=".ui.activity.SelectOrganizationContactActivity"></activity>
+        <!-- 二级折叠选择 -->
+        <activity android:name=".ui.activity.OrganizationLevelActivity" />
     </application>
 
 </manifest>

@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrganizationContactActivity extends BaseActivity {
+public class SelectOrganizationContactActivity extends BaseActivity {
 
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
@@ -54,7 +54,6 @@ public class OrganizationContactActivity extends BaseActivity {
         setTitle("选择组织联系人");
         startTransaction(true);
         isRadio = getIntent().getStringExtra("isRadio");
-
         initViews();
     }
 
@@ -73,7 +72,7 @@ public class OrganizationContactActivity extends BaseActivity {
 
                         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
                                 .params("companyId", organizationBean.getCompanyId())
-                                .execute(new EanfangCallback<SectionBean>(OrganizationContactActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
+                                .execute(new EanfangCallback<SectionBean>(SelectOrganizationContactActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
 
                                     organizationBean.setSectionBeanList(sectionBeanList);
                                     i++;

@@ -20,10 +20,19 @@ public class TemplateBean extends BaseItemData implements Serializable {
 
     public static class Preson extends BaseItemData implements Serializable {
         private String id;
+        private String departmentId;
         private String protraivat;
         private String name;
         private String mobile;
         private boolean isChecked;
+
+        public String getDepartmentId() {
+            return departmentId;
+        }
+
+        public void setDepartmentId(String departmentId) {
+            this.departmentId = departmentId;
+        }
 
         public String getMobile() {
             return mobile;

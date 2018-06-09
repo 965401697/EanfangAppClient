@@ -3,7 +3,6 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,19 +12,14 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.OrganizationBean;
-import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.OrganizationContactActivity;
-import com.eanfang.ui.items.OrgOneLevelItem;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.LoginActivity;
-import net.eanfang.client.ui.activity.im.AddFriendActivity;
-import net.eanfang.client.ui.activity.my.SettingActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -76,8 +70,6 @@ public class AdministratorSetActivity extends BaseClientActivity {
 
                                 logout();
 
-                                // TODO: 2018/6/1  重登陆
-
                             }));
 
                 }).showDialog();
@@ -85,7 +77,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
 
                 break;
             case R.id.ll_transfer:
-                Intent intent = new Intent(this, OrganizationContactActivity.class);
+                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
 //                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
 //                intent.putExtra("isRadio", "isRadio");//是否是单选
                 Uri uri = Uri.parse("worker://");

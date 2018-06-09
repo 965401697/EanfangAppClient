@@ -333,5 +333,11 @@ public interface NewApiService {
      * post
      */
     String ADD_STAFF = BASE_URL + "/yaf_sys/staff/insert";
+    /**
+     * 添加员工
+     * post
+     */
+    String ADD_STAFF_ROLE = BASE_URL + "/yaf_sys/staff/grant";
+
 
 }
