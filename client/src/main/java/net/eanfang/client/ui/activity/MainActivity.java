@@ -107,12 +107,11 @@ public class MainActivity extends BaseClientActivity {
     }
 
     private void initUpdate() {
-        int isUpdate = Var.get("MainActivity.initUpdate").getVar();
-        if (isUpdate <= 0) {
+        if (!EanfangApplication.isUpdated) {
             //app更新
             UpdateAppManager.update(this, BuildConfig.TYPE);
+            EanfangApplication.isUpdated = true;
         }
-        Var.get("MainActivity.initUpdate").setVar(1);
     }
 
 
@@ -193,6 +192,12 @@ public class MainActivity extends BaseClientActivity {
                 RongIM.getInstance().logout();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
+                EanfangApplication.get().closeAll();
+                EanfangApplication.isUpdated = false;
+//                android.os.Process.killProcess(android.os.Process.myPid());
+
+//                System.exit(0);//正常退出App
+
             }
             return true;
         }

@@ -28,14 +28,16 @@ import okhttp3.OkHttpClient;
 
 /**
  * @author Mr.hou
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
 public class EanfangApplication extends CustomeApplication {
 
     public static final String TAG = EanfangApplication.class.getSimpleName();
     private static EanfangApplication mEanfangApplication;
+    public static boolean isUpdated = false;
     private OkGo http;
+
 
     public static EanfangApplication getApplication() {
         return mEanfangApplication;
@@ -59,7 +61,7 @@ public class EanfangApplication extends CustomeApplication {
 //        mManager.init(this);
         CameraApplication.init(this, true);
         //初始换tbs 不需要 callback 的可以传入 null
-        QbSdk.initX5Environment(getApplicationContext(),null);
+        QbSdk.initX5Environment(getApplicationContext(), null);
     }
 
 

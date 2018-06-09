@@ -34,7 +34,7 @@ import java.io.IOException;
  * CustomeApplication
  *
  * @author hou
- *         Created at 2016/12/1 13:58
+ * Created at 2016/12/1 13:58
  * @desc 程序入口
  */
 
@@ -188,6 +188,22 @@ public abstract class CustomeApplication extends MultiDexApplication {
                         } catch (Exception e) {
                             LogUtil.e("close cathc", e.getMessage());
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public void closeAll() {
+        for (String str : mJIBaseArrayMap.keySet()) {
+            Object object = mJIBaseArrayMap.get(str);
+            if (object instanceof IBase) {
+                IBase base = (IBase) object;
+                if (!base.isFinishing()) {
+                    try {
+                        base.finishSelf();
+                    } catch (Exception e) {
+                        LogUtil.e("close cathc", e.getMessage());
                     }
                 }
             }
