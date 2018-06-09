@@ -1,18 +1,15 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
 import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -42,20 +39,14 @@ public class SignInActivity extends BaseWorkerActivity {
 
     public static final String TAG = SignInActivity.class.getSimpleName();
 
-    @BindView(R.id.tv_right)
-    TextView tvRight;
-    @BindView(R.id.iv_title)
-    ImageView ivTitle;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.mapView)
     MapView mapView;
     @BindView(R.id.tv_address)
     TextView tvAddress;
-    @BindView(R.id.btn_sign_in)
-    Button btnSignIn;
+    @BindView(R.id.rl_sign_in)
+    RelativeLayout rlSignIn;
     private LatLng latLng2;
     private float distance = -1;
     private Long orderId;
@@ -73,23 +64,21 @@ public class SignInActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-        supprotToolbar();
-        setTitle("选择地址");
-        mapView.onCreate(savedInstanceState);
-        initMap();
-
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
+        mapView.onCreate(savedInstanceState);
+        initView();
+        initMap();
+    }
 
-        tvTime.setText(GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
-//        LocationUtil.get().addListener(this, TAG);
-//        LocationUtil.get().startOnce();
+    private void initView() {
+        setTitle("选择地址");
+        setLeftBack();
+        tvTime.setText(GetDateUtils.dateToDateTimeStringForChinse(GetDateUtils.getDateNow()));
         String latitude = getIntent().getStringExtra("latitude");
         String longitude = getIntent().getStringExtra("longitude");
         orderId = getIntent().getLongExtra("orderId", 0);
         latLng2 = new LatLng(NumberUtil.parseDouble(latitude, 0), NumberUtil.parseDouble(longitude, 0));
-        btnSignIn.setOnClickListener(v -> onViewClicked());
-
-
+        rlSignIn.setOnClickListener(v -> onViewClicked());
     }
 
     private void initMap() {
@@ -192,7 +181,7 @@ public class SignInActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("签到成功");
-                        btnSignIn.setEnabled(false);
+                        rlSignIn.setEnabled(false);
                         finish();
                     });
                 }));

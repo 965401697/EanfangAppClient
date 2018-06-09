@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -73,8 +74,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //订单金额
         if (item.getPayLogEntity() != null) {
             if (item.getPayLogEntity().getPayPrice() != null) {
-//                helper.setText(R.id.tv_count_money, item.getPayLogEntity().getPayPrice());
+                helper.getView(R.id.ll_orderOrice).setVisibility(View.VISIBLE);
+                helper.setText(R.id.tv_count_money, item.getPayLogEntity().getPayPrice() + "");
             }
+        } else {
+            helper.getView(R.id.ll_orderOrice).setVisibility(View.GONE);
         }
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         if (item.getStatus() == 2) {

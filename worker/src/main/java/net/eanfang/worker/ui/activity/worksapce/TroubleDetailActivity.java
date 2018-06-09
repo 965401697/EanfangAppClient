@@ -28,6 +28,7 @@ import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.adapter.TroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -42,7 +43,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/24  10:52
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话未解决
  */
 
 public class TroubleDetailActivity extends BaseWorkerActivity {
@@ -98,7 +99,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private ImageView iv_left;
 
 
-    private TroubleDetailAdapter quotationDetailAdapter;
+    private FillTroubleDetailAdapter quotationDetailAdapter;
     private Long id;
     /**
      * 电视墙/操作台正面全貌 (3张)
@@ -231,7 +232,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void initAdapter(List<BughandleDetailEntity> mDataList) {
-        quotationDetailAdapter = new TroubleDetailAdapter(R.layout.item_quotation_detail, mDataList);
+        quotationDetailAdapter = new FillTroubleDetailAdapter(R.layout.layout_trouble_detail, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rv_trouble.setLayoutManager(new LinearLayoutManager(this));
