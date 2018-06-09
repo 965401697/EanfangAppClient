@@ -317,10 +317,10 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
                 quotationDetailAdapter.notifyDataSetChanged();
                 break;
             case 10003:
-                if (data.getSerializableExtra("beans") == null) {
+                if (data.getSerializableExtra("bean") == null) {
                     return;
                 }
-                RepairFailureEntity bugBean = (RepairFailureEntity) data.getSerializableExtra("beans");
+                RepairFailureEntity bugBean = (RepairFailureEntity) data.getSerializableExtra("bean");
                 BughandleDetailEntity bughandleDetailEntity = new BughandleDetailEntity();
                 bughandleDetailEntity.setBusRepairFailureId(bugBean.getId());
                 bughandleDetailEntity.setFailureEntity(bugBean);

@@ -6,7 +6,7 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/view_title_bar" />
+    <include layout="@layout/header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -87,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:background="@null"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
 
             <View style="@style/style_common_line_gray" />

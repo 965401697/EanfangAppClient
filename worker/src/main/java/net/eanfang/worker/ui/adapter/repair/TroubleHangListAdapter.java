@@ -1,22 +1,21 @@
-package net.eanfang.client.ui.adapter;
+package net.eanfang.worker.ui.adapter.repair;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.TransferLogEntity;
 
-import net.eanfang.client.R;
+import net.eanfang.worker.R;
 
 import java.util.List;
 
 /**
  * 描述：
  * 转单
+ *
  * @author Guanluocang
- * @date on 2018/5/22$  15:29$
+ * @date on 2018/6/9$  16:43$
  */
 public class TroubleHangListAdapter extends BaseQuickAdapter<TransferLogEntity, BaseViewHolder> {
     public TroubleHangListAdapter(int layoutResId, List data) {

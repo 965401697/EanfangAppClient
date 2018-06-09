@@ -31,12 +31,14 @@ import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
@@ -62,6 +64,8 @@ import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -139,12 +143,12 @@ public class MainActivity extends BaseActivity {
 
 
     private void initUpdate() {
-        int isUpdate = Var.get("MainActivity.initUpdate").getVar();
-        if (isUpdate <= 0) {
+
+        if (!EanfangApplication.isUpdated) {
             //app更新
             UpdateAppManager.update(this, BuildConfig.TYPE);
+            EanfangApplication.isUpdated = true;
         }
-        Var.get("MainActivity.initUpdate").setVar(1);
     }
 
 
@@ -212,6 +216,11 @@ public class MainActivity extends BaseActivity {
                 RongIM.getInstance().logout();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
+
+                EanfangApplication.get().closeAll();
+                EanfangApplication.isUpdated = false;
+                //android.os.Process.killProcess(android.os.Process.myPid());
+//                System.exit(0);//正常退出App
             }
             return true;
         }

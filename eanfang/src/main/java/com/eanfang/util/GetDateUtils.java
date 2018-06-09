@@ -243,6 +243,17 @@ public class GetDateUtils {
     }
 
     /**
+     * 将日期转换成 （yyyy-MM-dd hh:mm:ss）
+     *
+     * @param date
+     * @return
+     */
+    public static String dateToDateTimeStringForChinse(Date date) {
+        return dateToFormatString(date, "yyyy年MM月dd日 HH:mm:ss");
+    }
+
+
+    /**
      * 获取当前时间
      *
      * @return

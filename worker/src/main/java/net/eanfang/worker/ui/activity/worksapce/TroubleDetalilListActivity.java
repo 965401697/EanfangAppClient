@@ -93,6 +93,9 @@ public class TroubleDetalilListActivity extends BaseDialog {
     }
 
     private void jump(int position) {
+        /**
+         * 获取：是否电话解决（0：未解决，1：已解决）
+         */
         if (isPhoneSolve == 0) {
             intent = new Intent(mContext, TroubleDetailActivity.class);
         } else {

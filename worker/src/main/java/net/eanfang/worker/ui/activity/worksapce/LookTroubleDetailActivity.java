@@ -6,7 +6,8 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,7 +21,6 @@ import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -37,7 +37,6 @@ import net.eanfang.worker.ui.widget.MateraInfoView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,10 +47,10 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/24  11:05
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 电话未解决 故障明细
  */
 
-public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements View.OnClickListener */ {
+public class LookTroubleDetailActivity extends BaseWorkerActivity {
     public static final String TAG = LookTroubleDetailActivity.class.getSimpleName();
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
@@ -67,57 +66,81 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 10;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_5 = 11;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_6 = 12;
-    @BindView(R.id.tv_repair_misinformation)
-    TextView tvRepairMisinformation;
-
-    private TextView tv_trouble_device;
-    private TextView tv_brand_model;
-    private TextView tv_device_no;
-    private TextView tv_device_location;
-    private TextView tv_add;
-    private RecyclerView rcy_parameter;
-    private TextView et_trouble_desc;
-    private TextView et_trouble_point;
-    private TextView et_trouble_reason;
-    private TextView et_trouble_deal;
-    private TextView tv_use_goods;//耗用材料
+    // 故障描述
+    @BindView(R.id.tv_trouble_desc)
+    TextView tvTroubleDesc;
+    // 设备名称
+    @BindView(R.id.tv_trouble_title)
+    TextView tvTroubleTitle;
+    // 设备编号
+    @BindView(R.id.tv_device_no)
+    TextView tvDeviceNo;
+    // 设备位置
+    @BindView(R.id.tv_device_location)
+    TextView tvDeviceLocation;
+    //设备参数
+    @BindView(R.id.rl_add_device_param)
+    RelativeLayout rlAddDeviceParam;
+    // 原因判断
+    @BindView(R.id.tv_trouble_reason)
+    TextView tvTroubleReason;
+    //过程方法
+    @BindView(R.id.tv_trouble_point)
+    TextView tvTroublePoint;
+    // 处理措施
+    @BindView(R.id.tv_trouble_deal)
+    TextView tvTroubleDeal;
+    // 使用建议
+    @BindView(R.id.tv_trouble_useAdvace)
+    TextView tvTroubleUseAdvace;
+    @BindView(R.id.rg_yes)
+    RadioButton rgYes;
+    @BindView(R.id.rg_no)
+    RadioButton rgNo;
+    @BindView(R.id.rg_misreport)
+    RadioGroup rgMisreport;
     /**
      * 故障表象 （3张）
      */
-    private BGASortableNinePhotoLayout snpl_moment_add_photos;
+    @BindView(R.id.snpl_moment_add_photos)
+    BGASortableNinePhotoLayout snplMomentAddPhotos;
     /**
      * 工具及蓝布 （3张）
      */
-    private BGASortableNinePhotoLayout snpl_monitor_add_photos;
+    @BindView(R.id.snpl_monitor_add_photos)
+    BGASortableNinePhotoLayout snplMonitorAddPhotos;
     /**
      * 故障点照片 （3张）
      */
-    private BGASortableNinePhotoLayout snpl_tools_package_add_photos;
+    @BindView(R.id.snpl_tools_package_add_photos)
+    BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
     /**
      * 处理后现场 （3张）
      */
-    private BGASortableNinePhotoLayout snpl_after_processing_locale;
+    @BindView(R.id.snpl_after_processing_locale)
+    BGASortableNinePhotoLayout snplAfterProcessingLocale;
     /**
      * 设备回装 （3张）
      */
-    private BGASortableNinePhotoLayout snpl_machine_fit_back;
+    @BindView(R.id.snpl_machine_fit_back)
+    BGASortableNinePhotoLayout snplMachineFitBack;
     /**
      * 故障恢复后表象 （3张）
      */
-    private BGASortableNinePhotoLayout snpl_failure_recover_phenomena;
+    @BindView(R.id.snpl_failure_recover_phenomena)
+    BGASortableNinePhotoLayout snplFailureRecoverPhenomena;
 
-    private TextView tv_add_consumable;
+    private TextView tv_use_goods;//耗用材料
+
+
     private RecyclerView rcy_consumable;
-    private Button btn_add_trouble;
-    private TextView tv_trouble_title;
     private List<BughandleParamEntity> mDataList;
     private List<BughandleUseDeviceEntity> mDataList_2;
     private LookParamAdapter paramAdapter;
-    //2017年7月21日
+
     /**
      * 维修结果
      */
-    private TextView tv_repair_conclusion;
     /**
      * 故障表象 （3张）
      */
@@ -130,7 +153,6 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
      * 故障点照片 （3张）
      */
     private ArrayList<String> picList3 = new ArrayList<>();
-    //2017年7月21日
     /**
      * 处理后现场 （3张）
      */
@@ -143,15 +165,12 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
      * 故障恢复后表象 （3张）
      */
     private ArrayList<String> picList6 = new ArrayList<>();
-    private int position;
     private LookMaterialAdapter materialAdapter;
     private BughandleDetailEntity bughandleDetailEntity;
-    private RelativeLayout rel_parame;
     /**
      * 2017年8月1日
      * 故障明细的id
      */
-    private Integer detailId;
     private Long id;
 
 
@@ -216,12 +235,15 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         initNinePhoto();
         initAdapter();
 
-        if (mDataList.size() != 0) {
-            rcy_parameter.setAdapter(paramAdapter);
-        } else {
-            rcy_parameter.setVisibility(View.GONE);
-            rel_parame.setVisibility(View.GONE);
-        }
+        /**
+         * 设备参数
+         * */
+//        if (mDataList.size() != 0) {
+//            rcy_parameter.setAdapter(paramAdapter);
+//        } else {
+//            rcy_parameter.setVisibility(View.GONE);
+//        }
+
         if (mDataList_2.size() != 0) {
             rcy_consumable.setAdapter(materialAdapter);
         } else {
@@ -236,65 +258,45 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
                 String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
                 String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
                 String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
-                tv_trouble_title.setText(bugOne + "-" + bugTwo + "-" + bugThree);
+                tvTroubleTitle.setText(bugThree);
             } else {
-                tv_trouble_title.setText("");
+                tvTroubleTitle.setText("");
             }
 
-            tv_trouble_device.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceName()).orElse(""));
+            tvDeviceNo.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
 
-            tv_brand_model.setText(Optional.ofNullable(Config.get().getModelNameByCode(bughandleDetailEntity.getFailureEntity().getModelCode(), 2)).orElse(""));
-
-            tv_device_no.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
-
-            tv_device_location.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
-
-            et_trouble_desc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
+            tvDeviceLocation.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
+            //故障描述
+            tvTroubleDesc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
         }
-        et_trouble_point.setText(Optional.ofNullable(bughandleDetailEntity.getCheckProcess()).orElse(""));
-        et_trouble_reason.setText(Optional.ofNullable(bughandleDetailEntity.getCause()).orElse(""));
-        et_trouble_deal.setText(Optional.ofNullable(bughandleDetailEntity.getHandle()).orElse(""));
-        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(bughandleDetailEntity.getFailureEntity().getIsMisinformation()));
-        if (bughandleDetailEntity.getStatus() != null) {
-            tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
+        tvTroublePoint.setText(Optional.ofNullable(bughandleDetailEntity.getCheckProcess()).orElse(""));
+        tvTroubleReason.setText(Optional.ofNullable(bughandleDetailEntity.getCause()).orElse(""));
+        tvTroubleDeal.setText(Optional.ofNullable(bughandleDetailEntity.getHandle()).orElse(""));
+        tvTroubleUseAdvace.setText(Optional.ofNullable(bughandleDetailEntity.getUseAdvice()).orElse(""));
+//        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(bughandleDetailEntity.getFailureEntity().getIsMisinformation()));
+        // (0：否，1：是)
+        if (bughandleDetailEntity.getFailureEntity().getIsMisinformation() == 0) {
+            rgNo.setChecked(true);
+            rgYes.setChecked(false);
+        } else {
+            rgNo.setChecked(false);
+            rgYes.setChecked(true);
+
         }
+        // TODO 维修结果
+//        if (bughandleDetailEntity.getStatus() != null) {
+//            tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
+//        }
     }
 
 
     private void initView() {
         id = getIntent().getLongExtra("id", 0);
-        rel_parame = (RelativeLayout) findViewById(R.id.rel_parame);
-        //add by hou on 2017.8.2
-        tv_use_goods = (TextView) findViewById(R.id.tv_use_goods);
-        tv_trouble_device = (TextView) findViewById(R.id.tv_trouble_device);
-        tv_brand_model = (TextView) findViewById(R.id.tv_brand_model);
-        tv_device_no = (TextView) findViewById(R.id.tv_device_no);
-        tv_device_location = (TextView) findViewById(R.id.tv_device_location);
-        tv_add = (TextView) findViewById(R.id.tv_add);
-        rcy_parameter = (RecyclerView) findViewById(R.id.rcy_parameter);
-        et_trouble_desc = (TextView) findViewById(R.id.et_trouble_desc);
-        et_trouble_point = (TextView) findViewById(R.id.et_trouble_point);
-        et_trouble_reason = (TextView) findViewById(R.id.et_trouble_reason);
-        et_trouble_deal = (TextView) findViewById(R.id.et_trouble_deal);
-        //2017年7月20日
-        //维修结论
-        tv_repair_conclusion = (TextView) findViewById(R.id.tv_repair_conclusion);
-        snpl_moment_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_moment_add_photos);
-        snpl_monitor_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_monitor_add_photos);
-        snpl_tools_package_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_tools_package_add_photos);
-        //2017年7月21日
-        snpl_after_processing_locale = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_after_processing_locale);
-        snpl_machine_fit_back = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_machine_fit_back);
-        snpl_failure_recover_phenomena = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_failure_recover_phenomena);
-        tv_add_consumable = (TextView) findViewById(R.id.tv_add_consumable);
-        rcy_consumable = (RecyclerView) findViewById(R.id.rcy_consumable);
-        btn_add_trouble = (Button) findViewById(R.id.btn_add_trouble);
-        tv_trouble_title = (TextView) findViewById(R.id.tv_trouble_title);
-        tv_add.setVisibility(View.INVISIBLE);
-        tv_add_consumable.setVisibility(View.INVISIBLE);
-        btn_add_trouble.setVisibility(View.INVISIBLE);
-        supprotToolbar();
         setTitle("故障明细");
+        setLeftBack();
+
+        tv_use_goods = (TextView) findViewById(R.id.tv_use_goods);
+        rcy_consumable = (RecyclerView) findViewById(R.id.rcy_consumable);
     }
 
     private void initAdapter() {
@@ -311,36 +313,37 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         });
 
 
+        // 耗材 TODO
         paramAdapter = new LookParamAdapter(R.layout.item_look_parm, (ArrayList) mDataList);
-        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
-        rcy_parameter.setAdapter(paramAdapter);
+//        rcy_parameter.addItemDecoration(new DividerItemDecoration(this,
+//                DividerItemDecoration.VERTICAL));
+//        rcy_parameter.setLayoutManager(new LinearLayoutManager(this));
+//        rcy_parameter.setAdapter(paramAdapter);
     }
 
     private void initNinePhoto() {
-        snpl_moment_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
-        snpl_monitor_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
-        snpl_tools_package_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
-        snpl_after_processing_locale.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
-        snpl_machine_fit_back.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_5, REQUEST_CODE_PHOTO_PREVIEW_5));
-        snpl_failure_recover_phenomena.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_6, REQUEST_CODE_PHOTO_PREVIEW_6));
+        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        snplMonitorAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
+        snplToolsPackageAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
+        snplAfterProcessingLocale.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
+        snplMachineFitBack.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_5, REQUEST_CODE_PHOTO_PREVIEW_5));
+        snplFailureRecoverPhenomena.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_6, REQUEST_CODE_PHOTO_PREVIEW_6));
 
-        snpl_moment_add_photos.setData(picList1);
-        snpl_monitor_add_photos.setData(picList2);
-        snpl_tools_package_add_photos.setData(picList3);
+        snplMomentAddPhotos.setData(picList1);
+        snplMonitorAddPhotos.setData(picList2);
+        snplToolsPackageAddPhotos.setData(picList3);
         //2017年7月21日
-        snpl_after_processing_locale.setData(picList4);
-        snpl_machine_fit_back.setData(picList5);
-        snpl_failure_recover_phenomena.setData(picList6);
+        snplAfterProcessingLocale.setData(picList4);
+        snplMachineFitBack.setData(picList5);
+        snplFailureRecoverPhenomena.setData(picList6);
 
-        snpl_moment_add_photos.setEditable(false);
-        snpl_monitor_add_photos.setEditable(false);
-        snpl_tools_package_add_photos.setEditable(false);
+        snplMomentAddPhotos.setEditable(false);
+        snplMonitorAddPhotos.setEditable(false);
+        snplToolsPackageAddPhotos.setEditable(false);
         //2017年7月21日
-        snpl_after_processing_locale.setEditable(false);
-        snpl_machine_fit_back.setEditable(false);
-        snpl_failure_recover_phenomena.setEditable(false);
+        snplAfterProcessingLocale.setEditable(false);
+        snplMachineFitBack.setEditable(false);
+        snplFailureRecoverPhenomena.setEditable(false);
 
 
     }
@@ -353,41 +356,41 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity /*implements V
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snpl_moment_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snpl_monitor_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snpl_tools_package_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             //2017年7月21日
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snpl_after_processing_locale.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplAfterProcessingLocale.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_5:
-                snpl_machine_fit_back.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMachineFitBack.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_6:
-                snpl_failure_recover_phenomena.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplFailureRecoverPhenomena.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snpl_moment_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snpl_monitor_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snpl_tools_package_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snpl_after_processing_locale.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplAfterProcessingLocale.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_5:
-                snpl_machine_fit_back.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMachineFitBack.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_6:
-                snpl_failure_recover_phenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplFailureRecoverPhenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
 //            case 10009:
 //                FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean bugBean = (FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean) data.getSerializableExtra("bean");

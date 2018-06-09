@@ -1,12 +1,16 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -74,7 +78,6 @@ public class OrderListFragment extends BaseFragment implements
 //        if (((RepairCtrlActivity) getActivity()).getBean() == null) {
 //            return;
 //        }
-
 
 //        mDataList = ((RepairCtrlActivity) getActivity()).getBean().getList();
         adapter = new RepairedManageOrderAdapter();
@@ -165,7 +168,8 @@ public class OrderListFragment extends BaseFragment implements
             case 3:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-
+                        //给客户联系人打电话
+                        CallUtils.call(getActivity(), V.v(() -> item.getOwnerUser().getAccountEntity().getMobile()));
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
@@ -210,7 +214,6 @@ public class OrderListFragment extends BaseFragment implements
 
                     case R.id.tv_do_first:
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve()).show();
-//
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
