@@ -356,10 +356,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
             showToast("请输入使用建议");
             return false;
         }
-        if (paramEntityList.size() == 0) {
-            showToast("请选择设备参数");
-            return false;
-        }
+//        if (paramEntityList.size() == 0) {
+//            showToast("请选择设备参数");
+//            return false;
+//        }
         return true;
     }
 

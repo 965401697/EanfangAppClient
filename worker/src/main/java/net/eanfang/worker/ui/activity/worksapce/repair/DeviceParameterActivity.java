@@ -81,6 +81,9 @@ public class DeviceParameterActivity extends BaseActivity {
         setRightTitle("确认");
         setLeftBack();
         paramEntityList = (List<BughandleParamEntity>) getIntent().getSerializableExtra("paramEntityList");
+        if (paramEntityList == null) {
+            paramEntityList = new ArrayList<>();
+        }
     }
 
     private void initListener() {
@@ -94,6 +97,7 @@ public class DeviceParameterActivity extends BaseActivity {
                 BughandleParamEntity param = new BughandleParamEntity();
                 param.setParamValue(content);
                 param.setParamName(name);
+
                 paramEntityList.add(param);
                 paramAdapter.setNewData(paramEntityList);
                 paramAdapter.notifyDataSetChanged();

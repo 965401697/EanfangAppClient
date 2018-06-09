@@ -2,6 +2,8 @@ package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -60,6 +62,10 @@ public class AboutUsView extends BaseDialog {
 
         tvVersion.setText("V " + ApkUtils.getAppVersionName(mContext));
         findViewById(R.id.iv_left).setOnClickListener(v -> dismiss());
+
+        tvVersion.setOnClickListener((v) -> {
+            showToast("versionCode：" + ApkUtils.getAppVersionCode(getContext()));
+        });
 
         llServicePhone.setOnClickListener((v) -> {
             HelpLineView helpLineView = new HelpLineView(mContext, true);

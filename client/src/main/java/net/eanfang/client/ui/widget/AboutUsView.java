@@ -63,6 +63,10 @@ public class AboutUsView extends BaseDialog {
         tvVersion.setText("V " + ApkUtils.getAppVersionName(mContext));
         findViewById(R.id.iv_left).setOnClickListener(v -> dismiss());
 
+        tvVersion.setOnClickListener((v) -> {
+            showToast("versionCode：" + ApkUtils.getAppVersionCode(getContext()));
+        });
+
         llServicePhone.setOnClickListener((v) -> {
             HelpLineView helpLineView = new HelpLineView(mContext, true);
             helpLineView.show();
