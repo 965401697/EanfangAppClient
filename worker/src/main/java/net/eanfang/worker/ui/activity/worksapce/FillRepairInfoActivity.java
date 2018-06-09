@@ -94,8 +94,6 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
      */
     @BindView(R.id.et_remain_question)
     EditText etRemainQuestion;
-    @BindView(R.id.ll_remain_question)
-    LinearLayout llRemainQuestion;
     /**
      * 协助人员
      */
@@ -443,7 +441,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                     intent.putExtra("companyName", companyName);
                     intent.putExtra("companyId", companyId);
                     intent.putExtra("businessId", (ArrayList<String>) businessIdLis);
-                    intent.putExtra("orderId", bughandleConfirmEntity.getId());
+                    intent.putExtra("orderId", bughandleConfirmEntity.getBusRepairOrderId());
                     startActivity(intent);
                 }
             });
@@ -455,6 +453,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         intent.putExtra("companyName", companyName);
         intent.putExtra("companyId", companyId);
         intent.putStringArrayListExtra("businessId", (ArrayList<String>) businessIdLis);
+        intent.putExtra("orderId", bughandleConfirmEntity.getBusRepairOrderId());
         startActivity(intent);
     }
 

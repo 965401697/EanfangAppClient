@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -182,34 +183,34 @@ public class TroubleDetailActivity extends BaseClientActivity {
         //录像机天数
         if ("".equals(bughandleConfirmEntity.getStoreDays())) {
             tvVideoStorage.setBackgroundResource(R.drawable.bg_client_trouble_type);
-            tvVideoStorage.setTextColor(R.color.color_client_neworder);
+            tvVideoStorage.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
         } else {
             tvVideoStorage.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
-            tvVideoStorage.setTextColor(R.color.color_white);
+            tvVideoStorage.setTextColor(ContextCompat.getColor(this, R.color.color_white));
         }
         //报警打印功能
         if (bughandleConfirmEntity.getIsAlarmPrinter() == null) {
             tvPolicePriter.setBackgroundResource(R.drawable.bg_client_trouble_type);
-            tvPolicePriter.setTextColor(R.color.color_client_neworder);
+            tvPolicePriter.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
         } else {
             tvPolicePriter.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
-            tvPolicePriter.setTextColor(R.color.color_white);
+            tvPolicePriter.setTextColor(ContextCompat.getColor(this, R.color.color_white));
         }
         //所有设备时间同步
         if (bughandleConfirmEntity.getIsTimeRight() == null) {
             tvDeviceTime.setBackgroundResource(R.drawable.bg_client_trouble_type);
-            tvDeviceTime.setTextColor(R.color.color_client_neworder);
+            tvDeviceTime.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
         } else {
             tvDeviceTime.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
-            tvDeviceTime.setTextColor(R.color.color_white);
+            tvDeviceTime.setTextColor(ContextCompat.getColor(this, R.color.color_white));
         }
         //各类设备数据远传功能
         if (bughandleConfirmEntity.getIsMachineDataRemote() == null) {
             tvPoliceDeliver.setBackgroundResource(R.drawable.bg_client_trouble_type);
-            tvPoliceDeliver.setTextColor(R.color.color_client_neworder);
+            tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
         } else {
             tvPoliceDeliver.setBackgroundResource(R.drawable.bg_client_trouble_type_pressed);
-            tvPoliceDeliver.setTextColor(R.color.color_white);
+            tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_white));
         }
         //协作人员
         // 目前先获取技师

@@ -2,11 +2,11 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -17,26 +17,28 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.CallUtils;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
+import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
-import net.eanfang.worker.ui.adapter.TroubleDetailAdapter;
+import net.eanfang.worker.ui.adapter.repair.TroubleHangListAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.util.V.v;
 
 /**
  * Created by MrHou
@@ -56,48 +58,49 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
-//    @BindView(R.id.iv_left)
-//    ImageView ivLeft;
-
-    private RecyclerView rv_trouble;
-    private TextView tv_over_time;
-    private TextView tv_repair_time;
+    //录像机天数
+    @BindView(R.id.tv_videoStorage)
+    TextView tvVideoStorage;
+    //报警打印功能
+    @BindView(R.id.tv_deviceTime)
+    TextView tvDeviceTime;
+    //所有设备时间同步
+    @BindView(R.id.tv_policePriter)
+    TextView tvPolicePriter;
+    //各类设备数据远传功能
+    @BindView(R.id.tv_policeDeliver)
+    TextView tvPoliceDeliver;
+    @BindView(R.id.rv_trouble)
+    RecyclerView rvTrouble;
+    //遗留问题
+    @BindView(R.id.tv_remain_question)
+    TextView tvRemainQuestion;
     /**
      * 电视墙/操作台正面全貌 (3张)
      */
-    private BGASortableNinePhotoLayout snpl_moment_add_photos;
+    @BindView(R.id.snpl_moment_add_photos)
+    BGASortableNinePhotoLayout snplMomentAddPhotos;
     /**
      * 电视墙/操作台背面全照(3张)
      */
-    private BGASortableNinePhotoLayout snpl_monitor_add_photos;
+    @BindView(R.id.snpl_monitor_add_photos)
+    BGASortableNinePhotoLayout snplMonitorAddPhotos;
     /**
      * 机柜正面/背面 (3张)
      */
-    private BGASortableNinePhotoLayout snpl_tools_package_add_photos;
+    @BindView(R.id.snpl_tools_package_add_photos)
+    BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
     /**
      * 单据照片 (3张)
      */
-    private BGASortableNinePhotoLayout snpl_form_photos;
-
-
-    private TextView tv_complete;
-    private TextView tv_complaint;
-    //录像机天数
-    private TextView tv_store_time;
-    //报警打印功能
-    private TextView tv_print_on_alarm;
-    //所有设备时间同步
-    private TextView tv_time_right;
-    //各类设备数据远传功能
-    private TextView tv_machine_data_remote;
-    //遗留问题
-    private TextView tv_remain_question;
-    //2017年7月21日
+    @BindView(R.id.snpl_form_photos)
+    BGASortableNinePhotoLayout snplFormPhotos;
     //协助人员
-    private TextView tv_team_worker;
-
-    private ImageView iv_left;
-
+    @BindView(R.id.tv_team_worker)
+    TextView tvTeamWorker;
+    // 挂单
+    @BindView(R.id.rv_hang_list)
+    RecyclerView rvHangList;
 
     private FillTroubleDetailAdapter quotationDetailAdapter;
     private Long id;
@@ -117,18 +120,19 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
      * 单据照片 (3张)
      */
     private ArrayList<String> picList4 = new ArrayList<>();
-    private int isPhonesolve;
+
+    // 挂单List
+    private List<TransferLogEntity> transferLogEntityList = new ArrayList<>();
+    private TroubleHangListAdapter troubleHangListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_fill_repair_info);
-        //ButterKnife.bind(this);
-
-        id = getIntent().getLongExtra("orderId", 0);
+        ButterKnife.bind(this);
         initView();
-        setTitle("故障处理");
         initData();
+
     }
 
     private void initData() {
@@ -140,73 +144,68 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
-        iv_left.setVisibility(View.VISIBLE);
-        rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
-        tv_over_time = (TextView) findViewById(R.id.tv_over_time);
-        tv_repair_time = (TextView) findViewById(R.id.tv_repair_time);
-        snpl_moment_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_moment_add_photos);
-        snpl_monitor_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_monitor_add_photos);
-        snpl_tools_package_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_tools_package_add_photos);
-        snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
-        //2017年7月20日
-        //两个操作按钮
-        tv_complete = (TextView) findViewById(R.id.tv_complete);
-        tv_complaint = (TextView) findViewById(R.id.tv_complaint);
-        //录像机天数
-        tv_store_time = (TextView) findViewById(R.id.tv_store_time);
-        //报警打印功能
-        tv_print_on_alarm = (TextView) findViewById(R.id.tv_print_on_alarm);
-        //所有设备时间同步
-        tv_time_right = (TextView) findViewById(R.id.tv_time_right);
-        //各类设备数据远传功能
-        tv_machine_data_remote = (TextView) findViewById(R.id.tv_machine_data_remote);
-        //遗留问题
-        tv_remain_question = (TextView) findViewById(R.id.tv_remain_question);
-        //协作人员
-        tv_team_worker = (TextView) findViewById(R.id.tv_team_worker);
 
-        tv_complaint.setOnClickListener((v) -> {
-            CallUtils.call(this, "010-5877-8731");
-        });
-        iv_left.setOnClickListener((v) -> finishSelf());
+        setTitle("故障处理");
+        setLeftBack();
+        id = getIntent().getLongExtra("orderId", 0);
+
     }
 
     private void setData(BughandleConfirmEntity bughandleConfirmEntity) {
         if (bughandleConfirmEntity != null) {
-            if (bughandleConfirmEntity.getOverTime() != null) {
-                tv_over_time.setText(GetDateUtils.dateToDateString(bughandleConfirmEntity.getOverTime()));
-            }
-            if (bughandleConfirmEntity.getWorkHour() != null) {
-                tv_repair_time.setText(bughandleConfirmEntity.getWorkHour());
-            }
             //录像机天数
-            tv_store_time.setText(GetConstDataUtils.getStoreDayList().get(bughandleConfirmEntity.getStoreDays()));
-
+            if ("".equals(bughandleConfirmEntity.getStoreDays())) {
+                tvVideoStorage.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvVideoStorage.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            } else {
+                tvVideoStorage.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvVideoStorage.setTextColor(ContextCompat.getColor(this, R.color.color_white));
+            }
             //报警打印功能
-            if (bughandleConfirmEntity.getIsAlarmPrinter() != null) {
-                tv_print_on_alarm.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsAlarmPrinter()));
+            if (bughandleConfirmEntity.getIsAlarmPrinter() == null) {
+                tvPolicePriter.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvPolicePriter.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            } else {
+                tvPolicePriter.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvPolicePriter.setTextColor(ContextCompat.getColor(this, R.color.color_white));
             }
             //所有设备时间同步
-            if (bughandleConfirmEntity.getIsTimeRight() != null) {
-                tv_time_right.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsTimeRight()));
+            if (bughandleConfirmEntity.getIsTimeRight() == null) {
+                tvDeviceTime.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvDeviceTime.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            } else {
+                tvDeviceTime.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvDeviceTime.setTextColor(ContextCompat.getColor(this, R.color.color_white));
             }
             //各类设备数据远传功能
-            if (bughandleConfirmEntity.getIsMachineDataRemote() != null) {
-                tv_machine_data_remote.setText(GetConstDataUtils.getIsNormalList().get(bughandleConfirmEntity.getIsMachineDataRemote()));
+            if (bughandleConfirmEntity.getIsMachineDataRemote() == null) {
+                tvPoliceDeliver.setBackgroundResource(R.drawable.bg_trouble_type);
+                tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
+            } else {
+                tvPoliceDeliver.setBackgroundResource(R.drawable.bg_trouble_type_pressed);
+                tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_white));
             }
             //遗留问题
             if (bughandleConfirmEntity.getLeftoverProblem() != null) {
-                tv_remain_question.setText(bughandleConfirmEntity.getLeftoverProblem());
+                tvRemainQuestion.setText(bughandleConfirmEntity.getLeftoverProblem());
             }
+
             //协作人员
-            if (bughandleConfirmEntity.getTeamWorker() != null) {
-                tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
-            }
+            // 目前先获取技师
+            tvTeamWorker.setText(v(() -> (bughandleConfirmEntity.getCreateUserEntity().getAccountEntity().getRealName())));
+//            if (bughandleConfirmEntity.getTeamWorker() != null) {
+//                tvTeamWorker.setText(bughandleConfirmEntity.getTeamWorker());
+//            }
+
             initImageList(bughandleConfirmEntity);
             initNinePhoto();
+            // 转单记录
+            if (bughandleConfirmEntity.getTransferLogEntityList() != null) {
+                transferLogEntityList = bughandleConfirmEntity.getTransferLogEntityList();
+            }
             initAdapter(bughandleConfirmEntity.getDetailEntityList());
         }
+
     }
 
     private void initImageList(BughandleConfirmEntity bughandleConfirmEntity) {
@@ -233,11 +232,11 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
 
     private void initAdapter(List<BughandleDetailEntity> mDataList) {
         quotationDetailAdapter = new FillTroubleDetailAdapter(R.layout.layout_trouble_detail, mDataList);
-        rv_trouble.addItemDecoration(new DividerItemDecoration(this,
+        rvTrouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
-        rv_trouble.setLayoutManager(new LinearLayoutManager(this));
-        rv_trouble.setAdapter(quotationDetailAdapter);
-        rv_trouble.addOnItemTouchListener(new OnItemClickListener() {
+        rvTrouble.setLayoutManager(new LinearLayoutManager(this));
+        rvTrouble.setAdapter(quotationDetailAdapter);
+        rvTrouble.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(TroubleDetailActivity.this, LookTroubleDetailActivity.class);
@@ -245,23 +244,29 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
                 startActivity(intent);
             }
         });
+        // 转单
+        troubleHangListAdapter = new TroubleHangListAdapter(R.layout.layout_trouble_hanglist_item, transferLogEntityList);
+        rvHangList.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
+        rvHangList.setLayoutManager(new LinearLayoutManager(this));
+        rvHangList.setAdapter(troubleHangListAdapter);
     }
 
     private void initNinePhoto() {
-        snpl_moment_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
-        snpl_monitor_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
-        snpl_tools_package_add_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
-        snpl_form_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
+        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        snplMonitorAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
+        snplToolsPackageAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
+        snplFormPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
 
-        snpl_moment_add_photos.setData(picList1);
-        snpl_monitor_add_photos.setData(picList2);
-        snpl_tools_package_add_photos.setData(picList3);
-        snpl_form_photos.setData(picList4);
+        snplMomentAddPhotos.setData(picList1);
+        snplMonitorAddPhotos.setData(picList2);
+        snplToolsPackageAddPhotos.setData(picList3);
+        snplFormPhotos.setData(picList4);
 
-        snpl_moment_add_photos.setEditable(false);
-        snpl_monitor_add_photos.setEditable(false);
-        snpl_tools_package_add_photos.setEditable(false);
-        snpl_form_photos.setEditable(false);
+        snplMomentAddPhotos.setEditable(false);
+        snplMonitorAddPhotos.setEditable(false);
+        snplToolsPackageAddPhotos.setEditable(false);
+        snplFormPhotos.setEditable(false);
 
 
     }
@@ -274,28 +279,28 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snpl_moment_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snpl_monitor_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snpl_tools_package_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snpl_form_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplFormPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snpl_moment_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snpl_monitor_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snpl_tools_package_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snpl_form_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplFormPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             default:
                 break;
