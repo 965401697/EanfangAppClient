@@ -164,7 +164,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="    数  量    "
+                        android:text="数  量    "
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 

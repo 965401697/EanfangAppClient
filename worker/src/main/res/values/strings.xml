@@ -74,6 +74,7 @@
     <string name="private_chat">发起聊天</string>
     <string name="group_chat">创建群组</string>
     <string name="add_contacts">添加好友</string>
+    <string name="string_repair_fault_detail">故障明细</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

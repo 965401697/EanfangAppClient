@@ -72,7 +72,7 @@ public class RepairAppointTimeActivity extends BaseActivity {
                 showToast("预约时间不能为空");
                 return;
             }
-            doHttp(0, contract_door + contract_specific);
+            doHttp(0, contract_door + " " + contract_specific);
         });
     }
 

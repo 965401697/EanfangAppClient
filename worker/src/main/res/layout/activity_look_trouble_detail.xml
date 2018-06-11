@@ -349,254 +349,83 @@
                 </RadioGroup>
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_trouble_repair_result"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="维修结果"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <com.eanfang.witget.CustomRadioGroup
+                    android:id="@+id/rg_repairResultOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_30"
+                    android:paddingRight="@dimen/dimen_30" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="修复方式"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <com.eanfang.witget.CustomRadioGroup
+                    android:id="@+id/rg_repairResultTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_30"
+                    android:paddingRight="@dimen/dimen_30" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_gone_c"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="故障表象"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_moment_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="工具及蓝布"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_monitor_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="故障点照片"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_tools_package_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="处理后现场"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_after_processing_locale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="设备回装"
-                        android:textSize="16sp" />
-
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_machine_fit_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="恢复后表象"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_failure_recover_phenomena"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dimen_30">
 
                     <TextView
-                        android:id="@+id/tv_use_goods"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/ic_addtrouble_use"
+                        android:drawablePadding="@dimen/dimen_16"
                         android:text="耗用材料"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/tv_add_consumable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/button_bg_gray"
-                        android:paddingBottom="8dp"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:paddingTop="8dp"
-                        android:text="添加"
-                        android:textColor="@color/colorPrimary"
-                        android:visibility="gone" />
+                        android:textColor="@color/color_worker_data_item_title"
+                        android:textSize="@dimen/textSize_15" />
                 </RelativeLayout>
+
+                <View style="@style/style_common_line_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rcy_consumable"
@@ -607,6 +436,31 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_add_device_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_addtrouble_picture"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="查看现场照片"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_icon_right" />
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>

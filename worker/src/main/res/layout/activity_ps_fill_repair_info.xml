@@ -8,7 +8,7 @@
 
     <include layout="@layout/header" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="故障信息"
+                    android:text="@string/string_repair_fault_detail"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -115,7 +115,7 @@
                     android:id="@+id/snpl_form_photos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="@dimen/dimen_34"
                     app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                     app:bga_snpl_deleteDrawableOverlapQuarter="false"
                     app:bga_snpl_editable="true"
@@ -131,7 +131,7 @@
                     app:bga_snpl_sortable="true" />
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
