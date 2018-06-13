@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -295,7 +296,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void doHttpNews() {
-        EanfangHttp.get(NewApiService.GET_PUSH_NEWS).execute(new EanfangCallback<NoticeEntity>(getActivity(), true, NoticeEntity.class, true, (list -> {
+        EanfangHttp.get(NewApiService.GET_PUSH_NEWS).execute(new EanfangCallback<NoticeEntity>(getActivity(), false, NoticeEntity.class, true, (list -> {
             initRollTextView(list);
         })));
 
