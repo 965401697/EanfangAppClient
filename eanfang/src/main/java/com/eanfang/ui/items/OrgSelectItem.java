@@ -53,6 +53,7 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
     @Override
     public void onClick(ViewHolder viewHolder) {
         super.onClick(viewHolder);
-        getItemManager().notifyDataChanged();
+        TemplateBean.Preson preson = (TemplateBean.Preson) getItemManager().getItem(viewHolder.getAdapterPosition());
+        getItemManager().getAdapter().notifyItemChanged(viewHolder.getAdapterPosition());
     }
 }

@@ -281,6 +281,15 @@ public class GetDateUtils {
         return null;
     }
 
+    public static Date getYeanDate(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+        }
+        return null;
+    }
+
     public static Date getDate(String year, String month, String day, String hour, String minute, String second) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
@@ -50,6 +51,7 @@ public class OrganizationLevelActivity extends BaseActivity {
         setContentView(R.layout.activity_organization_level);
         ButterKnife.bind(this);
         supprotToolbar();
+
         mFlag = getIntent().getIntExtra("flag", 0);
         if (mFlag == 2) {
 //            mSecondDataList = (ArrayList<SectionBean>) getIntent().getSerializableExtra("list");
@@ -68,12 +70,39 @@ public class OrganizationLevelActivity extends BaseActivity {
                             preson.setName(staffBean.getAccountEntity().getNickName());
                             preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                             preson.setMobile(staffBean.getAccountEntity().getMobile());
+                            preson.setDepartmentId(staffBean.getDepartmentId());
                             presonArrayList.add(preson);
                         }
 
                         templateBean.setPresons(presonArrayList);
                     }
                 }
+            }
+
+            TemplateBean templateBean1 = new TemplateBean();
+
+            if (sectionBean.getStaff() != null) {
+                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
+
+
+                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+                templateBean1.setOrgName("本部门/本公司");
+
+                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setId(staffBeanX.getAccId());
+                    preson.setName(staffBeanX.getAccountEntity().getNickName());
+                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
+                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+                    preson.setDepartmentId(staffBeanX.getDepartmentId());
+                    presonArrayList.add(preson);
+
+                }
+                templateBean1.setPresons(presonArrayList);
+            }
+            if (!TextUtils.isEmpty(templateBean1.getOrgName())) {
+                mTemplateBeanList.add(templateBean1);
             }
             mTemplateBeanList.add(templateBean);
 //            }

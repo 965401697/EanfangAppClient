@@ -20,8 +20,9 @@ import java.util.List;
 
 public class MainAdapter extends BaseQuickAdapter<MainHistoryBean.ListBean, BaseViewHolder> {
     private SimpleDraweeView sdv_pic;
-    public MainAdapter(List data) {
-        super(R.layout.item_main_list, data);
+
+    public MainAdapter() {
+        super(R.layout.item_main_list);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class MainAdapter extends BaseQuickAdapter<MainHistoryBean.ListBean, Base
         helper.setText(R.id.tv_company, item.getClientCompanyName());
         helper.setText(R.id.tv_maintenance_circle, GetConstDataUtils.getCycleList().get(item.getCycle()));
         helper.setText(R.id.tv_time, item.getCreateTime());
-        helper.setText(R.id.tv_business, Config.get().getBusinessNameByCode(item.getMaintainDetail().getBusinessThreeCode(),1));
+        helper.setText(R.id.tv_business, Config.get().getBusinessNameByCode(item.getMaintainDetail().getBusinessThreeCode(), 1));
         helper.addOnClickListener(R.id.tv_select);
         sdv_pic = helper.getView(R.id.sdv_pic);
         if (item.getMaintainDetail().getPictures() != null) {

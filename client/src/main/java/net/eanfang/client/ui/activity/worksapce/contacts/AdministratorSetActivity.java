@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -78,10 +78,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
                 break;
             case R.id.ll_transfer:
                 Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-//                intent.putExtra("isRadio", "isRadio");//是否是单选
                 Uri uri = Uri.parse("worker://");
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 intent.setData(uri);
                 startActivity(intent);
                 break;

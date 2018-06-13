@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.im;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -59,12 +60,19 @@ public class MyGroupsListActivity extends BaseClientActivity {
 
                         for (GroupsBean bean : list) {
                             // 根据姓名获取拼音
-                            bean.setPinyin(bean.getGroupName());
-                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
-                            if (!Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                            if (!TextUtils.isEmpty(bean.getGroupName())) {//不等于空
+                                bean.setPinyin(bean.getGroupName());
+                                bean.setFirstLetter(Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
+                                if (!Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                                    bean.setFirstLetter("#");
+                                }
+                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                            } else {
+                                //为空赋值默认值
+                                bean.setPinyin("");
                                 bean.setFirstLetter("#");
+                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                             }
-                            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                         }
 
 

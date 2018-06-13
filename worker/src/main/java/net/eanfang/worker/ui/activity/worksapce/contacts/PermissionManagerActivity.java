@@ -1,21 +1,45 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.RoleBean;
+import com.eanfang.model.TemplateBean;
+import com.eanfang.model.device.User;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.sys.entity.AccountEntity;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 public class PermissionManagerActivity extends BaseWorkerActivity {
 
@@ -25,34 +49,144 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
     TextView tvNamePhone;
     @BindView(R.id.tv_address)
     TextView tvAddress;
-    @BindView(R.id.ll_section)
-    LinearLayout llSection;
     @BindView(R.id.tv_role)
     TextView tvRole;
+    @BindView(R.id.ll_select_staff)
+    LinearLayout llSelectStaff;
+    @BindView(R.id.ll_role)
+    LinearLayout llRole;
+    @BindView(R.id.rl_checked_staff)
+    RelativeLayout rlCheckedStaff;
     @BindView(R.id.tv_sure)
     TextView tvSure;
+
+    private User mBean;
+    private RoleBean roleBean;
+    private final int ROLE_FLAG = 101;
+    private String departmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_staff_next);
+        setContentView(R.layout.activity_permission_manager);
         ButterKnife.bind(this);
         setTitle("权限管理");
         setLeftBack();
-
-        llSection.setVisibility(View.GONE);
-        tvSure.setText("确定授权");
-
-
-        ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar());
-        tvNamePhone.setText(EanfangApplication.get().getUser().getAccount().getNickName() + "(" + EanfangApplication.get().getUser().getAccount().getMobile() + ")");
-        tvAddress.setText(Config.get().getAddressByCode(EanfangApplication.get().getUser().getAccount().getAreaCode()) + EanfangApplication.get().getUser().getAccount().getAddress());
-
-        tvRole.setText("CEO");
     }
 
-    @OnClick(R.id.ll_role)
-    public void onViewClicked() {
 
+    @OnClick({R.id.rl_checked_staff, R.id.ll_select_staff, R.id.tv_sure, R.id.ll_role})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_checked_staff:
+            case R.id.ll_select_staff:
+                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
+                Uri uri = Uri.parse("worker://yeah!");
+                intent.setData(uri);
+                startActivity(intent);
+                break;
+            case R.id.tv_sure:
+                subMermission();
+                break;
+            case R.id.ll_role:
+                startActivityForResult(new Intent(this, AolltRoleActivity.class), ROLE_FLAG);
+                break;
+        }
     }
+
+    private void subMermission() {
+        if (TextUtils.isEmpty(departmentId)) {
+            ToastUtil.get().showToast(this, "员工不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(tvRole.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "角色不能为空");
+            return;
+        }
+
+
+        UserEntity userEntity = new UserEntity();
+
+        userEntity.setDepartmentId(Long.parseLong(departmentId));
+
+        AccountEntity accountEntity = new AccountEntity();
+
+        accountEntity.setAccId(Long.parseLong(mBean.getAccId()));
+        accountEntity.setMobile(mBean.getMobile());
+        userEntity.setAccountEntity(accountEntity);
+
+        com.alibaba.fastjson.JSONObject jsonObject = (com.alibaba.fastjson.JSONObject) JSON.toJSON(userEntity);
+
+
+        EanfangHttp.post(NewApiService.ADD_STAFF)
+                .upJson(jsonObject.toJSONString())
+                .execute(new EanfangCallback<UserEntity>(PermissionManagerActivity.this, true, UserEntity.class) {
+                    @Override
+                    public void onSuccess(UserEntity bean) {
+
+                        JSONArray array = new JSONArray();
+                        array.add(Long.parseLong(roleBean.getRoleId()));
+
+
+                        //添加角色
+                        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + bean.getAccountEntity().getAccId())
+                                .upJson(array.toJSONString())
+                                .execute(new EanfangCallback<JSONObject>(PermissionManagerActivity.this, true, JSONObject.class) {
+
+                                    @Override
+                                    public void onSuccess(JSONObject bean) {
+                                        ToastUtil.get().showToast(PermissionManagerActivity.this, "授权成功");
+
+                                        endTransaction(true);
+                                    }
+
+                                });
+                    }
+
+
+                });
+    }
+
+    @Subscribe
+    public void onEvent(List<TemplateBean.Preson> presonList) {
+
+
+        if (presonList.size() > 0) {
+            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+            departmentId = bean.getDepartmentId();
+            llSelectStaff.setVisibility(View.GONE);
+            rlCheckedStaff.setVisibility(View.VISIBLE);
+            llRole.setVisibility(View.VISIBLE);
+            tvSure.setVisibility(View.VISIBLE);
+
+
+            EanfangHttp.get(UserApi.POST_USER_INFO + bean.getId())
+                    .execute(new EanfangCallback<User>(this, true, User.class, (b) -> {
+                        mBean = b;
+
+                        ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + b.getAvatar());
+                        tvNamePhone.setText(b.getNickName() + "(" + b.getMobile() + ")");
+                        tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());
+                    }));
+
+
+        } else {
+            llSelectStaff.setVisibility(View.VISIBLE);
+            rlCheckedStaff.setVisibility(View.GONE);
+            llRole.setVisibility(View.GONE);
+            tvSure.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == ROLE_FLAG) {
+                roleBean = (RoleBean) data.getSerializableExtra("bean");
+                tvRole.setText(roleBean.getRoleName());
+            }
+        }
+    }
+
 }

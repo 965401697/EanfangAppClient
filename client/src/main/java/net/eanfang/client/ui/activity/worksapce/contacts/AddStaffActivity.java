@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -18,7 +17,6 @@ import com.eanfang.model.FriendListBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.im.AddFriendActivity;
 import net.eanfang.client.ui.adapter.AddStaffAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 

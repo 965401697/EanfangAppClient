@@ -8,10 +8,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.AddStaffActivity;
-import net.eanfang.client.ui.activity.worksapce.AdministratorSetActivity;
-import net.eanfang.client.ui.activity.worksapce.CreatSectionActivity;
-import net.eanfang.client.ui.activity.worksapce.PermissionManagerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +42,7 @@ public class CompanyManagerActivity extends BaseActivity {
         mOrgName = getIntent().getStringExtra("orgName");
     }
 
-    @OnClick({R.id.rl_prefectInfo, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission})
+    @OnClick({R.id.rl_prefectInfo, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_prefectInfo:
@@ -77,6 +73,9 @@ public class CompanyManagerActivity extends BaseActivity {
                 break;
             case R.id.rl_permission:
                 JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
+                break;
+            case R.id.ll_cooperation_relation:
+                JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
                 break;
         }
     }

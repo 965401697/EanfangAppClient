@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.net.Uri;

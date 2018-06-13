@@ -157,8 +157,9 @@
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.AddMaterialActivity" />
         <activity android:name=".ui.activity.worksapce.MaterialInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"  />
+        <activity
+            android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <!-- 电话解决完善故障处理 -->
         <activity
             android:name=".ui.activity.worksapce.PhoneSolveTroubleDetailActivity"
@@ -344,20 +345,21 @@
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
 
-        <!--管理员设置-->
+        <!-- 管理员设置 -->
         <activity android:name=".ui.activity.worksapce.contacts.AdministratorSetActivity" />
-        <!--创建部门-->
+        <!-- 创建部门 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatSectionActivity" />
-        <!--添加员工-->
+        <!-- 添加员工 -->
         <activity android:name=".ui.activity.worksapce.contacts.AddStaffActivity" />
-        <!--添加员工下一步-->
+        <!-- 添加员工下一步 -->
         <activity android:name=".ui.activity.worksapce.contacts.AddStaffNextActivity" />
-        <!--权限设置-->
+        <!-- 权限设置 -->
         <activity android:name=".ui.activity.worksapce.contacts.PermissionManagerActivity" />
-        <!--角色分配-->
-        <activity android:name=".ui.activity.worksapce.contacts.AolltRoleActivity"></activity>
-
+        <!-- 角色分配 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AolltRoleActivity" />
         <activity android:name=".ui.activity.worksapce.repair.SolveModeActivity" />
+        <!-- 维保订单详情list· -->
+        <activity android:name=".ui.activity.worksapce.PersonMaintainHistoryActivity" />
         <!-- 预约上门时间 -->
         <activity android:name=".ui.activity.worksapce.repair.RepairAppointTimeActivity" />
         <!-- 设备参数 -->
@@ -370,6 +372,14 @@
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationAddActivity" />
+        <!-- 合作业务的列表 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationActivity" />
+        <!-- 合作业务详情 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationDetailActivity" />
+        <!-- 合作业务绑定成功 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperactionRelationSubActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationSearchClientActivity"></activity>
     </application>
 
 </manifest>

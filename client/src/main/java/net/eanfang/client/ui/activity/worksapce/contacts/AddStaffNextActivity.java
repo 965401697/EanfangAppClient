@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -32,7 +32,6 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
 
 
 import butterknife.BindView;

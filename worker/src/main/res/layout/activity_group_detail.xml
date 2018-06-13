@@ -27,11 +27,12 @@
                 android:gravity="center_horizontal"
                 android:horizontalSpacing="@dimen/dimen_20"
                 android:numColumns="5"
+                android:verticalSpacing="10dp"
                 android:paddingBottom="@dimen/dimen_40"
                 android:paddingLeft="@dimen/dimen_36"
                 android:paddingRight="@dimen/dimen_36"
                 android:paddingTop="@dimen/dimen_40"
-                android:verticalSpacing="10dp" />
+                 />
 
 
             <RelativeLayout

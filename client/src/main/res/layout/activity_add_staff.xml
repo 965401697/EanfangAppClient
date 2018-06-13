@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.AddStaffActivity">
+    tools:context="net.eanfang.client.ui.activity.worksapce.contacts.AddStaffActivity">
 
     <include
         android:id="@+id/header"

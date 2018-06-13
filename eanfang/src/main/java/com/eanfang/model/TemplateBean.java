@@ -24,7 +24,25 @@ public class TemplateBean extends BaseItemData implements Serializable {
         private String protraivat;
         private String name;
         private String mobile;
+        private String areaCode;
+        private String address;
         private boolean isChecked;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getAreaCode() {
+            return areaCode;
+        }
+
+        public void setAreaCode(String areaCode) {
+            this.areaCode = areaCode;
+        }
 
         public String getDepartmentId() {
             return departmentId;

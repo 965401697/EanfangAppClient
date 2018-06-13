@@ -3,15 +3,19 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.MainHistoryBean;
+import com.eanfang.model.WorkspaceInstallBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
@@ -33,23 +37,28 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  *
  * @on 2017/11/28  16:49
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 统一都成acitivity  废弃
  */
 
-public class PersonMaintainHistoryView extends BaseDialog implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+public class PersonMaintainHistoryView extends BaseDialog implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+    //public class PersonMaintainHistoryView extends BaseDialog implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+    @BindView(R.id.rv_list)
+    RecyclerView rvList;
+    @BindView(R.id.tv_no_datas)
+    TextView mTvNoData;
+    @BindView(R.id.swipre_fresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.rv_list)
-    RecyclerView recyclerView;
-    @BindView(R.id.swiprefresh)
-    SwipyRefreshLayout swiprefresh;
     @BindView(R.id.iv_left)
     ImageView ivLeft;
+
+
+    private int mPage = 1;
     private Activity mContext;
-    private MainAdapter orderAdapter;
+    private MainAdapter mAdapter;
     private Long id;
     private int type;
-    private static int page = 1;
 
     public PersonMaintainHistoryView(Activity context, boolean isfull, Long id, int type) {
         super(context, isfull);
@@ -62,17 +71,43 @@ public class PersonMaintainHistoryView extends BaseDialog implements SwipyRefres
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main_list);
         ButterKnife.bind(this);
+        initAdapter();
         initView();
 
+        mPage = 1;
     }
 
     private void initView() {
         tvTitle.setText("历史记录");
-        swiprefresh.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         ivLeft.setOnClickListener(v -> dismiss());
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        rvList.setLayoutManager(new LinearLayoutManager(mContext));
         queryHistory();
     }
+
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    public void refresh() {
+        mPage = 1;//下拉永远第一页
+        queryHistory();
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        queryHistory();
+    }
+
 
     private void queryHistory() {
         QueryEntry queryEntry = new QueryEntry();
@@ -82,70 +117,71 @@ public class PersonMaintainHistoryView extends BaseDialog implements SwipyRefres
             queryEntry.getEquals().put("createCompanyId", id + "");
         }
         queryEntry.setSize(10);
-        queryEntry.setPage(page);
+        queryEntry.setPage(mPage);
         EanfangHttp.post(NewApiService.QUERY_HISTORY_RECORD_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<MainHistoryBean>(mContext, true, MainHistoryBean.class, (bean) -> {
-                    initAdapter(bean);
-                    onDataReceived();
-                }));
+                .execute(new EanfangCallback<MainHistoryBean>(mContext, true, MainHistoryBean.class) {
+                    @Override
+                    public void onSuccess(MainHistoryBean bean) {
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
-    private void initAdapter(MainHistoryBean bean) {
+    private void initAdapter() {
 
-        orderAdapter = new MainAdapter(bean.getList());
-        orderAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        mAdapter = new MainAdapter();
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_select:
                     Intent intent = new Intent(mContext, MaintenanceHistoryDetailActivity.class);
-                    intent.putExtra("maintianId", bean.getList().get(position).getId());
+                    intent.putExtra("maintianId", mAdapter.getData().get(position).getId());
                     mContext.startActivity(intent);
                     break;
                 default:
                     break;
             }
         });
-        recyclerView.setAdapter(orderAdapter);
     }
-
-
-    @Override
-    public void onDataReceived() {
-        swiprefresh.setRefreshing(false);
-    }
-
-    /**
-     * 刷新
-     */
-    @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
-
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                queryHistory();
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                queryHistory();
-                break;
-            default:
-                break;
-        }
-    }
-
 }

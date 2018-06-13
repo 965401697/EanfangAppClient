@@ -401,18 +401,18 @@
         <activity
             android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
             android:screenOrientation="portrait" />
-        <!--管理员设置-->
-        <activity android:name=".ui.activity.worksapce.AdministratorSetActivity" />
-        <!--创建部门-->
-        <activity android:name=".ui.activity.worksapce.CreatSectionActivity" />
-        <!--添加员工-->
-        <activity android:name=".ui.activity.worksapce.AddStaffActivity" />
-        <!--添加员工下一步-->
-        <activity android:name=".ui.activity.worksapce.AddStaffNextActivity" />
-        <!--权限设置-->
-        <activity android:name=".ui.activity.worksapce.PermissionManagerActivity" />
-        <!--角色分配-->
-        <activity android:name=".ui.activity.worksapce.AolltRoleActivity"></activity>
+        <!-- 管理员设置 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AdministratorSetActivity" />
+        <!-- 创建部门 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatSectionActivity" />
+        <!-- 添加员工 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffActivity" />
+        <!-- 添加员工下一步 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffNextActivity" />
+        <!-- 权限设置 -->
+        <activity android:name=".ui.activity.worksapce.contacts.PermissionManagerActivity" />
+        <!-- 角色分配 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AolltRoleActivity" />
 
         <!-- 技师故障处理 查看照片 -->
         <activity
@@ -422,7 +422,12 @@
         <activity
             android:name=".ui.activity.worksapce.repair.FaultLibraryActivity"
             android:screenOrientation="portrait" />
-
+        <!--合作业务的列表-->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationActivity" />
+        <!--合作业务详情-->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationDetailActivity" />
+        <!--合作业务绑定成功-->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperactionRelationSubActivity"></activity>
     </application>
 
 </manifest>

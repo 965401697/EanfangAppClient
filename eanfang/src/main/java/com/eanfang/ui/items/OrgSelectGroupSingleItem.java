@@ -34,11 +34,26 @@ public class OrgSelectGroupSingleItem extends TreeSelectItemGroup<TemplateBean> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
+
+//        viewHolder.setChecked(R.id.cb_all_checked, isChildCheck());
+
         viewHolder.getView(R.id.cb_all_checked).setVisibility(View.INVISIBLE);
-        viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + ")");
+        if (data.getPresons() != null) {
+            viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + ")");
+        } else {
+
+        }
 
     }
 
+//    @Override
+//    public void onClick(ViewHolder viewHolder) {
+//        super.onClick(viewHolder);
+//
+//        List<TreeItem> treeItemList = getSelectItems();
+//
+//        getItemManager().getAdapter().getData(viewHolder.getAdapterPosition());
+//    }
 
     @Override
     public SelectFlag selectFlag() {

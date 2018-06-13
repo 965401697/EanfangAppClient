@@ -338,6 +338,31 @@ public interface NewApiService {
      * post
      */
     String ADD_STAFF_ROLE = BASE_URL + "/yaf_sys/staff/grant";
+    /**
+     * 获的合作业务的list
+     * post
+     */
+    String GET_COOPERATION_LIST = BASE_URL + "/yaf_shop/cooperation/list";
+    /**
+     * 查看合作业务的详情
+     * post
+     */
+    String GET_COOPERATION_DETAIL = BASE_URL + "/yaf_shop/cooperation/detail";
+    /**
+     * 客户审核合作业务
+     * post
+     */
+    String COOPERATION_AUDIT = BASE_URL + "/yaf_shop/cooperation/audit";
+    /**
+     * 搜索客户公司
+     * post
+     */
+    String COOPERATION_WORKCOMPANY_SEARCH = BASE_URL + "/yaf_shop/workCompany/search";
+    /**
+     * 搜索客户公司
+     * post
+     */
+    String COOPERATION_WORKCOMPANY_SUB = BASE_URL + "/yaf_shop/cooperation/create";
 
 
 }

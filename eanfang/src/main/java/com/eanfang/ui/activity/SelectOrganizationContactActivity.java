@@ -103,9 +103,12 @@ public class SelectOrganizationContactActivity extends BaseActivity {
             @Override
             public void onItemClick(ViewHolder viewHolder, int i) {
 
-                if (i == 2) return;
-
                 Object o = treeRecyclerAdapter.getData(i).getData();
+
+                //如果是第三级就不做任何操作
+                if (o instanceof SectionBean.ChildrenBean) {
+                    return;
+                }
 
                 if (mOldObj == null) {
                     mOldObj = o;
