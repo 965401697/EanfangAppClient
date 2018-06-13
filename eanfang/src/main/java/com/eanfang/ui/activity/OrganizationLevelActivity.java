@@ -79,31 +79,31 @@ public class OrganizationLevelActivity extends BaseActivity {
                 }
             }
 
-            TemplateBean templateBean1 = new TemplateBean();
-
-            if (sectionBean.getStaff() != null) {
-                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
-
-
-                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
-                templateBean1.setOrgName("本部门/本公司");
-
-                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
-
-                    TemplateBean.Preson preson = new TemplateBean.Preson();
-                    preson.setId(staffBeanX.getAccId());
-                    preson.setName(staffBeanX.getAccountEntity().getNickName());
-                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
-                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
-                    preson.setDepartmentId(staffBeanX.getDepartmentId());
-                    presonArrayList.add(preson);
-
-                }
-                templateBean1.setPresons(presonArrayList);
-            }
-            if (!TextUtils.isEmpty(templateBean1.getOrgName())) {
-                mTemplateBeanList.add(templateBean1);
-            }
+//            TemplateBean templateBean1 = new TemplateBean();
+//
+//            if (sectionBean.getStaff() != null) {
+//                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
+//
+//
+//                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+//                templateBean1.setOrgName("本部门/本公司");
+//
+//                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+//
+//                    TemplateBean.Preson preson = new TemplateBean.Preson();
+//                    preson.setId(staffBeanX.getAccId());
+//                    preson.setName(staffBeanX.getAccountEntity().getNickName());
+//                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
+//                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+//                    preson.setDepartmentId(staffBeanX.getDepartmentId());
+//                    presonArrayList.add(preson);
+//
+//                }
+//                templateBean1.setPresons(presonArrayList);
+//            }
+//            if (!TextUtils.isEmpty(templateBean1.getOrgName())) {
+//                mTemplateBeanList.add(templateBean1);
+//            }
             mTemplateBeanList.add(templateBean);
 //            }
 
