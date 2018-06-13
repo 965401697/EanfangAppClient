@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -41,6 +42,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,6 +144,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     // 设备参数List
     private List<BughandleParamEntity> paramEntityList = new ArrayList<>();
 
+    // 维修结果
+    List<String> mRepairResult = GetConstDataUtils.getBugDetailList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +183,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         //添加设备参数
         rlAddDeviceParam.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bughandleDetailEntity", detailEntity);
+            bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
             JumpItent.jump(this, DeviceParameterActivity.class, bundle, ADD_DEVICE_PARAM_REQUEST);
         });
         // 确定
@@ -190,29 +195,12 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
             bundle.putString("bugOneCode", Config.get().getBusinessCodeByName(bugOne, 1));
             JumpItent.jump(AddTroubleDetailActivity.this, AddMaterialActivity.class, bundle, REQUEST_ADD_MATERIAL);
         });
-
+        // 添加现场照片
         rlAddDevicePicture.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("detailEntity", detailEntity);
             JumpItent.jump(AddTroubleDetailActivity.this, AddTroubleAddPictureActivity.class, bundle);
         });
-        // 维修结果一级
-        rgRepairResultOne.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton tempButton = (RadioButton) findViewById(checkedId);
-                mReapirOneStauts = (Integer) tempButton.getTag();
-                addView(AddTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(mReapirOneStauts));
-            }
-        });
-        rgRepairResultTwo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton tempButton = (RadioButton) findViewById(checkedId);
-                mReapirTwoStauts = (Integer) tempButton.getTag();
-            }
-        });
-
     }
 
     private void lookFailureDetail() {
@@ -239,11 +227,17 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         } else {
             tvTroubleTitle.setText("");
         }
-//        tvTroubleDevice.setText(Optional.ofNullable(failureEntity.getDeviceName()).orElse(""));
-//        tvBrandModel.setText(Optional.ofNullable(Config.get().getModelNameByCode(failureEntity.getModelCode(), 2)).orElse(""));
         tvDeviceNo.setText(Optional.ofNullable(failureEntity.getDeviceNo()).orElse(""));
         tvDeviceLocation.setText(Optional.ofNullable(failureEntity.getBugPosition()).orElse(""));
         etTroubleDesc.setText(Optional.ofNullable(failureEntity.getBugDescription()).orElse(""));
+
+        if (detailEntity == null || detailEntity.getParamEntityList() == null) {
+            detailEntity.setParamEntityList(new ArrayList<>(0));
+        }
+        if (detailEntity == null || detailEntity.getUseDeviceEntityList() == null) {
+            detailEntity.setUseDeviceEntityList(new ArrayList<>(0));
+        }
+
 
         //加载上次提交记录
         if (detailEntity.getId() != null) {
@@ -253,31 +247,28 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                         etTroubleReason.setText(Optional.ofNullable(detailEntity.getCause()).orElse(""));
                         etTroubleDeal.setText(Optional.ofNullable(detailEntity.getHandle()).orElse(""));
                         etTroubleUseAdvace.setText(Optional.ofNullable(detailEntity.getUseAdvice()).orElse(""));
-                        // 是否误报 TODO
-//                        tvRepairMisinformation.setText(GetConstDataUtils.getRepairMisinformationList().get(failureEntity.getIsMisinformation()));
-                        if (detailEntity.getStatus() != null) {
-                            // 维修结论 TODO
-//                            tvRepairConclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(detailEntity.getStatus())).orElse(""));
+                        mReapirOneStauts = detailEntity.getStatus();
+                        mReapirTwoStauts = detailEntity.getStatusTwo();
+                        addViewOne(AddTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, detailEntity.getStatus());
+                        addViewTwo(AddTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(detailEntity.getStatus()), detailEntity.getStatusTwo());
+//                        doListener();
+                        // 是否误报
+                        if (failureEntity.getIsMisinformation() == 0) {
+                            rgNo.setChecked(true);
+                            rgYes.setChecked(false);
+                        } else {
+                            rgNo.setChecked(false);
+                            rgYes.setChecked(true);
                         }
-//                        initImgUrlList();
-//                        initNinePhoto();
                     },
                     () -> {
                         detailEntity.setId(null);
-                    }).showDialog();
-        } else {
-//            initNinePhoto();
-        }
-        if (detailEntity == null || detailEntity.getParamEntityList() == null) {
-            detailEntity.setParamEntityList(new ArrayList<>(0));
-        }
-        if (detailEntity == null || detailEntity.getUseDeviceEntityList() == null) {
-            detailEntity.setUseDeviceEntityList(new ArrayList<>(0));
-        }
 
-        //添加维修结论
-        addView(AddTroubleDetailActivity.this, rgRepairResultOne, GetConstDataUtils.getBugDetailList());
+                    }).showDialog();
+        }
+        addViewOne(AddTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, 100);
     }
+
 
     private void initAdapter() {
         if (detailEntity.getUseDeviceEntityList() != null) {
@@ -415,24 +406,84 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     /**
      * 动态添加维修结果
      */
-    public static void addView(final Context context, CustomRadioGroup
-            parent, List<String> list) {
+    public void addViewOne(Context context, CustomRadioGroup
+            parent, List<String> list, int flag) {
         parent.removeAllViews();
         RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {
-            final RadioButton radioButton = new RadioButton(context);
+            RadioButton radioButton = new RadioButton(context);
             pa.setMargins(22, 22, 22, 30);
             radioButton.setLayoutParams(pa);
             radioButton.setText(list.get(i));
+            radioButton.setId(i);
             radioButton.setTag(i);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(12);
             radioButton.setPadding(20, 20, 20, 20);
-            radioButton.setBackground(null);
             radioButton.setButtonDrawable(null);
+            if (flag == i) {
+                radioButton.setChecked(true);
+            }
             radioButton.setTextColor(R.drawable.select_camera_text_back);
             radioButton.setBackgroundResource(R.drawable.select_camera_back);
+            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        for (int j = 0; j < parent.getChildCount(); j++) {
+                            if ((parent.getChildAt(j)).getId() != radioButton.getId()) {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(false);
+                            } else {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(true);
+                                mReapirOneStauts = (Integer) buttonView.getTag();
+                            }
+                        }
+                        addViewTwo(AddTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(mReapirOneStauts), 100);
+                    }
+                }
+            });
             parent.addView(radioButton);
+        }
+    }
+
+    public void addViewTwo(Context context, CustomRadioGroup
+            parent, List<String> list, int flag) {
+        parent.removeAllViews();
+        RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < list.size(); i++) {
+            RadioButton radioButton = new RadioButton(context);
+            pa.setMargins(22, 22, 22, 30);
+            radioButton.setLayoutParams(pa);
+            radioButton.setText(list.get(i));
+            radioButton.setTag(i);
+            radioButton.setId(i);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setTextSize(12);
+            radioButton.setPadding(20, 20, 20, 20);
+            radioButton.setButtonDrawable(null);
+            if (flag == i) {
+                radioButton.setChecked(true);
+            }
+            radioButton.setTextColor(R.drawable.select_camera_text_back);
+            radioButton.setBackgroundResource(R.drawable.select_camera_back);
+            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        for (int j = 0; j < parent.getChildCount(); j++) {
+                            if ((parent.getChildAt(j)).getId() != radioButton.getId()) {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(false);
+                            } else {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(true);
+                                mReapirTwoStauts = (Integer) compoundButton.getTag();
+                            }
+                        }
+                    }
+                }
+            });
+            parent.addView(radioButton);
+
+
         }
     }
 }

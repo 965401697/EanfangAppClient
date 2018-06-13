@@ -105,7 +105,7 @@ public class RepairAppointTimeActivity extends BaseActivity {
         endDate.set(2040, 11, 31);
         mTimeYearMonthDay = new TimePickerBuilder(RepairAppointTimeActivity.this, new OnTimeSelectListener() {
             @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
+            public void onTimeS elect(Date date, View v) {//选中事件回调
                 tvDoorTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
             }
         })

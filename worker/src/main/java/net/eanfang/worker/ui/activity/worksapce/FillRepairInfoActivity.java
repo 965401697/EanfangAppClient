@@ -437,7 +437,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 @Override
                 public void onOssSuccess() {
                     Intent intent = new Intent(activity, PutUpOrderActivity.class);
-                    intent.putExtra("bean", fillBean());
+                    intent.putExtra("bean", bughandleConfirmEntity);
                     intent.putExtra("companyName", companyName);
                     intent.putExtra("companyId", companyId);
                     intent.putExtra("businessId", (ArrayList<String>) businessIdLis);
@@ -448,7 +448,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             return;
         }
         Intent intent = new Intent(this, PutUpOrderActivity.class);
-        intent.putExtra("bean", fillBean());
+        intent.putExtra("bean", bughandleConfirmEntity);
 //        intent.putExtra("workerId", workerId);
         intent.putExtra("companyName", companyName);
         intent.putExtra("companyId", companyId);

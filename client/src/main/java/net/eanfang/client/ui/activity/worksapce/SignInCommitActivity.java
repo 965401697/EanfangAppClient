@@ -77,7 +77,7 @@ public class SignInCommitActivity extends BaseActivity {
         setLeftBack();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         signinBean = (SigninBean) getIntent().getSerializableExtra("bean");
-        tvTime.setText(signinBean.getTime());
+        tvTime.setText(signinBean.getSignTime());
         tvAddress.setText(signinBean.getDetailPlace());
         tvName.setText(signinBean.getVisitorName());
         tvCompany.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());

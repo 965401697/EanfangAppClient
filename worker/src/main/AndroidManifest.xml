@@ -149,7 +149,10 @@
         <activity
             android:name=".ui.activity.worksapce.QuotationDetailActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".ui.activity.worksapce.PutUpOrderActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.PutUpOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.PutUpSelectWorkerActivity" />
         <!-- 电话未解决完善故障处理 -->
         <activity
@@ -375,8 +378,10 @@
             android:name=".ui.activity.worksapce.repair.SeeFaultParamActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 查看耗材详情 -->
         <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
-        <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity"></activity>
+        <!-- 故障处理查看照片 -->
+        <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
     </application>
 
 </manifest>

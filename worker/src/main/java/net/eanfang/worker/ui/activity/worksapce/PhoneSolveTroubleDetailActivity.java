@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.Gravity;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
@@ -115,6 +117,9 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     // 是否误报
     private String mIsRepairError = "否";
 
+    // 维修结果
+    List<String> mRepairResult = GetConstDataUtils.getBugDetailList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_ps_trouble_detail);
@@ -122,18 +127,9 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         ButterKnife.bind(this);
         initView();
         initData();
-        lookFailureDetail();
         initListener();
     }
 
-    private void lookFailureDetail() {
-
-        EanfangHttp.get(RepairApi.GET_FAILURE_DETAIL)
-                .params("id", id)
-                .execute(new EanfangCallback<RepairFailureEntity>(this, true, RepairFailureEntity.class, (bean) -> {
-                    repairFailureEntity = bean;
-                }));
-    }
 
     private void initView() {
         setTitle("故障明细");
@@ -146,7 +142,34 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         position = getIntent().getIntExtra("position", 0);
         id = getIntent().getLongExtra("id", 0);
         confirmId = getIntent().getLongExtra("confirmId", 0);
+        lookFailureDetail();
+    }
 
+    private void initListener() {
+        btnAddTrouble.setOnClickListener(v -> submit());
+        rgMisreport.setOnCheckedChangeListener(this);
+        rlAddDeviceParam.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
+            JumpItent.jump(this, DeviceParameterActivity.class, bundle, ADD_DEVICE_PARAM_REQUEST);
+        });
+    }
+
+    private void lookFailureDetail() {
+
+        EanfangHttp.get(RepairApi.GET_FAILURE_DETAIL)
+                .params("id", id)
+                .execute(new EanfangCallback<RepairFailureEntity>(this, true, RepairFailureEntity.class, (bean) -> {
+                    repairFailureEntity = bean;
+                    if (repairFailureEntity.getBughandleDetailEntityList() != null && repairFailureEntity.getBughandleDetailEntityList().size() > 0) {
+                        //取最后一条
+                        bughandleDetailEntity = repairFailureEntity.getBughandleDetailEntityList().get(repairFailureEntity.getBughandleDetailEntityList().size() - 1);
+                    }
+                    fillData();
+                }));
+    }
+
+    public void fillData() {
 
         if (bughandleDetailEntity.getParamEntityList() == null) {
             List<BughandleParamEntity> list = new ArrayList<>();
@@ -156,37 +179,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
             List<BughandleUseDeviceEntity> list = new ArrayList<>();
             bughandleDetailEntity.setUseDeviceEntityList(list);
         }
-        fillData();
-    }
 
-    private void initListener() {
-        btnAddTrouble.setOnClickListener(v -> submit());
-        rgMisreport.setOnCheckedChangeListener(this);
-        // 维修结果一级
-        rgRepairResultOne.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton tempButton = (RadioButton) findViewById(checkedId);
-                mReapirOneStauts = (Integer) tempButton.getTag();
-                addView(PhoneSolveTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(mReapirOneStauts));
-            }
-        });
-        rgRepairResultTwo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton tempButton = (RadioButton) findViewById(checkedId);
-                mReapirTwoStauts = (Integer) tempButton.getTag();
-            }
-        });
-        rlAddDeviceParam.setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
-            JumpItent.jump(this, DeviceParameterActivity.class, bundle, ADD_DEVICE_PARAM_REQUEST);
-        });
-    }
-
-
-    public void fillData() {
         if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
             String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
             String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
@@ -205,8 +198,37 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         tvDeviceLocation.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
         //故障描述
         etTroubleDesc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
+
+
+        //加载上次提交记录
+        if (bughandleDetailEntity.getId() != null) {
+            new TrueFalseDialog(this, "系统提醒", "是否加载并修改上次提交的记录？",
+                    () -> {
+                        etTroublePoint.setText(Optional.ofNullable(bughandleDetailEntity.getCheckProcess()).orElse(""));
+                        etTroubleReason.setText(Optional.ofNullable(bughandleDetailEntity.getCause()).orElse(""));
+                        etTroubleDeal.setText(Optional.ofNullable(bughandleDetailEntity.getHandle()).orElse(""));
+                        etTroubleUseAdvace.setText(Optional.ofNullable(bughandleDetailEntity.getUseAdvice()).orElse(""));
+                        mReapirOneStauts = bughandleDetailEntity.getStatus();
+                        mReapirTwoStauts = bughandleDetailEntity.getStatusTwo();
+                        addViewOne(PhoneSolveTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, bughandleDetailEntity.getStatus());
+                        addViewTwo(PhoneSolveTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(bughandleDetailEntity.getStatus()), bughandleDetailEntity.getStatusTwo());
+//                        doListener();
+                        // 是否误报
+                        if (bughandleDetailEntity.getFailureEntity().getIsMisinformation() == 0) {
+                            rgNo.setChecked(true);
+                            rgYes.setChecked(false);
+                        } else {
+                            rgNo.setChecked(false);
+                            rgYes.setChecked(true);
+                        }
+                    },
+                    () -> {
+                        bughandleDetailEntity.setId(null);
+
+                    }).showDialog();
+        }
         //添加维修结论
-        addView(PhoneSolveTroubleDetailActivity.this, rgRepairResultOne, GetConstDataUtils.getBugDetailList());
+        addViewOne(PhoneSolveTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, 100);
 
     }
 
@@ -241,10 +263,6 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         }
         if (mReapirTwoStauts == 200) {
             showToast("请选择修复方式");
-            return false;
-        }
-        if (paramEntityList.size() == 0) {
-            showToast("请选择设备参数");
             return false;
         }
         return true;
@@ -329,8 +347,8 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     /**
      * 动态添加维修结果
      */
-    public static void addView(final Context context, CustomRadioGroup
-            parent, List<String> list) {
+    public void addViewOne(final Context context, CustomRadioGroup
+            parent, List<String> list, int flag) {
         parent.removeAllViews();
         RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {
@@ -339,14 +357,75 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
             radioButton.setLayoutParams(pa);
             radioButton.setText(list.get(i));
             radioButton.setTag(i);
+            radioButton.setId(i);
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(12);
             radioButton.setPadding(20, 20, 20, 20);
-            radioButton.setBackground(null);
             radioButton.setButtonDrawable(null);
+            if (flag == i) {
+                radioButton.setChecked(true);
+            }
             radioButton.setTextColor(R.drawable.select_camera_text_back);
             radioButton.setBackgroundResource(R.drawable.select_camera_back);
+            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        for (int j = 0; j < parent.getChildCount(); j++) {
+                            if ((parent.getChildAt(j)).getId() != radioButton.getId()) {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(false);
+                            } else {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(true);
+                                mReapirOneStauts = (Integer) buttonView.getTag();
+                            }
+                        }
+                        addViewTwo(PhoneSolveTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(mReapirOneStauts), 100);
+                    }
+                }
+            });
             parent.addView(radioButton);
+        }
+    }
+
+    public void addViewTwo(Context context, CustomRadioGroup
+            parent, List<String> list, int flag) {
+        parent.removeAllViews();
+        RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < list.size(); i++) {
+            RadioButton radioButton = new RadioButton(context);
+            pa.setMargins(22, 22, 22, 30);
+            radioButton.setLayoutParams(pa);
+            radioButton.setText(list.get(i));
+            radioButton.setTag(i);
+            radioButton.setId(i);
+            radioButton.setGravity(Gravity.CENTER);
+            radioButton.setTextSize(12);
+            radioButton.setPadding(20, 20, 20, 20);
+            radioButton.setButtonDrawable(null);
+            if (flag == i) {
+                radioButton.setChecked(true);
+            }
+            radioButton.setTextColor(R.drawable.select_camera_text_back);
+            radioButton.setBackgroundResource(R.drawable.select_camera_back);
+            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        for (int j = 0; j < parent.getChildCount(); j++) {
+                            if ((parent.getChildAt(j)).getId() != radioButton.getId()) {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(false);
+                            } else {
+                                ((RadioButton) parent.getChildAt(j)).setChecked(true);
+                                mReapirTwoStauts = (Integer) compoundButton.getTag();
+                            }
+                        }
+
+                    }
+                }
+            });
+            parent.addView(radioButton);
+
+
         }
     }
 }

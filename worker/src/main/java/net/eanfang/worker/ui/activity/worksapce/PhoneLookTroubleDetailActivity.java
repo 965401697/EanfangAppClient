@@ -187,7 +187,9 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
         }
 
         //添加维修结论
-        addView(PhoneLookTroubleDetailActivity.this, rgRepairResultOne, GetConstDataUtils.getBugDetailList());
+        addView(PhoneLookTroubleDetailActivity.this, rgRepairResultOne, GetConstDataUtils.getBugDetailList(), bughandleDetailEntity.getStatus());
+        //添加维修结论
+        addView(PhoneLookTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(bughandleDetailEntity.getStatusTwo()), bughandleDetailEntity.getStatusTwo());
 
     }
 
@@ -233,7 +235,7 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
      * 动态添加维修结果
      */
     public static void addView(final Context context, CustomRadioGroup
-            parent, List<String> list) {
+            parent, List<String> list, int flag) {
         parent.removeAllViews();
         RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
         for (int i = 0; i < list.size(); i++) {
@@ -245,8 +247,12 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
             radioButton.setGravity(Gravity.CENTER);
             radioButton.setTextSize(12);
             radioButton.setPadding(20, 20, 20, 20);
-            radioButton.setBackground(null);
             radioButton.setButtonDrawable(null);
+            if (flag == i) {
+                radioButton.setChecked(true);
+            }
+            radioButton.setClickable(false);
+            radioButton.setEnabled(false);
             radioButton.setTextColor(R.drawable.select_camera_text_back);
             radioButton.setBackgroundResource(R.drawable.select_camera_back);
             parent.addView(radioButton);

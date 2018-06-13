@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
  *
  * @on 2018/1/11  22:33
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 查看故障处理
  */
 
 public class TroubleDetalilListActivity extends BaseDialog {

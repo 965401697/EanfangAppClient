@@ -2,7 +2,8 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -52,6 +53,10 @@ public class AddMaterialActivity extends BaseActivity {
     EditText etRemarks;
     @BindView(R.id.btn_add)
     Button btnAdd;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
+
+    private int maxWordsNum = 50; //输入限制的最大字数
 
     private String bugOneCode = "";
 
@@ -137,6 +142,34 @@ public class AddMaterialActivity extends BaseActivity {
         });
         btnAdd.setOnClickListener((v) -> {
             doSubmit();
+        });
+        etRemarks.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = etRemarks.getSelectionStart();
+                selectionEnd = etRemarks.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etRemarks.setText(s);
+                    etRemarks.setSelection(tempSelection); //设置光标在最后
+                }
+            }
         });
 
     }
