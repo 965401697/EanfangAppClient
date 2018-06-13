@@ -164,7 +164,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="    数  量    "
+                        android:text="数  量    "
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
@@ -196,25 +196,42 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="15dp"
-                    android:text="备注(50字以内)"
+                    android:text="备注"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 
                 <View style="@style/style_common_line_gray" />
 
-                <EditText
-                    android:id="@+id/et_remarks"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_100"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    android:layout_marginRight="@dimen/dimen_30"
-                    android:layout_marginTop="@dimen/dimen_36"
-                    android:background="@null"
-                    android:gravity="start"
-                    android:hint="请输入"
-                    android:textColor="@color/color_client_neworder"
-                    android:textColorHint="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_remarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_100"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:layout_marginTop="@dimen/dimen_36"
+                        android:background="@null"
+                        android:gravity="start"
+                        android:hint="请输入"
+                        android:textColor="@color/color_client_neworder"
+                        android:textColorHint="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/et_remarks"
+                        android:layout_alignRight="@id/et_remarks"
+                        android:padding="10dp"
+                        android:text="0/50"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
+                </RelativeLayout>
+
             </LinearLayout>
 
         </LinearLayout>

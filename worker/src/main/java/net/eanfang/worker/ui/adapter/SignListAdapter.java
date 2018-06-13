@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
 import com.eanfang.model.SignListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -32,7 +33,7 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean.ListBean, Bas
         ivPic2 = helper.getView(R.id.iv_pic2);
         ivPic3 = helper.getView(R.id.iv_pic3);
         helper.setText(R.id.tv_sign_time, item.getSignTime());
-        helper.setText(R.id.tv_address, item.getDetailPlace());
+        helper.setText(R.id.tv_address, Config.get().getAddressByCode(item.getZoneCode()) + item.getDetailPlace());
 //        helper.setText(R.id.tv_visit_name, item.getVisitorName());
 //        helper.setText(R.id.tv_remark, item.getRemarkInfo());
 

@@ -50,6 +50,10 @@ public class PersonMaintainHistoryView extends BaseDialog implements SwipeRefres
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.rv_list)
+    RecyclerView recyclerView;
+    @BindView(R.id.swipre_fresh)
+    SwipyRefreshLayout swiprefresh;
     @BindView(R.id.iv_left)
     ImageView ivLeft;
 

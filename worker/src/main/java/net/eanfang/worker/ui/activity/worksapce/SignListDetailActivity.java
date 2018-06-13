@@ -13,6 +13,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
@@ -93,7 +94,7 @@ public class SignListDetailActivity extends BaseActivity {
         setLeftBack();
 
         tvTime.setText(listBean.getSignTime());
-        tvAddress.setText(listBean.getDetailPlace());
+        tvAddress.setText(Config.get().getAddressByCode(listBean.getZoneCode()) + listBean.getDetailPlace());
         tvCompanyName.setText(listBean.getCompany().getOrgName());
         tvName.setText(listBean.getCreateUser().getAccountEntity().getRealName());
         ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar()));

@@ -204,7 +204,7 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/dimen_36"
-                android:text="注意：以下身份信息一经填写不可更改"
+                android:text="提示：以下身份信息一经填写不可更改"
                 android:textColor="@color/color_data_number"
                 android:textSize="@dimen/textSize_14" />
 

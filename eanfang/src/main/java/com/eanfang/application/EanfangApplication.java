@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.NoticeEntity;
 import com.eanfang.util.BarUtil.BarUtils;
 import com.eanfang.util.BarUtil.BaseUtil;
 import com.eanfang.util.FrecsoImagePipelineUtil;
@@ -21,6 +22,7 @@ import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
 import com.tencent.smtt.sdk.QbSdk;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -35,7 +37,11 @@ public class EanfangApplication extends CustomeApplication {
 
     public static final String TAG = EanfangApplication.class.getSimpleName();
     private static EanfangApplication mEanfangApplication;
+    /**
+     * 是否自动更新过
+     */
     public static boolean isUpdated = false;
+
     private OkGo http;
 
 

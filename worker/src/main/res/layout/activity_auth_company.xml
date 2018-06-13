@@ -160,8 +160,8 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="right"
-                        android:inputType="number"
                         android:hint="注册资本(万)"
+                        android:inputType="number"
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -181,8 +181,8 @@
                         android:id="@+id/tv_type_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="行业类型"
                         android:layout_alignParentLeft="true"
+                        android:text="行业类型"
                         android:textColor="@color/client_form_title_color"
                         android:textSize="16sp" />
 
@@ -190,22 +190,22 @@
                         android:id="@+id/tv_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@id/iv_type"
-                        android:layout_toRightOf="@id/tv_type_temp"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/font_color"
+                        android:layout_toLeftOf="@id/iv_type"
+                        android:layout_toRightOf="@id/tv_type_temp"
                         android:gravity="right"
+                        android:textColor="@color/font_color"
                         android:textSize="@dimen/textSize_10" />
 
                     <ImageView
                         android:id="@+id/iv_type"
                         android:layout_width="18sp"
                         android:layout_height="18sp"
+                        android:layout_alignParentRight="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:layout_alignParentRight="true"
                         android:src="@mipmap/arrow_right" />
                 </RelativeLayout>
 
@@ -298,8 +298,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -333,8 +333,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/et_detail_address"

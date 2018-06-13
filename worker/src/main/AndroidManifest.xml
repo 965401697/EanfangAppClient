@@ -149,7 +149,10 @@
         <activity
             android:name=".ui.activity.worksapce.QuotationDetailActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".ui.activity.worksapce.PutUpOrderActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.PutUpOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.PutUpSelectWorkerActivity" />
         <!-- 电话未解决完善故障处理 -->
         <activity
@@ -372,6 +375,7 @@
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+
         <activity android:name=".ui.activity.worksapce.contacts.CooperationAddActivity" />
         <!-- 合作业务的列表 -->
         <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationActivity" />
@@ -380,6 +384,17 @@
         <!-- 合作业务绑定成功 -->
         <activity android:name=".ui.activity.worksapce.contacts.CooperactionRelationSubActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.CooperationSearchClientActivity"></activity>
+
+        <!-- 查看设备参数 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.SeeFaultParamActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 查看耗材详情 -->
+        <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
+        <!-- 故障处理查看照片 -->
+        <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
+
     </application>
 
 </manifest>

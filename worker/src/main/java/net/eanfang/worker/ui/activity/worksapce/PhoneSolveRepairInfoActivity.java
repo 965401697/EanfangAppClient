@@ -122,6 +122,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         setTitle("电话解决");
         setLeftBack();
         rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
+        rv_trouble.setNestedScrollingEnabled(false);
         et_remain_question = (EditText) findViewById(R.id.et_remain_question);
         snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
         tv_commit = (TextView) findViewById(R.id.tv_commit);

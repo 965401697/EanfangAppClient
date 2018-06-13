@@ -117,7 +117,6 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
             EventBus.getDefault().register(this);
         }
         initView();
-        initNinePhoto();
         initListener();
     }
 
@@ -126,6 +125,8 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         setTitle("添加照片");
         setLeftBack();
         detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+        initNinePhoto();
+        initImgUrlList();
     }
 
 
@@ -166,7 +167,6 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {

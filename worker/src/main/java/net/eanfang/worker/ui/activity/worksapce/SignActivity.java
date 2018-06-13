@@ -31,10 +31,13 @@ import com.eanfang.model.SignCountBean;
 import com.eanfang.model.SigninBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -139,7 +142,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         SigninBean signinBean = new SigninBean();
         signinBean.setLatitude(latitude + "");
         signinBean.setLongitude(longitude + "");
-        signinBean.setTime(textClock.getText().toString().trim());
+        signinBean.setSignTime(GetDateUtils.dateToDateTimeString(new Date()));
         signinBean.setDetailPlace(detailPlace);
         signinBean.setVisitorName(etVisitName.getText().toString().trim());
         signinBean.setZoneCode(Config.get().getAreaCodeByName(cityAddress, contry));
@@ -275,11 +278,11 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
                 StringBuffer sb = new StringBuffer();
                 //省信息
-                sb.append(amapLocation.getProvince());
+//                sb.append(amapLocation.getProvince());
                 //城市信息
-                sb.append(amapLocation.getCity());
+//                sb.append(amapLocation.getCity());
                 //城区信息
-                sb.append(amapLocation.getDistrict());
+//                sb.append(amapLocation.getDistrict());
                 //街道信息
                 sb.append(amapLocation.getStreet());
                 //街道门牌号信息
@@ -294,7 +297,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
                 latitude = amapLocation.getLatitude();
                 longitude = amapLocation.getLongitude();
                 cityAddress = amapLocation.getCity();
-                contry = amapLocation.getAddress();
+                contry = amapLocation.getDistrict();
                 detailPlace = sb.toString();
                 tvSiginAddress.setText(detailPlace);
 

@@ -172,7 +172,7 @@ public class SignInActivity extends BaseWorkerActivity {
     private void doHttp(Long orderId) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("orderId", orderId + "");
-        queryEntry.getEquals().put("signInTime", tvTime.getText().toString().trim());
+        queryEntry.getEquals().put("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
         queryEntry.getEquals().put("signLongitude", mLongitude + "");
         queryEntry.getEquals().put("signLatitude", mLatitude + "");
         queryEntry.getEquals().put("signScope", mSignScope);

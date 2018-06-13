@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 
 public class MateraInfoView extends BaseDialog {
 
-
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)

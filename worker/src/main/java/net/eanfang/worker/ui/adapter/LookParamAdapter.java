@@ -23,9 +23,9 @@ public class LookParamAdapter extends BaseQuickAdapter<BughandleParamEntity, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, final BughandleParamEntity item) {
-        helper.setText(R.id.tv_param, item.getParamName());
+        helper.setText(R.id.tv_param_name, item.getParamName());
         if (StringUtils.isValid(item.getParamValue())) {
-            helper.setText(R.id.et_param, item.getParamValue());
+            helper.setText(R.id.tv_param_value, item.getParamValue());
         }
     }
 }
