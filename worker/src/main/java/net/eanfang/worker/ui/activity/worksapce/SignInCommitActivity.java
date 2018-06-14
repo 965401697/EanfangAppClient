@@ -120,7 +120,11 @@ public class SignInCommitActivity extends BaseActivity {
                     intent.putExtra("title", title);
                     intent.putExtra("status", status);
                     setResult(SIGN_SUCCESS, intent);
-                    showToast("签到成功");
+                    if (status == 0) {
+                        showToast("签到成功");
+                    } else {
+                        showToast("签退成功");
+                    }
                     finishSelf();
                 }));
     }

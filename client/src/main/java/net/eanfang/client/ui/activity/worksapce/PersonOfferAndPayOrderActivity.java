@@ -78,9 +78,9 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
 
             @Override
             public void onPageSelected(int position) {
-                currentFragment = (PersonOfferAndPayListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-                initData(1);
+//                currentFragment = (PersonOfferAndPayListFragment) mFragments.get(position);
+//                currentFragment.onDataReceived();
+//                initData(1);
             }
 
             @Override
@@ -88,45 +88,45 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
 
             }
         });
-        currentFragment = (PersonOfferAndPayListFragment) mFragments.get(0);
-        initData(1);
+//        currentFragment = (PersonOfferAndPayListFragment) mFragments.get(0);
+//        initData(1);
 
     }
 
-    private void initData(int page) {
-        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+//    private void initData(int page) {
+//        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+//
+//        QueryEntry queryEntry = new QueryEntry();
+//        queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+//        queryEntry.getEquals().put("status", status + "");
+//
+//        queryEntry.setPage(page);
+//        queryEntry.setSize(5);
+//
+//        EanfangHttp.post(NewApiService.QUOTE_ORDER_LIST)
+//                .upJson(JsonUtils.obj2String(queryEntry))
+//                .execute(new EanfangCallback<PayOrderListBean>(this, true, PayOrderListBean.class, (bean) -> {
+//                    runOnUiThread(() -> {
+//                        workReportListBean = bean;
+//                        currentFragment.onDataReceived();
+//                    });
+//                }));
+//
+//    }
 
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
-        queryEntry.getEquals().put("status", status + "");
-
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-
-        EanfangHttp.post(NewApiService.QUOTE_ORDER_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<PayOrderListBean>(this, true, PayOrderListBean.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        workReportListBean = bean;
-                        currentFragment.onDataReceived();
-                    });
-                }));
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData(1);
-    }
-
-    public PayOrderListBean getWorkReportListBean() {
-        return workReportListBean;
-    }
-
-    public void setWorkReportListBean(PayOrderListBean workReportListBean) {
-        this.workReportListBean = workReportListBean;
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        initData(1);
+//    }
+//
+//    public PayOrderListBean getWorkReportListBean() {
+//        return workReportListBean;
+//    }
+//
+//    public void setWorkReportListBean(PayOrderListBean workReportListBean) {
+//        this.workReportListBean = workReportListBean;
+//    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

@@ -108,7 +108,7 @@ public class CooperationRelationActivity extends BaseWorkerActivity implements S
         queryEntry.setSize(5);
         queryEntry.setPage(mPage);
 
-        queryEntry.getEquals().put("assigneeOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+        queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
 
         EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

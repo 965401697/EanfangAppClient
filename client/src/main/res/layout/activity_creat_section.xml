@@ -58,7 +58,7 @@
         android:textSize="@dimen/textSize_14" />
 
 
-    <TextView
+<!--    <TextView
         android:id="@+id/tv_created"
         android:layout_width="match_parent"
         android:visibility="visible"
@@ -67,6 +67,6 @@
         android:background="@color/color_service_title"
         android:gravity="center"
         android:text="完成创建"
-        android:textColor="@color/white" />
+        android:textColor="@color/white" />-->
 
 </RelativeLayout>

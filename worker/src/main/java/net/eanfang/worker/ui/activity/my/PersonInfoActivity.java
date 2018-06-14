@@ -125,7 +125,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void initView() {
         setTitle("我的资料");
-        setRightTitle("确认");
+        setRightTitle("保存");
         setLeftBack();
         rbMan.isChecked();
         ivUpload.setOnClickListener(v -> {

@@ -34,8 +34,6 @@ public class CreatSectionActivity extends BaseClientActivity {
     TextView tvSectionName;
     @BindView(R.id.et_new_name)
     EditText etNewName;
-    @BindView(R.id.tv_created)
-    TextView tvCreated;
 
     private String parentOrgId;
 
@@ -46,41 +44,18 @@ public class CreatSectionActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("创建部门");
         setLeftBack();
+        setRightTitle("创建");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                created();
+            }
+        });
     }
 
-    @OnClick({R.id.tv_created, R.id.ll_section})
+    @OnClick(R.id.ll_section)
     public void onViewClicked(View v) {
         switch (v.getId()) {
-            case R.id.tv_created:
-
-
-                if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
-                    parentOrgId = String.valueOf(EanfangApplication.get().getCompanyId());
-                }
-
-                if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
-                    ToastUtil.get().showToast(CreatSectionActivity.this, "请输入部门名称");
-                    return;
-                }
-
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("parentOrgId", parentOrgId);
-                    object.put("orgName", etNewName.getText().toString().trim());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                EanfangHttp.post(NewApiService.CREAT_SECTION)
-                        .upJson(object)
-                        .execute(new EanfangCallback<JSONObject>(CreatSectionActivity.this, true, JSONObject.class, (bean) -> {
-
-                            ToastUtil.get().showToast(CreatSectionActivity.this, "创建成功");
-
-                            finishSelf();
-
-                        }));
-                break;
             case R.id.ll_section:
 
 //                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
@@ -94,6 +69,37 @@ public class CreatSectionActivity extends BaseClientActivity {
                 break;
         }
 
+    }
+
+
+    private void created(){
+
+        if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
+            parentOrgId = String.valueOf(EanfangApplication.get().getCompanyId());
+        }
+
+        if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
+            ToastUtil.get().showToast(CreatSectionActivity.this, "请输入部门名称");
+            return;
+        }
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("parentOrgId", parentOrgId);
+            object.put("orgName", etNewName.getText().toString().trim());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        EanfangHttp.post(NewApiService.CREAT_SECTION)
+                .upJson(object)
+                .execute(new EanfangCallback<JSONObject>(CreatSectionActivity.this, true, JSONObject.class, (bean) -> {
+
+                    ToastUtil.get().showToast(CreatSectionActivity.this, "创建成功");
+
+                    finishSelf();
+
+                }));
     }
 
     @Subscribe

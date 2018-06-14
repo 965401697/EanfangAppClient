@@ -15,12 +15,8 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_above="@+id/tv_sub"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -275,20 +271,18 @@
                         android:src="@mipmap/arrow_right" />
 
                 </LinearLayout>
-
+                <TextView
+                    android:id="@+id/tv_sub"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_88"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center"
+                    android:text="提交绑定"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_14" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_sub"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_88"
-                android:layout_alignParentBottom="true"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:text="提交绑定"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSize_14" />
-        </RelativeLayout>
     </ScrollView>
 </LinearLayout>

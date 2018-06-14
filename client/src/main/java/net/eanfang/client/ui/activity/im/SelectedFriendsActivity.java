@@ -221,11 +221,15 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
-                        mUserIconList.remove(bean.getAvatar());
+                        if (!TextUtils.isEmpty(bean.getAvatar())) {
+                            mUserIconList.remove(bean.getAvatar());
+                        }
                         bean.setFlag(0);
                     } else {
                         mUserIdList.add(bean.getAccId());
-                        mUserIconList.add(bean.getAvatar());
+                        if (!TextUtils.isEmpty(bean.getAvatar())) {
+                            mUserIconList.add(bean.getAvatar());
+                        }
                         bean.setFlag(1);
                         mCurrentBean = bean;
                     }

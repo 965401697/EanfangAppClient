@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -41,6 +42,8 @@ public class SignListActivity extends BaseActivity {
     LinearLayout llSignLayout;
     @BindView(R.id.ll_footer)
     LinearLayout llFooter;
+    @BindView(R.id.tv_sign)
+    TextView tvSign;
     private String title;
     private int status;
 
@@ -55,9 +58,10 @@ public class SignListActivity extends BaseActivity {
     private void initView() {
         title = getIntent().getStringExtra("title");
         status = getIntent().getIntExtra("status", 0);
+        if (status == 1) tvSign.setText("签退");
         setTitle("足迹");
         setLeftBack();
-        llSignLayout.setOnClickListener(v ->finishSelf());
+        llSignLayout.setOnClickListener(v -> finishSelf());
         initData();
     }
 

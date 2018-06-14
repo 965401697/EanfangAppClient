@@ -66,14 +66,14 @@ public class CooperationAddActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_end_time)
     TextView tvEndTime;
     @BindView(R.id.recycler_view_classfiy)
-    RecyclerView recyclerViewClassfiy;
+    RecyclerView recyclerViewBusiness;
     @BindView(R.id.recycler_view_kind)
-    RecyclerView recyclerViewKind;
-    private CooperationAddAdapter classifyCooperationAddAdapter;
-    private CooperationAddAdapter kindCooperationAddAdapter;
+    RecyclerView recyclerViewOs;
+    private CooperationAddAdapter businessCooperationAddAdapter;
+    private CooperationAddAdapter osCooperationAddAdapter;
 
     List<String> mBusinessList = new ArrayList<>();
-    List<String> mServiceList = new ArrayList<>();
+    List<String> mOsList = new ArrayList<>();
 
 
     List<CooperationEntity> businessServerBeanArrayList = new ArrayList<>();
@@ -110,24 +110,24 @@ public class CooperationAddActivity extends BaseWorkerActivity {
 
 
         List<BaseDataEntity> businessList = Config.get().getBusinessList(1);
-        mServiceList = GetConstDataUtils.getCooperationTypeList();
+        mOsList = GetConstDataUtils.getCooperationTypeList();
 
         for (BaseDataEntity business : businessList) {
             mBusinessList.add(business.getDataName());
         }
 
 
-        recyclerViewClassfiy.setLayoutManager(new GridLayoutManager(this, 4));
-        recyclerViewKind.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
 
-        classifyCooperationAddAdapter = new CooperationAddAdapter(R.layout.item_cooperation_add);
-        kindCooperationAddAdapter = new CooperationAddAdapter(R.layout.item_cooperation_add);
+        businessCooperationAddAdapter = new CooperationAddAdapter(R.layout.item_cooperation_add);
+        osCooperationAddAdapter = new CooperationAddAdapter(R.layout.item_cooperation_add);
 
-        classifyCooperationAddAdapter.bindToRecyclerView(recyclerViewClassfiy);
-        kindCooperationAddAdapter.bindToRecyclerView(recyclerViewKind);
+        businessCooperationAddAdapter.bindToRecyclerView(recyclerViewBusiness);
+        osCooperationAddAdapter.bindToRecyclerView(recyclerViewOs);
 
-        classifyCooperationAddAdapter.setNewData(mServiceList);
-        kindCooperationAddAdapter.setNewData(mBusinessList);
+        businessCooperationAddAdapter.setNewData(mOsList);
+        osCooperationAddAdapter.setNewData(mBusinessList);
 
 
         doSelectYearMonthDay();
@@ -135,8 +135,8 @@ public class CooperationAddActivity extends BaseWorkerActivity {
 
 
     private void sub() {
-        List<CheckBox> osCheckBoxes = classifyCooperationAddAdapter.getCheckBoxList();
-        List<CheckBox> businessCheckBoxes = kindCooperationAddAdapter.getCheckBoxList();
+        List<CheckBox> businessCheckBoxes = businessCooperationAddAdapter.getCheckBoxList();
+        List<CheckBox> osCheckBoxes = osCooperationAddAdapter.getCheckBoxList();
 
         if (businessCheckBoxes.size() == 0) {
             ToastUtil.get().showToast(this, "请选择业务类别");
