@@ -1,21 +1,30 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EvaluateWorkerBean;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
@@ -26,7 +35,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * @desc
  */
 
-public class EvaluateClientActivity extends BaseWorkerActivity {
+public class EvaluateClientActivity extends BaseWorkerActivity implements RadioGroup.OnCheckedChangeListener {
     @BindView(R.id.rb_star1)
     MaterialRatingBar rbStar1;
     @BindView(R.id.rb_star2)
@@ -39,8 +48,29 @@ public class EvaluateClientActivity extends BaseWorkerActivity {
     MaterialRatingBar rbStar5;
     @BindView(R.id.tv_select)
     TextView tvSelect;
+    @BindView(R.id.ll_workerAnonymous)
+    LinearLayout llWorkerAnonymous;
     private String ordernum;
     private Long orderId, ownerId;
+
+    @BindView(R.id.sdv_workerHead)
+    SimpleDraweeView sdvWorkerHead;
+
+    @BindView(R.id.rb_wonderful)
+    RadioButton rbWonderful;
+    @BindView(R.id.rb_good)
+    RadioButton rbGood;
+    @BindView(R.id.rb_bad)
+    RadioButton rbBad;
+    @BindView(R.id.rg_score)
+    RadioGroup rgScore;
+
+
+    @BindView(R.id.iv_anonyMous)
+    ImageView ivAnonyMous;
+
+    //是否匿名
+    private boolean isAnonymous = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +87,7 @@ public class EvaluateClientActivity extends BaseWorkerActivity {
         ordernum = intent.getStringExtra("ordernum");
         orderId = intent.getLongExtra("orderId", 0);
         ownerId = intent.getLongExtra("ownerId", 0);
+        sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Uri.parse(getIntent().getStringExtra("avatar"))));
     }
 
     private void initView() {
@@ -83,6 +114,35 @@ public class EvaluateClientActivity extends BaseWorkerActivity {
                     showToast("评价成功");
                     finish();
                 }));
+    }
+
+    @OnClick(R.id.ll_workerAnonymous)
+    public void onViewClicked() {
+        if (!isAnonymous) {
+            ivAnonyMous.setImageResource(R.mipmap.ic_evalute_worker_pressed);
+            isAnonymous = true;
+        } else {
+            ivAnonyMous.setImageResource(R.mipmap.ic_evalute_worker);
+            isAnonymous = false;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+        switch (group.getCheckedRadioButtonId()) {
+            case R.id.tv_repair://超赞
+//                selectProjectType = "超赞";
+                break;
+            case R.id.tv_check://一般
+//                selectProjectType = "一般";
+                break;
+            case R.id.tv_task://差评
+//                selectProjectType = "差评";
+                break;
+            default:
+                break;
+
+        }
     }
 }
 

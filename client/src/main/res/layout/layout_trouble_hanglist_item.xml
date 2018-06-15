@@ -2,39 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_40">
 
     <TextView
-        android:id="@+id/tv_hangOrgUser"
+        android:id="@+id/tv_hangContnet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/color_bottom"
         android:textSize="@dimen/textSize_13" />
-
-    <TextView
-        android:id="@+id/tv_hangTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/color_bottom"
-        android:textSize="@dimen/textSize_13" />
-
-    <TextView
-        android:id="@+id/tv_hangResson"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/color_bottom"
-        android:textSize="@dimen/textSize_13" />
-
-    <TextView
-        android:id="@+id/tv_hangReceiveUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/color_bottom"
-        android:textSize="@dimen/textSize_13" />
-
 
 </LinearLayout>

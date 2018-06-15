@@ -120,6 +120,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     private void initData() {
         bughandleDetailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("bughandleDetailEntity");
         initImgUrlList();
+        initNinePhoto();
     }
 
 

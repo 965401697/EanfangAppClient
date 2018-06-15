@@ -36,6 +36,7 @@ import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -50,6 +51,7 @@ import net.eanfang.client.ui.adapter.ToRepairAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.RepairSelectTimePop;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -258,8 +260,9 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      * 故障明细
      */
     public void addTouble() {
-        Intent intent = new Intent(this, AddTroubleActivity.class);
-        startActivityForResult(intent, ADD_TROUBLE_CALLBACK_CODE);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("beanList", (Serializable) beanList);
+        JumpItent.jump(this, AddTroubleActivity.class, bundle, ADD_TROUBLE_CALLBACK_CODE);
     }
 
     /**

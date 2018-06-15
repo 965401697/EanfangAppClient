@@ -105,6 +105,8 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView mTvDoorFee;
     // 订单金额
     private TextView mTvOrderAllPrice;
+    // 头像地址
+    private String mHeadUrl = "";
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -177,7 +179,7 @@ public class OrderDetailFragment extends BaseFragment {
                         .putExtra("ordernum", mOrderNum)
                         .putExtra("workerUid", mAssigneeUserId)
                         .putExtra("orderId", mItemId)
-                );
+                        .putExtra("avatar", mHeadUrl));
             }
         });
         // 查看完工报告
@@ -305,7 +307,8 @@ public class OrderDetailFragment extends BaseFragment {
                     mAssigneeUserId = bean.getAssigneeUserId();
                     //客户端
                     if (bean.getAssigneeUser() != null) {
-                        iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
+                        mHeadUrl = bean.getAssigneeUser().getAccountEntity().getAvatar();
+                        iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(mHeadUrl));
                         tv_worker_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
                         tv_worker_company.setText(V.v(() -> bean.getAssigneeOrg().getBelongCompany().getOrgName()));
                         iv_phone.setTag(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));

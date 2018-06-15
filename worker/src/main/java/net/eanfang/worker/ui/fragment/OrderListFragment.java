@@ -223,7 +223,8 @@ public class OrderListFragment extends BaseFragment implements
                         startActivity(new Intent(getActivity(), EvaluateClientActivity.class).putExtra("flag", 0)
                                 .putExtra("ordernum", item.getOrderNum())
                                 .putExtra("ownerId", item.getOwnerUserId())
-                                .putExtra("orderId", item.getId()));
+                                .putExtra("orderId", item.getId())
+                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
                         break;
                     default:
                         break;

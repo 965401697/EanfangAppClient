@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -366,6 +367,12 @@
 
                 <View style="@style/style_common_line_gray" />
 
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_repair_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    zhy:max_select="1" />
+
                 <com.eanfang.witget.CustomRadioGroup
                     android:id="@+id/rg_repairResultOne"
                     android:layout_width="match_parent"
@@ -374,7 +381,8 @@
                     android:layout_marginTop="@dimen/dimen_30"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/dimen_30"
-                    android:paddingRight="@dimen/dimen_30" />
+                    android:paddingRight="@dimen/dimen_30"
+                    android:visibility="gone" />
 
                 <View style="@style/style_common_line_gray" />
 

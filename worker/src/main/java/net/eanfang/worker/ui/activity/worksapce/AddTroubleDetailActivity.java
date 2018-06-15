@@ -7,19 +7,24 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
+import com.camera.util.LogUtil;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -33,6 +38,9 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 import com.yaf.base.entity.RepairFailureEntity;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.AddTroubleAddPictureActivity;
@@ -46,6 +54,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,9 +118,12 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     // 维修结果
     @BindView(R.id.rg_repairResultOne)
     CustomRadioGroup rgRepairResultOne;
+    @BindView(R.id.tag_repair_result)
+    TagFlowLayout tagRepairResult;
     // 修复方式
     @BindView(R.id.rg_repairResultTwo)
     CustomRadioGroup rgRepairResultTwo;
+
 
     // 维修结果一级
     private int mReapirOneStauts = 100;
@@ -165,6 +177,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         rcyConsumable.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rcyConsumable.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     private void initData() {
@@ -266,6 +279,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
                     }).showDialog();
         }
+
         addViewOne(AddTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, 100);
     }
 
@@ -286,6 +300,34 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                 }
             });
         }
+        tagRepairResult.setAdapter(new TagAdapter<String>(mRepairResult) {
+            @Override
+            public View getView(FlowLayout parent, int position, String mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(AddTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResult, false);
+                tv.setText(mrepairResult);
+                return tv;
+            }
+        });
+        tagRepairResult.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                Log.e("GGGGGG", "" + position);
+                return true;
+            }
+        });
+        tagRepairResult.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                if (!selectPosSet.isEmpty()) {
+//                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+//                    int position = Integer.parseInt(str);
+//                    Log.e("GG", "" + position + mRepairResult.get(position));
+                }
+
+//                tagRepairResult.getSelectedList().clear();
+//                tagRepairResult.getAdapter().notifyDataChanged();
+            }
+        });
     }
 
     private void submit() {
