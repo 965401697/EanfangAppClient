@@ -33,6 +33,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -61,7 +62,10 @@ public class PermissionManagerActivity extends BaseClientActivity {
     TextView tvSure;
 
     private User mBean;
-    private RoleBean roleBean;
+
+    private ArrayList<String> roleIdList = new ArrayList<>();
+    private ArrayList<String> roleNameList = new ArrayList<>();
+
     private final int ROLE_FLAG = 101;
     private String departmentId;
 
@@ -89,7 +93,9 @@ public class PermissionManagerActivity extends BaseClientActivity {
                 subMermission();
                 break;
             case R.id.ll_role:
-                startActivityForResult(new Intent(this, AolltRoleActivity.class), ROLE_FLAG);
+                Intent in = new Intent(this, AolltRoleActivity.class);
+                in.putStringArrayListExtra("roleNameList", roleNameList);
+                startActivityForResult(in, ROLE_FLAG);
                 break;
         }
     }
@@ -104,47 +110,21 @@ public class PermissionManagerActivity extends BaseClientActivity {
             return;
         }
 
+        //添加角色
+        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + mBean.getAccId())
+                .upJson(JSON.toJSONString(roleIdList))
+                .execute(new EanfangCallback<JSONObject>(PermissionManagerActivity.this, true, JSONObject.class) {
 
-        UserEntity userEntity = new UserEntity();
-
-        userEntity.setDepartmentId(Long.parseLong(departmentId));
-
-        AccountEntity accountEntity = new AccountEntity();
-
-        accountEntity.setAccId(Long.parseLong(mBean.getAccId()));
-        accountEntity.setMobile(mBean.getMobile());
-        userEntity.setAccountEntity(accountEntity);
-
-        com.alibaba.fastjson.JSONObject jsonObject = (com.alibaba.fastjson.JSONObject) JSON.toJSON(userEntity);
-
-
-        EanfangHttp.post(NewApiService.ADD_STAFF)
-                .upJson(jsonObject.toJSONString())
-                .execute(new EanfangCallback<UserEntity>(PermissionManagerActivity.this, true, UserEntity.class) {
                     @Override
-                    public void onSuccess(UserEntity bean) {
+                    public void onSuccess(JSONObject bean) {
+                        ToastUtil.get().showToast(PermissionManagerActivity.this, "授权成功");
 
-                        JSONArray array = new JSONArray();
-                        array.add(Long.parseLong(roleBean.getRoleId()));
-
-
-                        //添加角色
-                        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + bean.getAccountEntity().getAccId())
-                                .upJson(array.toJSONString())
-                                .execute(new EanfangCallback<JSONObject>(PermissionManagerActivity.this, true, JSONObject.class) {
-
-                                    @Override
-                                    public void onSuccess(JSONObject bean) {
-                                        ToastUtil.get().showToast(PermissionManagerActivity.this, "授权成功");
-
-                                        endTransaction(true);
-                                    }
-
-                                });
+                        endTransaction(true);
                     }
 
-
                 });
+
+
     }
 
     @Subscribe
@@ -167,6 +147,15 @@ public class PermissionManagerActivity extends BaseClientActivity {
                         ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + b.getAvatar());
                         tvNamePhone.setText(b.getNickName() + "(" + b.getMobile() + ")");
                         tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());
+
+
+                        EanfangHttp.get(NewApiService.MY_CURREMT_LIST_ROLE + mBean.getAccId())
+                                .execute(new EanfangCallback<RoleBean>(PermissionManagerActivity.this, true, RoleBean.class, true, (list) -> {
+                                    for (RoleBean roleBean : list) {
+                                        roleNameList.add(roleBean.getRoleName());
+                                    }
+                                }));
+
                     }));
 
 
@@ -176,6 +165,8 @@ public class PermissionManagerActivity extends BaseClientActivity {
             llRole.setVisibility(View.GONE);
             tvSure.setVisibility(View.GONE);
         }
+
+
     }
 
     @Override
@@ -183,8 +174,19 @@ public class PermissionManagerActivity extends BaseClientActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == ROLE_FLAG) {
-                roleBean = (RoleBean) data.getSerializableExtra("bean");
-                tvRole.setText(roleBean.getRoleName());
+                roleIdList.clear();
+                roleNameList.clear();
+
+                roleIdList = data.getStringArrayListExtra("roleIdList");
+                roleNameList = data.getStringArrayListExtra("roleNameList");
+
+                StringBuffer stringBuffer = new StringBuffer();
+                for (String s : roleNameList) {
+                    stringBuffer.append(s + ",");
+                }
+                tvRole.setText(stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1));
+
+
             }
         }
     }
