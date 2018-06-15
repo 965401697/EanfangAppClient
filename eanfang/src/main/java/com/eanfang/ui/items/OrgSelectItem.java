@@ -2,6 +2,7 @@ package com.eanfang.ui.items;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.widget.CheckBox;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.item.TreeItem;
@@ -9,6 +10,10 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.util.SharePreferenceUtil;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -16,6 +21,9 @@ import com.eanfang.model.TemplateBean;
 
 public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
 
+
+    private static ViewHolder oldViewHolder;
+    private static TreeItemGroup oldParentItem;
 
     @Override
     public int getLayoutId() {
@@ -26,20 +34,6 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
         viewHolder.setText(R.id.tv_name, data.getName());
         viewHolder.getImageView(R.id.iv_user_header).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()));
-
-//        if (data.isChecked()) {
-//            ((CheckBox) viewHolder.getView(R.id.cb_check)).setChecked(true);
-//        } else {
-//            ((CheckBox) viewHolder.getView(R.id.cb_check)).setChecked(false);
-//        }
-//
-//        ((CheckBox) viewHolder.getView(R.id.cb_check)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                data.setChecked(isChecked);
-//
-//            }
-//        });
 
         TreeItemGroup parentItem = getParentItem();
         if (parentItem instanceof OrgSelectGroupMultipleItem) {
@@ -53,7 +47,21 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
     @Override
     public void onClick(ViewHolder viewHolder) {
         super.onClick(viewHolder);
-//        TemplateBean.Preson preson = (TemplateBean.Preson) getItemManager().getItem(viewHolder.getAdapterPosition());
+
+
+//        TreeItemGroup parentItem = getParentItem();
+//
+//        if (parentItem instanceof OrgSelectGroupSingleItem) {
+//
+//            if (oldViewHolder != null) {
+//                oldViewHolder.setChecked(R.id.cb_check, false);
+//            }
+//
+//            oldViewHolder = viewHolder;
+//            oldParentItem = parentItem;
+//            viewHolder.setChecked(R.id.cb_check, true);
+//        } else {
         getItemManager().notifyDataChanged();
+//        }
     }
 }

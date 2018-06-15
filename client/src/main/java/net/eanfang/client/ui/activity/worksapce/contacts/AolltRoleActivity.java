@@ -17,6 +17,9 @@ import com.eanfang.util.ToastUtil;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -26,7 +29,8 @@ public class AolltRoleActivity extends BaseClientActivity {
     RecyclerView recyclerView;
     private AolltRoleAdapter aolltRoleAdapter;
 
-    private int oldPositon = -1;
+    private ArrayList<String> roleIdList = new ArrayList<>();
+    private ArrayList<String> roleNameList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,10 @@ public class AolltRoleActivity extends BaseClientActivity {
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (oldPositon != -1) {
+                if (roleIdList.size() > 0) {
                     Intent intent = new Intent();
-                    intent.putExtra("bean", aolltRoleAdapter.getData().get(oldPositon));
+                    intent.putStringArrayListExtra("roleIdList", roleIdList);
+                    intent.putStringArrayListExtra("roleNameList", roleNameList);
                     setResult(RESULT_OK, intent);
                     finish();
                 } else {
@@ -51,12 +56,20 @@ public class AolltRoleActivity extends BaseClientActivity {
                 }
             }
         });
+
+        roleNameList = getIntent().getStringArrayListExtra("roleNameList");
     }
 
     private void initData() {
         EanfangHttp.get(NewApiService.MY_LIST_ROLE)
                 .execute(new EanfangCallback<RoleBean>(AolltRoleActivity.this, true, RoleBean.class, true, (list) -> {
 
+                    for (RoleBean roleBean : list) {
+                        if (roleNameList.contains(roleBean.getRoleName())) {
+                            roleBean.setChecked(true);
+                            roleIdList.add(roleBean.getRoleId());
+                        }
+                    }
                     aolltRoleAdapter.setNewData(list);
                 }));
     }
@@ -73,24 +86,17 @@ public class AolltRoleActivity extends BaseClientActivity {
 
                 RoleBean bean = (RoleBean) adapter.getData().get(position);
 
-                if (oldPositon == -1) {
-                    oldPositon = position;
-                    bean.setChecked(true);
-                    adapter.notifyDataSetChanged();
-                    return;
-                }
-
-                if (position == oldPositon) {
-                    oldPositon = -1;
+                if (bean.isChecked()) {
                     bean.setChecked(false);
-                } else {
-                    ((RoleBean) adapter.getData().get(oldPositon)).setChecked(false);
-                    oldPositon = position;
+                    roleIdList.remove(bean.getRoleId());
+                    roleNameList.remove(bean.getRoleName());
 
+                } else {
                     bean.setChecked(true);
+                    roleIdList.add(bean.getRoleId());
+                    roleNameList.add(bean.getRoleName());
                 }
                 adapter.notifyDataSetChanged();
-
             }
         });
     }

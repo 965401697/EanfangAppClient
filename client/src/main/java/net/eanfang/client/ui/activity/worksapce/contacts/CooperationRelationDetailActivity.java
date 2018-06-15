@@ -13,6 +13,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -109,7 +110,7 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
             companyName = list.get(0).getAssigneeOrg().getOrgName();
             ivCompanyLogo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getAssigneeOrg().getOrgUnitEntity().getLogoPic()));
             tvCompanyName.setText(companyName);
-            tvAddress.setText(Config.get().getAddressByCode(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode()) + list.get(0).getAssigneeOrg().getOrgUnitEntity().getOfficeAddress());
+//            tvAddress.setText(Config.get().getAddressByCode(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode()) + list.get(0).getAssigneeOrg().getOrgUnitEntity().getOfficeAddress());
 
             ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getCreateUserEntity().getAccountEntity().getAvatar()));
             tvName.setText(list.get(0).getCreateUserEntity().getAccountEntity().getRealName());
@@ -119,12 +120,14 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
             tvEndTime.setText(GetDateUtils.dateToFormatString(list.get(0).getEndTime(), "yyyy.MM.dd"));
 
 
+            List<String> mOsList = GetConstDataUtils.getCooperationTypeList();
+
             for (CooperationEntity cooperationEntity : list) {
 
                 array.add(cooperationEntity.getId());
 
                 //业务类型
-                String service = Config.get().getServiceNameById(cooperationEntity.getBusType());
+                String service = mOsList.get(cooperationEntity.getBusType());
                 Log.e("zzw", service + "");
                 //系统类型
                 String business = Config.get().getBusinessNameByCode(cooperationEntity.getBusinessOneCode(), 1);

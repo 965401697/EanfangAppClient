@@ -36,6 +36,7 @@ public class CreatSectionActivity extends BaseClientActivity {
     EditText etNewName;
 
     private String parentOrgId;
+    private String topCompanyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +59,8 @@ public class CreatSectionActivity extends BaseClientActivity {
         switch (v.getId()) {
             case R.id.ll_section:
 
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
                 Uri uri = Uri.parse("worker://");
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
                 intent.setData(uri);
                 intent.putExtra("isRadio", "isRadio");//是否是单选
                 startActivity(intent);
@@ -72,20 +71,24 @@ public class CreatSectionActivity extends BaseClientActivity {
     }
 
 
-    private void created(){
+    private void created() {
+        JSONObject object = new JSONObject();
 
-        if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
-            parentOrgId = String.valueOf(EanfangApplication.get().getCompanyId());
-        }
+//        if (TextUtils.isEmpty(tvSectionName.getText().toString().trim())) {
+//            parentOrgId = String.valueOf(EanfangApplication.get().getCompanyId());
+//        }
 
         if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
             ToastUtil.get().showToast(CreatSectionActivity.this, "请输入部门名称");
             return;
         }
-
-        JSONObject object = new JSONObject();
         try {
-            object.put("parentOrgId", parentOrgId);
+            object.put("topCompanyId", EanfangApplication.get().getTopCompanyId());
+            if (!TextUtils.isEmpty(tvSectionName.getText().toString().trim()) && TextUtils.isEmpty(topCompanyId)) {
+                object.put("parentOrgId", parentOrgId);
+            } else {
+                object.put("parentOrgId", EanfangApplication.get().getCompanyId());
+            }
             object.put("orgName", etNewName.getText().toString().trim());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -108,12 +111,12 @@ public class CreatSectionActivity extends BaseClientActivity {
         if (o instanceof OrganizationBean) {
             OrganizationBean organizationBean = (OrganizationBean) o;
             tvSectionName.setText(organizationBean.getOrgName());
-            parentOrgId = organizationBean.getCompanyId();
+            topCompanyId = organizationBean.getTopCompanyId();
 
         } else if (o instanceof SectionBean) {
             SectionBean sectionBean = (SectionBean) o;
             tvSectionName.setText(sectionBean.getOrgName());
-            parentOrgId = sectionBean.getParentOrgId();
+            parentOrgId = sectionBean.getOrgId();
         }
     }
 }

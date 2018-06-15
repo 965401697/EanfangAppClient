@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
@@ -65,6 +66,7 @@ public class AddStaffActivity extends BaseWorkerActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() == 11) {
+
                     initPhoneData(etSearch.getText().toString().trim());
                 }
             }
@@ -75,6 +77,11 @@ public class AddStaffActivity extends BaseWorkerActivity {
     public void onViewClicked() {
         if (mAddStaffAdapter.getData().size() == 0) {
             ToastUtil.get().showToast(AddStaffActivity.this, "请先搜索员工");
+            return;
+        }
+
+        if (mAddStaffAdapter.getData().get(0).getAccId().equals(String.valueOf(EanfangApplication.getApplication().getAccId()))) {
+            ToastUtil.get().showToast(AddStaffActivity.this, "自己不能添加自己");
             return;
         }
 
