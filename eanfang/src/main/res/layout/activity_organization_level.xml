@@ -47,7 +47,7 @@
         android:id="@+id/tv_sure"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_88"
-        android:background="@color/color_data_number"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:text="确定"
         android:textColor="@color/white"

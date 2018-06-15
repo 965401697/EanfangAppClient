@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_contact_line_gray"
@@ -402,9 +403,12 @@
                     android:paddingLeft="@dimen/dimen_38">
 
                     <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_header"
                         android:layout_width="@dimen/dimen_70"
                         android:layout_height="@dimen/dimen_70"
-                        app:placeholderImage="@mipmap/ic_nodata" />
+                        android:visibility="gone"
+                        app:placeholderImage="@mipmap/ic_nodata"
+                        fresco:roundAsCircle="true" />
 
                     <TextView
                         android:id="@+id/tv_team_worker"

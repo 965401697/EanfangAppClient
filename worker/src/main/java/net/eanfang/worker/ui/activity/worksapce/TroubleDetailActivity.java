@@ -191,11 +191,10 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             }
 
             //协作人员
-            // 目前先获取技师
-            tvTeamWorker.setText(v(() -> (bughandleConfirmEntity.getCreateUserEntity().getAccountEntity().getRealName())));
-//            if (bughandleConfirmEntity.getTeamWorker() != null) {
-//                tvTeamWorker.setText(bughandleConfirmEntity.getTeamWorker());
-//            }
+
+            if (bughandleConfirmEntity.getTeamWorker() != null) {
+                tvTeamWorker.setText(bughandleConfirmEntity.getTeamWorker());
+            }
 
             initImageList(bughandleConfirmEntity);
             initNinePhoto();

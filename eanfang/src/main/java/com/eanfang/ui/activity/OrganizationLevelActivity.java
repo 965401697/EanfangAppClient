@@ -53,6 +53,9 @@ public class OrganizationLevelActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization_level);
         ButterKnife.bind(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         supprotToolbar();
 
         mFlag = getIntent().getIntExtra("flag", 0);
@@ -178,5 +181,13 @@ public class OrganizationLevelActivity extends BaseActivity {
         // TODO: 2018/6/9 多选可能还要处理业务
         EventBus.getDefault().post(presonList);
         endTransaction(true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }
