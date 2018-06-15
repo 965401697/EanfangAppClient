@@ -18,13 +18,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
-import com.camera.util.LogUtil;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -33,7 +29,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.witget.CustomRadioGroup;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
@@ -54,6 +49,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -116,13 +112,13 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     @BindView(R.id.rl_add_device_picture)
     RelativeLayout rlAddDevicePicture;
     // 维修结果
-    @BindView(R.id.rg_repairResultOne)
-    CustomRadioGroup rgRepairResultOne;
     @BindView(R.id.tag_repair_result)
     TagFlowLayout tagRepairResult;
+    private TagAdapter<String> mResultAdapter;
     // 修复方式
-    @BindView(R.id.rg_repairResultTwo)
-    CustomRadioGroup rgRepairResultTwo;
+    @BindView(R.id.tag_repair_result_two)
+    TagFlowLayout tagRepairResultTwo;
+    private TagAdapter<String> mModeAdapter;
 
 
     // 维修结果一级
@@ -262,9 +258,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                         etTroubleUseAdvace.setText(Optional.ofNullable(detailEntity.getUseAdvice()).orElse(""));
                         mReapirOneStauts = detailEntity.getStatus();
                         mReapirTwoStauts = detailEntity.getStatusTwo();
-                        addViewOne(AddTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, detailEntity.getStatus());
-                        addViewTwo(AddTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(detailEntity.getStatus()), detailEntity.getStatusTwo());
-//                        doListener();
+                        addRepariResult();
+                        addReapirResultMode(mReapirOneStauts);
                         // 是否误报
                         if (failureEntity.getIsMisinformation() == 0) {
                             rgNo.setChecked(true);
@@ -279,8 +274,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
                     }).showDialog();
         }
-
-        addViewOne(AddTroubleDetailActivity.this, rgRepairResultOne, mRepairResult, 100);
+        addRepariResult();
     }
 
 
@@ -300,34 +294,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                 }
             });
         }
-        tagRepairResult.setAdapter(new TagAdapter<String>(mRepairResult) {
-            @Override
-            public View getView(FlowLayout parent, int position, String mrepairResult) {
-                TextView tv = (TextView) LayoutInflater.from(AddTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResult, false);
-                tv.setText(mrepairResult);
-                return tv;
-            }
-        });
-        tagRepairResult.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                Log.e("GGGGGG", "" + position);
-                return true;
-            }
-        });
-        tagRepairResult.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                if (!selectPosSet.isEmpty()) {
-//                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
-//                    int position = Integer.parseInt(str);
-//                    Log.e("GG", "" + position + mRepairResult.get(position));
-                }
-
-//                tagRepairResult.getSelectedList().clear();
-//                tagRepairResult.getAdapter().notifyDataChanged();
-            }
-        });
     }
 
     private void submit() {
@@ -445,88 +411,61 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         detailEntity = mDetailEntity;
     }
 
-    /**
-     * 动态添加维修结果
-     */
-    public void addViewOne(Context context, CustomRadioGroup
-            parent, List<String> list, int flag) {
-        parent.removeAllViews();
-        RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < list.size(); i++) {
-            RadioButton radioButton = new RadioButton(context);
-            pa.setMargins(22, 22, 22, 30);
-            radioButton.setLayoutParams(pa);
-            radioButton.setText(list.get(i));
-            radioButton.setId(i);
-            radioButton.setTag(i);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(12);
-            radioButton.setPadding(20, 20, 20, 20);
-            radioButton.setButtonDrawable(null);
-            if (flag == i) {
-                radioButton.setChecked(true);
+    public void addRepariResult() {
+
+        tagRepairResult.setAdapter(mResultAdapter = new TagAdapter<String>(mRepairResult) {
+            @Override
+            public View getView(FlowLayout parent, int position, String mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(AddTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResult, false);
+                tv.setText(mrepairResult);
+                return tv;
             }
-            radioButton.setTextColor(R.drawable.select_camera_text_back);
-            radioButton.setBackgroundResource(R.drawable.select_camera_back);
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        for (int j = 0; j < parent.getChildCount(); j++) {
-                            if ((parent.getChildAt(j)).getId() != radioButton.getId()) {
-                                ((RadioButton) parent.getChildAt(j)).setChecked(false);
-                            } else {
-                                ((RadioButton) parent.getChildAt(j)).setChecked(true);
-                                mReapirOneStauts = (Integer) buttonView.getTag();
-                            }
-                        }
-                        addViewTwo(AddTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(mReapirOneStauts), 100);
-                    }
-                }
-            });
-            parent.addView(radioButton);
+        });
+        if (mReapirOneStauts != 100) {
+            mResultAdapter.setSelectedList(mReapirOneStauts);
         }
+        tagRepairResult.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                if (!selectPosSet.isEmpty()) {
+                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                    int position = Integer.parseInt(str);
+                    mReapirOneStauts = position;
+                    mReapirOneStauts = 100;
+                    addReapirResultMode(position);
+                }
+            }
+        });
+
     }
 
-    public void addViewTwo(Context context, CustomRadioGroup
-            parent, List<String> list, int flag) {
-        parent.removeAllViews();
-        RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < list.size(); i++) {
-            RadioButton radioButton = new RadioButton(context);
-            pa.setMargins(22, 22, 22, 30);
-            radioButton.setLayoutParams(pa);
-            radioButton.setText(list.get(i));
-            radioButton.setTag(i);
-            radioButton.setId(i);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(12);
-            radioButton.setPadding(20, 20, 20, 20);
-            radioButton.setButtonDrawable(null);
-            if (flag == i) {
-                radioButton.setChecked(true);
-            }
-            radioButton.setTextColor(R.drawable.select_camera_text_back);
-            radioButton.setBackgroundResource(R.drawable.select_camera_back);
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                    if (isChecked) {
-                        for (int j = 0; j < parent.getChildCount(); j++) {
-                            if ((parent.getChildAt(j)).getId() != radioButton.getId()) {
-                                ((RadioButton) parent.getChildAt(j)).setChecked(false);
-                            } else {
-                                ((RadioButton) parent.getChildAt(j)).setChecked(true);
-                                mReapirTwoStauts = (Integer) compoundButton.getTag();
-                            }
-                        }
-                    }
-                }
-            });
-            parent.addView(radioButton);
-
-
+    public void addReapirResultMode(int status) {
+        if (tagRepairResultTwo.getSelectedList().size() > 0) {
+            tagRepairResultTwo.getSelectedList().clear();
+            tagRepairResultTwo.getAdapter().notifyDataChanged();
         }
+        tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(GetConstDataUtils.getBugDetailTwoList(status)) {
+            @Override
+            public View getView(FlowLayout parent, int position, String mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(AddTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResultTwo, false);
+                tv.setText(mrepairResult);
+                return tv;
+            }
+        });
+        if (mReapirTwoStauts != 100) {
+            mModeAdapter.setSelectedList(mReapirTwoStauts);
+        }
+        tagRepairResultTwo.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                if (!selectPosSet.isEmpty()) {
+                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                    int position = Integer.parseInt(str);
+                    mReapirTwoStauts = position;
+                }
+            }
+        });
     }
+
 }
 

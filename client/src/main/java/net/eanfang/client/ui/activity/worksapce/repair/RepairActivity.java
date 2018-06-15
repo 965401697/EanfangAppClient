@@ -146,6 +146,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     private int mSex = 1;
     // 区县ID
     private int mAreaId;
+    private Long mOwnerOrgId;
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -238,6 +239,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
                             Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
                             intent.putExtra("bean", fillBean());
                             intent.putExtra("doorFee", bean.getDoorFee());
+                            intent.putExtra("mOwnerOrgId", mOwnerOrgId);
                             intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
                             startActivity(intent);
                         }
@@ -426,6 +428,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
                 RepairBugEntity repairBugEntity = (RepairBugEntity) data.getSerializableExtra("bean");
                 beanList.add(repairBugEntity);
                 evaluateAdapter.notifyDataSetChanged();
+                mOwnerOrgId = data.getLongExtra("mOwnerOrgId", 0);
 //                initData();
                 break;
             default:

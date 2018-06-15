@@ -80,6 +80,8 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
     private ArrayList<String> businessIds = new ArrayList<>();
 
     private int mDoorFee;
+
+    private Long mOwnerOrgId;
     // 添加海量点时
     //private ProgressDialog progDialog = null;
     //@BindView(R.id.aMapview)
@@ -111,12 +113,14 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
 
         toRepairBean = (RepairOrderEntity) getIntent().getSerializableExtra("bean");
         businessIds = getIntent().getStringArrayListExtra("businessIds");
-        mDoorFee = getIntent().getIntExtra("doorFee",0);
+        mDoorFee = getIntent().getIntExtra("doorFee", 0);
+        mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
+
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
 
-        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, businessIds,mDoorFee));
-        mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, businessIds,mDoorFee));
-        mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, businessIds,mDoorFee));
+        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, businessIds, mDoorFee, mOwnerOrgId));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp_selectWork);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

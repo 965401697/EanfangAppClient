@@ -9,4 +9,5 @@
     android:layout_margin="@dimen/dimen_10"
     android:background="@drawable/select_camera_back"
     android:padding="@dimen/dimen_10"
-    android:textColor="@drawable/select_camera_text_back" />
+    android:text=""
+    android:textColor="@drawable/select_trouble_repair_result" />

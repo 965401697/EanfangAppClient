@@ -3,13 +3,14 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -24,17 +25,19 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.witget.CustomRadioGroup;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.TransferLogEntity;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.PutUpOrderRecordAdapter;
-import net.eanfang.worker.ui.adapter.SelectWorkerAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,12 +66,13 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     RecyclerView rvPutUpHistory;
     TransferLogEntity transferLogEntity = new TransferLogEntity();
     // 转单原因
-    @BindView(R.id.rg_reason)
-    CustomRadioGroup rgReason;
+    @BindView(R.id.tag_reason)
+    TagFlowLayout tagReason;
     @BindView(R.id.et_remarks)
     EditText etRemarks;
     @BindView(R.id.tv_num)
     TextView tvNum;
+
 
     private BughandleConfirmEntity bughandleConfirmEntity;
     private Long companyId;
@@ -109,7 +113,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     private void initData() {
         bughandleConfirmEntity = (BughandleConfirmEntity) getIntent().getSerializableExtra("bean");
         mDataList = bughandleConfirmEntity.getTransferLogEntityList();
-        addView(this, rgReason, GetConstDataUtils.getTransferCauseList());
+        addReapirResultMode(GetConstDataUtils.getTransferCauseList());
 
         llToWorker.setOnClickListener((v) -> {
             Intent intent = new Intent(PutUpOrderActivity.this, PutUpSelectWorkerActivity.class);
@@ -120,14 +124,6 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
         tvPutUpApply.setOnClickListener(v -> doVerify());
 
-        // 维修结果一级
-        rgReason.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton tempButton = (RadioButton) findViewById(checkedId);
-                mOrderReason = (Integer) tempButton.getTag();
-            }
-        });
         etRemarks.addTextChangedListener(new TextWatcher() {
             CharSequence temp;
             int selectionStart;
@@ -218,28 +214,29 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
     }
 
-    /**
-     * 动态添加维修结果
-     */
-    public static void addView(final Context context, CustomRadioGroup
-            parent, List<String> list) {
-        parent.removeAllViews();
-        RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < list.size(); i++) {
-            final RadioButton radioButton = new RadioButton(context);
-            pa.setMargins(22, 22, 22, 30);
-            radioButton.setLayoutParams(pa);
-            radioButton.setText(list.get(i));
-            radioButton.setTag(i);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(12);
-            radioButton.setPadding(20, 20, 20, 20);
-            radioButton.setBackground(null);
-            radioButton.setButtonDrawable(null);
-            radioButton.setTextColor(R.drawable.select_put_up_order_text_back);
-            radioButton.setBackgroundResource(R.drawable.select_put_up_back);
-            parent.addView(radioButton);
+    public void addReapirResultMode(List<String> stringList) {
+        if (tagReason.getSelectedList().size() > 0) {
+            tagReason.getSelectedList().clear();
+            tagReason.getAdapter().notifyDataChanged();
         }
+        tagReason.setAdapter(new TagAdapter<String>(stringList) {
+            @Override
+            public View getView(FlowLayout parent, int position, String mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(PutUpOrderActivity.this).inflate(R.layout.layout_trouble_result_item, tagReason, false);
+                tv.setText(mrepairResult);
+                return tv;
+            }
+        });
+        tagReason.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
+            @Override
+            public void onSelected(Set<Integer> selectPosSet) {
+                if (!selectPosSet.isEmpty()) {
+                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                    int position = Integer.parseInt(str);
+                    mOrderReason = position;
+                }
+            }
+        });
     }
 }
 

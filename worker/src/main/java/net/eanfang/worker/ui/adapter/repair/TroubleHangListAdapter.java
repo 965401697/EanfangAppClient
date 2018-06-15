@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.adapter.repair;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.TransferLogEntity;
 
@@ -29,7 +30,7 @@ public class TroubleHangListAdapter extends BaseQuickAdapter<TransferLogEntity, 
 
             helper.setText(R.id.tv_hangContnet, item.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
                     GetConstDataUtils.getTransferCauseList().get(item.getCause()) + "在" +
-                    item.getCreateTime() + "转给" + item.getReceiveUserEntity().getAccountEntity().getRealName()
+                    GetDateUtils.dateToDateTimeString(item.getCreateTime()) + "转给" + item.getReceiveUserEntity().getAccountEntity().getRealName()
 
             );
         }

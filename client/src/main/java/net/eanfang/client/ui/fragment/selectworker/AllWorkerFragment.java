@@ -56,12 +56,15 @@ public class AllWorkerFragment extends BaseFragment {
     private int mDoorFee;
     private SelectWorkerAdapter selectWorkerAdapter;
 
-    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee) {
+    private Long mOwnerOrgId;
+
+    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         AllWorkerFragment allWorkerFragment = new AllWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
         bundle.putInt("doorFee", doorfee);
+        bundle.putLong("mOwnerOrgId", ownerOrgId);
         allWorkerFragment.setArguments(bundle);
         return allWorkerFragment;
     }
@@ -78,7 +81,7 @@ public class AllWorkerFragment extends BaseFragment {
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
-
+        mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
     }
 
     @Override
@@ -124,6 +127,9 @@ public class AllWorkerFragment extends BaseFragment {
         queryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         queryEntry.getEquals().put("served", serviceId + "");
         queryEntry.getEquals().put("collect", collectId + "");
+        if (mOwnerOrgId != 0) {
+            queryEntry.getEquals().put("companyId", mOwnerOrgId + "");
+        }
         queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))

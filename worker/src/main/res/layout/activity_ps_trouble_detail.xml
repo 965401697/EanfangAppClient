@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:background="@color/background"
     android:orientation="vertical">
 
@@ -369,15 +370,12 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.CustomRadioGroup
-                    android:id="@+id/rg_repairResultOne"
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_repair_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_30"
-                    android:layout_marginTop="@dimen/dimen_30"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dimen_30"
-                    android:paddingRight="@dimen/dimen_30" />
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    zhy:max_select="1" />
 
                 <View style="@style/style_common_line_gray" />
 
@@ -390,15 +388,14 @@
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 
-                <com.eanfang.witget.CustomRadioGroup
-                    android:id="@+id/rg_repairResultTwo"
+
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_repair_result_two"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_30"
-                    android:layout_marginTop="@dimen/dimen_30"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dimen_30"
-                    android:paddingRight="@dimen/dimen_30" />
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:clickable="false"
+                    zhy:max_select="1" />
 
             </LinearLayout>
 

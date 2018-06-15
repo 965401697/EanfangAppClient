@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -29,9 +30,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
@@ -128,6 +131,11 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
      */
     @BindView(R.id.tv_videoStorage)
     TextView tvVideoStorage;
+    /**
+     * 增加团队成员
+     */
+    @BindView(R.id.tv_add_group)
+    TextView tvAddGroup;
     private boolean isVideoStroage = false;
     /**
      * 所有设备时间同步
@@ -273,6 +281,13 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 tvPoliceDeliver.setBackgroundResource(R.drawable.bg_trouble_type);
                 tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
             }
+        });
+        // 增加团队
+        tvAddGroup.setOnClickListener((v) -> {
+            Uri uri = Uri.parse("worker://yeah!");
+            Intent intent = new Intent(FillRepairInfoActivity.this, SelectOrganizationContactActivity.class);
+            intent.setData(uri);
+            this.startActivity(intent);
         });
 
     }

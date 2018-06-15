@@ -55,12 +55,14 @@ public class ServicedWorkerFragment extends BaseFragment {
     private int mDoorFee;
     private SelectWorkerAdapter selectWorkerAdapter;
 
-    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee) {
+    private Long mOwnerOrgId;
+    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         ServicedWorkerFragment servicedWorkerFragment = new ServicedWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
         bundle.putInt("doorFee", doorfee);
+        bundle.putLong("mOwnerOrgId", ownerOrgId);
         servicedWorkerFragment.setArguments(bundle);
         return servicedWorkerFragment;
     }
@@ -76,6 +78,7 @@ public class ServicedWorkerFragment extends BaseFragment {
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
+        mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
     }
 
     @Override
@@ -98,8 +101,8 @@ public class ServicedWorkerFragment extends BaseFragment {
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
                 intent.putExtra("toRepairBean", toRepairBean);
-                intent.putExtra("companyUserId", selectWorkerList.get(position).getCompanyUserId()+ "");
-                intent.putExtra("workerId", selectWorkerList.get(position).getId()+ "");
+                intent.putExtra("companyUserId", selectWorkerList.get(position).getCompanyUserId() + "");
+                intent.putExtra("workerId", selectWorkerList.get(position).getId() + "");
                 intent.putExtra("doorFee", mDoorFee);
                 startActivity(intent);
             }
@@ -121,6 +124,9 @@ public class ServicedWorkerFragment extends BaseFragment {
         queryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         queryEntry.getEquals().put("served", serviceId + "");
         queryEntry.getEquals().put("collect", collectId + "");
+        if (mOwnerOrgId != 0) {
+            queryEntry.getEquals().put("companyId", mOwnerOrgId + "");
+        }
         queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -132,10 +138,10 @@ public class ServicedWorkerFragment extends BaseFragment {
     }
 
     private void initAdapter() {
-        if (selectWorkerList == null|| selectWorkerList.size() == 0) {
+        if (selectWorkerList == null || selectWorkerList.size() == 0) {
             mRecyclerView.setVisibility(View.GONE);
             mTvNoData.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             mTvNoData.setVisibility(View.GONE);
             selectWorkerAdapter.refreshList(selectWorkerList);
