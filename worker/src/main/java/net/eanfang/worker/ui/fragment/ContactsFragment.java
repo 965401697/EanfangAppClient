@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.OrganizationBean;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
@@ -145,9 +148,35 @@ public class ContactsFragment extends BaseFragment {
                 switch (view.getId()) {
                     //组织结构
                     case R.id.tv_org:
-                        if (mDatas.get(position) != null) {
-                            startActivity(new Intent(getActivity(), ConstansActivity.class).putExtra("data", mDatas.get(position)));
+//                        if (mDatas.get(position) != null) {
+//                            startActivity(new Intent(getActivity(), ConstansActivity.class).putExtra("data", mDatas.get(position)));
+//                        }
+
+
+                        OrganizationBean organizationBean = new OrganizationBean();
+
+                        organizationBean.setOrgName(mDatas.get(position).getOrgName());
+
+                        int num = 0;
+
+                        if (mDatas.get(position).getStaff() != null) {
+                            num = mDatas.get(position).getStaff().size();
                         }
+
+                        if (mDatas.get(position).getChildren() != null) {
+                            num += mDatas.get(position).getChildren().size();
+                        }
+
+                        organizationBean.setCountStaff(num);
+
+                        Intent intent = new Intent(getActivity(), SelectOrganizationContactActivity.class);
+                        Uri uri = Uri.parse("worker://yeah!");
+                        intent.setData(uri);
+                        intent.putExtra("companyId", String.valueOf(mDatas.get(position).getCompanyId()));
+                        intent.putExtra("organizationBean", organizationBean);
+//                        intent.putExtra("isRadio", "isRadio");//是否是单选
+                        startActivity(intent);
+
                         break;
                     //子公司
                     case R.id.tv_child_company:

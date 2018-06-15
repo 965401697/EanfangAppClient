@@ -84,6 +84,7 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
             } else {
                 viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
             }
+
             viewHolder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

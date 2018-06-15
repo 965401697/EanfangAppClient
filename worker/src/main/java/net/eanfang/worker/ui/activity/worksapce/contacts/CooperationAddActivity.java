@@ -157,11 +157,11 @@ public class CooperationAddActivity extends BaseWorkerActivity {
                 bean.setAssigneeTopCompanyId(Long.parseLong(mBean.getOrgEntity().getTopCompanyId()));
                 bean.setOwnerTopCompanyId(EanfangApplication.get().getTopCompanyId());
                 bean.setOwnerOrgId(EanfangApplication.get().getCompanyId());
-                bean.setBusinessOneCode(Config.get().getBaseCodeByName(businessCheckBox.getText().toString().trim(), 1, Constant.SYS_TYPE).get(0));
+                bean.setBusinessOneCode(Config.get().getBaseCodeByName(osCheckBox.getText().toString().trim(), 1, Constant.SYS_TYPE).get(0));
                 bean.setBeginTime(GetDateUtils.getYeanDate(tvStartTime.getText().toString().trim()));
                 bean.setEndTime(GetDateUtils.getYeanDate(tvEndTime.getText().toString().trim()));
 
-                bean.setBusType(GetConstDataUtils.getCooperationTypeList().indexOf(osCheckBox.getText().toString().trim()));
+                bean.setBusType(GetConstDataUtils.getCooperationTypeList().indexOf(businessCheckBox.getText().toString().trim()));
 
                 businessServerBeanArrayList.add(bean);
 

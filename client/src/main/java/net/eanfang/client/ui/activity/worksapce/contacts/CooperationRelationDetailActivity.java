@@ -110,7 +110,9 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
             companyName = list.get(0).getAssigneeOrg().getOrgName();
             ivCompanyLogo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getAssigneeOrg().getOrgUnitEntity().getLogoPic()));
             tvCompanyName.setText(companyName);
-//            tvAddress.setText(Config.get().getAddressByCode(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode()) + list.get(0).getAssigneeOrg().getOrgUnitEntity().getOfficeAddress());
+            if (!TextUtils.isEmpty(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode())) {
+                tvAddress.setText(Config.get().getAddressByCode(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode()) + list.get(0).getAssigneeOrg().getOrgUnitEntity().getOfficeAddress());
+            }
 
             ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getCreateUserEntity().getAccountEntity().getAvatar()));
             tvName.setText(list.get(0).getCreateUserEntity().getAccountEntity().getRealName());

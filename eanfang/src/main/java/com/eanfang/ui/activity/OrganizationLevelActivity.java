@@ -5,6 +5,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
@@ -150,6 +151,10 @@ public class OrganizationLevelActivity extends BaseActivity {
             mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null));
         }
         recyclerView.setAdapter(mTreeRecyclerAdapter);
+
+        if (!TextUtils.isEmpty(SelectOrganizationContactActivity.companyId)) {
+            tvSure.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R2.id.tv_sure)

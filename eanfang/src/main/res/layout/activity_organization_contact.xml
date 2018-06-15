@@ -22,5 +22,6 @@
         android:gravity="center"
         android:text="确定"
         android:textColor="@color/white"
+        android:visibility="gone"
         android:textSize="@dimen/textSize_14" />
 </LinearLayout>

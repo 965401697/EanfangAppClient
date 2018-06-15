@@ -2,13 +2,14 @@ package com.eanfang.model;
 
 import com.baozi.treerecyclerview.base.BaseItemData;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by O u r on 2018/5/30.
  */
 
-public class OrganizationBean extends BaseItemData {
+public class OrganizationBean extends BaseItemData implements Serializable {
 
     /**
      * companyId : 981408170067369986

@@ -2,6 +2,8 @@ package com.eanfang.ui.items;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.CheckBox;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
@@ -10,6 +12,7 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.util.SharePreferenceUtil;
 
 import java.io.IOException;
@@ -34,6 +37,11 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
         viewHolder.setText(R.id.tv_name, data.getName());
         viewHolder.getImageView(R.id.iv_user_header).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()));
+
+        if (!TextUtils.isEmpty(SelectOrganizationContactActivity.companyId)) {
+            viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
+            viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
+        }
 
         TreeItemGroup parentItem = getParentItem();
         if (parentItem instanceof OrgSelectGroupMultipleItem) {

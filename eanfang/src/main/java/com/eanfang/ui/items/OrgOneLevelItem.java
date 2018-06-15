@@ -79,7 +79,7 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
         } else {
 
             if (totle != 0) {
-                viewHolder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
             } else {
                 viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
             }
