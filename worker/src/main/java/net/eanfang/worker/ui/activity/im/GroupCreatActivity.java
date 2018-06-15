@@ -51,21 +51,19 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
     SimpleDraweeView ivIcon;
     private final int HEADER_PIC = 107;
     private String imgKey;
-
+    private String path;
 
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String path = (String) msg.obj;
+            path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
                 ivIcon.setImageURI("file://" + path);
 
                 imgKey = UuidUtil.getUUID() + ".png";
-                OSSUtils.initOSS(GroupCreatActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(GroupCreatActivity.this, false) {
-                });
-                Log.e("zzw", "合成成功");
+
             }
 
         }
@@ -123,18 +121,30 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //创建群组
-        EanfangHttp.post(UserApi.POST_CREAT_GROUP)
-                .upJson(jsonObject)
-                .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
-                    ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
-                    Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
-                    RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+        //头像上传成功后提交数据
+        OSSUtils.initOSS(GroupCreatActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(GroupCreatActivity.this, false) {
 
-                    EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
-                    RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
-                    GroupCreatActivity.this.finish();
-                }));
+            @Override
+            public void onOssSuccess() {
+                super.onOssSuccess();
+
+                //创建群组
+                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                        .upJson(jsonObject)
+                        .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
+                            ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
+                            Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+                            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+
+                            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                            RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                            GroupCreatActivity.this.finish();
+                        }));
+
+            }
+        });
+
+
     }
 
     @OnClick(R.id.btn_created)

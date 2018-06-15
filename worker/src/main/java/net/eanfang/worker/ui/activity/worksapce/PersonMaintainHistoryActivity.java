@@ -53,7 +53,7 @@ public class PersonMaintainHistoryActivity extends BaseWorkerActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preson__mian);
+        setContentView(R.layout.activity_main_list);
         ButterKnife.bind(this);
 
         this.id = getIntent().getLongExtra("id", 0);

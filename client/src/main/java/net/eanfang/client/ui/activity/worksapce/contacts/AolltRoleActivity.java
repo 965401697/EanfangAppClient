@@ -12,6 +12,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RoleBean;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -36,16 +37,18 @@ public class AolltRoleActivity extends BaseClientActivity {
         setLeftBack();
         initViews();
         initData();
-
-        setLeftBack(new View.OnClickListener() {
+        setRightTitle("确定");
+        setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (oldPositon != -1) {
                     Intent intent = new Intent();
                     intent.putExtra("bean", aolltRoleAdapter.getData().get(oldPositon));
                     setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    ToastUtil.get().showToast(AolltRoleActivity.this, "请选择角色");
                 }
-                finish();
             }
         });
     }

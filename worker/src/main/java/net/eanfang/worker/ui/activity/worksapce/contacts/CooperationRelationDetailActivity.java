@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
@@ -124,7 +125,7 @@ public class CooperationRelationDetailActivity extends BaseWorkerActivity {
                 array.add(cooperationEntity.getId());
 
                 //业务类型
-                String service = Config.get().getServiceNameById(cooperationEntity.getBusType());
+                String service = Config.get().getBaseNameByCode(String.valueOf(cooperationEntity.getBusType()), Constant.SYS_TYPE);
                 Log.e("zzw", service + "");
                 //系统类型
                 String business = Config.get().getBusinessNameByCode(cooperationEntity.getBusinessOneCode(), 1);

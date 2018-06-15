@@ -139,7 +139,6 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
         defendLogAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!checkInfo()) return;
                 if (view.getId() == R.id.tv_defend_add) {
                     currentItemAdapter = mAdapterList.get(position);
                     Intent intent = new Intent(DefendLogWriteAndDetailActivity.this, DefendLogItemWriteAndDetailActivity.class);
@@ -286,6 +285,13 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
             String[] item = {"bypassList", "throughList", "falseList"};
             for (int i = 0; i < mAdapterList.size(); i++) {
                 List<DefendLogDetailBean.ListBean> beanList = (List<DefendLogDetailBean.ListBean>) mAdapterList.get(i).getData();
+
+                for (DefendLogDetailBean.ListBean bean : beanList) {
+                    bean.setAssigneeUserId(assigneeUserId + "");
+                    bean.setAssigneeCompanyId(assigneeCompanyId);
+                    bean.setAssigneeOrgCode(assigneeOrgCode + "");
+                }
+
                 JSONArray array = new JSONArray();
                 array.addAll(beanList);
                 object.put(item[i], array);
@@ -353,9 +359,9 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
             if (requestCode == ADD_CAUSE) {
                 DefendLogDetailBean.ListBean bean = (DefendLogDetailBean.ListBean) data.getSerializableExtra("bean");
 
-                bean.setAssigneeUserId(assigneeUserId + "");
-                bean.setAssigneeCompanyId(assigneeCompanyId);
-                bean.setAssigneeOrgCode(assigneeOrgCode + "");
+//                bean.setAssigneeUserId(assigneeUserId + "");
+//                bean.setAssigneeCompanyId(assigneeCompanyId);
+//                bean.setAssigneeOrgCode(assigneeOrgCode + "");
 //                bean.setAssigneeTopCompanyId(assigneeTopCompanyId);
 
                 bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());

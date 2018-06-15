@@ -33,7 +33,7 @@ public class CooperationRelationAdapter extends BaseQuickAdapter<CooperationEnti
         if (item.getStatus() == 0) {
             helper.setText(R.id.tv_status, "待审核");
             ((TextView) helper.getView(R.id.tv_status)).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_audit));
-            ((TextView) helper.getView(R.id.tv_status)).setTextColor(helper.getView(R.id.tv_status).getContext().getResources().getColor(R.color.colorPrimary));
+            ((TextView) helper.getView(R.id.tv_status)).setTextColor(helper.getView(R.id.tv_status).getContext().getResources().getColor(R.color.white));
         } else if (item.getStatus() == 1) {
             ((TextView) helper.getView(R.id.tv_status)).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_succee));
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(helper.getView(R.id.tv_status).getContext().getResources().getColor(R.color.colorPrimary));

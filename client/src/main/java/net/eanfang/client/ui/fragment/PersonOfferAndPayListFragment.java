@@ -44,21 +44,15 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc
  */
 
-public class PersonOfferAndPayListFragment extends BaseFragment implements
-        OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {
-    private static int page = 1;
-    TextView tvNoDatas;
-    RecyclerView rvList;
-    SwipyRefreshLayout swiprefresh;
-    private List<PayOrderListBean.ListBean> mDataList;
+public class PersonOfferAndPayListFragment extends TemplateItemListFragment {
+
     private String mTitle;
     private PayOrderListAdapter mAdapter;
-    private PayOrderListBean PayOrderListBean;
 
     public static PersonOfferAndPayListFragment getInstance(String title) {
         PersonOfferAndPayListFragment sf = new PersonOfferAndPayListFragment();
         sf.mTitle = title;
-        page = 1;
+
         return sf;
 
     }
@@ -67,59 +61,37 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
         return mTitle;
     }
 
-    @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_work_report_list;
-    }
 
     @Override
-    protected void initData(Bundle arguments) {
+    public void initAdapter() {
 
-    }
+        mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay);
 
-    @Override
-    protected void initView() {
-        tvNoDatas = (TextView) findViewById(R.id.tv_no_datas);
-        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
-        swiprefresh.setOnRefreshListener(this);
-        rvList = (RecyclerView) findViewById(R.id.rv_list);
-    }
 
-    @Override
-    protected void setListener() {
-    }
+        mAdapter.bindToRecyclerView(mRecyclerView);
+        mAdapter.setOnLoadMoreListener(this);
 
-    private void initAdapter() {
-         mDataList = ((PersonOfferAndPayOrderActivity) getActivity()).getWorkReportListBean().getList();
-        mAdapter = new PayOrderListAdapter(R.layout.item_offer_pay, mDataList);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvList.addOnItemTouchListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", mDataList.get(position).getId()));
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", mAdapter.getData().get(position).getId()));
             }
         });
+
+
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_do_first:
-                    CallUtils.call(getActivity(), mDataList.get(position).getOfferer().getAccountEntity().getMobile());
+                    CallUtils.call(getActivity(), mAdapter.getData().get(position).getOfferer().getAccountEntity().getMobile());
                     break;
                 case R.id.tv_do_second:
-                    payment(mDataList, position);
-//                    showToast("等待开通");
+                    payment(mAdapter.getData(), position);
                     break;
                 default:
                     break;
             }
         });
-        if (mDataList.size() > 0) {
-            rvList.setAdapter(mAdapter);
-            tvNoDatas.setVisibility(View.GONE);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        mAdapter.notifyDataSetChanged();
+
     }
 
     /**
@@ -151,66 +123,67 @@ public class PersonOfferAndPayListFragment extends BaseFragment implements
     }
 
     /**
-     * 刷新
-     */
-    @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
-
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                getData();
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                getData();
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
      * 获取工作任务列表
      */
-    private void getData() {
+    @Override
+    protected void getData() {
         int status = GetConstDataUtils.getQuoteStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.getEquals().put("status", status + "");
-        queryEntry.setPage(page);
+        queryEntry.setPage(mPage);
         queryEntry.setSize(5);
         EanfangHttp.post(NewApiService.QUOTE_ORDER_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<PayOrderListBean>(getActivity(), true, PayOrderListBean.class, (bean) -> {
-                            getActivity().runOnUiThread(() -> {
-                                ((PersonOfferAndPayOrderActivity) getActivity()).setWorkReportListBean(bean);
-                                onDataReceived();
-                            });
-                        })
-                );
-    }
+                .execute(new EanfangCallback<PayOrderListBean>(getActivity(), true, PayOrderListBean.class) {
+                    @Override
+                    public void onSuccess(PayOrderListBean bean) {
 
 
-    @Override
-    public void onDataReceived() {
-        initView();
-        initAdapter();
-        swiprefresh.setRefreshing(false);
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 5) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 5) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 }
