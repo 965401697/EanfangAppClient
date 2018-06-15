@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -45,10 +47,13 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
     MaterialRatingBar rbStar4;
     @BindView(R.id.rb_star5)
     MaterialRatingBar rbStar5;
+
     @BindView(R.id.tv_select)
     TextView tvSelect;
+
     @BindView(R.id.sdv_workerHead)
     SimpleDraweeView sdvWorkerHead;
+
     @BindView(R.id.rb_wonderful)
     RadioButton rbWonderful;
     @BindView(R.id.rb_good)
@@ -57,10 +62,12 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
     RadioButton rbBad;
     @BindView(R.id.rg_score)
     RadioGroup rgScore;
-    @BindView(R.id.ll_workerAnonymous)
-    LinearLayout llWorkerAnonymous;
+
+
     @BindView(R.id.iv_anonyMous)
     ImageView ivAnonyMous;
+    @BindView(R.id.ll_workerAnonymous)
+    LinearLayout llWorkerAnonymous;
     private String ordernum;
     private Long orderId, assigneeUserId;
 
@@ -81,6 +88,8 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
         ordernum = intent.getStringExtra("ordernum");
         orderId = intent.getLongExtra("orderId", 0);
         assigneeUserId = intent.getLongExtra("workerUid", 0);
+
+        sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Uri.parse(getIntent().getStringExtra("avatar"))));
     }
 
     private void initView() {

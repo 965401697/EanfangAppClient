@@ -199,7 +199,7 @@ public class OrderListFragment extends BaseFragment implements
                                 .putExtra("ordernum", item.getOrderNum())
                                 .putExtra("workerUid", item.getAssigneeUserId())
                                 .putExtra("orderId", item.getId())
-                        );
+                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
                         break;
                     default:
                         break;

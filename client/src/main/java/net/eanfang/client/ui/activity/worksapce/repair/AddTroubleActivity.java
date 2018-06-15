@@ -9,13 +9,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.model.SystypeBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ConnectivityChangeReceiver;
@@ -26,6 +31,7 @@ import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.yaf.base.entity.CooperationEntity;
 import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
@@ -34,6 +40,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -130,6 +137,12 @@ public class AddTroubleActivity extends BaseClientActivity {
     //   系统类别
     private String businessOneCode = "";
 
+    // 添加记录
+    List<CooperationEntity> cooperationEntities = new ArrayList<>();
+    private List<RepairBugEntity> beanList = new ArrayList<>();
+
+    private RepairBugEntity repairBugEntity = new RepairBugEntity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +159,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     private void initView() {
         setTitle("新增故障");
         setLeftBack();
-
+        beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
         //个人客户 不显示设备库选择
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
             llDeviceHouse.setVisibility(View.GONE);
@@ -162,36 +175,30 @@ public class AddTroubleActivity extends BaseClientActivity {
             showToast("网络异常，请检查网络");
             return;
         }
-        RepairBugEntity bean = new RepairBugEntity();
-        bean.setBusinessThreeCode(dataCode);
-        bean.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));// 设备品牌
-        bean.setBugPosition(etDeviceLocation.getText().toString().trim());// 故障位置
-        bean.setDeviceNo(etDeviceNum.getText().toString().trim());// 故障编号
-        bean.setBugDescription(evFaultDescripte.getText().toString().trim());// 故障详细描述
-        bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
-        bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
-        bean.setHeadDeviceFailureId(dataId);// 故障id
-        bean.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
+
+        repairBugEntity.setBusinessThreeCode(dataCode);
+        repairBugEntity.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));// 设备品牌
+        repairBugEntity.setBugPosition(etDeviceLocation.getText().toString().trim());// 故障位置
+        repairBugEntity.setDeviceNo(etDeviceNum.getText().toString().trim());// 故障编号
+        repairBugEntity.setBugDescription(evFaultDescripte.getText().toString().trim());// 故障详细描述
+        repairBugEntity.setDeviceName(Config.get().getBusinessNameByCode(repairBugEntity.getBusinessThreeCode(), 3));// 设备名称
+        repairBugEntity.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
+        repairBugEntity.setHeadDeviceFailureId(dataId);// 故障id
+        repairBugEntity.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
         String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
-        bean.setPictures(ursStr);
+        repairBugEntity.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("bean", bean);
-                        setResult(CLIENT_ADD_TROUBLE, intent);
-                        finish();
+                        doVerify();
                     });
                 }
             });
         } else {
-            Intent intent = new Intent();
-            intent.putExtra("bean", bean);
-            setResult(CLIENT_ADD_TROUBLE, intent);
-            finish();
+            doVerify();
         }
     }
 
@@ -285,4 +292,33 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
     }
 
+    public void doVerify() {
+        cooperationEntities.clear();
+        if (beanList.size() > 0) {
+            for (int i = 0; i < beanList.size(); i++) {
+                CooperationEntity cooperationEntity = new CooperationEntity();
+                cooperationEntity.setAssigneeOrgId(EanfangApplication.getApplication().getCompanyId());
+                cooperationEntity.setBusType(0);
+                cooperationEntity.setBusinessOneCode(Config.get().getBaseCodeByLevel(beanList.get(i).getBusinessThreeCode(), 1));
+                cooperationEntities.add(cooperationEntity);
+            }
+        }
+        CooperationEntity cooperationEntity_now = new CooperationEntity();
+        cooperationEntity_now.setAssigneeOrgId(EanfangApplication.getApplication().getCompanyId());
+        cooperationEntity_now.setBusType(0);
+        cooperationEntity_now.setBusinessOneCode(Config.get().getBaseCodeByLevel(repairBugEntity.getBusinessThreeCode(), 1));
+        cooperationEntities.add(cooperationEntity_now);
+
+        EanfangHttp.post(RepairApi.GET_REAPIR_DO_VERIRFY)
+                .upJson(JSON.toJSONString(cooperationEntities))
+                .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, (bean) -> {
+                    Intent intent = new Intent();
+                    if (bean != null) {
+                        intent.putExtra("mOwnerOrgId", bean.getOwnerOrgId());
+                    }
+                    intent.putExtra("bean", repairBugEntity);
+                    setResult(CLIENT_ADD_TROUBLE, intent);
+                    finish();
+                }));
+    }
 }

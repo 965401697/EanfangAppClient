@@ -187,4 +187,8 @@ public interface RepairApi {
      * 35.查找上门费 并查询所在城市是否开通
      */
     String GET_REAPIR_PAY_PRICE = BuildConfig.API_HOST + "/yaf_sys/openArea/getInfo";
+    /**
+     * 36.根据客户绑定的关系，查询是否存在记录并返回对象
+     */
+    String GET_REAPIR_DO_VERIRFY = BuildConfig.API_HOST + "/yaf_shop/cooperation/exists";
 }

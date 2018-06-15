@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,10 +23,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.witget.CustomRadioGroup;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.SeeFaultParamActivity;
@@ -37,6 +40,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,11 +94,13 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.rl_add_device_picture)
     RelativeLayout rlAddDevicePicture;
     // 维修结果
-    @BindView(R.id.rg_repairResultOne)
-    CustomRadioGroup rgRepairResultOne;
+    @BindView(R.id.tag_repair_result)
+    TagFlowLayout tagRepairResult;
+    private TagAdapter<String> mResultAdapter;
     // 修复方式
-    @BindView(R.id.rg_repairResultTwo)
-    CustomRadioGroup rgRepairResultTwo;
+    @BindView(R.id.tag_repair_result_two)
+    TagFlowLayout tagRepairResultTwo;
+    private TagAdapter<String> mModeAdapter;
 
 
     private RecyclerView rcy_consumable;
@@ -187,9 +193,8 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
 
         }
         //添加维修结论
-        addView(LookTroubleDetailActivity.this, rgRepairResultOne, GetConstDataUtils.getBugDetailList(), bughandleDetailEntity.getStatus());
-        //添加维修结论
-        addView(LookTroubleDetailActivity.this, rgRepairResultTwo, GetConstDataUtils.getBugDetailTwoList(bughandleDetailEntity.getStatusTwo()), bughandleDetailEntity.getStatusTwo());
+        addRepariResult(GetConstDataUtils.getBugDetailList(), bughandleDetailEntity.getStatus());
+        addReapirResultMode(GetConstDataUtils.getBugDetailTwoList(bughandleDetailEntity.getStatus()), bughandleDetailEntity.getStatusTwo());
     }
 
 
@@ -227,34 +232,38 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
         });
     }
 
-    /**
-     * 动态添加维修结果
-     */
-    public static void addView(final Context context, CustomRadioGroup
-            parent, List<String> list, int flag) {
-        parent.removeAllViews();
-        RadioGroup.LayoutParams pa = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < list.size(); i++) {
-            final RadioButton radioButton = new RadioButton(context);
-            pa.setMargins(22, 22, 22, 30);
-            radioButton.setLayoutParams(pa);
-            radioButton.setText(list.get(i));
-            radioButton.setTag(i);
-            radioButton.setGravity(Gravity.CENTER);
-            radioButton.setTextSize(12);
-            radioButton.setPadding(20, 20, 20, 20);
-            if (flag == i) {
-                radioButton.setChecked(true);
+    public void addRepariResult(List<String> stringList, int status) {
+
+        tagRepairResult.setAdapter(mResultAdapter = new TagAdapter<String>(stringList) {
+            @Override
+            public View getView(FlowLayout parent, int position, String mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(LookTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResult, false);
+                tv.setText(mrepairResult);
+                return tv;
             }
-            radioButton.setClickable(false);
-            radioButton.setEnabled(false);
-            radioButton.setButtonDrawable(null);
-            radioButton.setTextColor(R.drawable.select_camera_text_back);
-            radioButton.setBackgroundResource(R.drawable.select_camera_back);
-            parent.addView(radioButton);
-        }
+        });
+        mResultAdapter.setSelectedList(status);
+        tagRepairResult.setClickable(false);
+        tagRepairResult.setEnabled(false);
     }
 
+    public void addReapirResultMode(List<String> stringList, int status) {
+        if (tagRepairResultTwo.getSelectedList().size() > 0) {
+            tagRepairResultTwo.getSelectedList().clear();
+            tagRepairResultTwo.getAdapter().notifyDataChanged();
+        }
+        tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(stringList) {
+            @Override
+            public View getView(FlowLayout parent, int position, String mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(LookTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResultTwo, false);
+                tv.setText(mrepairResult);
+                return tv;
+            }
+        });
+        mModeAdapter.setSelectedList(status);
+        tagRepairResultTwo.setClickable(false);
+        tagRepairResultTwo.setEnabled(false);
+    }
 
 }
 
