@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -14,6 +15,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -85,10 +87,12 @@ public class CooperationRelationDetailActivity extends BaseWorkerActivity {
 
 
         if (cooperationEntity.getStatus() == 1) {
+            tvSure.setVisibility(View.VISIBLE);
             tvSure.setBackgroundColor(getResources().getColor(R.color.white));
             tvSure.setTextColor(getResources().getColor(R.color.colorPrimary));
             tvSure.setText("审核通过");
         } else if (cooperationEntity.getStatus() == 2) {
+            tvSure.setVisibility(View.VISIBLE);
             tvSure.setBackgroundColor(getResources().getColor(R.color.white));
             tvSure.setTextColor(getResources().getColor(R.color.color_bottom));
             tvSure.setText("失效/拒绝");
@@ -120,12 +124,15 @@ public class CooperationRelationDetailActivity extends BaseWorkerActivity {
             tvEndTime.setText(GetDateUtils.dateToFormatString(list.get(0).getEndTime(), "yyyy.MM.dd"));
 
 
+            List<String> mOsList = GetConstDataUtils.getCooperationTypeList();
+
             for (CooperationEntity cooperationEntity : list) {
 
                 array.add(cooperationEntity.getId());
 
                 //业务类型
-                String service = Config.get().getBaseNameByCode(String.valueOf(cooperationEntity.getBusType()), Constant.SYS_TYPE);
+                String service = mOsList.get(cooperationEntity.getBusType());
+
                 Log.e("zzw", service + "");
                 //系统类型
                 String business = Config.get().getBusinessNameByCode(cooperationEntity.getBusinessOneCode(), 1);

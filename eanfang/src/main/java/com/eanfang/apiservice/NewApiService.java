@@ -324,10 +324,15 @@ public interface NewApiService {
      */
     String CREAT_SECTION = BASE_URL + "/yaf_sys/org/insertdepartment";
     /**
-     * 当前登录人可以访问的角色
+     * 当前搜索人角色
      * post
      */
     String MY_LIST_ROLE = BASE_URL + "/yaf_sys/role/listmyrole";
+    /**
+     * 当前登录人可以访问的角色
+     * post
+     */
+    String MY_CURREMT_LIST_ROLE = BASE_URL + "/yaf_sys/role/listbyuser/";
     /**
      * 添加员工
      * post
