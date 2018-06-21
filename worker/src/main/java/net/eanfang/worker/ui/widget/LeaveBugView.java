@@ -22,8 +22,8 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.PsTroubleDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.TroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.LeaveBugAdapter;
 
 import java.util.List;

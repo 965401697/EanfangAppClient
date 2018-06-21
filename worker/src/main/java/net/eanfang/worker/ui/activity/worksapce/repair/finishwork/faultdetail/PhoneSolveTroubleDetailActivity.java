@@ -1,14 +1,11 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -39,7 +36,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -155,6 +151,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     private void initListener() {
         btnAddTrouble.setOnClickListener(v -> submit());
         rgMisreport.setOnCheckedChangeListener(this);
+
         rlAddDeviceParam.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
@@ -227,6 +224,9 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
                             rgNo.setChecked(false);
                             rgYes.setChecked(true);
                         }
+                        if (bughandleDetailEntity.getParamEntityList() != null) {
+                            paramEntityList = bughandleDetailEntity.getParamEntityList();
+                        }
                     },
                     () -> {
                         bughandleDetailEntity.setId(null);
@@ -258,10 +258,6 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         }
         if (StringUtils.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
             showToast("请输入使用建议");
-            return false;
-        }
-        if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
-            showToast("请输入原因");
             return false;
         }
         if (mReapirOneStauts == 100) {
@@ -371,8 +367,10 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
                     String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
                     int position = Integer.parseInt(str);
                     mReapirOneStauts = position;
-                    mReapirOneStauts = 100;
+                    mReapirTwoStauts = 200;
                     addReapirResultMode(position);
+                } else {
+                    mReapirOneStauts = 100;
                 }
             }
         });
@@ -380,11 +378,12 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     }
 
     public void addReapirResultMode(int status) {
+        List<String> faultModeList = GetConstDataUtils.getBugDetailTwoList(status);
         if (tagRepairResultTwo.getSelectedList().size() > 0) {
             tagRepairResultTwo.getSelectedList().clear();
             tagRepairResultTwo.getAdapter().notifyDataChanged();
         }
-        tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(GetConstDataUtils.getBugDetailTwoList(status)) {
+        tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(faultModeList) {
             @Override
             public View getView(FlowLayout parent, int position, String mrepairResult) {
                 TextView tv = (TextView) LayoutInflater.from(PhoneSolveTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResultTwo, false);
@@ -392,7 +391,11 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
                 return tv;
             }
         });
-        if (mReapirTwoStauts != 100) {
+
+        if (mReapirTwoStauts > faultModeList.size()) {
+            mReapirTwoStauts = 200;
+        }
+        if (mReapirTwoStauts != 200) {
             mModeAdapter.setSelectedList(mReapirTwoStauts);
         }
         tagRepairResultTwo.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
@@ -402,6 +405,8 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
                     String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
                     int position = Integer.parseInt(str);
                     mReapirTwoStauts = position;
+                } else {
+                    mReapirTwoStauts = 200;
                 }
             }
         });

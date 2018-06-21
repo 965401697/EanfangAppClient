@@ -1,11 +1,9 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -33,15 +31,10 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.SeeFaultParamActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.material.SeeMaterialActivity;
-import net.eanfang.worker.ui.adapter.LookMaterialAdapter;
-import net.eanfang.worker.ui.adapter.LookParamAdapter;
 import net.eanfang.worker.ui.adapter.MaterialAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.widget.MateraInfoView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -146,7 +139,7 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
         initAdapter();
 
         if (mDataList_2.size() != 0) {
-            rcyConsumable.setAdapter(materialAdapter);
+            materialAdapter.bindToRecyclerView(rcyConsumable);
         } else {
             //无数据时隐藏
             rcyConsumable.setVisibility(View.GONE);
@@ -208,8 +201,8 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
     }
 
     private void initAdapter() {
-        materialAdapter = new MaterialAdapter(R.layout.item_quotation_detail, mDataList_2);
-
+        materialAdapter = new MaterialAdapter(R.layout.item_quotation_detail);
+        materialAdapter.setNewData(mDataList_2);
         rcyConsumable.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {

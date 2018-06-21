@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,8 +21,8 @@ import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail.PhoneLookTroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
-import net.eanfang.worker.ui.adapter.TroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
