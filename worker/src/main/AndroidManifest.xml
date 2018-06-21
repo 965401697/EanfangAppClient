@@ -138,14 +138,14 @@
         <activity android:name=".ui.activity.MyBGAPhotoPickerPreviewActivity" />
         <activity android:name=".ui.activity.worksapce.WorkTaskListActivity" />
         <activity android:name=".ui.activity.worksapce.OrderDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.TroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.PsTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.LookTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneLookTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.faultdetail.LookTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.faultdetail.PhoneLookTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.WorkCheckListActivity" />
         <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
         <activity android:name=".ui.activity.worksapce.SignInActivity" />
-        <activity android:name=".ui.activity.worksapce.FillRepairInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity" />
         <activity
             android:name=".ui.activity.worksapce.QuotationDetailActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
@@ -157,16 +157,16 @@
         <activity android:name=".ui.activity.worksapce.PutUpSelectWorkerActivity" />
         <!-- 电话未解决完善故障处理 -->
         <activity
-            android:name=".ui.activity.worksapce.AddTroubleDetailActivity"
+            android:name=".ui.activity.worksapce.repair.finishwork.faultdetail.AddTroubleDetailActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.AddMaterialActivity" />
         <activity android:name=".ui.activity.worksapce.MaterialInfoActivity" />
         <activity
-            android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity"
+            android:name=".ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <!-- 电话解决完善故障处理 -->
         <activity
-            android:name=".ui.activity.worksapce.PhoneSolveTroubleDetailActivity"
+            android:name=".ui.activity.worksapce.repair.finishwork.faultdetail.PhoneSolveTroubleDetailActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.EvaluateClientActivity" />
         <activity
@@ -376,7 +376,6 @@
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
         <activity android:name=".ui.activity.worksapce.contacts.CooperationAddActivity" />
         <!-- 合作业务的列表 -->
         <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationActivity" />
@@ -384,7 +383,7 @@
         <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationDetailActivity" />
         <!-- 合作业务绑定成功 -->
         <activity android:name=".ui.activity.worksapce.contacts.CooperactionRelationSubActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.CooperationSearchClientActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationSearchClientActivity" />
 
         <!-- 查看设备参数 -->
         <activity
@@ -395,7 +394,10 @@
         <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
         <!-- 故障处理查看照片 -->
         <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
-
+        <!-- 技师认证 -->
+        <activity
+            android:name=".ui.activity.my.AuthListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

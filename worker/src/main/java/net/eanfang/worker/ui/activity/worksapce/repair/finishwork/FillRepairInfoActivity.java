@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.finishwork;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,7 +10,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -48,13 +47,14 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.PutUpOrderActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.AddTroubleActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail.AddTroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.adapter.RepairTeamWorkerAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -87,14 +87,6 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
     private static final Integer WORKER_ADD_TROUBLE_CALLBACK = 2;
     private final Activity activity = this;
-    @BindView(R.id.tv_right)
-    TextView tvRight;
-    @BindView(R.id.iv_title)
-    ImageView ivTitle;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.rv_trouble)
     RecyclerView rvTrouble;
     /**

@@ -17,8 +17,8 @@ import java.util.List;
  */
 
 public class MaterialAdapter extends BaseQuickAdapter<BughandleUseDeviceEntity, BaseViewHolder> {
-    public MaterialAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
+    public MaterialAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override

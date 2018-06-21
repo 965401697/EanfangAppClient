@@ -79,7 +79,9 @@ public class DeviceParameterActivity extends BaseActivity {
     private void initView() {
         setTitle("设备参数");
         setRightTitle("确认");
-        setLeftBack();
+        setLeftBack((v) -> {
+            doFinish();
+        });
         paramEntityList = (List<BughandleParamEntity>) getIntent().getSerializableExtra("paramEntityList");
         if (paramEntityList == null) {
             paramEntityList = new ArrayList<>();
@@ -118,10 +120,7 @@ public class DeviceParameterActivity extends BaseActivity {
         });
         setRightTitleOnClickListener((v) -> {
             if (paramEntityList.size() > 0) {
-                Intent intent = new Intent();
-                intent.putExtra("addParam", (Serializable) paramEntityList);
-                setResult(ADD_DEVICE_PARAM_RESULT, intent);
-                finishSelf();
+                doFinish();
             } else {
                 showToast("请完善参数");
             }
@@ -144,4 +143,18 @@ public class DeviceParameterActivity extends BaseActivity {
         });
     }
 
+    public void doFinish() {
+        Intent intent = new Intent();
+        intent.putExtra("addParam", (Serializable) paramEntityList);
+        setResult(ADD_DEVICE_PARAM_RESULT, intent);
+        finishSelf();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            doFinish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

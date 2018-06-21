@@ -1,18 +1,14 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -38,6 +34,7 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.AddMaterialActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.AddTroubleAddPictureActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.DeviceParameterActivity;
 import net.eanfang.worker.ui.adapter.MaterialAdapter;
@@ -49,7 +46,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -60,7 +56,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/25  16:24
  * @email houzhongzhou@yeah.net
- * @desc 完善故障处理明细·
+ * @desc 电话未解决 完善故障处理明细·
  */
 
 public class AddTroubleDetailActivity extends BaseWorkerActivity implements RadioGroup.OnCheckedChangeListener {
@@ -145,15 +141,18 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     // 是否误报
     private String mIsRepairError = "否";
     // 耗用材料
-    private List<BughandleUseDeviceEntity> useDeviceEntityList = new ArrayList<>();
+//    private List<BughandleUseDeviceEntity> useDeviceEntityList = new ArrayList<>();
 
-    private HashMap<String, String> uploadMap = new HashMap<>();
+    private HashMap<String, String> mUploadMapPicture = new HashMap<>();
 
     // 设备参数List
     private List<BughandleParamEntity> paramEntityList = new ArrayList<>();
 
     // 维修结果
     List<String> mRepairResult = GetConstDataUtils.getBugDetailList();
+
+    // 是否加载上次
+    private boolean isLoad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +182,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         // bean = (BughandleDetailEntity) getIntent().getSerializableExtra("bean");
         // bugBean = (BusinessWorkBean) getIntent().getSerializableExtra("bugBean");
         // bugOneCode = getIntent().getStringExtra("bugOneCode");
+        initAdapter();
         lookFailureDetail();
     }
 
@@ -208,6 +208,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         rlAddDevicePicture.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("detailEntity", detailEntity);
+            bundle.putBoolean("isLoad", isLoad);
+            bundle.putSerializable("mUploadMapPicture", mUploadMapPicture);
             JumpItent.jump(AddTroubleDetailActivity.this, AddTroubleAddPictureActivity.class, bundle);
         });
     }
@@ -222,7 +224,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                         detailEntity = failureEntity.getBughandleDetailEntityList().get(failureEntity.getBughandleDetailEntityList().size() - 1);
                     }
                     fillData();
-                    initAdapter();
                 }));
     }
 
@@ -252,6 +253,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         if (detailEntity.getId() != null) {
             new TrueFalseDialog(this, "系统提醒", "是否加载并修改上次提交的记录？",
                     () -> {
+                        isLoad = true;
                         etTroublePoint.setText(Optional.ofNullable(detailEntity.getCheckProcess()).orElse(""));
                         etTroubleReason.setText(Optional.ofNullable(detailEntity.getCause()).orElse(""));
                         etTroubleDeal.setText(Optional.ofNullable(detailEntity.getHandle()).orElse(""));
@@ -268,32 +270,40 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                             rgNo.setChecked(false);
                             rgYes.setChecked(true);
                         }
+                        if (detailEntity.getUseDeviceEntityList() != null) {
+//                            useDeviceEntityList = detailEntity.getUseDeviceEntityList();
+                            materialAdapter.setNewData(detailEntity.getUseDeviceEntityList());
+                        }
+                        if (detailEntity.getParamEntityList() != null) {
+                            paramEntityList = detailEntity.getParamEntityList();
+                        }
                     },
                     () -> {
+                        isLoad = false;
                         detailEntity.setId(null);
-
+                        detailEntity.setPresentationPictures(null);
+                        detailEntity.setPointPictures(null);
+                        detailEntity.setRestorePictures(null);
                     }).showDialog();
         }
         addRepariResult();
     }
 
-
     private void initAdapter() {
-        if (detailEntity.getUseDeviceEntityList() != null) {
-            useDeviceEntityList = detailEntity.getUseDeviceEntityList();
-            materialAdapter = new MaterialAdapter(R.layout.layout_item_add_material, useDeviceEntityList);
-            rcyConsumable.setAdapter(materialAdapter);
-            materialAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-                switch (view.getId()) {
-                    case R.id.iv_delete:
-                        detailEntity.getUseDeviceEntityList().remove(position);
-                        materialAdapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
-                }
-            });
-        }
+
+        materialAdapter = new MaterialAdapter(R.layout.layout_item_add_material);
+        materialAdapter.bindToRecyclerView(rcyConsumable);
+
+        materialAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.iv_delete:
+                    materialAdapter.remove(position);
+                    break;
+                default:
+                    break;
+            }
+        });
+
     }
 
     private void submit() {
@@ -324,8 +334,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         detailEntity.setUseAdvice(etTroubleUseAdvace.getText().toString().trim());
         detailEntity.setBusBughandleConfirmId(confirmId);
         // 设备耗材
-        detailEntity.setUseDeviceEntityList(useDeviceEntityList);
-
+        detailEntity.setUseDeviceEntityList(materialAdapter.getData());
         //设备参数
         detailEntity.setParamEntityList(paramEntityList);
 
@@ -343,6 +352,14 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
             showToast("请输入原因");
             return false;
         }
+        if (StringUtils.isEmpty(etTroublePoint.getText().toString().trim())) {
+            showToast("请输入过程方法");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroubleDeal.getText().toString().trim())) {
+            showToast("请输入处理措施");
+            return false;
+        }
         if (mReapirOneStauts == 100) {
             showToast("请选择维修结果");
             return false;
@@ -353,6 +370,18 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         }
         if (StringUtils.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
             showToast("请输入使用建议");
+            return false;
+        }
+        if (StringUtils.isEmpty(detailEntity.getPresentationPictures())) {
+            showToast("请添加现场照片");
+            return false;
+        }
+        if (StringUtils.isEmpty(detailEntity.getPointPictures())) {
+            showToast("请添加现场照片");
+            return false;
+        }
+        if (StringUtils.isEmpty(detailEntity.getRestorePictures())) {
+            showToast("请添加现场照片");
             return false;
         }
 //        if (paramEntityList.size() == 0) {
@@ -396,19 +425,28 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 耗材
         if (requestCode == REQUEST_ADD_MATERIAL && resultCode == RESULT_ADD_MATERIAL) {
-            useDeviceEntityList.add((BughandleUseDeviceEntity) data.getSerializableExtra("bean"));
-            materialAdapter.notifyDataSetChanged();
-
+//            useDeviceEntityList.add((BughandleUseDeviceEntity) data.getSerializableExtra("bean"));
+            materialAdapter.addData((BughandleUseDeviceEntity) data.getSerializableExtra("bean"));
         } else if (requestCode == ADD_DEVICE_PARAM_REQUEST && resultCode == ADD_DEVICE_PARAM_RESULT) {
+            // 设备参数
             paramEntityList = (List<BughandleParamEntity>) data.getSerializableExtra("addParam");
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * 添加照片回调
+     */
     @Subscribe
     public void onEventWork(BughandleDetailEntity mDetailEntity) {
         detailEntity = mDetailEntity;
+    }
+
+    @Subscribe
+    public void onEventWorkPicture(HashMap<String, String> uploadMap) {
+        mUploadMapPicture = uploadMap;
     }
 
     public void addRepariResult() {
@@ -431,8 +469,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                     String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
                     int position = Integer.parseInt(str);
                     mReapirOneStauts = position;
-                    mReapirOneStauts = 100;
+                    mReapirTwoStauts = 200;
                     addReapirResultMode(position);
+                } else {
+                    mReapirOneStauts = 100;
                 }
             }
         });
@@ -440,11 +480,13 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     }
 
     public void addReapirResultMode(int status) {
+        List<String> faultModeList = GetConstDataUtils.getBugDetailTwoList(status);
         if (tagRepairResultTwo.getSelectedList().size() > 0) {
             tagRepairResultTwo.getSelectedList().clear();
             tagRepairResultTwo.getAdapter().notifyDataChanged();
+
         }
-        tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(GetConstDataUtils.getBugDetailTwoList(status)) {
+        tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(faultModeList) {
             @Override
             public View getView(FlowLayout parent, int position, String mrepairResult) {
                 TextView tv = (TextView) LayoutInflater.from(AddTroubleDetailActivity.this).inflate(R.layout.layout_trouble_result_item, tagRepairResultTwo, false);
@@ -452,9 +494,13 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                 return tv;
             }
         });
-        if (mReapirTwoStauts != 100) {
+        if (mReapirTwoStauts > faultModeList.size()) {
+            mReapirTwoStauts = 200;
+        }
+        if (mReapirTwoStauts != 200) {
             mModeAdapter.setSelectedList(mReapirTwoStauts);
         }
+
         tagRepairResultTwo.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
             @Override
             public void onSelected(Set<Integer> selectPosSet) {
@@ -462,6 +508,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                     String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
                     int position = Integer.parseInt(str);
                     mReapirTwoStauts = position;
+                } else {
+                    mReapirTwoStauts = 200;
                 }
             }
         });
