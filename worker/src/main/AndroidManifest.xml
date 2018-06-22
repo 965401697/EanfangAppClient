@@ -394,9 +394,13 @@
         <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
         <!-- 故障处理查看照片 -->
         <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
-        <!-- 技师认证 -->
+        <!-- 技师认证 列表页 -->
         <activity
             android:name=".ui.activity.my.AuthListActivity"
+            android:screenOrientation="portrait" />
+        <!-- 技师认证上传照片 -->
+        <activity
+            android:name=".ui.activity.my.AuthPhotoActivity"
             android:screenOrientation="portrait" />
     </application>
 

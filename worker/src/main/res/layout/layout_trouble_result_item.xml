@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Created by 岱青海蓝信息系统(北京)有限公司 on 17-2-10 下午2:18
-  ~ Copyright (c) 2017. All rights reserved.
-  -->
+<?xml version="1.0" encoding="utf-8"?>
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"

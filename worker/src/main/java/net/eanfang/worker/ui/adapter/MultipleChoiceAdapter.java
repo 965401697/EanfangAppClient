@@ -60,19 +60,7 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(v, position, getItemId(position));
                 }
-                if (data.get(position).isCheck()) {
-                    holder.checkBox.setImageResource(R.mipmap.ic_checked);
-                } else {
-                    holder.checkBox.setImageResource(R.mipmap.ic_uncheck);
-                }
-
             });
-        }
-
-        if (data.get(position).isCheck()) {
-            holder.checkBox.setImageResource(R.mipmap.ic_checked);
-        } else {
-            holder.checkBox.setImageResource(R.mipmap.ic_uncheck);
         }
 
         holder.tvTitle.setText(getItem(position));
@@ -98,8 +86,6 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
     }
 
     class InternalViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.checkBox)
-        ImageView checkBox;
         @BindView(R.id.tv_title)
         TextView tvTitle;
 
