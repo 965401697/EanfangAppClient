@@ -408,12 +408,14 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
         <!--设备参数-->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity"></activity>
-
-        <!-- 技师认证 -->
+        <!-- 技师认证 列表页 -->
         <activity
             android:name=".ui.activity.my.AuthListActivity"
             android:screenOrientation="portrait" />
-
+        <!-- 技师认证上传照片 -->
+        <activity
+            android:name=".ui.activity.my.AuthPhotoActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
