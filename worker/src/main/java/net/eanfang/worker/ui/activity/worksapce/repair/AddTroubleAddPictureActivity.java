@@ -108,6 +108,8 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
 
     private HashMap<String, String> uploadMap = new HashMap<>();
 
+    private boolean isLoad = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +126,18 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
     private void initView() {
         setTitle("添加照片");
         setLeftBack();
-        detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+        isLoad = getIntent().getBooleanExtra("isLoad", false);
+        uploadMap = (HashMap<String, String>) getIntent().getSerializableExtra("mUploadMapPicture");
+        //是否加载记录
+        if (isLoad) {
+            detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+        } else {
+            if (uploadMap.size() > 0) {
+                detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+            } else {
+                detailEntity = new BughandleDetailEntity();
+            }
+        }
         initNinePhoto();
         initImgUrlList();
     }
@@ -146,23 +159,37 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
 
     private void doSubmitData() {
         //故障表象 （3张）
-        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, false);
+        if (StringUtils.isEmpty(presentationPic)) {
+            showToast("请选择故障表象照片");
+            return;
+        }
         detailEntity.setPresentationPictures(presentationPic);
+        //故障点照片 （3张）
+        String pointPic = PhotoUtils.getPhotoUrl(snplToolsPackageAddPhotos, uploadMap, false);
+        if (StringUtils.isEmpty(pointPic)) {
+            showToast("请选择故障点照片");
+            return;
+        }
+        detailEntity.setPointPictures(pointPic);
+        //恢复后表象 （3张）
+        String restorePic = PhotoUtils.getPhotoUrl(snplFailureRecoverPhenomena, uploadMap, false);
+        if (StringUtils.isEmpty(restorePic)) {
+            showToast("请选择恢复后表象照片");
+            return;
+        }
+        detailEntity.setRestorePictures(restorePic);
         //工具及蓝布 （3张）
         String toolPic = PhotoUtils.getPhotoUrl(snplMonitorAddPhotos, uploadMap, false);
         detailEntity.setToolPictures(toolPic);
-        //故障点照片 （3张）
-        String pointPic = PhotoUtils.getPhotoUrl(snplToolsPackageAddPhotos, uploadMap, false);
-        detailEntity.setPointPictures(pointPic);
+
         //处理后现场 （3张）
         String afterHandlePic = PhotoUtils.getPhotoUrl(snplAfterProcessingLocale, uploadMap, false);
         detailEntity.setAfterHandlePictures(afterHandlePic);
         //设备回装 （3张）
         String deviceReturnInstallPic = PhotoUtils.getPhotoUrl(snplMachineFitBack, uploadMap, false);
         detailEntity.setDeviceReturnInstallPictures(deviceReturnInstallPic);
-        //恢复后表象 （3张）
-        String restorePic = PhotoUtils.getPhotoUrl(snplFailureRecoverPhenomena, uploadMap, false);
-        detailEntity.setRestorePictures(restorePic);
+
         /**
          * 提交照片
          * */
@@ -172,11 +199,14 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
                         EventBus.getDefault().post(detailEntity);
+                        EventBus.getDefault().post(uploadMap);
                         finishSelf();
                     });
                 }
             });
             return;
+        } else if (isLoad) {
+            finishSelf();
         }
 
     }

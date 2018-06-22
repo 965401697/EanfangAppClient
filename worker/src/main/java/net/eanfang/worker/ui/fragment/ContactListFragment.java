@@ -63,6 +63,10 @@ public class ContactListFragment extends BaseFragment {
     private List<String> invalidList = new ArrayList<>();//无效的会话id
     private Set<String> conversationsId = Sets.newHashSet();
 
+    private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
+
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -218,14 +222,15 @@ public class ContactListFragment extends BaseFragment {
 
     private void doHttpNoticeCount() {
         EanfangHttp.get(NewApiService.GET_PUSH_COUNT).execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-            if (bean == null) {
-                return;
-            }
             if (bean.containsKey("sys")) {
                 initSysCount(bean.getInteger("sys"));
+            } else {
+                initSysCount(0);
             }
             if (bean.containsKey("biz")) {
                 initBizCount(bean.getInteger("biz"));
+            } else {
+                initBizCount(0);
             }
         }));
     }
@@ -237,21 +242,24 @@ public class ContactListFragment extends BaseFragment {
         } else {
             ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
         }
-        new QBadgeView(getActivity())
+
+        qBadgeViewBiz
                 .bindTarget(findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true)
-                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-                    //清除成功
-                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
-                        showToast("消息被清空了");
-//                        Var.get().setVar(0);
-                    }
-                });
+                .setBadgeTextSize(11, true);
+
+
+//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+//                    //清除成功
+//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
+//                        showToast("消息被清空了");
+////                        Var.get().setVar(0);
+//                    }
+//                });
     }
 
     private void initSysCount(Integer sys) {
@@ -260,21 +268,22 @@ public class ContactListFragment extends BaseFragment {
         } else {
             ((TextView) findViewById(R.id.tv_sys_msg_info)).setText("没有新消息");
         }
-        new QBadgeView(getActivity())
+        qBadgeViewSys
                 .bindTarget(findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true)
-                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-                    //清除成功
-                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
-                        showToast("消息被清空了");
-//                        Var.get().setVar(0);
-                    }
-                });
+                .setBadgeTextSize(11, true);
+
+//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+//                    //清除成功
+//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
+//                        showToast("消息被清空了");
+////                        Var.get().setVar(0);
+//                    }
+//                });
     }
 
 

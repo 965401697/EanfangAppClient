@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.finishwork;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,6 +38,8 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail.PhoneSolveTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.QuotationDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -308,7 +310,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
                 snpl_form_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             case REQUEST_CODE_UPDATE_TROUBLE:
-                BughandleDetailEntity resultBean = (BughandleDetailEntity) data.getSerializableExtra("bean");
+                BughandleDetailEntity resultBean = (BughandleDetailEntity) data.getSerializableExtra("beans");
                 if (resultBean == null) {
                     return;
                 }

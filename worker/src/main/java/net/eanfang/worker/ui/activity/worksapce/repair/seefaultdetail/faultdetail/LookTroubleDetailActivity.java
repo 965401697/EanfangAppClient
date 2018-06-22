@@ -1,11 +1,9 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -40,7 +38,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,7 +153,7 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
          * */
 
         if (mDataList_2.size() != 0) {
-            rcy_consumable.setAdapter(materialAdapter);
+            materialAdapter.bindToRecyclerView(rcy_consumable);
         } else {
             //无数据时隐藏
             rcy_consumable.setVisibility(View.GONE);
@@ -199,7 +196,8 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
 
 
     private void initAdapter() {
-        materialAdapter = new MaterialAdapter(R.layout.layout_item_add_material, mDataList_2);
+        materialAdapter = new MaterialAdapter(R.layout.layout_item_add_material);
+        materialAdapter.setNewData(mDataList_2);
         rcy_consumable.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {

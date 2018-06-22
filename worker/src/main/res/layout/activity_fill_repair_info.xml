@@ -7,7 +7,7 @@
     android:background="@color/color_contact_line_gray"
     android:orientation="vertical">
 
-    <include layout="@layout/view_title_bar" />
+    <include layout="@layout/header" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -428,8 +428,8 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_team_worker"
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/dimen_20"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_20"
                     android:scrollbars="none" />
 
             </LinearLayout>
