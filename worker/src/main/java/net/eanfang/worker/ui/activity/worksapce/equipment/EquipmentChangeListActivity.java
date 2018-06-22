@@ -1,34 +1,30 @@
-package net.eanfang.client.ui.activity.worksapce.contacts;
+package net.eanfang.worker.ui.activity.worksapce.equipment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.sys.entity.OrgEntity;
+import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.CooperationRelationAdapter;
-import net.eanfang.client.ui.base.BaseClientActivity;
-
-import java.util.List;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CooperationRelationActivity extends BaseClientActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class EquipmentChangeListActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+
+
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.tv_no_datas)
@@ -38,40 +34,45 @@ public class CooperationRelationActivity extends BaseClientActivity implements S
 
 
     private int mPage = 1;
-    private CooperationRelationAdapter mAdapter;
+    private EquipmentChangeListAdapter mAdapter;
 
+    private String deviceNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cooperation_relation);
+
+
+        setContentView(R.layout.activity_equipment_change);
         ButterKnife.bind(this);
+        setTitle("变更记录");
+        setLeftBack();
+        deviceNo = getIntent().getStringExtra("deviceNo");
 
         initView();
-        mPage = 1;
-        startTransaction(true);
+
+
     }
 
 
     private void initView() {
-        setTitle("合作业务");
-        setLeftBack();
         mSwipeRefreshLayout.setOnRefreshListener(this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
 
-        mAdapter = new CooperationRelationAdapter(R.layout.item_cooperation_relation);
+        mAdapter = new EquipmentChangeListAdapter(R.layout.item_equipment_change_list);
         mAdapter.bindToRecyclerView(rvList);
         mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(CooperationRelationActivity.this, CooperationRelationDetailActivity.class);
-                intent.putExtra("bean", (CooperationEntity) adapter.getData().get(position));
+
+                Intent intent = new Intent(EquipmentChangeListActivity.this, EquipmentChangeDetailActivity.class);
+                intent.putExtra("id", ((CustDeviceChangeLogEntity) adapter.getData().get(position)).getId());
                 startActivity(intent);
             }
         });
-
+        mSwipeRefreshLayout.setRefreshing(true);
         getData();
     }
 
@@ -101,15 +102,14 @@ public class CooperationRelationActivity extends BaseClientActivity implements S
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
         queryEntry.setPage(mPage);
-
-        queryEntry.getEquals().put("assigneeOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-
-        EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
+        queryEntry.getEquals().put("deviceNo", deviceNo);
+        EanfangHttp.post(NewApiService.DEVICE_CHANGE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, true, (list) -> {
-
+                .execute(new EanfangCallback<CustDeviceChangeLogEntity>(this, true, CustDeviceChangeLogEntity.class, true, (list) -> {
+//                    @Override
+//                    public void onSuccess (FaultListsBean bean){
 
                     if (mPage == 1) {
                         mAdapter.getData().clear();
@@ -135,6 +135,7 @@ public class CooperationRelationActivity extends BaseClientActivity implements S
                         }
                     }
 
+//                    }
 
 //                    @Override
 //                    public void onNoData(String message) {

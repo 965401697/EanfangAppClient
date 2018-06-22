@@ -18,9 +18,11 @@ import com.yaf.sys.entity.OrgEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
+import net.eanfang.client.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
+import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DefendLogView;
 import net.eanfang.client.ui.widget.OpenShopLogView;
@@ -205,6 +207,27 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_defend_log).setOnClickListener((v) -> {
             if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
                 new DefendLogView(getActivity(), true).show();
+            } else {
+                showToast("暂无权限");
+            }
+        });
+
+
+        //故障记录
+        findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
+                startActivity(intent);
+            } else {
+                showToast("暂无权限");
+            }
+        });
+
+        //设备库
+        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+                startActivity(intent);
             } else {
                 showToast("暂无权限");
             }

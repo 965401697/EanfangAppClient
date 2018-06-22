@@ -26,14 +26,12 @@
             android:id="@+id/tv_work_library"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_library"
-            android:onClick="noOpen"
             android:text="@string/text_work_library" />
 
         <TextView
             android:id="@+id/tv_work_fault"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_fault"
-            android:onClick="noOpen"
             android:text="@string/text_work_fault" />
 
         <TextView

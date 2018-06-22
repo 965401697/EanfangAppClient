@@ -395,7 +395,20 @@
         <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
         <!-- 故障处理查看照片 -->
         <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
-
+        <!--故障列表-->
+        <activity android:name=".ui.activity.worksapce.FaultRecordListActivity" />
+        <!--故障统计列表-->
+        <activity android:name=".ui.activity.worksapce.FaultStatisticsListActivity" />
+        <!--设备详情-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentDetailActivity" />
+        <!--设备列表-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentListActivity" />
+        <!--设备变更列表-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeListActivity" />
+        <!--设备变更详情-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
+        <!--设备参数-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity"></activity>
     </application>
 
 </manifest>

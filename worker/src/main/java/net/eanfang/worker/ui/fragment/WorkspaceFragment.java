@@ -24,7 +24,9 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
+import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
+import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.ReportCtrlView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
@@ -210,6 +212,26 @@ public class WorkspaceFragment extends BaseFragment {
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
             new WorkCheckCtrlView(getActivity(), true).show();
+        });
+
+        //故障记录
+        findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
+                startActivity(intent);
+            } else {
+                showToast("暂无权限");
+            }
+        });
+
+        //设备库
+        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+//                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+//                startActivity(intent);
+            } else {
+                showToast("暂无权限");
+            }
         });
     }
 

@@ -155,6 +155,54 @@ public class GetDateUtils {
         return gc.getTime();
     }
 
+
+    public static Date getLastWeek(String currentDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(currentDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.add(Calendar.DATE, -7); // 向前一周；如果需要向后一周，用正数即可
+        return calendar.getTime();
+
+    }
+
+
+    public static Date getLastMonth(String currentDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(currentDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.add(Calendar.DATE, -30); // 向前一月；如果需要向后一月，用正数即可
+        return calendar.getTime();
+
+    }
+
+    /**
+     * 时间转换为时间戳
+     *
+     * @param timeStr 时间 例如: 2016-03-09
+     * @param format  时间对应格式  例如: yyyy-MM-dd
+     * @return
+     */
+    public static long getTimeStamp(String timeStr, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(timeStr);
+            long timeStamp = date.getTime();
+            return timeStamp;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     /**
      * 将指定日期 增加 指定个月
      *

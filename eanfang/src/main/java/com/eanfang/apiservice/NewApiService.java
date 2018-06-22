@@ -368,6 +368,36 @@ public interface NewApiService {
      * post
      */
     String COOPERATION_WORKCOMPANY_SUB = BASE_URL + "/yaf_shop/cooperation/create";
+    /**
+     * 故障记录列表
+     * post
+     */
+    String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list";
+    /**
+     * 故障记录统计
+     * post
+     */
+    String FAULT_RECORD_TOTAL = BASE_URL + "/yaf_repair/failure/record/total";
+    /**
+     * 设备列表
+     * post
+     */
+    String DEVICE_LIST = BASE_URL + "/yaf_device/custDevice/list";
+    /**
+     * 设备詳情
+     * post
+     */
+    String DEVICE_DETAIL = BASE_URL + "/yaf_device/custDevice/detail";
+    /**
+     * 变更记录列表
+     * post
+     */
+    String DEVICE_CHANGE_LIST = BASE_URL + "/yaf_device/custdevicechangelog/list";
+    /**
+     * 变更记录详情
+     * post
+     */
+    String DEVICE_CHANGE_DETAIL = BASE_URL + "/yaf_device/custdevicechangelog/info/";
 
 
 }
