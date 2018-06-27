@@ -339,7 +339,7 @@ public interface NewApiService {
      */
     String ADD_STAFF = BASE_URL + "/yaf_sys/staff/insert";
     /**
-     * 添加员工
+     * 添加角色
      * post
      */
     String ADD_STAFF_ROLE = BASE_URL + "/yaf_sys/staff/grant";
@@ -398,6 +398,5 @@ public interface NewApiService {
      * post
      */
     String DEVICE_CHANGE_DETAIL = BASE_URL + "/yaf_device/custdevicechangelog/info/";
-
 
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -193,7 +194,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private String workerName = "";
     private String comapnyName = "";
 
-    private int regionSize = 30;
+    private int regionSize = 20;
 
 
     @Override
@@ -318,6 +319,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 rvList1.setVisibility(View.VISIBLE);
                 fillRegionData();
                 ivDown.setImageResource(R.mipmap.arrow_up);
+                evaluateAdapter1.getFooterLayout().setVisibility(View.VISIBLE);
             }
         });
 
@@ -567,30 +569,36 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
         evaluateAdapter1 = new WorkerDetailAdapter(R.layout.item_worker_detail1, new ArrayList());
         evaluateAdapter1.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-
+        View footView = LayoutInflater.from(this).inflate(R.layout.foot_view_aren, null);
         evaluateAdapter1.bindToRecyclerView(rvList1);
+        evaluateAdapter1.addFooterView(footView);
 
-        rvList1.setNestedScrollingEnabled(false);
-
-        findViewById(R.id.sv_worker_detail).setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                int width, height;
-                Point p = new Point();
-                getWindowManager().getDefaultDisplay().getSize(p);
-                width = p.x;
-                height = p.y;
-                Rect rect = new Rect(0, 0, width, height);
-                //如果荣誉证书在屏幕可见范围
-                if (ivPic1.getLocalVisibleRect(rect)) {
-                    //并且 服务区域是打开状态
-                    if (rvList1.getVisibility() == View.VISIBLE) {
-                        //加载服务区域
-                        fillRegionData();
-                    }
-                }
+        evaluateAdapter1.getFooterLayout().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fillRegionData();
             }
-            return false;
         });
+//        rvList1.setNestedScrollingEnabled(false);
+//        findViewById(R.id.sv_worker_detail).setOnTouchListener((v, event) -> {
+//            if (event.getAction() == MotionEvent.ACTION_UP) {
+//                int width, height;
+//                Point p = new Point();
+//                getWindowManager().getDefaultDisplay().getSize(p);
+//                width = p.x;
+//                height = p.y;
+//                Rect rect = new Rect(0, 0, width, height);
+//                //如果荣誉证书在屏幕可见范围
+//                if (ivPic1.getLocalVisibleRect(rect)) {
+//                    //并且 服务区域是打开状态
+//                    if (rvList1.getVisibility() == View.VISIBLE) {
+//                        //加载服务区域
+//                        fillRegionData();
+//                    }
+//                }
+//            }
+//            return false;
+//        });
     }
 
     private void fillRegionData() {
@@ -599,6 +607,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         evaluateAdapter1.loadMoreComplete();
         if (dataList.size() < regionSize) {
             evaluateAdapter1.loadMoreEnd();
+            evaluateAdapter1.getFooterLayout().setVisibility(View.GONE);
         }
 
     }

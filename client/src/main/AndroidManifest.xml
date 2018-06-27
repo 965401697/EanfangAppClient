@@ -170,7 +170,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:scheme="sdksample" />
+                <data android:scheme="wx11d1a11a2f79200a" />
             </intent-filter>
         </activity>
         <activity
@@ -428,20 +428,22 @@
         <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationDetailActivity" />
         <!-- 合作业务绑定成功 -->
         <activity android:name=".ui.activity.worksapce.contacts.CooperactionRelationSubActivity" />
-        <!--故障列表-->
+        <!-- 故障列表 -->
         <activity android:name=".ui.activity.worksapce.FaultRecordListActivity" />
-        <!--故障统计列表-->
+        <!-- 故障统计列表 -->
         <activity android:name=".ui.activity.worksapce.FaultStatisticsListActivity" />
-        <!--设备详情-->
+        <!-- 设备详情 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentDetailActivity" />
-        <!--设备列表-->
+        <!-- 设备列表 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentListActivity" />
-        <!--设备变更列表-->
+        <!-- 设备变更列表 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeListActivity" />
-        <!--设备变更详情-->
+        <!-- 设备变更详情 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
-        <!--设备参数-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity"></activity>
+        <!-- 设备参数 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity" />
+        <!--设备搜索界面-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity"></activity>
     </application>
 
 </manifest>

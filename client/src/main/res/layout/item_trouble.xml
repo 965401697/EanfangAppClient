@@ -124,11 +124,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="维保状态:"
+                    android:text="保修状态:"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
 
                 <TextView
+                    android:id="@+id/tv_repair_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_36"

@@ -394,26 +394,33 @@
         <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
         <!-- 故障处理查看照片 -->
         <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
-        <!--故障列表-->
+        <!-- 故障列表 -->
         <activity android:name=".ui.activity.worksapce.FaultRecordListActivity" />
-        <!--故障统计列表-->
+        <!-- 故障统计列表 -->
         <activity android:name=".ui.activity.worksapce.FaultStatisticsListActivity" />
-        <!--设备详情-->
+        <!-- 设备详情 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentDetailActivity" />
-        <!--设备列表-->
+        <!-- 设备列表 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentListActivity" />
-        <!--设备变更列表-->
+        <!-- 设备变更列表 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeListActivity" />
-        <!--设备变更详情-->
+        <!-- 设备变更详情 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
-        <!--设备参数-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity"></activity>
+        <!-- 设备参数 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity" />
 
         <!-- 技师认证 -->
         <activity
             android:name=".ui.activity.my.AuthListActivity"
             android:screenOrientation="portrait" />
-
+        <!--免费设计-->
+        <activity android:name=".ui.activity.worksapce.design.DesignActivity" />
+        <!--设计订单List-->
+        <activity android:name=".ui.activity.worksapce.design.DesignOrderActivity" />
+        <!--设计订单详情-->
+        <activity android:name=".ui.activity.worksapce.design.DesignOrderDetailActivity"></activity>
+        <!--设备搜索界面-->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity"></activity>
     </application>
 
 </manifest>

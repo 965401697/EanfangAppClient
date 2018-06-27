@@ -99,6 +99,7 @@ public class DesignOrderListBean {
         private String createTime;
         private Long createTopCompanyId;
         private Long createUserId;
+        private Long createCompanyId;
         private String detailPlace;
         private Long id;
         private String latitude;
@@ -110,6 +111,14 @@ public class DesignOrderListBean {
         private int status;
         private String userName;
         private String zoneCode;
+
+        public Long getCreateCompanyId() {
+            return createCompanyId;
+        }
+
+        public void setCreateCompanyId(Long createCompanyId) {
+            this.createCompanyId = createCompanyId;
+        }
 
         public String getBudgetLimit() {
             return budgetLimit == null ? "" : budgetLimit;

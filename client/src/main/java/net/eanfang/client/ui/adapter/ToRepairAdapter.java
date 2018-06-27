@@ -45,5 +45,18 @@ public class ToRepairAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewH
             faultPic.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgs[0]));
         }
 
+        //1:保外 0：保内
+        if(item.getMaintenanceStatus()!=null) {
+            if (item.getMaintenanceStatus() == 0) {
+                helper.setText(R.id.tv_repair_status, "保内");
+            } else {
+                helper.setText(R.id.tv_repair_status, "保外");
+            }
+        }
+
+        if(item.getRepairCount()!=null) {
+            helper.setText(R.id.tv_repairHistory, String.valueOf(item.getRepairCount()));
+        }
+
     }
 }

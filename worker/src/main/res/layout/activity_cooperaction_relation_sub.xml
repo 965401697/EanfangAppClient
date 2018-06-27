@@ -36,9 +36,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_26"
             android:text="易安网科技北京有限公司"
-            android:textSize="@dimen/textSize_13" />
+            android:textSize="@dimen/textSize_13"
+            android:visibility="invisible" />
 
         <TextView
+            android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -52,21 +54,38 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_service"
+        android:layout_above="@+id/ll_service"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:text="如有疑问，请联系客服处理"
         android:textSize="@dimen/textSize_13" />
 
-    <TextView
-        android:id="@+id/tv_service"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_service"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen_38"
-        android:text="客服热线：010-5877-8731"
-        android:textSize="@dimen/textSize_13" />
+        android:gravity="center_horizontal">
 
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客服热线 ："
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dimen_38"
+            android:text="010-5877-8731"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_13" />
+    </LinearLayout>
 
 </RelativeLayout>

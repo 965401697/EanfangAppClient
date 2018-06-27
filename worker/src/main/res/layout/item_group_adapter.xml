@@ -39,7 +39,7 @@
                 android:maxEms="10"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 
             <ImageView
@@ -78,6 +78,7 @@
             android:src="@mipmap/ic_contact_setting" />
     </RelativeLayout>
 
+
     <LinearLayout
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
@@ -87,7 +88,11 @@
         android:orientation="vertical"
         android:visibility="gone">
 
+
+        <TextView style="@style/style_common_line_gray" />
+
         <LinearLayout
+            android:id="@+id/ll_org"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
@@ -112,6 +117,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_child_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -134,10 +140,12 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+
         <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
+            android:id="@+id/ll_outside_company"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
@@ -160,6 +168,7 @@
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
+
         <View style="@style/style_common_line_gray" />
 
 
@@ -181,16 +190,18 @@
                 android:id="@+id/tv_parten_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dimen_44"
                 android:text="合作供应商"
                 android:textColor="@color/roll_content"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
+
         <View style="@style/style_common_line_gray" />
 
 
         <LinearLayout
+            android:id="@+id/ll_out_contacts"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
@@ -207,7 +218,7 @@
                 android:id="@+id/tv_outer_worker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dimen_44"
                 android:text="外部联系人"
                 android:textColor="@color/roll_content"
                 android:textSize="@dimen/textSize_14" />

@@ -43,14 +43,16 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         SimpleDraweeView ivCompanyHead = helper.getView(R.id.iv_company_logo);
 
         LinearLayout ll_show = helper.getView(R.id.ll_show);
-        helper.addOnClickListener(R.id.tv_org);
-        helper.addOnClickListener(R.id.tv_child_company);
-        helper.addOnClickListener(R.id.tv_outside_company);
+        helper.addOnClickListener(R.id.ll_org);
+        helper.addOnClickListener(R.id.ll_child_company);
+        helper.addOnClickListener(R.id.ll_outside_company);
         helper.addOnClickListener(R.id.ll_part_company);
+        helper.addOnClickListener(R.id.ll_out_contacts);
         helper.addOnClickListener(R.id.iv_setting);
         helper.setText(R.id.tv_company_name, item.getOrgName());
         imageView.setImageResource(R.mipmap.ic_contact_setting);
         helper.addOnClickListener(R.id.tv_auth_status);
+
 
         if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
             ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));

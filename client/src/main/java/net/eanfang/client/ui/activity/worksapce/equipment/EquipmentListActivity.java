@@ -1,156 +1,91 @@
 package net.eanfang.client.ui.activity.worksapce.equipment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.EquipmentBean;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.config.Config;
+import com.eanfang.util.GetConstDataUtils;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.OpenShopLogActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.OpenShopLogFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EquipmentListActivity extends BaseClientActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class EquipmentListActivity extends BaseClientActivity {
 
 
-    @BindView(R.id.rv_list)
-    RecyclerView rvList;
-    @BindView(R.id.tv_no_datas)
-    TextView mTvNoData;
-    @BindView(R.id.swipre_fresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.tl_equipment)
+    SlidingTabLayout tlEquipment;
+    @BindView(R.id.vp_equipment)
+    ViewPager vpEquipment;
 
-
-    private int mPage = 1;
-    private EquipmentListAdapter mAdapter;
-
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private MyPagerAdapter mAdapter;
+    private List<BaseDataEntity> allmTitles = Config.get().getBusinessList(1);
+    private List<String> mTitlesList = new ArrayList<>();
+    private String[] mTitles;
+    private Bundle mBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_equipment_list);
         ButterKnife.bind(this);
         setTitle("设备列表");
         setLeftBack();
-
         initView();
-        mPage = 1;
-
-
+        mBundle = getIntent().getExtras();
     }
-
 
     private void initView() {
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        rvList.setLayoutManager(new LinearLayoutManager(this));
+        mTitles = new String[allmTitles.size()];
+        for (BaseDataEntity baseDataEntity : allmTitles) {
+            mFragments.add(EquipmentListFragment.getInstance(baseDataEntity.getDataCode()));
+            mTitlesList.add(baseDataEntity.getDataName());
+        }
+        mTitlesList.toArray(mTitles);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        vpEquipment.setAdapter(mAdapter);
+        tlEquipment.setViewPager(vpEquipment, mTitles, this, mFragments);
+        vpEquipment.setCurrentItem(0);
 
-
-        mAdapter = new EquipmentListAdapter(R.layout.item_equipment_list);
-        mAdapter.bindToRecyclerView(rvList);
-        mAdapter.setOnLoadMoreListener(this);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(EquipmentListActivity.this, EquipmentDetailActivity.class);
-                intent.putExtra("id", mAdapter.getData().get(position).getId());
-                startActivity(intent);
-            }
-        });
-        mSwipeRefreshLayout.setRefreshing(true);
-        getData();
     }
 
 
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {
-        refresh();
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
     }
 
-    public void refresh() {
-        mPage = 1;//下拉永远第一页
-        getData();
+    public Bundle getmBundle() {
+        return mBundle;
     }
-
-    /**
-     * 加载更多
-     */
-    @Override
-    public void onLoadMoreRequested() {
-        mPage++;
-        getData();
-    }
-
-
-    private void getData() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(10);
-        queryEntry.setPage(mPage);
-        EanfangHttp.post(NewApiService.DEVICE_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<EquipmentBean>(this, true, EquipmentBean.class) {
-                    @Override
-                    public void onSuccess(EquipmentBean bean) {
-
-                        if (mPage == 1) {
-                            mAdapter.getData().clear();
-                            mAdapter.setNewData(bean.getList());
-                            mSwipeRefreshLayout.setRefreshing(false);
-                            mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
-                                mAdapter.loadMoreEnd();
-                            }
-
-                            if (bean.getList().size() > 0) {
-                                mTvNoData.setVisibility(View.GONE);
-                            } else {
-                                mTvNoData.setVisibility(View.VISIBLE);
-                            }
-
-
-                        } else {
-                            mAdapter.addData(bean.getList());
-                            mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
-                                mAdapter.loadMoreEnd();
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onNoData(String message) {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        mAdapter.loadMoreEnd();//没有数据了
-                        if (mAdapter.getData().size() == 0) {
-                            mTvNoData.setVisibility(View.VISIBLE);
-                        } else {
-                            mTvNoData.setVisibility(View.GONE);
-                        }
-
-                    }
-
-                    @Override
-                    public void onCommitAgain() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-    }
-
 }
+

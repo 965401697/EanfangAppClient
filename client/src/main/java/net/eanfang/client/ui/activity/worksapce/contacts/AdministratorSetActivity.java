@@ -36,8 +36,8 @@ public class AdministratorSetActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_name)
     TextView tvName;
-    @BindView(R.id.tv_sure)
-    TextView tvSure;
+    @BindView(R.id.tv_desc)
+    TextView tvDesc;
     private TemplateBean.Preson bean;
     private String molibe;//设置人的手机号
     private String name = "ceshi";//设置人的手机号
@@ -49,33 +49,21 @@ public class AdministratorSetActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("管理员设置");
         setLeftBack();
+
+        setRightTitle("转让");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transfer();
+            }
+        });
+//        tvDesc.setText("转让管理员需提供公司营业执照复印件加盖公章\r\n" + " 授权书(______公司授权____变更主管理员、被授权人身份证信息+复印)加盖公章\r\n" + "拨打010-5877 8731，由客服在1-2个工作日内人工办理");
+
     }
 
-    @OnClick({R.id.tv_sure, R.id.ll_transfer})
+    @OnClick(R.id.ll_transfer)
     public void onViewClicked(View v) {
         switch (v.getId()) {
-            case R.id.tv_sure:
-
-                if (Long.parseLong(bean.getId()) == EanfangApplication.get().getAccId()) {
-                    ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
-                    return;
-                }
-
-                new TrueFalseDialog(this, "转让管理员提示", "您的定将管理员身份转让给" + name + "?", () -> {
-                    EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
-                            .params("mobile", molibe)
-                            .execute(new EanfangCallback<JSONObject>(AdministratorSetActivity.this, true, JSONObject.class, (bean) -> {
-
-                                ToastUtil.get().showToast(AdministratorSetActivity.this, "转让成功，请重新登录");
-
-                                logout();
-
-                            }));
-
-                }).showDialog();
-
-
-                break;
             case R.id.ll_transfer:
                 Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
                 Uri uri = Uri.parse("worker://");
@@ -90,12 +78,36 @@ public class AdministratorSetActivity extends BaseClientActivity {
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
         if (presonList.size() > 0) {
-            tvSure.setVisibility(View.VISIBLE);
             bean = (TemplateBean.Preson) presonList.get(0);
             name = bean.getName();
             molibe = bean.getMobile();
             tvName.setText(bean.getName());
         }
+    }
+
+    private void transfer() {
+        if (bean == null) {
+            ToastUtil.get().showToast(AdministratorSetActivity.this, "请选择人员");
+            return;
+        }
+
+        if (Long.parseLong(bean.getId()) == EanfangApplication.get().getAccId()) {
+            ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
+            return;
+        }
+        String companyName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您的定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
+            EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
+                    .params("mobile", molibe)
+                    .execute(new EanfangCallback<JSONObject>(AdministratorSetActivity.this, true, JSONObject.class, (bean) -> {
+
+                        ToastUtil.get().showToast(AdministratorSetActivity.this, "转让成功，请重新登录");
+
+                        logout();
+
+                    }));
+
+        }).showDialog();
     }
 
 
