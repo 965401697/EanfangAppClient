@@ -382,7 +382,7 @@ public class EanfangCallback<T> extends StringCallback {
     public final void onError(Response<String> response) {
         // onError(response.body());
         if (isConnected()) {
-            onFail(0, "哎呀，服务器好像罢工了试", null);
+            onFail(0, "哎呀，服务器好像罢工了", null);
         } else {
             ToastUtil.get().showToast(this.activity, "网络中断，请检查网络连接");
         }

@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/color_contact_line_gray"
     android:orientation="vertical">
 
     <include layout="@layout/header" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dimen_30"
+            android:text="选择系统类别"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <View style="@style/style_common_line_gray" />
+
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tag_work_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dimen_30"
+            android:scrollbars="none"
+            app:max_select="-1" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_confim"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:padding="5dp" />
+        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:gravity="center"
+        android:padding="@dimen/dimen_30"
+        android:text="确认保存"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_13" />
+
 </LinearLayout>

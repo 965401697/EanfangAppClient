@@ -421,6 +421,11 @@
         <activity android:name=".ui.activity.worksapce.design.DesignOrderDetailActivity"></activity>
         <!--设备搜索界面-->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity"></activity>
+        <!-- 技师认证上传照片 -->
+        <activity
+            android:name=".ui.activity.my.AuthPhotoActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
