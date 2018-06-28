@@ -81,6 +81,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private HashMap<String, String> uploadMap = new HashMap<>();
     private String companyName;
     private Long companyId;
+    private Long clientCompanyUid;
 
     // 地址
     private String mAddress = "";
@@ -136,6 +137,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         tvAddFault.setOnClickListener(v -> {
             Intent intent = new Intent(PhoneSolveRepairInfoActivity.this, AddTroubleActivity.class);
             intent.putExtra("repaid", id);
+            intent.putExtra("clientCompanyUid",clientCompanyUid);
             startActivityForResult(intent, 10003);
         });
 
@@ -175,6 +177,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         id = getIntent().getLongExtra("orderId", 0);
         companyName = getIntent().getStringExtra("companyName");
         companyId = getIntent().getLongExtra("companyUid", 0);
+        clientCompanyUid = getIntent().getLongExtra("clientCompanyUid", 0);
         new Thread(() -> {
             // 获取经纬度
             LocationUtil.location(this, (location) -> {

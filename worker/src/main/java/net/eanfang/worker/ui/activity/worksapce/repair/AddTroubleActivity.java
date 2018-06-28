@@ -36,7 +36,9 @@ import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentAddActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
+import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentSearchActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -148,6 +150,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     private List<RepairBugEntity> beanList = new ArrayList<>();
 
     private RepairBugEntity repairBugEntity = new RepairBugEntity();
+    private long clientCompanyUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +159,8 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         initView();
         setListener();
+
+        clientCompanyUid = getIntent().getLongExtra("clientCompanyUid", 0);
     }
 
     private void setListener() {
@@ -287,9 +292,10 @@ public class AddTroubleActivity extends BaseWorkerActivity {
                     showToast("请选择故障设备名称");
                     return;
                 }
-                showToast("待开发");
-//                Bundle b = new Bundle();
-//                JumpItent.jump(AddTroubleActivity.this, EquipmentListActivity.class, b, REQUEST_EQUIPMENT);
+                Bundle b = new Bundle();
+                b.putString("businessOneCode", dataCode);
+                b.putString("clientCompanyUid", String.valueOf(clientCompanyUid));
+                JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
                 break;
             // 故障设备编号
             case R.id.ll_deviceNum:

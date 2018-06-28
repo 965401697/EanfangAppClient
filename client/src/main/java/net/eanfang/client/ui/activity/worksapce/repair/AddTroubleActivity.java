@@ -36,6 +36,7 @@ import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentAddActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -246,7 +247,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
-            tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
+                tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
@@ -290,7 +291,8 @@ public class AddTroubleActivity extends BaseClientActivity {
                 }
 
                 Bundle b = new Bundle();
-                JumpItent.jump(AddTroubleActivity.this, EquipmentListActivity.class, b, REQUEST_EQUIPMENT);
+                b.putString("businessOneCode",dataCode);
+                JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
                 break;
             // 故障设备编号
             case R.id.ll_deviceNum:

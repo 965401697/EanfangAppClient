@@ -93,7 +93,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
 
     private void initData() {
 
-        EanfangHttp.post(NewApiService.DEVICE_DETAIL)
+        EanfangHttp.post(NewApiService.DEVICE_DETAIL_WORKER)
                 .params("id", id)
                 .execute(new EanfangCallback<CustDeviceEntity>(this, true, CustDeviceEntity.class) {
 

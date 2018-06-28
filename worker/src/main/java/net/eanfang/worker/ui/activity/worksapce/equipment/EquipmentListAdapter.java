@@ -49,14 +49,19 @@ public class EquipmentListAdapter extends BaseQuickAdapter<CustDeviceEntity, Bas
 
         helper.setText(R.id.tv_position_num, item.getLocationNumber());
         helper.setText(R.id.tv_position, item.getLocation());
-        helper.setText(R.id.tv_setup_time, GetDateUtils.dateToFormatString(item.getInstallDate(), "yyyy-MM-dd"));
-        //1:保外 0：保内
-        if (item.getWarrantyStatus() == 0) {
-            helper.setText(R.id.tv_repair_status, "保内");
+        if (item.getInstallDate() != null) {
+            helper.setText(R.id.tv_setup_time, GetDateUtils.dateToFormatString(item.getInstallDate(), "yyyy-MM-dd"));
         } else {
-            helper.setText(R.id.tv_repair_status, "保外");
-        }
 
+        }
+        //1:保外 0：保内
+        if (item.getWarrantyStatus() != null) {
+            if (item.getWarrantyStatus() == 0) {
+                helper.setText(R.id.tv_repair_status, "保内");
+            } else {
+                helper.setText(R.id.tv_repair_status, "保外");
+            }
+        }
         helper.setText(R.id.tv_change_num, String.valueOf(item.getDeviceVersion()));
     }
 }

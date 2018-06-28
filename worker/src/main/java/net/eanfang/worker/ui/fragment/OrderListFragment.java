@@ -184,6 +184,7 @@ public class OrderListFragment extends BaseFragment implements
                         intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
                         intent.putExtra("phoneSolve", item.getIsPhoneSolve());
                         intent.putExtra("companyUid", item.getAssigneeOrg().getCompanyId());
+                        intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());
                         startActivity(intent);
 
                         break;

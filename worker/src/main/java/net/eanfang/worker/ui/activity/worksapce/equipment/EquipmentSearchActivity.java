@@ -51,7 +51,6 @@ public class EquipmentSearchActivity extends BaseWorkerActivity implements Swipe
         initView();
         mPage = 1;
 
-
     }
 
 
@@ -111,7 +110,7 @@ public class EquipmentSearchActivity extends BaseWorkerActivity implements Swipe
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
-        EanfangHttp.post(NewApiService.DEVICE_LIST)
+        EanfangHttp.post(NewApiService.DEVICE_LIST_ADD)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<EquipmentBean>(this, true, EquipmentBean.class) {
                     @Override
