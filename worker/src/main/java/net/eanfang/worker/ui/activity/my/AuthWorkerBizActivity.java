@@ -74,6 +74,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
 
     private void initView() {
         setTitle("选择业务类别");
+        setRightTitle("编辑");
         setLeftBack();
         status = getIntent().getIntExtra("status", status);
     }
@@ -88,6 +89,8 @@ public class AuthWorkerBizActivity extends BaseActivity {
         }
         if (status == 1 || status == 2) {
             tagWorkType.setEnabled(false);
+        }else{
+            setRightGone();
         }
         addRepariResult();
     }
@@ -100,6 +103,10 @@ public class AuthWorkerBizActivity extends BaseActivity {
             } else {
                 finishSelf();
             }
+        });
+        setRightTitleOnClickListener((v) -> {
+            // 掉编辑接口
+            tagWorkType.setEnabled(true);
         });
     }
 

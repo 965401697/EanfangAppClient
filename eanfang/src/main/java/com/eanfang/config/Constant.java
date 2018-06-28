@@ -236,6 +236,12 @@ public interface Constant {
     String PAY_TYPE = "PayType";
 
     String NOTICE_TYPE = "NoticeType";
+
+    //业务通知
+    int NOTICE_BUSINESS = 1;
+
+    // 系统通知
+    int NOTICE_SYSTEM = 0;
     /**
      * 发包类型
      */

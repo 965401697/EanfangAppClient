@@ -299,5 +299,10 @@ public interface UserApi {
      * 根据账户id 查找用户
      */
     String POST_USER_INFO = BuildConfig.API_HOST + "/yaf_sys/account/info/";
+    /**
+     * 技师认证，资料完善状态查询
+     */
+    String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";
+
 
 }

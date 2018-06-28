@@ -120,7 +120,7 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.CameraActivity" />
-        <activity android:name=".ui.activity.my.MessageListActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.MessageListActivity" />
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
@@ -294,7 +294,7 @@
             </intent-filter>
         </activity>
         <!-- 业务通知详情 -->
-        <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.MessageDetailActivity" />
         <activity android:name=".ui.activity.im.GroupNoticeActivity" />
         <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
         <!-- 客服 -->
@@ -406,7 +406,7 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeListActivity" />
         <!--设备变更详情-->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
-        <!--设备参数-->
+                <!--设备参数-->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity"></activity>
         <!-- 技师认证 列表页 -->
         <activity

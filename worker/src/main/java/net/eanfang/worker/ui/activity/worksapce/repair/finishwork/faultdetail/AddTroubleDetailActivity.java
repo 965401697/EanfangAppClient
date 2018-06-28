@@ -258,8 +258,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                         etTroubleReason.setText(Optional.ofNullable(detailEntity.getCause()).orElse(""));
                         etTroubleDeal.setText(Optional.ofNullable(detailEntity.getHandle()).orElse(""));
                         etTroubleUseAdvace.setText(Optional.ofNullable(detailEntity.getUseAdvice()).orElse(""));
-                        mReapirOneStauts = detailEntity.getStatus();
-                        mReapirTwoStauts = detailEntity.getStatusTwo();
+                        if (detailEntity.getStatus() != null && detailEntity.getStatusTwo() != null) {
+                            mReapirOneStauts = detailEntity.getStatus();
+                            mReapirTwoStauts = detailEntity.getStatusTwo();
+                        }
                         addRepariResult();
                         addReapirResultMode(mReapirOneStauts);
                         // 是否误报

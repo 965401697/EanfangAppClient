@@ -27,9 +27,7 @@ public class MaterialInfoActivity extends BaseWorkerActivity {
     private LinearLayout ll_model;
     private TextView tv_model;
     private LinearLayout ll_location;
-    private EditText et_location;
     private LinearLayout ll_code;
-    private EditText et_code;
     private TextView tv_right;
     private EditText et_desc;
     private Button btn_add;
@@ -62,8 +60,6 @@ public class MaterialInfoActivity extends BaseWorkerActivity {
         tv_business.setText(type);
         tv_equipment.setText(name);
         tv_model.setText(model);
-        et_location.setText(number);
-        et_code.setText(mark);
     }
 
     private void initView() {
@@ -74,13 +70,9 @@ public class MaterialInfoActivity extends BaseWorkerActivity {
         ll_model = (LinearLayout) findViewById(R.id.ll_model);
         tv_model = (TextView) findViewById(R.id.tv_model);
         ll_location = (LinearLayout) findViewById(R.id.ll_location);
-        et_location = (EditText) findViewById(R.id.et_location);
         ll_code = (LinearLayout) findViewById(R.id.ll_code);
-        et_code = (EditText) findViewById(R.id.et_code);
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_add.setVisibility(View.GONE);
-        et_location.setEnabled(false);
-        et_code.setEnabled(false);
         setTitle("耗材详情");
         setLeftBack();
     }

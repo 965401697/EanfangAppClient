@@ -11,7 +11,7 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
-import net.eanfang.worker.ui.activity.my.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 
 /**
  * Created by MrHou

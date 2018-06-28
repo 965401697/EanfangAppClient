@@ -42,7 +42,17 @@
             android:layout_height="wrap_content"
             android:text="】"
             android:textStyle="bold" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_detailTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_36"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_12" />
 
 
     <TextView

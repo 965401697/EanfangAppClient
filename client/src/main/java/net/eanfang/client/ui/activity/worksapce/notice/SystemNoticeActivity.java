@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
@@ -23,6 +24,8 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.MessageListAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +53,9 @@ public class SystemNoticeActivity extends BaseActivity implements
     private int page = 1;
     private List<NoticeEntity> mDataList = new ArrayList<>();
     private MessageListAdapter messageListAdapter = null;
+    // 消息数量
+    private int mStystemCount = 0;
+    private boolean isDelete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,10 @@ public class SystemNoticeActivity extends BaseActivity implements
         setContentView(R.layout.activity_system_notice);
         ButterKnife.bind(this);
         initView();
+        initData();
+        initListener();
     }
+
 
     /**
      * @date on 2018/4/24  10:09
@@ -66,7 +75,18 @@ public class SystemNoticeActivity extends BaseActivity implements
     private void initView() {
         setTitle("系统消息");
         setLeftBack();
+        mStystemCount = getIntent().getIntExtra("mStystemCount", 0);
+        // 如果等于0 则全删  反之全读
+        if (mStystemCount == 0) {
+            setRightTitle("全删");
+        } else {
+            setRightTitle("全读");
+        }
+    }
 
+    private void initData() {
+        messageListAdapter = new MessageListAdapter(R.layout.item_message_list);
+        messageListAdapter.bindToRecyclerView(mRvSystemNotice);
         mRvSystemNotice.setLayoutManager(new LinearLayoutManager(this));
         mRvSystemNotice.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -82,24 +102,37 @@ public class SystemNoticeActivity extends BaseActivity implements
         });
     }
 
+
+    private void initListener() {
+        setRightTitleOnClickListener((v) -> {
+            if (mStystemCount == 0 || isDelete) {
+                doAllDelete();
+            } else {
+                doReadAll();
+            }
+        });
+    }
+
     @Override
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无数据");
-            } else {
-                messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
-                mRvSystemNotice.setAdapter(messageListAdapter);
+                setRightGone();
+                messageListAdapter.getData().clear();
                 messageListAdapter.notifyDataSetChanged();
+            } else {
+                messageListAdapter.getData().clear();
+                messageListAdapter.setNewData(mDataList);
+                setRightVisible();
             }
         } else {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-            } else {
-                messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 messageListAdapter.notifyDataSetChanged();
-                mRvSystemNotice.setAdapter(messageListAdapter);
+            } else {
+                messageListAdapter.addData(mDataList);
             }
         }
     }
@@ -109,7 +142,6 @@ public class SystemNoticeActivity extends BaseActivity implements
         queryEntry.setPage(page);
         queryEntry.setSize(10);
         queryEntry.getEquals().put("noticeClasses", "0");
-
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -123,6 +155,42 @@ public class SystemNoticeActivity extends BaseActivity implements
                 );
     }
 
+    /**
+     * 一键已读
+     */
+    private void doReadAll() {
+        EanfangHttp.post(NewApiService.GET_PUSH_READ_ALL)
+                .params("noticeClasses", Constant.NOTICE_SYSTEM)
+                .execute(new EanfangCallback(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        page = 1;
+                        messageListAdapter.getData().clear();
+                        getJPushMessage();
+                        setRightTitle("全删");
+                        mStystemCount = 0;
+                        isDelete = true;
+                    }
+                });
+    }
+
+    /**
+     * 一键删除
+     */
+    private void doAllDelete() {
+        EanfangHttp.post(NewApiService.GET_PUSH_DELETE_ALL + Constant.NOTICE_SYSTEM)
+                .upJson("[]")
+                .execute(new EanfangCallback(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        page = 1;
+                        messageListAdapter.getData().clear();
+                        getJPushMessage();
+                    }
+                });
+    }
 
     /**
      * 下拉刷新，上拉加载更多
@@ -160,6 +228,7 @@ public class SystemNoticeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        page = 1;
         getJPushMessage();
     }
 

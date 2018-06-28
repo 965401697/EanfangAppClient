@@ -2,29 +2,25 @@ package net.eanfang.worker.ui.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.Message;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
-import net.eanfang.worker.ui.activity.worksapce.CheckActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
@@ -48,6 +44,8 @@ public class AuthWorkerAreaActivity extends BaseActivity {
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
     List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+    @BindView(R.id.tv_confim)
+    TextView tvConfim;
     private GroupAdapter mAdapter;
     private Long userid = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
     private List<Integer> checkListId;
@@ -116,7 +114,7 @@ public class AuthWorkerAreaActivity extends BaseActivity {
 
     private void initView() {
         setTitle("选择服务区域");
-        setRightTitle("提交");
+        setRightTitle("编辑");
         setLeftBack();
         status = getIntent().getIntExtra("status", status);
     }
@@ -125,8 +123,18 @@ public class AuthWorkerAreaActivity extends BaseActivity {
         mAdapter = new GroupAdapter(this, areaListBean);
         elvArea.setAdapter(mAdapter);
 
-        setRightTitleOnClickListener(v -> commit());
-        setRightTitleOnClickListener((v) -> {
+        if (status != 0 || status != 3) {
+            mAdapter.isAuth = true;
+            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                    return true;
+                }
+            });
+        } else {
+            setRightGone();
+        }
+        tvConfim.setOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
             } else if (status == 1) {
@@ -135,6 +143,18 @@ public class AuthWorkerAreaActivity extends BaseActivity {
                 showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
         });
+        setRightTitleOnClickListener((v) -> {
+            // 掉编辑接口
+            mAdapter.isAuth = false;
+            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                    return false;
+                }
+            });
+            mAdapter.notifyDataSetChanged();
+        });
+
     }
 
     private List<Integer> getListData(List<BaseDataEntity> list, boolean isChecked) {

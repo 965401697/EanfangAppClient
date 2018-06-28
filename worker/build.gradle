@@ -42,6 +42,13 @@ android {
             storePassword 'eanfang'
         }
     }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/libs']
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.release

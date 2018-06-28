@@ -82,7 +82,7 @@ public class SignInActivity extends BaseWorkerActivity {
     }
 
     private void initMap() {
-        locationUtil = LocationUtil.get(this, mapView);
+        locationUtil = LocationUtil.get(SignInActivity.this, mapView);
         PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
         //禁止所有手势
         locationUtil.mAMap.getUiSettings().setAllGesturesEnabled(false);

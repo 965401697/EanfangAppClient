@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_messagedeatil_back"
     android:orientation="vertical"
-    tools:context=".ui.activity.worksapce.MessageDetailActivity">
+    tools:context=".ui.activity.worksapce.notice.MessageDetailActivity">
 
     <include layout="@layout/header" />
 

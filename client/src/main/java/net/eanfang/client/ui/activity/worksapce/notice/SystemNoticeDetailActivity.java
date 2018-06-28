@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce.notice;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -13,7 +12,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.MessageDetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,5 +1,6 @@
 package com.eanfang.application;
 
+import android.preference.Preference;
 import android.util.Log;
 
 import com.camera.CameraApplication;

@@ -37,7 +37,7 @@ public class ExternalCompanyActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment_list);
+        setContentView(R.layout.activity_contact_unit);
         ButterKnife.bind(this);
         initView();
     }

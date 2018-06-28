@@ -125,7 +125,6 @@ public class ContactsFragment extends BaseFragment {
                 @Override
                 public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                     OrgEntity bean = (OrgEntity) adapter.getData().get(position);
-
                     if (position == mOldPosition) {
                         if (isFirstShow) {
                             isFirstShow = false;

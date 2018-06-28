@@ -43,7 +43,7 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="确认保存"
+        android:text="下一步"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
 

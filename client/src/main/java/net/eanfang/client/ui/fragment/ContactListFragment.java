@@ -22,8 +22,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.Var;
+import com.eanfang.util.JumpItent;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.client.R;
@@ -32,7 +31,7 @@ import net.eanfang.client.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
-import net.eanfang.client.ui.activity.my.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
-import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
 /**
@@ -65,6 +63,10 @@ public class ContactListFragment extends BaseFragment {
     private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
+    // 消息数量
+    private int mMessageCount = 0;
+    private int mStystemCount = 0;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -72,7 +74,6 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-
 
     }
 
@@ -116,19 +117,8 @@ public class ContactListFragment extends BaseFragment {
             }
         }, Conversation.ConversationType.GROUP);
 
-        findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
-        findViewById(R.id.ll_system_notice).setOnClickListener(v -> startActivity(new Intent(getActivity(), SystemNoticeActivity.class)));
 
         doHttpNoticeCount();
-        findViewById(R.id.iv_add).setOnClickListener(v -> {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), SelectedFriendsActivity.class);
-//                intent.putExtra("flag", 1);
-//                startActivity(intent);
-
-            MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-            morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
-        });
 
         /**
          * 设置会话列表界面操作的监听器。
@@ -214,18 +204,23 @@ public class ContactListFragment extends BaseFragment {
     }
 
     private void doHttpNoticeCount() {
-        EanfangHttp.get(NewApiService.GET_PUSH_COUNT).execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-            if (bean.containsKey("sys")) {
-                initSysCount(bean.getInteger("sys"));
-            } else {
-                initSysCount(0);
-            }
-            if (bean.containsKey("biz")) {
-                initBizCount(bean.getInteger("biz"));
-            } else {
-                initBizCount(0);
-            }
-        }));
+        EanfangHttp.get(NewApiService.GET_PUSH_COUNT)
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
+                    if (bean.containsKey("sys")) {
+                        initSysCount(bean.getInteger("sys"));
+                        mStystemCount = bean.getInteger("sys");
+                    } else {
+                        initSysCount(0);
+                        mStystemCount = 0;
+                    }
+                    if (bean.containsKey("biz")) {
+                        initBizCount(bean.getInteger("biz"));
+                        mMessageCount = bean.getInteger("biz");
+                    } else {
+                        initBizCount(0);
+                        mMessageCount = 0;
+                    }
+                }));
     }
 
     private void initBizCount(Integer biz) {
@@ -360,5 +355,21 @@ public class ContactListFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+        // 业务通知
+        findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mMessageCount", mMessageCount);
+            JumpItent.jump(getActivity(), MessageListActivity.class, bundle);
+        });
+        // 系统消息
+        findViewById(R.id.ll_system_notice).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mStystemCount", mStystemCount);
+            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle);
+        });
+        findViewById(R.id.iv_add).setOnClickListener(v -> {
+            MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
+            morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
+        });
     }
 }

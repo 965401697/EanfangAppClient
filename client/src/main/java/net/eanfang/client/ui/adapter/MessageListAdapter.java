@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;
 
@@ -18,8 +19,8 @@ import java.util.List;
  */
 
 public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewHolder> {
-    public MessageListAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
+    public MessageListAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override
@@ -27,17 +28,23 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
 
         helper.setText(R.id.tv_titles, GetConstDataUtils.getNoticeTypeList().get(item.getNoticeType()));
         helper.setText(R.id.tv_content, item.getContent());
+        helper.setText(R.id.tv_detailTime, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+
         if (item.getStatus() == 0) {
             helper.setTextColor(R.id.tv_titles, Color.parseColor("#333333"));
             helper.setTextColor(R.id.tv_content, Color.parseColor("#333333"));
             helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#333333"));
             helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#333333"));
             helper.setVisible(R.id.iv_header, true);
+
+            helper.setTextColor(R.id.tv_detailTime, Color.parseColor("#333333"));
         } else if (item.getStatus() == 1) {
             helper.setTextColor(R.id.tv_titles, Color.parseColor("#999999"));
-            helper.setTextColor(R.id.tv_content,Color.parseColor("#999999"));
+            helper.setTextColor(R.id.tv_content, Color.parseColor("#999999"));
             helper.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#999999"));
             helper.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#999999"));
+
+            helper.setTextColor(R.id.tv_detailTime, Color.parseColor("#999999"));
             helper.setVisible(R.id.iv_header, false);
         }
 

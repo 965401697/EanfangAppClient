@@ -19,11 +19,10 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.Var;
+import com.eanfang.util.JumpItent;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
@@ -31,7 +30,7 @@ import net.eanfang.worker.ui.activity.im.GroupDetailActivity;
 import net.eanfang.worker.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyConversationListFragment;
-import net.eanfang.worker.ui.activity.my.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 
@@ -40,13 +39,11 @@ import java.util.List;
 import java.util.Set;
 
 import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
-import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
 /**
@@ -66,6 +63,9 @@ public class ContactListFragment extends BaseFragment {
     private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
+    // 消息数量
+    private int mMessageCount = 0;
+    private int mStystemCount = 0;
 
     @Override
     protected int setLayoutResouceId() {
@@ -114,31 +114,11 @@ public class ContactListFragment extends BaseFragment {
 
             }
         }, Conversation.ConversationType.GROUP);
-
-
-        findViewById(R.id.ll_msg_list).setOnClickListener(v -> startActivity(new Intent(getActivity(), MessageListActivity.class)));
-
-        findViewById(R.id.ll_system_notice).setOnClickListener(v -> startActivity(new Intent(getActivity(), SystemNoticeActivity.class)));
-
         doHttpNoticeCount();
 
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), SelectedFriendsActivity.class);
-//                intent.putExtra("flag", 1);
-//                startActivity(intent);
-
-                MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
-            }
-        });
-
-
-/**
- * 设置会话列表界面操作的监听器。
- */
+        /**
+         * 设置会话列表界面操作的监听器。
+         */
         RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
 
             @Override
@@ -215,6 +195,30 @@ public class ContactListFragment extends BaseFragment {
     }
 
     @Override
+    protected void setListener() {
+        // 业务通知
+        findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mMessageCount", mMessageCount);
+            JumpItent.jump(getActivity(), MessageListActivity.class, bundle);
+        });
+        // 系统消息
+        findViewById(R.id.ll_system_notice).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mStystemCount", mStystemCount);
+            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle);
+        });
+
+        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
+                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
+            }
+        });
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         doHttpNoticeCount();
@@ -224,13 +228,17 @@ public class ContactListFragment extends BaseFragment {
         EanfangHttp.get(NewApiService.GET_PUSH_COUNT).execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
             if (bean.containsKey("sys")) {
                 initSysCount(bean.getInteger("sys"));
+                mStystemCount = bean.getInteger("sys");
             } else {
                 initSysCount(0);
+                mStystemCount = 0;
             }
             if (bean.containsKey("biz")) {
                 initBizCount(bean.getInteger("biz"));
+                mMessageCount = bean.getInteger("biz");
             } else {
                 initBizCount(0);
+                mMessageCount = 0;
             }
         }));
     }
@@ -362,8 +370,4 @@ public class ContactListFragment extends BaseFragment {
         }
     }
 
-    @Override
-    protected void setListener() {
-
-    }
 }

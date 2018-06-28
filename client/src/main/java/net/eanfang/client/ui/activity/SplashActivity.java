@@ -58,8 +58,6 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         //bugly初始化
         CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false);
         init();
-
-
     }
 
     private void init() {

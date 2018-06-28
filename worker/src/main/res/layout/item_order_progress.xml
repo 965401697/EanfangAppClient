@@ -78,9 +78,10 @@
 
     <LinearLayout
         android:id="@+id/ll_orderFinish"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dimen_65"
         android:layout_height="@dimen/dimen_120"
         android:layout_marginLeft="@dimen/dimen_20"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -92,8 +93,8 @@
 
             <ImageView
                 android:id="@+id/iv_orderFinish"
-                android:layout_width="@dimen/dimen_65"
-                android:layout_height="@dimen/dimen_20"
+                android:layout_width="@dimen/dimen_40"
+                android:layout_height="@dimen/dimen_40"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/ic_order_finish"

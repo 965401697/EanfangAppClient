@@ -6,6 +6,7 @@
     android:background="@drawable/bg_ll_selctor"
     android:orientation="horizontal"
     android:padding="10dp">
+
     <ImageView
         android:id="@+id/iv_header"
         android:layout_width="wrap_content"
@@ -45,6 +46,14 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_detailTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_36"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_12" />
 
     <TextView
         android:id="@+id/tv_content"
@@ -58,6 +67,7 @@
         android:singleLine="true"
         android:text="内容"
         android:textSize="@dimen/textSize_12" />
+
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
@@ -65,8 +75,8 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/select_worker"
         android:padding="3dp"
-        android:visibility="gone"
-        android:text="已读" />
+        android:text="已读"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="wrap_content"

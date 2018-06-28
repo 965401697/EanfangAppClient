@@ -229,18 +229,6 @@ public class MainActivity extends BaseActivity {
 
     public void initXinGe() {
         registerXinGe();
-//        Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
-//
-//            ExecuteUtils.execute(
-//                    () -> Var.get("MainActivity.initXinGe").getVar()
-//                    , 1, 0,
-//                    () -> Var.remove("MainActivity.initXinGe")
-//                    , () -> {
-//
-//
-//                    });
-//        });
-//        Var.get("MainActivity.initXinGe").setVar(0);
     }
 
 
@@ -248,7 +236,13 @@ public class MainActivity extends BaseActivity {
         //开启信鸽日志输出
 //        XGPushConfig.enableDebug(this, false);
         //信鸽注册代码
-        XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
+        Log.e("GG", "信鸽注册代码");
+        Log.e("GG", user.toString());
+        Log.e("GG", user.getToken());
+        Log.e("GG", user.getAccount() + "");
+        Log.e("GG", user.getAccount().getMobile());
+
+        XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
 //                        Log.d("TPush", "注册成功，设备token为：" + data);
