@@ -24,6 +24,7 @@ import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CheckSignPermission;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 
@@ -31,6 +32,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
+import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
@@ -122,7 +124,7 @@ public class HomeFragment extends BaseFragment {
         });
         //设计订单
         findViewById(R.id.tv_design_order).setOnClickListener((v) -> {
-            showToast("制造中。。。");
+            JumpItent.jump(getActivity(), DesignActivity.class);
         });
         //维保订单
         findViewById(R.id.tv_maintain_order).setOnClickListener((v) -> {

@@ -283,7 +283,8 @@ public class PayActivity extends BaseClientActivity {
                             request.packageValue = wxPayBean.getPackageX();
                             request.nonceStr = wxPayBean.getNoncestr();
                             request.timeStamp = wxPayBean.getTimestamp();
-                            request.sign = wxPayBean.getSign();
+                            request.sign = "asdfasdfasdfasdfasd";
+//                            request.sign = wxPayBean.getSign();
                             boolean isOk = msgApi.sendReq(request);
                             System.err.println(isOk + "------------");
                         }).start();

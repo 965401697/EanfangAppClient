@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
+import com.baozi.treerecyclerview.adpater.TreeRecyclerType;
 import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
@@ -40,7 +41,7 @@ public class SelectOrganizationContactActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R2.id.tv_sure)
     TextView tv_sure;
-    TreeRecyclerAdapter treeRecyclerAdapter = new TreeRecyclerAdapter();
+    TreeRecyclerAdapter treeRecyclerAdapter;
 
     private int i = 0;
 
@@ -72,7 +73,11 @@ public class SelectOrganizationContactActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(companyId)) {
             setTitle("组织架构");
+            treeRecyclerAdapter = new TreeRecyclerAdapter(TreeRecyclerType.SHOW_ALL);
+        } else {
+            treeRecyclerAdapter = new TreeRecyclerAdapter();
         }
+
 
         initViews();
     }

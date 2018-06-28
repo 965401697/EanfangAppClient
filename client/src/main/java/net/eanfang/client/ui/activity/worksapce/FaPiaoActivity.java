@@ -35,10 +35,9 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 public class FaPiaoActivity extends BaseClientActivity {
 
     private RadioButton rb_normal;
-    private EditText et_head;
     private RadioButton rb_pro;
     private EditText et_company;
-    private EditText et_number, et_number_normal;
+    private EditText et_number;
     private EditText et_address;
     private EditText et_phone;
     private EditText et_bank;
@@ -74,10 +73,10 @@ public class FaPiaoActivity extends BaseClientActivity {
                 }
                 String json = "";
                 if (rb_normal.isChecked()) {
-                    if (StringUtils.isEmpty(et_head.getText().toString().trim())) {
-                        showToast("请填写发票抬头");
-                        return;
-                    }
+//                    if (StringUtils.isEmpty(et_head.getText().toString().trim())) {
+//                        showToast("请填写发票抬头");
+//                        return;
+//                    }
                     if (StringUtils.isEmpty(et_name.getText().toString().trim())) {
                         showToast("请填写姓名");
                         return;
@@ -94,16 +93,16 @@ public class FaPiaoActivity extends BaseClientActivity {
                         showToast("请填写详细地址");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_number_normal.getText().toString().trim())) {
-                        showToast("请填写税号");
-                        return;
-                    }
+//                    if (StringUtils.isEmpty(et_number_normal.getText().toString().trim())) {
+//                        showToast("请填写税号");
+//                        return;
+//                    }
                     PuPiaoBean puPiaoBean = new PuPiaoBean();
                     puPiaoBean.setOrdernum(ordernum);
                     puPiaoBean.setType("普票");
-                    puPiaoBean.setUnitname(et_head.getText().toString().trim());
+//                    puPiaoBean.setUnitname(et_head.getText().toString().trim());
                     puPiaoBean.setPostname(et_name.getText().toString().trim());
-                    puPiaoBean.setTaxno(et_number_normal.getText().toString().trim());
+//                    puPiaoBean.setTaxno(et_number_normal.getText().toString().trim());
                     puPiaoBean.setCity(city);
                     puPiaoBean.setZone(zone);
                     puPiaoBean.setDetailplace(et_detail_address.getText().toString().trim());
@@ -244,8 +243,8 @@ public class FaPiaoActivity extends BaseClientActivity {
                         LookFaPiaoBean lookFaPiaoBean = bean;
                         if ("普票".equals(lookFaPiaoBean.getType())) {
                             rb_normal.setChecked(true);
-                            et_head.setText(lookFaPiaoBean.getUnitname());
-                            et_number_normal.setText(lookFaPiaoBean.getTaxno());
+//                            et_head.setText(lookFaPiaoBean.getUnitname());
+//                            et_number_normal.setText(lookFaPiaoBean.getTaxno());
                         } else if ("专票".equals(lookFaPiaoBean.getType())) {
                             rb_pro.setChecked(true);
                             et_company.setText(lookFaPiaoBean.getUnitname());
@@ -271,11 +270,11 @@ public class FaPiaoActivity extends BaseClientActivity {
 
     private void initView() {
         rb_normal = (RadioButton) findViewById(R.id.rb_normal);
-        et_head = (EditText) findViewById(R.id.et_head);
+//        et_head = (EditText) findViewById(R.id.et_head);
         rb_pro = (RadioButton) findViewById(R.id.rb_pro);
         et_company = (EditText) findViewById(R.id.et_company);
         et_number = (EditText) findViewById(R.id.et_number);
-        et_number_normal = (EditText) findViewById(R.id.et_number_normal);
+//        et_number_normal = (EditText) findViewById(R.id.et_number_normal);
         et_address = (EditText) findViewById(R.id.et_address);
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_bank = (EditText) findViewById(R.id.et_bank);

@@ -39,8 +39,8 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     protected void convert(BaseViewHolder helper, WorkerEntity item) {
         // 头像
         SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
-        if (!StringUtils.isEmpty(item.getAccountEntity().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()));
+        if (!StringUtils.isEmpty(item.getVerifyEntity().getAvatarPhoto())) {
+            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()));
         }
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());

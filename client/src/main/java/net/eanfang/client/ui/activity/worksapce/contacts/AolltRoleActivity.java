@@ -63,12 +63,15 @@ public class AolltRoleActivity extends BaseClientActivity {
     private void initData() {
         EanfangHttp.get(NewApiService.MY_LIST_ROLE)
                 .execute(new EanfangCallback<RoleBean>(AolltRoleActivity.this, true, RoleBean.class, true, (list) -> {
-
-                    for (RoleBean roleBean : list) {
-                        if (roleNameList.contains(roleBean.getRoleName())) {
-                            roleBean.setChecked(true);
-                            roleIdList.add(roleBean.getRoleId());
+                    if (roleNameList != null) {
+                        for (RoleBean roleBean : list) {
+                            if (roleNameList.contains(roleBean.getRoleName())) {
+                                roleBean.setChecked(true);
+                                roleIdList.add(roleBean.getRoleId());
+                            }
                         }
+                    } else {
+                        roleNameList = new ArrayList<>();
                     }
                     aolltRoleAdapter.setNewData(list);
                 }));

@@ -21,6 +21,7 @@ import com.eanfang.model.OrganizationBean;
 import com.eanfang.ui.activity.SelectOrganizationContactActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
@@ -146,7 +147,7 @@ public class ContactsFragment extends BaseFragment {
             parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
                 switch (view.getId()) {
                     //组织结构
-                    case R.id.tv_org:
+                    case R.id.ll_org:
 //                        if (mDatas.get(position) != null) {
 //                            startActivity(new Intent(getActivity(), ConstansActivity.class).putExtra("data", mDatas.get(position)));
 //                        }
@@ -169,7 +170,7 @@ public class ContactsFragment extends BaseFragment {
                         organizationBean.setCountStaff(num);
 
                         Intent intent = new Intent(getActivity(), SelectOrganizationContactActivity.class);
-                        Uri uri = Uri.parse("worker://yeah!");
+                        Uri uri = Uri.parse("worker://");
                         intent.setData(uri);
                         intent.putExtra("companyId", String.valueOf(mDatas.get(position).getCompanyId()));
                         intent.putExtra("organizationBean", organizationBean);
@@ -178,15 +179,18 @@ public class ContactsFragment extends BaseFragment {
 
                         break;
                     //子公司
-                    case R.id.tv_child_company:
+                    case R.id.ll_child_company:
                         startActivity(new Intent(getActivity(), SubcompanyActivity.class));
                         break;
                     //外协单位
-                    case R.id.tv_outside_company:
+                    case R.id.ll_outside_company:
                         startActivity(new Intent(getActivity(), ExternalCompanyActivity.class));
                         break;
                     case R.id.ll_part_company:
                         startActivity(new Intent(getActivity(), PartnerActivity.class));
+                        break;
+                    case R.id.ll_out_contacts:
+                        ToastUtil.get().showToast(getActivity(), "待开通");
                         break;
                     case R.id.tv_auth_status:
 //                        startActivity(new Intent(getActivity(), AuthCompanyActivity.class)

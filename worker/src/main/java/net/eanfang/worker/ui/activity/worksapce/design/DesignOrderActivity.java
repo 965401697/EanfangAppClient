@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.equipment;
+package net.eanfang.worker.ui.activity.worksapce.design;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,12 +6,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.config.Config;
+import com.eanfang.model.PayOrderListBean;
+import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.fragment.DesignOrderFragment;
+import net.eanfang.worker.ui.fragment.OfferAndPayListFragment1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,46 +22,44 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EquipmentListActivity extends BaseWorkerActivity {
+public class DesignOrderActivity extends BaseWorkerActivity {
 
+    @BindView(R.id.tab_layout)
+    SlidingTabLayout tabLayout;
+    @BindView(R.id.vp)
+    ViewPager vp;
 
-    @BindView(R.id.tl_equipment)
-    SlidingTabLayout tlEquipment;
-    @BindView(R.id.vp_equipment)
-    ViewPager vpEquipment;
-
+    public List<String> allmTitles = GetConstDataUtils.getDesignStatus().subList(1,4);//除去第一个元素
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private MyPagerAdapter mAdapter;
-    private List<BaseDataEntity> allmTitles = Config.get().getBusinessList(1);
-    private List<String> mTitlesList = new ArrayList<>();
     private String[] mTitles;
-    private Bundle mBundle;
+    private MyPagerAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_equipment_list);
+        setContentView(R.layout.activity_design_order);
         ButterKnife.bind(this);
-        setTitle("设备列表");
+        setTitle("我接收的订单");
         setLeftBack();
         initView();
-        mBundle = getIntent().getExtras();
+
+
     }
 
     private void initView() {
         mTitles = new String[allmTitles.size()];
-        for (BaseDataEntity baseDataEntity : allmTitles) {
-            mFragments.add(EquipmentListFragment.getInstance(baseDataEntity.getDataCode()));
-            mTitlesList.add(baseDataEntity.getDataName());
+        allmTitles.toArray(mTitles);
+        for (String title : mTitles) {
+            mFragments.add(DesignOrderFragment.getInstance(title, String.valueOf(allmTitles.indexOf(title))));
         }
-        mTitlesList.toArray(mTitles);
+
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        vpEquipment.setAdapter(mAdapter);
-        tlEquipment.setViewPager(vpEquipment, mTitles, this, mFragments);
-        vpEquipment.setCurrentItem(0);
+        vp.setAdapter(mAdapter);
+        tabLayout.setViewPager(vp, mTitles, this, mFragments);
+        vp.setCurrentItem(0);
 
     }
-
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
@@ -79,10 +80,6 @@ public class EquipmentListActivity extends BaseWorkerActivity {
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
-    }
-
-    public Bundle getmBundle() {
-        return mBundle;
     }
 }
 

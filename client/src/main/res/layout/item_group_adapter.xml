@@ -92,6 +92,7 @@
         <TextView style="@style/style_common_line_gray" />
 
         <LinearLayout
+            android:id="@+id/ll_org"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
@@ -116,6 +117,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_child_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -143,6 +145,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_outside_company"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
@@ -198,6 +201,7 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_out_contacts"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"

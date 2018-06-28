@@ -229,6 +229,7 @@ public class WorkspaceFragment extends BaseFragment {
             if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
 //                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
 //                startActivity(intent);
+                showToast("待开发");
             } else {
                 showToast("暂无权限");
             }
