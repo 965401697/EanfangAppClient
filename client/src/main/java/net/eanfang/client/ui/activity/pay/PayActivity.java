@@ -287,8 +287,8 @@ public class PayActivity extends BaseClientActivity {
                             request.nonceStr = wxPayBean.getNonceStr();
 //                            request.signType = "MD5";
                             request.timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
-//                            request.sign = "asdfasdfasdfasdfasd";
-                            request.sign = wxPayBean.getSign();
+                            request.sign = "asdfasdfasdfasdfasd";
+//                            request.sign = wxPayBean.getSign();
                             boolean isOk = ClientApplication.getWxApi().sendReq(request);
                             Log.e("zzw", "异常：" + isOk);
 //                        }).start();

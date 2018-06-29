@@ -227,14 +227,14 @@ public class ContactsFragment extends BaseFragment {
             }
         });
 
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //添加好友界面
 //                startActivity(new Intent(getActivity(), AddFriendActivity.class));
 
                 MorePopWindow morePopWindow = new MorePopWindow(getActivity(), true);
-                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
+                morePopWindow.showPopupWindow(findViewById(R.id.ll_add));
             }
         });
     }

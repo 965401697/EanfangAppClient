@@ -102,13 +102,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.activity.SelectContactActivity">
-            <intent-filter>
-                <action android:name="com.eanfang.intent.action.SELECTCONTACT" />
+        <activity android:name=".ui.activity.SelectContactActivity"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <!-- 组织结构 -->
         <activity android:name=".ui.activity.SelectOrganizationActivity"></activity>
         <!-- 二级折叠选择 -->

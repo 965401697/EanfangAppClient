@@ -122,7 +122,7 @@ public class ContactListFragment extends BaseFragment {
 
         doHttpNoticeCount();
 
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent();
@@ -131,7 +131,7 @@ public class ContactListFragment extends BaseFragment {
 //                startActivity(intent);
 
                 MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
+                morePopWindow.showPopupWindow(findViewById(R.id.ll_add));
             }
         });
 

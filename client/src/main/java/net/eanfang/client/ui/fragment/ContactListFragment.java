@@ -120,14 +120,14 @@ public class ContactListFragment extends BaseFragment {
         findViewById(R.id.ll_system_notice).setOnClickListener(v -> startActivity(new Intent(getActivity(), SystemNoticeActivity.class)));
 
         doHttpNoticeCount();
-        findViewById(R.id.iv_add).setOnClickListener(v -> {
+        findViewById(R.id.ll_add).setOnClickListener(v -> {
 //                Intent intent = new Intent();
 //                intent.setClass(getActivity(), SelectedFriendsActivity.class);
 //                intent.putExtra("flag", 1);
 //                startActivity(intent);
 
             MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-            morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
+            morePopWindow.showPopupWindow(findViewById(R.id.ll_add));
         });
 
         /**
