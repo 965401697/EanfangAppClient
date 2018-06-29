@@ -34,6 +34,10 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.model.LoginBean;
 import com.jaeger.library.StatusBarUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -96,6 +100,7 @@ public class BaseActivity extends AppCompatActivity implements
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        EventBus.getDefault().register(this);
         loadingDialog = DialogUtil.createLoadingDialog(this);
         RegListener();
 
@@ -129,6 +134,7 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+//        EventBus.getDefault().register(this);
     }
 
     public void setLeftBack() {
@@ -210,10 +216,10 @@ public class BaseActivity extends AppCompatActivity implements
         findViewById(R.id.iv_right).setOnClickListener(listener);
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
+//        EventBus.getDefault().unregister(this);
     }
 
 /*    @Override
@@ -255,6 +261,7 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         CustomeApplication.get().pull(this);
         this.unregisterReceiver(exitre);
     }
@@ -295,6 +302,11 @@ public class BaseActivity extends AppCompatActivity implements
         return null;
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageReceived(BaseEvent baseEvent) {
+
+    }
 
     /**
      * 退出程序广播

@@ -36,8 +36,8 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_name)
     TextView tvName;
-    @BindView(R.id.tv_desc)
-    TextView tvDesc;
+//    @BindView(R.id.tv_desc)
+//    TextView tvDesc;
     private TemplateBean.Preson bean;
     private String molibe;//设置人的手机号
     private String name ;//设置人的手机号

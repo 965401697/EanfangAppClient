@@ -37,6 +37,7 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -97,6 +98,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        EventBus.getDefault().register(this);
 
     }
 
@@ -175,6 +177,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         CustomeApplication.get().pull(this);
     }
 
