@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="1.电视监控-摄像采集-模拟球机"
+            android:text=""
             android:textColor="@color/font_color"
             android:textSize="16sp" />
 
@@ -60,7 +60,7 @@
                     android:id="@+id/tv_model"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="品牌型号：大华-DS-859034535"
+                    android:text=""
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
 
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="故障位置：奶粉排面"
+                    android:text=""
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
 
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="设备编号：5452545"
+                    android:text=""
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="故障描述：附近的酸辣粉简单来说交付鼎折覆餗解放路的大书法家李发简历到"
+            android:text=""
             android:textColor="@color/font_color"
             android:textSize="14sp" />
     </LinearLayout>

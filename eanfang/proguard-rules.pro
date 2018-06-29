@@ -104,4 +104,28 @@
 -dontnote io.rong.**
 -keep class RongYunNotificationReceiver {*;}
 
+
+#=============讯飞混淆
+-keep class com.iflytek.**{*;}
+-dontwarn com.iflytek.**
+-keep class com.iflytek.**{
+    public <methods>;
+    public <fields>;
+}
+-keep class com.iflytek.sunflower.**{
+  public protected *;
+}
+
+#信鸽
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep class com.tencent.android.tpush.** {* ;}
+-keep class com.tencent.mid.** {* ;}
+-keep public class * extends com.qq.taf.jce.JceStruct{*;}
+
+#fastJson
+-keepattributes Signature
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.**{*; }
+
 -ignorewarnings

@@ -106,6 +106,17 @@
 #bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+#=============讯飞混淆
+-keep class com.iflytek.**{*;}
+-dontwarn com.iflytek.**
+-keep class com.iflytek.**{
+    public <methods>;
+    public <fields>;
+}
+-keep class com.iflytek.sunflower.**{
+  public protected *;
+}
+
 #信鸽
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
@@ -133,6 +144,11 @@
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
 -keep class RongYunNotificationReceiver {*;}
+
+#fastJson
+-keepattributes Signature
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.**{*; }
 
 #不混淆Serializable接口的子类中指定的某些成员变量和方法
 -keepclassmembers class * implements java.io.Serializable { *; }

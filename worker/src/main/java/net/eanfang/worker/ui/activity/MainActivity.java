@@ -118,6 +118,7 @@ public class MainActivity extends BaseActivity {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
     }
 
+
     /**
      * 技师上报位置专用
      */
@@ -236,12 +237,6 @@ public class MainActivity extends BaseActivity {
         //开启信鸽日志输出
 //        XGPushConfig.enableDebug(this, false);
         //信鸽注册代码
-        Log.e("GG", "信鸽注册代码");
-        Log.e("GG", user.toString());
-        Log.e("GG", user.getToken());
-        Log.e("GG", user.getAccount() + "");
-        Log.e("GG", user.getAccount().getMobile());
-
         XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
@@ -354,6 +349,7 @@ public class MainActivity extends BaseActivity {
         }, true);
 //        RongIM.getInstance().setMessageAttachedUserInfo(true);//有具体场景的
     }
+
 
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
 
@@ -495,5 +491,7 @@ public class MainActivity extends BaseActivity {
         bundle.putSerializable("workEntriy", workerEntity);
         JumpItent.jump(MainActivity.this, WorkDetailActivity.class, bundle);
     }
+
+
 }
 

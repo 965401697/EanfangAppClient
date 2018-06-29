@@ -153,4 +153,22 @@
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
 -keep class RongYunNotificationReceiver {*;}
+
+#=============讯飞混淆
+-keep class com.iflytek.**{*;}
+-dontwarn com.iflytek.**
+-keep class com.iflytek.**{
+    public <methods>;
+    public <fields>;
+}
+-keep class com.iflytek.sunflower.**{
+  public protected *;
+}
+
+#fastJson
+-keepattributes Signature
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.**{*; }
+
+
 -ignorewarnings

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_120"
+    android:layout_height="@dimen/dimen_130"
     android:background="@color/color_white"
     android:gravity="center_vertical"
     android:orientation="horizontal">
@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="@dimen/dimen_200"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <LinearLayout
@@ -79,7 +79,7 @@
     <LinearLayout
         android:id="@+id/ll_orderFinish"
         android:layout_width="@dimen/dimen_65"
-        android:layout_height="@dimen/dimen_120"
+        android:layout_height="@dimen/dimen_130"
         android:layout_marginLeft="@dimen/dimen_20"
         android:gravity="center"
         android:orientation="horizontal"
@@ -89,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_20"
             android:orientation="vertical">
 
             <ImageView
@@ -107,7 +108,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
         android:orientation="vertical">
 
         <TextView
@@ -122,7 +124,7 @@
         <TextView
             android:id="@+id/tv_progressTime"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_28"
             android:layout_marginTop="@dimen/dimen_12"
             android:text="(月月时间：2018-02-09)"

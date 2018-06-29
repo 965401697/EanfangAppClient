@@ -3,6 +3,7 @@ package net.eanfang.client.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,8 +12,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.OrderProgressAdapter;
@@ -33,9 +36,14 @@ public class OrderProgressFragment extends BaseFragment {
     private List<OrderProgressBean> mDataList;
     private Long ordernum;
 
-    public static OrderProgressFragment getInstance(Long ordernum) {
+    private String mOrderTime = "";
+
+    private TextView mTvData, mTvWeek, mTvTime;
+
+    public static OrderProgressFragment getInstance(Long ordernum, String orderTime) {
         OrderProgressFragment sf = new OrderProgressFragment();
         sf.ordernum = ordernum;
+        sf.mOrderTime = orderTime;
         return sf;
     }
 
@@ -55,12 +63,21 @@ public class OrderProgressFragment extends BaseFragment {
 //                    mDataList=  Stream.of(list).sorted((o1, o2)->-Integer.compare(o1.getNodeCode(),o2.getNodeCode())).toList();
                     initAdapter();
                 }));
+
     }
 
     @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTvData = findViewById(R.id.tv_date);
+        mTvWeek = findViewById(R.id.tv_weeks);
+        mTvTime = findViewById(R.id.tv_time);
+        if (!StringUtils.isEmpty(mOrderTime)) {
+            mTvTime.setText(mOrderTime.substring(11));
+            mTvData.setText(mOrderTime.substring(5, 10));
+            mTvWeek.setText(GetDateUtils.dateToWeek(mOrderTime.substring(0, 10)));
+        }
     }
 
     @Override
