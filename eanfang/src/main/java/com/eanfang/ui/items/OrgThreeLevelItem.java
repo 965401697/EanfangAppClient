@@ -1,9 +1,6 @@
 package com.eanfang.ui.items;
 
 import android.content.Intent;
-import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
@@ -11,7 +8,7 @@ import com.baozi.treerecyclerview.item.TreeItem;
 import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.SectionBean;
-import com.eanfang.ui.activity.OrganizationLevelActivity;
+import com.eanfang.ui.activity.SelectPresonActivity;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -29,14 +26,14 @@ public class OrgThreeLevelItem extends TreeItem<SectionBean.ChildrenBean> {
     public void onBindViewHolder(ViewHolder holder) {
 
 
-        if (data.getFlag() == 1) {
+        if (data.getFlag() == 2) {
             holder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
             if (data.getCountStaff() == 0) {
                 holder.setText(R.id.tv_company_name, data.getOrgName());
             } else {
                 holder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
             }
-        } else {
+        } else if (data.getFlag() == 1 || data.getFlag() == 3 || data.getFlag() == 0) { // 0:多选
             if (data.getCountStaff() == 0) {
                 holder.setText(R.id.tv_company_name, data.getOrgName());
                 holder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
@@ -48,8 +45,17 @@ public class OrgThreeLevelItem extends TreeItem<SectionBean.ChildrenBean> {
             holder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(EanfangApplication.getApplication(), OrganizationLevelActivity.class);
+                    Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
                     intent.putExtra("flag", 3);
+
+                    if (data.getFlag() == 1) {
+                        intent.putExtra("isRadio", "isRadio");
+                    }
+
+                    if (data.getFlag() == 3) {
+                        intent.putExtra("isOrganization", "isOrganization");
+                    }
+
                     intent.putExtra("bean", data);
                     holder.getView(R.id.tv_unit).getContext().startActivity(intent);
                 }

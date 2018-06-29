@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EanfangApp2.iml" filepath="$PROJECT_DIR$/EanfangApp2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Eanfang.iml" filepath="$PROJECT_DIR$/Eanfang.iml" />
+      <module fileurl="file://D:\workspace\Eanfang\EanfangApp2.iml" filepath="D:\workspace\Eanfang\EanfangApp2.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMKit/IMKit.iml" filepath="$PROJECT_DIR$/IMKit/IMKit.iml" />
       <module fileurl="file://$PROJECT_DIR$/IMLib/IMLib.iml" filepath="$PROJECT_DIR$/IMLib/IMLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />

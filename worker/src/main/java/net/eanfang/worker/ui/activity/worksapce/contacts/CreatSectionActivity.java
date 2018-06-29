@@ -14,7 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -59,12 +59,8 @@ public class CreatSectionActivity extends BaseWorkerActivity {
         switch (v.getId()) {
             case R.id.ll_section:
 
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-                Uri uri = Uri.parse("worker://yeah!");
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-                intent.setData(uri);
-                intent.putExtra("isRadio", "isRadio");//是否是单选
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isSection", "isRadio");//是否是选择部门单选
                 startActivity(intent);
 
                 break;
@@ -89,7 +85,7 @@ public class CreatSectionActivity extends BaseWorkerActivity {
             if (!TextUtils.isEmpty(tvSectionName.getText().toString().trim()) && TextUtils.isEmpty(topCompanyId)) {
                 object.put("parentOrgId", parentOrgId);
             } else {
-                object.put("parentOrgId",  EanfangApplication.get().getCompanyId());
+                object.put("parentOrgId", EanfangApplication.get().getCompanyId());
             }
             object.put("orgName", etNewName.getText().toString().trim());
         } catch (JSONException e) {

@@ -38,6 +38,7 @@
                 android:paddingRight="@dimen/dimen_20"
                 android:src="@mipmap/ic_news_add" />
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

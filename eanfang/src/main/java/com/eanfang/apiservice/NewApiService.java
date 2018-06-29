@@ -326,12 +326,12 @@ public interface NewApiService {
      */
     String CREAT_SECTION = BASE_URL + "/yaf_sys/org/insertdepartment";
     /**
-     * 当前搜索人角色
+     * 当前登录人可以访问的角色
      * post
      */
     String MY_LIST_ROLE = BASE_URL + "/yaf_sys/role/listmyrole";
     /**
-     * 当前登录人可以访问的角色
+     * 当前搜索人角色
      * post
      */
     String MY_CURREMT_LIST_ROLE = BASE_URL + "/yaf_sys/role/listbyuser/";
@@ -381,15 +381,30 @@ public interface NewApiService {
      */
     String FAULT_RECORD_TOTAL = BASE_URL + "/yaf_repair/failure/record/total";
     /**
-     * 设备列表
+     * 客户端设备列表
      * post
      */
-    String DEVICE_LIST = BASE_URL + "/yaf_device/custDevice/list";
+    String DEVICE_LIST_CLIENT = BASE_URL + "/yaf_device/custDevice/list";
+    /**
+     * 技师端设备列表
+     * post
+     */
+    String DEVICE_LIST_WORKER = BASE_URL + "/yaf_device/shopDevice/list";
+    /**
+     * 添加设备库列表
+     * post
+     */
+    String DEVICE_LIST_ADD = BASE_URL + "/yaf_device/custDevice/choose";
     /**
      * 设备詳情
      * post
      */
     String DEVICE_DETAIL = BASE_URL + "/yaf_device/custDevice/detail";
+    /**
+     * 技师端设备詳情
+     * post
+     */
+    String DEVICE_DETAIL_WORKER = BASE_URL + "/yaf_device/shopDevice/detail";
     /**
      * 变更记录列表
      * post

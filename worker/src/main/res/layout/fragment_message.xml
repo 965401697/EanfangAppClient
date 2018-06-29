@@ -43,6 +43,7 @@
                 android:src="@mipmap/ic_news_add" />
             <!--android:onClick="noOpen"-->
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

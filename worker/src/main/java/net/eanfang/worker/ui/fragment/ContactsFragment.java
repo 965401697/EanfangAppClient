@@ -18,7 +18,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
@@ -26,9 +26,7 @@ import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.im.AddFriendActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
-import net.eanfang.worker.ui.activity.worksapce.ConstansActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -145,13 +143,14 @@ public class ContactsFragment extends BaseFragment {
                 }
             });
             parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                if (!String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()).equals(String.valueOf(EanfangApplication.get().getCompanyId()))) {
+                    ToastUtil.get().showToast(getActivity(), "请到工作台切换当前被点击的公司");
+                    return;
+                }
+
                 switch (view.getId()) {
                     //组织结构
                     case R.id.ll_org:
-//                        if (mDatas.get(position) != null) {
-//                            startActivity(new Intent(getActivity(), ConstansActivity.class).putExtra("data", mDatas.get(position)));
-//                        }
-
 
                         OrganizationBean organizationBean = new OrganizationBean();
 
@@ -169,14 +168,11 @@ public class ContactsFragment extends BaseFragment {
 
                         organizationBean.setCountStaff(num);
 
-                        Intent intent = new Intent(getActivity(), SelectOrganizationContactActivity.class);
-                        Uri uri = Uri.parse("worker://");
-                        intent.setData(uri);
+                        Intent intent = new Intent(getActivity(), SelectOrganizationActivity.class);
                         intent.putExtra("companyId", String.valueOf(mDatas.get(position).getCompanyId()));
                         intent.putExtra("organizationBean", organizationBean);
-//                        intent.putExtra("isRadio", "isRadio");//是否是单选
+                        intent.putExtra("isOrganization", "isOrganization");//是否是组织架构
                         startActivity(intent);
-
                         break;
                     //子公司
                     case R.id.ll_child_company:
@@ -230,14 +226,14 @@ public class ContactsFragment extends BaseFragment {
             }
         });
 
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //添加好友界面
 //                startActivity(new Intent(getActivity(), AddFriendActivity.class));
 
                 MorePopWindow morePopWindow = new MorePopWindow(getActivity(), true);
-                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
+                morePopWindow.showPopupWindow(findViewById(R.id.ll_add));
             }
         });
     }

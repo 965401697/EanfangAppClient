@@ -1,9 +1,8 @@
-package net.eanfang.client.ui.activity.worksapce.equipment;
+package net.eanfang.worker.ui.activity.worksapce.equipment;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,19 +10,21 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EquipmentBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EquipmentSearchActivity extends BaseClientActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
     @BindView(R.id.rv_list)
@@ -42,13 +43,11 @@ public class EquipmentSearchActivity extends BaseClientActivity implements Swipe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        setContentView(R.layout.activity_equipment_list);
+        setContentView(R.layout.activity_equipment_search);
         ButterKnife.bind(this);
-        setTitle("设备列表");
-        setLeftBack();
         mBundle = getIntent().getExtras();
+        setTitle(Config.get().getBusinessNameByCode((String) mBundle.get("businessOneCode"), 3));
+        setLeftBack();
         initView();
         mPage = 1;
 
@@ -73,10 +72,6 @@ public class EquipmentSearchActivity extends BaseClientActivity implements Swipe
                     intent.putExtra("bean", mAdapter.getData().get(position));
                     setResult(RESULT_OK, intent);
                     finish();
-                } else {
-                    Intent intent = new Intent(EquipmentSearchActivity.this, EquipmentDetailActivity.class);
-                    intent.putExtra("id", mAdapter.getData().get(position).getId());
-                    startActivity(intent);
                 }
             }
         });
@@ -112,6 +107,8 @@ public class EquipmentSearchActivity extends BaseClientActivity implements Swipe
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
+        queryEntry.getEquals().put("businessThreeCode", (String) mBundle.get("businessOneCode"));
+        queryEntry.getEquals().put("ownerCompanyId", (String) mBundle.get("clientCompanyUid"));
         EanfangHttp.post(NewApiService.DEVICE_LIST_ADD)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<EquipmentBean>(this, true, EquipmentBean.class) {

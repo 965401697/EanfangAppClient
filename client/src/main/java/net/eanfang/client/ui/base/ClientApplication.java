@@ -3,6 +3,9 @@ package net.eanfang.client.ui.base;
 import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.EanfangConst;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
@@ -18,6 +21,7 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  */
 
 public class ClientApplication extends EanfangApplication {
+    private static IWXAPI api;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -26,10 +30,15 @@ public class ClientApplication extends EanfangApplication {
 
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
-        }
+
+            //初始化微信支付
+            api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);}
+
     }
 
-
+    public static IWXAPI getWxApi() {
+        return api;
+    }
     /**
      * 融云的token
      *

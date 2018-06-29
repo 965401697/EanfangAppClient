@@ -12,6 +12,8 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 
+import com.eanfang.ui.activity.SelectContactActivity;
+
 import net.eanfang.client.R;
 
 
@@ -59,6 +61,7 @@ public class MorePopWindow extends PopupWindow {
 
             @Override
             public void onClick(View v) {
+//                Intent intent = new Intent(new Intent(context, SelectContactActivity.class));
                 Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
                 intent.putExtra("flag", 1);
                 context.startActivity(intent);

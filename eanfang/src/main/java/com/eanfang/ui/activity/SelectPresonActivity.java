@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
-import com.baozi.treerecyclerview.adpater.TreeRecyclerType;
 import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
@@ -34,20 +33,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrganizationLevelActivity extends BaseActivity {
+public class SelectPresonActivity extends BaseActivity {
 
     @BindView(R2.id.tv_search)
     TextView tvSearch;
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R2.id.tv_sure)
-    TextView tvSure;
 
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
     private List<TemplateBean> mTemplateBeanList = new ArrayList<>();
     private TreeRecyclerAdapter mTreeRecyclerAdapter;
 
     private int mFlag;
+    private String isRadio;
+
+    private TemplateBean.Preson oldPreson;
+    private String isOrganization;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,8 @@ public class OrganizationLevelActivity extends BaseActivity {
             EventBus.getDefault().register(this);
         }
         supprotToolbar();
-
+        isRadio = getIntent().getStringExtra("isRadio");//单选 多选
+        isOrganization = getIntent().getStringExtra("isOrganization");//组织架构
         mFlag = getIntent().getIntExtra("flag", 0);
         if (mFlag == 2) {
 //            mSecondDataList = (ArrayList<SectionBean>) getIntent().getSerializableExtra("list");
@@ -70,6 +72,9 @@ public class OrganizationLevelActivity extends BaseActivity {
                 for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
                     List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
                     templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
+                    if (!TextUtils.isEmpty(isOrganization)) {
+                        templateBean.setVisible(true);
+                    }
                     if (childrens.getStaff() != null) {
                         for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
                             TemplateBean.Preson preson = new TemplateBean.Preson();
@@ -78,6 +83,9 @@ public class OrganizationLevelActivity extends BaseActivity {
                             preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                             preson.setMobile(staffBean.getAccountEntity().getMobile());
                             preson.setDepartmentId(staffBean.getDepartmentId());
+                            if (!TextUtils.isEmpty(isOrganization)) {
+                                preson.setVisible(true);
+                            }
                             presonArrayList.add(preson);
                         }
 
@@ -87,6 +95,9 @@ public class OrganizationLevelActivity extends BaseActivity {
             }
 
             TemplateBean templateBean1 = new TemplateBean();
+            if (!TextUtils.isEmpty(isOrganization)) {
+                templateBean1.setVisible(true);
+            }
 
             if (sectionBean.getStaff() != null) {
                 List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
@@ -103,6 +114,9 @@ public class OrganizationLevelActivity extends BaseActivity {
                     preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
                     preson.setMobile(staffBeanX.getAccountEntity().getMobile());
                     preson.setDepartmentId(staffBeanX.getDepartmentId());
+                    if (!TextUtils.isEmpty(isOrganization)) {
+                        preson.setVisible(true);
+                    }
                     presonArrayList.add(preson);
 
                 }
@@ -124,6 +138,9 @@ public class OrganizationLevelActivity extends BaseActivity {
 //            for (SectionBean.ChildrenBean bean : mThreeDataList) {
             TemplateBean templateBean = new TemplateBean();
             templateBean.setOrgName(childrenBean.getOrgName());
+            if (!TextUtils.isEmpty(isOrganization)) {
+                templateBean.setVisible(true);
+            }
             List<TemplateBean.Preson> staffBeanList = new ArrayList<>();
             for (SectionBean.ChildrenBean.StaffBean staffBean : childrenBean.getStaff()) {
                 TemplateBean.Preson preson = new TemplateBean.Preson();
@@ -132,6 +149,9 @@ public class OrganizationLevelActivity extends BaseActivity {
                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                 preson.setMobile(staffBean.getAccountEntity().getMobile());
                 preson.setDepartmentId(staffBean.getDepartmentId());
+                if (!TextUtils.isEmpty(isOrganization)) {
+                    preson.setVisible(true);
+                }
                 staffBeanList.add(preson);
             }
             templateBean.setPresons(staffBeanList);
@@ -142,26 +162,57 @@ public class OrganizationLevelActivity extends BaseActivity {
 
         }
         initViews();
+        if (TextUtils.isEmpty(isOrganization)) {
+            setRightTitle("确定");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onSure();
+                }
+            });
+        }
     }
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         mTreeRecyclerAdapter = new TreeRecyclerAdapter();
-        if (mFlag != 0) {//多选
+        if (!TextUtils.isEmpty(isRadio)) {// 单选
             mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupSingleItem.class, null));
-        } else {//单选
+        } else {//多选
             mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null));
         }
         recyclerView.setAdapter(mTreeRecyclerAdapter);
 
-        if (!TextUtils.isEmpty(SelectOrganizationContactActivity.companyId)) {
-            tvSure.setVisibility(View.GONE);
-        }
+        mTreeRecyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ViewHolder viewHolder, int i) {
+                Object o = mTreeRecyclerAdapter.getData(i).getData();
+
+                if (o instanceof TemplateBean.Preson) {
+                    TemplateBean.Preson b = (TemplateBean.Preson) o;
+
+                    if (oldPreson == null) {
+                        b.setChecked(true);
+                        oldPreson = b;
+                    } else {
+                        if (oldPreson.getId() == b.getId()) {
+                            b.setChecked(false);
+                            oldPreson = null;
+                        } else {
+                            oldPreson.setChecked(false);
+                            b.setChecked(true);
+                            oldPreson = b;
+                        }
+                    }
+                    mTreeRecyclerAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
-    @OnClick(R2.id.tv_sure)
-    public void onViewClicked() {
+
+    public void onSure() {
         List<TreeItem> treeItems = new ArrayList<>();
         List<TreeItem> list = mTreeRecyclerAdapter.getDatas();
         for (TreeItem tree : list) {
@@ -169,21 +220,24 @@ public class OrganizationLevelActivity extends BaseActivity {
             TreeItemGroup parentItem = tree.getParentItem();
             if (parentItem instanceof OrgSelectGroupMultipleItem) {
                 treeItems = ((OrgSelectGroupMultipleItem) parentItem).getSelectItems();
+                for (TreeItem t : treeItems) {
+                    TemplateBean.Preson preson = ((OrgSelectItem) t).getData();
+                    presonList.add(preson);
+                }
             } else if (parentItem instanceof OrgSelectGroupSingleItem) {
-                treeItems = ((OrgSelectGroupSingleItem) parentItem).getSelectItems();
+                if (oldPreson != null) {
+                    presonList.add(oldPreson);
+                    break;
+                }
+
             }
         }
 
-        for (TreeItem t : treeItems) {
-            TemplateBean.Preson preson = ((OrgSelectItem) t).getData();
-            presonList.add(preson);
-        }
 
         if (presonList.size() == 0) {
             ToastUtil.get().showToast(this, "你还没有选择人员");
             return;
         }
-        // TODO: 2018/6/9 多选可能还要处理业务
         EventBus.getDefault().post(presonList);
         endTransaction(true);
     }

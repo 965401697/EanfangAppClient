@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,12 +16,22 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupCreatBean;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ToastUtil;
-
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,6 +52,8 @@ public class SelectContactActivity extends BaseActivity {
     TextView tvSure;
     private HeaderIconAdapter mHeaderIconAdapter;
 
+    List<TemplateBean.Preson> presonList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +65,16 @@ public class SelectContactActivity extends BaseActivity {
         findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectContactActivity.this, SelectOrganizationContactActivity.class);
+                Intent intent = new Intent(SelectContactActivity.this, SelectOrganizationActivity.class);
                 startActivity(intent);
+            }
+        });
+        findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(new Intent(SelectContactActivity.this, SelectedFriendsActivity.class));
+//                intent.putExtra("flag", 1);
+//                startActivity(intent);
             }
         });
 
@@ -71,11 +92,8 @@ public class SelectContactActivity extends BaseActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
-            tvSure.setVisibility(View.VISIBLE);
-            rlSelected.setVisibility(View.VISIBLE);
-            mHeaderIconAdapter.getData().clear();
-            mHeaderIconAdapter.setNewData(presonList);
+        if (presonList.size() > 0) {//管理员设置 单选 就一个
+            this.presonList = presonList;
         }
     }
 
@@ -95,4 +113,68 @@ public class SelectContactActivity extends BaseActivity {
             ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
         }
     }
+
+    /**
+     * 创建群组
+     */
+//    private void submit() {
+//
+//        if (TextUtils.isEmpty(etGroupName.getText().toString().trim())) {
+//            ToastUtil.get().showToast(this, "群组名称不能为空");
+//            return;
+//        }
+//
+//        if (TextUtils.isEmpty(imgKey)) {
+//            ToastUtil.get().showToast(this, "请上传群头像");
+//            return;
+//        }
+//
+//        ArrayList<String> list = getIntent().getStringArrayListExtra("userIdList");
+//        list.add(String.valueOf(EanfangApplication.get().getAccId()));
+//        JSONObject jsonObject = new JSONObject();
+//        JSONObject jsonObject1 = new JSONObject();
+//
+//        JSONArray array = new JSONArray();
+//        try {
+//            for (String s : list) {
+//                JSONObject jsonObject3 = new JSONObject();
+//                jsonObject3.put("accId", s);
+//                array.put(jsonObject3);
+//            }
+//
+//            jsonObject1.put("groupName", etGroupName.getText().toString().trim());
+//            jsonObject1.put("headPortrait", imgKey);
+//            jsonObject.put("sysGroup", jsonObject1);
+//            jsonObject.put("sysGroupUsers", array);
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //头像上传成功后  提交数据
+//        OSSUtils.initOSS(SelectContactActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(SelectContactActivity.this, false) {
+//
+//            @Override
+//            public void onOssSuccess() {
+//                super.onOssSuccess();
+//
+//
+//                //创建群组
+//                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+//                        .upJson(jsonObject)
+//                        .execute(new EanfangCallback<GroupCreatBean>(SelectContactActivity.this, true, GroupCreatBean.class, (bean) -> {
+//                            ToastUtil.get().showToast(SelectContactActivity.this, "创建成功");
+//                            Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+//                            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+//
+//                            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+//                            RongIM.getInstance().startGroupChat(SelectContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+//                            endTransaction(true);
+//                        }));
+//
+//            }
+//        });
+//
+//
+//    }
 }

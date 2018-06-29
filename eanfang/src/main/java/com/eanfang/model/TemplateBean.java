@@ -16,7 +16,7 @@ public class TemplateBean extends BaseItemData implements Serializable {
     private boolean isChecked;
     private boolean flag;
     private List<Preson> presons;
-
+    private boolean isVisible;
 
     public static class Preson extends BaseItemData implements Serializable {
         private String id;
@@ -27,6 +27,15 @@ public class TemplateBean extends BaseItemData implements Serializable {
         private String areaCode;
         private String address;
         private boolean isChecked;
+        private boolean isVisible;
+
+        public boolean isVisible() {
+            return isVisible;
+        }
+
+        public void setVisible(boolean visible) {
+            isVisible = visible;
+        }
 
         public String getAddress() {
             return address;
@@ -91,6 +100,14 @@ public class TemplateBean extends BaseItemData implements Serializable {
         public void setChecked(boolean checked) {
             isChecked = checked;
         }
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean visible) {
+        isVisible = visible;
     }
 
     public String getOrgName() {

@@ -227,9 +227,8 @@ public class WorkspaceFragment extends BaseFragment {
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
             if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-//                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
-//                startActivity(intent);
-                showToast("待开发");
+                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+                startActivity(intent);
             } else {
                 showToast("暂无权限");
             }

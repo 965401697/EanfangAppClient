@@ -66,16 +66,10 @@ public class EquipmentListFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (((EquipmentListActivity) getActivity()).getmBundle() != null) {
-                    Intent intent = new Intent();
-                    intent.putExtra("bean", mAdapter.getData().get(position));
-                    getActivity().setResult(RESULT_OK, intent);
-                    getActivity().finish();
-                } else {
                     Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
                     intent.putExtra("id", mAdapter.getData().get(position).getId());
                     startActivity(intent);
-                }
+
             }
         });
         getData();
@@ -87,7 +81,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getLike().put("businessThreeCode", mType+"%");
-        EanfangHttp.post(NewApiService.DEVICE_LIST)
+        EanfangHttp.post(NewApiService.DEVICE_LIST_WORKER)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<EquipmentBean>(getActivity(), true, EquipmentBean.class) {
                     @Override

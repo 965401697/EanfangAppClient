@@ -216,9 +216,10 @@
                         android:id="@+id/rb_weixin_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
                         android:focusable="false"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:layout_gravity="center_vertical"
+                      />
                 </LinearLayout>
 
             </LinearLayout>

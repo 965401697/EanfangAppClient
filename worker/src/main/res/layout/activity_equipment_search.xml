@@ -4,18 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eanfang.ui.activity.SelectPresonActivity">
+    tools:context="net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity">
 
-    <include layout="@layout/view_title_bar" />
+
+    <include layout="@layout/header" />
 
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_70"
+        android:layout_below="@+id/header"
         android:layout_marginBottom="@dimen/dimen_26"
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_marginRight="@dimen/dimen_36"
         android:layout_marginTop="@dimen/dimen_26"
         android:background="#f5f5f5"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:orientation="horizontal">
 
         <ImageView
@@ -25,22 +30,20 @@
             android:layout_marginLeft="@dimen/dimen_20"
             android:src="@mipmap/ic_contact_search" />
 
-        <TextView
-            android:id="@+id/tv_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="4dp"
-            android:text="搜索"
+            android:background="@null"
+            android:hint="请输入系统类别/位置/负责人 进行搜索"
             android:textColor="@color/color_bottom"
-            android:textSize="@dimen/textSize_12" />
+            android:textSize="@dimen/textSize_12"
+            android:windowSoftInputMode="stateHidden" />
 
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+    <include layout="@layout/fragment_template_item_list" />
 
 </LinearLayout>

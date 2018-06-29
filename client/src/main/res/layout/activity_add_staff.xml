@@ -68,15 +68,4 @@
             android:background="@color/white" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_add"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_86"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_service_title"
-        android:gravity="center"
-        android:text="添加"
-        android:textColor="@color/white" />
-
 </RelativeLayout>

@@ -10,23 +10,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RoleBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.device.User;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -39,8 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 public class PermissionManagerActivity extends BaseClientActivity {
 
@@ -58,8 +52,6 @@ public class PermissionManagerActivity extends BaseClientActivity {
     LinearLayout llRole;
     @BindView(R.id.rl_checked_staff)
     RelativeLayout rlCheckedStaff;
-    @BindView(R.id.tv_sure)
-    TextView tvSure;
 
     private User mBean;
 
@@ -76,22 +68,27 @@ public class PermissionManagerActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("权限管理");
         setLeftBack();
+
+        setRightTitle("确认授权");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subMermission();
+            }
+        });
     }
 
 
-    @OnClick({R.id.rl_checked_staff, R.id.ll_select_staff, R.id.tv_sure, R.id.ll_role})
+    @OnClick({R.id.rl_checked_staff, R.id.ll_select_staff, R.id.ll_role})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_checked_staff:
             case R.id.ll_select_staff:
-                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-                Uri uri = Uri.parse("worker://");
-                intent.setData(uri);
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isRadio", "isRadio");
                 startActivity(intent);
                 break;
-            case R.id.tv_sure:
-                subMermission();
-                break;
+
             case R.id.ll_role:
                 Intent in = new Intent(this, AolltRoleActivity.class);
                 in.putStringArrayListExtra("roleNameList", roleNameList);
@@ -137,7 +134,6 @@ public class PermissionManagerActivity extends BaseClientActivity {
             llSelectStaff.setVisibility(View.GONE);
             rlCheckedStaff.setVisibility(View.VISIBLE);
             llRole.setVisibility(View.VISIBLE);
-            tvSure.setVisibility(View.VISIBLE);
 
 
             EanfangHttp.get(UserApi.POST_USER_INFO + bean.getId())
@@ -163,7 +159,6 @@ public class PermissionManagerActivity extends BaseClientActivity {
             llSelectStaff.setVisibility(View.VISIBLE);
             rlCheckedStaff.setVisibility(View.GONE);
             llRole.setVisibility(View.GONE);
-            tvSure.setVisibility(View.GONE);
         }
 
 

@@ -30,15 +30,23 @@
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/textSize_15" />
 
-            <ImageView
-                android:id="@+id/iv_add"
-                android:layout_width="@dimen/dimen_44"
-                android:layout_height="@dimen/dimen_44"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:padding="@dimen/dimen_4"
-                android:src="@mipmap/ic_contact_add" />
+
+            <LinearLayout
+                android:id="@+id/ll_add"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/iv_add"
+                    android:layout_width="@dimen/dimen_44"
+                    android:layout_height="@dimen/dimen_44"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:padding="@dimen/dimen_4"
+                    android:src="@mipmap/ic_contact_add" />
+            </LinearLayout>
 
         </RelativeLayout>
     </LinearLayout>

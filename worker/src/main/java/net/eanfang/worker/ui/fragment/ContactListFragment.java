@@ -116,9 +116,10 @@ public class ContactListFragment extends BaseFragment {
         }, Conversation.ConversationType.GROUP);
         doHttpNoticeCount();
 
-        /**
-         * 设置会话列表界面操作的监听器。
-         */
+
+/**
+ * 设置会话列表界面操作的监听器。
+ */
         RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
 
             @Override

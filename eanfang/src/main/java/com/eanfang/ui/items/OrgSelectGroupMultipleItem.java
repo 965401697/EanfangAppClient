@@ -41,7 +41,13 @@ public class OrgSelectGroupMultipleItem extends TreeSelectItemGroup<TemplateBean
 
 //        if (data == null || data.getPresons() == null) return;
 
-        viewHolder.setChecked(R.id.cb_all_checked, isChildCheck());
+        if (data.isVisible()) {
+            viewHolder.getView(R.id.cb_all_checked).setVisibility(View.INVISIBLE);
+        } else {
+            viewHolder.setChecked(R.id.cb_all_checked, isChildCheck());
+        }
+
+
         viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + ")");
 
 //        viewHolder.getView(R.id.tv_all_checked).setOnClickListener(new View.OnClickListener() {
