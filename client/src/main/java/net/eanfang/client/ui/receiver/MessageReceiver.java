@@ -2,10 +2,8 @@ package net.eanfang.client.ui.receiver;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.LogTime;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -13,7 +11,7 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
-import net.eanfang.client.ui.activity.my.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 
 /**
  * Created by MrHou

@@ -15,7 +15,6 @@ import com.eanfang.R;
 import com.eanfang.util.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -57,10 +56,6 @@ public abstract class BaseFragment extends Fragment implements IBase {
         mRootView = inflater.inflate(setLayoutResouceId(), container, false);
         ButterKnife.bind(this, mRootView);
         initData(getArguments());
-        if (!EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().register(this);
-        }
-
         initView();
 
         mIsPrepare = true;
@@ -193,7 +188,6 @@ public abstract class BaseFragment extends Fragment implements IBase {
     @Override
     public void onDestroyView() {
         this.mActivity = null;
-        EventBus.getDefault().unregister(this);
         super.onDestroyView();
     }
 

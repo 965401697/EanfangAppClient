@@ -77,9 +77,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         if (item.getPayLogEntity() != null) {
             if (item.getPayLogEntity().getPayPrice() != null) {
                 helper.setText(R.id.tv_count_money, "¥" + NumberUtil.getEndTwoNum(item.getPayLogEntity().getPayPrice() / 100.00));
+            } else {
+                helper.setText(R.id.tv_count_money, "0.00");
             }
         } else {
-            helper.setVisible(R.id.ll_pay, false);
+            helper.setText(R.id.tv_count_money, "0.00");
         }
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 

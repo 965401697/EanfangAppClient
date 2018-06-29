@@ -179,7 +179,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- <activity android:name=".ui.activLoginClientActivityvity" /> -->
         <activity android:name=".ui.activity.CameraActivity" />
-        <activity android:name=".ui.activity.my.MessageListActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.MessageListActivity" />
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
@@ -248,7 +248,7 @@
         </provider>
 
         <!-- 业务通知详情 -->
-        <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.MessageDetailActivity" />
         <!-- 客服 帮助页面 -->
         <activity android:name=".ui.activity.worksapce.CustomerServiceActivity" />
         <!-- 系统通知 -->

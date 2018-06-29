@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.ViewGroup;
@@ -131,11 +132,11 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         initView();
         setOnClick();
-
     }
 
     private void initView() {
         setTitle("填写技师资料");
+        setRightTitle("编辑");
         setLeftBack();
         //设置表情过滤，最多输入字数为100
         etIntro.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(100)});
@@ -154,7 +155,14 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
         ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
         setRightTitleOnClickListener((v) -> {
-
+            // 掉编辑接口
+            etPayAccount.setEnabled(true);
+            llWorkingLevel.setEnabled(true);
+            llWorkingYear.setEnabled(true);
+            llPayType.setEnabled(true);
+            etIntro.setEnabled(true);
+            etUrgentPhone.setEnabled(true);
+            etUrgentName.setEnabled(true);
         });
 
         rlUploadInfo.setOnClickListener((v) -> {
@@ -177,6 +185,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         // 已经认证成功/ 已经提交认证，正在认证中 无法编辑
         if (workerInfoBean.getStatus() == 2 || workerInfoBean.getStatus() == 1) {
             doSetGone();
+        } else {
+            setRightGone();
         }
 
     }

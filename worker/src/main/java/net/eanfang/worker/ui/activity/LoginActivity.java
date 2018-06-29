@@ -156,6 +156,9 @@ public class LoginActivity extends BaseActivity {
                 .execute(new EanfangCallback<LoginBean>(LoginActivity.this, true, LoginBean.class, (bean) -> {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
+                    showToast("" + EanfangApplication.get().get(LoginBean.class.getName(), ""));
+                    showToast("" + EanfangApplication.get().getUser());
+                    showToast("" + EanfangApplication.get().getUser().getToken());
                     goMain();
                 }));
 

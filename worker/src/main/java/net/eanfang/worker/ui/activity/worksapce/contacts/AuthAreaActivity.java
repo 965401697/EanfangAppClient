@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
@@ -47,6 +48,8 @@ import butterknife.ButterKnife;
 public class AuthAreaActivity extends BaseActivity {
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
+    @BindView(R.id.tv_confim)
+    TextView tvConfim;
     List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     private GroupAdapter mAdapter;
     private Long orgid;
@@ -133,7 +136,7 @@ public class AuthAreaActivity extends BaseActivity {
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
         elvArea.setAdapter(mAdapter);
-        if ((verifyStatus != 0 && verifyStatus != 3)) {
+        if ((verifyStatus != 0 || verifyStatus != 3)) {
             //  当状态为已认证状态时， 设置为不可点击不可点击
             mAdapter.isAuth = true;
             elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -143,7 +146,7 @@ public class AuthAreaActivity extends BaseActivity {
                 }
             });
         }
-        setRightTitleOnClickListener((v) -> {
+        tvConfim.setOnClickListener((v) -> {
             if (verifyStatus == 0 || verifyStatus == 3) {
                 commit();
             } else if (verifyStatus == 1) {
@@ -151,6 +154,8 @@ public class AuthAreaActivity extends BaseActivity {
             } else if (verifyStatus == 2) {
                 showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
             }
+        });
+        setRightTitleOnClickListener((v) -> {
 
         });
     }

@@ -118,6 +118,7 @@ public class MainActivity extends BaseActivity {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
     }
 
+
     /**
      * 技师上报位置专用
      */
@@ -229,18 +230,6 @@ public class MainActivity extends BaseActivity {
 
     public void initXinGe() {
         registerXinGe();
-//        Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
-//
-//            ExecuteUtils.execute(
-//                    () -> Var.get("MainActivity.initXinGe").getVar()
-//                    , 1, 0,
-//                    () -> Var.remove("MainActivity.initXinGe")
-//                    , () -> {
-//
-//
-//                    });
-//        });
-//        Var.get("MainActivity.initXinGe").setVar(0);
     }
 
 
@@ -248,7 +237,7 @@ public class MainActivity extends BaseActivity {
         //开启信鸽日志输出
 //        XGPushConfig.enableDebug(this, false);
         //信鸽注册代码
-        XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
+        XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
 //                        Log.d("TPush", "注册成功，设备token为：" + data);
@@ -360,6 +349,7 @@ public class MainActivity extends BaseActivity {
         }, true);
 //        RongIM.getInstance().setMessageAttachedUserInfo(true);//有具体场景的
     }
+
 
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
 
@@ -501,5 +491,7 @@ public class MainActivity extends BaseActivity {
         bundle.putSerializable("workEntriy", workerEntity);
         JumpItent.jump(MainActivity.this, WorkDetailActivity.class, bundle);
     }
+
+
 }
 

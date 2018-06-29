@@ -21,6 +21,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
@@ -183,10 +184,12 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
         if (bughandleDetailEntity.getStatus() != null) {
 //            tv_repair_conclusion.setText(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus()));
         }
+        if (bughandleDetailEntity.getStatus() != null && bughandleDetailEntity.getStatusTwo() != null) {
+            //添加维修结论
+            addRepariResult(GetConstDataUtils.getBugDetailList(), v(() -> bughandleDetailEntity.getStatus()));
+            addReapirResultMode(GetConstDataUtils.getBugDetailTwoList(v(() -> bughandleDetailEntity.getStatus())), bughandleDetailEntity.getStatusTwo());
+        }
 
-        //添加维修结论
-        addRepariResult(GetConstDataUtils.getBugDetailList(), bughandleDetailEntity.getStatus());
-        addReapirResultMode(GetConstDataUtils.getBugDetailTwoList(bughandleDetailEntity.getStatus()), bughandleDetailEntity.getStatusTwo());
 
     }
 

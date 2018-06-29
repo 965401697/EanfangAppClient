@@ -17,6 +17,7 @@ import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
@@ -379,6 +380,7 @@ public class OrderListFragment extends BaseFragment implements
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra("id", ((RepairOrderEntity) adapter.getData().get(position)).getId());
+            intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
             startActivity(intent);
         }
     };

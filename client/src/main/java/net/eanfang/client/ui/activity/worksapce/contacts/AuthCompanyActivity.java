@@ -190,6 +190,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             setOnFouse(etPhone);
             setOnFouse(etDesc);
         } else {
+            setRightGone();
             initListener();
         }
     }
@@ -197,6 +198,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private void initView() {
         setTitle("填写企业信息");
         setLeftBack();
+        setRightTitle("编辑");
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
         // 完善资料
@@ -238,6 +240,21 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 //                    showToast("抱歉，您没有权限！");
 //                }
 //            }
+        });
+        setRightTitleOnClickListener((v)->{
+            ivUpload.setEnabled(true);
+            ivUpload2.setEnabled(true);
+            etCompany.setEnabled(true);
+            edCompanyNumber.setEnabled(true);
+            etMoney.setEnabled(true);
+            llType.setEnabled(true);
+            llOfficeAddress.setEnabled(true);
+            tvOfficeAddress.setEnabled(true);
+            etLegalPersion.setEnabled(true);
+            llCompanyScale.setEnabled(true);
+            etPhone.setEnabled(true);
+            etDetailOfficeAddress.setEnabled(true);
+            etDesc.setEnabled(true);
         });
     }
 

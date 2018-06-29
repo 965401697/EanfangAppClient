@@ -2,9 +2,9 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
@@ -16,9 +16,12 @@ import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.yaf.sys.entity.BaseDataEntity;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.MultipleChoiceAdapter;
+import net.eanfang.worker.ui.activity.my.AuthWorkerSysTypeActivity;
 
 import java.util.List;
 
@@ -34,15 +37,18 @@ import butterknife.ButterKnife;
  */
 
 public class AuthBizActivity extends BaseActivity {
-    @BindView(R.id.rev_list)
-    RecyclerView revList;
+
+
+    @BindView(R.id.tag_work_type)
+    TagFlowLayout tagWorkType;
+    @BindView(R.id.tv_confim)
+    TextView tvConfim;
     private Long orgid;
     private int verifyStatus;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
 
-    private MultipleChoiceAdapter multipleChoiceAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class AuthBizActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
         initData();
+        initListener();
     }
 
     private void initData() {
@@ -63,17 +70,28 @@ public class AuthBizActivity extends BaseActivity {
 
     private void initView() {
         setTitle("选择业务类别");
-        setRightTitle("下一步");
+        setRightTitle("编辑");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        multipleChoiceAdapter = new MultipleChoiceAdapter(this);
-        revList.setAdapter(multipleChoiceAdapter);
         if ((verifyStatus != 0 && verifyStatus != 3)) {
-            multipleChoiceAdapter.isAuth = true;
+            tagWorkType.setEnabled(false);
         }
+    }
+
+    private void initListener() {
+
+        tvConfim.setOnClickListener((v) -> {
+            if (verifyStatus == 0 || verifyStatus == 3) {
+                commit();
+            } else {
+                jump();
+            }
+        });
+        setRightTitleOnClickListener((v) -> {
+            // 掉编辑接口
+            tagWorkType.setEnabled(true);
+        });
     }
 
     private void fillData() {
@@ -84,22 +102,12 @@ public class AuthBizActivity extends BaseActivity {
                 }
             }
         }
-        initAdapter();
-    }
-
-    private void initAdapter() {
-        multipleChoiceAdapter.refreshData(bizTypeList);
-        multipleChoiceAdapter.setOnItemClickListener((view, position, id) -> {
-            bizTypeList.get(position).setCheck(!bizTypeList.get(position).isCheck());
-        });
-
-        setRightTitleOnClickListener((v) -> {
-            if (verifyStatus == 0 || verifyStatus == 3) {
-                commit();
-            } else {
-                jump();
-            }
-        });
+        if (verifyStatus == 1 || verifyStatus == 2) {
+            tagWorkType.setEnabled(false);
+        } else {
+            setRightGone();
+        }
+        addRepariResult();
     }
 
     private void commit() {
@@ -124,6 +132,35 @@ public class AuthBizActivity extends BaseActivity {
             }
             showToast("请至少选择一种业务类别");
         }
+    }
+
+    public void addRepariResult() {
+
+        tagWorkType.setAdapter(new TagAdapter<BaseDataEntity>(bizTypeList) {
+            @Override
+            public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(AuthBizActivity.this).inflate(R.layout.layout_trouble_result_item, tagWorkType, false);
+                tv.setText(mrepairResult.getDataName());
+                return tv;
+            }
+
+            @Override
+            public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
+                Long coutn = Stream.of(byNetGrant.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
+                if (coutn > 0) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        tagWorkType.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                bizTypeList.get(position).setCheck(!bizTypeList.get(position).isCheck());
+                return true;
+            }
+        });
+
     }
 
     private void jump() {

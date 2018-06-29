@@ -134,16 +134,6 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    private SecondCheckedCallback secondCheckedCallback;
-
-    public void setSecondCheckedCallback(SecondCheckedCallback secondCheckedCallback) {
-        this.secondCheckedCallback = secondCheckedCallback;
-    }
-
-    public interface SecondCheckedCallback {
-        void onSecondItemClick(View view, int position, long id);
-    }
-
 
     class FirstHolder {
         TextView tv;

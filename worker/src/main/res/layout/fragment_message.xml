@@ -31,28 +31,24 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
-            <LinearLayout
-                android:id="@+id/ll_add"
+            <ImageView
+                android:id="@+id/iv_add"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_20"
+                android:src="@mipmap/ic_news_add" />
+            <!--android:onClick="noOpen"-->
 
-                <ImageView
-                    android:id="@+id/iv_add"
-                    android:layout_width="@dimen/dimen_30"
-                    android:layout_height="@dimen/dimen_30"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_news_add" />
-                <!--android:onClick="noOpen"-->
-            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/ll_add"
+                android:layout_toLeftOf="@id/iv_add"
                 android:layout_toRightOf="@id/iv_camera"
                 android:gravity="center"
                 android:text="消息"

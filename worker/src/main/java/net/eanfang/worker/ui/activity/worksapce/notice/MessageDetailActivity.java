@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.notice;
 
 import android.os.Bundle;
 import android.widget.TextView;

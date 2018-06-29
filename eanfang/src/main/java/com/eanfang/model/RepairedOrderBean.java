@@ -12,6 +12,9 @@ import java.util.List;
 
 public class RepairedOrderBean implements Serializable {
 
+    public RepairedOrderBean() {
+        super();
+    }
 
     /**
      * currPage : 1

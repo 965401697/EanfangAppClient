@@ -1,8 +1,12 @@
 package com.eanfang.application;
 
+import android.os.Environment;
+import android.preference.Preference;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.camera.CameraApplication;
+import com.eanfang.R;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.util.BarUtil.BarUtils;
@@ -12,6 +16,11 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -30,7 +39,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * @author Mr.hou
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
 public class EanfangApplication extends CustomeApplication {
@@ -44,6 +53,9 @@ public class EanfangApplication extends CustomeApplication {
 
     private OkGo http;
 
+    // 语音合成对象
+    private SpeechSynthesizer mTts;
+
 
     public static EanfangApplication getApplication() {
         return mEanfangApplication;
@@ -53,13 +65,13 @@ public class EanfangApplication extends CustomeApplication {
         return mEanfangApplication;
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         mEanfangApplication = this;
         initConfig();
         initOkGo();
+
 //        BaseUtil.init(this);
 //        initXinGe();
         //数据库初始化 ziwu
@@ -68,6 +80,10 @@ public class EanfangApplication extends CustomeApplication {
         CameraApplication.init(this, true);
         //初始换tbs 不需要 callback 的可以传入 null
         QbSdk.initX5Environment(getApplicationContext(), null);
+
+        // 初始化讯飞
+        // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
+        SpeechUtility.createUtility(EanfangApplication.this, "appid=5a4445e3");
     }
 
 
@@ -127,4 +143,6 @@ public class EanfangApplication extends CustomeApplication {
         //全局公共参数
         EanfangHttp.setHttp(http);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.my;
+package net.eanfang.worker.ui.activity.worksapce.notice;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
@@ -23,11 +23,9 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.MessageDetailActivity;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
-import net.eanfang.worker.ui.widget.MessageDetailView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,21 +61,39 @@ public class MessageListActivity extends BaseWorkerActivity implements
     private MessageListAdapter messageListAdapter = null;
 
 
+    // 消息数量
+    private int mMessageCount = 0;
+    private boolean isDelete = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
         initView();
+        initData();
+        initListener();
     }
 
     private void initView() {
         setTitle("通知提醒");
         tvRight.setText("全读");
-        tvRight.setOnClickListener((v) -> {
-            doReadAll();
-        });
         setLeftBack();
+        mMessageCount = getIntent().getIntExtra("mMessageCount", 0);
+        // 如果等于0 则全删  反之全读
+        if (mMessageCount == 0) {
+            setRightTitle("全删");
+        } else {
+            setRightTitle("全读");
+        }
+
+    }
+
+    private void initData() {
+
+        messageListAdapter = new MessageListAdapter(R.layout.item_message_list);
+        messageListAdapter.bindToRecyclerView(rvList);
+
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -95,6 +111,16 @@ public class MessageListActivity extends BaseWorkerActivity implements
         });
     }
 
+    private void initListener() {
+        setRightTitleOnClickListener((v) -> {
+            if (mMessageCount == 0 || isDelete) {
+                doAllDelete();
+            } else {
+                doReadAll();
+            }
+        });
+    }
+
     /**
      * 一键已读
      */
@@ -103,9 +129,31 @@ public class MessageListActivity extends BaseWorkerActivity implements
             @Override
             public void onSuccess(Object bean) {
                 super.onSuccess(bean);
+                page = 1;
+                messageListAdapter.getData().clear();
                 getJPushMessage();
+                setRightTitle("全删");
+                mMessageCount = 0;
+                isDelete = true;
             }
         });
+    }
+
+    /**
+     * 一键删除
+     */
+    private void doAllDelete() {
+        EanfangHttp.post(NewApiService.GET_PUSH_DELETE_ALL + Constant.NOTICE_BUSINESS)
+                .upJson("[]")
+                .execute(new EanfangCallback(this, true, org.json.JSONObject.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        page = 1;
+                        messageListAdapter.getData().clear();
+                        getJPushMessage();
+                    }
+                });
     }
 
     // 获取数据
@@ -122,6 +170,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
                                 mDataList = bean.getList();
                                 onDataReceived();
                                 msgRefresh.setRefreshing(false);
+
                             });
                         })
                 );
@@ -129,26 +178,24 @@ public class MessageListActivity extends BaseWorkerActivity implements
 
     @Override
     public void onDataReceived() {
-        messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
-                messageListAdapter.notifyDataSetChanged();
                 showToast("暂无数据");
-            } else {
-
-                rvList.setAdapter(messageListAdapter);
+                setRightGone();
+                messageListAdapter.getData().clear();
                 messageListAdapter.notifyDataSetChanged();
-                //showToast("已是最新数据");
+            } else {
+                messageListAdapter.getData().clear();
+                messageListAdapter.setNewData(mDataList);
+                setRightVisible();
             }
         } else {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-            } else {
-//                tvNoData.setVisibility(View.GONE);
-//                msgRefresh.setVisibility(View.VISIBLE);
-                rvList.setAdapter(messageListAdapter);
                 messageListAdapter.notifyDataSetChanged();
+            } else {
+                messageListAdapter.addData(mDataList);
             }
         }
     }
@@ -192,6 +239,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        page = 1;
         getJPushMessage();
     }
 

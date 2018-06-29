@@ -22,6 +22,10 @@ public class ConstAllBean implements Serializable {
 
     private String MD5;
 
+    public ConstAllBean() {
+        super();
+    }
+
     @Getter
     @Setter
     public class ConstBean {

@@ -19,6 +19,56 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+#避免混淆Android基本组件
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+
+   #不混淆Parcelable和它的实现子类，还有Creator成员变量
+    -keep class * implements android.os.Parcelable {
+      public static final android.os.Parcelable$Creator *;
+    }
+
+    #不混淆Serializable和它的实现子类、其成员变量
+    -keepclassmembers class * implements java.io.Serializable {
+        static final long serialVersionUID;
+        private static final java.io.ObjectStreamField[] serialPersistentFields;
+        private void writeObject(java.io.ObjectOutputStream);
+        private void readObject(java.io.ObjectInputStream);
+        java.lang.Object writeReplace();
+        java.lang.Object readResolve();
+    }
+    #避免混淆枚举类
+      -keepclassmembers enum * {
+            public static **[] values();
+            public static ** valueOf(java.lang.String);
+    }
+
+#不提示V4包下错误警告
+-dontwarn android.support.v4.**
+#保持下面的V4兼容包的类不被混淆
+-keep class android.support.v4.**{*;}
+
+#避免混淆自定义控件类的get/set方法和构造函数
+-keep public class * extends android.view.View{
+        *** get*();
+        void set*(***);
+        public <init>(android.content.Context);
+        public <init>(android.content.Context,android.util.AttributeSet);
+        public <init>(android.content.Context, android.util.AttributeSet,int);
+}
+
+ #使用GSON、fastjson等框架时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象
+    -keepclassmembers class * {
+        public <init>(org.json.JSONObject);
+    }
+
+
 -keep class com.chad.library.adapter.** {
    *;
 }
@@ -103,4 +153,22 @@
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
 -keep class RongYunNotificationReceiver {*;}
+
+#=============讯飞混淆
+-keep class com.iflytek.**{*;}
+-dontwarn com.iflytek.**
+-keep class com.iflytek.**{
+    public <methods>;
+    public <fields>;
+}
+-keep class com.iflytek.sunflower.**{
+  public protected *;
+}
+
+#fastJson
+-keepattributes Signature
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.**{*; }
+
+
 -ignorewarnings

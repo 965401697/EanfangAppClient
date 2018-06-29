@@ -70,6 +70,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
 
     private void initView() {
         setTitle("选择系统类别");
+        setRightTitle("编辑");
         status = getIntent().getIntExtra("status", 0);
         setLeftBack();
     }
@@ -93,6 +94,8 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
         }
         if (status == 1 || status == 2) {
             tagWorkType.setEnabled(false);
+        }else{
+            setRightGone();
         }
         addRepariResult();
     }
@@ -105,6 +108,10 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
             } else {
                 finishSelf();
             }
+        });
+        setRightTitleOnClickListener((v) -> {
+            // 掉编辑接口
+            tagWorkType.setEnabled(true);
         });
     }
 

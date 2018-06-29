@@ -38,6 +38,7 @@ public class OrderDetailActivity extends BaseClientActivity implements OnTabSele
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private Long id;
+    private String mOrderTime = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +47,10 @@ public class OrderDetailActivity extends BaseClientActivity implements OnTabSele
         //loading加载动画
         loadingDialog.show();
         id = getIntent().getLongExtra("id", 0);
+        mOrderTime = getIntent().getStringExtra("orderTime");
 
         mFragments.add(OrderDetailFragment.getInstance(id));
-        mFragments.add(OrderProgressFragment.getInstance(id));
+        mFragments.add(OrderProgressFragment.getInstance(id, mOrderTime));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

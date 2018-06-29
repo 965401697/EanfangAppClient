@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
@@ -25,6 +26,8 @@ import com.eanfang.util.V;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +56,9 @@ public class SystemNoticeActivity extends BaseActivity implements
     private int page = 1;
     private List<NoticeEntity> mDataList = new ArrayList<>();
     private MessageListAdapter messageListAdapter = null;
+    // 消息数量
+    private int mStystemCount = 0;
+    private boolean isDelete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,8 @@ public class SystemNoticeActivity extends BaseActivity implements
         setContentView(R.layout.activity_system_notice);
         ButterKnife.bind(this);
         initView();
+        initData();
+        initListener();
     }
 
     /**
@@ -69,7 +77,18 @@ public class SystemNoticeActivity extends BaseActivity implements
     private void initView() {
         setTitle("系统消息");
         setLeftBack();
+        mStystemCount = getIntent().getIntExtra("mStystemCount", 0);
+        // 如果等于0 则全删  反之全读
+        if (mStystemCount == 0) {
+            setRightTitle("全删");
+        } else {
+            setRightTitle("全读");
+        }
+    }
 
+    private void initData() {
+        messageListAdapter = new MessageListAdapter(R.layout.item_message_list);
+        messageListAdapter.bindToRecyclerView(mRvSystemNotice);
         mRvSystemNotice.setLayoutManager(new LinearLayoutManager(this));
         mRvSystemNotice.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -77,12 +96,21 @@ public class SystemNoticeActivity extends BaseActivity implements
         mRvSystemNotice.setNestedScrollingEnabled(false);
 
         // rv 和 scrollview 滑动冲突
-        mRvSystemNotice.setNestedScrollingEnabled(false);
-
         mRvSystemNotice.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(SystemNoticeActivity.this, SystemNoticeDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
+                startActivity(new Intent(SystemNoticeActivity.this, SystemNoticeDetailActivity.class)
+                        .putExtra("infoId", messageListAdapter.getData().get(position).getId()));
+            }
+        });
+    }
+
+    private void initListener() {
+        setRightTitleOnClickListener((v) -> {
+            if (mStystemCount == 0 || isDelete) {
+                doAllDelete();
+            } else {
+                doReadAll();
             }
         });
     }
@@ -92,19 +120,21 @@ public class SystemNoticeActivity extends BaseActivity implements
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无数据");
-            } else {
-                messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
-                mRvSystemNotice.setAdapter(messageListAdapter);
+                setRightGone();
+                messageListAdapter.getData().clear();
                 messageListAdapter.notifyDataSetChanged();
+            } else {
+                messageListAdapter.getData().clear();
+                messageListAdapter.setNewData(mDataList);
+                setRightVisible();
             }
         } else {
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-            } else {
-                messageListAdapter = new MessageListAdapter(R.layout.item_message_list, mDataList);
                 messageListAdapter.notifyDataSetChanged();
-                mRvSystemNotice.setAdapter(messageListAdapter);
+            } else {
+                messageListAdapter.addData(mDataList);
             }
         }
     }
@@ -165,6 +195,44 @@ public class SystemNoticeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        page = 1;
         getJPushMessage();
+    }
+
+    /**
+     * 一键已读
+     */
+    private void doReadAll() {
+        EanfangHttp.post(NewApiService.GET_PUSH_READ_ALL)
+                .params("noticeClasses", Constant.NOTICE_SYSTEM)
+                .execute(new EanfangCallback(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        page = 1;
+                        messageListAdapter.getData().clear();
+                        getJPushMessage();
+                        setRightTitle("全删");
+                        mStystemCount = 0;
+                        isDelete = true;
+                    }
+                });
+    }
+
+    /**
+     * 一键删除
+     */
+    private void doAllDelete() {
+        EanfangHttp.post(NewApiService.GET_PUSH_DELETE_ALL + Constant.NOTICE_SYSTEM)
+                .upJson("[]")
+                .execute(new EanfangCallback(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        super.onSuccess(bean);
+                        page = 1;
+                        messageListAdapter.getData().clear();
+                        getJPushMessage();
+                    }
+                });
     }
 }

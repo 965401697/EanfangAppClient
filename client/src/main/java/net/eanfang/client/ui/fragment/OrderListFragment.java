@@ -19,6 +19,7 @@ import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.PayLogEntity;
@@ -51,6 +52,7 @@ public class OrderListFragment extends BaseFragment implements
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
             intent.putExtra("title", mTitle);
+            intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
             startActivity(intent);
         }
     };
