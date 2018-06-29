@@ -37,7 +37,7 @@ public class RepairCtrlActivity extends BaseClientActivity {
     private final List<String> mTitlesClient = GetConstDataUtils.getRepairStatus();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
-    private RepairedOrderBean repairedOrderBean;
+//    private RepairedOrderBean repairedOrderBean;
     private String[] mTitles;
     public SlidingTabLayout tabLayout_2;
     //    private OrderListFragment currentFragment;
@@ -134,21 +134,21 @@ public class RepairCtrlActivity extends BaseClientActivity {
 //
 //    }
 
-
-    public RepairedOrderBean getBean() {
-        return repairedOrderBean;
-    }
-
-
-    public synchronized void setBean(RepairedOrderBean bean) {
-        this.repairedOrderBean = bean;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        initData();
-    }
+//
+//    public RepairedOrderBean getBean() {
+//        return repairedOrderBean;
+//    }
+//
+//
+//    public synchronized void setBean(RepairedOrderBean bean) {
+//        this.repairedOrderBean = bean;
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+////        initData();
+//    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

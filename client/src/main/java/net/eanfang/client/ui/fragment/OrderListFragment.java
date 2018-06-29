@@ -329,9 +329,6 @@ public class OrderListFragment extends BaseFragment implements
 //                        });
                     }
                 });
-
-        initAdapter();
-
     }
 
     public String getTitle() {

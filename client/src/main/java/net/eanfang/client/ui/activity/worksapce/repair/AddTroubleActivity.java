@@ -247,7 +247,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
-                tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
+            tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
@@ -291,7 +291,8 @@ public class AddTroubleActivity extends BaseClientActivity {
                 }
 
                 Bundle b = new Bundle();
-                b.putString("businessOneCode",dataCode);
+                b.putString("businessOneCode", dataCode);
+
                 JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
                 break;
             // 故障设备编号
@@ -329,7 +330,7 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     public void doVerify() {
         cooperationEntities.clear();
-        if (beanList.size() > 0) {
+        if (beanList != null && beanList.size() > 0) {
             for (int i = 0; i < beanList.size(); i++) {
                 CooperationEntity cooperationEntity = new CooperationEntity();
                 cooperationEntity.setAssigneeOrgId(EanfangApplication.getApplication().getCompanyId());
