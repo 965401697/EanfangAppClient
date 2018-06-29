@@ -14,7 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -59,10 +59,8 @@ public class CreatSectionActivity extends BaseClientActivity {
         switch (v.getId()) {
             case R.id.ll_section:
 
-                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-                Uri uri = Uri.parse("worker://");
-                intent.setData(uri);
-                intent.putExtra("isRadio", "isRadio");//是否是单选
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isSection", "isRadio");//是否是选择部门单选
                 startActivity(intent);
 
                 break;

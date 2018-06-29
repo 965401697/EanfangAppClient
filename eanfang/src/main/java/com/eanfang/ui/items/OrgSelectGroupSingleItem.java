@@ -7,6 +7,7 @@ import android.view.View;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
+import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.baozi.treerecyclerview.item.TreeSelectItemGroup;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by O u r on 2018/5/31.
  */
 
-public class OrgSelectGroupSingleItem extends TreeSelectItemGroup<TemplateBean> {
+public class OrgSelectGroupSingleItem extends TreeItemGroup<TemplateBean> {
 
 
     @Nullable
@@ -43,10 +44,5 @@ public class OrgSelectGroupSingleItem extends TreeSelectItemGroup<TemplateBean> 
             viewHolder.setText(R.id.tv_company_name, data.getOrgName());
         }
 
-    }
-
-    @Override
-    public SelectFlag selectFlag() {
-        return SelectFlag.SINGLE_CHOICE;
     }
 }

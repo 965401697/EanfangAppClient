@@ -404,7 +404,7 @@
                     android:layout_marginBottom="@dimen/dimen_28"
                     android:layout_marginLeft="@dimen/dimen_40"
                     android:layout_marginRight="@dimen/dimen_32"
-                    android:text="备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息备注信息"
+                    android:text=" "
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
 
@@ -417,6 +417,7 @@
                 android:layout_marginBottom="@dimen/dimen_32"
                 android:layout_marginTop="@dimen/dimen_14"
                 android:background="@color/white"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout

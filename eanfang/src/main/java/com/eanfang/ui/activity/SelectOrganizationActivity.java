@@ -23,7 +23,6 @@ import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.items.OrgOneLevelItem;
-import com.eanfang.ui.items.OrgTwoLevelItem;
 import com.eanfang.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,23 +34,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SelectOrganizationContactActivity extends BaseActivity {
+public class SelectOrganizationActivity extends BaseActivity {
 
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R2.id.tv_sure)
-    TextView tv_sure;
     TreeRecyclerAdapter treeRecyclerAdapter;
 
     private int i = 0;
 
     private String isRadio;
+    private String isSection;
 
     private OrganizationBean mOrganizationBean;
     private OrganizationBean organizationBean;
     private SectionBean mSectionBean;
     private Object mOldObj;
-    public static String companyId;
+    private String companyId;
+    private String isOrganization;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +59,30 @@ public class SelectOrganizationContactActivity extends BaseActivity {
         ButterKnife.bind(this);
         supprotToolbar();
         startTransaction(true);
-        isRadio = getIntent().getStringExtra("isRadio");//单选 多选
+        isRadio = getIntent().getStringExtra("isRadio");//单选
+        isSection = getIntent().getStringExtra("isSection");//部门单选
         companyId = getIntent().getStringExtra("companyId");//组织架构
+        isOrganization = getIntent().getStringExtra("isOrganization");//组织架构
 
         organizationBean = (OrganizationBean) getIntent().getSerializableExtra("organizationBean");//组织架构
 
-        if (TextUtils.isEmpty(isRadio)) {
+        if (TextUtils.isEmpty(isSection)) {
             setTitle("选择组织联系人");
         } else {
             setTitle("选择组织部门");
+            setRightTitle("确定");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOldObj == null) {
+                        ToastUtil.get().showToast(SelectOrganizationActivity.this, "请选择一个部门");
+                        return;
+                    }
+
+                    EventBus.getDefault().post(mOldObj);
+                    finishSelf();
+                }
+            });
         }
 
         if (!TextUtils.isEmpty(companyId)) {
@@ -77,7 +91,6 @@ public class SelectOrganizationContactActivity extends BaseActivity {
         } else {
             treeRecyclerAdapter = new TreeRecyclerAdapter();
         }
-
 
         initViews();
     }
@@ -96,11 +109,13 @@ public class SelectOrganizationContactActivity extends BaseActivity {
 
                             if (!TextUtils.isEmpty(isRadio)) {
                                 organizationBean.setFlag(1);//单选
+                            } else if (!TextUtils.isEmpty(isSection)) {
+                                organizationBean.setFlag(2);//部门单选
                             }
 
                             EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
                                     .params("companyId", organizationBean.getCompanyId())
-                                    .execute(new EanfangCallback<SectionBean>(SelectOrganizationContactActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
+                                    .execute(new EanfangCallback<SectionBean>(SelectOrganizationActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
 
                                         organizationBean.setSectionBeanList(sectionBeanList);
                                         i++;
@@ -114,9 +129,10 @@ public class SelectOrganizationContactActivity extends BaseActivity {
         } else {
             EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
                     .params("companyId", companyId)
-                    .execute(new EanfangCallback<SectionBean>(SelectOrganizationContactActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
+                    .execute(new EanfangCallback<SectionBean>(SelectOrganizationActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
 
                         organizationBean.setSectionBeanList(sectionBeanList);
+                        organizationBean.setFlag(3);//组织架构
                         List<OrganizationBean> list = new ArrayList<>();
                         list.add(organizationBean);
                         treeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(list, OrgOneLevelItem.class, null));
@@ -128,21 +144,11 @@ public class SelectOrganizationContactActivity extends BaseActivity {
 
     private void initViews() {
 
-        Uri uri = getIntent().getData();
-        String str = uri.getHost();
-        if (!TextUtils.isEmpty(str)) {
-            tv_sure.setBackgroundColor(getResources().getColor(R.color.color_main_worker));
-        }
-
-        if (!TextUtils.isEmpty(isRadio)) {
-            tv_sure.setVisibility(View.VISIBLE);
-        }
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         initData();
 
-        if (TextUtils.isEmpty(isRadio)) return;
+        if (TextUtils.isEmpty(isSection)) return;
 
         treeRecyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
@@ -186,17 +192,5 @@ public class SelectOrganizationContactActivity extends BaseActivity {
 
             }
         });
-    }
-
-    @OnClick(R2.id.tv_sure)
-    public void onViewClicked() {
-
-        if (mOldObj == null) {
-            ToastUtil.get().showToast(this, "请选择一个部门");
-            return;
-        }
-
-        EventBus.getDefault().post(mOldObj);
-        finishSelf();
     }
 }

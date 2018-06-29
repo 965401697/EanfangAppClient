@@ -3,22 +3,27 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.RoleBean;
 import com.eanfang.model.SectionBean;
-import com.eanfang.model.device.User;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.AccountEntity;
@@ -28,9 +33,9 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +56,9 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
 
     private SectionBean mSectionBean;
     private FriendListBean friendBean;
-    private RoleBean roleBean;
+
+    private ArrayList<String> roleIdList = new ArrayList<>();
+    private ArrayList<String> roleNameList = new ArrayList<>();
 
     private final int ROLE_FLAG = 101;
 
@@ -62,81 +69,86 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("添加员工");
         setLeftBack();
-
         friendBean = (FriendListBean) getIntent().getSerializableExtra("bean");
 
         ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + friendBean.getAvatar());
         tvNamePhone.setText(friendBean.getNickName() + "(" + friendBean.getMobile() + ")");
         tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());
 
+        setRightTitle("确定");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSure();
+            }
+        });
     }
 
-    @OnClick({R.id.ll_section, R.id.ll_role, R.id.tv_sure})
+    @OnClick({R.id.ll_section, R.id.ll_role})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_section:
-                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-                Uri uri = Uri.parse("worker://yeah!");
-                intent.setData(uri);
-                intent.putExtra("isRadio", "isRadio");//是否是单选
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isSection", "isSection");//是否是组织架构
                 startActivity(intent);
                 break;
             case R.id.ll_role:
-                startActivityForResult(new Intent(this, AolltRoleActivity.class), ROLE_FLAG);
+                Intent in = new Intent(this, AolltRoleActivity.class);
+                in.putStringArrayListExtra("roleNameList", roleNameList);
+                startActivityForResult(in, ROLE_FLAG);
                 break;
-            case R.id.tv_sure:
 
-                if (TextUtils.isEmpty(tvSectionName.getText().toString().trim())) {
-                    ToastUtil.get().showToast(this, "部门不能为空");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(tvRole.getText().toString().trim())) {
-                    ToastUtil.get().showToast(this, "角色不能为空");
-                    return;
-                }
-
-                UserEntity userEntity = new UserEntity();
-
-                userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
-
-                AccountEntity accountEntity = new AccountEntity();
-
-                accountEntity.setAccId(Long.parseLong(friendBean.getAccId()));
-                accountEntity.setMobile(friendBean.getMobile());
-                userEntity.setAccountEntity(accountEntity);
-
-                com.alibaba.fastjson.JSONObject jsonObject = (com.alibaba.fastjson.JSONObject) JSON.toJSON(userEntity);
-
-
-                EanfangHttp.post(NewApiService.ADD_STAFF)
-                        .upJson(jsonObject.toJSONString())
-                        .execute(new EanfangCallback<UserEntity>(AddStaffNextActivity.this, true, UserEntity.class) {
-                            @Override
-                            public void onSuccess(UserEntity bean) {
-                                com.alibaba.fastjson.JSONArray array = new com.alibaba.fastjson.JSONArray();
-                                array.add(Long.parseLong(roleBean.getRoleId()));
-
-
-                                //添加角色
-                                EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + bean.getAccountEntity().getAccId())
-                                        .upJson(array.toJSONString())
-                                        .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(AddStaffNextActivity.this, true, com.alibaba.fastjson.JSONObject.class) {
-
-                                            @Override
-                                            public void onSuccess(com.alibaba.fastjson.JSONObject bean) {
-                                                ToastUtil.get().showToast(AddStaffNextActivity.this, "添加成功");
-
-                                                endTransaction(true);
-                                            }
-
-                                        });
-                            }
-
-
-                        });
-                break;
         }
+    }
+
+    private void onSure() {
+        if (TextUtils.isEmpty(tvSectionName.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "部门不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(tvRole.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "角色不能为空");
+            return;
+        }
+
+
+        UserEntity userEntity = new UserEntity();
+
+        userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
+
+        AccountEntity accountEntity = new AccountEntity();
+
+        accountEntity.setAccId(Long.parseLong(friendBean.getAccId()));
+        accountEntity.setMobile(friendBean.getMobile());
+        userEntity.setAccountEntity(accountEntity);
+
+        com.alibaba.fastjson.JSONObject jsonObject = (com.alibaba.fastjson.JSONObject) JSON.toJSON(userEntity);
+
+
+        EanfangHttp.post(NewApiService.ADD_STAFF)
+                .upJson(jsonObject.toJSONString())
+                .execute(new EanfangCallback<UserEntity>(AddStaffNextActivity.this, true, UserEntity.class) {
+                    @Override
+                    public void onSuccess(UserEntity bean) {
+
+                        //添加角色
+                        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + bean.getAccountEntity().getAccId())
+                                .upJson(JSON.toJSONString(roleIdList))
+                                .execute(new EanfangCallback<JSONObject>(AddStaffNextActivity.this, true, JSONObject.class) {
+
+                                    @Override
+                                    public void onSuccess(JSONObject bean) {
+                                        ToastUtil.get().showToast(AddStaffNextActivity.this, "添加成功");
+
+                                        endTransaction(true);
+                                    }
+
+                                });
+                    }
+
+
+                });
     }
 
     @Subscribe
@@ -158,8 +170,17 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == ROLE_FLAG) {
-                roleBean = (RoleBean) data.getSerializableExtra("bean");
-                tvRole.setText(roleBean.getRoleName());
+                roleIdList.clear();
+                roleNameList.clear();
+
+                roleIdList = data.getStringArrayListExtra("roleIdList");
+                roleNameList = data.getStringArrayListExtra("roleNameList");
+
+                StringBuffer stringBuffer = new StringBuffer();
+                for (String s : roleNameList) {
+                    stringBuffer.append(s + ",");
+                }
+                tvRole.setText(stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1));
             }
         }
     }

@@ -21,9 +21,9 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 public class AppRegister extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        final IWXAPI api = WXAPIFactory.createWXAPI(context, null);
-
-        // 注册api.registerApp(Constants.APP_ID);
-        api.registerApp(EanfangConst.WX_APPID_CLIENT);
+//        final IWXAPI api = WXAPIFactory.createWXAPI(context, EanfangConst.WX_APPID_CLIENT,true);
+//
+//        // 注册api.registerApp(Constants.APP_ID);
+//        api.registerApp(EanfangConst.WX_APPID_CLIENT);
     }
 }

@@ -45,6 +45,14 @@ public class AddStaffActivity extends BaseWorkerActivity {
         setLeftBack();
         initViews();
         startTransaction(true);
+
+        setRightTitle("添加");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add();
+            }
+        });
     }
 
     private void initViews() {
@@ -73,8 +81,8 @@ public class AddStaffActivity extends BaseWorkerActivity {
         });
     }
 
-    @OnClick(R.id.tv_add)
-    public void onViewClicked() {
+
+    public void add() {
         if (mAddStaffAdapter.getData().size() == 0) {
             ToastUtil.get().showToast(AddStaffActivity.this, "请先搜索员工");
             return;

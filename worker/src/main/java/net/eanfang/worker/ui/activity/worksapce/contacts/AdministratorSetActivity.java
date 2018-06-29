@@ -13,7 +13,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
@@ -36,11 +36,11 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_name)
     TextView tvName;
-    @BindView(R.id.tv_sure)
-    TextView tvSure;
+    @BindView(R.id.tv_desc)
+    TextView tvDesc;
     private TemplateBean.Preson bean;
     private String molibe;//设置人的手机号
-    private String name = "ceshi";//设置人的手机号
+    private String name ;//设置人的手机号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,40 +49,22 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("管理员设置");
         setLeftBack();
+
+        setRightTitle("转让");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transfer();
+            }
+        });
     }
 
-    @OnClick({R.id.tv_sure, R.id.ll_transfer})
+    @OnClick(R.id.ll_transfer)
     public void onViewClicked(View v) {
         switch (v.getId()) {
-            case R.id.tv_sure:
-
-                if (Long.parseLong(bean.getId()) == EanfangApplication.get().getAccId()) {
-                    ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
-                    return;
-                }
-
-                new TrueFalseDialog(this, "转让管理员提示", "您的定将管理员身份转让给" + name + "?", () -> {
-                    EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
-                            .params("mobile", molibe)
-                            .execute(new EanfangCallback<JSONObject>(AdministratorSetActivity.this, true, JSONObject.class, (bean) -> {
-
-                                ToastUtil.get().showToast(AdministratorSetActivity.this, "转让成功，请重新登录");
-
-                                logout();
-
-                            }));
-
-                }).showDialog();
-
-
-                break;
             case R.id.ll_transfer:
-                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-//                intent.putExtra("isRadio", "isRadio");//是否是单选
-                Uri uri = Uri.parse("worker://yeah!");
-//                Intent intent = new Intent("com.eanfang.intent.action.ORG1");
-                intent.setData(uri);
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isRadio", "isRadio");
                 startActivity(intent);
                 break;
         }
@@ -92,13 +74,37 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
-            tvSure.setVisibility(View.VISIBLE);
+        if (presonList.size() > 0) {//管理员设置 单选 就一个
             bean = (TemplateBean.Preson) presonList.get(0);
             name = bean.getName();
             molibe = bean.getMobile();
             tvName.setText(bean.getName());
         }
+    }
+
+    private void transfer() {
+        if (bean == null) {
+            ToastUtil.get().showToast(AdministratorSetActivity.this, "请选择人员");
+            return;
+        }
+
+        if (Long.parseLong(bean.getId()) == EanfangApplication.get().getAccId()) {
+            ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
+            return;
+        }
+        String companyName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您的定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
+            EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
+                    .params("mobile", molibe)
+                    .execute(new EanfangCallback<JSONObject>(AdministratorSetActivity.this, true, JSONObject.class, (bean) -> {
+
+                        ToastUtil.get().showToast(AdministratorSetActivity.this, "转让成功，请重新登录");
+
+                        logout();
+
+                    }));
+
+        }).showDialog();
     }
 
 

@@ -12,21 +12,13 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
-import com.eanfang.util.SharePreferenceUtil;
-
-import java.io.IOException;
-import java.util.List;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 
 /**
  * Created by O u r on 2018/5/31.
  */
 
 public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
-
-
-    private static ViewHolder oldViewHolder;
-    private static TreeItemGroup oldParentItem;
 
     @Override
     public int getLayoutId() {
@@ -38,8 +30,7 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
         viewHolder.setText(R.id.tv_name, data.getName());
         viewHolder.getImageView(R.id.iv_user_header).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()));
 
-        if (!TextUtils.isEmpty(SelectOrganizationContactActivity.companyId)) {
-            viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
+        if (data.isVisible()) {
             viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
         }
 
@@ -48,28 +39,12 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
             viewHolder.setChecked(R.id.cb_check, ((OrgSelectGroupMultipleItem) parentItem).getSelectItems().contains(this));
         }
         if (parentItem instanceof OrgSelectGroupSingleItem) {
-            viewHolder.setChecked(R.id.cb_check, ((OrgSelectGroupSingleItem) parentItem).getSelectItems().contains(this));
+            if (data.isChecked()) {
+                ((CheckBox) viewHolder.getView(R.id.cb_check)).setChecked(true);
+            } else {
+                ((CheckBox) viewHolder.getView(R.id.cb_check)).setChecked(false);
+            }
         }
     }
 
-    @Override
-    public void onClick(ViewHolder viewHolder) {
-        super.onClick(viewHolder);
-
-
-//        TreeItemGroup parentItem = getParentItem();
-//
-//        if (parentItem instanceof OrgSelectGroupSingleItem) {
-//
-//            if (oldViewHolder != null) {
-//                oldViewHolder.setChecked(R.id.cb_check, false);
-//            }
-//
-//            oldViewHolder = viewHolder;
-//            oldParentItem = parentItem;
-//            viewHolder.setChecked(R.id.cb_check, true);
-//        } else {
-        getItemManager().notifyDataChanged();
-//        }
-    }
 }

@@ -13,7 +13,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
@@ -40,7 +40,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
     TextView tvDesc;
     private TemplateBean.Preson bean;
     private String molibe;//设置人的手机号
-    private String name = "ceshi";//设置人的手机号
+    private String name ;//设置人的手机号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +57,14 @@ public class AdministratorSetActivity extends BaseClientActivity {
                 transfer();
             }
         });
-//        tvDesc.setText("转让管理员需提供公司营业执照复印件加盖公章\r\n" + " 授权书(______公司授权____变更主管理员、被授权人身份证信息+复印)加盖公章\r\n" + "拨打010-5877 8731，由客服在1-2个工作日内人工办理");
-
     }
 
     @OnClick(R.id.ll_transfer)
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.ll_transfer:
-                Intent intent = new Intent(this, SelectOrganizationContactActivity.class);
-                Uri uri = Uri.parse("worker://");
-                intent.setData(uri);
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isRadio", "isRadio");
                 startActivity(intent);
                 break;
         }
@@ -77,7 +74,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
+        if (presonList.size() > 0) {//管理员设置 单选 就一个
             bean = (TemplateBean.Preson) presonList.get(0);
             name = bean.getName();
             molibe = bean.getMobile();

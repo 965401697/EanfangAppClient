@@ -9,11 +9,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +29,7 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.activity.SelectOrganizationContactActivity;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
@@ -293,9 +291,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         });
         // 增加团队
         tvAddGroup.setOnClickListener((v) -> {
-            Uri uri = Uri.parse("worker://yeah!");
-            Intent intent = new Intent(FillRepairInfoActivity.this, SelectOrganizationContactActivity.class);
-            intent.setData(uri);
+            Intent intent = new Intent(FillRepairInfoActivity.this, SelectOrganizationActivity.class);
             this.startActivity(intent);
         });
 

@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -39,6 +40,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.base.ClientApplication;
 
 import java.util.List;
 import java.util.Map;
@@ -272,23 +274,29 @@ public class PayActivity extends BaseClientActivity {
                         super.onSuccess(bean);
                         wxPayBean = bean;
                         // Config.get().setAppId(wxPayBean.getAppid());
-                        new Thread(() -> {
-                            final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
+//                        new Thread(() -> {
+                        try {
+//                            final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
                             // 将该app注册到微信
-                            msgApi.registerApp(wxPayBean.getAppid());
+//                            msgApi.registerApp(wxPayBean.getAppid());
                             PayReq request = new PayReq();
                             request.appId = wxPayBean.getAppid();
-                            request.partnerId = wxPayBean.getPartnerid();
-                            request.prepayId = wxPayBean.getPrepayid();
-                            request.packageValue = wxPayBean.getPackageX();
-                            request.nonceStr = wxPayBean.getNoncestr();
-                            request.timeStamp = wxPayBean.getTimestamp();
-                            request.sign = "asdfasdfasdfasdfasd";
-//                            request.sign = wxPayBean.getSign();
-                            boolean isOk = msgApi.sendReq(request);
-                            System.err.println(isOk + "------------");
-                        }).start();
+                            request.partnerId = wxPayBean.getMchId();
+                            request.prepayId = wxPayBean.getPrepayId();
+                            request.packageValue = "Sign=WXPay";
+                            request.nonceStr = wxPayBean.getNonceStr();
+//                            request.signType = "MD5";
+                            request.timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
+//                            request.sign = "asdfasdfasdfasdfasd";
+                            request.sign = wxPayBean.getSign();
+                            boolean isOk = ClientApplication.getWxApi().sendReq(request);
+                            Log.e("zzw", "异常：" + isOk);
+//                        }).start();
+                        } catch (Exception e) {
+                            Log.e("zzw", "异常：" + e.getMessage());
+                            Toast.makeText(PayActivity.this, "异常：" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
+                        }
                     }
                 });
     }

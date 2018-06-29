@@ -232,11 +232,11 @@ public class PayActivity extends BaseWorkerActivity {
                         msgApi.registerApp(wxPayBean.getAppid());
                         PayReq request = new PayReq();
                         request.appId = wxPayBean.getAppid();
-                        request.partnerId = wxPayBean.getPartnerid();
-                        request.prepayId = wxPayBean.getPrepayid();
-                        request.packageValue = wxPayBean.getPackageX();
-                        request.nonceStr = wxPayBean.getNoncestr();
-                        request.timeStamp = wxPayBean.getTimestamp();
+//                        request.partnerId = wxPayBean.getPartnerid();
+//                        request.prepayId = wxPayBean.getPrepayid();
+//                        request.packageValue = wxPayBean.getPackageX();
+//                        request.nonceStr = wxPayBean.getNoncestr();
+//                        request.timeStamp = wxPayBean.getTimestamp();
                         request.sign = wxPayBean.getSign();
                         msgApi.sendReq(request);
                     }

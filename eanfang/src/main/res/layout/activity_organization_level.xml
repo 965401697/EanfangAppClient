@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eanfang.ui.activity.OrganizationLevelActivity">
+    tools:context="com.eanfang.ui.activity.SelectPresonActivity">
 
     <include layout="@layout/view_title_bar" />
 
@@ -42,15 +42,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />
-
-    <TextView
-        android:id="@+id/tv_sure"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_88"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textSize_14" />
 
 </LinearLayout>
