@@ -245,13 +245,13 @@ public class MainActivity extends BaseActivity {
         XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
-//                        Log.d("TPush", "注册成功，设备token为：" + data);
+                        Log.e("TPush", "注册成功，设备token为：" + data);
                 // Var.get("MainActivity.initXinGe").setVar(1);
             }
 
             @Override
             public void onFail(Object data, int errCode, String msg) {
-//                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
                 //Var.get("MainActivity.initXinGe").setVar(0);
                 registerXinGe();
             }
