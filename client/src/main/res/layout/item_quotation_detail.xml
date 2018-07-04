@@ -58,7 +58,7 @@
             android:paddingTop="6dp"
             android:text="删除"
             android:textColor="@color/colorPrimary"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 

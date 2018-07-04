@@ -96,7 +96,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         llDependPerson.setOnClickListener(this);
         llComit.setOnClickListener(this);
 
-        maintenanceDetailAdapter = new AddTaskDetailAdapter(R.layout.item_quotation_detail, beanList);
+        maintenanceDetailAdapter = new AddTaskDetailAdapter(R.layout.item_question_detail, beanList);
         taskDetialList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         taskDetialList.setLayoutManager(new LinearLayoutManager(this));

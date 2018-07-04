@@ -118,7 +118,7 @@ public class CheckActivity extends BaseWorkerActivity {
             startActivityForResult(intent, REQUEST_ADD_CODE);
         });
 
-        maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_quotation_detail, beanList);
+        maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_question_detail, beanList);
         checkDetailList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         checkDetailList.setLayoutManager(new LinearLayoutManager(this));

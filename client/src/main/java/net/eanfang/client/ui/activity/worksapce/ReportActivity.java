@@ -120,7 +120,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
         llReportType.setOnClickListener(this);
 //        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
 
-        addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, beanList);
+        addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, beanList);
         reportCompleteList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportCompleteList.setLayoutManager(new LinearLayoutManager(this));
@@ -134,7 +134,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             }
         });
 
-        findAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, findList);
+        findAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, findList);
         reportFindList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportFindList.setLayoutManager(new LinearLayoutManager(this));
@@ -148,7 +148,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             }
         });
 
-        planAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, planList);
+        planAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, planList);
         reportPlanList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportPlanList.setLayoutManager(new LinearLayoutManager(this));
