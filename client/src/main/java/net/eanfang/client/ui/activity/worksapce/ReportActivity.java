@@ -125,18 +125,43 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 DividerItemDecoration.VERTICAL));
         reportCompleteList.setLayoutManager(new LinearLayoutManager(this));
         reportCompleteList.setAdapter(addReportDetialAdapter);
+        addReportDetialAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    addReportDetialAdapter.remove(position);
+                }
+            }
+        });
 
         findAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, findList);
         reportFindList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportFindList.setLayoutManager(new LinearLayoutManager(this));
         reportFindList.setAdapter(findAdapter);
+        findAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    findAdapter.remove(position);
+                }
+            }
+        });
 
         planAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, planList);
         reportPlanList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportPlanList.setLayoutManager(new LinearLayoutManager(this));
         reportPlanList.setAdapter(planAdapter);
+        planAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    planAdapter.remove(position);
+                }
+            }
+        });
+
         etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
         getData();
@@ -269,9 +294,9 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
         WorkAddReportBean.WorkReportDetailsBean resultBean = (WorkAddReportBean.WorkReportDetailsBean) data.getSerializableExtra("result");
         if (EanfangConst.TYPE_REPORT_DETAIL_FINISH == resultBean.getType()) {
             beanList.add(resultBean);
-            reportCompleteList.addOnItemTouchListener(new OnItemClickListener() {
+            addReportDetialAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
-                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     detailsBean = beanList.get(position);
                     new CompleteWorkView(ReportActivity.this, true, detailsBean).show();
                 }
@@ -279,20 +304,20 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             addReportDetialAdapter.notifyDataSetChanged();
         } else if (EanfangConst.TYPE_REPORT_DETAIL_FIND == resultBean.getType()) {
             findList.add(resultBean);
-            reportFindList.addOnItemTouchListener(new OnItemClickListener() {
+            findAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
-                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    detailsBean = findList.get(position);
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    detailsBean = beanList.get(position);
                     new FindTroubleView(ReportActivity.this, true, detailsBean).show();
                 }
             });
             findAdapter.notifyDataSetChanged();
         } else if (EanfangConst.TYPE_REPORT_DETAIL_PLAN == resultBean.getType()) {
             planList.add(resultBean);
-            reportPlanList.addOnItemTouchListener(new OnItemClickListener() {
+            planAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
-                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    detailsBean = planList.get(position);
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    detailsBean = beanList.get(position);
                     new WorkPlanView(ReportActivity.this, true, detailsBean).show();
                 }
             });

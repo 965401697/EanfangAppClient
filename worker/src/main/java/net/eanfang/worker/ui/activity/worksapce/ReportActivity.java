@@ -129,18 +129,43 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 DividerItemDecoration.VERTICAL));
         reportCompleteList.setLayoutManager(new LinearLayoutManager(this));
         reportCompleteList.setAdapter(addReportDetialAdapter);
+        addReportDetialAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId()==R.id.tv_delete){
+                    addReportDetialAdapter.remove(position);
+                }
+            }
+        });
 
         findAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, findList);
         reportFindList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportFindList.setLayoutManager(new LinearLayoutManager(this));
         reportFindList.setAdapter(findAdapter);
+        findAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId()==R.id.tv_delete){
+                    findAdapter.remove(position);
+                }
+            }
+        });
+
 
         planAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, planList);
         reportPlanList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportPlanList.setLayoutManager(new LinearLayoutManager(this));
         reportPlanList.setAdapter(planAdapter);
+        planAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId()==R.id.tv_delete){
+                    planAdapter.remove(position);
+                }
+            }
+        });
 
         getData();
     }

@@ -99,6 +99,14 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 DividerItemDecoration.VERTICAL));
         taskDetialList.setLayoutManager(new LinearLayoutManager(this));
         taskDetialList.setAdapter(maintenanceDetailAdapter);
+        maintenanceDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    maintenanceDetailAdapter.remove(position);
+                }
+            }
+        });
 
         etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());

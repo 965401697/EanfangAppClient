@@ -123,6 +123,14 @@ public class CheckActivity extends BaseWorkerActivity {
                 DividerItemDecoration.VERTICAL));
         checkDetailList.setLayoutManager(new LinearLayoutManager(this));
         checkDetailList.setAdapter(maintenanceDetailAdapter);
+        maintenanceDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    maintenanceDetailAdapter.remove(position);
+                }
+            }
+        });
     }
 
 
