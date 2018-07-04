@@ -33,7 +33,7 @@ public class SynthesizerPresenter extends MySynthesizerListener{
 
     public static SynthesizerPresenter getInstance() {
         if (mSynthesizerPresenter == null) {
-            synchronized (SpeakTts.class) {
+            synchronized (SynthesizerPresenter.class) {
                 if (mSynthesizerPresenter == null) {
                     mSynthesizerPresenter = new SynthesizerPresenter();
                 }
