@@ -39,7 +39,7 @@
                 android:layout_alignParentRight="true"
                 android:drawablePadding="@dimen/dimen_14"
                 android:drawableRight="@mipmap/ic_icon_right"
-                android:text="待完善"
+                android:text=""
                 android:textColor="@color/color_auth_list_unfinish"
                 android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
@@ -68,7 +68,7 @@
                 android:layout_alignParentRight="true"
                 android:drawablePadding="@dimen/dimen_14"
                 android:drawableRight="@mipmap/ic_icon_right"
-                android:text="待完善"
+                android:text=""
                 android:textColor="@color/color_auth_list_unfinish"
                 android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
@@ -97,7 +97,7 @@
                 android:layout_alignParentRight="true"
                 android:drawablePadding="@dimen/dimen_14"
                 android:drawableRight="@mipmap/ic_icon_right"
-                android:text="待完善"
+                android:text=""
                 android:textColor="@color/color_auth_list_unfinish"
                 android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
@@ -126,7 +126,7 @@
                 android:layout_alignParentRight="true"
                 android:drawablePadding="@dimen/dimen_14"
                 android:drawableRight="@mipmap/ic_icon_right"
-                android:text="已完善"
+                android:text=""
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
@@ -207,7 +207,6 @@
         android:padding="@dimen/dimen_30"
         android:text="提交认证"
         android:textColor="@color/color_white"
-        android:textSize="@dimen/textSize_13"
-        android:visibility="gone" />
+        android:textSize="@dimen/textSize_13" />
 
 </LinearLayout>

@@ -164,8 +164,20 @@ public interface UserApi {
      * 技师绑定系统类别
      */
     String POST_TECH_WORKER_SYS = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workersys";
+
+    /**
+     * 技师绑定业务类型
+     */
     String POST_TECH_WORKER_BIZ = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerbiz";
+
+    /**
+     * 技师绑定服务区域
+     */
     String POST_TECH_WORKER_AREA = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerarea";
+
+    /**
+     * 提交认证
+     */
     String POST_TECH_WORKER_SEND_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/sendverify";
 
     /**

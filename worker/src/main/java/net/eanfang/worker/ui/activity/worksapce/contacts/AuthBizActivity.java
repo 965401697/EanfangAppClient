@@ -70,7 +70,6 @@ public class AuthBizActivity extends BaseActivity {
 
     private void initView() {
         setTitle("选择业务类别");
-        setRightTitle("编辑");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
@@ -88,10 +87,6 @@ public class AuthBizActivity extends BaseActivity {
                 jump();
             }
         });
-        setRightTitleOnClickListener((v) -> {
-            // 掉编辑接口
-            tagWorkType.setEnabled(true);
-        });
     }
 
     private void fillData() {
@@ -104,8 +99,6 @@ public class AuthBizActivity extends BaseActivity {
         }
         if (verifyStatus == 1 || verifyStatus == 2) {
             tagWorkType.setEnabled(false);
-        } else {
-            setRightGone();
         }
         addRepariResult();
     }
@@ -121,17 +114,22 @@ public class AuthBizActivity extends BaseActivity {
 
         grantChange.setAddIds(checkList);
         grantChange.setDelIds(unCheckList);
-        for (int i = 0; i < bizTypeList.size(); i++) {
-            if (bizTypeList.get(i).isCheck()) {
-                EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_BIZ + orgid)
-                        .upJson(JSONObject.toJSONString(grantChange))
-                        .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                            jump();
-                        }));
-                break;
-            }
+        if ((unCheckList.size() == 0) && (checkList.size() == 0) && (byNetGrant.getList().size() <= 0)) {
             showToast("请至少选择一种业务类别");
+        } else {
+            for (int i = 0; i < bizTypeList.size(); i++) {
+                if (bizTypeList.get(i).isCheck()) {
+                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_BIZ + orgid)
+                            .upJson(JSONObject.toJSONString(grantChange))
+                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                                jump();
+                            }));
+                    break;
+                }
+
+            }
         }
+
     }
 
     public void addRepariResult() {

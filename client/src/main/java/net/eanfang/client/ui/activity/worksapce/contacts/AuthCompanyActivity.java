@@ -11,8 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -129,6 +131,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         initView();
         initData();
+        initListener();
     }
 
     private void initData() {
@@ -174,7 +177,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             }
             if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
                 ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
-                infoBean.setLicensePic(byNetBean.getLogoPic());
+                infoBean.setLicensePic(byNetBean.getLicensePic());
             }
         }
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
@@ -189,9 +192,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             setOnFouse(etDetailOfficeAddress);
             setOnFouse(etPhone);
             setOnFouse(etDesc);
-        } else {
+        }
+        if (byNetBean.getStatus() != 2) {
             setRightGone();
-            initListener();
         }
     }
 
@@ -241,21 +244,33 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 //                }
 //            }
         });
-        setRightTitleOnClickListener((v)->{
-            ivUpload.setEnabled(true);
-            ivUpload2.setEnabled(true);
-            etCompany.setEnabled(true);
-            edCompanyNumber.setEnabled(true);
-            etMoney.setEnabled(true);
-            llType.setEnabled(true);
-            llOfficeAddress.setEnabled(true);
-            tvOfficeAddress.setEnabled(true);
-            etLegalPersion.setEnabled(true);
-            llCompanyScale.setEnabled(true);
-            etPhone.setEnabled(true);
-            etDetailOfficeAddress.setEnabled(true);
-            etDesc.setEnabled(true);
+        setRightTitleOnClickListener((v) -> {
+            doRevoke();
         });
+    }
+
+    /**
+     * 重新编辑
+     */
+    private void doRevoke() {
+        EanfangHttp.post(NewApiService.COMPANY_ENTERPRISE_AUTH_REVOKE + byNetBean.getOrgId())
+                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    ivUpload.setEnabled(true);
+                    ivUpload2.setEnabled(true);
+                    etCompany.setEnabled(true);
+                    edCompanyNumber.setEnabled(true);
+                    etMoney.setEnabled(true);
+                    llType.setEnabled(true);
+                    llOfficeAddress.setEnabled(true);
+                    tvOfficeAddress.setEnabled(true);
+                    etLegalPersion.setEnabled(true);
+                    llCompanyScale.setEnabled(true);
+                    etPhone.setEnabled(true);
+                    etDetailOfficeAddress.setEnabled(true);
+                    etDesc.setEnabled(true);
+                    setRightGone();
+                    btnComplete.setVisibility(View.VISIBLE);
+                }));
     }
 
     /**

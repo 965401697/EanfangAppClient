@@ -17,16 +17,17 @@ android {
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
-//        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
-//        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
+        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
 
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
 
 //        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
-        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+
+//        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
     }
 
@@ -140,13 +141,15 @@ dependencies {
     //信鸽3.2.0 稳定版本
 
     //信鸽jar
-    compile 'com.tencent.xinge:xinge:3.2.0-release'
+    compile 'com.tencent.xinge:xinge:3.2.4-beta'
 
     //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-release'
 
     //mid包
-    compile 'com.tencent.mid:mid:4.0.0-release'
+    compile 'com.tencent.mid:mid:4.0.6-release'
+    //在集成信鸽的基础上新增华为push的jar包
+    compile 'com.tencent.xinge:xghw:3.2.4-beta'
 
     //微信
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'

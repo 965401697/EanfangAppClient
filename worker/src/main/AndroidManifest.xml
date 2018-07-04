@@ -316,6 +316,7 @@
         <!-- 群内成员禁言 -->
         <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
         <activity android:name=".ui.activity.worksapce.WorkDetailActivity" />
+        <!-- 企业管理 -->
         <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity" />
         <activity android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity" />
         <!-- 视频文件选择 -->

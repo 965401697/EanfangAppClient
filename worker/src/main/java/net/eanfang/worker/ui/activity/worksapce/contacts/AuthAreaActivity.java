@@ -68,9 +68,16 @@ public class AuthAreaActivity extends BaseActivity {
         ButterKnife.bind(this);
         doLoadArea();
         initView();
-        initArea();
         initData();
         // initArea();
+    }
+
+    private void initView() {
+        setTitle("选择服务区域");
+        setLeftBack();
+        orgid = getIntent().getLongExtra("orgid", 0);
+        verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
+
     }
 
     private void doLoadArea() {
@@ -96,18 +103,6 @@ public class AuthAreaActivity extends BaseActivity {
         }).start();
     }
 
-    private void initArea() {
-//        EanfangHttp.get(NewApiService.GET_BASE_DATA_CACHE_TREE + "0")
-//                .tag(this)
-//                .execute(new EanfangCallback<String>(this, true, String.class, (str) -> {
-//                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
-//                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
-//                        areaListBean = Stream.of(newDate.getData()).filter(bean -> bean.getDataCode().equals("3")).toList().get(0).getChildren();
-//                        initData();
-//                    }
-//                }));
-    }
-
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
@@ -116,7 +111,6 @@ public class AuthAreaActivity extends BaseActivity {
                 }));
     }
 
-
     private void fillData() {
         selDataId = new HashSet<>(byNetGrant.getList().size());
         selDataId.addAll(Stream.of(byNetGrant.getList()).map(bean -> bean.getDataId()).toList());
@@ -124,19 +118,11 @@ public class AuthAreaActivity extends BaseActivity {
         initAdapter(areaListBean);
     }
 
-    private void initView() {
-        setTitle("选择服务区域");
-        setRightTitle("完善");
-        setLeftBack();
-        orgid = getIntent().getLongExtra("orgid", 0);
-        verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
-
-    }
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
         elvArea.setAdapter(mAdapter);
-        if ((verifyStatus != 0 || verifyStatus != 3)) {
+        if ((verifyStatus != 0 && verifyStatus != 3)) {
             //  当状态为已认证状态时， 设置为不可点击不可点击
             mAdapter.isAuth = true;
             elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -149,14 +135,10 @@ public class AuthAreaActivity extends BaseActivity {
         tvConfim.setOnClickListener((v) -> {
             if (verifyStatus == 0 || verifyStatus == 3) {
                 commit();
-            } else if (verifyStatus == 1) {
-                showToast("您已经提交认证，审核中。。");
-            } else if (verifyStatus == 2) {
-                showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
+            } else {
+                finishSelf();
+                closeActivity();
             }
-        });
-        setRightTitleOnClickListener((v) -> {
-
         });
     }
 
@@ -206,22 +188,28 @@ public class AuthAreaActivity extends BaseActivity {
         unCheckListId = getListData(areaListBean, false);
         grantChange.setAddIds(checkListId);
         grantChange.setDelIds(unCheckListId);
-        for (int i = 0; i < areaListBean.size(); i++) {
-            if (areaListBean.get(i).isCheck()) {
 
-                EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
-                        .upJson(JSONObject.toJSONString(grantChange))
-                        .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                            showToast("认证资料提交成功");
-                            commitVerfiy();
-                            closeActivity();
-                            finishSelf();
-
-                        }));
-                break;
-            }
+        if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
             showToast("请至少选择一个服务区域");
+        } else {
+            for (int i = 0; i < areaListBean.size(); i++) {
+                if (areaListBean.get(i).isCheck()) {
+
+                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
+                            .upJson(JSONObject.toJSONString(grantChange))
+                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+//                            showToast("认证资料提交成功");
+                                commitVerfiy();
+                                closeActivity();
+                                finishSelf();
+
+                            }));
+                    break;
+                }
+
+            }
         }
+
     }
 
 
