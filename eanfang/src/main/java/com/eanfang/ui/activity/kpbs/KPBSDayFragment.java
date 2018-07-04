@@ -151,6 +151,7 @@ public class KPBSDayFragment extends BaseFragment {
                 etDay.setText("");
                 etSdNum.setText("");
                 tvResult.setText("");
+                tvKpbs.setText("");
             }
         });
 
@@ -169,24 +170,44 @@ public class KPBSDayFragment extends BaseFragment {
                 if (!TextUtils.isEmpty(currentKpbs)) {
                     kpbs = Float.parseFloat(currentKpbs.split("M")[0]);
                 }
-                if (!TextUtils.isEmpty(etVidiconNum.getText().toString())) {
+                if (!TextUtils.isEmpty(etVidiconNum.getText().toString().trim())) {
                     vidiconNum = Integer.parseInt(etVidiconNum.getText().toString().trim());
                 } else {
                     ToastUtil.get().showToast(getActivity(), "请输入摄像机数量");
+                    return;
                 }
 
-                if (!TextUtils.isEmpty(etSdNum.getText().toString()) && mType == 0 || mType == 2) {
+                if ((!TextUtils.isEmpty(etSdNum.getText().toString().trim()) && mType == 0) || (!TextUtils.isEmpty(etSdNum.getText().toString().trim()) && mType == 2)) {
                     sdNum = Integer.parseInt(etSdNum.getText().toString().trim());
                 } else {
-                    if (mType == 0 || mType == 2)
+                    if (mType == 0 || mType == 2) {
                         ToastUtil.get().showToast(getActivity(), "请输入硬盘容量");
+                        return;
+                    }
                 }
-                if (!TextUtils.isEmpty(etDay.getText().toString()) && mType == 1 || mType == 2) {
+                if ((!TextUtils.isEmpty(etDay.getText().toString().trim()) && mType == 1) || (!TextUtils.isEmpty(etDay.getText().toString().trim()) && mType == 2)) {
                     day = Integer.parseInt(etDay.getText().toString().trim());
                 } else {
-                    if (mType == 1 || mType == 2)
+                    if (mType == 1 || mType == 2) {
                         ToastUtil.get().showToast(getActivity(), "请输入储存天数");
+                        return;
+                    }
                 }
+
+                if (mType != 2) {
+                    if (rbDis.isChecked()) {
+                        if (TextUtils.isEmpty(tvKpbs.getText().toString().trim())) {
+                            ToastUtil.get().showToast(getActivity(), "请输选择分辨率");
+                            return;
+                        }
+                    } else {
+                        if (TextUtils.isEmpty(tvKpbs.getText().toString().trim())) {
+                            ToastUtil.get().showToast(getActivity(), "请输选择码率");
+                            return;
+                        }
+                    }
+                }
+
 
                 if (mType == 0) {
                     //算存储时间
@@ -263,6 +284,13 @@ public class KPBSDayFragment extends BaseFragment {
         return (Math.round(a)) / (Math.pow(10, n));
     }
 
+    /**
+     * 根据码率拿屏幕分辨率
+     *
+     * @param o
+     * @param t
+     * @return
+     */
     private String findDis(int o, int t) {
         String dis = "";
         switch (o) {
@@ -270,10 +298,18 @@ public class KPBSDayFragment extends BaseFragment {
                 dis = distinguishability[o];
                 break;
             case 1:
-                dis = distinguishability[o];
+                if (t < 4) {
+                    dis = distinguishability[0];
+                } else {
+                    dis = distinguishability[o];
+                }
                 break;
             case 2:
-                dis = distinguishability[o];
+                if (t < 5) {
+                    dis = distinguishability[1];
+                } else {
+                    dis = distinguishability[o];
+                }
                 break;
             case 3:
                 dis = distinguishability[o];
