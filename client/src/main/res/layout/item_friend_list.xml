@@ -24,16 +24,25 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dimen_128">
+
+        <CheckBox
+            android:id="@+id/cb_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:visibility="gone" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_friend_header"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
+            android:layout_toRightOf="@+id/cb_checked"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/dimen_24"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_36"
-            android:layout_marginTop="@dimen/dimen_24"
             fresco:placeholderImage="@mipmap/ic_header"
             fresco:roundAsCircle="true" />
 
@@ -49,13 +58,7 @@
             android:textSize="16sp" />
 
 
-        <CheckBox
-            android:id="@+id/cb_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:visibility="invisible" />
+
     </RelativeLayout>
 
 

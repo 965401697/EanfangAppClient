@@ -13,15 +13,27 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_128"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
+        <RadioButton
+            android:id="@+id/rb_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_centerVertical="true"
+            android:visibility="visible" />
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_friend_header"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
             android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/rb_checked"
+            android:layout_marginLeft="@dimen/dimen_36"
             fresco:placeholderImage="@mipmap/ic_header" />
 
 
@@ -30,19 +42,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/iv_friend_header"
+            android:layout_toEndOf="@+id/iv_friend_header"
+            android:layout_marginLeft="@dimen/dimen_38"
             android:text=" "
-            android:textSize="16sp" />
+            android:textSize="@dimen/textSize_15" />
 
 
-        <RadioButton
-            android:id="@+id/rb_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:visibility="visible" />
     </RelativeLayout>
 
 

@@ -36,7 +36,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+import io.rong.message.TextMessage;
 
 public class SelectedFriendsActivity extends BaseClientActivity {
 
@@ -115,6 +119,10 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                     if (mUserIdList.size() == 1) {
                         //说明单聊
                         RongIM.getInstance().startPrivateChat(SelectedFriendsActivity.this, mUserIdList.get(0), mCurrentBean.getNickName());
+
+//                        sendCheckedMsg(mUserIdList.get(0));
+
+
                     } else {
 
                         if (mUserIdList.size() <= 1) {
@@ -130,6 +138,22 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                 } else {
                     AddNumber();
                 }
+            }
+        });
+    }
+
+    private void sendCheckedMsg(String id) {
+        CustomizeMessage customizeMessage =  new CustomizeMessage("我是一个帅哥");
+
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, id, customizeMessage, "asdf", "asdfasdf", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+
             }
         });
     }

@@ -169,11 +169,11 @@
                 </RelativeLayout>
 
                 <TextView style="@style/style_common_line_gray" />
-
+        <!--        android:onClick="noOpen"-->
                 <RelativeLayout
+                    android:id="@+id/rl_focus"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:onClick="noOpen"
                     android:orientation="horizontal">
 
                     <ImageView

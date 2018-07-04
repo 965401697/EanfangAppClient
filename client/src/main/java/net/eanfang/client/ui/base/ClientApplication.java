@@ -7,6 +7,8 @@ import com.eanfang.config.EanfangConst;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import net.eanfang.client.ui.activity.im.CustomizeMessage;
+import net.eanfang.client.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 
@@ -31,8 +33,13 @@ public class ClientApplication extends EanfangApplication {
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
 
+            RongIM.registerMessageType(CustomizeMessage.class);
+            RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
+
+
             //初始化微信支付
-            api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);}
+            api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT,true);
+        }
 
     }
 

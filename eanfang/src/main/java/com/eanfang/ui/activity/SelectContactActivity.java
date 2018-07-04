@@ -26,6 +26,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ToastUtil;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,9 +73,17 @@ public class SelectContactActivity extends BaseActivity {
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(new Intent(SelectContactActivity.this, SelectedFriendsActivity.class));
-//                intent.putExtra("flag", 1);
-//                startActivity(intent);
+                Intent intent = new Intent("net.eanfang.client.action.SELECTFRIENDS");
+                intent.putExtra("flag", 1);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.rl_attention).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent("net.eanfang.client.action.MYGROUPLIST");
+                intent.putExtra("isVisible", true);
+                startActivity(intent);
             }
         });
 

@@ -13,6 +13,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
+import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CheckSignPermission;
 import com.eanfang.util.LocationUtil;
@@ -165,6 +166,10 @@ public class WorkspaceFragment extends BaseFragment {
         //相机
         findViewById(R.id.tv_work_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
+        });
+        //码率
+        findViewById(R.id.tv_work_calculate).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), KPBSActivity.class));
         });
         //天猫安防
         findViewById(R.id.tv_work_tm).setOnClickListener((v) -> {
