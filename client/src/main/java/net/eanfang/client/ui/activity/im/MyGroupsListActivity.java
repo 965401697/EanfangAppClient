@@ -1,9 +1,13 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,20 +19,25 @@ import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.util.Cn2Spell;
+import com.eanfang.util.DialogUtil;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.GroupsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.mention.MemberMentionedActivity;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 public class MyGroupsListActivity extends BaseClientActivity {
@@ -36,9 +45,55 @@ public class MyGroupsListActivity extends BaseClientActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private GroupsAdapter mGroupsAdapter;
-    private int flag = 0;//显示不显示checkbox的标志位
     @BindView(R.id.side_bar)
     SideBar sideBar;
+
+    private boolean isVisible;
+    private List<String> rongIdLists = new ArrayList<>();
+    private Dialog dialog;
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            ToastUtil.get().showToast(MyGroupsListActivity.this, "发送成功");
+        }
+    };
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            //要做的事情，这里再次调用此Runnable对象，以实现每一秒实现一次的定时器操作
+            if (!dialog.isShowing()) {
+                dialog.show();
+            }
+            if (rongIdLists.size() > 5) {
+
+                handler.postDelayed(runnable, 1500);
+                List<String> newRongIdLists = new ArrayList<>();
+
+                newRongIdLists.addAll(rongIdLists);
+                List<String> newLists = rongIdLists.subList(0, 5);
+
+                for (String id : newLists) {
+                    newRongIdLists.remove(id);
+                    sendCheckedMsg(id);
+                }
+                rongIdLists = newRongIdLists;
+
+            } else if (rongIdLists.size() <= 5) {
+                for (String id : rongIdLists) {
+                    sendCheckedMsg(id);
+                }
+                handler.sendEmptyMessage(1);
+                handler.removeCallbacks(runnable);
+                dialog.dismiss();
+                MyGroupsListActivity.this.finishSelf();
+            }
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +103,17 @@ public class MyGroupsListActivity extends BaseClientActivity {
 
         setTitle("我的群组");
         setLeftBack();
+        dialog = DialogUtil.createLoadingDialog(MyGroupsListActivity.this);
+        isVisible = getIntent().getBooleanExtra("isVisible", false);
+        if (isVisible) {
+            setRightTitle("发送");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.post(runnable);//立马发送
+                }
+            });
+        }
         initViews();
 //        initData();
     }
@@ -87,7 +153,7 @@ public class MyGroupsListActivity extends BaseClientActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mGroupsAdapter = new GroupsAdapter(R.layout.item_friend_list);
+        mGroupsAdapter = new GroupsAdapter(R.layout.item_friend_list, isVisible);
 
         mGroupsAdapter.bindToRecyclerView(recyclerView);
 
@@ -110,14 +176,33 @@ public class MyGroupsListActivity extends BaseClientActivity {
      * 开始聊天
      */
     private void startConv() {
-        mGroupsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                RongIM.getInstance().startConversation(MyGroupsListActivity.this, Conversation.ConversationType.GROUP, ((GroupsBean) adapter.getData().get(position)).getRcloudGroupId(), ((GroupsBean) adapter.getData().get(position)).getGroupName());
+        if (!isVisible) {
 
-            }
-        });
+            mGroupsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                    RongIM.getInstance().startConversation(MyGroupsListActivity.this, Conversation.ConversationType.GROUP, ((GroupsBean) adapter.getData().get(position)).getRcloudGroupId(), ((GroupsBean) adapter.getData().get(position)).getGroupName());
+
+                }
+            });
+        } else {
+            mGroupsAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (view.getId() == R.id.cb_checked) {
+                        GroupsBean groupsBean = (GroupsBean) adapter.getData().get(position);
+
+                        if (groupsBean.isChecked()) {
+                            rongIdLists.remove(groupsBean.getRcloudGroupId());
+                        } else {
+                            rongIdLists.add(groupsBean.getRcloudGroupId());
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -128,5 +213,21 @@ public class MyGroupsListActivity extends BaseClientActivity {
             mGroupsAdapter.notifyDataSetChanged();
         }
         initData();
+    }
+
+    private void sendCheckedMsg(String id) {
+        CustomizeMessage customizeMessage = new CustomizeMessage("法狗必胜");
+
+        RongIM.getInstance().sendMessage(Conversation.ConversationType.GROUP, id, customizeMessage, "asdf", "asdfasdf", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+                Log.e("zzw", "发送失败=" + integer + "=" + errorCode);
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+                Log.e("zzw", "发送成功=" + integer);
+            }
+        });
     }
 }

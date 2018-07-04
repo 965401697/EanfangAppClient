@@ -21,10 +21,19 @@ public class GroupsBean implements Comparator<GroupsBean> {
     private String groupIcon;
     private String rcloudGroupId;
     private String headPortrait;
-
+    private boolean isChecked;
     private String nickName;   // 姓名
     private String pinyin; // 姓名对应的拼音
     private String firstLetter; // 拼音的首字母
+
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getHeadPortrait() {
         return headPortrait;

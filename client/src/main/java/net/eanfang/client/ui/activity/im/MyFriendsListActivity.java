@@ -54,9 +54,13 @@ public class MyFriendsListActivity extends BaseClientActivity {
 
         setLeftBack();
         setTitle("我的好友");
+
+//        flag=getIntent().getIntExtra("flag",0);
+
         initViews();
         initData();
         startTransaction(true);
+
     }
 
 

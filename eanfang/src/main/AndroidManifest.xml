@@ -102,12 +102,13 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ui.activity.SelectContactActivity"/>
+        <activity android:name=".ui.activity.SelectContactActivity" />
 
         <!-- 组织结构 -->
-        <activity android:name=".ui.activity.SelectOrganizationActivity"></activity>
+        <activity android:name=".ui.activity.SelectOrganizationActivity" />
         <!-- 二级折叠选择 -->
         <activity android:name=".ui.activity.SelectPresonActivity" />
+        <activity android:name=".ui.activity.kpbs.KPBSActivity"></activity>
     </application>
 
 </manifest>

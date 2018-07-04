@@ -18,6 +18,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
+import com.eanfang.ui.activity.SelectContactActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
@@ -237,6 +238,14 @@ public class ContactsFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), MyGroupsListActivity.class));
             }
         });
+
+//        findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //开启我的群组列表
+//                startActivity(new Intent(getActivity(), SelectContactActivity.class));
+//            }
+//        });
 
         findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override

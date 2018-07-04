@@ -2,6 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -17,8 +18,11 @@ import net.eanfang.client.R;
 
 public class GroupsAdapter extends BaseQuickAdapter<GroupsBean, BaseViewHolder> {
 
-    public GroupsAdapter(int layoutResId) {
+    private boolean isVisible;
+
+    public GroupsAdapter(int layoutResId, boolean isVisible) {
         super(layoutResId);
+        this.isVisible = isVisible;
 
     }
 
@@ -26,6 +30,18 @@ public class GroupsAdapter extends BaseQuickAdapter<GroupsBean, BaseViewHolder> 
     protected void convert(BaseViewHolder helper, GroupsBean item) {
         ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getHeadPortrait()));
         helper.setText(R.id.tv_friend_name, item.getGroupName());
+
+        if (isVisible) {
+            helper.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.cb_checked).setVisibility(View.GONE);
+        }
+
+        if (item.isChecked()) {
+            ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(true);
+        } else {
+            ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(false);
+        }
 
         //根据position获取首字母作为目录catalog
         String catalog = item.getFirstLetter();
@@ -37,6 +53,8 @@ public class GroupsAdapter extends BaseQuickAdapter<GroupsBean, BaseViewHolder> 
         } else {
             helper.getView(R.id.tv_letter).setVisibility(View.GONE);
         }
+
+        helper.addOnClickListener(R.id.cb_checked);
     }
 
     /**
