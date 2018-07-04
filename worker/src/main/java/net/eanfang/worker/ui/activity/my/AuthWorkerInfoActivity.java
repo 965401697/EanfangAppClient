@@ -13,12 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -105,7 +109,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     NestedScrollView nestedScrollView;
 
     private String isAuthen = "";
-
+    private int status;
     //edittext拦截器
     InputFilter inputFilter = new InputFilter() {
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
@@ -145,6 +149,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         nestedScrollView.setFocusable(true);
         nestedScrollView.setFocusableInTouchMode(true);
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("workerInfoBean");
+        status = getIntent().getIntExtra("status", status);
         fillData();
     }
 
@@ -155,14 +160,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
         ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
         setRightTitleOnClickListener((v) -> {
-            // 掉编辑接口
-            etPayAccount.setEnabled(true);
-            llWorkingLevel.setEnabled(true);
-            llWorkingYear.setEnabled(true);
-            llPayType.setEnabled(true);
-            etIntro.setEnabled(true);
-            etUrgentPhone.setEnabled(true);
-            etUrgentName.setEnabled(true);
+            doRevoke();
         });
 
         rlUploadInfo.setOnClickListener((v) -> {
@@ -175,20 +173,40 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         });
 
         tvConfim.setOnClickListener((v) -> {
-            if (workerInfoBean.getStatus() == 0 || workerInfoBean.getStatus() == 3) {
+            if (status == 0 || status == 3) {
                 setData();
             } else {
                 finishSelf();
             }
         });
 
-        // 已经认证成功/ 已经提交认证，正在认证中 无法编辑
-        if (workerInfoBean.getStatus() == 2 || workerInfoBean.getStatus() == 1) {
+        // 已经认证成功/ 已经提交认证，正在认证中 无法点击操作
+
+        if (status == 2 || status == 1) {
             doSetGone();
-        } else {
+        }
+
+        if (status != 2) {
             setRightGone();
         }
 
+    }
+
+    /**
+     * 重新编辑
+     */
+    private void doRevoke() {
+        EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    // 掉编辑接口
+                    etPayAccount.setEnabled(true);
+                    llWorkingLevel.setEnabled(true);
+                    llWorkingYear.setEnabled(true);
+                    llPayType.setEnabled(true);
+                    etIntro.setEnabled(true);
+                    etUrgentPhone.setEnabled(true);
+                    etUrgentName.setEnabled(true);
+                }));
     }
 
     private void fillData() {

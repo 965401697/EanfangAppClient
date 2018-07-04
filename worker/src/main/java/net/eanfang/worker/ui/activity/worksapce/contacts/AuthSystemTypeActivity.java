@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
@@ -112,7 +114,8 @@ public class AuthSystemTypeActivity extends BaseActivity {
         }
         if (verifyStatus == 1 || verifyStatus == 2) {
             tagWorkType.setEnabled(false);
-        } else {
+        }
+        if (verifyStatus != 2) {
             setRightGone();
         }
         addRepariResult();
@@ -129,11 +132,20 @@ public class AuthSystemTypeActivity extends BaseActivity {
             }
         });
         setRightTitleOnClickListener((v) -> {
-            // 掉编辑接口
-            tagWorkType.setEnabled(true);
+            doRevoke();
         });
     }
 
+    /**
+     * 重新编辑
+     */
+    private void doRevoke() {
+        EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + orgid)
+                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    tagWorkType.setEnabled(true);
+                }));
+
+    }
 
     private void commit() {
         List<Integer> checkList = Stream.of(businessOneList)
@@ -147,19 +159,25 @@ public class AuthSystemTypeActivity extends BaseActivity {
                                 .filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
                 .map(beans -> beans.getDataId()).toList();
 
-        for (int i = 0; i < businessOneList.size(); i++) {
-            if (businessOneList.get(i).isCheck()) {
-                grantChange.setAddIds(checkList);
-                grantChange.setDelIds(unCheckList);
-                EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_SYS + orgid)
-                        .upJson(JSONObject.toJSONString(grantChange))
-                        .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                            jump();
-                        }));
-                break;
+        if ((unCheckList.size() == 0) && (checkList.size() == 0) && (byNetGrant.getList().size() <= 0)) {
+            showToast("请选择一种系统类别");
+        } else {
+            for (int i = 0; i < businessOneList.size(); i++) {
+                if (businessOneList.get(i).isCheck()) {
+                    grantChange.setAddIds(checkList);
+                    grantChange.setDelIds(unCheckList);
+                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_SYS + orgid)
+                            .upJson(JSONObject.toJSONString(grantChange))
+                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                                jump();
+                            }));
+                    break;
+                }
+
+
             }
-            showToast("请选择一种业务类别");
         }
+
     }
 
     public void addRepariResult() {

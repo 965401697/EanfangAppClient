@@ -7,16 +7,20 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
+import com.eanfang.model.Message;
 import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,15 +62,22 @@ public class AuthListActivity extends BaseActivity {
 
     private WorkerInfoBean workerInfoBean;
 
+    private CommitVerfiyView verfiyView;
+    private int verify = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_list);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
 
     private void initView() {
         setTitle("技师认证");
@@ -79,7 +90,8 @@ public class AuthListActivity extends BaseActivity {
         EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS)
                 .params("accId", EanfangApplication.getApplication().getAccId())
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
-                    doChange(bean.getBase(), bean.getService(), bean.getBiz(), bean.getArea());
+                    verify = bean.getVerify();
+                    doChange(bean.getBase(), bean.getService(), bean.getBiz(), bean.getArea(), bean.getVerify());
                 }));
     }
 
@@ -90,25 +102,28 @@ public class AuthListActivity extends BaseActivity {
             case R.id.rl_base_info:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("workerInfoBean", workerInfoBean);
+                bundle.putInt("status", verify);
                 JumpItent.jump(this, AuthWorkerInfoActivity.class, bundle);
                 break;
             case R.id.rl_systom_type:
-                startActivity(new Intent(this, AuthWorkerSysTypeActivity.class).putExtra("status", workerInfoBean.getStatus()));
+                startActivity(new Intent(this, AuthWorkerSysTypeActivity.class).putExtra("status", verify));
                 break;
             case R.id.rl_business_type:
-                startActivity(new Intent(this, AuthWorkerBizActivity.class).putExtra("status", workerInfoBean.getStatus()));
+                startActivity(new Intent(this, AuthWorkerBizActivity.class).putExtra("status", verify));
                 break;
             case R.id.rl_service_area:
-                startActivity(new Intent(this, AuthWorkerAreaActivity.class).putExtra("status", workerInfoBean.getStatus()));
+                startActivity(new Intent(this, AuthWorkerAreaActivity.class).putExtra("status", verify));
                 break;
             case R.id.rl_other_info:
                 break;
             case R.id.tv_confim:
+                doVerify();
                 break;
         }
     }
 
-    private void doChange(int baseStatus, int serviceStatus, int bizStatus, int areaStatus) {
+    private void doChange(int baseStatus, int serviceStatus, int bizStatus, int areaStatus, int verify) {
+
         if (baseStatus > 0) {
             tvBaseInfo.setText("已完善");
             tvBaseInfo.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
@@ -138,6 +153,44 @@ public class AuthListActivity extends BaseActivity {
             tvServiceArea.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
 
+        if (baseStatus > 0 && serviceStatus > 0 && bizStatus > 0 && areaStatus > 0 && (verify != 1 && verify != 2)) {
+            tvConfim.setVisibility(View.VISIBLE);
+        } else {
+            tvConfim.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 是否提交认证
+     */
+    private void doVerify() {
+        verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
+        verfiyView.show();
+    }
+
+    private void commitVerfiy(CommitVerfiyView verfiyView) {
+        EanfangHttp.post(UserApi.POST_TECH_WORKER_SEND_VERIFY)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    verfiyView.dismiss();
+                    doJumpConfirm();
+                }));
+    }
+
+    public void doJumpConfirm() {
+        Intent intent = new Intent(AuthListActivity.this, StateChangeActivity.class);
+        Bundle bundle = new Bundle();
+        Message message = new Message();
+        message.setTitle("认证提交成功");
+        message.setMsgTitle("您的技师认证资料已经提交成功");
+        message.setMsgContent("我们会在72小时内进行审核");
+        message.setMsgHelp("如需修改认证资料");
+        message.setShowOkBtn(true);
+        message.setShowLogo(true);
+        message.setTip("");
+        bundle.putSerializable("message", message);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finishSelf();
     }
 
 }

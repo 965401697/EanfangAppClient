@@ -48,6 +48,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -235,7 +236,11 @@ public class MainActivity extends BaseActivity {
 
     private void registerXinGe() {
         //开启信鸽日志输出
-//        XGPushConfig.enableDebug(this, false);
+//        XGPushConfig.enableDebug(this, true);
+        XGPushConfig.setHuaweiDebug(true);
+        // 打开第三方推送
+        XGPushConfig.enableOtherPush(getApplicationContext(), true);
+
         //信鸽注册代码
         XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override

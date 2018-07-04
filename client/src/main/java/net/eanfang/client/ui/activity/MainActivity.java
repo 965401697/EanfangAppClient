@@ -98,8 +98,7 @@ public class MainActivity extends BaseClientActivity {
         initXinGe();
         getBaseData();
         getConst();
-        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
-        });
+        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {});
 
         privoderMy();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());

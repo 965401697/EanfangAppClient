@@ -66,6 +66,12 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
+//        getData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getData();
     }
 

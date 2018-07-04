@@ -14,6 +14,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.github.vipulasri.timelineview.TimelineView;
 
+
 import net.eanfang.client.R;
 
 import java.util.List;

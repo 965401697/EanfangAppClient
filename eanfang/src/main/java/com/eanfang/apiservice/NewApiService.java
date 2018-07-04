@@ -415,5 +415,19 @@ public interface NewApiService {
      * post
      */
     String DEVICE_CHANGE_DETAIL = BASE_URL + "/yaf_device/custdevicechangelog/info/";
+    /**
+     * 技师认证编辑
+     */
+    String WORKER_AUTH_REVOKE = BASE_URL + "/yaf_sys/techworkerverify/rollBack/";
+    /**
+     * 安防公司编辑
+     */
+    String COMPANY_SECURITY_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/shop/rollback/";
+
+    /**
+     * 企业认证编辑
+     */
+    String COMPANY_ENTERPRISE_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/ent/rollback/";
+
 
 }

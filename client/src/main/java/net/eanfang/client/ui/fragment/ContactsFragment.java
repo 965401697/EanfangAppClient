@@ -66,13 +66,14 @@ public class ContactsFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
+//        getData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         getData();
     }
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getData();
-//    }
 
     private void getData() {
         EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)

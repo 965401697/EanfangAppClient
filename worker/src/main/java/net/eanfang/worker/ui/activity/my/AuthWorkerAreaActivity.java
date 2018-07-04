@@ -7,7 +7,9 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -66,6 +68,13 @@ public class AuthWorkerAreaActivity extends BaseActivity {
         initData();
     }
 
+    private void initView() {
+        setTitle("选择服务区域");
+        setRightTitle("编辑");
+        setLeftBack();
+        status = getIntent().getIntExtra("status", status);
+    }
+
     private void initArea() {
 //        EanfangHttp.get(NewApiService.GET_BASE_DATA_CACHE_TREE + "0")
 //                .tag(this)
@@ -112,18 +121,12 @@ public class AuthWorkerAreaActivity extends BaseActivity {
         initAdapter(areaListBean);
     }
 
-    private void initView() {
-        setTitle("选择服务区域");
-        setRightTitle("编辑");
-        setLeftBack();
-        status = getIntent().getIntExtra("status", status);
-    }
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
         elvArea.setAdapter(mAdapter);
 
-        if (status != 0 || status != 3) {
+        if (status != 0 && status != 3) {
             mAdapter.isAuth = true;
             elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
                 @Override
@@ -131,30 +134,38 @@ public class AuthWorkerAreaActivity extends BaseActivity {
                     return true;
                 }
             });
-        } else {
+        }
+        if (status != 2) {
             setRightGone();
         }
         tvConfim.setOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
-            } else if (status == 1) {
-                showToast("您已经提交认证，审核中。。");
-            } else if (status == 2) {
-                showToast("已认证成功，请勿重复认证，如需需要请联系后台人员");
+            } else {
+                finishSelf();
             }
         });
         setRightTitleOnClickListener((v) -> {
-            // 掉编辑接口
-            mAdapter.isAuth = false;
-            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-                @Override
-                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                    return false;
-                }
-            });
-            mAdapter.notifyDataSetChanged();
+            doRevoke();
         });
 
+    }
+
+    /**
+     * 重新编辑
+     */
+    private void doRevoke() {
+        EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    mAdapter.isAuth = false;
+                    elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                        @Override
+                        public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                            return false;
+                        }
+                    });
+                    mAdapter.notifyDataSetChanged();
+                }));
     }
 
     private List<Integer> getListData(List<BaseDataEntity> list, boolean isChecked) {
@@ -206,41 +217,9 @@ public class AuthWorkerAreaActivity extends BaseActivity {
         EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA)
                 .upJson(JSONObject.toJSONString(grantChange))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    verfiyView = new CommitVerfiyView(this, view -> commitVerfiy(verfiyView));
-                    verfiyView.show();
+                    finishSelf();
                 }));
     }
 
-    private void commitVerfiy(CommitVerfiyView verfiyView) {
-        EanfangHttp.post(UserApi.POST_TECH_WORKER_SEND_VERIFY)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    verfiyView.dismiss();
-                    closeActivity();
-                    doJumpConfirm();
-                }));
-    }
-
-    public void doJumpConfirm() {
-        Intent intent = new Intent(AuthWorkerAreaActivity.this, StateChangeActivity.class);
-        Bundle bundle = new Bundle();
-        Message message = new Message();
-        message.setTitle("认证提交成功");
-        message.setMsgTitle("您的技师认证资料已经提交成功");
-        message.setMsgContent("我们会在72小时内进行审核");
-        message.setMsgHelp("如需修改认证资料");
-        message.setShowOkBtn(true);
-        message.setShowLogo(true);
-        message.setTip("");
-        bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finishSelf();
-    }
-
-    private void closeActivity() {
-        EanfangApplication.get().closeActivity(AuthWorkerInfoActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthWorkerSysTypeActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthWorkerBizActivity.class.getName());
-    }
 
 }

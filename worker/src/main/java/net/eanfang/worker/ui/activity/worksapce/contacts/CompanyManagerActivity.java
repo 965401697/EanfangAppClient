@@ -47,6 +47,7 @@ public class CompanyManagerActivity extends BaseActivity {
     @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            // 完善资料
             case R.id.rl_prefectInfo:
                 Bundle bundle_prefect = new Bundle();
                 bundle_prefect.putLong("orgid", mOrgId);
@@ -54,7 +55,7 @@ public class CompanyManagerActivity extends BaseActivity {
                 bundle_prefect.putString("assign", "prefect");
                 JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
                 break;
-
+            // 资质认证
             case R.id.rl_auth:
                 Bundle bundle_auth = new Bundle();
                 bundle_auth.putLong("orgid", mOrgId);

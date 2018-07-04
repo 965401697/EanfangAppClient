@@ -11,8 +11,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -175,22 +177,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 showToast("抱歉，您没有权限！");
             }
         });
-        setRightTitleOnClickListener((v)->{
-            ivUpload.setEnabled(true);
-            ivUpload2.setEnabled(true);
-            etCompany.setEnabled(true);
-            edCompanyNumber.setEnabled(true);
-            etMoney.setEnabled(true);
-            llType.setEnabled(true);
-            llOfficeAddress.setEnabled(true);
-            tvOfficeAddress.setEnabled(true);
-            etLegalPersion.setEnabled(true);
-            llCompanyScale.setEnabled(true);
-            etPhone.setEnabled(true);
-            etDetailOfficeAddress.setEnabled(true);
-            etDesc.setEnabled(true);
+        setRightTitleOnClickListener((v) -> {
+            doRevoke();
         });
     }
+
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
@@ -287,11 +278,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private void fillData() {
 
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
+        // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
         if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
             btnComplete.setVisibility(View.GONE);
-        }
-        // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
-        if ((byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3)) {
             ivUpload.setEnabled(false);
             ivUpload2.setEnabled(false);
             etCompany.setEnabled(false);
@@ -305,7 +294,8 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             etPhone.setEnabled(false);
             etDetailOfficeAddress.setEnabled(false);
             etDesc.setEnabled(false);
-        }else{
+        }
+        if (byNetBean.getStatus() != 2) {
             setRightGone();
         }
         if (byNetBean != null) {
@@ -342,7 +332,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             }
             if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
                 ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
-                infoBean.setLicensePic(byNetBean.getLogoPic());
+                infoBean.setLicensePic(byNetBean.getLicensePic());
             }
         }
     }
@@ -353,6 +343,30 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("保存成功");
                     finishSelf();
+                }));
+    }
+
+    /**
+     * 重新编辑
+     */
+    private void doRevoke() {
+        EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + byNetBean.getOrgId())
+                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    ivUpload.setEnabled(true);
+                    ivUpload2.setEnabled(true);
+                    etCompany.setEnabled(true);
+                    edCompanyNumber.setEnabled(true);
+                    etMoney.setEnabled(true);
+                    llType.setEnabled(true);
+                    llOfficeAddress.setEnabled(true);
+                    tvOfficeAddress.setEnabled(true);
+                    etLegalPersion.setEnabled(true);
+                    llCompanyScale.setEnabled(true);
+                    etPhone.setEnabled(true);
+                    etDetailOfficeAddress.setEnabled(true);
+                    etDesc.setEnabled(true);
+                    btnComplete.setVisibility(View.VISIBLE);
+                    setRightGone();
                 }));
     }
 

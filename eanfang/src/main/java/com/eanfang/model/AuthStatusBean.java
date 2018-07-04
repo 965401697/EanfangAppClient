@@ -21,6 +21,7 @@ public class AuthStatusBean implements Serializable {
     private int biz;
     private int service;
     private int base;
+    private int verify;
 
     public int getArea() {
         return area;
@@ -52,5 +53,13 @@ public class AuthStatusBean implements Serializable {
 
     public void setBase(int base) {
         this.base = base;
+    }
+
+    public int getVerify() {
+        return verify;
+    }
+
+    public void setVerify(int verify) {
+        this.verify = verify;
     }
 }

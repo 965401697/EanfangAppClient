@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -55,7 +56,7 @@ public class SolveModeActivity extends BaseActivity {
         switch (view.getId()) {
             // 电话解决   new FillAppointmentInfoView(getActivity(), true, item.getId()).show();
             case R.id.tv_solvePhone:
-                doHttp(1, null);
+                doPhoneSolve();
 //                JumpItent.jump(mContext, );
                 break;
             // 预约上门
@@ -65,6 +66,12 @@ public class SolveModeActivity extends BaseActivity {
                 JumpItent.jump(SolveModeActivity.this, RepairAppointTimeActivity.class, bundle);
                 break;
         }
+    }
+
+    private void doPhoneSolve() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+            doHttp(1, null);
+        }).showDialog();
     }
 
     /**

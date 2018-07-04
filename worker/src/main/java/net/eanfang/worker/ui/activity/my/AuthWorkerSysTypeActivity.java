@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -94,7 +96,8 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
         }
         if (status == 1 || status == 2) {
             tagWorkType.setEnabled(false);
-        }else{
+        }
+        if (status != 2) {
             setRightGone();
         }
         addRepariResult();
@@ -110,11 +113,20 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
             }
         });
         setRightTitleOnClickListener((v) -> {
-            // 掉编辑接口
-            tagWorkType.setEnabled(true);
+            doRevoke();
         });
     }
 
+    /**
+     * 重新编辑
+     */
+    private void doRevoke() {
+        EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    // 掉编辑接口
+                    tagWorkType.setEnabled(true);
+                }));
+    }
 
     private void commit() {
         List<Integer> checkList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == true
