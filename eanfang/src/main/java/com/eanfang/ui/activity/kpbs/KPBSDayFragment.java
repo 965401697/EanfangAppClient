@@ -385,14 +385,6 @@ public class KPBSDayFragment extends BaseFragment {
         mPopWindow.showAsDropDown(tvKpbs, 0, 2);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
     /*
        * 毫秒转化时分秒毫秒
        */

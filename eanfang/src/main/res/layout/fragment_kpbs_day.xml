@@ -178,6 +178,7 @@
                         android:layout_width="@dimen/dimen_128"
                         android:layout_height="@dimen/dimen_58"
                         android:layout_marginRight="@dimen/dimen_26"
+                        android:textColor="@drawable/selector_text_kpbs"
                         android:background="@drawable/selector_kpbs"
                         android:button="@color/transparent"
                         android:checked="true"
@@ -188,6 +189,7 @@
                         android:id="@+id/rb_ruselt_kpbs"
                         android:layout_width="@dimen/dimen_128"
                         android:layout_height="@dimen/dimen_58"
+                        android:textColor="@drawable/selector_text_kpbs"
                         android:background="@drawable/selector_kpbs"
                         android:button="@color/transparent"
                         android:gravity="center"
@@ -229,9 +231,9 @@
                         android:layout_width="@dimen/dimen_128"
                         android:layout_height="@dimen/dimen_58"
                         android:layout_marginRight="@dimen/dimen_26"
-                        android:background="@drawable/selector_kpbs"
-
                         android:button="@color/transparent"
+                        android:textColor="@drawable/selector_text_kpbs"
+                        android:background="@drawable/selector_kpbs"
                         android:checked="true"
                         android:gravity="center"
                         android:text="分辨率" />
@@ -240,8 +242,8 @@
                         android:id="@+id/rb_kpbs"
                         android:layout_width="@dimen/dimen_128"
                         android:layout_height="@dimen/dimen_58"
+                        android:textColor="@drawable/selector_text_kpbs"
                         android:background="@drawable/selector_kpbs"
-
                         android:button="@color/transparent"
                         android:gravity="center"
                         android:text="码率" />
