@@ -94,11 +94,19 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
         llDependPerson.setOnClickListener(this);
         llComit.setOnClickListener(this);
 
-        maintenanceDetailAdapter = new AddTaskDetailAdapter(R.layout.item_quotation_detail, beanList);
+        maintenanceDetailAdapter = new AddTaskDetailAdapter(R.layout.item_question_detail, beanList);
         taskDetialList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         taskDetialList.setLayoutManager(new LinearLayoutManager(this));
         taskDetialList.setAdapter(maintenanceDetailAdapter);
+        maintenanceDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    maintenanceDetailAdapter.remove(position);
+                }
+            }
+        });
 
         etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());

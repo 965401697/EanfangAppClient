@@ -118,11 +118,19 @@ public class CheckActivity extends BaseWorkerActivity {
             startActivityForResult(intent, REQUEST_ADD_CODE);
         });
 
-        maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_quotation_detail, beanList);
+        maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_question_detail, beanList);
         checkDetailList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         checkDetailList.setLayoutManager(new LinearLayoutManager(this));
         checkDetailList.setAdapter(maintenanceDetailAdapter);
+        maintenanceDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    maintenanceDetailAdapter.remove(position);
+                }
+            }
+        });
     }
 
 

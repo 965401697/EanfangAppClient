@@ -124,23 +124,48 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         llReportType.setOnClickListener(this);
 //        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
 
-        addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, beanList);
+        addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, beanList);
         reportCompleteList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportCompleteList.setLayoutManager(new LinearLayoutManager(this));
         reportCompleteList.setAdapter(addReportDetialAdapter);
+        addReportDetialAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId()==R.id.tv_delete){
+                    addReportDetialAdapter.remove(position);
+                }
+            }
+        });
 
-        findAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, findList);
+        findAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, findList);
         reportFindList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportFindList.setLayoutManager(new LinearLayoutManager(this));
         reportFindList.setAdapter(findAdapter);
+        findAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId()==R.id.tv_delete){
+                    findAdapter.remove(position);
+                }
+            }
+        });
 
-        planAdapter = new AddReportDetailAdapter(R.layout.item_quotation_detail, planList);
+
+        planAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, planList);
         reportPlanList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         reportPlanList.setLayoutManager(new LinearLayoutManager(this));
         reportPlanList.setAdapter(planAdapter);
+        planAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if(view.getId()==R.id.tv_delete){
+                    planAdapter.remove(position);
+                }
+            }
+        });
 
         getData();
     }

@@ -83,7 +83,7 @@ public class CheckActivity extends BaseClientActivity {
     private AddCheckDetailAdapter maintenanceDetailAdapter;
     private Long assigneeUserId;
     private String assigneeOrgCode;
-    private static int CHECK_REQUEST_CODE=101;
+    private static int CHECK_REQUEST_CODE = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +115,19 @@ public class CheckActivity extends BaseClientActivity {
             startActivityForResult(intent, CHECK_REQUEST_CODE);
         });
 
-        maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_quotation_detail, beanList);
+        maintenanceDetailAdapter = new AddCheckDetailAdapter(R.layout.item_question_detail, beanList);
         checkDetailList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         checkDetailList.setLayoutManager(new LinearLayoutManager(this));
         checkDetailList.setAdapter(maintenanceDetailAdapter);
+        maintenanceDetailAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.tv_delete) {
+                    maintenanceDetailAdapter.remove(position);
+                }
+            }
+        });
     }
 
 
@@ -241,9 +249,9 @@ public class CheckActivity extends BaseClientActivity {
 
         detailBean = (WorkAddCheckBean.WorkInspectDetailsBean) data.getSerializableExtra("result");
         beanList.add(detailBean);
-        checkDetailList.addOnItemTouchListener(new OnItemClickListener() {
+        maintenanceDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 new CheckInfoView(CheckActivity.this, true, beanList.get(position)).show();
             }
         });
