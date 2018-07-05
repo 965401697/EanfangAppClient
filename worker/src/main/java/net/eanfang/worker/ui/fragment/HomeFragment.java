@@ -220,16 +220,16 @@ public class HomeFragment extends BaseFragment {
         List<String> data = new ArrayList<>();
         List<String> titleList = new ArrayList<>();
 
-        String repairStr = "通过易安防进行了报修。";
-        String installStr = "通过易安防提交了一个报装需求";
-        String quoteStr = "通过易安防获得了一次免费报价";
-        String applyStr = "通过易安防接到了一个活儿";
-        String designStr = "通过易安防获得了进行了免费设计";
+        String repairStr = "通过易安防接到了一个报修订单。";
+        String installStr = "通过易安防完成了一次报装订单。";
+        String quoteStr = "通过易安防进行了一次报价。";
+        String applyStr = "通过易安防接到了一个大工程。";
+        String designStr = "通过易安防接到了一个设计订单。";
 
         if (list != null && !list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 NoticeEntity noticeEntity = list.get(i);
-                if (noticeEntity.getNoticeType() == 12) {
+                if (noticeEntity.getNoticeType() == 13) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 27) {
                     data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
