@@ -24,6 +24,9 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
@@ -35,6 +38,7 @@ import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.contacts.CompanyManagerActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
+import net.eanfang.client.ui.base.ClientApplication;
 import net.eanfang.client.ui.widget.CreateTeamView;
 
 import java.util.Collections;
@@ -243,8 +247,7 @@ public class ContactsFragment extends BaseFragment {
 //        findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                //开启我的群组列表
-//                startActivity(new Intent(getActivity(), SelectContactActivity.class));
+//
 //            }
 //        });
 
@@ -259,7 +262,6 @@ public class ContactsFragment extends BaseFragment {
             }
         });
     }
-
 
     @Override
     protected void setListener() {

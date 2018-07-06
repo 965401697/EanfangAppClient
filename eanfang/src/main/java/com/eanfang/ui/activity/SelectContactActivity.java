@@ -81,9 +81,9 @@ public class SelectContactActivity extends BaseActivity {
         findViewById(R.id.rl_attention).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("net.eanfang.client.action.MYGROUPLIST");
-                intent.putExtra("isVisible", true);
-                startActivity(intent);
+//                Intent intent = new Intent("net.eanfang.client.action.MYGROUPLIST");
+//                intent.putExtra("isVisible", true);
+//                startActivity(intent);
             }
         });
 

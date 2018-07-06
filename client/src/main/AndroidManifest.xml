@@ -132,32 +132,7 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.VIEW" /> -->
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-            <!-- <data android:scheme="wx11d1a11a2f79200a" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-
-        <!-- <activity -->
-        <!-- android:name=".wxapi.WXPayEntryActivity" -->
-        <!-- android:configChanges="keyboardHidden|screenSize|orientation" -->
-        <!-- android:exported="true" -->
-        <!-- android:launchMode="singleTop" -->
-        <!-- android:screenOrientation="portrait" -->
-        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.VIEW" /> -->
-
-
-        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-
-
-        <!-- <data android:scheme="sdksample" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+            android:launchMode="singleTop"></activity>
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -173,6 +148,8 @@
                 <data android:scheme="wx11d1a11a2f79200a" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
@@ -307,7 +284,7 @@
         <!-- 群组创建 -->
         <activity android:name=".ui.activity.im.GroupCreatActivity" />
         <!-- 群组列表 -->
-        <activity android:name=".ui.activity.im.MyGroupsListActivity" >
+        <activity android:name=".ui.activity.im.MyGroupsListActivity">
 
             <intent-filter>
                 <action android:name="net.eanfang.client.action.MYGROUPLIST" />

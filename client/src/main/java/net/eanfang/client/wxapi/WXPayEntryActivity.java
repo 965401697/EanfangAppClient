@@ -5,12 +5,12 @@
 
 package net.eanfang.client.wxapi;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.ui.base.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -19,6 +19,8 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import net.eanfang.client.ui.activity.pay.PayActivity;
 
 
 /**
@@ -32,7 +34,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        iwxapi = WXAPIFactory.createWXAPI(this,  EanfangConst.WX_APPID_CLIENT);
+        iwxapi = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
         iwxapi.handleIntent(getIntent(), this);
     }
 
@@ -56,6 +58,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
             switch (baseResp.errCode) {
                 case 0:
                     Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+                    for (Activity a : transactionActivities) {
+                        if (a instanceof PayActivity) {
+                            ((PayActivity) a).finishSelf();
+                        }
+                    }
+                    finish();
                     break;
                 case -1:
                     Toast.makeText(this, "支付失败！！！", Toast.LENGTH_SHORT).show();
@@ -66,12 +74,14 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
                 default:
                     break;
             }
-            Intent intent = new Intent(EanfangConst.ACTION_WX_PAY_SUCCESS);
-            Bundle bundle = new Bundle();
-            bundle.putInt("weChatPaymentCode", baseResp.errCode);
-            intent.putExtras(bundle);
-            sendBroadcast(intent);
-            finish();
+//            Intent intent = new Intent(EanfangConst.ACTION_WX_PAY_SUCCESS);
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("weChatPaymentCode", baseResp.errCode);
+//            intent.putExtras(bundle);
+//            sendBroadcast(intent);
+//            finish();
+
+
         } else {
             finish();
         }

@@ -12,30 +12,25 @@ import java.io.Serializable;
 
 public class WXPayBean implements Serializable {
 
-
     /**
+     * package : Sign=WXPay
      * appid : wx11d1a11a2f79200a
-     * mchId : 1416487802
-     * nonceStr : 03DHv5b8NKkjOzAM
-     * prepayId : wx281759408679680eddc693133264836461
-     * resultCode : SUCCESS
-     * returnCode : SUCCESS
-     * returnMsg : OK
-     * sign : 4EBB37DDF0D4F8E11F0C3BFAB8FA4FC9
-     * tradeType : APP
-     * xmlString : <xml><return_code><![CDATA[SUCCESS]]></return_code> <return_msg><![CDATA[OK]]></return_msg> <appid><![CDATA[wx11d1a11a2f79200a]]></appid> <mch_id><![CDATA[1416487802]]></mch_id> <nonce_str><![CDATA[03DHv5b8NKkjOzAM]]></nonce_str> <sign><![CDATA[4EBB37DDF0D4F8E11F0C3BFAB8FA4FC9]]></sign> <result_code><![CDATA[SUCCESS]]></result_code> <prepay_id><![CDATA[wx281759408679680eddc693133264836461]]></prepay_id> <trade_type><![CDATA[APP]]></trade_type> </xml>
+     * sign : 35A918335B246D83F4F31D29A0BF1E03D59298242AD66DA7B1F4290AD071C5AD
+     * partnerid : 1416487802
+     * prepayid : wx06183500920638bb9d198cdb0012624597
+     * noncestr : cU2QyKu0xKITye5I
+     * timestamp : 1530873302
      */
 
+
     private String appid;
-    private String mchId;
-    private String nonceStr;
-    private String prepayId;
-    private String resultCode;
-    private String returnCode;
-    private String returnMsg;
     private String sign;
-    private String tradeType;
-    private String xmlString;
+    private String partnerid;
+    private String prepayid;
+    private String noncestr;
+    private String timestamp;
+
+
 
     public String getAppid() {
         return appid;
@@ -43,54 +38,6 @@ public class WXPayBean implements Serializable {
 
     public void setAppid(String appid) {
         this.appid = appid;
-    }
-
-    public String getMchId() {
-        return mchId;
-    }
-
-    public void setMchId(String mchId) {
-        this.mchId = mchId;
-    }
-
-    public String getNonceStr() {
-        return nonceStr;
-    }
-
-    public void setNonceStr(String nonceStr) {
-        this.nonceStr = nonceStr;
-    }
-
-    public String getPrepayId() {
-        return prepayId;
-    }
-
-    public void setPrepayId(String prepayId) {
-        this.prepayId = prepayId;
-    }
-
-    public String getResultCode() {
-        return resultCode;
-    }
-
-    public void setResultCode(String resultCode) {
-        this.resultCode = resultCode;
-    }
-
-    public String getReturnCode() {
-        return returnCode;
-    }
-
-    public void setReturnCode(String returnCode) {
-        this.returnCode = returnCode;
-    }
-
-    public String getReturnMsg() {
-        return returnMsg;
-    }
-
-    public void setReturnMsg(String returnMsg) {
-        this.returnMsg = returnMsg;
     }
 
     public String getSign() {
@@ -101,20 +48,36 @@ public class WXPayBean implements Serializable {
         this.sign = sign;
     }
 
-    public String getTradeType() {
-        return tradeType;
+    public String getPartnerid() {
+        return partnerid;
     }
 
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
+    public void setPartnerid(String partnerid) {
+        this.partnerid = partnerid;
     }
 
-    public String getXmlString() {
-        return xmlString;
+    public String getPrepayid() {
+        return prepayid;
     }
 
-    public void setXmlString(String xmlString) {
-        this.xmlString = xmlString;
+    public void setPrepayid(String prepayid) {
+        this.prepayid = prepayid;
+    }
+
+    public String getNoncestr() {
+        return noncestr;
+    }
+
+    public void setNoncestr(String noncestr) {
+        this.noncestr = noncestr;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
 

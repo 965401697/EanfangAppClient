@@ -168,7 +168,7 @@ public class KPBSDayFragment extends BaseFragment {
                 int day = 0;
                 float kpbs = 0.0f;
                 if (!TextUtils.isEmpty(currentKpbs)) {
-                    kpbs = Float.parseFloat(currentKpbs.split("M")[0]);
+                    kpbs = Float.parseFloat(currentKpbs.split("M")[0]) * 1024;
                 }
                 if (!TextUtils.isEmpty(etVidiconNum.getText().toString().trim())) {
                     vidiconNum = Integer.parseInt(etVidiconNum.getText().toString().trim());
@@ -221,14 +221,15 @@ public class KPBSDayFragment extends BaseFragment {
                     double d = SplitAndRound(Double.parseDouble(String.valueOf((kpbs * 60 * 60 * 24 * day * vidiconNum / 8 / 1024 / 1024 / 1024))), 2);
                     if (d < 0.99d) {
                         tvResult.setText(String.valueOf(d * 1024) + "GB");
-                    } else if (d < 1.00d) {
-                        tvResult.setText(String.valueOf(d) + "TB");
-                    } else {
+                    }
+//                    else if (d < 1.00d) {
+//                        tvResult.setText(String.valueOf(d) + "TB");
+//                    }
+                    else {
                         tvResult.setText(String.valueOf(Math.rint(d)) + "TB");
                     }
                 } else {
                     double temp = new BigDecimal((String.valueOf((sdNum * 1024 * 1024 * 1024)))).multiply(new BigDecimal("8")).doubleValue();
-//                    new BigDecimal((String.valueOf((sdNum * 1024 * 1024 * 1024)))).multiply(new BigDecimal("8")).doubleValue()
                     double kp = Double.parseDouble(String.valueOf(temp / day / 60 / 60 / 24 / vidiconNum / 1024));
                     if (rbRuseltDis.isChecked()) {
                         int o = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[0]);

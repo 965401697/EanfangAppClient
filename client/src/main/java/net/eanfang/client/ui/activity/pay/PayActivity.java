@@ -14,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -27,12 +26,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
-import com.tencent.mm.opensdk.constants.ConstantsAPI;
-import com.tencent.mm.opensdk.modelbase.BaseReq;
-import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yaf.base.entity.PayLogEntity;
 
@@ -42,8 +37,13 @@ import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
 
+import java.security.MessageDigest;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,6 +133,8 @@ public class PayActivity extends BaseClientActivity {
         setListener();
         setLeftBack();
         setTitle("支付中心");
+
+        startTransaction(true);
     }
 
     private void initData() {
@@ -272,41 +274,23 @@ public class PayActivity extends BaseClientActivity {
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);
-                        wxPayBean = bean;
-                        // Config.get().setAppId(wxPayBean.getAppid());
-//                        new Thread(() -> {
-                        try {
-//                            final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
-                            // 将该app注册到微信
-//                            msgApi.registerApp(wxPayBean.getAppid());
-                            PayReq request = new PayReq();
-                            request.appId = wxPayBean.getAppid();
-                            request.partnerId = wxPayBean.getMchId();
-                            request.prepayId = wxPayBean.getPrepayId();
-                            request.packageValue = "Sign=WXPay";
-                            request.nonceStr = wxPayBean.getNonceStr();
-//                            request.signType = "MD5";
-                            request.timeStamp = String.valueOf(System.currentTimeMillis() / 1000);
-                            request.sign = "asdfasdfasdfasdfasd";
-//                            request.sign = wxPayBean.getSign();
-                            boolean isOk = ClientApplication.getWxApi().sendReq(request);
-                            Log.e("zzw", "异常：" + isOk);
-//                        }).start();
-                        } catch (Exception e) {
-                            Log.e("zzw", "异常：" + e.getMessage());
-                            Toast.makeText(PayActivity.this, "异常：" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        }
+                        PayReq request = new PayReq();
+                        request.appId = bean.getAppid();
+                        request.partnerId = bean.getPartnerid();
+                        request.prepayId = bean.getPrepayid();
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = bean.getNoncestr();
+                        request.timeStamp = bean.getTimestamp();
+                        request.signType = "MD5";
+                        request.sign = bean.getSign();
+                        ClientApplication.getWxApi().sendReq(request);
+
                     }
                 });
     }
 
-    /**
-     * 判断手机是否安装微信
-     *
-     * @param mContext
-     * @return
-     */
+
     private boolean isWeixinAvilible(Context mContext) {
         final PackageManager packageManager = mContext.getPackageManager();// 获取packagemanager
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息

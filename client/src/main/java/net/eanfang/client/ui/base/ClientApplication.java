@@ -24,6 +24,7 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class ClientApplication extends EanfangApplication {
     private static IWXAPI api;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,7 +39,9 @@ public class ClientApplication extends EanfangApplication {
 
 
             //初始化微信支付
-            api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT,true);
+            api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
+
+            api.registerApp(EanfangConst.WX_APPID_CLIENT);
         }
 
     }
@@ -46,6 +49,7 @@ public class ClientApplication extends EanfangApplication {
     public static IWXAPI getWxApi() {
         return api;
     }
+
     /**
      * 融云的token
      *
