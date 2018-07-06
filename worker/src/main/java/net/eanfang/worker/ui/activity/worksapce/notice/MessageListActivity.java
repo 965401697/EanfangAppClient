@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.camera.util.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -21,6 +24,8 @@ import com.eanfang.model.NoticeListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.tencent.android.tpush.XGPushClickedResult;
+import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
@@ -74,6 +79,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
         initData();
         initListener();
     }
+
 
     private void initView() {
         setTitle("通知提醒");
@@ -241,7 +247,21 @@ public class MessageListActivity extends BaseWorkerActivity implements
         super.onResume();
         page = 1;
         getJPushMessage();
+
+        XGPushManager.onActivityStarted(this);
+        XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);
+        Log.d("TPush", "onResumeXGPushClickedResult:" + clickedResult);
+        if (clickedResult != null) { // 判断是否来自信鸽的打开方式
+            Toast.makeText(this, "通知被点击:" + clickedResult.toString(),
+                    Toast.LENGTH_SHORT).show();
+            if (clickedResult != null) {
+                String title = clickedResult.getTitle();
+                LogUtil.v("TPush", "title:" + title);
+                String id = clickedResult.getMsgId() + "";
+                LogUtil.v("TPush", "id:" + id);
+                String content = clickedResult.getContent();
+                LogUtil.v("TPush", "content:" + content);
+            }
+        }
     }
-
-
 }

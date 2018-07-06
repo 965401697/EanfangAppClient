@@ -1,5 +1,7 @@
 package com.eanfang.ui.base.voice;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.view.View;
 
@@ -20,10 +22,12 @@ import com.iflytek.cloud.SpeechSynthesizer;
  * @author Guanluocang
  * @date on 2018/7/3$  10:43$
  */
-public class SynthesizerPresenter extends MySynthesizerListener{
+public class SynthesizerPresenter extends MySynthesizerListener {
 
     private SpeechSynthesizer mTts;
     private MySynthesizerListener mTtsListener;
+
+    private AudioManager mAudioManager;
 
     private volatile static SynthesizerPresenter mSynthesizerPresenter;
 
@@ -79,10 +83,15 @@ public class SynthesizerPresenter extends MySynthesizerListener{
 
         mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");// 设置在线合成发音人
         mTts.setParameter(SpeechConstant.SPEED, "60");//设置合成语速
-        mTts.setParameter(SpeechConstant.PITCH, "50");//设置合成音调
-        mTts.setParameter(SpeechConstant.VOLUME, "50");//设置合成音量
-        mTts.setParameter(SpeechConstant.STREAM_TYPE, "1");//设置播放器音频流类型 1 系统
+        mTts.setParameter(SpeechConstant.PITCH, "60");//设置合成音调
+        mTts.setParameter(SpeechConstant.VOLUME, "100");//设置合成音量
+        mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");//设置播放器音频流类型 1 系统
         mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true");// 设置播放合成音频打断音乐播放，默认为true
+        //把音乐音量强制设置为最大音量
+        mAudioManager = (AudioManager) EanfangApplication.get().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        int mVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); // 获取当前音乐音量
+        int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);// 获取最大声音
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0);
 
         if (!StringUtils.isEmpty(answer)) {
             doAnswer(answer);
