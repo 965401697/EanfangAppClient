@@ -29,10 +29,12 @@ import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionsCallBack;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.model.LoginBean;
 import com.jaeger.library.StatusBarUtil;
+import com.yaf.base.entity.WorkerEntity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -100,7 +102,11 @@ public class BaseActivity extends AppCompatActivity implements
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        EventBus.getDefault().register(this);
+
+        //确保之前未订阅过，再调用订阅语句，以免报错
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         loadingDialog = DialogUtil.createLoadingDialog(this);
         RegListener();
 
@@ -134,7 +140,6 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
     }
 
     public void setLeftBack() {
@@ -219,7 +224,6 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
     }
 
 /*    @Override
@@ -261,7 +265,10 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //取消订阅
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         CustomeApplication.get().pull(this);
         this.unregisterReceiver(exitre);
     }
@@ -337,6 +344,5 @@ public class BaseActivity extends AppCompatActivity implements
             ((Activity) context).finish();
         }
     }
-
 
 }

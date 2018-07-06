@@ -52,7 +52,7 @@ android {
         }
         release {
 
-            buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
 
@@ -102,7 +102,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'
 
     // add library
-    compile 'com.alibaba:fastjson:1.2.41'
+    compile 'com.alibaba:fastjson:1.2.47'
 
     //takephoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
@@ -138,18 +138,14 @@ dependencies {
 
     //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
 
-    //信鸽3.2.0 稳定版本
-
     //信鸽jar
-    compile 'com.tencent.xinge:xinge:3.2.4-beta'
-
+    compile 'com.tencent.xinge:xinge:3.2.3-release'
     //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-release'
-
     //mid包
     compile 'com.tencent.mid:mid:4.0.6-release'
     //在集成信鸽的基础上新增华为push的jar包
-    compile 'com.tencent.xinge:xghw:3.2.4-beta'
+    compile 'com.tencent.xinge:xghw:2.5.2.300-release'
 
     //微信
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'

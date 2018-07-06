@@ -48,6 +48,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.yaf.base.entity.WorkerEntity;
@@ -56,6 +57,7 @@ import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -87,11 +89,35 @@ public class MainActivity extends BaseActivity {
     private long mExitTime;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        JumpItent.jump(MainActivity.this, MessageListActivity.class);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        XGPushManager.onActivityStoped(this);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
+        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
+        if (message != null) {
+            // 获取自定义key-value String customContent = message.getCustomContent();
+            //拿到数据自行处理
+            if (isTaskRoot()) {
+                return;
+            }
+            //如果有面板存在则关闭当前的面板
+            finish();
+        }
         setHeaders();
         initXinGe();
         initFragment();
@@ -235,17 +261,19 @@ public class MainActivity extends BaseActivity {
 
 
     private void registerXinGe() {
-        //开启信鸽日志输出
-//        XGPushConfig.enableDebug(this, true);
-        XGPushConfig.setHuaweiDebug(true);
         // 打开第三方推送
         XGPushConfig.enableOtherPush(getApplicationContext(), true);
+        //开启信鸽日志输出
+//        XGPushConfig.enableDebug(this, true);
+
+//        XGPushConfig.setHuaweiDebug(true);
+
 
         //信鸽注册代码
         XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
-                        Log.e("TPush", "注册成功，设备token为：" + data);
+                Log.e("TPush", "注册成功，设备token为：" + data);
                 // Var.get("MainActivity.initXinGe").setVar(1);
             }
 

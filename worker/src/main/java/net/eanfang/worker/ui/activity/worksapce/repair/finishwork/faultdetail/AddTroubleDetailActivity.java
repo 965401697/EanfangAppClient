@@ -75,6 +75,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     TextView tvDeviceNo;
     @BindView(R.id.tv_device_location)
     TextView tvDeviceLocation;
+    // 故障简述
+    @BindView(R.id.et_trouble_sketch)
+    EditText etTroubleSketch;
+    // 故障描述
     @BindView(R.id.et_trouble_desc)
     EditText etTroubleDesc;
     // 过程方法
@@ -239,6 +243,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         }
         tvDeviceNo.setText(Optional.ofNullable(failureEntity.getDeviceNo()).orElse(""));
         tvDeviceLocation.setText(Optional.ofNullable(failureEntity.getBugPosition()).orElse(""));
+        etTroubleSketch.setText(Optional.ofNullable(failureEntity.getSketch()).orElse(""));
         etTroubleDesc.setText(Optional.ofNullable(failureEntity.getBugDescription()).orElse(""));
 
         if (detailEntity == null || detailEntity.getParamEntityList() == null) {
@@ -319,6 +324,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         detailEntity.setBusRepairFailureId(failureId);
         //故障描述
         repairFailureEntity.setBugDescription(etTroubleDesc.getText().toString().trim());
+        repairFailureEntity.setSketch(etTroubleSketch.getText().toString().trim());
         repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(mIsRepairError));
         detailEntity.setFailureEntity(repairFailureEntity);
         //   使用建议
@@ -348,6 +354,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     private boolean checkData() {
         if (StringUtils.isEmpty(etTroubleDesc.getText().toString().trim())) {
             showToast("请输入故障描述");
+            return false;
+        }
+        if (StringUtils.isEmpty(etTroubleSketch.getText().toString().trim())) {
+            showToast("请输入故障简述");
             return false;
         }
         if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
