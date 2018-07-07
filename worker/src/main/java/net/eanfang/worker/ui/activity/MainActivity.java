@@ -262,7 +262,7 @@ public class MainActivity extends BaseActivity {
 
     private void registerXinGe() {
         // 打开第三方推送
-        XGPushConfig.enableOtherPush(getApplicationContext(), true);
+        XGPushConfig.enableOtherPush(MainActivity.this, true);
         //开启信鸽日志输出
 //        XGPushConfig.enableDebug(this, true);
 

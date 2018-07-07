@@ -82,8 +82,8 @@ public class SynthesizerPresenter extends MySynthesizerListener {
         mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
 
         mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");// 设置在线合成发音人
-        mTts.setParameter(SpeechConstant.SPEED, "60");//设置合成语速
-        mTts.setParameter(SpeechConstant.PITCH, "60");//设置合成音调
+        mTts.setParameter(SpeechConstant.SPEED, "75");//设置合成语速
+        mTts.setParameter(SpeechConstant.PITCH, "45");//设置合成音调
         mTts.setParameter(SpeechConstant.VOLUME, "100");//设置合成音量
         mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");//设置播放器音频流类型 1 系统
         mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true");// 设置播放合成音频打断音乐播放，默认为true

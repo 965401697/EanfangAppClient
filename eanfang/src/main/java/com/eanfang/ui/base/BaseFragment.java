@@ -193,7 +193,9 @@ public abstract class BaseFragment extends Fragment implements IBase {
     @Override
     public void onDestroyView() {
         this.mActivity = null;
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         super.onDestroyView();
     }
 
