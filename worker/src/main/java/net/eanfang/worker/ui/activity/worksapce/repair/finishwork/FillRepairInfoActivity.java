@@ -207,7 +207,11 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         new Thread(() -> {
             // 获取经纬度
             LocationUtil.location(this, (location) -> {
-                mAddress = location.getCity() + location.getDistrict();
+                // mAddress = location.getCity() + location.getDistrict();
+                mAddress = location.getAddress();
+                if (!mAddress.contains("(")) {
+                    mAddress += " (" + location.getDescription() + ")";
+                }
                 mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
             });
         }).start();

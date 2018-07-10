@@ -137,7 +137,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         tvAddFault.setOnClickListener(v -> {
             Intent intent = new Intent(PhoneSolveRepairInfoActivity.this, AddTroubleActivity.class);
             intent.putExtra("repaid", id);
-            intent.putExtra("clientCompanyUid",clientCompanyUid);
+            intent.putExtra("clientCompanyUid", clientCompanyUid);
             startActivityForResult(intent, 10003);
         });
 
@@ -181,7 +181,10 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         new Thread(() -> {
             // 获取经纬度
             LocationUtil.location(this, (location) -> {
-                mAddress = location.getCity() + location.getDistrict();
+                mAddress = location.getAddress();
+                if (!mAddress.contains("(")) {
+                    mAddress += " (" + location.getDescription() + ")";
+                }
                 mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
             });
         }).start();
