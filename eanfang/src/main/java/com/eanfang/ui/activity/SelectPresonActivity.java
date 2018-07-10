@@ -222,7 +222,10 @@ public class SelectPresonActivity extends BaseActivity {
                 treeItems = ((OrgSelectGroupMultipleItem) parentItem).getSelectItems();
                 for (TreeItem t : treeItems) {
                     TemplateBean.Preson preson = ((OrgSelectItem) t).getData();
-                    presonList.add(preson);
+                    if (!presonList.contains(preson)) {
+                        presonList.add(preson);
+                    }
+
                 }
             } else if (parentItem instanceof OrgSelectGroupSingleItem) {
                 if (oldPreson != null) {

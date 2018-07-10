@@ -427,7 +427,8 @@
         <activity
             android:name=".ui.activity.my.AuthPhotoActivity"
             android:screenOrientation="portrait" />
-
+        <!--选择IM联系人-->
+        <activity android:name=".ui.activity.im.SelectIMContactActivity" />
     </application>
 
 </manifest>

@@ -36,6 +36,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
+
 /**
  * 进群的二维码
  */
@@ -197,5 +198,6 @@ public class AddGroupActivity extends BaseClientActivity {
                     RongIM.getInstance().refreshGroupInfoCache(groupInfo);
                 }));
     }
+
 
 }

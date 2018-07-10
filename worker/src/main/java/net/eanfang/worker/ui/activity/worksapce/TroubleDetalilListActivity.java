@@ -53,12 +53,13 @@ public class TroubleDetalilListActivity extends BaseDialog {
     private int isPhoneSolve;
     private Intent intent;
     private List<BughandleConfirmEntity> mDataList;
-
-    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve) {
+    private boolean isVisible;
+    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve,boolean isVisible) {
         super(context, isfull);
         this.mContext = context;
         this.busRepairOrderId = id;
         this.isPhoneSolve = isPhoneSolve;
+        this.isVisible = isVisible;
     }
 
     @Override
@@ -106,6 +107,7 @@ public class TroubleDetalilListActivity extends BaseDialog {
         intent.putExtra("orderId", mDataList.get(position).getId());
         intent.putExtra("phoneSolve", isPhoneSolve);
         intent.putExtra("bean", mDataList.get(position));
+        intent.putExtra("isVisible", isVisible);
         mContext.startActivity(intent);
     }
 

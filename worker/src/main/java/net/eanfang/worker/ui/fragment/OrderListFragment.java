@@ -200,7 +200,7 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUser().getAccountEntity().getMobile()));
                         break;
                     case R.id.tv_do_second:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve()).show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(),false).show();
                         break;
                     default:
                         break;
@@ -211,7 +211,7 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve()).show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(),false).show();
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {

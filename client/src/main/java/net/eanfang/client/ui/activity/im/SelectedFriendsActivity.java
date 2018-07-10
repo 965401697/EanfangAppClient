@@ -17,21 +17,25 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +60,7 @@ public class SelectedFriendsActivity extends BaseClientActivity {
     private String mGroupId;
     private String mRYGroupId;
     private String mTitle;
-
+    private List<TemplateBean.Preson> presonList = new ArrayList<>();
 
     Handler handler = new Handler() {
         @Override
@@ -89,7 +93,7 @@ public class SelectedFriendsActivity extends BaseClientActivity {
         setTitle("选择好友");
         setLeftBack();
 
-        //1:创建选着好友  2：群组添加好友
+        //1:创建选着好友  2：群组添加好友 3：分享
         mFlag = getIntent().getIntExtra("flag", 0);
         rightTitleOnClick(mFlag);
 
@@ -103,12 +107,14 @@ public class SelectedFriendsActivity extends BaseClientActivity {
     private void rightTitleOnClick(int flag) {
         if (flag == 1) {
             setRightTitle("下一步");
-        } else {
+        } else if (flag == 2) {
             setRightTitle("确定");
             mGroupId = getIntent().getStringExtra("groupId");
             mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
+        } else {
+            setRightTitle("确定");
         }
 
         setRightTitleOnClickListener(new View.OnClickListener() {
@@ -135,25 +141,12 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                         intent.putStringArrayListExtra("userIconList", mUserIconList);
                         startActivity(intent);
                     }
-                } else {
+                } else if (flag == 2) {
                     AddNumber();
+                } else {
+                    EventBus.getDefault().post(presonList);
+                    finishSelf();
                 }
-            }
-        });
-    }
-
-    private void sendCheckedMsg(String id) {
-        CustomizeMessage customizeMessage =  new CustomizeMessage("我是一个帅哥");
-
-        RongIM.getInstance().sendMessage(Conversation.ConversationType.PRIVATE, id, customizeMessage, "asdf", "asdfasdf", new RongIMClient.SendMessageCallback() {
-            @Override
-            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-
-            }
-
-            @Override
-            public void onSuccess(Integer integer) {
-
             }
         });
     }
@@ -245,12 +238,21 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
+                        presonList.remove(position);
                         if (!TextUtils.isEmpty(bean.getAvatar())) {
                             mUserIconList.remove(bean.getAvatar());
                         }
                         bean.setFlag(0);
                     } else {
                         mUserIdList.add(bean.getAccId());
+
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setName(bean.getNickName());
+                        preson.setId(bean.getAccId());
+                        preson.setProtraivat(bean.getAvatar());
+
+                        presonList.add(preson);
+
                         if (!TextUtils.isEmpty(bean.getAvatar())) {
                             mUserIconList.add(bean.getAvatar());
                         }

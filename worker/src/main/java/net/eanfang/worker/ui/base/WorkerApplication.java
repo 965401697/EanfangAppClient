@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 
+import net.eanfang.worker.ui.activity.im.CustomizeMessage;
+import net.eanfang.worker.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.worker.ui.activity.im.MyConversationClickListener;
 import net.eanfang.worker.ui.activity.im.SampleExtensionModule;
 
@@ -26,6 +28,9 @@ public class WorkerApplication extends EanfangApplication {
 
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
+
+            RongIM.registerMessageType(CustomizeMessage.class);
+            RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
         }
     }
 

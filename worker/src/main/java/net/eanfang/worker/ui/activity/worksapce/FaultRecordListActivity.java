@@ -86,7 +86,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 //                    status = "待确认";
 //                }
 
-                new TroubleDetalilListActivity(FaultRecordListActivity.this, true, bean.getBusRepairOrderId(), isPhoneSolve).show();
+                new TroubleDetalilListActivity(FaultRecordListActivity.this, true, bean.getBusRepairOrderId(), isPhoneSolve,false).show();
 
             }
         });

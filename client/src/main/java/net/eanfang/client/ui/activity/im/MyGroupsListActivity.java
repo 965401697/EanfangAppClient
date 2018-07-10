@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
@@ -26,6 +27,8 @@ import com.eanfang.witget.SideBar;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.GroupsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,51 +52,7 @@ public class MyGroupsListActivity extends BaseClientActivity {
     SideBar sideBar;
 
     private boolean isVisible;
-    private List<String> rongIdLists = new ArrayList<>();
-    private Dialog dialog;
-    private Handler handler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            ToastUtil.get().showToast(MyGroupsListActivity.this, "发送成功");
-        }
-    };
-
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            // TODO Auto-generated method stub
-            //要做的事情，这里再次调用此Runnable对象，以实现每一秒实现一次的定时器操作
-            if (!dialog.isShowing()) {
-                dialog.show();
-            }
-            if (rongIdLists.size() > 5) {
-
-                handler.postDelayed(runnable, 1500);
-                List<String> newRongIdLists = new ArrayList<>();
-
-                newRongIdLists.addAll(rongIdLists);
-                List<String> newLists = rongIdLists.subList(0, 5);
-
-                for (String id : newLists) {
-                    newRongIdLists.remove(id);
-                    sendCheckedMsg(id);
-                }
-                rongIdLists = newRongIdLists;
-
-            } else if (rongIdLists.size() <= 5) {
-                for (String id : rongIdLists) {
-                    sendCheckedMsg(id);
-                }
-                handler.sendEmptyMessage(1);
-                handler.removeCallbacks(runnable);
-                dialog.dismiss();
-                MyGroupsListActivity.this.finishSelf();
-            }
-
-        }
-    };
+    private List<TemplateBean.Preson> groupPresonList = new ArrayList<>();//选中群组的
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,19 +62,20 @@ public class MyGroupsListActivity extends BaseClientActivity {
 
         setTitle("我的群组");
         setLeftBack();
-        dialog = DialogUtil.createLoadingDialog(MyGroupsListActivity.this);
         isVisible = getIntent().getBooleanExtra("isVisible", false);
+        initViews();
+
         if (isVisible) {
-            setRightTitle("发送");
+            setRightTitle("确定");
             setRightTitleOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    handler.post(runnable);//立马发送
+                    EventBus.getDefault().post(groupPresonList);
+                    MyGroupsListActivity.this.finishSelf();
                 }
             });
         }
-        initViews();
-//        initData();
+
     }
 
     private void initData() {
@@ -195,9 +155,14 @@ public class MyGroupsListActivity extends BaseClientActivity {
                         GroupsBean groupsBean = (GroupsBean) adapter.getData().get(position);
 
                         if (groupsBean.isChecked()) {
-                            rongIdLists.remove(groupsBean.getRcloudGroupId());
+                            groupPresonList.remove(position);
                         } else {
-                            rongIdLists.add(groupsBean.getRcloudGroupId());
+                            TemplateBean.Preson preson = new TemplateBean.Preson();
+
+                            preson.setId(groupsBean.getRcloudGroupId());
+                            preson.setProtraivat(groupsBean.getHeadPortrait());
+                            preson.setName(groupsBean.getGroupName());
+                            groupPresonList.add(preson);
                         }
                     }
                 }
@@ -213,21 +178,5 @@ public class MyGroupsListActivity extends BaseClientActivity {
             mGroupsAdapter.notifyDataSetChanged();
         }
         initData();
-    }
-
-    private void sendCheckedMsg(String id) {
-        CustomizeMessage customizeMessage = new CustomizeMessage("法狗必胜");
-
-        RongIM.getInstance().sendMessage(Conversation.ConversationType.GROUP, id, customizeMessage, "asdf", "asdfasdf", new RongIMClient.SendMessageCallback() {
-            @Override
-            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-                Log.e("zzw", "发送失败=" + integer + "=" + errorCode);
-            }
-
-            @Override
-            public void onSuccess(Integer integer) {
-                Log.e("zzw", "发送成功=" + integer);
-            }
-        });
     }
 }

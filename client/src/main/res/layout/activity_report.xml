@@ -206,7 +206,7 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/btn_add_plan"
+                    android:id="@+id/tv_add_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_btn"

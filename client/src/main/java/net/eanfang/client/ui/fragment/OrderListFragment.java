@@ -166,14 +166,14 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认").show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认",false).show();
                         break;
                     case R.id.tv_finish:
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成",false).show();
                         break;
                     default:
                         break;
@@ -188,7 +188,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成",false).show();
 
                         break;
                     case R.id.tv_do_second:// 评价技师

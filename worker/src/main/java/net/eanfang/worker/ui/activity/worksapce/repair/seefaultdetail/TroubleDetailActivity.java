@@ -26,6 +26,7 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail.LookTroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.adapter.repair.TroubleHangListAdapter;
@@ -123,6 +124,11 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private List<TransferLogEntity> transferLogEntityList = new ArrayList<>();
     private TroubleHangListAdapter troubleHangListAdapter;
 
+    private BughandleConfirmEntity bughandleConfirmEntity;
+
+    //聊天分享的必要参数
+    Bundle bundle = new Bundle();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,12 +137,44 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         initView();
         initData();
 
+        if (!getIntent().getBooleanExtra("isVisible", false)) {
+            setRightTitle("分享");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(TroubleDetailActivity.this, SelectIMContactActivity.class);
+
+                    bundle.putString("id", String.valueOf(bughandleConfirmEntity.getBusRepairOrderId()));
+                    bundle.putString("orderNum", (String) bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
+                    if (bughandleConfirmEntity.getDetailEntityList() != null && bughandleConfirmEntity.getDetailEntityList().size() > 0) {
+                        bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
+                    }
+                    bundle.putString("creatTime", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getBugPosition());
+                    if (bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount() != null) {
+                        bundle.putString("workerName", String.valueOf(bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount()));
+                    }
+//                    if (bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getMaintenanceStatus() == 0) {
+//                        bundle.putString("status", "保内");
+//                    } else {
+//                        bundle.putString("status", "保外");
+//                    }
+                    bundle.putString("status", String.valueOf(0));//电话未解决
+                    bundle.putString("shareType", "2");
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+        }
+
     }
 
     private void initData() {
         EanfangHttp.get(RepairApi.GET_BUGHANDLE_DETAIL)
                 .params("id", id)
                 .execute(new EanfangCallback<BughandleConfirmEntity>(this, true, BughandleConfirmEntity.class, (bean) -> {
+                    bughandleConfirmEntity = bean;
                     setData(bean);
                 }));
     }

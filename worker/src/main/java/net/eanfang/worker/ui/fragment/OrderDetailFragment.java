@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +32,7 @@ import net.eanfang.worker.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.worker.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -79,6 +81,9 @@ public class OrderDetailFragment extends BaseFragment {
     // 订单状态
     private int mOrderStatus;
     private Long id;
+
+    //分享用的必要参数
+    private HashMap hashMap = new HashMap();
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -181,6 +186,17 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
+
+                    hashMap.put("id", String.valueOf(bean.getId()));
+                    if (bean.getBugEntityList() != null && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
+                        hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
+                    }
+                    hashMap.put("orderNum", bean.getOrderNum());
+                    hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                    hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    hashMap.put("status", String.valueOf(bean.getStatus()));
+                    hashMap.put("shareType", "1");
+
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
                     tv_contract_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));//联系人
                     tv_contract_phone.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));
@@ -255,4 +271,7 @@ public class OrderDetailFragment extends BaseFragment {
                 }));
     }
 
+    public HashMap getHashMap() {
+        return hashMap;
+    }
 }

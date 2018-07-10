@@ -115,7 +115,7 @@
         <TextView style="@style/style_common_line_gray" />
 
         <RelativeLayout
-            android:id="@+id/rl_attention"
+            android:id="@+id/rl_my_group"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
@@ -126,7 +126,7 @@
                 android:layout_height="@dimen/dimen_70"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dimen_36"
-                android:src="@mipmap/ic_my_focus" />
+                android:src="@mipmap/ic_my_group" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -134,7 +134,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
                 android:layout_toRightOf="@+id/iv_attention"
-                android:text="我关注的人"
+                android:text="我的群组"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 

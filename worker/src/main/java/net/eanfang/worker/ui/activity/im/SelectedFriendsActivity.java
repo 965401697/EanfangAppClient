@@ -2,10 +2,9 @@ package net.eanfang.worker.ui.activity.im;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,6 +17,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ToastUtil;
@@ -28,16 +28,22 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+import io.rong.message.TextMessage;
 
 public class SelectedFriendsActivity extends BaseWorkerActivity {
 
@@ -53,7 +59,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
     private String mGroupId;
     private String mRYGroupId;
     private String mTitle;
-
+    private List<TemplateBean.Preson> presonList = new ArrayList<>();
 
     Handler handler = new Handler() {
         @Override
@@ -86,7 +92,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
         setTitle("选择好友");
         setLeftBack();
 
-        //1:创建选着好友  2：群组添加好友
+        //1:创建选着好友  2：群组添加好友 3：分享
         mFlag = getIntent().getIntExtra("flag", 0);
         rightTitleOnClick(mFlag);
 
@@ -100,12 +106,14 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
     private void rightTitleOnClick(int flag) {
         if (flag == 1) {
             setRightTitle("下一步");
-        } else {
+        } else if (flag == 2) {
             setRightTitle("确定");
             mGroupId = getIntent().getStringExtra("groupId");
             mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
+        } else {
+            setRightTitle("确定");
         }
 
         setRightTitleOnClickListener(new View.OnClickListener() {
@@ -116,6 +124,10 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     if (mUserIdList.size() == 1) {
                         //说明单聊
                         RongIM.getInstance().startPrivateChat(SelectedFriendsActivity.this, mUserIdList.get(0), mCurrentBean.getNickName());
+
+//                        sendCheckedMsg(mUserIdList.get(0));
+
+
                     } else {
 
                         if (mUserIdList.size() <= 1) {
@@ -128,8 +140,11 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                         intent.putStringArrayListExtra("userIconList", mUserIconList);
                         startActivity(intent);
                     }
-                } else {
+                } else if (flag == 2) {
                     AddNumber();
+                } else {
+                    EventBus.getDefault().post(presonList);
+                    finishSelf();
                 }
             }
         });
@@ -222,11 +237,24 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
-                        mUserIconList.remove(bean.getAvatar());
+                        presonList.remove(position);
+                        if (!TextUtils.isEmpty(bean.getAvatar())) {
+                            mUserIconList.remove(bean.getAvatar());
+                        }
                         bean.setFlag(0);
                     } else {
                         mUserIdList.add(bean.getAccId());
-                        mUserIconList.add(bean.getAvatar());
+
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setName(bean.getNickName());
+                        preson.setId(bean.getAccId());
+                        preson.setProtraivat(bean.getAvatar());
+
+                        presonList.add(preson);
+
+                        if (!TextUtils.isEmpty(bean.getAvatar())) {
+                            mUserIconList.add(bean.getAvatar());
+                        }
                         bean.setFlag(1);
                         mCurrentBean = bean;
                     }

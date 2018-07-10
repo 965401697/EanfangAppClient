@@ -100,6 +100,35 @@ public class TemplateBean extends BaseItemData implements Serializable {
         public void setChecked(boolean checked) {
             isChecked = checked;
         }
+
+
+        /**
+         * 如果对象类型是User,先比较hashcode，一致的场合再比较每个属性的值
+         */
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null)
+                return false;
+            if (this == obj)
+                return true;
+            if (obj instanceof Preson) {
+                Preson preson = (Preson) obj;
+
+                // 比较每个属性的值 一致时才返回true
+                if (preson.id.equals(this.id) && preson.name.equals(this.name))
+                    return true;
+            }
+            return false;
+        }
+
+        /**
+         * 重写hashcode 方法，返回的hashCode不一样才再去比较每个属性的值
+         */
+        @Override
+        public int hashCode() {
+            return id.hashCode() * name.hashCode();
+        }
+
     }
 
     public boolean isVisible() {

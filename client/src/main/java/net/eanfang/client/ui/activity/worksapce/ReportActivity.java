@@ -63,8 +63,8 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     TextView btnAddFind;
     @BindView(R.id.report_find_list)
     RecyclerView reportFindList;
-    @BindView(R.id.btn_add_plan)
-    TextView btnAddPlan;
+    @BindView(R.id.tv_add_plan)
+    TextView tvAddPlan;
     @BindView(R.id.report_plan_list)
     RecyclerView reportPlanList;
     @BindView(R.id.tv_depend_person)
@@ -114,7 +114,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
 
         btnAddComplete.setOnClickListener(this);
         btnAddFind.setOnClickListener(this);
-        btnAddPlan.setOnClickListener(this);
+        tvAddPlan.setOnClickListener(this);
         llComit.setOnClickListener(this);
         llDependPerson.setOnClickListener(this);
         llReportType.setOnClickListener(this);
@@ -179,7 +179,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 intent = new Intent(ReportActivity.this, AddReportFindActivity.class);
                 startActivityForResult(intent, 2);
                 break;
-            case R.id.btn_add_plan://后续计划
+            case R.id.tv_add_plan://后续计划
                 intent = new Intent(ReportActivity.this, AddReportPlanActivity.class);
                 startActivityForResult(intent, 3);
                 break;

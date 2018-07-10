@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -38,9 +39,18 @@ public class TroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEntity
         // 设备名称
         helper.setText(R.id.tv_devicesName, item.getFailureEntity().getDeviceName());
         // 设备状态
-//        helper.setText(R.id.tv_deviceStatus, bugThree);
-        // 维修历史
-//        helper.setText(R.id.tv_devicesHistory, bugThree);
+        //1:保外 0：保内
+        if(item.getFailureEntity().getMaintenanceStatus()!=null) {
+            if (item.getFailureEntity().getMaintenanceStatus() == 0) {
+                helper.setText(R.id.tv_deviceStatus, "保内");
+            } else {
+                helper.setText(R.id.tv_deviceStatus, "保外");
+            }
+        }
+        if(item.getFailureEntity().getRepairCount()!=null) {
+            // 维修历史
+            helper.setText(R.id.tv_devicesHistory, String.valueOf(item.getFailureEntity().getRepairCount()));
+        }
 
         helper.setText(R.id.tv_num, helper.getAdapterPosition() + 1 + "");
         //设备位置

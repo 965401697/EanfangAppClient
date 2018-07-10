@@ -1,11 +1,10 @@
-package net.eanfang.client.ui.activity.im;
+package net.eanfang.worker.ui.activity.im;
 
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -17,21 +16,15 @@ import android.widget.TextView;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Constant;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.base.entity.RepairOrderEntity;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.MainActivity;
-import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 
-import io.rong.imkit.emoticon.AndroidEmoji;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
-import io.rong.imkit.widget.SingleChoiceAdapter;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
-import io.rong.imlib.model.Message;
 
 /**
  * Created by O u r on 2018/7/2.
@@ -95,7 +88,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             intent.putExtra("isVisible", true);
             view.getContext().startActivity(intent);
         } else if (customizeMessage.getShareType().equals("2")) {
-            new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), "完成", true).show();
+            new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), true).show();
         }
     }
 

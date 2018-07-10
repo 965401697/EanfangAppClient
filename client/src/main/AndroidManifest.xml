@@ -436,6 +436,10 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity"></activity>
         <!--添加设备库-->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity"></activity>
+        <!--选择IM联系人-->
+        <activity android:name=".ui.activity.im.SelectIMContactActivity" />
+
+
     </application>
 
 </manifest>

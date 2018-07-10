@@ -69,7 +69,7 @@ public class InstallActivity extends BaseClientActivity {
     LinearLayout llBusiness;
     @BindView(R.id.tv_project_time)
     TextView tvProjectTime;
-    @BindView(R.id.LL_project_time)
+    @BindView(R.id.ll_project_time)
     LinearLayout LLProjectTime;
     @BindView(R.id.tv_budget)
     TextView tvBudget;
