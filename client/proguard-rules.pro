@@ -33,7 +33,11 @@
     -keep class * implements android.os.Parcelable {
       public static final android.os.Parcelable$Creator *;
     }
-
+   #不混淆Serializable接口的子类中指定的某些成员变量和方法
+    -keepclassmembers class * implements java.io.Serializable { *; }
+    -keep public class * implements java.io.Serializable {
+       public *;
+    }
     #不混淆Serializable和它的实现子类、其成员变量
     -keepclassmembers class * implements java.io.Serializable {
         static final long serialVersionUID;
@@ -169,6 +173,6 @@
 -keepattributes Signature
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.**{*; }
-
+-keepattributes *Annotation*
 
 -ignorewarnings

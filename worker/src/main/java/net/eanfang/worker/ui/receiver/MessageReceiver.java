@@ -4,7 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.camera.util.LogUtil;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -35,21 +39,34 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onNotifactionShowedResult(Context context,
                                           XGPushShowedResult notifiShowedRlt) {
+        if (context == null || notifiShowedRlt == null) {
+            return;
+        }
         Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
         Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
-        SynthesizerPresenter.getInstance().initTts(notifiShowedRlt.getContent());
+
+        JSONObject jsonObject = JSON.parseObject(notifiShowedRlt.getCustomContent());
+        System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
+        if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
+            SynthesizerPresenter.getInstance().initTts(jsonObject.getString("audio"));
+        }
+
+        LogUtil.e(LogTag, "onNotifactionShowedResult");
     }
 
     @Override
     public void onUnregisterResult(Context context, int errorCode) {
+        LogUtil.e(LogTag, "onUnregisterResult");
     }
 
     @Override
     public void onSetTagResult(Context context, int errorCode, String tagName) {
+        LogUtil.e(LogTag, "onSetTagResult");
     }
 
     @Override
     public void onDeleteTagResult(Context context, int errorCode, String tagName) {
+        LogUtil.e(LogTag, "onDeleteTagResult");
 
     }
 
@@ -61,6 +78,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (context == null || message == null) {
             return;
         }
+        LogUtil.e(LogTag, "onNotifactionClickedResult");
         if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
             // 通知在通知栏被点击啦。。。。。
             // APP自己处理点击的相关动作
@@ -75,13 +93,13 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onRegisterResult(Context context, int errorCode,
                                  XGPushRegisterResult message) {
-
+        LogUtil.e(LogTag, "onRegisterResult");
     }
 
     // 消息透传
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
-
+        LogUtil.e(LogTag, "onTextMessage");
     }
 
 }

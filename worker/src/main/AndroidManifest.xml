@@ -91,6 +91,20 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
+        <!-- 华为自定义的广播名称 -->
+        <receiver android:name=".ui.receiver.HuaWeiReceiver">
+            <intent-filter>
+
+                <!-- 必须,用于接收TOKEN -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看PUSH通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -117,10 +131,24 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- app -->
-        <activity android:name=".ui.activity.MainActivity" />
+        <!-- 设置主界面的启动模式为singleTop，当应用在前他的时候不重新开启应用-->
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.CameraActivity" />
-        <activity android:name=".ui.activity.worksapce.notice.MessageListActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.MessageListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.xg.push"
+                    android:path="/notify_detail"
+                    android:scheme="xgscheme" />
+            </intent-filter>
+        </activity>
+
+
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />

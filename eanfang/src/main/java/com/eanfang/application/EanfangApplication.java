@@ -53,9 +53,6 @@ public class EanfangApplication extends CustomeApplication {
 
     private OkGo http;
 
-    // 语音合成对象
-    private SpeechSynthesizer mTts;
-
 
     public static EanfangApplication getApplication() {
         return mEanfangApplication;
@@ -73,7 +70,6 @@ public class EanfangApplication extends CustomeApplication {
         initOkGo();
 
 //        BaseUtil.init(this);
-//        initXinGe();
         //数据库初始化 ziwu
 //        mManager = DaoManager.getInstance();
 //        mManager.init(this);

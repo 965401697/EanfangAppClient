@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.ui.base.voice.SynthesizerPresenter;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -38,6 +42,12 @@ public class MessageReceiver extends XGPushBaseReceiver {
         }
         Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
         Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
+
+        JSONObject jsonObject = JSON.parseObject(notifiShowedRlt.getCustomContent());
+        System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
+        if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
+            SynthesizerPresenter.getInstance().initTts(jsonObject.getString("audio"));
+        }
     }
 
     @Override
