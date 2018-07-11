@@ -37,6 +37,8 @@ public class GetConstDataUtils {
 
     private static List<String> taskPublishStatus;
 
+    private static List<String> workTalkStatus;
+
 
     /**
      * 优先级
@@ -273,6 +275,22 @@ public class GetConstDataUtils {
             }
         }
         return workReportStatus;
+    }
+
+    /**
+     * 面谈员工状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTalkStatus() {
+        if (workTalkStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTalkStatus == null) {
+                    workTalkStatus = Config.get().getConstBean().getData().getConst().get(Constant.RED_UN_READ);
+                }
+            }
+        }
+        return workTalkStatus;
     }
 
     /**

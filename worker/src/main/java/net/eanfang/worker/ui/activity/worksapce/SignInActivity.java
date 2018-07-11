@@ -12,6 +12,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -57,6 +58,9 @@ public class SignInActivity extends BaseWorkerActivity {
     private double mLongitude;
     // 是否在签到范围内
     private String mSignScope = "";
+    // 城市
+    private String city = "";
+    private String county = "";
 
 
     @Override
@@ -99,6 +103,8 @@ public class SignInActivity extends BaseWorkerActivity {
         locationUtil.onSearched = (regeocodeResult, i) -> {
             regeocodeResult.getRegeocodeAddress();
             tvAddress.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
+            city = regeocodeResult.getRegeocodeAddress().getCity();
+            county = regeocodeResult.getRegeocodeAddress().getDistrict();
         };
 
     }
@@ -176,6 +182,9 @@ public class SignInActivity extends BaseWorkerActivity {
         queryEntry.getEquals().put("signLongitude", mLongitude + "");
         queryEntry.getEquals().put("signLatitude", mLatitude + "");
         queryEntry.getEquals().put("signScope", mSignScope);
+        queryEntry.getEquals().put("signCode", Config.get().getAreaCodeByName(city, county));
+        queryEntry.getEquals().put("signAddress", tvAddress.getText().toString().trim());
+
         EanfangHttp.post(RepairApi.POST_FLOW_SIGNIN)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {

@@ -172,6 +172,9 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
     // 地址
     private String mAddress = "";
+    private double mSignOutLongitude;
+    private double mSignOutLatitude;
+
     private String mAddressCode = "";
     // 团队成员
     List<TemplateBean.Preson> mPresonList = new ArrayList<>();
@@ -212,6 +215,8 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 if (!mAddress.contains("(")) {
                     mAddress += " (" + location.getDescription() + ")";
                 }
+                mSignOutLatitude = location.getLatitude();
+                mSignOutLongitude = location.getLongitude();
                 mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
             });
         }).start();
@@ -425,6 +430,9 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         //签退地点
         bughandleConfirmEntity.setSignOutAddress(mAddress);
         bughandleConfirmEntity.setSignOutCode(mAddressCode);
+        bughandleConfirmEntity.setSignOutLongitude(mSignOutLongitude + "");
+        bughandleConfirmEntity.setSignOutLatitude(mSignOutLatitude + "");
+
 
         //添加合作成员
         StringBuilder stringBuilder = new StringBuilder();

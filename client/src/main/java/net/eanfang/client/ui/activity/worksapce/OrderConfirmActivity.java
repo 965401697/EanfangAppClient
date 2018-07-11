@@ -25,6 +25,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.PayLogEntity;
@@ -33,6 +34,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.PayActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -139,6 +141,14 @@ public class OrderConfirmActivity extends BaseClientActivity {
                         secondItem.setVisibility(View.VISIBLE);
                     }
                 }
+            }
+        });
+        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("faultDeatail", mDataList.get(position));
+                JumpItent.jump(OrderConfirmActivity.this, FaultDetailActivity.class, bundle);
             }
         });
         mRecyclerView.setAdapter(evaluateAdapter);

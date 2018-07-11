@@ -182,7 +182,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
         // 已经认证成功/ 已经提交认证，正在认证中 无法点击操作
 
-        if (status == 2 || status == 1) {
+        if (status == 2 || status == 1) {tvConfim.setText("确定");
             doSetGone();
         }
 

@@ -82,20 +82,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     ImageView ivType;
     @BindView(R.id.ll_type)
     RelativeLayout llType;
-    @BindView(R.id.tv_start_time)
-    TextView tvStartTime;
-    @BindView(R.id.ll_start_time)
-    LinearLayout llStartTime;
-    @BindView(R.id.tv_end_time)
-    TextView tvEndTime;
-    @BindView(R.id.ll_end_time)
-    LinearLayout llEndTime;
-    @BindView(R.id.tv_register_address)
-    TextView tvRegisterAddress;
-    @BindView(R.id.ll_register_address)
-    LinearLayout llRegisterAddress;
-    @BindView(R.id.et_detail_address)
-    EditText etDetailAddress;
     @BindView(R.id.tv_office_address)
     TextView tvOfficeAddress;
     @BindView(R.id.ll_office_address)

@@ -128,6 +128,7 @@ public class AuthWorkerAreaActivity extends BaseActivity {
 
         if (status != 0 && status != 3) {
             mAdapter.isAuth = true;
+            tvConfim.setText("确定");
             elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
                 @Override
                 public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {

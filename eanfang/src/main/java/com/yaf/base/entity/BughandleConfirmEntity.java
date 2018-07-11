@@ -107,6 +107,12 @@ public class BughandleConfirmEntity implements Serializable {
     //创建时间
     //@TableField(value = "create_time")
     private Date createTime;
+    //签退经度
+    //@TableField(value="sign_out_longitude")
+    private String signOutLongitude;
+    //签退纬度
+    //@TableField(value="sign_out_latitude")
+    private String signOutLatitude;
     //修改人
     //@TableField(value = "edit_user_id")
     private Long editUserId;

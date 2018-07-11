@@ -24,6 +24,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
@@ -32,6 +33,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.client.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.client.util.ImagePerviewUtil;
 
@@ -228,8 +230,7 @@ public class OrderDetailFragment extends BaseFragment {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
-                }
-                if (view.getId() == R.id.ll_item) {
+                }else if (view.getId() == R.id.ll_item) {
                     View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
                     if (secondItem.getVisibility() == View.VISIBLE) {
                         secondItem.setVisibility(View.GONE);
@@ -239,6 +240,15 @@ public class OrderDetailFragment extends BaseFragment {
                 }
             }
         });
+        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("faultDeatail",mDataList.get(position));
+                    JumpItent.jump(getActivity(), FaultDetailActivity.class,bundle);
+            }
+        });
+
         mRecyclerView.setAdapter(evaluateAdapter);
 
         iv_phone.setOnClickListener(v ->
