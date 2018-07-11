@@ -10,9 +10,8 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.OpenShopLogActivity;
-import net.eanfang.client.ui.activity.worksapce.OpenShopLogWriteActivity;
-import net.eanfang.client.ui.activity.worksapce.ReportActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogWriteActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,10 +25,10 @@ public class OpenShopLogView extends BaseDialog {
     ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.ll_mine_assignment)
-    RelativeLayout llMineAssignment;
-    @BindView(R.id.ll_mine_accept)
-    RelativeLayout llMineAccept;
+    @BindView(R.id.iv_mine_assignment)
+    ImageView ivMineAssignment;
+    @BindView(R.id.iv_mine_accept)
+    ImageView ivMineAccept;
     @BindView(R.id.iv_add)
     ImageView ivAdd;
     private Activity mContext;
@@ -50,8 +49,8 @@ public class OpenShopLogView extends BaseDialog {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("开店日志");
         ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, OpenShopLogWriteActivity.class)));
-        llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
-        llMineAccept.setOnClickListener(v -> jump("我接收的", 2));
+        ivMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
+        ivMineAccept.setOnClickListener(v -> jump("我接收的", 2));
     }
 
     private void jump(String title, int type) {

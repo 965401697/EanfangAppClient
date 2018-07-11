@@ -10,14 +10,13 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.DefendLogDetailBean;
 import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.DefendLogItemWriteAndDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.DefendLogWriteAndDetailActivity;
 import net.eanfang.client.ui.adapter.OpenShopLogAdapter;
 
@@ -46,7 +45,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new OpenShopLogAdapter(R.layout.item_open_shop);
+        mAdapter = new OpenShopLogAdapter(R.layout.item_open_shop, R.layout.item_open_shop);
 
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
@@ -55,16 +54,16 @@ public class DefendLogFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), DefendLogWriteAndDetailActivity.class).putExtra("id", ((OpenShopLogBean.ListBean) adapter.getData().get(position)).getId()));
+                startActivity(new Intent(getActivity(), DefendLogWriteAndDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
                 //刷新数据
                 if (getmTitle().equals("未读日志")) {
-                    updateStatus(((OpenShopLogBean.ListBean) adapter.getData().get(position)).getId());//更新数据
+                    updateStatus(String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId()));//更新数据
                     adapter.remove(position);
                 } else if (getmTitle().equals("已读日志")) {
 
                 } else {
-                    updateStatus(((OpenShopLogBean.ListBean) adapter.getData().get(position)).getId());//更新数据
-                    ((OpenShopLogBean.ListBean) adapter.getData().get(position)).setStatus(1);
+                    updateStatus(String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId()));//更新数据
+                    ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
                     adapter.notifyItemChanged(position);
                 }
             }
@@ -73,7 +72,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_do_first:
-                    CallUtils.call(getActivity(), ((OpenShopLogBean.ListBean) adapter.getData().get(position)).getAssigneeUser().getAccountEntity().getMobile());
+                    CallUtils.call(getActivity(), ((OpenShopLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccountEntity().getMobile());
                     break;
                 default:
                     break;

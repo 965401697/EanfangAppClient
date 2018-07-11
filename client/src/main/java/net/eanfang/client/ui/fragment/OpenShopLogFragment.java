@@ -13,9 +13,10 @@ import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.OpenShopLogDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
 import net.eanfang.client.ui.adapter.OpenShopLogAdapter;
 
 /**
@@ -43,7 +44,7 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new OpenShopLogAdapter(R.layout.item_open_shop);
+        mAdapter = new OpenShopLogAdapter(mType, R.layout.item_open_shop);
 
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
@@ -53,23 +54,38 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //刷新数据
+                startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
+
                 if (getmTitle().equals("未读日志")) {
                     adapter.remove(position);
                 } else if (getmTitle().equals("已读日志")) {
 
                 } else {
-                    ((OpenShopLogBean.ListBean) adapter.getData().get(position)).setStatus(1);
+                    ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
                     adapter.notifyItemChanged(position);
                 }
 
-                startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", ((OpenShopLogBean.ListBean) adapter.getData().get(position)).getId()));
             }
         });
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_do_first:
-                    CallUtils.call(getActivity(), ((OpenShopLogBean.ListBean) adapter.getData().get(position)).getAssigneeUser().getAccountEntity().getMobile());
+                    if (mType == 1) {
+                        CallUtils.call(getActivity(), ((OpenShopLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccountEntity().getMobile());
+                    } else {
+                        CallUtils.call(getActivity(), ((OpenShopLogEntity) adapter.getData().get(position)).getOwnerUser().getAccountEntity().getMobile());
+                    }
+
+                    break;
+                case R.id.tv_detail:
+                    //刷新数据
+
+                    startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
+
+                    if (getmTitle().equals("未读日志")) {
+                        adapter.remove(position);
+                    }
                     break;
                 default:
                     break;

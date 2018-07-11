@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.openshop;
 
 import android.os.Bundle;
 import android.widget.EditText;
@@ -10,7 +10,9 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.model.OpenShopLogDetailBean;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
+import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -62,7 +64,7 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
 
     private void initData() {
         EanfangHttp.post(NewApiService.OA_OPEN_SHOP_DETAIL + "/" + getIntent().getStringExtra("id"))
-                .execute(new EanfangCallback<OpenShopLogDetailBean>(this, true, OpenShopLogDetailBean.class, (bean) -> {
+                .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
                     initViews(bean);
                 }));
     }
@@ -72,17 +74,17 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
      *
      * @param bean
      */
-    private void initViews(OpenShopLogDetailBean bean) {
-        tvCompanyName.setText(bean.getCreateOrg().getOrgName());
-        tvSectionName.setText(bean.getCreateUnit().getOrgName());
+    private void initViews(OpenShopLogEntity bean) {
+        tvCompanyName.setText(bean.getOwnerCompany().getOrgName());
+        tvSectionName.setText(bean.getOwnerDepartment().getOrgName());
         tvAcceptPreson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
         tvAcceptPhone.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
-        tvStaffInTime.setText(bean.getEmpEntryTime());
-        tvStaffOutTime.setText(bean.getEmpExitTime());
-        tvClientInTime.setText(bean.getCusEntryTime());
-        tvClientOutTime.setText(bean.getCusExitTime());
-        tvOpenTime.setText(bean.getRecYardStaTime());
-        tvCloseTime.setText(bean.getRecYardEndTime());
+        tvStaffInTime.setText(GetDateUtils.dateToDateTimeString(bean.getEmpEntryTime()));
+        tvStaffOutTime.setText(GetDateUtils.dateToDateTimeString(bean.getEmpExitTime()));
+        tvClientInTime.setText(GetDateUtils.dateToDateTimeString(bean.getCusEntryTime()));
+        tvClientOutTime.setText(GetDateUtils.dateToDateTimeString(bean.getCusExitTime()));
+        tvOpenTime.setText(GetDateUtils.dateToDateTimeString(bean.getRecYardStaTime()));
+        tvCloseTime.setText(GetDateUtils.dateToDateTimeString(bean.getRecYardEndTime()));
 
         evFaultDescripte.setText(bean.getRemarkInfo());
     }

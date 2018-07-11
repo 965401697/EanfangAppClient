@@ -1,10 +1,11 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.openshop;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -18,7 +19,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.ETimeUtils;
-import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
@@ -195,10 +196,27 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         try {
             object.put("empEntryTime", tvStaffInTime.getText().toString().trim());
             object.put("empExitTime", tvStaffOutTime.getText().toString().trim());
+
+            if (GetDateUtils.getTimeStamp(tvStaffOutTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvStaffInTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+                Toast.makeText(this, "员工的退场时间不能小于进场时间", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             object.put("cusEntryTime", tvClientInTime.getText().toString().trim());
             object.put("cusExitTime", tvClientOutTime.getText().toString().trim());
+
+            if (GetDateUtils.getTimeStamp(tvClientOutTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvClientInTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+                Toast.makeText(this, "顾客的退场时间不能小于进场时间", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             object.put("recYardStaTime", tvOpenTime.getText().toString().trim());
             object.put("recYardEndTime", tvCloseTime.getText().toString().trim());
+
+            if (GetDateUtils.getTimeStamp(tvCloseTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvOpenTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+                Toast.makeText(this, "收货区的关闭时间不能小于进场时间", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             object.put("ownerUserId", EanfangApplication.getApplication().getUserId());
             object.put("ownerCompanyId", EanfangApplication.getApplication().getCompanyId());

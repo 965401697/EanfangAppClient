@@ -385,11 +385,11 @@
             android:screenOrientation="portrait" />
 
         <!-- 开店日志 -->
-        <activity android:name=".ui.activity.worksapce.OpenShopLogActivity" />
+        <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogActivity" />
         <!-- 开店日志详情 -->
-        <activity android:name=".ui.activity.worksapce.OpenShopLogDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogDetailActivity" />
         <!-- 填写开店日志 -->
-        <activity android:name=".ui.activity.worksapce.OpenShopLogWriteActivity" />
+        <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogWriteActivity" />
         <!-- 布防日志 -->
         <activity android:name=".ui.activity.worksapce.DefendLogActivity" />
         <!-- 布防日志的填写和展示详情 -->

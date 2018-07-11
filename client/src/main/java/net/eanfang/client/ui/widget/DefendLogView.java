@@ -25,10 +25,10 @@ public class DefendLogView extends BaseDialog {
     ImageView ivLeft;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.ll_mine_assignment)
-    RelativeLayout llMineAssignment;
-    @BindView(R.id.ll_mine_accept)
-    RelativeLayout llMineAccept;
+    @BindView(R.id.iv_mine_assignment)
+    ImageView ivMineAssignment;
+    @BindView(R.id.iv_mine_accept)
+    ImageView ivMineAccept;
     @BindView(R.id.iv_add)
     ImageView ivAdd;
     private Activity mContext;
@@ -49,8 +49,8 @@ public class DefendLogView extends BaseDialog {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("布防日志");
         ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, DefendLogWriteAndDetailActivity.class).putExtra("add", "add")));
-        llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
-        llMineAccept.setOnClickListener(v -> jump("我接收的", 2));
+        ivMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
+        ivMineAccept.setOnClickListener(v -> jump("我接收的", 2));
     }
 
     private void jump(String title, int type) {

@@ -857,7 +857,7 @@ public class DefendLogDetailBean implements Serializable {
         private TopCompanyEntityBeanX topCompanyEntity;
         private String topCompanyId;
         private String updateTime;
-        private int updateUser;
+        private long updateUser;
         private String userId;
         private int userType;
 
@@ -965,11 +965,11 @@ public class DefendLogDetailBean implements Serializable {
             this.updateTime = updateTime;
         }
 
-        public int getUpdateUser() {
+        public long getUpdateUser() {
             return updateUser;
         }
 
-        public void setUpdateUser(int updateUser) {
+        public void setUpdateUser(long updateUser) {
             this.updateUser = updateUser;
         }
 
@@ -1169,7 +1169,7 @@ public class DefendLogDetailBean implements Serializable {
             private int orgType;
             private String topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private long updateUser;
             private int verifyStatus;
 
             public String getCompanyId() {
@@ -1244,11 +1244,11 @@ public class DefendLogDetailBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public long getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(long updateUser) {
                 this.updateUser = updateUser;
             }
 
@@ -1284,7 +1284,7 @@ public class DefendLogDetailBean implements Serializable {
             private int orgType;
             private String topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private long updateUser;
 
             public String getCompanyId() {
                 return companyId;
@@ -1358,11 +1358,11 @@ public class DefendLogDetailBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public long getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(long updateUser) {
                 this.updateUser = updateUser;
             }
         }
@@ -1391,7 +1391,7 @@ public class DefendLogDetailBean implements Serializable {
             private int orgType;
             private String topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private long updateUser;
             private int verifyStatus;
 
             public String getCompanyId() {
@@ -1466,11 +1466,11 @@ public class DefendLogDetailBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public long getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(long updateUser) {
                 this.updateUser = updateUser;
             }
 

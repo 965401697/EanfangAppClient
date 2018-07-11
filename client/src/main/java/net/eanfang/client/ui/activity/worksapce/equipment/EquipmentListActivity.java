@@ -7,14 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.eanfang.config.Config;
-import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.OpenShopLogActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.OpenShopLogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
