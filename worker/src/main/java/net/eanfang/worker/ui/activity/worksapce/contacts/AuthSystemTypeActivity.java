@@ -114,6 +114,7 @@ public class AuthSystemTypeActivity extends BaseActivity {
         }
         if (verifyStatus == 1 || verifyStatus == 2) {
             tagWorkType.setEnabled(false);
+            tvConfim.setText("查看业务类别");
         }
         if (verifyStatus != 2) {
             setRightGone();

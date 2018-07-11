@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.worktalk;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,12 +6,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.activity.worksapce.WorkTaskListActivity;
 import net.eanfang.client.ui.fragment.WorkTaskListFragment;
+import net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,55 +22,55 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by MrHou
- *
- * @on 2017/11/22  17:33
- * @email houzhongzhou@yeah.net
- * @desc
+ * @author Guanluocang
+ * @date on 2018/7/11  16:38
+ * @decision 面谈员工 列表
  */
+public class WorkTalkListActivity extends BaseActivity {
+    public final List<String> allmTitles = GetConstDataUtils.getWorkTalkStatus();
+    @BindView(R.id.sl_tabLayout)
+    SlidingTabLayout slTabLayout;
+    @BindView(R.id.viewpager)
+    ViewPager viewpager;
 
-public class WorkTaskListActivity extends BaseClientActivity {
-
-    private static String titleBar;
-    public final List<String> allmTitles = GetConstDataUtils.getWorkTaskStatus();
-    @BindView(R.id.tl_work_list)
-    SlidingTabLayout tlWorkList;
-    @BindView(R.id.vp_work_list)
-    ViewPager vpWorkList;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
 
+
+    // 创建  收到 标示
+    private String mType = "";
+
+    // 已读 未读 全部 标示
     private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_list);
+        setContentView(R.layout.activity_wrok_talk_list);
         ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
-        titleBar = getIntent().getStringExtra("title");
+        setLeftBack();
+        mType = getIntent().getStringExtra("title");
         type = getIntent().getIntExtra("type", 0);
 
-        setTitle(titleBar);
-        setLeftBack();
+        setTitle(mType);
 
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTaskListFragment.getInstance(title, type));
+            mFragments.add(WorkTalkListFragment.getInstance(title, type));
         }
 
-
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        vpWorkList.setAdapter(mAdapter);
-        tlWorkList.setViewPager(vpWorkList, mTitles, this, mFragments);
-        vpWorkList.setCurrentItem(0);
+        viewpager.setAdapter(mAdapter);
+        slTabLayout.setViewPager(viewpager, mTitles, this, mFragments);
+        viewpager.setCurrentItem(0);
 
-        vpWorkList.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -85,6 +87,7 @@ public class WorkTaskListActivity extends BaseClientActivity {
             }
         });
     }
+
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

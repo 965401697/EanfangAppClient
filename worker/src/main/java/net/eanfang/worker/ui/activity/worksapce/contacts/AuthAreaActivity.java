@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.GrantChange;
+import com.eanfang.model.Message;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
@@ -24,6 +26,8 @@ import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
+import net.eanfang.worker.ui.activity.my.AuthListActivity;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -125,6 +129,7 @@ public class AuthAreaActivity extends BaseActivity {
         if ((verifyStatus != 0 && verifyStatus != 3)) {
             //  当状态为已认证状态时， 设置为不可点击不可点击
             mAdapter.isAuth = true;
+            tvConfim.setText("确定");
             elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
                 @Override
                 public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
@@ -200,9 +205,6 @@ public class AuthAreaActivity extends BaseActivity {
                             .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 //                            showToast("认证资料提交成功");
                                 commitVerfiy();
-                                closeActivity();
-                                finishSelf();
-
                             }));
                     break;
                 }
@@ -217,6 +219,8 @@ public class AuthAreaActivity extends BaseActivity {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + orgid)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("已提交认证");
+                    closeActivity();
+                    doJumpConfirm();
                     finishSelf();
                 }));
     }
@@ -225,6 +229,23 @@ public class AuthAreaActivity extends BaseActivity {
         EanfangApplication.get().closeActivity(AuthCompanyActivity.class.getName());
         EanfangApplication.get().closeActivity(AuthSystemTypeActivity.class.getName());
         EanfangApplication.get().closeActivity(AuthBizActivity.class.getName());
+    }
+
+    public void doJumpConfirm() {
+        Intent intent = new Intent(AuthAreaActivity.this, StateChangeActivity.class);
+        Bundle bundle = new Bundle();
+        Message message = new Message();
+        message.setTitle("认证提交成功");
+        message.setMsgTitle("您的技师认证资料已经提交成功");
+        message.setMsgContent("我们会在72小时内进行审核");
+        message.setMsgHelp("如需修改认证资料");
+        message.setShowOkBtn(true);
+        message.setShowLogo(true);
+        message.setTip("");
+        bundle.putSerializable("message", message);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finishSelf();
     }
 
 }

@@ -99,6 +99,7 @@ public class AuthBizActivity extends BaseActivity {
         }
         if (verifyStatus == 1 || verifyStatus == 2) {
             tagWorkType.setEnabled(false);
+            tvConfim.setText("查看服务区域");
         }
         addRepariResult();
     }

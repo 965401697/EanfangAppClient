@@ -28,7 +28,7 @@ android {
                 XG_ACCESS_ID : "2100270002",
                 XG_ACCESS_KEY: "A72E1ECQX57G",
                 AMAP_KEY     : "db2be5c0ebed1c47388afd3c361bbfe3",
-                HW_APPID: "100326855"
+                HW_APPID     : "100326855"
         ]
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 

@@ -90,6 +90,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
             }
         }
         if (status == 1 || status == 2) {
+            tvConfim.setText("确定");
             tagWorkType.setEnabled(false);
         }
         if (status != 2) {

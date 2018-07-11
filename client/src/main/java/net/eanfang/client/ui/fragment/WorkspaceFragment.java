@@ -24,6 +24,8 @@ import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
+import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
+import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DefendLogView;
 import net.eanfang.client.ui.widget.OpenShopLogView;
@@ -237,6 +239,24 @@ public class WorkspaceFragment extends BaseFragment {
                 showToast("暂无权限");
             }
         });
+//        //交接班
+//        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+//            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+//                Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
+//                startActivity(intent);
+//            } else {
+//                showToast("暂无权限");
+//            }
+//        });
+//        //面谈员工
+//        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+//            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+//                Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
+//                startActivity(intent);
+//            } else {
+//                showToast("暂无权限");
+//            }
+//        });
 
     }
 

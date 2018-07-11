@@ -21,12 +21,14 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.worker.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.worker.util.ImagePerviewUtil;
 
@@ -167,6 +169,14 @@ public class OrderDetailFragment extends BaseFragment {
                         secondItem.setVisibility(View.VISIBLE);
                     }
                 }
+            }
+        });
+        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("faultDeatail", mDataList.get(position));
+                JumpItent.jump(getActivity(), FaultDetailActivity.class, bundle);
             }
         });
         mRecyclerView.setAdapter(evaluateAdapter);

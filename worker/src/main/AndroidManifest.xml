@@ -131,7 +131,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- app -->
-        <!-- 设置主界面的启动模式为singleTop，当应用在前他的时候不重新开启应用-->
+        <!-- 设置主界面的启动模式为singleTop，当应用在前他的时候不重新开启应用 -->
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTop" />
@@ -140,15 +140,15 @@
         <activity android:name=".ui.activity.worksapce.notice.MessageListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.xg.push"
                     android:path="/notify_detail"
                     android:scheme="xgscheme" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
@@ -435,27 +435,27 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeListActivity" />
         <!-- 设备变更详情 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
-        <!--设备参数-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity"></activity>
+        <!-- 设备参数 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity" />
         <!-- 技师认证 列表页 -->
         <activity
             android:name=".ui.activity.my.AuthListActivity"
             android:screenOrientation="portrait" />
-        <!--免费设计-->
+        <!-- 免费设计 -->
         <activity android:name=".ui.activity.worksapce.design.DesignActivity" />
-        <!--设计订单List-->
+        <!-- 设计订单List -->
         <activity android:name=".ui.activity.worksapce.design.DesignOrderActivity" />
-        <!--设计订单详情-->
-        <activity android:name=".ui.activity.worksapce.design.DesignOrderDetailActivity"></activity>
-        <!--设备搜索界面-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity"></activity>
-        <!--添加设备选择设备库-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity"></activity>
+        <!-- 设计订单详情 -->
+        <activity android:name=".ui.activity.worksapce.design.DesignOrderDetailActivity" />
+        <!-- 设备搜索界面 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity" />
+        <!-- 添加设备选择设备库 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity" />
         <!-- 技师认证上传照片 -->
         <activity
             android:name=".ui.activity.my.AuthPhotoActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity"></activity>
     </application>
 
 </manifest>

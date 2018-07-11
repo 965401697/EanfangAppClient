@@ -146,8 +146,7 @@
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"></activity>
-
+            android:launchMode="singleTop" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -162,8 +161,6 @@
                 <data android:scheme="wx11d1a11a2f79200a" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
@@ -279,7 +276,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <!--我的好友列表-->
+        <!-- 我的好友列表 -->
         <activity android:name=".ui.activity.im.MyFriendsListActivity" />
         <!-- 融云配置broadcastReceiver -->
         <receiver
@@ -299,12 +296,11 @@
         <activity android:name=".ui.activity.im.GroupCreatActivity" />
         <!-- 群组列表 -->
         <activity android:name=".ui.activity.im.MyGroupsListActivity">
-
             <intent-filter>
                 <action android:name="net.eanfang.client.action.MYGROUPLIST" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <!-- 群组详情界面 -->
         <activity android:name=".ui.activity.im.GroupDetailActivity" />
@@ -331,6 +327,7 @@
         <activity android:name=".ui.activity.im.SelectedFriendsActivity">
             <intent-filter>
                 <action android:name="net.eanfang.client.action.SELECTFRIENDS" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -425,7 +422,8 @@
         <!-- 故障库 -->
         <activity
             android:name=".ui.activity.worksapce.repair.FaultLibraryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <!-- 合作业务的列表 -->
         <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationActivity" />
         <!-- 合作业务详情 -->
@@ -446,10 +444,22 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
         <!-- 设备参数 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity" />
-        <!--设备搜索界面-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity"></activity>
-        <!--添加设备库-->
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity"></activity>
+        <!-- 设备搜索界面 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity" />
+        <!-- 添加设备库 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkControlActivity" />
+        <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferControlActivity" />
+        <!-- 面谈员工列表 -->
+        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkListActivity"
+            android:screenOrientation="portrait" />
+        <!-- 面谈员工详情 -->
+        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 面谈员工创建 -->
+        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

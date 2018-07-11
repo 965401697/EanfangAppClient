@@ -96,6 +96,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
         }
         if (status == 1 || status == 2) {
             tagWorkType.setEnabled(false);
+            tvConfim.setText("确定");
         }
         if (status != 2) {
             setRightGone();

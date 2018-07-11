@@ -42,6 +42,7 @@ public class WorkReportListActivity extends BaseClientActivity {
     SlidingTabLayout tlWorkList;
     @BindView(R.id.vp_work_list)
     ViewPager vpWorkList;
+
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
