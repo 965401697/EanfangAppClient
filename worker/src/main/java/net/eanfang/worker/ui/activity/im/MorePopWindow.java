@@ -60,7 +60,8 @@ public class MorePopWindow extends PopupWindow {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
+                Intent intent = new Intent(new Intent(context, SelectIMContactActivity.class));
+//                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
                 intent.putExtra("flag", 1);
                 context.startActivity(intent);
                 MorePopWindow.this.dismiss();

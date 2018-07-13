@@ -215,16 +215,4 @@
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/dimen_36" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_sure"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_88"
-        android:background="@color/color_data_number"
-        android:gravity="center"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textSize_14"
-        android:visibility="gone" />
-
 </LinearLayout>

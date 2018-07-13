@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,17 +18,31 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupCreatBean;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.UuidUtil;
+import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +54,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 
 /**
  * 选择联系人
@@ -50,22 +66,34 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
     RelativeLayout rlSelected;
     @BindView(R.id.recycler_view_hori)
     RecyclerView recyclerViewHori;
-    @BindView(R.id.tv_sure)
-    TextView tvSure;
     private HeaderIconAdapter mHeaderIconAdapter;
     private Bundle bundle;
 
     private List<TemplateBean.Preson> newPresonList = new ArrayList<>();
     private Dialog dialog;
+    private String imgKey;
+    private String path;
+    private String groupName;
+
     private Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            ToastUtil.get().showToast(SelectIMContactActivity.this, "发送成功");
+            Object message = msg.obj;
+            if (message == null) {
+                ToastUtil.get().showToast(SelectIMContactActivity.this, "发送成功");
+            } else {
+                path = (String) message;
+                if (!TextUtils.isEmpty(path)) {
+                    imgKey = UuidUtil.getUUID() + ".png";
+                    creatGroup();
+                }
+            }
         }
     };
 
+    private int mFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +102,31 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         supprotToolbar();
         setTitle("选择联系人");
-        setRightTitle("发送");
+
         dialog = DialogUtil.createLoadingDialog(SelectIMContactActivity.this);
 
         bundle = getIntent().getExtras();
 
+        mFlag = getIntent().getIntExtra("flag", 0);
+
+        if (mFlag == 1) {
+            //创建群组
+            setRightTitle("创建");
+            findViewById(R.id.rl_my_group).setVisibility(View.GONE);
+        } else {
+            setRightTitle("发送");
+        }
+
+
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //发送分享的群组
-                handler.post(runnable);//立马发送
+                if (mFlag == 1) {
+                    compoundPhoto();
+                } else {
+                    //发送分享的群组
+                    handler.post(runnable);//立马发送
+                }
             }
         });
 
@@ -143,6 +186,9 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
 
     }
 
+    /**
+     * 循环发送
+     */
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -178,10 +224,6 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         }
     };
 
-    @OnClick(R.id.tv_sure)
-    public void onViewClicked() {
-        ToastUtil.get().showToast(this, "待开发");
-    }
 
     class HeaderIconAdapter extends BaseQuickAdapter<TemplateBean.Preson, BaseViewHolder> {
 
@@ -231,6 +273,123 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
                 }
             });
         }
+    }
+
+    /**
+     * 合唱头像
+     */
+    private void compoundPhoto() {
+
+        if (newPresonList.size() == 1) {
+            ToastUtil.get().showToast(this, "最少选两个好友");
+            return;
+        }
+        dialog.show();
+        ArrayList<String> userIconList = new ArrayList<>();
+
+        if (newPresonList.size() > 3) {
+
+            for (int i = 0; i < 3; i++) {
+                userIconList.add(newPresonList.get(i).getProtraivat());
+            }
+            handleNames(3);
+        } else {
+            for (TemplateBean.Preson preson : newPresonList) {
+                userIconList.add(preson.getProtraivat());
+            }
+            handleNames(newPresonList.size());
+        }
+
+
+        userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+        //合成头像
+
+        CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片
+    }
+
+    private void handleNames(int len) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (int i = 0; i < len; i++) {
+            if (i == 0) {
+                stringBuffer.append(newPresonList.get(i).getName());
+            } else if (i == len - 1) {
+                if (i < 2) {
+                    stringBuffer.append("," + newPresonList.get(i).getName());
+                } else {
+                    stringBuffer.append("," + newPresonList.get(i).getName() + "...等");
+                }
+            } else {
+                stringBuffer.append("," + newPresonList.get(i).getName());
+            }
+        }
+        groupName = EanfangApplication.get().getUser().getAccount().getNickName() + "," + stringBuffer.toString();
+    }
+
+    /**
+     * 创建群组
+     */
+    private void creatGroup() {
+
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject1 = new JSONObject();
+
+        JSONArray array = new JSONArray();
+        try {
+            for (TemplateBean.Preson preson : newPresonList) {
+                JSONObject jsonObject3 = new JSONObject();
+                jsonObject3.put("accId", preson.getId());
+                array.put(jsonObject3);
+            }
+            //把自己的id 加进去
+            JSONObject jsonObject3 = new JSONObject();
+            jsonObject3.put("accId", EanfangApplication.get().getAccId());
+            array.put(jsonObject3);
+
+            jsonObject1.put("groupName", groupName);
+            jsonObject1.put("headPortrait", imgKey);
+            jsonObject.put("sysGroup", jsonObject1);
+            jsonObject.put("sysGroupUsers", array);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //头像上传成功后  提交数据
+        OSSUtils.initOSS(SelectIMContactActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(SelectIMContactActivity.this, false) {
+
+            @Override
+            public void onOssSuccess() {
+                super.onOssSuccess();
+
+
+                //创建群组
+                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                        .upJson(jsonObject)
+                        .execute(new EanfangCallback<GroupCreatBean>(SelectIMContactActivity.this, false, GroupCreatBean.class) {
+                            @Override
+                            public void onSuccess(GroupCreatBean bean) {
+                                super.onSuccess(bean);
+                                ToastUtil.get().showToast(SelectIMContactActivity.this, "创建成功");
+                                Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+                                RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+
+                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                                RongIM.getInstance().startGroupChat(SelectIMContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                                dialog.dismiss();
+                                SelectIMContactActivity.this.finish();
+                            }
+
+                            @Override
+                            public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
+                                super.onFail(code, message, jsonObject);
+                                ToastUtil.get().showToast(SelectIMContactActivity.this, "创建失败");
+                                dialog.dismiss();
+                            }
+                        });
+
+            }
+        });
+
     }
 
     /**
