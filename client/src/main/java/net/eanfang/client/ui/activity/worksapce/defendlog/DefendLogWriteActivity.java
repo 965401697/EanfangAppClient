@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
@@ -27,14 +28,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DefendLogDetailBean;
 import com.eanfang.util.ETimeUtils;
-import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.V;
+import com.yaf.base.entity.LogDetailsEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.DefendLogAdapter;
-import net.eanfang.client.ui.adapter.DefendLogItemAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
@@ -44,9 +43,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class DefendLogWriteAndDetailActivity extends BaseClientActivity implements View.OnClickListener {
+public class DefendLogWriteActivity extends BaseClientActivity implements View.OnClickListener {
 
     @BindView(R.id.tv_open_time)
     TextView tvOpenTime;
@@ -86,8 +84,7 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
     private Long assigneeCompanyId;
 
     private final int ADD_CAUSE = 1;
-    private int flag = 1;//1是添加操作
-    private String mIsAdd;
+
 
     private TimePickerView mTimeYearMonthDayHMS;
     private TextView currentTextView;
@@ -105,31 +102,24 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
 
     private void initViews() {
 
-        mIsAdd = getIntent().getStringExtra("add");
 
-        if (!TextUtils.isEmpty(mIsAdd)) {
-            llOpenTime.setOnClickListener(this);
-            llCloseTime.setOnClickListener(this);
-            llDependPerson.setOnClickListener(this);
-            llComit.setOnClickListener(this);
-            etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-            etSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        llOpenTime.setOnClickListener(this);
+        llCloseTime.setOnClickListener(this);
+        llDependPerson.setOnClickListener(this);
+        llComit.setOnClickListener(this);
+        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
 
-            getData();
-        } else {
-            flag = 2;
-            String mId = getIntent().getStringExtra("id");
-            llComit.setVisibility(View.GONE);
-            getDetail(mId);
-        }
+        getData();
+
 
         mTitleList.add("旁路");
         mTitleList.add("闯防");
         mTitleList.add("误报");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DefendLogAdapter defendLogAdapter = new DefendLogAdapter(R.layout.item_defend_log, flag, this);
+        DefendLogAdapter defendLogAdapter = new DefendLogAdapter(R.layout.item_defend_log, this, 1);
         defendLogAdapter.setNewData(mTitleList);
         mAdapterList = defendLogAdapter.getmList();//如果是添加数据  这里为空
 
@@ -141,7 +131,7 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId() == R.id.tv_defend_add) {
                     currentItemAdapter = mAdapterList.get(position);
-                    Intent intent = new Intent(DefendLogWriteAndDetailActivity.this, DefendLogItemWriteAndDetailActivity.class);
+                    Intent intent = new Intent(DefendLogWriteActivity.this, DefendLogItemWriteAndDetailActivity.class);
                     intent.putExtra("title", mTitleList.get(position));
                     intent.putExtra("position", position);
                     startActivityForResult(intent, ADD_CAUSE);
@@ -163,7 +153,7 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
         Calendar endDate = Calendar.getInstance();
         startDate.set(2000, 0, 1, 0, 0, 0);
         endDate.set(2040, 11, 31, 0, 0, 0);
-        mTimeYearMonthDayHMS = new TimePickerBuilder(DefendLogWriteAndDetailActivity.this, new OnTimeSelectListener() {
+        mTimeYearMonthDayHMS = new TimePickerBuilder(DefendLogWriteActivity.this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
@@ -211,39 +201,6 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
         }
     }
 
-    /**
-     * 获取布防日志详情
-     *
-     * @param
-     */
-    private void getDetail(String id) {
-
-        EanfangHttp.get(NewApiService.OA_DEFEND_LOG_DETAIL)
-                .params("protectionLogId", id)
-                .execute(new EanfangCallback<DefendLogDetailBean>(DefendLogWriteAndDetailActivity.this, true, DefendLogDetailBean.class, bean -> {
-
-                    etCompanyName.setText(bean.getCreateUser().getCompanyEntity().getOrgName());
-                    etSectionName.setText(bean.getCreateUser().getTopCompanyEntity().getOrgName());
-
-                    tvOpenTime.setText(bean.getOpenTime());
-                    tvCloseTime.setText(bean.getCloseTime());
-
-                    tvDependPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
-                    etPhoneNum.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
-
-                    List<List<DefendLogDetailBean.ListBean>> listBeans = new ArrayList<>();
-                    listBeans.add(bean.getBypassList());
-                    listBeans.add(bean.getThroughList());
-                    listBeans.add(bean.getFalseList());
-
-                    for (int i = 0; i < mAdapterList.size(); i++) {
-                        mAdapterList.get(i).setNewData((List<DefendLogDetailBean.ListBean>) listBeans.get(i));
-                    }
-
-
-                }));
-    }
-
 
     /**
      * 获取公司部门员工信息
@@ -254,7 +211,7 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
                 .tag(this)
                 .params("id", EanfangApplication.getApplication().getUserId())
                 .params("companyId", EanfangApplication.getApplication().getCompanyId())
-                .execute(new EanfangCallback<UserEntity>(DefendLogWriteAndDetailActivity.this, true, UserEntity.class, true, (list) -> {
+                .execute(new EanfangCallback<UserEntity>(DefendLogWriteActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
                 }));
@@ -264,6 +221,12 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
     private void sub() {
 
         if (!checkInfo()) return;
+
+
+        if (GetDateUtils.getTimeStamp(tvCloseTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvOpenTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+            Toast.makeText(this, "关闭时间不能小于开启时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         JSONObject object = new JSONObject();
         try {
@@ -284,11 +247,12 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
             object.put("assigneeOrgCode", assigneeOrgCode);
             String[] item = {"bypassList", "throughList", "falseList"};
             for (int i = 0; i < mAdapterList.size(); i++) {
-                List<DefendLogDetailBean.ListBean> beanList = (List<DefendLogDetailBean.ListBean>) mAdapterList.get(i).getData();
+                List<LogDetailsEntity> beanList = (List<LogDetailsEntity>) mAdapterList.get(i).getData();
 
-                for (DefendLogDetailBean.ListBean bean : beanList) {
-                    bean.setAssigneeUserId(assigneeUserId + "");
+                for (LogDetailsEntity bean : beanList) {
+                    bean.setAssigneeUserId(assigneeUserId);
                     bean.setAssigneeCompanyId(assigneeCompanyId);
+                    bean.setAssigneeTopCompanyId(assigneeTopCompanyId);
                     bean.setAssigneeOrgCode(assigneeOrgCode + "");
                 }
 
@@ -305,7 +269,7 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
         EanfangHttp.post(NewApiService.OA_SUB_DEFEND_LOG)
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    ToastUtil.get().showToast(DefendLogWriteAndDetailActivity.this, "提交成功");
+                    ToastUtil.get().showToast(DefendLogWriteActivity.this, "提交成功");
                     finish();
                 }));
     }
@@ -357,17 +321,13 @@ public class DefendLogWriteAndDetailActivity extends BaseClientActivity implemen
 
         if (resultCode == RESULT_OK) {
             if (requestCode == ADD_CAUSE) {
-                DefendLogDetailBean.ListBean bean = (DefendLogDetailBean.ListBean) data.getSerializableExtra("bean");
+                LogDetailsEntity bean = (LogDetailsEntity) data.getSerializableExtra("bean");
 
-//                bean.setAssigneeUserId(assigneeUserId + "");
-//                bean.setAssigneeCompanyId(assigneeCompanyId);
-//                bean.setAssigneeOrgCode(assigneeOrgCode + "");
-//                bean.setAssigneeTopCompanyId(assigneeTopCompanyId);
 
                 bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
                 bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
                 bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
-                bean.setOwnerUserId(EanfangApplication.getApplication().getUserId() + "");
+                bean.setOwnerUserId(EanfangApplication.getApplication().getUserId());
 
                 currentItemAdapter.addData(bean);
             }

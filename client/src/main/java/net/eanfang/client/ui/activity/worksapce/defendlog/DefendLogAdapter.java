@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.adapter;
+package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +9,9 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.DefendLogDetailBean;
-import com.eanfang.util.GetConstDataUtils;
+import com.yaf.base.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.DefendLogItemWriteAndDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.DefendLogWriteAndDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.List;
 public class DefendLogAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
     private Context mContext;
-    private int mFlag;
+    private int mFlag; //1:"填写布防日志" 2：布防日志详情
 
     private List<DefendLogItemAdapter> mList = new ArrayList<>();
 
@@ -34,7 +32,7 @@ public class DefendLogAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         return mList;
     }
 
-    public DefendLogAdapter(int layoutResId, int flag, Context context) {
+    public DefendLogAdapter(int layoutResId, Context context, int flag) {
         super(layoutResId);
         this.mContext = context;
         this.mFlag = flag;
@@ -48,18 +46,19 @@ public class DefendLogAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
         } else {
             helper.getView(R.id.tv_defend_add).setVisibility(View.GONE);
         }
+
         helper.setText(R.id.tv_title, item);
         helper.addOnClickListener(R.id.tv_defend_add);
         RecyclerView recyclerView = helper.getView(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        DefendLogItemAdapter defendLogItemAdapter = new DefendLogItemAdapter(R.layout.item_item_defend_log);
+        DefendLogItemAdapter defendLogItemAdapter = new DefendLogItemAdapter(R.layout.item_item_defend_log, mFlag);
         defendLogItemAdapter.bindToRecyclerView(recyclerView);
         mList.add(defendLogItemAdapter);//将二级的adapter的对象都保存集合
 
         defendLogItemAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.tv_delect) {
+                if (view.getId() == R.id.iv_delect) {
                     adapter.remove(position);
                 }
             }
@@ -70,7 +69,7 @@ public class DefendLogAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 int postion;
                 String title;
-                DefendLogDetailBean.ListBean bean = (DefendLogDetailBean.ListBean) adapter.getData().get(position);
+                LogDetailsEntity bean = (LogDetailsEntity) adapter.getData().get(position);
 //                (0-旁路,1-闯防,2-误报)
                 if (bean.getLogType() == 1) {
                     postion = 1;

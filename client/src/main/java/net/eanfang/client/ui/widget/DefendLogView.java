@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.DefendLogActivity;
-import net.eanfang.client.ui.activity.worksapce.DefendLogWriteAndDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogActivity;
+import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogWriteActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +47,7 @@ public class DefendLogView extends BaseDialog {
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("布防日志");
-        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, DefendLogWriteAndDetailActivity.class).putExtra("add", "add")));
+        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, DefendLogWriteActivity.class)));
         ivMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         ivMineAccept.setOnClickListener(v -> jump("我接收的", 2));
     }

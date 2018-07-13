@@ -1,9 +1,8 @@
-package net.eanfang.client.ui.fragment;
+package net.eanfang.client.ui.activity.worksapce.openshop;
 
 import android.content.Intent;
 import android.view.View;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -17,22 +16,21 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.DefendLogWriteAndDetailActivity;
-import net.eanfang.client.ui.adapter.OpenShopLogAdapter;
+import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 /**
  * Created by O u r on 2018/5/22.
  */
 
-public class DefendLogFragment extends TemplateItemListFragment {
+public class OpenShopLogFragment extends TemplateItemListFragment {
 
     private String mTitle;
     private int mType;
     private OpenShopLogAdapter mAdapter;
     private static int page = 1;
 
-    public static DefendLogFragment getInstance(String title, int type) {
-        DefendLogFragment f = new DefendLogFragment();
+    public static OpenShopLogFragment getInstance(String title, int type) {
+        OpenShopLogFragment f = new OpenShopLogFragment();
         f.mTitle = title;
         f.mType = type;
         return f;
@@ -45,7 +43,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new OpenShopLogAdapter(R.layout.item_open_shop, R.layout.item_open_shop);
+        mAdapter = new OpenShopLogAdapter(mType, R.layout.item_open_shop);
 
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
@@ -54,25 +52,39 @@ public class DefendLogFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), DefendLogWriteAndDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
                 //刷新数据
+                startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
+
                 if (getmTitle().equals("未读日志")) {
-                    updateStatus(String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId()));//更新数据
                     adapter.remove(position);
                 } else if (getmTitle().equals("已读日志")) {
 
                 } else {
-                    updateStatus(String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId()));//更新数据
                     ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
                     adapter.notifyItemChanged(position);
                 }
+
             }
         });
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_do_first:
-                    CallUtils.call(getActivity(), ((OpenShopLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccountEntity().getMobile());
+                    if (mType == 1) {
+                        CallUtils.call(getActivity(), ((OpenShopLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccountEntity().getMobile());
+                    } else {
+                        CallUtils.call(getActivity(), ((OpenShopLogEntity) adapter.getData().get(position)).getOwnerUser().getAccountEntity().getMobile());
+                    }
+
+                    break;
+                case R.id.tv_detail:
+                    //刷新数据
+
+                    startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
+
+                    if (getmTitle().equals("未读日志")) {
+                        adapter.remove(position);
+                    }
                     break;
                 default:
                     break;
@@ -87,7 +99,6 @@ public class DefendLogFragment extends TemplateItemListFragment {
         if (mType == 1) {
             queryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");
         } else {
-//            queryEntry.getEquals().put("assigneeUserId",  "980695066010497026");
             queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         }
         if (getmTitle().equals("未读日志")) {
@@ -99,7 +110,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
         queryEntry.setSize(10);
         queryEntry.setPage(page);
 
-        EanfangHttp.post(NewApiService.OA_DEFEND_LOG_LIST)
+        EanfangHttp.post(NewApiService.OA_OPEN_SHOP_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<OpenShopLogBean>(getActivity(), true, OpenShopLogBean.class) {
 
@@ -149,13 +160,5 @@ public class DefendLogFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
-    }
-
-    private void updateStatus(String id) {
-        EanfangHttp.post(NewApiService.OA__DEFEND_LOG_UPDATE)
-                .params("protectionLogId", id)
-                .execute(new EanfangCallback<JSONObject>(getActivity(), false, JSONObject.class) {
-                });
-
     }
 }

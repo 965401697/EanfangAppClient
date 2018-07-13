@@ -1,17 +1,17 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.OpenShopLogBean;
-import com.eanfang.model.OpenShopLogDetailBean;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.ToastUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
@@ -25,32 +25,44 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
-    @BindView(R.id.tv_section_name)
-    TextView tvSectionName;
     @BindView(R.id.tv_accept_preson)
     TextView tvAcceptPreson;
     @BindView(R.id.tv_accept_phone)
     TextView tvAcceptPhone;
-    @BindView(R.id.tv_staff_time)
-    TextView tvStaffTime;
     @BindView(R.id.tv_staff_in_time)
     TextView tvStaffInTime;
     @BindView(R.id.tv_staff_out_time)
     TextView tvStaffOutTime;
-    @BindView(R.id.tv_client_time)
-    TextView tvClientTime;
     @BindView(R.id.tv_client_in_time)
     TextView tvClientInTime;
     @BindView(R.id.tv_client_out_time)
     TextView tvClientOutTime;
-    @BindView(R.id.tv_receiving_time)
-    TextView tvReceivingTime;
     @BindView(R.id.tv_open_time)
     TextView tvOpenTime;
     @BindView(R.id.tv_close_time)
     TextView tvCloseTime;
     @BindView(R.id.ev_faultDescripte)
     EditText evFaultDescripte;
+    @BindView(R.id.iv_report_header)
+    SimpleDraweeView ivReportHeader;
+    @BindView(R.id.tv_report_name)
+    TextView tvReportName;
+    @BindView(R.id.tv_section)
+    TextView tvSection;
+    @BindView(R.id.tv_year)
+    TextView tvYear;
+    @BindView(R.id.tv_week)
+    TextView tvWeek;
+    @BindView(R.id.tv_data)
+    TextView tvData;
+    @BindView(R.id.tv_work_time)
+    TextView tvWorkTime;
+    @BindView(R.id.tv_shopping_time)
+    TextView tvShoppingTime;
+    @BindView(R.id.tv_reveice_time)
+    TextView tvReveiceTime;
+    @BindView(R.id.tv_company_phone)
+    TextView tvCompanyPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +78,7 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         EanfangHttp.post(NewApiService.OA_OPEN_SHOP_DETAIL + "/" + getIntent().getStringExtra("id"))
                 .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
                     initViews(bean);
+
                 }));
     }
 
@@ -75,8 +88,39 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
      * @param bean
      */
     private void initViews(OpenShopLogEntity bean) {
+        if (bean.getOwnerUser() != null && bean.getOwnerUser().getAccountEntity() != null) {
+            ivReportHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUser().getAccountEntity().getAvatar()));
+            tvCompanyPhone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
+            tvReportName.setText(bean.getOwnerUser().getAccountEntity().getRealName());
+        }
+        tvSection.setText(bean.getOwnerDepartment().getOrgName());
+
+
+        String[] date = GetDateUtils.dateToDateString(bean.getCreateTime()).split("-");
+        tvYear.setText(date[0] + "-" + date[1]);
+        tvWeek.setText(GetDateUtils.dateToWeek(GetDateUtils.dateToDateString(bean.getCreateTime())));
+        tvData.setText(date[2]);
+        long workTime = bean.getEmpExitTime().getTime() - bean.getEmpEntryTime().getTime();
+        if (!TextUtils.isEmpty(formatTime(workTime))) {
+            tvWorkTime.setText("工作时长\r\n" + formatTime(workTime));
+        } else {
+            tvWorkTime.setText("工作时长\r\n" + "太短了");
+        }
+        long shoppingTime = bean.getCusExitTime().getTime() - bean.getCusEntryTime().getTime();
+        if (!TextUtils.isEmpty(formatTime(shoppingTime))) {
+            tvShoppingTime.setText("购物时长\r\n" + formatTime(shoppingTime));
+        } else {
+            tvShoppingTime.setText("购物时长\r\n" + "太短了");
+        }
+        long reveiceTime = bean.getRecYardEndTime().getTime() - bean.getRecYardStaTime().getTime();
+        if (!TextUtils.isEmpty(formatTime(reveiceTime))) {
+            tvReveiceTime.setText("收货时长\r\n" + formatTime(reveiceTime));
+        } else {
+            tvReveiceTime.setText("收货时长\r\n" + "太短了");
+        }
+
+
         tvCompanyName.setText(bean.getOwnerCompany().getOrgName());
-        tvSectionName.setText(bean.getOwnerDepartment().getOrgName());
         tvAcceptPreson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
         tvAcceptPhone.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
         tvStaffInTime.setText(GetDateUtils.dateToDateTimeString(bean.getEmpEntryTime()));
@@ -87,5 +131,37 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         tvCloseTime.setText(GetDateUtils.dateToDateTimeString(bean.getRecYardEndTime()));
 
         evFaultDescripte.setText(bean.getRemarkInfo());
+    }
+
+    /*
+   * 毫秒转化时分秒毫秒
+   */
+    public static String formatTime(Long ms) {
+        Integer ss = 1000;
+        Integer mi = ss * 60;
+        Integer hh = mi * 60;
+        Integer dd = hh * 24;
+
+        Long day = ms / dd;
+        Long hour = (ms - day * dd) / hh;
+        Long minute = (ms - day * dd - hour * hh) / mi;
+        Long second = (ms - day * dd - hour * hh - minute * mi) / ss;
+        Long milliSecond = ms - day * dd - hour * hh - minute * mi - second * ss;
+
+        StringBuffer sb = new StringBuffer();
+        if (day > 0) {
+            sb.append(day + "天");
+        }
+        if (hour > 0) {
+            sb.append(hour + "小时");
+        }
+        if (minute > 0) {
+            sb.append(minute + "分");
+        }
+        if (milliSecond > 0) {
+            sb.append(milliSecond + "秒");
+        }
+
+        return sb.toString();
     }
 }

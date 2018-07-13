@@ -125,7 +125,7 @@
                         android:text="  "
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
-                    android:gravity="left"
+
 
                     <ImageView
                         android:layout_width="@dimen/dimen_26"

@@ -388,11 +388,11 @@
         <!-- 填写开店日志 -->
         <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogWriteActivity" />
         <!-- 布防日志 -->
-        <activity android:name=".ui.activity.worksapce.DefendLogActivity" />
+        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogActivity" />
         <!-- 布防日志的填写和展示详情 -->
-        <activity android:name=".ui.activity.worksapce.DefendLogWriteAndDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogWriteActivity" />
         <!-- 布防日志的二级填写和展示详情 -->
-        <activity android:name=".ui.activity.worksapce.DefendLogItemWriteAndDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogItemWriteAndDetailActivity" />
 
         <!-- 扫码界面 -->
         <activity
@@ -455,14 +455,21 @@
         <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkControlActivity" />
         <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferControlActivity" />
         <!-- 面谈员工列表 -->
-        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkListActivity"
+        <activity
+            android:name=".ui.activity.worksapce.worktalk.WorkTalkListActivity"
             android:screenOrientation="portrait" />
         <!-- 面谈员工详情 -->
-        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkDetailActivity"
+        <activity
+            android:name=".ui.activity.worksapce.worktalk.WorkTalkDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 面谈员工创建 -->
-        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
+            android:screenOrientation="portrait" />
+        <!--布防日志-->
+        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogDetailActivity" />
+        <!--布防日志详情-->
+        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogDetailDetailActivity" />
     </application>
 
 </manifest>

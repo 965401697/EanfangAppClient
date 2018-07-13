@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,8 +10,6 @@ import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.DefendLogFragment;
-import net.eanfang.client.ui.fragment.OpenShopLogFragment;
 
 import java.util.ArrayList;
 

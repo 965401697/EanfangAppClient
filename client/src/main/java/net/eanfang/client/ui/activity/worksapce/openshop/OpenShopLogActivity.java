@@ -10,8 +10,6 @@ import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.OpenShopLogFragment;
-import net.eanfang.client.ui.fragment.WorkReportListFragment;
 
 import java.util.ArrayList;
 

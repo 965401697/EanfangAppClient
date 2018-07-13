@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dimen_38"
-            android:text="  "
-            android:textColor="@color/roll_title"
+            android:text="   "
+            android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_13" />
 
         <TextView
@@ -28,29 +28,9 @@
             android:layout_marginLeft="@dimen/dimen_20"
             android:layout_weight="1"
             android:gravity="left"
-            android:inputType="phone"
-            android:text=" "
+            android:text="  "
             android:textColor="@color/roll_title"
             android:textSize="@dimen/textSize_13" />
-
-        <ImageView
-            android:id="@+id/iv_delect"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_38"
-            android:layout_marginRight="@dimen/dimen_32"
-            android:src="@mipmap/x_mark" />
-
-        <ImageView
-            android:id="@+id/iv_detail"
-            android:layout_width="@dimen/dimen_24"
-            android:layout_height="@dimen/dimen_24"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_38"
-            android:layout_marginRight="@dimen/dimen_32"
-            android:visibility="gone"
-            android:src="@mipmap/arrow_right" />
 
     </LinearLayout>
 </RelativeLayout>

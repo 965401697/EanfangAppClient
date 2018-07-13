@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.DefendLogDetailBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.yaf.base.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -41,7 +42,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
     LinearLayout llCause;
 
     private int mPosition;
-    private DefendLogDetailBean.ListBean dataBean;
+    private LogDetailsEntity dataBean;
     private String title;
 
     @Override
@@ -52,7 +53,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
 //        (0-旁路,1-闯防,2-误报)
         title = getIntent().getStringExtra("title");
         mPosition = getIntent().getIntExtra("position", 0);
-        dataBean = (DefendLogDetailBean.ListBean) getIntent().getSerializableExtra("bean");
+        dataBean = (LogDetailsEntity) getIntent().getSerializableExtra("bean");
         setTitle(title + "详情");
 
         tvCause.setText(title + "报警原因");
@@ -117,7 +118,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
                 if (!checkInfo()) return;
 
 
-                DefendLogDetailBean.ListBean bean = new DefendLogDetailBean.ListBean();
+                LogDetailsEntity bean = new LogDetailsEntity();
                 bean.setNoteInfo(evDefendDesc.getText().toString().toString());
                 bean.setPlayLocaltion(etDefendPosition.getText().toString().toString());
 
@@ -130,7 +131,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
                 }
 
                 bean.setSlipNum(etDefendCode.getText().toString().trim());
-                bean.setCreateUserId(EanfangApplication.getApplication().getUserId() + "");
+                bean.setCreateUserId(EanfangApplication.getApplication().getUserId());
                 bean.setLogType(mPosition);
                 bean.setAlarmNum(Integer.parseInt(etDefendNext.getText().toString().toString()));
                 Intent intent = new Intent();

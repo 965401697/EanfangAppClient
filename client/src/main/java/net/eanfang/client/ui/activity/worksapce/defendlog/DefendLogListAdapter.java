@@ -1,10 +1,9 @@
-package net.eanfang.client.ui.adapter;
+package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.GetDateUtils;
-import com.yaf.base.entity.OpenShopLogEntity;
+import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
 
@@ -12,16 +11,16 @@ import net.eanfang.client.R;
  * Created by O u r on 2018/5/22.
  */
 
-public class OpenShopLogAdapter extends BaseQuickAdapter<OpenShopLogEntity, BaseViewHolder> {
+public class DefendLogListAdapter extends BaseQuickAdapter<ProtectionLogEntity, BaseViewHolder> {
     private int mType;
 
-    public OpenShopLogAdapter(int type, int layoutResId) {
+    public DefendLogListAdapter(int type, int layoutResId) {
         super(layoutResId);
         this.mType = type;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, OpenShopLogEntity item) {
+    protected void convert(BaseViewHolder helper, ProtectionLogEntity item) {
         if (item.getOwnerCompany() != null) {
             helper.setText(R.id.tv_company_name, item.getOwnerCompany().getOrgName() + "(" + item.getOwnerUser().getAccountEntity().getRealName() + ")");
         } else {
