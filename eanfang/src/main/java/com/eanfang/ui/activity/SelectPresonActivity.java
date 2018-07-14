@@ -79,6 +79,8 @@ public class SelectPresonActivity extends BaseActivity {
                         for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
                             TemplateBean.Preson preson = new TemplateBean.Preson();
                             preson.setId(staffBean.getAccId());
+                            preson.setOrgCode(sectionBean.getOrgCode());
+                            preson.setUserId(staffBean.getUserId());
                             preson.setName(staffBean.getAccountEntity().getNickName());
                             preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                             preson.setMobile(staffBean.getAccountEntity().getMobile());
@@ -113,6 +115,7 @@ public class SelectPresonActivity extends BaseActivity {
                     preson.setName(staffBeanX.getAccountEntity().getNickName());
                     preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
                     preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+                    preson.setUserId(staffBeanX.getUserId());
                     preson.setDepartmentId(staffBeanX.getDepartmentId());
                     if (!TextUtils.isEmpty(isOrganization)) {
                         preson.setVisible(true);
@@ -145,6 +148,8 @@ public class SelectPresonActivity extends BaseActivity {
             for (SectionBean.ChildrenBean.StaffBean staffBean : childrenBean.getStaff()) {
                 TemplateBean.Preson preson = new TemplateBean.Preson();
                 preson.setId(staffBean.getAccId());
+                preson.setOrgCode(childrenBean.getOrgCode());
+                preson.setUserId(staffBean.getUserId());
                 preson.setName(staffBean.getAccountEntity().getNickName());
                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                 preson.setMobile(staffBean.getAccountEntity().getMobile());

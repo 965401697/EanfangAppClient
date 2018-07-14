@@ -24,7 +24,9 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.yaf.sys.entity.UserEntity;
@@ -35,6 +37,8 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CompleteWorkView;
 import net.eanfang.worker.ui.widget.FindTroubleView;
 import net.eanfang.worker.ui.widget.WorkPlanView;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +191,9 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 startActivityForResult(intent, 3);
                 break;
             case R.id.ll_depend_person://联系人
-                showDependPerson();
+                Intent in= new Intent(this, SelectOrganizationActivity.class);
+                in.putExtra("isRadio", "isRadio");
+                startActivity(in);
                 break;
             case R.id.ll_report_type://类型
                 PickerSelectUtil.singleTextPicker(this, "", etTaskName, GetConstDataUtils.getWorkReportTypeList());
@@ -264,22 +270,41 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     /**
      * 责任人
      */
-    private void showDependPerson() {
-        if (userlist == null || userlist.isEmpty()) {
-            showToast("暂无其他员工可选");
-            return;
-        }
-        pvOptions_NoLink = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
-            posistion = options1;
-            etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
-            tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
-            assigneeUserId = userlist.get(posistion).getUserId();
-            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
+    @Subscribe
+    public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        }).build();
-        pvOptions_NoLink.setPicker(userNameList);
-        pvOptions_NoLink.show();
+
+        if (presonList.size() > 0) {
+            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+
+            etPhoneNum.setText(bean.getMobile());
+            tvDependPerson.setText(bean.getName());
+
+            assigneeUserId = Long.parseLong(bean.getUserId());
+            if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                assigneeOrgCode = bean.getOrgCode();
+            } else {
+                assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+            }
+
+        }
     }
+//    private void showDependPerson() {
+//        if (userlist == null || userlist.isEmpty()) {
+//            showToast("暂无其他员工可选");
+//            return;
+//        }
+//        pvOptions_NoLink = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
+//            posistion = options1;
+//            etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
+//            tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
+//            assigneeUserId = userlist.get(posistion).getUserId();
+//            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
+//
+//        }).build();
+//        pvOptions_NoLink.setPicker(userNameList);
+//        pvOptions_NoLink.show();
+//    }
 
 
     @Override

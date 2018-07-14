@@ -27,6 +27,8 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DefendLogDetailBean;
+import com.eanfang.model.TemplateBean;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
@@ -35,6 +37,8 @@ import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -191,7 +195,10 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
                 break;
             case R.id.ll_depend_person:
-                showDependPerson();
+//                showDependPerson();
+                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                intent.putExtra("isRadio", "isRadio");
+                startActivity(intent);
                 break;
             case R.id.ll_phone_num:
                 break;
@@ -277,26 +284,52 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
     /**
      * 责任人
      */
-    private void showDependPerson() {
-        if (userlist == null || userlist.isEmpty()) {
-            showToast("暂无其他员工可选");
-            return;
-        }
-        pvOptions_NoLink = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                posistion = options1;
-                etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
-                tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
-                assigneeUserId = userlist.get(posistion).getUserId();
-                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
-                assigneeTopCompanyId = userlist.get(posistion).getCompanyEntity().getTopCompanyId();
-                assigneeCompanyId = userlist.get(posistion).getCompanyId();
+
+    /**
+     * 责任人
+     */
+
+    @Subscribe
+    public void onEvent(List<TemplateBean.Preson> presonList) {
+
+
+        if (presonList.size() > 0) {
+            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+
+            etPhoneNum.setText(bean.getMobile());
+            tvDependPerson.setText(bean.getName());
+
+            assigneeUserId = Long.parseLong(bean.getUserId());
+            if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                assigneeOrgCode = bean.getOrgCode();
+            } else {
+                assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
             }
-        }).build();
-        pvOptions_NoLink.setPicker(userNameList);
-        pvOptions_NoLink.show();
+            assigneeTopCompanyId = EanfangApplication.getApplication().getTopCompanyId();
+            assigneeCompanyId = EanfangApplication.getApplication().getCompanyId();
+        }
     }
+
+//    private void showDependPerson() {
+//        if (userlist == null || userlist.isEmpty()) {
+//            showToast("暂无其他员工可选");
+//            return;
+//        }
+//        pvOptions_NoLink = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+//                posistion = options1;
+//                etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
+//                tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
+//                assigneeUserId = userlist.get(posistion).getUserId();
+//                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
+//                assigneeTopCompanyId = userlist.get(posistion).getCompanyEntity().getTopCompanyId();
+//                assigneeCompanyId = userlist.get(posistion).getCompanyId();
+//            }
+//        }).build();
+//        pvOptions_NoLink.setPicker(userNameList);
+//        pvOptions_NoLink.show();
+//    }
 
     private boolean checkInfo() {
 

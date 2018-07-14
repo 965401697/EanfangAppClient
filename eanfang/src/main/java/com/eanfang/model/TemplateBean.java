@@ -20,6 +20,7 @@ public class TemplateBean extends BaseItemData implements Serializable {
 
     public static class Preson extends BaseItemData implements Serializable {
         private String id;
+        private String userId;
         private String departmentId;
         private String protraivat;
         private String name;
@@ -28,6 +29,23 @@ public class TemplateBean extends BaseItemData implements Serializable {
         private String address;
         private boolean isChecked;
         private boolean isVisible;
+        private String orgCode;
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public String getOrgCode() {
+            return orgCode;
+        }
+
+        public void setOrgCode(String orgCode) {
+            this.orgCode = orgCode;
+        }
 
         public boolean isVisible() {
             return isVisible;
