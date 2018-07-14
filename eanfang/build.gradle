@@ -145,7 +145,7 @@ dependencies {
     compile 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     compile 'com.tencent.mid:mid:4.0.6-release'
-
+                   
     //在集成信鸽的基础上新增华为push的jar包
     compile 'com.tencent.xinge:xghw:2.5.2.300-release'
     //在集成信鸽的基础上新增小米push的jar包

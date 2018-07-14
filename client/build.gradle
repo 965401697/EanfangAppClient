@@ -18,7 +18,6 @@ android {
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
 
-
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi', 'armeabi-v7a', 'x86'

@@ -280,7 +280,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
      */
     private void compoundPhoto() {
 
-        if (newPresonList.size() == 1) {
+        if (newPresonList.size() <= 1) {
             ToastUtil.get().showToast(this, "最少选两个好友");
             return;
         }
