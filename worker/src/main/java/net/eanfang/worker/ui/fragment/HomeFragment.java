@@ -99,10 +99,6 @@ public class HomeFragment extends BaseFragment {
         initFalseData();
         doHttpNews();
 
-//        Object o = EanfangApplication.get().getUser().getAccount().getAccountExtInfo();
-//        if (o != null) {
-//            Log.e("zzw", o.toString());
-//        }
     }
 
     @Override
@@ -116,9 +112,6 @@ public class HomeFragment extends BaseFragment {
             tvHomeTitle.setText(orgName);
         }
 
-//        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
-//            finish();
-//        }).showDialog();
     }
 
     /**
@@ -127,40 +120,56 @@ public class HomeFragment extends BaseFragment {
     private void initIconClick() {
         //报修订单
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
+            if (workerApprove()) {
+                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
+            }
         });
         //报装订单
         findViewById(R.id.tv_install_order).setOnClickListener((v) -> {
-            new InstallCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new InstallCtrlView(getActivity(), true).show();
+            }
         });
         //设计订单
         findViewById(R.id.tv_design_order).setOnClickListener((v) -> {
-            JumpItent.jump(getActivity(), DesignActivity.class);
+            if (workerApprove()) {
+                JumpItent.jump(getActivity(), DesignActivity.class);
+            }
         });
         //维保订单
         findViewById(R.id.tv_maintain_order).setOnClickListener((v) -> {
-            new MaintainCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new MaintainCtrlView(getActivity(), true).show();
+            }
         });
         //项目发包
         findViewById(R.id.tv_project_send).setOnClickListener((v) -> {
-            new TaskPubCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new TaskPubCtrlView(getActivity(), true).show();
+            }
         });
         //项目接包
         findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
-            new TakePubCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new TakePubCtrlView(getActivity(), true).show();
+            }
         });
         //内部报价
         findViewById(R.id.tv_inside_price).setOnClickListener((v) -> {
-            new PayOrderListCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new PayOrderListCtrlView(getActivity(), true).show();
+            }
         });
         //签到
         findViewById(R.id.tv_sign).setOnClickListener((v) -> {
-            // 检查有无权限
-            List<String> ss = new ArrayList<>();
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                new SignCtrlView(getActivity()).show();
-            } else {
-                showToast("暂无权限");
+            if (workerApprove()) {
+                // 检查有无权限
+                List<String> ss = new ArrayList<>();
+                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                    new SignCtrlView(getActivity()).show();
+                } else {
+                    showToast("暂无权限");
+                }
             }
         });
         //扫描二维码

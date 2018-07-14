@@ -1,6 +1,7 @@
 package com.eanfang.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.R;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.model.WorkerInfoBean;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
-import com.jaeger.library.StatusBarUtil;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -211,4 +216,29 @@ public abstract class BaseFragment extends Fragment implements IBase {
         ((ImageView) findViewById(R.id.iv_left)).setVisibility(visible);
     }
 
+    /**
+     * 判断技师是否认证
+     *
+     * @return
+     */
+    public boolean workerApprove() {
+
+        if (EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
+
+            WorkerInfoBean workerInfoBean = new WorkerInfoBean();
+            workerInfoBean.setAccId(EanfangApplication.get().getAccId());
+            workerInfoBean.setUserId(EanfangApplication.get().getUserId());
+
+            new TrueFalseDialog(getActivity(), "提示", "你还没有通过技师认证，认证通过后才能使用此功能？", () -> {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("workerInfoBean", workerInfoBean);
+                Intent intent = new Intent("net.eanfang.worker.action.AUTH");
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }).showDialog();
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

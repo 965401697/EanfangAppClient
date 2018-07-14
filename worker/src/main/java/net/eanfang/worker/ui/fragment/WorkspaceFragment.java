@@ -196,46 +196,57 @@ public class WorkspaceFragment extends BaseFragment {
     private void teamWork() {
         //签到
         findViewById(R.id.tv_sign).setOnClickListener((v) -> {
-
-            // 检查有无权限
-            List<String> ss = new ArrayList<>();
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                new SignCtrlView(getActivity()).show();
-            } else {
-                showToast("暂无权限");
+            if (workerApprove()) {
+                // 检查有无权限
+                List<String> ss = new ArrayList<>();
+                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                    new SignCtrlView(getActivity()).show();
+                } else {
+                    showToast("暂无权限");
+                }
             }
         });
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
-            new ReportCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new ReportCtrlView(getActivity(), true).show();
+            }
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
-            new TaskCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new TaskCtrlView(getActivity(), true).show();
+            }
         });
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
-            new WorkCheckCtrlView(getActivity(), true).show();
+            if (workerApprove()) {
+                new WorkCheckCtrlView(getActivity(), true).show();
+            }
         });
 
         //故障记录
         findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
-                startActivity(intent);
-            } else {
-                showToast("暂无权限");
+            if (workerApprove()) {
+                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                    Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
+                    startActivity(intent);
+                } else {
+                    showToast("暂无权限");
+                }
             }
         });
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
-                startActivity(intent);
-            } else {
-                showToast("暂无权限");
+            if (workerApprove()) {
+                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                    Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+                    startActivity(intent);
+                } else {
+                    showToast("暂无权限");
+                }
             }
         });
     }

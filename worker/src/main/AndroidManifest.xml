@@ -456,7 +456,15 @@
         <!-- 技师认证 列表页 -->
         <activity
             android:name=".ui.activity.my.AuthListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="net.eanfang.worker.action.AUTH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
         <!-- 免费设计 -->
         <activity android:name=".ui.activity.worksapce.design.DesignActivity" />
         <!-- 设计订单List -->
@@ -473,7 +481,7 @@
             android:screenOrientation="portrait" />
         <!-- 选择IM联系人 -->
         <activity android:name=".ui.activity.im.SelectIMContactActivity" />
- 
+
         <!-- 第一次登陆的提示 -->
         <activity android:name=".ui.activity.worksapce.LoginHintActivity" />
 
