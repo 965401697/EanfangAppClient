@@ -129,6 +129,22 @@
 -keep class com.tencent.mid.** {* ;}
 -keep public class * extends com.qq.taf.jce.JceStruct{*;}
 
+ #华为推送
+-keepattributes *Annotation*
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
+-keep class com.hianalytics.android.**{*;}
+-keep class com.huawei.updatesdk.**{*;}
+-keep class com.huawei.hms.**{*;}
+  #小米推送
+-keep class com.xiaomi.**{*;}
+-keep public class * extends com.xiaomi.mipush.sdk.PushMessageReceiver
+#魅族
+-dontwarn com.meizu.cloud.pushsdk.**
+-keep class com.meizu.cloud.pushsdk.**{*;}
+
 #fastJson
 -keepattributes Signature
 -dontwarn com.alibaba.fastjson.**

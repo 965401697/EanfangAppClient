@@ -239,24 +239,24 @@ public class WorkspaceFragment extends BaseFragment {
                 showToast("暂无权限");
             }
         });
-//        //交接班
-//        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-//            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-//                Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
-//                startActivity(intent);
-//            } else {
-//                showToast("暂无权限");
-//            }
-//        });
-//        //面谈员工
-//        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-//            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-//                Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
-//                startActivity(intent);
-//            } else {
-//                showToast("暂无权限");
-//            }
-//        });
+        //交接班
+        findViewById(R.id.tv_work_transfer).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
+                startActivity(intent);
+            } else {
+                showToast("暂无权限");
+            }
+        });
+        //面谈员工
+        findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
+            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+                Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
+                startActivity(intent);
+            } else {
+                showToast("暂无权限");
+            }
+        });
 
     }
 

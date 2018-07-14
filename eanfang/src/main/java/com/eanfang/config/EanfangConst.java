@@ -87,4 +87,11 @@ public class EanfangConst {
 
     // 微信支付成功 action
     public static final String ACTION_WX_PAY_SUCCESS = "net.eanfang.client.action.repair_wx_pay_success";
+
+    // 小米推送 Appid Appkey
+    public static final String XIAOMI_APPID = "2882303761517837079";
+    public static final String XIAOMI_APPKEY = "5641783759079";
+    // 魅族 Appid Appkey
+    public static final String MEIZU_APPID = "1001122";
+    public static final String MEIZU_APPKEY = "27052f4accf34d49934941f28db1c2e4";
 }

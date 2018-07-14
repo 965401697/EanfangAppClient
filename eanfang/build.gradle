@@ -28,6 +28,8 @@ android {
 
         buildConfigField("String", "HOST", "\"http://192.168.0.220:8080\"")
         buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
     }
 
@@ -147,6 +149,10 @@ dependencies {
 
     //在集成信鸽的基础上新增华为push的jar包
     compile 'com.tencent.xinge:xghw:2.5.2.300-release'
+    //在集成信鸽的基础上新增小米push的jar包
+    compile 'com.tencent.xinge:mipush:3.2.2-release'
+    //集成信鸽的基础上新增魅族push的jar包
+    compile 'com.tencent.xinge:xgmz:3.2.2-release'
 
     //微信
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
