@@ -429,5 +429,10 @@ public interface NewApiService {
      */
     String COMPANY_ENTERPRISE_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/ent/rollback/";
 
+    /**
+     * 报修统计接口
+     */
+    String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
+
 
 }

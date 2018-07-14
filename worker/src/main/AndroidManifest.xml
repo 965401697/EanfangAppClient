@@ -105,6 +105,21 @@
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
         </receiver>
+        <!-- 小米自定义的广播名称 -->
+        <receiver
+            android:name=".ui.receiver.XiaoMiReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -137,6 +152,7 @@
             android:launchMode="singleTop" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.CameraActivity" />
+        <!-- 消息列表 -->
         <activity android:name=".ui.activity.worksapce.notice.MessageListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -455,9 +471,9 @@
         <activity
             android:name=".ui.activity.my.AuthPhotoActivity"
             android:screenOrientation="portrait" />
-        <!--选择IM联系人-->
+        <!-- 选择IM联系人 -->
         <activity android:name=".ui.activity.im.SelectIMContactActivity" />
-        <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity"></activity>
+ 
         <!-- 第一次登陆的提示 -->
         <activity android:name=".ui.activity.worksapce.LoginHintActivity" />
 
@@ -465,6 +481,19 @@
         <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
         <!--创建团队-->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity"></activity>
+
+        <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
+        <!-- 保活Activity -->
+        <activity
+            android:name=".ui.activity.worksapce.live.LiveActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnTaskLaunch="false"
+            android:theme="@style/LiveStyle"></activity>
+        <service
+            android:name=".ui.activity.worksapce.live.LiveService"
+            android:process=":live_service" />
+
     </application>
 
 </manifest>

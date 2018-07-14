@@ -58,6 +58,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.live.LiveService;
+import net.eanfang.worker.ui.activity.worksapce.live.ScreenManager;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
@@ -65,6 +67,7 @@ import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
+import net.eanfang.worker.ui.receiver.ReceiverInit;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -89,19 +92,19 @@ public class MainActivity extends BaseActivity {
     private LoginBean user;
     private long mExitTime;
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        JumpItent.jump(MainActivity.this, MessageListActivity.class);
-    }
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        setIntent(intent);
+//        JumpItent.jump(MainActivity.this, MessageListActivity.class);
+//    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        XGPushManager.onActivityStoped(this);
-
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        XGPushManager.onActivityStoped(this);
+//
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,16 +112,17 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
-        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
-        if (message != null) {
-            // 获取自定义key-value String customContent = message.getCustomContent();
-            //拿到数据自行处理
-            if (isTaskRoot()) {
-                return;
-            }
-            //如果有面板存在则关闭当前的面板
-            finish();
-        }
+        LiveService.toLiveService(MainActivity.this);
+//        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
+//        if (message != null) {
+//            // 获取自定义key-value String customContent = message.getCustomContent();
+//            //拿到数据自行处理
+//            if (isTaskRoot()) {
+//                return;
+//            }
+//            //如果有面板存在则关闭当前的面板
+//            finish();
+//        }
         setHeaders();
         initXinGe();
         initFragment();
@@ -268,29 +272,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void registerXinGe() {
-        // 打开第三方推送
-        XGPushConfig.enableOtherPush(MainActivity.this, true);
-        //开启信鸽日志输出
-//        XGPushConfig.enableDebug(this, true);
-
-//        XGPushConfig.setHuaweiDebug(true);
-
-
-        //信鸽注册代码
-        XGPushManager.registerPush(MainActivity.this, user.getAccount().getMobile(), new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                Log.e("TPush", "注册成功，设备token为：" + data);
-                // Var.get("MainActivity.initXinGe").setVar(1);
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-                //Var.get("MainActivity.initXinGe").setVar(0);
-                registerXinGe();
-            }
-        });
+        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
 
     /**

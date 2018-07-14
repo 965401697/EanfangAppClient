@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.datastatistics;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.witget.DataSelectPopWindow;
 import com.github.mikephil.charting.animation.Easing;
@@ -23,6 +29,8 @@ import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import net.eanfang.worker.R;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +81,11 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initView() {
         setTitle("数据统计");
         setLeftBack();
+        /**
+         * 设置pieChart图表的描述
+         * */
+        initMyPieChart(pcFault);
+        initMyPieChart(pcIntact);
     }
 
     /**
@@ -80,11 +93,11 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      * @decision 初始化数据
      */
     private void initData() {
-        /**
-         * 设置pieChart图表的描述
-         * */
-        initMyPieChart(pcFault);
-        initMyPieChart(pcIntact);
+
+        EanfangHttp.post(NewApiService.REPAIR_DATA_STATISTICE)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                    Log.e("GG", bean + "");
+                }));
 
         //模拟数据
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
@@ -105,6 +118,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         setFaultData(entries);
         setIntactData(entries_intact);
 
+        Config.get().getBusinessList(1);
         mDataType.add("防盗报警");
         mDataType.add("电视监控");
         mDataType.add("可视对讲");

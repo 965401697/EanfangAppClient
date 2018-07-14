@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * @decision 面谈员工 列表
  */
 public class WorkTalkListActivity extends BaseActivity {
-    public final List<String> allmTitles = GetConstDataUtils.getWorkTalkStatus();
+    public final List<String> allmTitles = GetConstDataUtils.getWorkTaskStatus();
     @BindView(R.id.sl_tabLayout)
     SlidingTabLayout slTabLayout;
     @BindView(R.id.viewpager)
