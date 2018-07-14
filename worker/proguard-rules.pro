@@ -137,7 +137,7 @@
     public void onEvent*(**);
     void onEvent*(**);
 }
-
+  #华为推送
 -keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes InnerClasses
@@ -146,7 +146,12 @@
 -keep class com.hianalytics.android.**{*;}
 -keep class com.huawei.updatesdk.**{*;}
 -keep class com.huawei.hms.**{*;}
-
+  #小米推送
+-keep class com.xiaomi.**{*;}
+-keep public class * extends com.xiaomi.mipush.sdk.PushMessageReceiver
+#魅族
+-dontwarn com.meizu.cloud.pushsdk.**
+-keep class com.meizu.cloud.pushsdk.**{*;}
 ## ----------------------------------
 ##      融云 相关
 ## ----------------------------------

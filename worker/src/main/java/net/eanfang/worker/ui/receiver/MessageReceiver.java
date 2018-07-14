@@ -79,14 +79,14 @@ public class MessageReceiver extends XGPushBaseReceiver {
             return;
         }
         LogUtil.e(LogTag, "onNotifactionClickedResult");
-        if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
-            // 通知在通知栏被点击啦。。。。。
-            // APP自己处理点击的相关动作
-            // 这个动作可以在activity的onResume也能监听，请看第3点相关内容
-            Intent intent = new Intent(context, MessageListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        }
+//        if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
+//            // 通知在通知栏被点击啦。。。。。
+//            // APP自己处理点击的相关动作
+//            // 这个动作可以在activity的onResume也能监听，请看第3点相关内容
+//            Intent intent = new Intent(context, MessageListActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            context.startActivity(intent);
+//        }
 
     }
 
