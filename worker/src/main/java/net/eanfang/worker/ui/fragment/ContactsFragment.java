@@ -33,6 +33,7 @@ import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.worker.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CompanyManagerActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.worker.ui.adapter.ParentAdapter;
 import net.eanfang.worker.ui.widget.CreateTeamView;
 
@@ -247,5 +248,11 @@ public class ContactsFragment extends BaseFragment {
     @Override
     protected void setListener() {
         rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), () -> getData()).show());
+        rl_create_team.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), CreatTeamActivity.class));
+            }
+        });
     }
 }

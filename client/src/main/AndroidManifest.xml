@@ -444,7 +444,7 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
         <!-- 设备参数 -->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity" />
-        <!--选择IM联系人-->
+        <!-- 选择IM联系人 -->
         <activity android:name=".ui.activity.im.SelectIMContactActivity" />
 
         <!-- 设备搜索界面 -->
@@ -466,10 +466,17 @@
         <activity
             android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
             android:screenOrientation="portrait" />
-        <!--布防日志-->
+        <!-- 布防日志 -->
         <activity android:name=".ui.activity.worksapce.defendlog.DefendLogDetailActivity" />
-        <!--布防日志详情-->
+        <!-- 布防日志详情 -->
         <activity android:name=".ui.activity.worksapce.defendlog.DefendLogDetailDetailActivity" />
+        <!-- 第一次登陆的提示 -->
+        <activity android:name=".ui.activity.worksapce.LoginHintActivity" />
+
+        <!-- 提交资料成功提示 -->
+        <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
+        <!--创建团队-->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity"></activity>
     </application>
 
 </manifest>

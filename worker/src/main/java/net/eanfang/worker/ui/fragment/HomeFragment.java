@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ClientData;
@@ -96,6 +98,11 @@ public class HomeFragment extends BaseFragment {
         initCount();
         initFalseData();
         doHttpNews();
+
+//        Object o = EanfangApplication.get().getUser().getAccount().getAccountExtInfo();
+//        if (o != null) {
+//            Log.e("zzw", o.toString());
+//        }
     }
 
     @Override
@@ -108,6 +115,10 @@ public class HomeFragment extends BaseFragment {
         } else {
             tvHomeTitle.setText(orgName);
         }
+
+//        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+//            finish();
+//        }).showDialog();
     }
 
     /**

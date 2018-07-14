@@ -41,6 +41,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
+import net.eanfang.client.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -98,11 +99,14 @@ public class MainActivity extends BaseClientActivity {
         initXinGe();
         getBaseData();
         getConst();
-        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {});
+        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
+        });
 
         privoderMy();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
+
+
     }
 
     private void initUpdate() {

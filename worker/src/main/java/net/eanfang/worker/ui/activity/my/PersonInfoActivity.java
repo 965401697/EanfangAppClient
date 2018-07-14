@@ -37,6 +37,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 
 import java.text.ParseException;
 
@@ -320,7 +321,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                             userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
-
+                        startActivity(new Intent(PersonInfoActivity.this, OwnDataHintActivity.class));
                         finish();
                     });
                 }));

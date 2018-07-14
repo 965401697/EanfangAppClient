@@ -37,6 +37,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
 
 import java.text.ParseException;
 
@@ -312,6 +313,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                             user.getAccount().setNickName(tvNickname.getText().toString().trim());
                         }
                         EanfangApplication.get().saveUser(user);
+                        startActivity(new Intent(PersonInfoActivity.this, OwnDataHintActivity.class));
                         finish();
                     });
                 }));

@@ -101,16 +101,17 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <!--选择组织联系人-->
+        <!-- 选择组织联系人 -->
         <activity android:name=".ui.activity.SelectContactActivity" />
 
-        <!--选择IM联系人-->
+        <!-- 选择IM联系人 -->
+
 
         <!-- 组织结构 -->
         <activity android:name=".ui.activity.SelectOrganizationActivity" />
         <!-- 二级折叠选择 -->
         <activity android:name=".ui.activity.SelectPresonActivity" />
-        <activity android:name=".ui.activity.kpbs.KPBSActivity"></activity>
+        <activity android:name=".ui.activity.kpbs.KPBSActivity" />
     </application>
 
 </manifest>

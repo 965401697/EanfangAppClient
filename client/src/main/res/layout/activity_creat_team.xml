@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_input_name"
+        android:layout_width="@dimen/dimen_350"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/dimen_200"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_input_company"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="请输入公司名"
+            android:textColorHint="@color/color_bottom"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:background="@color/color_contact_create_line" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="@dimen/dimen_280"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_below="@+id/ll_input_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:background="@drawable/bg_contact_create_confim"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_13" />
+
+
+</RelativeLayout>

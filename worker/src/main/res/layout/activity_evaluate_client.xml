@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="评分："
+                    android:text="整体印象："
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -97,6 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white"
+            android:visibility="gone"
             android:padding="@dimen/dimen_30">
 
             <TextView
@@ -129,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="解释清故障原因及处理措施"
+                android:text="工作配合程度"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_13" />
 
@@ -160,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="服务态度热情友好"
+                android:text="结算及时程度"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_13" />
 
@@ -191,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="作业符合规范"
+                android:text="额外要求合理度"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_13" />
 
@@ -215,6 +216,7 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:padding="15dp">
 
             <TextView
@@ -245,6 +247,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
+            android:visibility="gone"
             android:orientation="horizontal"
             android:padding="15dp">
 

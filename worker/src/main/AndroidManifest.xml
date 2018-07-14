@@ -458,6 +458,13 @@
         <!--选择IM联系人-->
         <activity android:name=".ui.activity.im.SelectIMContactActivity" />
         <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity"></activity>
+        <!-- 第一次登陆的提示 -->
+        <activity android:name=".ui.activity.worksapce.LoginHintActivity" />
+
+        <!-- 提交资料成功提示 -->
+        <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
+        <!--创建团队-->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity"></activity>
     </application>
 
 </manifest>

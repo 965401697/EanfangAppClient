@@ -56,6 +56,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
+import net.eanfang.worker.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
@@ -143,6 +144,12 @@ public class MainActivity extends BaseActivity {
 
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
+
+        //判断是否晚上资料
+        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getIdCard())) {
+
+            startAnimActivity(new Intent(this, LoginHintActivity.class));
+        }
     }
 
 

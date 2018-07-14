@@ -104,8 +104,8 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
         evaluateWorkerBean.setItem1(rbStar1.getProgress());
         evaluateWorkerBean.setItem2(rbStar2.getProgress());
         evaluateWorkerBean.setItem3(rbStar3.getProgress());
-        evaluateWorkerBean.setItem4(rbStar4.getProgress());
-        evaluateWorkerBean.setItem5(rbStar5.getProgress());
+//        evaluateWorkerBean.setItem4(rbStar4.getProgress());
+//        evaluateWorkerBean.setItem5(rbStar5.getProgress());
         evaluateWorkerBean.setOrderId(orderId);
         evaluateWorkerBean.setOwnerId(ownerId);
         EanfangHttp.post(RepairApi.POST_CLIENT_EVALUATE_CREATE)
