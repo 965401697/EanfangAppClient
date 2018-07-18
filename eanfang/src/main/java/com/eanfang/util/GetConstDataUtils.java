@@ -72,7 +72,10 @@ public class GetConstDataUtils {
      * 故障处理明细状态
      */
     private static List<String> bugDetailList;
-
+    /**
+     * 故障处理明细状态
+     */
+    private static List<String> repairList;
     /**
      * 故障明细状态二级 的 key
      */
@@ -460,6 +463,8 @@ public class GetConstDataUtils {
         }
         return bugDetailList;
     }
+
+
 
     /**
      * 故障处理明细 二级

@@ -491,16 +491,6 @@
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity"></activity>
 
         <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
-        <!-- 保活Activity -->
-        <activity
-            android:name=".ui.activity.worksapce.live.LiveActivity"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:finishOnTaskLaunch="false"
-            android:theme="@style/LiveStyle"></activity>
-        <service
-            android:name=".ui.activity.worksapce.live.LiveService"
-            android:process=":live_service" />
 
     </application>
 

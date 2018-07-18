@@ -12,7 +12,7 @@
 
     <include layout="@layout/header" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -62,11 +62,27 @@
                             android:textSize="@dimen/textSize_15" />
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="("
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
                             android:id="@+id/tv_childCompanyName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:text="(两家子公司)"
+                            android:text=""
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="家子公司)"
                             android:textColor="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
@@ -74,6 +90,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_change_company"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_150"
                     android:background="@mipmap/ic_data_compangy_back"
@@ -83,10 +100,11 @@
                     android:paddingTop="@dimen/dimen_55">
 
                     <TextView
+                        android:id="@+id/tv_select_company_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_70"
-                        android:text="北京易安防科技有限公司" />
+                        android:text="" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -117,6 +135,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_dealy_reapair"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/ic_data_repair_back"
@@ -131,176 +150,29 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_repair"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_repair_noresult"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_36">
+                        android:layout_height="200dp"
+                        android:gravity="center"
+                        android:text="暂无数据"
+                        android:visibility="gone" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_repairing" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="维修中(105)"
-                                android:textColor="@color/color_data_repair"
-                                android:textSize="@dimen/textSize_15" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_20"
-                                android:text="返厂:12   再次上门:46   等待批准:23"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_13" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_repair_class_one"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_50"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_36">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_repaired" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="修复(26)"
-                                android:textColor="@color/color_data_statics_repairs"
-                                android:textSize="@dimen/textSize_15" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_20"
-                                android:text="更换配件:7   更换本机:9   等待批准:14   自动恢复:5"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_13" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_50"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_36">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_scarp" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="报废(37)"
-                                android:textColor="@color/color_data_statics_repair_two"
-                                android:textSize="@dimen/textSize_15" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_50"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_36">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_giveup" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="放弃(82)"
-                                android:textColor="@color/color_client_menu"
-                                android:textSize="@dimen/textSize_15" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_50"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_36">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_close" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="关闭(49)"
-                                android:textColor="@color/color_client_menu"
-                                android:textSize="@dimen/textSize_15" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:scrollbars="none" />
 
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_five_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_80"
@@ -315,97 +187,21 @@
                         android:textSize="@dimen/textSize_18" />
                 </RelativeLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_five_noresult"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:text="暂无数据"
+                    android:visibility="gone" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/ic_data_repair_one"
-                            android:drawablePadding="@dimen/dimen_24"
-                            android:text="北京法安视科技有限公司"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_15" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_36"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/ic_data_repair_two"
-                            android:drawablePadding="@dimen/dimen_24"
-                            android:text="北京易安防科技有限公司"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_15" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_36"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/ic_data_repair_three"
-                            android:drawablePadding="@dimen/dimen_24"
-                            android:text="北京法安视科技有限公司"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_15" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_36"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/ic_data_repair_four"
-                            android:drawablePadding="@dimen/dimen_24"
-                            android:text="北京易安防科技有限公司"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_15" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_36"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/ic_data_repair_five"
-                            android:drawablePadding="@dimen/dimen_24"
-                            android:text="北京法安视科技有限公司"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_15" />
-                    </LinearLayout>
-                </LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_five_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_80"
@@ -420,280 +216,19 @@
                         android:textSize="@dimen/textSize_18" />
                 </RelativeLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_device_noresult"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:text="暂无数据"
+                    android:visibility="gone" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_device"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_28">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_device_monitor" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/text_data_monitor"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_15" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="主机"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="86"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_30"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="显示器"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="75"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_30"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="摄像机"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="45"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_50"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/dimen_36">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_data_device_self" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_18"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/text_data_self"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_15" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="接警主机"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="9"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_30"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="红外探测器"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="347"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_30"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="门磁"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="71"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="EAS"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_10"
-                                    android:layout_marginRight="@dimen/dimen_10"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="36"
-                                    android:textColor="@color/color_data_number"
-                                    android:textSize="@dimen/textSize_13" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dimen_20"
-                                    android:text="台"
-                                    android:textColor="@color/color_client_neworder"
-                                    android:textSize="@dimen/textSize_13" />
-
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
+                    android:scrollbars="none" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -732,7 +267,7 @@
                         android:button="@null"
                         android:checked="true"
                         android:gravity="center"
-                        android:text="@string/text_data_today"
+                        android:text="@string/text_data_yesterday"
                         android:textColor="@drawable/select_data_date"
                         android:textSize="@dimen/textSize_13" />
 
@@ -751,15 +286,16 @@
 
                 <TextView
                     android:id="@+id/tv_dataSelectType"
-                    android:layout_width="@dimen/dimen_150"
+                    android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/dimen_36"
                     android:background="@drawable/select_camera_back"
                     android:drawableRight="@mipmap/arrow_down"
                     android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_10"
                     android:paddingRight="@dimen/dimen_10"
-                    android:text="电视监控"
+                    android:text="全部"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
             </RelativeLayout>
@@ -770,11 +306,21 @@
                 android:layout_marginTop="@dimen/dimen_70"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tv_pie_noresult"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:text="暂无数据"
+                    android:visibility="gone" />
+
                 <LinearLayout
+                    android:id="@+id/ll_fault"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pc_fault"
@@ -785,13 +331,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_40"
-                        android:text="故障现象比"
+                        android:text="故障类型"
                         android:textColor="@color/color_data_bottom"
                         android:textSize="@dimen/textSize_15" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_intact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -807,7 +354,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_40"
-                        android:text="设备完好率"
+                        android:text="故障修复率"
                         android:textColor="@color/color_data_bottom"
                         android:textSize="@dimen/textSize_15" />
 
@@ -816,5 +363,5 @@
 
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

@@ -150,7 +150,11 @@ public class SystemNoticeActivity extends BaseActivity implements
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
-                                mDataList = bean.getList();
+                                 if (bean.getList().size() > 0) {
+                                    mDataList = bean.getList();
+                                } else {
+                                    mDataList.clear();
+                                }
                                 onDataReceived();
                                 msgRefresh.setRefreshing(false);
                             });

@@ -433,6 +433,9 @@ public interface NewApiService {
      * 报修统计接口
      */
     String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
-
+    /**
+     * 报修统计获取公司
+     */
+    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
 
 }

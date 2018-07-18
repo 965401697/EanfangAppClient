@@ -232,6 +232,10 @@ public interface Constant {
      */
     String PUSH_TYPE = "PushType";
 
+    /**
+     * 35.报修统计设备状况图片后缀
+     */
+    String DEVICE_PIC_FONT = "biz/statistics/icon_";
 
     String PAY_TYPE = "PayType";
 

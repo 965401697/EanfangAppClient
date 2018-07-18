@@ -58,9 +58,6 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.live.LiveService;
-import net.eanfang.worker.ui.activity.worksapce.live.ScreenManager;
-import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -112,7 +109,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
-        LiveService.toLiveService(MainActivity.this);
 //        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
 //        if (message != null) {
 //            // 获取自定义key-value String customContent = message.getCustomContent();

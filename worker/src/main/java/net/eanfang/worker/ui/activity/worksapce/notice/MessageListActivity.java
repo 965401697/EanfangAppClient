@@ -176,7 +176,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
                                 mDataList = bean.getList();
                                 onDataReceived();
                                 msgRefresh.setRefreshing(false);
-
                             });
                         })
                 );
