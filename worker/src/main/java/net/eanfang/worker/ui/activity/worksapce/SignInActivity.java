@@ -112,6 +112,10 @@ public class SignInActivity extends BaseWorkerActivity {
     public void onViewClicked() {
         //修改可签到范围偏差
         if (distance >= 1000 || distance < 0) {
+            if (mLongitude <= 0 || mLatitude <= 0) {
+                showToast("定位失败，请检查定位或返回后重试。");
+                return;
+            }
             mSignScope = "1";
             singNotAround();
         } else {

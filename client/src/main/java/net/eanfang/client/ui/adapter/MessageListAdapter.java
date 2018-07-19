@@ -26,7 +26,7 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, NoticeEntity item) {
 
-        helper.setText(R.id.tv_titles, GetConstDataUtils.getNoticeTypeList().get(item.getNoticeType()));
+        helper.setText(R.id.tv_titles, item.getTitle());
         helper.setText(R.id.tv_content, item.getContent());
         helper.setText(R.id.tv_detailTime, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
 
