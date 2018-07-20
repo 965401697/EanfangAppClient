@@ -11,6 +11,7 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -62,6 +63,7 @@ public class SignInActivity extends BaseWorkerActivity {
     private String city = "";
     private String county = "";
 
+    private int mIsFromType;  // 1：维保签到
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class SignInActivity extends BaseWorkerActivity {
         String latitude = getIntent().getStringExtra("latitude");
         String longitude = getIntent().getStringExtra("longitude");
         orderId = getIntent().getLongExtra("orderId", 0);
+        mIsFromType = getIntent().getIntExtra("isFromType", 0);
         latLng2 = new LatLng(NumberUtil.parseDouble(latitude, 0), NumberUtil.parseDouble(longitude, 0));
         rlSignIn.setOnClickListener(v -> onViewClicked());
     }
@@ -125,7 +128,11 @@ public class SignInActivity extends BaseWorkerActivity {
      */
     private void singNotAround() {
         new TrueFalseDialog(this, "当前不在签到范围内", "是否继续签到", () -> {
-            doHttp(orderId);
+            if (mIsFromType == 1) {
+                doMaintenanceHttp(orderId);
+            } else {
+                doHttp(orderId);
+            }
         }).showDialog();
     }
 
@@ -187,6 +194,41 @@ public class SignInActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(RepairApi.POST_FLOW_SIGNIN)
                 .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> {
+                        showToast("签到成功");
+                        rlSignIn.setEnabled(false);
+                        finish();
+                    });
+                }));
+
+    }
+
+    /**
+     * 维保签到
+     * @param orderId
+     */
+    private void doMaintenanceHttp(Long orderId) {
+//        QueryEntry queryEntry = new QueryEntry();
+//        queryEntry.getEquals().put("orderId", orderId + "");
+//        queryEntry.getEquals().put("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
+//        queryEntry.getEquals().put("signLongitude", mLongitude + "");
+//        queryEntry.getEquals().put("signLatitude", mLatitude + "");
+//        queryEntry.getEquals().put("signScope", mSignScope);
+//        queryEntry.getEquals().put("signCode", Config.get().getAreaCodeByName(city, county));
+//        queryEntry.getEquals().put("signAddress", tvAddress.getText().toString().trim());
+
+        JSONObject object = new JSONObject();
+        object.put("id", orderId + "");
+        object.put("signTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
+        object.put("signLongitude", mLongitude + "");
+        object.put("signLatitude", mLatitude + "");
+        object.put("signScope", mSignScope);
+
+
+
+        EanfangHttp.post(NewApiService.MAINTENANCE_SINGIN)
+                .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("签到成功");

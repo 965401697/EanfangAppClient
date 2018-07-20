@@ -113,6 +113,18 @@ public class GetConstDataUtils {
      */
     private static List<String> maintainLevelList;
     /**
+     * 维保订单的状态
+     */
+    private static List<String> maintainStatusList;
+    /**
+     * 维保增加处理结果的条件
+     */
+    private static List<String> maintainConditionList;
+    /**
+     * 维保处理的处理结论
+     */
+    private static List<String> maintainOsRuntimeList;
+    /**
      * 维保 检查结果
      */
     private static List<String> checkResultList;
@@ -576,6 +588,40 @@ public class GetConstDataUtils {
             }
         }
         return maintainLevelList;
+    }
+
+    public static List<String> getMaintainStatusList() {
+        if (maintainStatusList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (maintainStatusList == null) {
+                    maintainStatusList = Config.get().getConstBean().getData().getMainTainConstant().get(Constant.MAINTAIN_CONSTANT_STATUS);
+                }
+            }
+        }
+        return maintainStatusList;
+    }
+
+
+    public static List<String> getMaintainConditionList() {
+        if (maintainConditionList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (maintainConditionList == null) {
+                    maintainConditionList = Config.get().getConstBean().getData().getMainTainConstant().get(Constant.MAINTAIN_ADD_CHECK_CONDITION);
+                }
+            }
+        }
+        return maintainConditionList;
+    }
+
+    public static List<String> getMaintainOsRuntimeList() {
+        if (maintainOsRuntimeList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (maintainOsRuntimeList == null) {
+                    maintainOsRuntimeList = Config.get().getConstBean().getData().getMainTainConstant().get(Constant.MAINTAIN_OS_RUNTIME);
+                }
+            }
+        }
+        return maintainOsRuntimeList;
     }
 
     public static List<String> getCheckResultList() {

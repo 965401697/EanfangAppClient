@@ -35,6 +35,9 @@ import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceListActivity;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceListFragment;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
@@ -139,7 +142,8 @@ public class HomeFragment extends BaseFragment {
         //维保订单
         findViewById(R.id.tv_maintain_order).setOnClickListener((v) -> {
             if (workerApprove()) {
-                new MaintainCtrlView(getActivity(), true).show();
+//                new MaintainCtrlView(getActivity(), true).show();
+                startActivity(new Intent(getActivity(), MaintenanceActivity.class));
             }
         });
         //项目发包

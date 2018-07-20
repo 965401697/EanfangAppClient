@@ -433,6 +433,38 @@ public interface NewApiService {
      * 报修统计接口
      */
     String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
+    /**
+     * 维保管控列表接口
+     */
+    String MAINTENANCE_GET_LIST = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/list";
+    /**
+     * 维保管控详情接口
+     */
+    String MAINTENANCE_GET_DETAIL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detail";
+    /**
+     * 维保管控预约接口接口
+     */
+    String MAINTENANCE_APPOINT_TIME = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/update";
+    /**
+     * 维保管控改约接口
+     */
+    String MAINTENANCE_UPDATE_APPOINT_TIME = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/Appointment";
+    /**
+     * 维保管控预约签到
+     */
+    String MAINTENANCE_SINGIN = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/signIn";
+    /**
+     * 维保处理提交
+     */
+    String MAINTENANCE_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/dispose";
+    /**
+     * 维保详情的状态
+     */
+    String MAINTENANCE_DETAIL_STATUS = BASE_URL + "/yaf_maintain/shopmaintenanceorder/flow";
+    /**
+     * 待验收的查看处理信息 传ID
+     */
+    String MAINTENANCE_DETAIL_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detailDispose";
 
 
 }

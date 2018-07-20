@@ -475,8 +475,9 @@
 
         <!-- 提交资料成功提示 -->
         <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
-        <!--创建团队-->
-        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity"></activity>
+        <!-- 创建团队 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity" />
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity"></activity>
     </application>
 
 </manifest>

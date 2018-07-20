@@ -237,6 +237,23 @@ public interface Constant {
 
     String NOTICE_TYPE = "NoticeType";
 
+    /**
+     * 35.维保状态
+     */
+
+    String MAINTAIN_CONSTANT_STATUS = "statusTwo";
+    /**
+     * 36，处理的结果
+     */
+
+    String MAINTAIN_ADD_CHECK_CONDITION = "existResult";
+
+    /**
+     * 37，系统运行结论
+     */
+
+    String MAINTAIN_OS_RUNTIME = "confirmStatus";
+
     //业务通知
     int NOTICE_BUSINESS = 1;
 

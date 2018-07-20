@@ -120,7 +120,6 @@
             </intent-filter>
         </receiver>
 
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/launch_theme">
@@ -457,13 +456,11 @@
         <activity
             android:name=".ui.activity.my.AuthListActivity"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="net.eanfang.worker.action.AUTH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <!-- 免费设计 -->
         <activity android:name=".ui.activity.worksapce.design.DesignActivity" />
@@ -487,9 +484,8 @@
 
         <!-- 提交资料成功提示 -->
         <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
-        <!--创建团队-->
-        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity"></activity>
-
+        <!-- 创建团队 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity" />
         <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
         <!-- 保活Activity -->
         <activity
@@ -497,10 +493,26 @@
             android:excludeFromRecents="true"
             android:exported="false"
             android:finishOnTaskLaunch="false"
-            android:theme="@style/LiveStyle"></activity>
+            android:theme="@style/LiveStyle" />
+
         <service
             android:name=".ui.activity.worksapce.live.LiveService"
             android:process=":live_service" />
+
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.maintenance.MaintenanceAddCheckResultActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleEditActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".ui.activity.worksapce.maintenance.MeintenancePhotoActivity" />
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceAppointTimeActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.maintenance.MeintenanceEditPhotoActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleShowActivity"></activity>
 
     </application>
 

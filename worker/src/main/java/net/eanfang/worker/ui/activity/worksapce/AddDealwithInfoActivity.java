@@ -51,7 +51,6 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
 
     private Map<String, String> uploadMap = new HashMap<>();
     private AddWorkInspectDetailBean addWorkInspectDetailBean = new AddWorkInspectDetailBean();
-
     private Long detailId, id;
 
     @Override
