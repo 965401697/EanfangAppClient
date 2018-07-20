@@ -81,35 +81,4 @@ public class SystemNoticeDetailActivity extends BaseActivity {
                 })));
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == event.KEYCODE_BACK) {
-//            SystemNoticeDetailActivity.this.finishSelf();
-//        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e("GG", "detail ondestory");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("GG", "detail onResume");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e("GG", "detail onStop");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("GG", "detail onPause");
-    }
 }

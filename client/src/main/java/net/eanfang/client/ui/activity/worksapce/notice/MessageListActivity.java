@@ -106,6 +106,7 @@ public class MessageListActivity extends BaseClientActivity implements
 //                if (mDataList.size() <= position) {
 //                    return;
 //                }
+                messageListAdapter.notifyItemChanged(position, 100);
                 Intent intent = new Intent(MessageListActivity.this, MessageDetailActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());

@@ -113,10 +113,13 @@ public class MessageListActivity extends BaseWorkerActivity implements
 //                if (mDataList.size() <= position) {
 //                    return;
 //                }
+                messageListAdapter.notifyItemChanged(position, 100);
                 Intent intent = new Intent(MessageListActivity.this, MessageDetailActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
                 MessageListActivity.this.startActivity(intent);
+
+
             }
         });
     }
@@ -216,7 +219,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
     public void onRefresh(int index) {
 //        page = 1;
         dataOption(TOP_REFRESH);
-
     }
 
     @Override
@@ -248,7 +250,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        page = 1;
+//        page = 1;
         getJPushMessage();
 
         XGPushManager.onActivityStarted(this);
