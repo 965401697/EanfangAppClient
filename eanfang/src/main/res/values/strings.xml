@@ -85,13 +85,13 @@
     <string name="text_data_change">切换</string>
 
     <!-- 帮助页面 -->
-    <string name="text_data_repair_dealy">当日报修</string>
+    <string name="text_data_repair_dealy">昨日报修</string>
     <string name="text_data_repair_five">报修前五家单位</string>
     <string name="text_data_devices">设备情况</string>
     <string name="text_data_monitor">监控系统</string>
     <string name="text_data_self">防盗系统</string>
     <string name="text_data_analysis">数据分析</string>
-    <string name="text_data_today">今日</string>
+    <string name="text_data_yesterday">昨日</string>
     <string name="text_data_month">本月</string>
 
     <string name="text_edit_personal_info">编辑个人资料</string>

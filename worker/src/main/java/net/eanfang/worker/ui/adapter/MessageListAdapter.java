@@ -26,7 +26,7 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
     @Override
     protected void convert(BaseViewHolder helper, NoticeEntity item) {
 
-        helper.setText(R.id.tv_titles, GetConstDataUtils.getNoticeTypeList().get(item.getNoticeType()));
+        helper.setText(R.id.tv_titles, item.getTitle());
         helper.setText(R.id.tv_content, item.getContent());
         helper.setText(R.id.tv_detailTime, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
 
@@ -48,5 +48,19 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
             helper.setVisible(R.id.iv_header, false);
         }
 
+    }
+
+    @Override
+    public void onBindViewHolder(BaseViewHolder holder, int position, List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            holder.setTextColor(R.id.tv_titles, Color.parseColor("#999999"));
+            holder.setTextColor(R.id.tv_content, Color.parseColor("#999999"));
+            holder.setTextColor(R.id.tv_leftBrackets, Color.parseColor("#999999"));
+            holder.setTextColor(R.id.tv_rightBrackets, Color.parseColor("#999999"));
+            holder.setTextColor(R.id.tv_detailTime, Color.parseColor("#999999"));
+            holder.setVisible(R.id.iv_header, false);
+        }
     }
 }

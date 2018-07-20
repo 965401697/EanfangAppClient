@@ -237,4 +237,10 @@ public class NoticeEntity implements Serializable {
     @TableField(exist = false)
     String content;
 
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    String title;
+
+
 }

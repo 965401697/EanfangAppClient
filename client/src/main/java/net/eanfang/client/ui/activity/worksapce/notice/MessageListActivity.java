@@ -103,10 +103,14 @@ public class MessageListActivity extends BaseClientActivity implements
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mDataList.size() < position) {
-                    return;
-                }
-                startActivity(new Intent(MessageListActivity.this, MessageDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
+//                if (mDataList.size() <= position) {
+//                    return;
+//                }
+                messageListAdapter.notifyItemChanged(position, 100);
+                Intent intent = new Intent(MessageListActivity.this, MessageDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
+                MessageListActivity.this.startActivity(intent);
             }
         });
     }

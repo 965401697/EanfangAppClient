@@ -72,7 +72,10 @@ public class GetConstDataUtils {
      * 故障处理明细状态
      */
     private static List<String> bugDetailList;
-
+    /**
+     * 故障处理明细状态
+     */
+    private static List<String> repairList;
     /**
      * 故障明细状态二级 的 key
      */
@@ -144,7 +147,7 @@ public class GetConstDataUtils {
 
     private static List<String> repairMisinformationList;
 
-    private static List<String> noticeTypeList;
+//    private static List<String> noticeTypeList;
 
     private static List<String> dataList;//数据库查询数据集合
     /**
@@ -473,6 +476,8 @@ public class GetConstDataUtils {
         return bugDetailList;
     }
 
+
+
     /**
      * 故障处理明细 二级
      *
@@ -733,17 +738,17 @@ public class GetConstDataUtils {
         return repairMisinformationList;
     }
 
-    public static List<String> getNoticeTypeList() {
-
-        if (noticeTypeList == null) {
-            synchronized (GetConstDataUtils.class) {
-                if (noticeTypeList == null) {
-                    noticeTypeList = Config.get().getConstBean().getData().getNoticeConst().get(Constant.NOTICE_TYPE);
-                }
-            }
-        }
-        return noticeTypeList;
-    }
+//    public static List<String> getNoticeTypeList() {
+//
+//        if (noticeTypeList == null) {
+//            synchronized (GetConstDataUtils.class) {
+//                if (noticeTypeList == null) {
+//                    noticeTypeList = Config.get().getConstBean().getData().getNoticeConst().get(Constant.NOTICE_TYPE);
+//                }
+//            }
+//        }
+//        return noticeTypeList;
+//    }
 
     /**
      * 旁路报警

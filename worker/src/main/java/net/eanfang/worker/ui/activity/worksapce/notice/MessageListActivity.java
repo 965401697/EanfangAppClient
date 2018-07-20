@@ -23,6 +23,7 @@ import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
@@ -109,10 +110,16 @@ public class MessageListActivity extends BaseWorkerActivity implements
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mDataList.size() < position) {
-                    return;
-                }
-                startActivity(new Intent(MessageListActivity.this, MessageDetailActivity.class).putExtra("infoId", mDataList.get(position).getId()));
+//                if (mDataList.size() <= position) {
+//                    return;
+//                }
+                messageListAdapter.notifyItemChanged(position, 100);
+                Intent intent = new Intent(MessageListActivity.this, MessageDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
+                MessageListActivity.this.startActivity(intent);
+
+
             }
         });
     }
@@ -176,7 +183,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
                                 mDataList = bean.getList();
                                 onDataReceived();
                                 msgRefresh.setRefreshing(false);
-
                             });
                         })
                 );
@@ -213,7 +219,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
     public void onRefresh(int index) {
 //        page = 1;
         dataOption(TOP_REFRESH);
-
     }
 
     @Override
@@ -245,7 +250,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        page = 1;
+//        page = 1;
         getJPushMessage();
 
         XGPushManager.onActivityStarted(this);

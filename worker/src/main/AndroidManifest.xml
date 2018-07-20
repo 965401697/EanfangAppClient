@@ -487,18 +487,7 @@
         <!-- 创建团队 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity" />
         <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
-        <!-- 保活Activity -->
-        <activity
-            android:name=".ui.activity.worksapce.live.LiveActivity"
-            android:excludeFromRecents="true"
-            android:exported="false"
-            android:finishOnTaskLaunch="false"
-            android:theme="@style/LiveStyle" />
-
-        <service
-            android:name=".ui.activity.worksapce.live.LiveService"
-            android:process=":live_service" />
-
+ 
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceDetailActivity" />
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivity" />

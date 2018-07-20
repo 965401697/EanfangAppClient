@@ -434,6 +434,7 @@ public interface NewApiService {
      */
     String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
     /**
+     * <<<<<<< HEAD
      * 维保管控列表接口
      */
     String MAINTENANCE_GET_LIST = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/list";
@@ -465,6 +466,11 @@ public interface NewApiService {
      * 待验收的查看处理信息 传ID
      */
     String MAINTENANCE_DETAIL_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detailDispose";
+
+    /*
+    * 报修统计获取公司
+    */
+    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
 
 
 }

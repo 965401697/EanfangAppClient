@@ -2,21 +2,31 @@ package net.eanfang.worker.ui.activity.worksapce.datastatistics;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.datastatistics.DataStatisticsBean;
+import com.eanfang.model.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.eanfang.witget.DataSelectPopWindow;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -25,12 +35,14 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
-
-import org.json.JSONObject;
+import net.eanfang.worker.ui.adapter.datastatistics.DataStatisticsCompanyAdapter;
+import net.eanfang.worker.ui.adapter.datastatistics.DataStatisticsDeviceAdapter;
+import net.eanfang.worker.ui.adapter.datastatistics.DataStatisticsReapirAdapter;
+import net.eanfang.worker.ui.widget.DataStatisticsCompanyListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,9 +72,75 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     // 设备完好率
     @BindView(R.id.pc_intact)
     PieChart pcIntact;
+    //昨日报修
+    @BindView(R.id.rv_repair_class_one)
+    RecyclerView rvRepairClassOne;
+    //五家公司
+    @BindView(R.id.rv_five_company)
+    RecyclerView rvFiveCompany;
+    // 设备情况
+    @BindView(R.id.rv_device)
+    RecyclerView rvDevice;
+    // 总公司名称
+    @BindView(R.id.tv_companyName)
+    TextView tvCompanyName;
+    //子公司名称
+    @BindView(R.id.tv_childCompanyName)
+    TextView tvChildCompanyName;
+
+    @BindView(R.id.tv_select_company_name)
+    TextView tvSelectCompanyName;
+
+    // 切换公司
+    @BindView(R.id.rl_change_company)
+    RelativeLayout rlChangeCompany;
+
+
+    // 设备完好率
+    @BindView(R.id.ll_intact)
+    LinearLayout llIntact;
+    // 故障类型
+    @BindView(R.id.ll_fault)
+    LinearLayout llFault;
+
+    @BindView(R.id.tv_repair_noresult)
+    TextView tvRepairNoresult;
+    @BindView(R.id.tv_five_noresult)
+    TextView tvFiveNoresult;
+    @BindView(R.id.tv_device_noresult)
+    TextView tvDeviceNoresult;
+    @BindView(R.id.tv_pie_noresult)
+    TextView tvPieNoresult;
+
     // 类型选择下拉Pop
     private DataSelectPopWindow dataSelectPopWindow;
-    private List<String> mDataType = new ArrayList();
+
+    private DataStatisticsReapirAdapter dataStatisticsReapirAdapter;
+    private DataStatisticsCompanyAdapter dataStatisticsCompanyAdapter;
+    private DataStatisticsDeviceAdapter dataStatisticsDeviceAdapter;
+    // 类型
+    private List<BaseDataEntity> mDataType = new ArrayList();
+
+    // 时间  值 1是昨日，2是本月 默认是昨日
+    private String mData = "1";
+
+    //报修公司
+    private List<DataStatisticsBean.RepairBean> repairBeanList = new ArrayList<>();
+    // 报修五家单位
+    private List<DataStatisticsBean.FiveBean> fiveBeanList = new ArrayList<>();
+    // 设备情况
+    private List<DataStatisticsBean.DeviceBean> deviceBeanList = new ArrayList<>();
+    // 故障类型
+    private List<DataStatisticsBean.BussinessBean> bussinessBeanList = new ArrayList<>();
+    private ArrayList<PieEntry> bussinessEntryList = new ArrayList<>();
+    // 设备完好率
+    private List<DataStatisticsBean.FailureBean> failureBeanList = new ArrayList<>();
+    private ArrayList<PieEntry> failureEntryList = new ArrayList<>();
+
+    //当前公司ID
+    private Long mOrgId;
+    // 当前公司名称
+    private String mOrgName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +159,32 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initView() {
         setTitle("数据统计");
         setLeftBack();
+        mOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         /**
          * 设置pieChart图表的描述
          * */
         initMyPieChart(pcFault);
         initMyPieChart(pcIntact);
+        // 报修
+        dataStatisticsReapirAdapter = new DataStatisticsReapirAdapter(DataStatisticsActivity.this);
+        rvRepairClassOne.setLayoutManager(new LinearLayoutManager(this));
+        dataStatisticsReapirAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        dataStatisticsReapirAdapter.bindToRecyclerView(rvRepairClassOne);
+        rvRepairClassOne.setNestedScrollingEnabled(false);
+        // 五家公司
+        dataStatisticsCompanyAdapter = new DataStatisticsCompanyAdapter();
+        rvFiveCompany.setLayoutManager(new LinearLayoutManager(this));
+        dataStatisticsCompanyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        dataStatisticsCompanyAdapter.bindToRecyclerView(rvFiveCompany);
+        rvFiveCompany.setNestedScrollingEnabled(false);
+        // 设备情况
+        dataStatisticsDeviceAdapter = new DataStatisticsDeviceAdapter();
+        rvDevice.setLayoutManager(new LinearLayoutManager(this));
+        dataStatisticsDeviceAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        dataStatisticsDeviceAdapter.bindToRecyclerView(rvDevice);
+        rvDevice.setNestedScrollingEnabled(false);
+
     }
 
     /**
@@ -93,41 +192,130 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      * @decision 初始化数据
      */
     private void initData() {
+        tvCompanyName.setText(mOrgName);
+        tvSelectCompanyName.setText(mOrgName);
+        // 获取统计数据
+        doGetData("");
+        // 获取公司
+        doGetComapnyData(mOrgId + "");
+        BaseDataEntity baseDataEntity = new BaseDataEntity();
+        baseDataEntity.setDataName("全部");
+        baseDataEntity.setDataCode("");
+        mDataType.add(baseDataEntity);
+        mDataType.addAll(Config.get().getBusinessList(1));
 
-        EanfangHttp.post(NewApiService.REPAIR_DATA_STATISTICE)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    Log.e("GG", bean + "");
+    }
+
+    private void doGetComapnyData(String orgId) {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("topCompanyId", orgId + "");
+        queryEntry.getEquals().put("companyId", orgId + "");
+        EanfangHttp.post(NewApiService.REPAIR_DATA_COMPANGY)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, bean -> {
+                    List<DataStatisticsCompany.ListBean> companyEntityBeanList = bean.getList();
+                    if (companyEntityBeanList.size() - 1 > 0) {
+                        tvChildCompanyName.setText(companyEntityBeanList.size() + "");
+                    } else {
+                        tvChildCompanyName.setText("0");
+                    }
                 }));
-
-        //模拟数据
-        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
-        entries.add(new PieEntry(20, "优秀啊岁"));
-        entries.add(new PieEntry(50, "是的"));
-        entries.add(new PieEntry(10, "测萨等"));
-        entries.add(new PieEntry(20, "是"));
-        //模拟数据
-        ArrayList<PieEntry> entries_intact = new ArrayList<PieEntry>();
-        entries_intact.add(new PieEntry(20, "擦拭"));
-        entries_intact.add(new PieEntry(20, "测试是"));
-        entries_intact.add(new PieEntry(20, "及格"));
-        entries_intact.add(new PieEntry(10, "哈哈搜索我"));
-        entries_intact.add(new PieEntry(10, "你好"));
-        entries_intact.add(new PieEntry(20, "谁的撒旦法"));
-
-        //设置数据
-        setFaultData(entries);
-        setIntactData(entries_intact);
-
-        Config.get().getBusinessList(1);
-        mDataType.add("防盗报警");
-        mDataType.add("电视监控");
-        mDataType.add("可视对讲");
-        mDataType.add("公共广播");
-        mDataType.add("停车场");
     }
 
     private void initListener() {
         rgDataTiem.setOnCheckedChangeListener(this);
+        rlChangeCompany.setOnClickListener((View v) -> {
+            new DataStatisticsCompanyListView(DataStatisticsActivity.this, mOrgId + "", (mCompanyName, mCompanyId, mSonId) -> {
+                tvSelectCompanyName.setText(mCompanyName);
+                doGetData("");
+            }).show();
+            doGetComapnyData(mOrgId + "");
+        });
+    }
+
+    public void doGetData(String businessCode) {
+        QueryEntry queryEntry = new QueryEntry();
+        if (!StringUtils.isEmpty(businessCode)) {
+            queryEntry.getEquals().put("bussinessCode", businessCode);
+        }
+        queryEntry.getEquals().put("shopCompanyId", mOrgId + "");
+        queryEntry.getEquals().put("date", mData);
+        EanfangHttp.post(NewApiService.REPAIR_DATA_STATISTICE)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<DataStatisticsBean>(this, true, DataStatisticsBean.class, bean -> {
+                    setData(bean);
+                }));
+
+    }
+
+    /**
+     * 填充数据
+     */
+    private void setData(DataStatisticsBean bean) {
+
+        // 昨日报修
+        if (bean.getRepair().size() > 0) {
+            repairBeanList.clear();
+            tvRepairNoresult.setVisibility(View.GONE);
+            repairBeanList = bean.getRepair();
+            dataStatisticsReapirAdapter.setNewData(repairBeanList);
+        } else {
+            tvRepairNoresult.setVisibility(View.VISIBLE);
+        }
+        // 五家公司
+        if (bean.getFive().size() > 0) {
+            fiveBeanList.clear();
+            tvFiveNoresult.setVisibility(View.GONE);
+            fiveBeanList = bean.getFive();
+            dataStatisticsCompanyAdapter.setNewData(fiveBeanList);
+        } else {
+            tvFiveNoresult.setVisibility(View.VISIBLE);
+        }
+        // 设备情况
+        if (bean.getDevice().size() > 0) {
+            tvDeviceNoresult.setVisibility(View.GONE);
+            deviceBeanList.clear();
+            deviceBeanList = bean.getDevice();
+            dataStatisticsDeviceAdapter.setNewData(deviceBeanList);
+        } else {
+            tvDeviceNoresult.setVisibility(View.VISIBLE);
+        }
+        // 饼状图
+        if (bean.getBussiness().size() > 0) {
+            bussinessBeanList = bean.getBussiness();
+            //设置数据
+            bussinessEntryList.clear();
+            for (int i = 0; i < bussinessBeanList.size(); i++) {
+
+                if (bussinessBeanList.get(i).getCount() != 0) {
+                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getCount(), bussinessBeanList.get(i).getTypeStr()));
+                }
+            }
+
+            setFaultData(bussinessEntryList);
+
+        }
+        if (bean.getFailure().size() > 0) {
+            failureBeanList = bean.getFailure();
+            //设置数据
+            failureEntryList.clear();
+            for (int i = 0; i < failureBeanList.size(); i++) {
+                if (failureBeanList.get(i).getCount() != 0) {
+                    failureEntryList.add(new PieEntry(failureBeanList.get(i).getCount(), failureBeanList.get(i).getTypeStr()));
+                }
+            }
+
+            setIntactData(failureEntryList);
+        }
+        if (bussinessEntryList.size() <= 0 && failureEntryList.size() <= 0) {
+            tvPieNoresult.setVisibility(View.VISIBLE);
+            llIntact.setVisibility(View.GONE);
+            llFault.setVisibility(View.GONE);
+        } else {
+            tvPieNoresult.setVisibility(View.GONE);
+        }
+
+
     }
 
     @OnClick(R.id.tv_dataSelectType)
@@ -135,7 +323,8 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         dataSelectPopWindow = new DataSelectPopWindow(this, mDataType, new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                tvDataSelectType.setText(mDataType.get(i).toString());
+                tvDataSelectType.setText(mDataType.get(i).getDataName());
+                doGetData(mDataType.get(i).getDataCode());
                 dataSelectPopWindow.dismiss();
             }
         });
@@ -155,15 +344,22 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_dataTimeToday:
+                mData = "1";
+                // 获取统计数据
+                doGetData("");
                 break;
             case R.id.rb_dataTimeMonth:
+                mData = "2";
+                // 获取统计数据
+                doGetData("");
                 break;
         }
     }
 
     //设置数据
     private void setFaultData(ArrayList<PieEntry> entries) {
-        PieDataSet dataSet = new PieDataSet(entries, "电视监控");
+        pcFault.clear();
+        PieDataSet dataSet = new PieDataSet(entries, "故障类型");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
@@ -208,13 +404,15 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         // 撤销所有的亮点
         pcFault.highlightValues(null);
 
+        pcFault.notifyDataSetChanged();
         pcFault.invalidate();
 
     }
 
     //设置数据
     private void setIntactData(ArrayList<PieEntry> entries) {
-        PieDataSet dataSet = new PieDataSet(entries, "电视监控");
+        pcIntact.clear();
+        PieDataSet dataSet = new PieDataSet(entries, "故障修复率");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
@@ -262,8 +460,8 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         // 撤销所有的亮点
         pcIntact.highlightValues(null);
 
+        pcIntact.notifyDataSetChanged();
         pcIntact.invalidate();
-
     }
 
     public void initPieChart(PieChart pieChart) {

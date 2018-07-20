@@ -723,7 +723,7 @@
                         android:button="@null"
                         android:checked="true"
                         android:gravity="center"
-                        android:text="@string/text_data_today"
+                        android:text="@string/text_data_yesterday"
                         android:textColor="@drawable/select_data_date"
                         android:textSize="@dimen/textSize_13" />
 

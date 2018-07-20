@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.NestedScrollingChild;
+import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -49,7 +51,8 @@ import com.eanfang.R;
  *
  * @author hou
  */
-public class SwipyRefreshLayout extends ViewGroup {
+public class SwipyRefreshLayout extends ViewGroup implements NestedScrollingParent,
+        NestedScrollingChild {
 
     // Maps to ProgressBar.Large style
     public static final int LARGE = MaterialProgressDrawable.LARGE;

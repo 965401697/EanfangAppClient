@@ -20,8 +20,8 @@
             android:ellipsize="end"
             android:singleLine="true"
             android:text="1.电视监控"
-            android:textColor="@color/common_ext_color"
-            android:textSize="@dimen/sp_14" />
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
 
         <TextView
             android:id="@+id/tv_detai_status"
@@ -50,22 +50,23 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@id/iv_arrow"
-            android:text="删除"
             android:gravity="center"
             android:paddingBottom="6dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="6dp"
+            android:text="删除"
             android:textColor="@color/colorPrimary"
             android:visibility="gone" />
 
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/ll_person"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_first_name"

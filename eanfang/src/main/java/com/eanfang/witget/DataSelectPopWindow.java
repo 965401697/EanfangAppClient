@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.eanfang.R;
 import com.eanfang.util.ViewHolder;
 import com.picker.common.util.ScreenUtils;
+import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.List;
 
@@ -29,16 +30,16 @@ public class DataSelectPopWindow extends PopupWindow {
 
     private Activity context;
     private ListView mLvType;
-    private List<String> list;
+    private List<BaseDataEntity> mList;
     private TextView mTitle;
 
-    public DataSelectPopWindow(Activity context, List<String> list, AdapterView.OnItemClickListener listener) {
+    public DataSelectPopWindow(Activity context, List<BaseDataEntity> list, AdapterView.OnItemClickListener listener) {
         this.context = context;
-        this.list = list;
+        this.mList = list;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
 
         mLvType = (ListView) view.findViewById(R.id.lv_type);
-        MyAdapter adapter = new MyAdapter(context, list);
+        MyAdapter adapter = new MyAdapter(context, mList);
         mLvType.setAdapter(adapter);
         mLvType.setOnItemClickListener(listener);
         mTitle = view.findViewById(R.id.tv_title);
@@ -59,9 +60,9 @@ public class DataSelectPopWindow extends PopupWindow {
     class MyAdapter extends BaseAdapter {
 
         private Context context;
-        private List<String> list;
+        private List<BaseDataEntity> list;
 
-        public MyAdapter(Context context, List<String> list) {
+        public MyAdapter(Context context, List<BaseDataEntity> list) {
             this.context = context;
             this.list = list;
         }
@@ -87,7 +88,7 @@ public class DataSelectPopWindow extends PopupWindow {
                 view = LayoutInflater.from(context).inflate(R.layout.layout_data_select_item, viewGroup, false);
             }
             TextView tvName = ViewHolder.get(view, R.id.tv_typeName);
-            tvName.setText(list.get(i).toString());
+            tvName.setText(list.get(i).getDataName());
             return view;
         }
     }

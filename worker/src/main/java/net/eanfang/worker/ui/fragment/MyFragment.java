@@ -15,6 +15,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.ui.base.BaseFragment;
@@ -66,26 +67,28 @@ public class MyFragment extends BaseFragment {
 
 
     private void getWorkInfo() {
-        EanfangHttp.get(UserApi.GET_WORKER_INFO)
-                .execute(new EanfangCallback<WorkerInfoBean>(getActivity(), true, WorkerInfoBean.class, (bean) -> {
-                    setOnClick(bean);
+        // 获取认证状态
+        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS)
+                .params("accId", EanfangApplication.getApplication().getAccId())
+                .execute(new EanfangCallback<AuthStatusBean>(getActivity(), true, AuthStatusBean.class, (bean) -> {
+                    setOnClick(bean.getVerify());
                 }));
     }
 
-    private void setOnClick(WorkerInfoBean bean) {
+    private void setOnClick(int status) {
 
         //status 0草稿1认证中2认证通过3认证拒绝
-        if (bean.getStatus() == 0) {
+        if (status == 0) {
             tvVerfiy.setText("技师未认证，待认证");
-        } else if (bean.getStatus() == 1) {
+        } else if (status == 1) {
             tvVerfiy.setText("认证中");
-        } else if (bean.getStatus() == 2) {
+        } else if (status == 2) {
             tvVerfiy.setText("已认证");
-        } else if (bean.getStatus() == 3) {
+        } else if (status == 3) {
             tvVerfiy.setText("认证失败，请重新认证");
         }
         rlWorkerVerfity.setOnClickListener((v) -> {
-            doWorkAuth(bean);
+            doWorkAuth();
         });
     }
 
@@ -167,16 +170,14 @@ public class MyFragment extends BaseFragment {
     }
 
     // 判断是否认证
-    private void doWorkAuth(WorkerInfoBean bean) {
+    private void doWorkAuth() {
         // 技师未认证，提示完善个人资料
 
         String realName = EanfangApplication.get().getUser().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("workerInfoBean", bean);
-            JumpItent.jump(getActivity(), AuthListActivity.class, bundle);
+            JumpItent.jump(getActivity(), AuthListActivity.class);
         }
     }
 }

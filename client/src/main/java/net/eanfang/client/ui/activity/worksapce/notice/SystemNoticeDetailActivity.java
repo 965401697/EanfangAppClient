@@ -67,7 +67,7 @@ public class SystemNoticeDetailActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mInfoId)
                 .execute(new EanfangCallback<NoticeEntity>(SystemNoticeDetailActivity.this, true, NoticeEntity.class, (bean -> {
                     runOnUiThread(() -> {
-                        tvDetailTitle.setText(GetConstDataUtils.getNoticeTypeList().get(bean.getNoticeType()));
+                        tvDetailTitle.setText(bean.getTitle());
                         String extInfo = null;
                         if (bean.getExtInfo() != null && !bean.getExtInfo().toString().contains("{")) {
                             extInfo = bean.getExtInfo().toString();

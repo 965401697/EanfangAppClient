@@ -184,6 +184,9 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             });
             return;
         } else if (isAdd) {
+            Intent intent = new Intent();
+            intent.putExtra("photos", workerInfoBean);
+            setResult(RESULT_ADD_PHOTO, intent);
             finishSelf();
         }
 

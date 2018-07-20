@@ -1,6 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -8,6 +10,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
@@ -39,6 +42,7 @@ public class SystemNoticeDetailActivity extends BaseActivity {
     //消息ID
     private Long mInfoId;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,7 @@ public class SystemNoticeDetailActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mInfoId)
                 .execute(new EanfangCallback<NoticeEntity>(SystemNoticeDetailActivity.this, true, NoticeEntity.class, (bean -> {
                     runOnUiThread(() -> {
-                        tvDetailTitle.setText(GetConstDataUtils.getNoticeTypeList().get(bean.getNoticeType()));
+                        tvDetailTitle.setText(bean.getTitle());
                         String extInfo = null;
                         if (bean.getExtInfo() != null && !bean.getExtInfo().toString().contains("{")) {
                             extInfo = bean.getExtInfo().toString();
@@ -76,4 +80,5 @@ public class SystemNoticeDetailActivity extends BaseActivity {
                     });
                 })));
     }
+
 }

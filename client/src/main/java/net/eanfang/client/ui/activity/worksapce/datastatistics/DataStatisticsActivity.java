@@ -9,8 +9,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.witget.DataSelectPopWindow;
+import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
 
@@ -38,7 +40,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     RadioGroup rgDataTiem;
     // 类型选择下拉Pop
     private DataSelectPopWindow dataSelectPopWindow;
-    private List<String> mDataType = new ArrayList();
+    private List<BaseDataEntity> mDataType = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,12 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      * @decision 初始化数据
      */
     private void initData() {
-        mDataType.add("防盗报警");
-        mDataType.add("电视监控");
-        mDataType.add("可视对讲");
-        mDataType.add("公共广播");
-        mDataType.add("停车场");
+
+        BaseDataEntity baseDataEntity = new BaseDataEntity();
+        baseDataEntity.setDataName("全部");
+        baseDataEntity.setDataCode("");
+        mDataType.add(baseDataEntity);
+        mDataType.addAll(Config.get().getBusinessList(1));
     }
 
     private void initListener() {
@@ -81,7 +84,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         dataSelectPopWindow = new DataSelectPopWindow(this, mDataType, new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                tvDataSelectType.setText(mDataType.get(i).toString());
+                tvDataSelectType.setText(mDataType.get(i).getDataName());
                 dataSelectPopWindow.dismiss();
             }
         });

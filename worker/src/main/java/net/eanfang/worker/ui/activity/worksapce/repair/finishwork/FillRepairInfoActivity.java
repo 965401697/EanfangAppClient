@@ -207,19 +207,23 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         orderId = getIntent().getLongExtra("orderId", 0);
         companyName = getIntent().getStringExtra("companyName");
         companyId = getIntent().getLongExtra("companyUid", 0);
-        new Thread(() -> {
-            // 获取经纬度
-            LocationUtil.location(this, (location) -> {
-                // mAddress = location.getCity() + location.getDistrict();
-                mAddress = location.getAddress();
-                if (!mAddress.contains("(")) {
-                    mAddress += " (" + location.getDescription() + ")";
+        // 获取经纬度
+        LocationUtil.location(this, (location) -> {
+            // mAddress = location.getCity() + location.getDistrict();
+            mAddress = location.getAddress();
+            if (!mAddress.contains("(")) {
+                mAddress += " (" + location.getDescription() + ")";
+            }
+            mSignOutLatitude = location.getLatitude();
+            mSignOutLongitude = location.getLongitude();
+            mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
+
+            runOnUiThread(() -> {
+                if (mSignOutLatitude <= 0 || mSignOutLongitude <= 0) {
+                    showToast("获取定位信息失败，请检查定位或返回后重试。");
                 }
-                mSignOutLatitude = location.getLatitude();
-                mSignOutLongitude = location.getLongitude();
-                mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
             });
-        }).start();
+        });
 
         repairTeamWorkerAdapter = new RepairTeamWorkerAdapter(R.layout.layout_team_worker_item);
         repairTeamWorkerAdapter.bindToRecyclerView(rvTeamWorker);
