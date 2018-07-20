@@ -52,6 +52,7 @@ public class OrderListFragment extends BaseFragment implements
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
             intent.putExtra("title", mTitle);
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
             startActivity(intent);
         }
@@ -166,14 +167,14 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认",false).show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
                         break;
                     case R.id.tv_finish:
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成",false).show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
                         break;
                     default:
                         break;
@@ -188,7 +189,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成",false).show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
 
                         break;
                     case R.id.tv_do_second:// 评价技师

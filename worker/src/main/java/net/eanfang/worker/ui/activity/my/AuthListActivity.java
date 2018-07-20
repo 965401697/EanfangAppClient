@@ -82,7 +82,6 @@ public class AuthListActivity extends BaseActivity {
     private void initView() {
         setTitle("技师认证");
         setLeftBack();
-        workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("workerInfoBean");
     }
 
     private void initData() {
@@ -91,7 +90,11 @@ public class AuthListActivity extends BaseActivity {
                 .params("accId", EanfangApplication.getApplication().getAccId())
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
                     verify = bean.getVerify();
-                    doChange(bean.getBase(), bean.getService(), bean.getBiz(), bean.getArea(), bean.getVerify());
+                    doChange(bean.getBase(), bean.getBiz(), bean.getService(), bean.getArea(), bean.getVerify());
+                }));
+        EanfangHttp.get(UserApi.GET_WORKER_INFO)
+                .execute(new EanfangCallback<WorkerInfoBean>(AuthListActivity.this, true, WorkerInfoBean.class, (bean) -> {
+                    workerInfoBean = bean;
                 }));
     }
 
@@ -105,9 +108,11 @@ public class AuthListActivity extends BaseActivity {
                 bundle.putInt("status", verify);
                 JumpItent.jump(this, AuthWorkerInfoActivity.class, bundle);
                 break;
+            //系统类别
             case R.id.rl_systom_type:
                 startActivity(new Intent(this, AuthWorkerSysTypeActivity.class).putExtra("status", verify));
                 break;
+            // 业务类型
             case R.id.rl_business_type:
                 startActivity(new Intent(this, AuthWorkerBizActivity.class).putExtra("status", verify));
                 break;
@@ -131,6 +136,7 @@ public class AuthListActivity extends BaseActivity {
             tvBaseInfo.setText("待完善");
             tvBaseInfo.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
+        //系统类别
         if (serviceStatus > 0) {
             tvSysType.setText("已完善");
             tvSysType.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
@@ -138,6 +144,7 @@ public class AuthListActivity extends BaseActivity {
             tvSysType.setText("待完善");
             tvSysType.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
+        //业务类型
         if (bizStatus > 0) {
             tvBusinessType.setText("已完善");
             tvBusinessType.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));

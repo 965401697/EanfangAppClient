@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -99,8 +100,10 @@ public class SystemNoticeActivity extends BaseActivity implements
         mRvSystemNotice.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(SystemNoticeActivity.this, SystemNoticeDetailActivity.class)
-                        .putExtra("infoId", messageListAdapter.getData().get(position).getId()));
+                Intent intent = new Intent(SystemNoticeActivity.this, SystemNoticeDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
+                SystemNoticeActivity.this.startActivity(intent);
             }
         });
     }
@@ -150,7 +153,7 @@ public class SystemNoticeActivity extends BaseActivity implements
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
-                                 if (bean.getList().size() > 0) {
+                                if (bean.getList().size() > 0) {
                                     mDataList = bean.getList();
                                 } else {
                                     mDataList.clear();
@@ -199,6 +202,7 @@ public class SystemNoticeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("GG", "sys onResume");
         page = 1;
         getJPushMessage();
     }
@@ -238,5 +242,23 @@ public class SystemNoticeActivity extends BaseActivity implements
                         getJPushMessage();
                     }
                 });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("GG", "sys onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("GG", "sys onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("GG", "sys onDestroy");
     }
 }

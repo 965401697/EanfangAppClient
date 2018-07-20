@@ -23,6 +23,7 @@ import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
@@ -113,9 +114,9 @@ public class MessageListActivity extends BaseWorkerActivity implements
 //                    return;
 //                }
                 Intent intent = new Intent(MessageListActivity.this, MessageDetailActivity.class);
-                long id = messageListAdapter.getData().get(position).getId();
-                intent.putExtra("infoId", id);
-                startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
+                MessageListActivity.this.startActivity(intent);
             }
         });
     }

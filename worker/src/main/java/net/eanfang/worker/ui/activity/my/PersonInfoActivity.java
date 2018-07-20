@@ -132,7 +132,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         ivUpload.setOnClickListener(v -> {
             takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
         });
-        llArea.setOnClickListener(v -> {
+        tvArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
             startActivityForResult(intent, 1);
         });

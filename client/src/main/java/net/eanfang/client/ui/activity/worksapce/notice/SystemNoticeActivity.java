@@ -97,7 +97,10 @@ public class SystemNoticeActivity extends BaseActivity implements
         mRvSystemNotice.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(SystemNoticeActivity.this, SystemNoticeDetailActivity.class).putExtra("infoId", messageListAdapter.getData().get(position).getId()));
+                Intent intent = new Intent(SystemNoticeActivity.this, SystemNoticeDetailActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
+                SystemNoticeActivity.this.startActivity(intent);
             }
         });
     }

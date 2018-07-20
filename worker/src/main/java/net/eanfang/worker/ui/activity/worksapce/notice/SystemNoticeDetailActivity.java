@@ -1,6 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -8,6 +10,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
@@ -38,6 +41,7 @@ public class SystemNoticeDetailActivity extends BaseActivity {
     TextView tvDetailTime;
     //消息ID
     private Long mInfoId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,5 +79,37 @@ public class SystemNoticeDetailActivity extends BaseActivity {
                         tvDetailTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
                     });
                 })));
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == event.KEYCODE_BACK) {
+//            SystemNoticeDetailActivity.this.finishSelf();
+//        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("GG", "detail ondestory");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("GG", "detail onResume");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("GG", "detail onStop");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("GG", "detail onPause");
     }
 }
