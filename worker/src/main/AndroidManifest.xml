@@ -165,6 +165,8 @@
                     android:scheme="xgscheme" />
             </intent-filter>
         </activity>
+        <!-- 业务通知详情 -->
+        <activity android:name=".ui.activity.worksapce.notice.MessageDetailActivity" />
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
@@ -337,8 +339,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <!-- 业务通知详情 -->
-        <activity android:name=".ui.activity.worksapce.notice.MessageDetailActivity" />
+
         <activity android:name=".ui.activity.im.GroupNoticeActivity" />
         <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
         <!-- 客服 -->

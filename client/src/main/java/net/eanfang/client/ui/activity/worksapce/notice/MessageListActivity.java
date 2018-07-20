@@ -113,6 +113,7 @@ public class MessageListActivity extends BaseClientActivity implements
                 MessageListActivity.this.startActivity(intent);
             }
         });
+        getJPushMessage();
     }
 
     private void initListener() {
@@ -242,8 +243,8 @@ public class MessageListActivity extends BaseClientActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        page = 1;
-        getJPushMessage();
+//        page = 1;
+//        getJPushMessage();
         XGPushManager.onActivityStarted(this);
         XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);
         if (clickedResult != null) {

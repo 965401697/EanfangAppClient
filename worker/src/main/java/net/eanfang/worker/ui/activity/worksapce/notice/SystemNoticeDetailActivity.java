@@ -68,7 +68,7 @@ public class SystemNoticeDetailActivity extends BaseActivity {
      */
     private void initData() {
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mInfoId)
-                .execute(new EanfangCallback<NoticeEntity>(SystemNoticeDetailActivity.this, true, NoticeEntity.class, (bean -> {
+                .execute(new EanfangCallback<NoticeEntity>(SystemNoticeDetailActivity.this, false, NoticeEntity.class, (bean -> {
                     runOnUiThread(() -> {
                         tvDetailTitle.setText(bean.getTitle());
                         String extInfo = null;
@@ -80,5 +80,49 @@ public class SystemNoticeDetailActivity extends BaseActivity {
                     });
                 })));
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    private boolean isDestroyed = false;
+
+    private void destroy() {
+        if (isDestroyed) {
+            return;
+        }
+        // 回收资源
+        isDestroyed = true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroy();
+        Log.e("GG", "detail ondestory");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("GG", "detail onResume");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("GG", "detail onStop");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isFinishing()) {
+            destroy();
+        }
+        Log.e("GG", "detail onPause");
+    }
+
 
 }

@@ -107,6 +107,7 @@ public class SystemNoticeActivity extends BaseActivity implements
                 SystemNoticeActivity.this.startActivity(intent);
             }
         });
+        getJPushMessage();
     }
 
     private void initListener() {
@@ -152,7 +153,7 @@ public class SystemNoticeActivity extends BaseActivity implements
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
+                .execute(new EanfangCallback<NoticeListBean>(this, false, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
                                 if (bean.getList().size() > 0) {
                                     mDataList = bean.getList();
@@ -204,8 +205,8 @@ public class SystemNoticeActivity extends BaseActivity implements
     protected void onResume() {
         super.onResume();
         Log.e("GG", "sys onResume");
-        page = 1;
-        getJPushMessage();
+//        page = 1;
+//
     }
 
     /**
@@ -245,21 +246,4 @@ public class SystemNoticeActivity extends BaseActivity implements
                 });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e("GG", "sys onPause");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e("GG", "sys onStop");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.e("GG", "sys onDestroy");
-    }
 }
