@@ -104,6 +104,7 @@ public class SystemNoticeActivity extends BaseActivity implements
                 SystemNoticeActivity.this.startActivity(intent);
             }
         });
+        getJPushMessage();
     }
 
 
@@ -232,8 +233,8 @@ public class SystemNoticeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        page = 1;
-        getJPushMessage();
+//        page = 1;
+//        getJPushMessage();
     }
 
 }
