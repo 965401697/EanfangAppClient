@@ -446,7 +446,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             return;
         }
         if (bean.getAccountEntity() != null) {
-            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()));
+            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()));
             headUrl = bean.getAccountEntity().getAvatar();
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();

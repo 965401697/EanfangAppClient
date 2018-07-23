@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.widget;
+package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,8 +17,9 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.datastatistics.SwitchCompanyDataStatisticsListAdapter;
+
+import net.eanfang.client.R;
+import net.eanfang.client.ui.adapter.datastatistics.SwitchCompanyDataStatisticsListAdapter;
 
 import java.util.List;
 

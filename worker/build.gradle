@@ -113,7 +113,7 @@ dependencies {
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
     // add library
-    compile 'com.alibaba:fastjson:1.2.41'
+    compile 'com.alibaba:fastjson:1.2.35'
     provided 'org.projectlombok:lombok:1.16.18'
     implementation project(':IMKit')
     implementation project(':IMLib')
