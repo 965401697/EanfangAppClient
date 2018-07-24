@@ -56,6 +56,7 @@ public class OrderListFragment extends BaseFragment implements
     //    private List<RepairOrderEntity> mDataList;
     private RepairedManageOrderAdapter adapter;
     private String status = null;
+    private int currentPosition;
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -86,6 +87,7 @@ public class OrderListFragment extends BaseFragment implements
 //            RepairOrderEntity item = mDataList.get(position);
             RepairOrderEntity item = adapter.getData().get(position);
             switchCase(item, view);
+            currentPosition = position;
         });
 
         mRecyclerView.addOnItemTouchListener(onItemClickListener);
@@ -127,7 +129,7 @@ public class OrderListFragment extends BaseFragment implements
                         // 解决方式
                         Bundle bundle = new Bundle();
                         bundle.putLong("orderId", item.getId());
-                        JumpItent.jump(getActivity(), SolveModeActivity.class, bundle);
+                        JumpItent.jump(getActivity(), SolveModeActivity.class, bundle,((RepairCtrlActivity) getActivity()).REFREST_ITEM);
                         //给客户联系人打电话
                         CallUtils.call(getActivity(), V.v(() -> item.getOwnerUser().getAccountEntity().getMobile()));
                         break;
@@ -155,7 +157,7 @@ public class OrderListFragment extends BaseFragment implements
                         intent.putExtra("orderId", item.getId());
                         intent.putExtra("latitude", item.getLatitude());
                         intent.putExtra("longitude", item.getLongitude());
-                        startActivity(intent);
+                        getActivity().startActivityForResult(intent, ((RepairCtrlActivity) getActivity()).REFREST_ITEM);
                         break;
                     default:
                         break;
@@ -186,8 +188,7 @@ public class OrderListFragment extends BaseFragment implements
                         intent.putExtra("phoneSolve", item.getIsPhoneSolve());
                         intent.putExtra("companyUid", item.getAssigneeOrg().getCompanyId());
                         intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());
-                        startActivity(intent);
-
+                        getActivity().startActivityForResult(intent, ((RepairCtrlActivity) getActivity()).REFREST_ITEM);
                         break;
                     default:
                         break;
@@ -435,5 +436,13 @@ public class OrderListFragment extends BaseFragment implements
     @Override
     public void onRefresh() {
         dataOption(TOP_REFRESH);
+    }
+
+    public RepairedManageOrderAdapter getAdapter() {
+        return adapter;
+    }
+
+    public int getCurrentPosition() {
+        return currentPosition;
     }
 }

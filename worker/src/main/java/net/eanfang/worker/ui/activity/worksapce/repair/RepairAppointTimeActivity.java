@@ -88,8 +88,8 @@ public class RepairAppointTimeActivity extends BaseActivity {
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(RepairAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
+                    setResult(RESULT_OK);
                     finishSelf();
-                    EanfangApplication.get().closeActivity(SolveModeActivity.class.getName());
                 }));
 
     }

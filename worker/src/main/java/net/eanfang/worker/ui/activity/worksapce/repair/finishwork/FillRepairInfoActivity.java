@@ -511,6 +511,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 .upJson(jsonString)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("提交成功");
+                    setResult(RESULT_OK);
                     finishSelf();
                 }));
 

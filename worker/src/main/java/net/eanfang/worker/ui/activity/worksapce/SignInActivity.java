@@ -26,6 +26,7 @@ import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -205,6 +206,7 @@ public class SignInActivity extends BaseWorkerActivity {
                     runOnUiThread(() -> {
                         showToast("签到成功");
                         rlSignIn.setEnabled(false);
+                        setResult(RESULT_OK);
                         finish();
                     });
                 }));

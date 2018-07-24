@@ -54,15 +54,20 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_company_name, item.getOwnerOrg().getBelongCompany().getOrgName());
             // 客户名称
             helper.setText(R.id.tv_real_name, item.getOwnerUser().getAccountEntity().getRealName());
-        } else if (item.getOwnerOrg() == null) {
-            helper.setText(R.id.tv_company_name, item.getOwnerUser().getAccountEntity().getRealName());
+        } else {
+            helper.setText(R.id.tv_company_name, "个人客户");
+            helper.setText(R.id.tv_real_name, item.getOwnerUser().getAccountEntity().getRealName());
         }
 
         if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
             helper.setText(R.id.tv_person_name, "技师：" + item.getAssigneeUser().getAccountEntity().getRealName());
+        } else {
+            helper.setText(R.id.tv_person_name, "技师：" + "");
         }
         if (item.getOrderNum() != null) {
             helper.setText(R.id.tv_order_id, "订单编号：" + item.getOrderNum() + str);
+        } else {
+            helper.setText(R.id.tv_order_id, "订单编号：");
         }
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateString(item.getCreateTime()));
         helper.setText(R.id.tv_arriveTime, "到达时限：" + GetConstDataUtils.getArriveList().get(item.getArriveTimeLimit()));
@@ -102,6 +107,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+        } else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
         }
 
         helper.addOnClickListener(R.id.tv_do_first);

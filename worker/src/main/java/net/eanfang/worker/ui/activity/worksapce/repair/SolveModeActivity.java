@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.repair;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -63,8 +64,18 @@ public class SolveModeActivity extends BaseActivity {
             case R.id.tv_solveAppoint:
                 Bundle bundle = new Bundle();
                 bundle.putLong("orderId", orderId);
-                JumpItent.jump(SolveModeActivity.this, RepairAppointTimeActivity.class, bundle);
+                JumpItent.jump(SolveModeActivity.this, RepairAppointTimeActivity.class, bundle, RepairCtrlActivity.REFREST_ITEM);
                 break;
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == RepairCtrlActivity.REFREST_ITEM) {
+            setResult(RESULT_OK);
+            finishSelf();
         }
     }
 
@@ -86,6 +97,7 @@ public class SolveModeActivity extends BaseActivity {
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(SolveModeActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
+                    setResult(RESULT_OK);
                     finishSelf();
                 }));
 

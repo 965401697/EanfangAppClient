@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.repair;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +41,10 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     //    private OrderListFragment currentFragment;
 
 
+    public static  final int REFREST_ITEM = 101;
+    private OrderListFragment currentFragment;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,33 +69,40 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
 //        tabLayout_2.setViewPager(vp, mTitles);
         tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
 
-//        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                currentFragment = (OrderListFragment) mFragments.get(position);
-//                currentFragment.onDataReceived();
-//                initData();
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentFragment = (OrderListFragment) mFragments.get(position);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         setTitle("报修管控");
         setLeftBack();
-//        currentFragment = (OrderListFragment) mFragments.get(0);
+        currentFragment = (OrderListFragment) mFragments.get(0);
 //        initData();
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REFREST_ITEM) {
+            currentFragment.getAdapter().remove(currentFragment.getCurrentPosition());
+        }
+    }
 
-//    public void initData() {
+
+    //    public void initData() {
 //        String status = null;
 //        QueryEntry queryEntry = new QueryEntry();
 //        if (!"全部".equals(currentFragment.getTitle())) {
@@ -168,4 +180,6 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
             return mFragments.get(position);
         }
     }
+
+
 }
