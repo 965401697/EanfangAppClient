@@ -2,7 +2,10 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -12,11 +15,11 @@ import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.ShopBughandleMaintenanceConfirmEntity;
-import com.yaf.base.entity.ShopBughandleMaintenanceDetailEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -34,6 +37,8 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 101;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
+    @BindView(R.id.tv_save)
+    TextView tvSave;
 
     private HashMap<String, String> uploadMap = new HashMap<>();
 
@@ -44,6 +49,11 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
     @BindView(R.id.snpl_box_photo)
     BGASortableNinePhotoLayout snplBoxPhoto;
 
+    private ArrayList<String> picList1 = new ArrayList<>();
+    private ArrayList<String> picList2 = new ArrayList<>();
+    private ArrayList<String> picList3 = new ArrayList<>();
+    private ShopBughandleMaintenanceConfirmEntity confirmEntity;
+    private boolean isShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +62,37 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("照片信息");
         setLeftBack();
-        initNinePhoto();
+
+
+        confirmEntity = (ShopBughandleMaintenanceConfirmEntity) getIntent().getSerializableExtra("bean");
+        isShow = getIntent().getBooleanExtra("isShow", false);
+        if (confirmEntity != null) {
+            initImgUrlList();
+            snplTvPhoto.setData(picList1);
+            snplOperatingPhoto.setData(picList2);
+            snplBoxPhoto.setData(picList3);
+
+            if (isShow) {
+                snplTvPhoto.setPlusEnable(false);
+                snplTvPhoto.setEditable(false);
+
+                snplOperatingPhoto.setPlusEnable(false);
+                snplOperatingPhoto.setEditable(false);
+
+                snplBoxPhoto.setPlusEnable(false);
+                snplBoxPhoto.setEditable(false);
+
+
+                tvSave.setVisibility(View.GONE);
+
+            } else {
+                initNinePhoto();
+            }
+
+        } else {
+            initNinePhoto();
+        }
+
     }
 
     private void initNinePhoto() {
@@ -82,7 +122,9 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
             return;
         }
 
-        ShopBughandleMaintenanceConfirmEntity confirmEntity = new ShopBughandleMaintenanceConfirmEntity();
+        if (confirmEntity == null) {
+            confirmEntity = new ShopBughandleMaintenanceConfirmEntity();
+        }
         confirmEntity.setFrontPictures(tvPhoto);
         confirmEntity.setReverseSidePictures(operatingPhoto);
         confirmEntity.setEquipmentCabinetPictures(boxPhoto);
@@ -101,6 +143,13 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
                 }
             });
             return;
+        }
+
+        if (confirmEntity != null) {
+            Intent intent = new Intent();
+            intent.putExtra("bean", confirmEntity);
+            setResult(RESULT_OK, intent);
+            finishSelf();
         }
 
     }
@@ -133,6 +182,51 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 初始化存储图片用的List集合
+     */
+    private void initImgUrlList() {
+        //修改小bug 图片读取问题
+        if (!StringUtils.isEmpty(confirmEntity.getFrontPictures())) {
+            String[] presentationPic = confirmEntity.getFrontPictures().split(",");
+            if (presentationPic.length >= 1) {
+                picList1.add(BuildConfig.OSS_SERVER + presentationPic[0]);
+            }
+            if (presentationPic.length >= 2) {
+                picList1.add(BuildConfig.OSS_SERVER + presentationPic[1]);
+            }
+            if (presentationPic.length >= 3) {
+                picList1.add(BuildConfig.OSS_SERVER + presentationPic[2]);
+            }
+        }
+
+        if (!StringUtils.isEmpty(confirmEntity.getReverseSidePictures())) {
+            String[] presentationPic = confirmEntity.getReverseSidePictures().split(",");
+            if (presentationPic.length >= 1) {
+                picList2.add(BuildConfig.OSS_SERVER + presentationPic[0]);
+            }
+            if (presentationPic.length >= 2) {
+                picList2.add(BuildConfig.OSS_SERVER + presentationPic[1]);
+            }
+            if (presentationPic.length >= 3) {
+                picList2.add(BuildConfig.OSS_SERVER + presentationPic[2]);
+            }
+        }
+
+        if (!StringUtils.isEmpty(confirmEntity.getEquipmentCabinetPictures())) {
+            String[] presentationPic = confirmEntity.getEquipmentCabinetPictures().split(",");
+            if (presentationPic.length >= 1) {
+                picList3.add(BuildConfig.OSS_SERVER + presentationPic[0]);
+            }
+            if (presentationPic.length >= 2) {
+                picList3.add(BuildConfig.OSS_SERVER + presentationPic[1]);
+            }
+            if (presentationPic.length >= 3) {
+                picList3.add(BuildConfig.OSS_SERVER + presentationPic[2]);
+            }
         }
     }
 

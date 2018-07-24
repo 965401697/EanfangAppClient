@@ -121,18 +121,25 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 examDeviceEntity = (ShopMaintenanceExamDeviceEntity) adapter.getData().get(position);
-                if (examDeviceEntity.getMaintenanceDetailEntity() == null) {
-                    Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceHandleEditActivity.class);
-                    intent.putExtra("bean", examDeviceEntity);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceHandleEditShowActivity.class);
+                intent.putExtra("bean", examDeviceEntity);
+//                intent.putExtra("isShow", true);//是否仅展示 不可编辑
+                startActivity(intent);
             }
         });
 
 
-        maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add,1);
+        maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add, 1);
         maintenanceHandeCheckAdapter.bindToRecyclerView(rvCheckResult);
         maintenanceHandeCheckAdapter.setNewData(orderEntity.getExamResultEntityList());
+        maintenanceHandeCheckAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceAddCheckResultShowActivity.class);
+                intent.putExtra("bean", (ShopMaintenanceExamResultEntity) adapter.getData().get(position));
+                startActivity(intent);
+            }
+        });
 
 
         setChecked(cbVideo, orderEntity.getConfirmEntity().getIsVcrStoreDayNormal());
@@ -171,6 +178,8 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
 
 
                 Intent intent = new Intent(MaintenanceHandleShowActivity.this, MeintenancePhotoActivity.class);
+                intent.putExtra("bean", orderEntity.getConfirmEntity());
+                intent.putExtra("isShow", true);
                 startActivity(intent);
 
                 break;

@@ -43,14 +43,17 @@ public class MaintenanceHandleEditShowActivity extends BaseWorkerActivity {
     @BindView(R.id.et_suggest)
     EditText etSuggest;
     private ShopMaintenanceExamDeviceEntity examDeviceEntity;
-
     //添加检查结果
     private final int ADD_HANDLE_RESULT = 101;
+
+    private void initData() {
+        examDeviceEntity = (ShopMaintenanceExamDeviceEntity) getIntent().getSerializableExtra("bean");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maintenance_handle_add);
+        setContentView(R.layout.activity_maintenance_handle_add_show);
         ButterKnife.bind(this);
         setTitle("维保处理");
         setLeftBack();
@@ -77,10 +80,7 @@ public class MaintenanceHandleEditShowActivity extends BaseWorkerActivity {
         etCheck.setText(examDeviceEntity.getMaintenanceDetailEntity().getCheckProcess());
         etHandle.setText(examDeviceEntity.getMaintenanceDetailEntity().getMeasure());
         etSuggest.setText(examDeviceEntity.getMaintenanceDetailEntity().getUseAdvice());
-    }
 
-    private void initData() {
-        examDeviceEntity = (ShopMaintenanceExamDeviceEntity) getIntent().getSerializableExtra("bean");
     }
 
     @OnClick(R.id.ll_photo)

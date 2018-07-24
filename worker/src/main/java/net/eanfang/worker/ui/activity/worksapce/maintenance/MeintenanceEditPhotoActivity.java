@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -19,8 +20,6 @@ import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,6 +41,8 @@ public class MeintenanceEditPhotoActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
+    @BindView(R.id.tv_save)
+    TextView tvSave;
 
 
     /**
@@ -73,6 +74,7 @@ public class MeintenanceEditPhotoActivity extends BaseWorkerActivity {
 
     private HashMap<String, String> uploadMap = new HashMap<>();
     private ShopMaintenanceExamDeviceEntity deviceEntity;
+    private boolean isShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class MeintenanceEditPhotoActivity extends BaseWorkerActivity {
         setLeftBack();
 
         deviceEntity = (ShopMaintenanceExamDeviceEntity) getIntent().getSerializableExtra("bean");
+        isShow = getIntent().getBooleanExtra("isShow", false);
 
         if (deviceEntity.getMaintenanceDetailEntity() != null && !TextUtils.isEmpty(deviceEntity.getMaintenanceDetailEntity().getBeforePictures())) {
             initImgUrlList();
@@ -92,15 +95,33 @@ public class MeintenanceEditPhotoActivity extends BaseWorkerActivity {
     }
 
     private void initNinePhoto() {
-        snplBeforePhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
-        snplEndPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
-        snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
-        snplFunctionPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
+
         if (deviceEntity.getMaintenanceDetailEntity() != null && !TextUtils.isEmpty(deviceEntity.getMaintenanceDetailEntity().getBeforePictures())) {
             snplBeforePhoto.setData(picList1);
             snplEndPhoto.setData(picList2);
             snplPhoto.setData(picList3);
             snplFunctionPhoto.setData(picList4);
+
+            if (isShow) {
+                snplBeforePhoto.setPlusEnable(false);
+                snplBeforePhoto.setEditable(false);
+
+                snplEndPhoto.setPlusEnable(false);
+                snplEndPhoto.setEditable(false);
+
+                snplPhoto.setPlusEnable(false);
+                snplPhoto.setEditable(false);
+
+                snplFunctionPhoto.setPlusEnable(false);
+                snplFunctionPhoto.setEditable(false);
+                tvSave.setVisibility(View.GONE);
+
+            }
+        } else {
+            snplBeforePhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+            snplEndPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
+            snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
+            snplFunctionPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
         }
     }
 

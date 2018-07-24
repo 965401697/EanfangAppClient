@@ -16,12 +16,15 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -47,6 +50,7 @@ public class MaintenanceAppointTimeActivity extends BaseActivity {
     LinearLayout llSpecificTime;
     private Long orderId;
     private TimePickerView mTimeYearMonthDay, mTimeHourMinSec;
+    private long mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class MaintenanceAppointTimeActivity extends BaseActivity {
 
     private void initView() {
         orderId = getIntent().getLongExtra("orderId", 0);
+        mType = getIntent().getIntExtra("type", 0);
         setTitle("预约上门时间");
         setLeftBack();
         setRightTitle("确认");
@@ -89,10 +94,17 @@ public class MaintenanceAppointTimeActivity extends BaseActivity {
         object.put("bookTime", bookTime);
         object.put("status", 2);//更新状态 变为带上门
 
-        EanfangHttp.post(NewApiService.MAINTENANCE_UPDATE_APPOINT_TIME)
+        String url = NewApiService.MAINTENANCE_APPOINT_TIME;
+        if (mType != 1) {
+            url = NewApiService.MAINTENANCE_UPDATE_APPOINT_TIME;
+        }
+
+        EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<JSONObject>(MaintenanceAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
+                    if (mType == 1)
+                        EventBus.getDefault().post(new BaseEvent());//刷新item
                     finishSelf();
                     EanfangApplication.get().closeActivity(MaintenanceAppointTimeActivity.class.getName());
                 }));

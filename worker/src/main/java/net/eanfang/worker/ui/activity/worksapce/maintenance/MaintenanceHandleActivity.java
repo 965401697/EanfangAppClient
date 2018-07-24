@@ -23,6 +23,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -35,6 +36,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 
@@ -53,9 +55,10 @@ import butterknife.OnClick;
 public class MaintenanceHandleActivity extends BaseWorkerActivity {
     //添加检查结果
     private final int ADD_HANDLE_RESULT = 101;
+    //修改检查结果
+    private final int EDIT_HANDLE_RESULT = 104;
     //修改重點處理設備
     private final int EXAM_DEVICE_RESULT = 102;
-
     //修改重點處理設備
     private final int ADD_PHOTO = 103;
 
@@ -102,6 +105,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private ShopBughandleMaintenanceConfirmEntity confirmEntity;
     private MaintenanceTeamAdapter teamAdapter;
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+    private int examResultEntityPosition;
+    private ShopMaintenanceExamResultEntity examResultEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +132,23 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-        rvCheckResult.setLayoutManager(new LinearLayoutManager(this));
-        rvDeviceHandle.setLayoutManager(new LinearLayoutManager(this));
+        //互动冲突的解决
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+
+        rvCheckResult.setLayoutManager(linearLayoutManager1);
+        rvDeviceHandle.setLayoutManager(linearLayoutManager2);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -144,18 +164,22 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 examDeviceEntityPosition = position;
                 examDeviceEntity = (ShopMaintenanceExamDeviceEntity) adapter.getData().get(position);
-                    Intent intent = new Intent(MaintenanceHandleActivity.this, MaintenanceHandleEditActivity.class);
-                    intent.putExtra("bean", examDeviceEntity);
-                    startActivityForResult(intent, EXAM_DEVICE_RESULT);
+                Intent intent = new Intent(MaintenanceHandleActivity.this, MaintenanceHandleEditActivity.class);
+                intent.putExtra("bean", examDeviceEntity);
+                startActivityForResult(intent, EXAM_DEVICE_RESULT);
             }
         });
 
-        maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add,0);
+        maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add, 0);
         maintenanceHandeCheckAdapter.bindToRecyclerView(rvCheckResult);
         maintenanceHandeCheckAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                examResultEntityPosition = position;
+                examResultEntity = (ShopMaintenanceExamResultEntity) adapter.getData().get(position);
+                Intent intent = new Intent(MaintenanceHandleActivity.this, MaintenanceAddCheckResultActivity.class);
+                intent.putExtra("bean", examResultEntity);
+                startActivityForResult(intent, EDIT_HANDLE_RESULT);
             }
         });
 
@@ -177,6 +201,10 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             if (requestCode == ADD_HANDLE_RESULT) {
                 ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
                 maintenanceHandeCheckAdapter.addData(resultEntity);
+            } else if (requestCode == EDIT_HANDLE_RESULT) {//修改已有检查结果
+                ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
+                maintenanceHandeCheckAdapter.setData(examResultEntityPosition, resultEntity);
+                maintenanceHandeCheckAdapter.notifyItemChanged(examResultEntityPosition);
             } else if (requestCode == EXAM_DEVICE_RESULT) {
                 ShopMaintenanceExamDeviceEntity deviceEntity = (ShopMaintenanceExamDeviceEntity) data.getSerializableExtra("bean");
                 examDeviceEntity.setMaintenanceDetailEntity(deviceEntity.getMaintenanceDetailEntity());
@@ -211,6 +239,9 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
 
                 Intent intent = new Intent(MaintenanceHandleActivity.this, MeintenancePhotoActivity.class);
+                if (confirmEntity != null) {
+                    intent.putExtra("bean", confirmEntity);
+                }
                 startActivityForResult(intent, ADD_PHOTO);
 
                 break;
@@ -372,6 +403,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                     .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
 
                         showToast("提交成功");
+
+                        EventBus.getDefault().post(new BaseEvent());//刷新item
 
                         finish();
 

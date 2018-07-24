@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.oss.OSSCallBack;
@@ -60,6 +61,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
 
     private HashMap<String, String> uploadMap = new HashMap<>();
     private String checkResultPhoto;
+    private ShopMaintenanceExamResultEntity examResultEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +71,23 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
         setTitle("新增检查结果");
         setLeftBack();
 
-        initViews();
         snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        examResultEntity = (ShopMaintenanceExamResultEntity) getIntent().getSerializableExtra("bean");
+        initViews();
     }
 
     private void initViews() {
-//        snplPhoto.setData(picList);
+        if (examResultEntity != null) {
+            etQuestion.setText(examResultEntity.getExistQuestions());
+            etHandle.setText(examResultEntity.getDisposeCourse());
+            etNotice.setText(examResultEntity.getInfo());
+            tvConclusion.setText(GetConstDataUtils.getMaintainConditionList().get(examResultEntity.getStatus()));
+            initImgUrlList();
+            snplPhoto.setData(picList);
+        }
     }
 
-    @OnClick({R.id.tv_add, R.id.ll_conclusion})
+    @OnClick({R.id.tv_add, R.id.ll_conclusion,R.id.tv_conclusion})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_add:
@@ -107,10 +117,18 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
                     return;
                 }
 
+                if (examResultEntity != null) {
+                    Intent intent = new Intent();
+                    intent.putExtra("bean", resultEntity);
+                    setResult(RESULT_OK, intent);
+                    finishSelf();
+                }
+
 
                 break;
 
             case R.id.ll_conclusion:
+            case R.id.tv_conclusion:
                 //系统类别
 
                 PickerSelectUtil.singleTextPicker(this, "", tvConclusion, GetConstDataUtils.getMaintainConditionList());
@@ -164,5 +182,24 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
 
 
         return true;
+    }
+
+    /**
+     * 初始化存储图片用的List集合
+     */
+    private void initImgUrlList() {
+        //修改小bug 图片读取问题
+        if (!StringUtils.isEmpty(examResultEntity.getPicture())) {
+            String[] presentationPic = examResultEntity.getPicture().split(",");
+            if (presentationPic.length >= 1) {
+                picList.add(BuildConfig.OSS_SERVER + presentationPic[0]);
+            }
+            if (presentationPic.length >= 2) {
+                picList.add(BuildConfig.OSS_SERVER + presentationPic[1]);
+            }
+            if (presentationPic.length >= 3) {
+                picList.add(BuildConfig.OSS_SERVER + presentationPic[2]);
+            }
+        }
     }
 }

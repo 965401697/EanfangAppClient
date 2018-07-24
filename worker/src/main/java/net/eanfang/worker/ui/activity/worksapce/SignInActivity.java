@@ -17,6 +17,7 @@ import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
@@ -26,6 +27,8 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -210,6 +213,7 @@ public class SignInActivity extends BaseWorkerActivity {
 
     /**
      * 维保签到
+     *
      * @param orderId
      */
     private void doMaintenanceHttp(Long orderId) {
@@ -230,12 +234,12 @@ public class SignInActivity extends BaseWorkerActivity {
         object.put("signScope", mSignScope);
 
 
-
         EanfangHttp.post(NewApiService.MAINTENANCE_SINGIN)
                 .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("签到成功");
+                        EventBus.getDefault().post(new BaseEvent());//刷新item
                         rlSignIn.setEnabled(false);
                         finish();
                     });

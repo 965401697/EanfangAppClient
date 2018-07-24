@@ -166,7 +166,7 @@
                     android:layout_marginLeft="@dimen/dimen_39"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="请添加现场照片"
+                    android:text="请查看现场照片"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 

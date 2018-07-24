@@ -110,6 +110,7 @@
             android:layout_centerVertical="true"
             android:textSize="@dimen/textSize_12"
             android:gravity="center"
+            android:background="@drawable/shape_maintenance_delect"
             android:text="删除" />
 
 

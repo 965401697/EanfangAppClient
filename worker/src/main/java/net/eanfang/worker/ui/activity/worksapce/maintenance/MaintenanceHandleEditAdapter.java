@@ -33,7 +33,7 @@ public class MaintenanceHandleEditAdapter extends BaseQuickAdapter<ShopMaintenan
         } else {
             helper.setText(R.id.tv_empasis_status, "已完善");
             ((TextView) helper.getView(R.id.tv_empasis_status)).setBackground(null);
-            ((TextView) helper.getView(R.id.tv_empasis_status)).setTextColor(helper.getView(R.id.tv_empasis_status).getResources().getColor(R.color.content_bg));
+            ((TextView) helper.getView(R.id.tv_empasis_status)).setTextColor(helper.getView(R.id.tv_empasis_status).getResources().getColor(R.color.color_bottom));
         }
 
 
@@ -52,5 +52,6 @@ public class MaintenanceHandleEditAdapter extends BaseQuickAdapter<ShopMaintenan
         }
 
         helper.setText(R.id.tv_history, "维修历史    " + String.valueOf(item.getRepairCount()));
+
     }
 }

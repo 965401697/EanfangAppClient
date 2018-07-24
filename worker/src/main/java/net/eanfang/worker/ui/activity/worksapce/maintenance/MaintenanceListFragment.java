@@ -47,6 +47,8 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
     private int mStatus;
     private String mTitle;
     private MaintenanceListAdapter mAdapter;
+    private int currentPosition;
+
 
     public static MaintenanceListFragment getInstance(int status, String title) {
         MaintenanceListFragment sf = new MaintenanceListFragment();
@@ -77,6 +79,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 ShopMaintenanceOrderEntity shopMaintenanceOrderEntity = (ShopMaintenanceOrderEntity) adapter.getData().get(position);
+                currentPosition = position;
                 switchCase(shopMaintenanceOrderEntity, view);
             }
         });
@@ -163,6 +166,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 // 解决方式
                 Bundle bundle = new Bundle();
                 bundle.putLong("orderId", item.getId());
+                bundle.putInt("type", 1);
                 JumpItent.jump(getActivity(), MaintenanceAppointTimeActivity.class, bundle);
                 //给客户联系人打电话
                 CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
@@ -250,4 +254,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         }
     }
 
+    public MaintenanceListAdapter getmAdapter() {
+        return mAdapter;
+    }
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
 }
