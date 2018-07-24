@@ -1,5 +1,6 @@
 package com.eanfang.ui.items;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,8 +13,10 @@ import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
+import com.eanfang.ui.activity.SelectPresonActivity;
 
 import java.util.List;
 
@@ -65,17 +68,17 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
         //说明是人员单选
         if (data.getFlag() == 1 || data.getFlag() == 3 || data.getFlag() == 0) {
             if (totle != 0) {
-                viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
             } else {
                 viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
             }
             viewHolder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
-//                    intent.putExtra("flag", 1);
-//                    intent.putExtra("bean", data);
-//                    viewHolder.getView(R.id.tv_unit).getContext().startActivity(intent);
+                    Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
+                    intent.putExtra("flag", 1);
+                    intent.putExtra("bean", data);
+                    viewHolder.getView(R.id.tv_unit).getContext().startActivity(intent);
                 }
             });
             //选择部门

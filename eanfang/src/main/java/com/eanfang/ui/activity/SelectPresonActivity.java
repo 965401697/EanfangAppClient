@@ -16,6 +16,7 @@ import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
@@ -96,38 +97,38 @@ public class SelectPresonActivity extends BaseActivity {
                 }
             }
 
-            TemplateBean templateBean1 = new TemplateBean();
-            if (!TextUtils.isEmpty(isOrganization)) {
-                templateBean1.setVisible(true);
-            }
-
-            if (sectionBean.getStaff() != null) {
-                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
-
-
-                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
-                templateBean1.setOrgName("本部门/本公司");
-
-                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
-
-                    TemplateBean.Preson preson = new TemplateBean.Preson();
-                    preson.setId(staffBeanX.getAccId());
-                    preson.setName(staffBeanX.getAccountEntity().getNickName());
-                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
-                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
-                    preson.setUserId(staffBeanX.getUserId());
-                    preson.setDepartmentId(staffBeanX.getDepartmentId());
-                    if (!TextUtils.isEmpty(isOrganization)) {
-                        preson.setVisible(true);
-                    }
-                    presonArrayList.add(preson);
-
-                }
-                templateBean1.setPresons(presonArrayList);
-            }
-            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                mTemplateBeanList.add(templateBean1);
-            }
+//            TemplateBean templateBean1 = new TemplateBean();
+//            if (!TextUtils.isEmpty(isOrganization)) {
+//                templateBean1.setVisible(true);
+//            }
+//
+//            if (sectionBean.getStaff() != null) {
+//                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
+//
+//
+//                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+//                templateBean1.setOrgName("本部门/本公司");
+//
+//                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+//
+//                    TemplateBean.Preson preson = new TemplateBean.Preson();
+//                    preson.setId(staffBeanX.getAccId());
+//                    preson.setName(staffBeanX.getAccountEntity().getNickName());
+//                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
+//                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+//                    preson.setUserId(staffBeanX.getUserId());
+//                    preson.setDepartmentId(staffBeanX.getDepartmentId());
+//                    if (!TextUtils.isEmpty(isOrganization)) {
+//                        preson.setVisible(true);
+//                    }
+//                    presonArrayList.add(preson);
+//
+//                }
+//                templateBean1.setPresons(presonArrayList);
+//            }
+//            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+//                mTemplateBeanList.add(templateBean1);
+//            }
             if (templateBean.getPresons() != null && templateBean.getPresons().size() > 0) {
                 mTemplateBeanList.add(templateBean);
             }
@@ -164,6 +165,80 @@ public class SelectPresonActivity extends BaseActivity {
 //            }
 
         } else {
+
+            OrganizationBean organizationBean = (OrganizationBean) getIntent().getSerializableExtra("bean");
+
+            TemplateBean templateBean1 = new TemplateBean();
+            List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
+
+            setTitle(organizationBean.getOrgName());
+            for (SectionBean sectionBean : organizationBean.getSectionBeanList()) {//循环一个公司全部 部门和员工
+                TemplateBean templateBean = new TemplateBean();
+                if (sectionBean.getChildren() != null) {
+                    for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
+                        List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+                        templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
+                        if (!TextUtils.isEmpty(isOrganization)) {
+                            templateBean.setVisible(true);
+                        }
+                        if (childrens.getStaff() != null) {
+                            for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
+                                TemplateBean.Preson preson = new TemplateBean.Preson();
+                                preson.setId(staffBean.getAccId());
+                                preson.setOrgCode(sectionBean.getOrgCode());
+                                preson.setUserId(staffBean.getUserId());
+                                preson.setName(staffBean.getAccountEntity().getNickName());
+                                preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
+                                preson.setMobile(staffBean.getAccountEntity().getMobile());
+                                preson.setDepartmentId(staffBean.getDepartmentId());
+                                if (!TextUtils.isEmpty(isOrganization)) {
+                                    preson.setVisible(true);
+                                }
+                                presonArrayList.add(preson);
+                            }
+
+                            templateBean.setPresons(presonArrayList);
+                            mTemplateBeanList.add(templateBean);
+                        }
+                    }
+                }
+
+
+
+
+                if (!TextUtils.isEmpty(isOrganization)) {
+                    templateBean1.setVisible(true);
+                }
+
+                if (sectionBean.getStaff() != null) {
+                    List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
+
+
+
+                    templateBean1.setOrgName("本部门/本公司");
+
+                    for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setId(staffBeanX.getAccId());
+                        preson.setName(staffBeanX.getAccountEntity().getNickName());
+                        preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
+                        preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+                        preson.setUserId(staffBeanX.getUserId());
+                        preson.setDepartmentId(staffBeanX.getDepartmentId());
+                        if (!TextUtils.isEmpty(isOrganization)) {
+                            preson.setVisible(true);
+                        }
+                        presonArrayList1.add(preson);
+
+                    }
+                    templateBean1.setPresons(presonArrayList1);
+                }
+
+            }
+
+
+            mTemplateBeanList.add(0,templateBean1);
 
         }
         initViews();

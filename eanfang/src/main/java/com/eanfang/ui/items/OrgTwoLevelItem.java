@@ -49,16 +49,29 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
                     childrenBean.setFlag(1);
                 } else if (data.getFlag() == 2) {
                     childrenBean.setFlag(2);
-                }else if (data.getFlag() == 3) {
+                } else if (data.getFlag() == 3) {
                     childrenBean.setFlag(3);
                 }
             }
         }
 
-        if (data.getCountStaff() == 0) {
-            viewHolder.setText(R.id.tv_company_name, data.getOrgName());
+        if (data.getStaff() != null) {
+
+            if ((data.getStaff().size() - data.getCountStaff()) >= 0) {
+                viewHolder.setText(R.id.tv_company_name, data.getOrgName());
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+            } else {
+                viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + (Math.abs(data.getStaff().size() - data.getCountStaff())) + ")");
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
+            }
         } else {
-            viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
+            if (data.getCountStaff() > 0) {
+                viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + (data.getCountStaff()) + ")");
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.setText(R.id.tv_company_name, data.getOrgName());
+                viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+            }
         }
 
 
@@ -70,11 +83,6 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
 
         //说明是单选
         if (data.getFlag() == 1 || data.getFlag() == 3 || data.getFlag() == 0) {
-            if (data.getCountStaff() != 0) {
-                viewHolder.getView(R.id.ll_staff).setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
-            }
 
             viewHolder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
