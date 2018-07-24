@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -13,6 +14,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 
@@ -80,49 +82,5 @@ public class SystemNoticeDetailActivity extends BaseActivity {
                     });
                 })));
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    private boolean isDestroyed = false;
-
-    private void destroy() {
-        if (isDestroyed) {
-            return;
-        }
-        // 回收资源
-        isDestroyed = true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        destroy();
-        Log.e("GG", "detail ondestory");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.e("GG", "detail onResume");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e("GG", "detail onStop");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (isFinishing()) {
-            destroy();
-        }
-        Log.e("GG", "detail onPause");
-    }
-
 
 }

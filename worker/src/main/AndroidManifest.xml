@@ -488,7 +488,7 @@
         <!-- 创建团队 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity" />
         <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
- 
+
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceDetailActivity" />
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivity" />
