@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -13,6 +14,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 
@@ -68,7 +70,7 @@ public class SystemNoticeDetailActivity extends BaseActivity {
      */
     private void initData() {
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + mInfoId)
-                .execute(new EanfangCallback<NoticeEntity>(SystemNoticeDetailActivity.this, true, NoticeEntity.class, (bean -> {
+                .execute(new EanfangCallback<NoticeEntity>(SystemNoticeDetailActivity.this, false, NoticeEntity.class, (bean -> {
                     runOnUiThread(() -> {
                         tvDetailTitle.setText(bean.getTitle());
                         String extInfo = null;

@@ -78,4 +78,8 @@ public class MessageDetailActivity extends BaseActivity {
                 })));
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

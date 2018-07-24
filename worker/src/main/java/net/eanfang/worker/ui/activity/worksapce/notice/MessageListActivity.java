@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.notice;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,13 +53,13 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  */
 
 public class MessageListActivity extends BaseWorkerActivity implements
-        SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     //    @BindView(R.id.tv_no_data)
 //    TextView tvNoData;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.msg_refresh)
-    SwipyRefreshLayout msgRefresh;
+    SwipeRefreshLayout msgRefresh;
     @BindView(R.id.tv_right)
     TextView tvRight;
     private Activity activity = this;
@@ -105,6 +106,8 @@ public class MessageListActivity extends BaseWorkerActivity implements
         rvList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         msgRefresh.setOnRefreshListener(this);
+        messageListAdapter.disableLoadMoreIfNotFullPage();
+        messageListAdapter.setOnLoadMoreListener(this, rvList);
         rvList.setNestedScrollingEnabled(false);
 
         rvList.addOnItemTouchListener(new OnItemClickListener() {
@@ -115,13 +118,12 @@ public class MessageListActivity extends BaseWorkerActivity implements
 //                }
                 messageListAdapter.notifyItemChanged(position, 100);
                 Intent intent = new Intent(MessageListActivity.this, MessageDetailActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("infoId", messageListAdapter.getData().get(position).getId());
                 MessageListActivity.this.startActivity(intent);
-
-
             }
         });
+        getJPushMessage();
     }
 
     private void initListener() {
@@ -178,7 +180,7 @@ public class MessageListActivity extends BaseWorkerActivity implements
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
+                .execute(new EanfangCallback<NoticeListBean>(this, false, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
                                 mDataList = bean.getList();
                                 onDataReceived();
@@ -188,7 +190,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
                 );
     }
 
-    @Override
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
@@ -205,9 +206,14 @@ public class MessageListActivity extends BaseWorkerActivity implements
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-                messageListAdapter.notifyDataSetChanged();
+//                messageListAdapter.notifyDataSetChanged();
+                messageListAdapter.loadMoreEnd();
             } else {
                 messageListAdapter.addData(mDataList);
+                messageListAdapter.loadMoreComplete();
+                if (mDataList.size() < 10) {
+                    messageListAdapter.loadMoreEnd();
+                }
             }
         }
     }
@@ -216,13 +222,13 @@ public class MessageListActivity extends BaseWorkerActivity implements
      * 下拉刷新，上拉加载更多
      */
     @Override
-    public void onRefresh(int index) {
+    public void onRefresh() {
 //        page = 1;
         dataOption(TOP_REFRESH);
     }
 
     @Override
-    public void onLoad(int index) {
+    public void onLoadMoreRequested() {
         dataOption(BOTTOM_REFRESH);
     }
 
@@ -251,7 +257,6 @@ public class MessageListActivity extends BaseWorkerActivity implements
     protected void onResume() {
         super.onResume();
 //        page = 1;
-        getJPushMessage();
 
         XGPushManager.onActivityStarted(this);
         XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);

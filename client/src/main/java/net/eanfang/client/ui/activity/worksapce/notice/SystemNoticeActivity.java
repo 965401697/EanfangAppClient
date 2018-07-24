@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.notice;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,12 +43,12 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @decision 系统通知
  */
 public class SystemNoticeActivity extends BaseActivity implements
-        SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.rv_systemNotice)
     RecyclerView mRvSystemNotice;
     @BindView(R.id.srl_systemNotice)
-    SwipyRefreshLayout msgRefresh;
+    SwipeRefreshLayout msgRefresh;
     //    @BindView(R.id.tv_no_data)
 //    TextView tvNoData;
     private int page = 1;
@@ -91,6 +92,8 @@ public class SystemNoticeActivity extends BaseActivity implements
         mRvSystemNotice.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         msgRefresh.setOnRefreshListener(this);
+        messageListAdapter.disableLoadMoreIfNotFullPage();
+        messageListAdapter.setOnLoadMoreListener(this, mRvSystemNotice);
         // rv 和 scrollview 滑动冲突
         mRvSystemNotice.setNestedScrollingEnabled(false);
 
@@ -104,6 +107,7 @@ public class SystemNoticeActivity extends BaseActivity implements
                 SystemNoticeActivity.this.startActivity(intent);
             }
         });
+        getJPushMessage();
     }
 
 
@@ -117,7 +121,6 @@ public class SystemNoticeActivity extends BaseActivity implements
         });
     }
 
-    @Override
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
@@ -134,9 +137,14 @@ public class SystemNoticeActivity extends BaseActivity implements
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-                messageListAdapter.notifyDataSetChanged();
+//                messageListAdapter.notifyDataSetChanged();
+                messageListAdapter.loadMoreEnd();
             } else {
                 messageListAdapter.addData(mDataList);
+                messageListAdapter.loadMoreComplete();
+                if (mDataList.size() < 10) {
+                    messageListAdapter.loadMoreEnd();
+                }
             }
         }
     }
@@ -200,12 +208,12 @@ public class SystemNoticeActivity extends BaseActivity implements
      * 下拉刷新，上拉加载更多
      */
     @Override
-    public void onRefresh(int index) {
+    public void onRefresh() {
         dataOption(TOP_REFRESH);
     }
 
     @Override
-    public void onLoad(int index) {
+    public void onLoadMoreRequested() {
         dataOption(BOTTOM_REFRESH);
     }
 
@@ -232,8 +240,8 @@ public class SystemNoticeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        page = 1;
-        getJPushMessage();
+//        page = 1;
+//        getJPushMessage();
     }
 
 }

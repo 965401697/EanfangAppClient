@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.notice;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,13 +49,13 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  */
 
 public class MessageListActivity extends BaseClientActivity implements
-        SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     //    @BindView(R.id.tv_no_data)
 //    TextView tvNoData;
     @BindView(R.id.msg_refresh)
-    SwipyRefreshLayout msgRefresh;
+    SwipeRefreshLayout msgRefresh;
     private int page = 1;
     @BindView(R.id.tv_right)
     TextView tvRight;
@@ -97,6 +98,8 @@ public class MessageListActivity extends BaseClientActivity implements
         rvList.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         msgRefresh.setOnRefreshListener(this);
+        messageListAdapter.disableLoadMoreIfNotFullPage();
+        messageListAdapter.setOnLoadMoreListener(this, rvList);
         // rv 和 scrollview 滑动冲突
         rvList.setNestedScrollingEnabled(false);
 
@@ -113,6 +116,7 @@ public class MessageListActivity extends BaseClientActivity implements
                 MessageListActivity.this.startActivity(intent);
             }
         });
+        getJPushMessage();
     }
 
     private void initListener() {
@@ -126,7 +130,6 @@ public class MessageListActivity extends BaseClientActivity implements
 
     }
 
-    @Override
     public void onDataReceived() {
         if (page == 1) {
             if (mDataList.size() == 0 || mDataList == null) {
@@ -143,9 +146,14 @@ public class MessageListActivity extends BaseClientActivity implements
             if (mDataList.size() == 0 || mDataList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-                messageListAdapter.notifyDataSetChanged();
+//                messageListAdapter.notifyDataSetChanged();
+                messageListAdapter.loadMoreEnd();
             } else {
                 messageListAdapter.addData(mDataList);
+                messageListAdapter.loadMoreComplete();
+                if (mDataList.size() < 10) {
+                    messageListAdapter.loadMoreEnd();
+                }
             }
         }
     }
@@ -196,7 +204,7 @@ public class MessageListActivity extends BaseClientActivity implements
 
         EanfangHttp.post(NewApiService.GET_PUSH_MSG_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<NoticeListBean>(this, true, NoticeListBean.class, (bean) -> {
+                .execute(new EanfangCallback<NoticeListBean>(this, false, NoticeListBean.class, (bean) -> {
                             runOnUiThread(() -> {
                                 mDataList = bean.getList();
                                 onDataReceived();
@@ -210,12 +218,12 @@ public class MessageListActivity extends BaseClientActivity implements
      * 下拉刷新，上拉加载更多
      */
     @Override
-    public void onRefresh(int index) {
+    public void onRefresh() {
         dataOption(TOP_REFRESH);
     }
 
     @Override
-    public void onLoad(int index) {
+    public void onLoadMoreRequested() {
         dataOption(BOTTOM_REFRESH);
     }
 
@@ -242,8 +250,8 @@ public class MessageListActivity extends BaseClientActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        page = 1;
-        getJPushMessage();
+//        page = 1;
+//        getJPushMessage();
         XGPushManager.onActivityStarted(this);
         XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);
         if (clickedResult != null) {

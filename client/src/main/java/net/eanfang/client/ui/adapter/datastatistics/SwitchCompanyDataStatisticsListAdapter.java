@@ -1,11 +1,11 @@
-package net.eanfang.worker.ui.adapter;
+package net.eanfang.client.ui.adapter.datastatistics;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.datastatistics.DataStatisticsCompany;
-import com.yaf.sys.entity.OrgEntity;
 
-import net.eanfang.worker.R;
+
+import net.eanfang.client.R;
 
 import java.util.List;
 

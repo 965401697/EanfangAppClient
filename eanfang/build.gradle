@@ -23,11 +23,11 @@ android {
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
 
-//        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
-//        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 
-        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
 
     }
@@ -103,7 +103,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'
 
     // add library
-    compile 'com.alibaba:fastjson:1.2.47'
+    compile 'com.alibaba:fastjson:1.2.35'
+    compile 'com.alibaba:fastjson:1.1.68.android'
 
     //takephoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
@@ -145,7 +146,7 @@ dependencies {
     compile 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     compile 'com.tencent.mid:mid:4.0.6-release'
-                   
+
     //在集成信鸽的基础上新增华为push的jar包
     compile 'com.tencent.xinge:xghw:2.5.2.300-release'
     //在集成信鸽的基础上新增小米push的jar包

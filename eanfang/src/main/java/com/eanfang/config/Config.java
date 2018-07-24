@@ -12,12 +12,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 
 /**
  * @author wen
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc app配置信息
  */
+@AllArgsConstructor
+@NoArgsConstructor
 public class Config {
     private static Config config = new Config();
     /**
