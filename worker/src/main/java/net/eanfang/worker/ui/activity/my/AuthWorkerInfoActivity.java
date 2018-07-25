@@ -214,7 +214,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
      * 进行撤销认证操作
      */
     public void doUndoVerify() {
-        new TrueFalseDialog(this, "系统提示", "是否撤销认证？", () -> {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
             EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
                     .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
                         setData();
