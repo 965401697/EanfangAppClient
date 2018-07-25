@@ -107,11 +107,15 @@ public class SignInActivity extends BaseWorkerActivity {
             mLatitude = latLng.latitude;
             mLongitude = latLng.longitude;
         };
-        locationUtil.onSearched = (regeocodeResult, i) -> {
-            regeocodeResult.getRegeocodeAddress();
-            tvAddress.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
-            city = regeocodeResult.getRegeocodeAddress().getCity();
-            county = regeocodeResult.getRegeocodeAddress().getDistrict();
+
+        locationUtil.onLocationed = (location) -> {
+            city = location.getCity();
+            county = location.getDistrict();
+            String address = location.getAddress().replace(city, "").replace(county, "");
+            if (!address.contains("(")) {
+                address += " (" + location.getDescription() + ")";
+            }
+            tvAddress.setText(address);
         };
 
     }

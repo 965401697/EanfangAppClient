@@ -72,7 +72,7 @@ public class MessageDetailActivity extends BaseActivity {
                         if (bean.getExtInfo() != null && !bean.getExtInfo().toString().contains("{")) {
                             extInfo = bean.getExtInfo().toString();
                         }
-                        tvDetailContent.setText(bean.getContent() + (extInfo != null ? extInfo : ""));
+                        tvDetailContent.setText(bean.getContent() + "\r\n\t" + "\r\n\t" + (extInfo != null ? extInfo : ""));
                         tvDetailTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
                     });
                 })));

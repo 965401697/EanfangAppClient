@@ -231,10 +231,10 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             return false;
         }
 
-        if (TextUtils.isEmpty(etDeviceNum.getText().toString().trim())) {
-            showToast("请填写设备编号");
-            return false;
-        }
+//        if (TextUtils.isEmpty(etDeviceNum.getText().toString().trim())) {
+//            showToast("请填写设备编号");
+//            return false;
+//        }
         if (TextUtils.isEmpty(evFaultDescripte.getText().toString().trim())) {
             showToast("请填写故障现象");
             return false;

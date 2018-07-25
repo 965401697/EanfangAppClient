@@ -210,7 +210,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         // 获取经纬度
         LocationUtil.location(this, (location) -> {
             // mAddress = location.getCity() + location.getDistrict();
-            mAddress = location.getAddress();
+            mAddress = location.getAddress().replace(location.getCity(), "").replace(location.getDistrict(), "");
             if (!mAddress.contains("(")) {
                 mAddress += " (" + location.getDescription() + ")";
             }

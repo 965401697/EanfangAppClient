@@ -7,6 +7,7 @@ import com.eanfang.config.EanfangConst;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
 import net.eanfang.client.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
@@ -42,7 +43,10 @@ public class ClientApplication extends EanfangApplication {
             api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
 
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
+
+            EanfangApplication.AppType = BuildConfig.TYPE;
         }
+
 
     }
 

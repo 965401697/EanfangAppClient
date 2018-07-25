@@ -1,6 +1,8 @@
 package com.eanfang.http;
 
 
+import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.StringUtils;
 import com.okgo.OkGo;
 import com.okgo.request.GetRequest;
@@ -23,11 +25,7 @@ public class EanfangHttp {
      * @return
      */
     public static GetRequest get(String url) {
-        if (getHttp() == null) {
-            new EanfangHttp();
-        }
-
-        return OkGo.<String>get(url);
+        return getHttp().get(url);
     }
 
     /**
@@ -37,13 +35,18 @@ public class EanfangHttp {
      * @return
      */
     public static PostRequest post(String url) {
-        if (getHttp() == null) {
-            new EanfangHttp();
-        }
-        return OkGo.<String>post(url);
+        return getHttp().post(url);
     }
 
     public static OkGo getHttp() {
+        if (http == null) {
+            synchronized (http) {
+                if (http == null) {
+                    EanfangApplication.get().initOkGo();
+                }
+            }
+        }
+
         return http;
     }
 

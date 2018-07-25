@@ -54,7 +54,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
      */
     private AMapLocation location;
 
-    private OnLocationed onLocationed;
+    public OnLocationed onLocationed;
 
     public OnSearched onSearched;
     private LatLng latLng;
