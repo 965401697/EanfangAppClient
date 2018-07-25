@@ -149,6 +149,9 @@
 -keepattributes Signature
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.**{*; }
+-keep class * implements com.eanfang.model.IFastJson {
+public (***);
+}
 -keepattributes *Annotation*
 -keep class com.eanfang.model.*{*;}
 -keep class com.yaf.base.entity.*{*;}

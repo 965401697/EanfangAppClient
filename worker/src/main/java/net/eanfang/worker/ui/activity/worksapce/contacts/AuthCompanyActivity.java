@@ -19,6 +19,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthCompanyBaseInfoBean;
@@ -114,6 +115,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     // 区别
     //  private String mAssign = "";
 
+    // 是否编辑
+    private boolean isEdit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,16 +162,22 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         btnComplete.setOnClickListener((v) -> {
             // 完善资料
             if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
-                doVerify();
+                if (isEdit) {
+                    doUndoVerify();
+                } else {
+                    doVerify();
+                }
             } else {
                 showToast("抱歉，您没有权限！");
             }
         });
         setRightTitleOnClickListener((v) -> {
+            showToast("可以进行编辑");
+            isEdit = true;
+            setRightGone();
             doRevoke();
         });
     }
-
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
@@ -332,28 +342,38 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 }));
     }
 
+
+    /**
+     * 进行撤销认证操作
+     */
+    public void doUndoVerify() {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证？", () -> {
+            EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + byNetBean.getOrgId()).
+                    execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        doVerify();
+                    }));
+        }).showDialog();
+    }
+
     /**
      * 重新编辑
      */
     private void doRevoke() {
-        EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + byNetBean.getOrgId())
-                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
-                    ivUpload.setEnabled(true);
-                    ivUpload2.setEnabled(true);
-                    etCompany.setEnabled(true);
-                    edCompanyNumber.setEnabled(true);
-                    etMoney.setEnabled(true);
-                    llType.setEnabled(true);
-                    llOfficeAddress.setEnabled(true);
-                    tvOfficeAddress.setEnabled(true);
-                    etLegalPersion.setEnabled(true);
-                    llCompanyScale.setEnabled(true);
-                    etPhone.setEnabled(true);
-                    etDetailOfficeAddress.setEnabled(true);
-                    etDesc.setEnabled(true);
-                    btnComplete.setVisibility(View.VISIBLE);
-                    setRightGone();
-                }));
+        ivUpload.setEnabled(true);
+        ivUpload2.setEnabled(true);
+        etCompany.setEnabled(true);
+        edCompanyNumber.setEnabled(true);
+        etMoney.setEnabled(true);
+        llType.setEnabled(true);
+        llOfficeAddress.setEnabled(true);
+        tvOfficeAddress.setEnabled(true);
+        etLegalPersion.setEnabled(true);
+        llCompanyScale.setEnabled(true);
+        etPhone.setEnabled(true);
+        etDetailOfficeAddress.setEnabled(true);
+        etDesc.setEnabled(true);
+        btnComplete.setVisibility(View.VISIBLE);
+        setRightGone();
     }
 
     /**

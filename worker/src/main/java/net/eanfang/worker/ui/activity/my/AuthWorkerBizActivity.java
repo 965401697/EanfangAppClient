@@ -16,6 +16,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
@@ -54,6 +55,8 @@ public class AuthWorkerBizActivity extends BaseActivity {
     List<BaseDataEntity> bizTypeList = Config.get().getServiceList(1);
     private int status;
 
+    // 是否编辑
+    private boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,23 +107,42 @@ public class AuthWorkerBizActivity extends BaseActivity {
         tvConfim.setOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 commit();
+            } else if (status == 2) {
+                if (isEdit) {
+                    doUndoVerify();
+                } else {
+                    finishSelf();
+                }
             } else {
                 finishSelf();
             }
         });
         setRightTitleOnClickListener((v) -> {
+            showToast("可以进行编辑");
+            isEdit = true;
+            setRightGone();
             doRevoke();
         });
+    }
+
+    /**
+     * 进行撤销认证操作
+     */
+    public void doUndoVerify() {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证？", () -> {
+            EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                    .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        commit();
+                    }));
+        }).showDialog();
+
     }
 
     /**
      * 重新编辑
      */
     private void doRevoke() {
-        EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
-                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
-                    tagWorkType.setEnabled(true);
-                }));
+        tagWorkType.setEnabled(true);
     }
 
     private void commit() {
