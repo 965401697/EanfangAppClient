@@ -20,6 +20,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
@@ -110,6 +111,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
     private String isAuthen = "";
     private int status;
+    // 是否编辑
+    private boolean isEdit = false;
     //edittext拦截器
     InputFilter inputFilter = new InputFilter() {
         Pattern emoji = Pattern.compile("[\ud83c\udc00-\ud83c\udfff]|[\ud83d\udc00-\ud83d\udfff]|[\u2600-\u27ff]", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
@@ -159,7 +162,11 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
 
         ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
+
         setRightTitleOnClickListener((v) -> {
+            showToast("可以进行编辑");
+            isEdit = true;
+            setRightGone();
             doRevoke();
         });
 
@@ -172,21 +179,31 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             JumpItent.jump(AuthWorkerInfoActivity.this, AuthPhotoActivity.class, bundle, REQUETST_ADD_PHOTO);
         });
 
+        /**
+         *  0 技师未认证，待认证
+         *  1认证中
+         *  2已认证
+         *  3认证失败，请重新认证
+         * */
         tvConfim.setOnClickListener((v) -> {
             if (status == 0 || status == 3) {
                 setData();
+            } else if (status == 2) {
+                if (isEdit) {
+                    doUndoVerify();
+                } else {
+                    finishSelf();
+                }
             } else {
                 finishSelf();
             }
         });
-
         // 已经认证成功/ 已经提交认证，正在认证中 无法点击操作
-
         if (status == 2 || status == 1) {
             tvConfim.setText("确定");
+            // 不可编辑
             doSetGone();
         }
-
         if (status != 2) {
             setRightGone();
         }
@@ -194,20 +211,28 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     }
 
     /**
+     * 进行撤销认证操作
+     */
+    public void doUndoVerify() {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证？", () -> {
+            EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                    .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        setData();
+                    }));
+        }).showDialog();
+    }
+
+    /**
      * 重新编辑
      */
     private void doRevoke() {
-        EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
-                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
-                    // 掉编辑接口
-                    etPayAccount.setEnabled(true);
-                    llWorkingLevel.setEnabled(true);
-                    llWorkingYear.setEnabled(true);
-                    llPayType.setEnabled(true);
-                    etIntro.setEnabled(true);
-                    etUrgentPhone.setEnabled(true);
-                    etUrgentName.setEnabled(true);
-                }));
+        // 掉编辑接口
+        etPayAccount.setEnabled(true);
+        llWorkingLevel.setEnabled(true);
+        llWorkingYear.setEnabled(true);
+        llPayType.setEnabled(true);
+        etIntro.setEnabled(true);
+        etUrgentPhone.setEnabled(true);
     }
 
     private void fillData() {

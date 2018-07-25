@@ -9,21 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by MrHou
- *
- * @on 2017/12/11  17:36
- * @email houzhongzhou@yeah.net
- * @desc
- */
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConstAllBean implements Serializable {
-
     public ConstBean data;
-
     public String MD5;
 
     @Getter

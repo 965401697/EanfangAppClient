@@ -21,8 +21,6 @@ import lombok.NoArgsConstructor;
  *         Created at 2017/3/2
  * @desc app配置信息
  */
-@AllArgsConstructor
-@NoArgsConstructor
 public class Config {
     private static Config config = new Config();
     /**

@@ -139,6 +139,7 @@ public class OrderDetailFragment extends BaseFragment {
         llm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(llm);
 
+        mRecyclerView.setNestedScrollingEnabled(false);
         tv_company_name = findViewById(R.id.tv_company_name);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);

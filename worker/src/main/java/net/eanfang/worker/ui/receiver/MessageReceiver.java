@@ -46,11 +46,12 @@ public class MessageReceiver extends XGPushBaseReceiver {
         Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
 
         JSONObject jsonObject = JSON.parseObject(notifiShowedRlt.getCustomContent());
-        System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
-        if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
-            SynthesizerPresenter.getInstance().initTts(jsonObject.getString("audio"));
+        if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
+            System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
+            if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
+                SynthesizerPresenter.getInstance().initTts(jsonObject.getString("audio"));
+            }
         }
-
         LogUtil.e(LogTag, "onNotifactionShowedResult");
     }
 

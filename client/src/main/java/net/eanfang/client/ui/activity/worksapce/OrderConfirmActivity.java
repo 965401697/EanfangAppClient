@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -36,6 +37,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -67,7 +69,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     @BindView(R.id.btn_complete)
     Button btnComplete;
     @BindView(R.id.sv)
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     @BindView(R.id.iv_header)
     SimpleDraweeView ivHeader;
     @BindView(R.id.tv_realname)
@@ -103,6 +105,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     private void initView() {
         llm = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(llm);
+        mRecyclerView.setNestedScrollingEnabled(false);
         scrollView.smoothScrollTo(0, 20);
         setLeftBack();
         setTitle("订单确认");
@@ -194,7 +197,6 @@ public class OrderConfirmActivity extends BaseClientActivity {
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-
         closeActivity();
 
 
@@ -230,6 +232,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void closeActivity() {
+        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
