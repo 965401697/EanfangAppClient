@@ -14,7 +14,9 @@ import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthCompanyBaseInfoBean;
@@ -60,6 +62,9 @@ public class AuthSystemTypeActivity extends BaseActivity {
     // 获取系统类别
     List<BaseDataEntity> businessOneList = Config.get().getBusinessList(1);
 
+
+    // 是否编辑
+    private boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,24 +133,41 @@ public class AuthSystemTypeActivity extends BaseActivity {
         tvConfim.setOnClickListener((v) -> {
             if (verifyStatus == 0 || verifyStatus == 3) {
                 commit();
+            } else if (verifyStatus == 2) {
+                if (isEdit) {
+                    doUndoVerify();
+                } else {
+                    finishSelf();
+                }
             } else {
                 jump();
             }
         });
         setRightTitleOnClickListener((v) -> {
+            showToast("可以进行编辑");
+            isEdit = true;
+            setRightGone();
             doRevoke();
         });
+    }
+
+    /**
+     * 进行撤销认证操作
+     */
+    public void doUndoVerify() {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证？", () -> {
+            EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + orgid)
+                    .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        commit();
+                    }));
+        }).showDialog();
     }
 
     /**
      * 重新编辑
      */
     private void doRevoke() {
-        EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + orgid)
-                .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
-                    tagWorkType.setEnabled(true);
-                }));
-
+        tagWorkType.setEnabled(true);
     }
 
     private void commit() {

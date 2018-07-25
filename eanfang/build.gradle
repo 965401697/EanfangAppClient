@@ -103,8 +103,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.2'
 
     // add library
-    compile 'com.alibaba:fastjson:1.2.35'
-    compile 'com.alibaba:fastjson:1.1.68.android'
+    compile 'com.alibaba:fastjson:1.2.47'
 
     //takephoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'

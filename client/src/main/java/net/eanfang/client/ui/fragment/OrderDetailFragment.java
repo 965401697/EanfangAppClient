@@ -139,6 +139,7 @@ public class OrderDetailFragment extends BaseFragment {
         llm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(llm);
 
+        mRecyclerView.setNestedScrollingEnabled(false);
         tv_company_name = findViewById(R.id.tv_company_name);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
@@ -177,7 +178,7 @@ public class OrderDetailFragment extends BaseFragment {
 //                    showToast("当前订单负责人可以操作");
 //                    return;
 //                }
-                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认",false).show();
+                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
             } else if (mOrderStatus == 5) {//立即评价
 //                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
 //                    showToast("当前订单负责人可以操作");
@@ -197,7 +198,7 @@ public class OrderDetailFragment extends BaseFragment {
 //                showToast("当前订单负责人可以操作");
 //                return;
 //            }
-            new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成",false).show();
+            new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
         });
 
     }
@@ -230,7 +231,7 @@ public class OrderDetailFragment extends BaseFragment {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
-                }else if (view.getId() == R.id.ll_item) {
+                } else if (view.getId() == R.id.ll_item) {
                     View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
                     if (secondItem.getVisibility() == View.VISIBLE) {
                         secondItem.setVisibility(View.GONE);
@@ -243,9 +244,9 @@ public class OrderDetailFragment extends BaseFragment {
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("faultDeatail",mDataList.get(position));
-                    JumpItent.jump(getActivity(), FaultDetailActivity.class,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("faultDeatail", mDataList.get(position));
+                JumpItent.jump(getActivity(), FaultDetailActivity.class, bundle);
             }
         });
 
