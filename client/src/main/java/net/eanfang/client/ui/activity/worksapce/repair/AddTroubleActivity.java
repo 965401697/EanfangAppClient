@@ -216,10 +216,10 @@ public class AddTroubleActivity extends BaseClientActivity {
             showToast("请选择故障设备名称");
             return false;
         }
-        if (TextUtils.isEmpty(etDeviceNum.getText().toString().trim())) {
-            showToast("请填写设备编号");
-            return false;
-        }
+//        if (TextUtils.isEmpty(etDeviceNum.getText().toString().trim())) {
+//            showToast("请填写设备编号");
+//            return false;
+//        }
         if (TextUtils.isEmpty(etDeviceLocation.getText().toString().trim())) {
             showToast("请填写故障设备位置");
             return false;

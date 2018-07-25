@@ -61,7 +61,7 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
         }
         helper.setText(R.id.tv_model, "故障设备:" + bugThree);
         helper.setText(R.id.tv_location, "故障位置:" + item.getBugPosition());
-        helper.setText(R.id.tv_number, "位置编号:" + item.getBugPosition());
+        helper.setText(R.id.tv_number, "位置编号:" + item.getLocationNumber());
         helper.setText(R.id.tv_desc, "故障描述:" + item.getBugDescription());
         SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {

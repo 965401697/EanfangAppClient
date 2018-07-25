@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dimen_28"
-                android:text="122341352"
+                android:text="--"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_15" />
 
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dimen_28"
-                android:text="122341352"
+                android:text="--"
                 android:textColor="@color/black"
                 android:textSize="@dimen/textSize_15" />
 

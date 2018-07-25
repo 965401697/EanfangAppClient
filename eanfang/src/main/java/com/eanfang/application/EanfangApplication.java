@@ -39,7 +39,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * @author Mr.hou
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
 public class EanfangApplication extends CustomeApplication {
@@ -50,6 +50,10 @@ public class EanfangApplication extends CustomeApplication {
      * 是否自动更新过
      */
     public static boolean isUpdated = false;
+    /**
+     * app类型
+     */
+    public static String AppType;
 
     private OkGo http;
 
@@ -119,11 +123,6 @@ public class EanfangApplication extends CustomeApplication {
 
         HttpHeaders headers = new HttpHeaders();
 
-        if (EanfangApplication.get().getUser() != null) {
-            headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-        }
-//        headers.put("Request-From", "CLIENT");
-
         //必须调用初始化
         http = OkGo.getInstance().init(this)
                 //建议设置OkHttpClient，不设置将使用默认的
@@ -138,6 +137,15 @@ public class EanfangApplication extends CustomeApplication {
                 .addCommonHeaders(headers);
         //全局公共参数
         EanfangHttp.setHttp(http);
+
+        if (EanfangApplication.get().getUser() != null) {
+            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+        }
+        if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("client")) {
+            EanfangHttp.setClient();
+        } else if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("worker")) {
+            EanfangHttp.setWorker();
+        }
     }
 
 

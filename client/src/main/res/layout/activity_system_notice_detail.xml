@@ -14,16 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen_50"
         android:paddingLeft="@dimen/dimen_36"
         android:paddingTop="@dimen/dimen_50">
+        <!--android:gravity="center_vertical"-->
 
         <ImageView
             android:layout_width="@dimen/dimen_60"
             android:layout_height="@dimen/dimen_60"
             android:src="@mipmap/ic_message_notice" />
+
 
         <LinearLayout
             android:layout_width="match_parent"

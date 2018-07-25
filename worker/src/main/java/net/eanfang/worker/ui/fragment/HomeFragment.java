@@ -253,7 +253,7 @@ public class HomeFragment extends BaseFragment {
         if (list != null && !list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 NoticeEntity noticeEntity = list.get(i);
-                if (noticeEntity.getNoticeType() == 13) {
+                if (noticeEntity.getNoticeType() == 12) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 27) {
                     data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
