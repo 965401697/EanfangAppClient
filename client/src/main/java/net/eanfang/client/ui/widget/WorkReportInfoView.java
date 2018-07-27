@@ -116,7 +116,7 @@ public class WorkReportInfoView extends BaseDialog {
 
                     bundle.putString("id", String.valueOf(bean.getId()));
                     bundle.putString("orderNum", bean.getCreateOrg().getOrgName());
-                    if (bean.getWorkReportDetails() != null && !TextUtils.isEmpty(bean.getWorkReportDetails().get(0).getPictures())) {
+                    if (bean.getWorkReportDetails() != null && bean.getWorkReportDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkReportDetails().get(0).getPictures())) {
                         bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                     }
                     bundle.putString("creatTime", String.valueOf(bean.getType()));

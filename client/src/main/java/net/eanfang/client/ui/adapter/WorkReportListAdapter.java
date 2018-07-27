@@ -25,8 +25,8 @@ import java.util.List;
  */
 
 public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.ListBean, BaseViewHolder> {
-    public WorkReportListAdapter(List<WorkReportListBean.ListBean> data) {
-        super(R.layout.item_work_report_layout, data);
+    public WorkReportListAdapter() {
+        super(R.layout.item_work_report_layout);
 
     }
 
