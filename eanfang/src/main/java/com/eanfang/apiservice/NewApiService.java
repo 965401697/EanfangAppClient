@@ -472,5 +472,9 @@ public interface NewApiService {
     */
     String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
 
+    /**
+     * 面谈员工
+     */
+    String WORK_TALK = BASE_URL + "/yaf_oa/facetoworker/list";
 
 }

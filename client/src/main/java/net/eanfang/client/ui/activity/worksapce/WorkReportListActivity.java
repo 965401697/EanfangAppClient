@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
  */
 
 public class WorkReportListActivity extends BaseClientActivity {
+
     private static String titleBar;
     public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();
     @BindView(R.id.tl_work_list)
@@ -46,6 +47,7 @@ public class WorkReportListActivity extends BaseClientActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
+
     private WorkReportListFragment currentFragment;
     private WorkReportListBean workReportListBean;
     private int dataType;

@@ -95,6 +95,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_do_first, false);
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "完工报告");
+            helper.setVisible(R.id.tv_state, false);
+            helper.setVisible(R.id.iv_finish, true);
             if (item.getWorkerEvaluateId() == null || item.getWorkerEvaluateId().longValue() <= 0) {
                 helper.setVisible(R.id.tv_do_second, true);
             } else {
@@ -111,7 +113,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
-        }else {
+        } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + ""));
         }
         helper.addOnClickListener(R.id.tv_do_first);

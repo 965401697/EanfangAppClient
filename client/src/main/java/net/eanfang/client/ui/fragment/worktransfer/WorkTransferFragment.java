@@ -1,10 +1,15 @@
-package net.eanfang.client.ui.fragment.worktalk;
+package net.eanfang.client.ui.fragment.worktransfer;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -19,36 +24,28 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.WorkTalkAdapter;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 /**
  * @author Guanluocang
- * @date on 2018/7/11  19:08
- * @decision 面谈员工列表
+ * @date on 2018/7/27  16:23
+ * @decision 交接班列表
  */
-public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private String mTitle;
-    private String mType;
 
     private int page = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv_worktalk;
-    private List<WorkTalkBean.DataBean.ListBean> workTalkBeanList = new ArrayList<>();
-    private WorkTalkAdapter workTalkAdapter;
 
-    public static WorkTalkListFragment getInstance(String title, int type) {
-        WorkTalkListFragment workTalkListFragment = new WorkTalkListFragment();
-        workTalkListFragment.mTitle = title;
-        workTalkListFragment.mType = String.valueOf(type);
-        return workTalkListFragment;
+    public static WorkTransferFragment getInstance(String title) {
+        WorkTransferFragment workTransferFragment = new WorkTransferFragment();
+        workTransferFragment.mTitle = title;
+        return workTransferFragment;
 
     }
 
@@ -58,7 +55,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected int setLayoutResouceId() {
-        return R.layout.fragment_work_talk_list;
+        return R.layout.fragment_work_transfer;
     }
 
     @Override
@@ -83,7 +80,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 .execute(new EanfangCallback<WorkTalkBean>(getActivity(), true, WorkTalkBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
 //                                workTalkBeanList = bean.getData().getList();
-                                onDataReceived();
+//                                onDataReceived();
                             });
                         })
                 );
@@ -91,30 +88,18 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected void initView() {
-        swipeRefreshLayout = findViewById(R.id.srl_worktalk);
+        swipeRefreshLayout = findViewById(R.id.srl_worktransfer);
         swipeRefreshLayout.setOnRefreshListener(this);
-        rv_worktalk = findViewById(R.id.rv_worktalk);
-        workTalkAdapter = new WorkTalkAdapter();
+        rv_worktalk = findViewById(R.id.rv_worktransfer);
+//        workTalkAdapter = new WorkTalkAdapter();
         rv_worktalk.setLayoutManager(new LinearLayoutManager(getContext()));
-        workTalkAdapter.bindToRecyclerView(rv_worktalk);
+//        workTalkAdapter.bindToRecyclerView(rv_worktalk);
     }
+
 
     @Override
     protected void setListener() {
-        workTalkAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                WorkTalkBean.DataBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
-                switch (view.getId()) {
-                    // 查看详情
-                    case R.id.tv_seedetail:
-                        break;
-                    //联系汇报人
-                    case R.id.tv_contact:
-                        break;
-                }
-            }
-        });
+
     }
 
     private void dataOption(int option) {
@@ -145,31 +130,5 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
     @Override
     public void onRefresh() {
         dataOption(TOP_REFRESH);
-    }
-
-    public void onDataReceived() {
-        if (page == 1) {
-            if (workTalkBeanList.size() == 0 || workTalkBeanList == null) {
-                showToast("暂无数据");
-                workTalkAdapter.getData().clear();
-                workTalkAdapter.notifyDataSetChanged();
-            } else {
-                workTalkAdapter.getData().clear();
-                workTalkAdapter.setNewData(workTalkBeanList);
-            }
-        } else {
-            if (workTalkBeanList.size() == 0 || workTalkBeanList == null) {
-                showToast("暂无更多数据");
-                page = page - 1;
-//                messageListAdapter.notifyDataSetChanged();
-                workTalkAdapter.loadMoreEnd();
-            } else {
-                workTalkAdapter.addData(workTalkBeanList);
-                workTalkAdapter.loadMoreComplete();
-                if (workTalkBeanList.size() < 5) {
-                    workTalkAdapter.loadMoreEnd();
-                }
-            }
-        }
     }
 }

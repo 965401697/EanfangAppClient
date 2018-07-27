@@ -11,7 +11,7 @@
 
 
     <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/sl_worktalk_list"
+        android:id="@+id/sl_worktransfer_list"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#FFFFFF"
