@@ -45,12 +45,13 @@ public class WorkTalkControlActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_work_receiver:
-                doJump("我接受的");
+                doJump("我接收的");
                 break;
             case R.id.iv_work_create:
                 doJump("我创建的");
                 break;
             case R.id.iv_repairNew:
+                JumpItent.jump(WorkTalkControlActivity.this, WorkTalkCreateActivity.class);
                 break;
         }
     }
@@ -58,6 +59,6 @@ public class WorkTalkControlActivity extends BaseActivity {
     public void doJump(String title) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("title", title);
-        JumpItent.jump(WorkTalkControlActivity.this, WorkTalkListActivity.class);
+        JumpItent.jump(WorkTalkControlActivity.this, WorkTalkListActivity.class, bundle);
     }
 }

@@ -95,6 +95,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_do_first, "联系客户");
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "查看故障处理");
+            helper.setVisible(R.id.tv_state, false);
+            helper.setVisible(R.id.iv_finish, true);
             if (item.getClientEvaluateId() == null || item.getClientEvaluateId().longValue() <= 0) {
                 helper.setVisible(R.id.tv_do_second, true);
             } else {

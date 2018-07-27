@@ -28,6 +28,7 @@ import net.eanfang.client.ui.widget.WorkReportInfoView;
  * @desc
  */
 
+
 public class WorkReportListFragment extends TemplateItemListFragment {
 
 

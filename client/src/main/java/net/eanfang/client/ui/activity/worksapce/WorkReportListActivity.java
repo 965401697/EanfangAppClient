@@ -6,15 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Constant;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkReportListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
@@ -36,6 +28,7 @@ import butterknife.ButterKnife;
  */
 
 public class WorkReportListActivity extends BaseClientActivity {
+
     private static String titleBar;
     public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();
     @BindView(R.id.tl_work_list)

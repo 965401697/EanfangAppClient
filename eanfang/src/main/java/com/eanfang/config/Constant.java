@@ -258,6 +258,15 @@ public interface Constant {
 
     String MAINTAIN_OS_RUNTIME = "confirmStatus";
 
+    /**
+     * 38.面谈员工
+     */
+    String WORKTALK_STATUS = "FaceToWorkerStatus";
+    /**
+     * 39.交接班
+     */
+    String WORKTRANSFER_STATUS = "ExchangeStatus";
+
     //业务通知
     int NOTICE_BUSINESS = 1;
 

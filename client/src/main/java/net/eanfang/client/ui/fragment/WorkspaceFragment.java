@@ -203,59 +203,35 @@ public class WorkspaceFragment extends BaseFragment {
 
         //开店日志
         findViewById(R.id.tv_shop_log).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                new OpenShopLogView(getActivity(), true).show();
-            } else {
-                showToast("暂无权限");
-            }
+            new OpenShopLogView(getActivity(), true).show();
         });
 
         //布防日志
         findViewById(R.id.tv_defend_log).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                new DefendLogView(getActivity(), true).show();
-            } else {
-                showToast("暂无权限");
-            }
+            new DefendLogView(getActivity(), true).show();
         });
 
 
         //故障记录
         findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
-                startActivity(intent);
-            } else {
-                showToast("暂无权限");
-            }
+            Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
+            startActivity(intent);
         });
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
-                startActivity(intent);
-            } else {
-                showToast("暂无权限");
-            }
+            Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+            startActivity(intent);
         });
         //交接班
         findViewById(R.id.tv_work_transfer).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
-                startActivity(intent);
-            } else {
-                showToast("暂无权限");
-            }
+            Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
+            startActivity(intent);
         });
         //面谈员工
         findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
-                startActivity(intent);
-            } else {
-                showToast("暂无权限");
-            }
+            Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
+            startActivity(intent);
         });
 
     }

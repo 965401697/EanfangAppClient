@@ -7,14 +7,14 @@
     tools:context="net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srl_worktalk"
+        android:id="@+id/srl_worktransfer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
         my:direction="both">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_worktalk"
+            android:id="@+id/rv_worktransfer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible" />
