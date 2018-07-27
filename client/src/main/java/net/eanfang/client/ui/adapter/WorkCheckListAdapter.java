@@ -24,8 +24,8 @@ import java.util.List;
 
 public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.ListBean, BaseViewHolder> {
 
-    public WorkCheckListAdapter(List<WorkCheckListBean.ListBean> data) {
-        super(R.layout.item_check_list_layout, data);
+    public WorkCheckListAdapter() {
+        super(R.layout.item_check_list_layout);
 
     }
 

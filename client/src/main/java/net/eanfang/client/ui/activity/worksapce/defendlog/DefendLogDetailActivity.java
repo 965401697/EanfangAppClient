@@ -17,9 +17,13 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.LogDetailsEntity;
+import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.MorePopWindow;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
@@ -74,6 +78,7 @@ public class DefendLogDetailActivity extends BaseClientActivity {
     private List<DefendLogDetailItemAdapter> mAdapterList;
     private String mId;
 
+    private ProtectionLogEntity protectionLogEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +89,28 @@ public class DefendLogDetailActivity extends BaseClientActivity {
         setLeftBack();
 
         initViews();
-        setRightTitle("查看详情");
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DefendLogDetailActivity.this, DefendLogDetailDetailActivity.class).putExtra("id", mId));
 
-            }
-        });
+        boolean isVisible = getIntent().getBooleanExtra("isVisible", false);
+
+        if(isVisible){
+            setRightTitle("查看详情");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(DefendLogDetailActivity.this, DefendLogDetailDetailActivity.class).putExtra("id", mId));
+                }
+            });
+        }else {
+
+            setRightImageResId(R.mipmap.more);
+            setRightImageOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DefendMorePopWindow defendMorePopWindow = new DefendMorePopWindow(DefendLogDetailActivity.this, protectionLogEntity, isVisible);
+                    defendMorePopWindow.showPopupWindow(findViewById(R.id.ll_right));
+                }
+            });
+        }
     }
 
     private void initViews() {
@@ -124,6 +143,7 @@ public class DefendLogDetailActivity extends BaseClientActivity {
                 .params("protectionLogId", id)
                 .execute(new EanfangCallback<ProtectionLogEntity>(DefendLogDetailActivity.this, true, ProtectionLogEntity.class, bean -> {
 
+                    protectionLogEntity = bean;
 
                     if (bean.getOwnerUser() != null && bean.getOwnerUser().getAccountEntity() != null) {
                         ivReportHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUser().getAccountEntity().getAvatar()));

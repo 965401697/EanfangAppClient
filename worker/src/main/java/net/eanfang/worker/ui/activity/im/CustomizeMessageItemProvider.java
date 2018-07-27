@@ -21,6 +21,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.worker.ui.widget.WorkCheckInfoView;
+import net.eanfang.worker.ui.widget.WorkReportInfoView;
+import net.eanfang.worker.ui.widget.WorkTaskInfoView;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -45,7 +48,6 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     public void bindView(View view, int i, CustomizeMessage customizeMessage, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
-//        if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
         if (customizeMessage.getShareType().equals("1")) {
             holder.title.setText("报修订单");
             holder.orderNum.setText("单号：  " + customizeMessage.getOrderNum());
@@ -64,8 +66,28 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
                 holder.workerName.setText("维修历史：");
             }
             holder.status.setVisibility(View.INVISIBLE);
+        }else if (customizeMessage.getShareType().equals("3")) {
+            holder.title.setText("工作汇报");
+            holder.orderNum.setText("部门：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            holder.creatTime.setText("类型：" + GetConstDataUtils.getWorkReportTypeList().get(Integer.parseInt(customizeMessage.getCreatTime())));
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+        } else if (customizeMessage.getShareType().equals("4")) {
+            holder.title.setText("布置任务");
+            holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+        } else if (customizeMessage.getShareType().equals("5")) {
+            holder.title.setText("设备点检");
+            holder.orderNum.setText("检查人：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setVisibility(View.GONE);
+            holder.creatTime.setText("负责人：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("整改期限：" + customizeMessage.getWorkerName());
+            holder.status.setVisibility(View.INVISIBLE);
         }
-//        }
     }
 
     @Override
@@ -74,6 +96,12 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("报修订单(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("2")) {
             return new SpannableString("故障处理(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("3")) {
+            return new SpannableString("工作汇报(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("4")) {
+            return new SpannableString("布置任务(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("5")) {
+            return new SpannableString("设备点检(快去查看吧!)");
         }
         return null;
     }
@@ -89,6 +117,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             view.getContext().startActivity(intent);
         } else if (customizeMessage.getShareType().equals("2")) {
             new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), true).show();
+        } else if (customizeMessage.getShareType().equals("3")) {
+            new WorkReportInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+        } else if (customizeMessage.getShareType().equals("4")) {
+            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+        } else if (customizeMessage.getShareType().equals("5")) {
+            new WorkCheckInfoView((Activity) view.getContext(), true,  Long.parseLong(customizeMessage.getOrderId()),true).show();
+
         }
     }
 

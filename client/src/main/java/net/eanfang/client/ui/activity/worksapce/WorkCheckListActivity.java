@@ -47,15 +47,6 @@ public class WorkCheckListActivity extends BaseClientActivity {
     private MyPagerAdapter mAdapter;
     private int dataType;
     private WorkCheckListBean workChenkBean;
-    private WorkCheckListFragment currentFragment;
-
-    public WorkCheckListBean getWorkChenkBean() {
-        return workChenkBean;
-    }
-
-    public void setWorkChenkBean(WorkCheckListBean workChenkBean) {
-        this.workChenkBean = workChenkBean;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,62 +71,8 @@ public class WorkCheckListActivity extends BaseClientActivity {
         vpWorkList.setAdapter(mAdapter);
         tlWorkList.setViewPager(vpWorkList, mTitles, this, mFragments);
         vpWorkList.setCurrentItem(0);
-        vpWorkList.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentFragment = (WorkCheckListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-//                initData(1);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        currentFragment = (WorkCheckListFragment) mFragments.get(0);
-//        initData(1);
     }
 
-    /**
-     * 加载数据
-     */
-    private void initData(int page) {
-        QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(currentFragment.getmTitle())) {
-            String status = GetConstDataUtils.getWorkInspectStatus().indexOf(currentFragment.getmTitle()) + "";
-            queryEntry.getEquals().put(Constant.STATUS, status);
-        }
-        if (Constant.COMPANY_DATA_CODE == dataType) {
-            queryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
-        } else if (Constant.CREATE_DATA_CODE == dataType) {
-            queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
-        } else if (Constant.ASSIGNEE_DATA_CODE == dataType) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
-        }
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-        EanfangHttp.post(NewApiService.GET_WORK_CHECK_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkCheckListBean>(this, true, WorkCheckListBean.class, (bean) -> {
-                            runOnUiThread(() -> {
-                                workChenkBean = bean;
-                                currentFragment.onDataReceived();
-                            });
-                        })
-                );
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        initData(1);
-    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

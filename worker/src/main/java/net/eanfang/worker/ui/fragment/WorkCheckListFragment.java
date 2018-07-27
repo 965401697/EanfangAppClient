@@ -90,7 +90,7 @@ public class WorkCheckListFragment extends BaseFragment
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new WorkCheckInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+                new WorkCheckInfoView(getActivity(), true, mDataList.get(position).getId(),false).show();
             }
         });
         rvList.setAdapter(mAdapter);

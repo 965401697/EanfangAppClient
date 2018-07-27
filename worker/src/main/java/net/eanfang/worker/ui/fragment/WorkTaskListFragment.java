@@ -62,7 +62,7 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                 if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
                     getFirstLookData(bean.getId());
                 }
-                new WorkTaskInfoView(getActivity(), true, bean.getId()).show();
+                new WorkTaskInfoView(getActivity(), true, bean.getId(),false).show();
             }
         });
     }

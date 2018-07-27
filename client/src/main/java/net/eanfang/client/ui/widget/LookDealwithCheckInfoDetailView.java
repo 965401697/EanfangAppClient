@@ -137,7 +137,7 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog {
                 .params("status", status)
                 .params("id", bean.getId())
                 .execute(new EanfangCallback(mContext, true, JSONObject.class, (bean) -> {
-                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId()).show();
+                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId(),false).show();
                 }));
     }
 }

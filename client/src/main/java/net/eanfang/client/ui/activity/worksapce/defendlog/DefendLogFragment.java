@@ -30,7 +30,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
     private String mTitle;
     private int mType;
     private DefendLogListAdapter mAdapter;
-    private static int page = 1;
+    private int page = 1;
 
     public static DefendLogFragment getInstance(String title, int type) {
         DefendLogFragment f = new DefendLogFragment();
@@ -46,7 +46,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new DefendLogListAdapter(R.layout.item_open_shop, R.layout.item_open_shop);
+        mAdapter = new DefendLogListAdapter(mType, R.layout.item_open_shop);
 
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
@@ -55,7 +55,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())));
+                startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
                 //刷新数据
                 if (getmTitle().equals("未读日志")) {
                     updateStatus(String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId()));//更新数据

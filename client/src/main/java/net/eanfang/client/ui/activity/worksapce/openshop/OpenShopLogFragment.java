@@ -53,7 +53,8 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //刷新数据
-                startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
+                startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).
+                        putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
 
                 if (getmTitle().equals("未读日志")) {
                     adapter.remove(position);

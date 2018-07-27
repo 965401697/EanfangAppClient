@@ -115,7 +115,7 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
                 .upJson(jsonString)
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
-                        new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id).show();
+                        new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id,false).show();
                     });
                 }));
 

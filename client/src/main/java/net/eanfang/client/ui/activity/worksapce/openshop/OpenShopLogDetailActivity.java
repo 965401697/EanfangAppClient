@@ -1,8 +1,10 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -10,11 +12,13 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
@@ -64,6 +68,8 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
     @BindView(R.id.tv_company_phone)
     TextView tvCompanyPhone;
 
+    private boolean isVisible;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +78,15 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         setTitle("日志详情");
         setLeftBack();
         initData();
+
+        isVisible = getIntent().getBooleanExtra("isVisible", false);
     }
 
     private void initData() {
         EanfangHttp.post(NewApiService.OA_OPEN_SHOP_DETAIL + "/" + getIntent().getStringExtra("id"))
                 .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
                     initViews(bean);
-
+                    share(bean);
                 }));
     }
 
@@ -131,6 +139,32 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         tvCloseTime.setText(GetDateUtils.dateToDateTimeString(bean.getRecYardEndTime()));
 
         evFaultDescripte.setText(bean.getRemarkInfo());
+    }
+
+
+    private void share(OpenShopLogEntity bean) {
+        if (!isVisible) {
+            setRightTitle("分享");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //分享聊天
+
+                    Intent intent = new Intent(OpenShopLogDetailActivity.this, SelectIMContactActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("id", String.valueOf(bean.getId()));
+                    bundle.putString("orderNum", bean.getOrderNumber());
+                    bundle.putString("creatTime", GetDateUtils.dateToDateTimeStringForChinse(bean.getCreateTime()));
+                    bundle.putString("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    bundle.putString("status", String.valueOf(bean.getStatus()));
+                    bundle.putString("shareType", "8");
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     /*

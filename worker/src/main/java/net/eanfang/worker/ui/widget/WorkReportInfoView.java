@@ -1,9 +1,11 @@
 package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.adapter.LookReportDetailAdapter;
 
 import java.util.ArrayList;
@@ -60,6 +63,8 @@ public class WorkReportInfoView extends BaseDialog {
     RecyclerView reportFindList;
     @BindView(R.id.plan_list)
     RecyclerView reportPlanList;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
     private Activity mContext;
     private Long id;
     private List<WorkReportInfoBean.WorkReportDetailsBean> completeList;
@@ -69,11 +74,13 @@ public class WorkReportInfoView extends BaseDialog {
     private LookReportDetailAdapter findAdapter;
     private LookReportDetailAdapter planAdapter;
     private WorkReportInfoBean.WorkReportDetailsBean detailsBean;
+    private boolean isVisible;
 
-    public WorkReportInfoView(Activity context, boolean isfull, Long id) {
+    public WorkReportInfoView(Activity context, boolean isfull, Long id, boolean isVisible) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
+        this.isVisible = isVisible;
     }
 
     @Override
@@ -109,6 +116,7 @@ public class WorkReportInfoView extends BaseDialog {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<WorkReportInfoBean>(mContext, true, WorkReportInfoBean.class, (bean) -> {
+                            share(bean);
                             completeList = new ArrayList<>();
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
@@ -155,5 +163,33 @@ public class WorkReportInfoView extends BaseDialog {
                             });
                         })
                 );
+    }
+
+    private void share(WorkReportInfoBean bean) {
+        if (!isVisible) {
+            tvRight.setText("分享");
+            tvRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //分享聊天
+
+                    Intent intent = new Intent(mContext, SelectIMContactActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("id", String.valueOf(bean.getId()));
+                    bundle.putString("orderNum", bean.getCreateOrg().getOrgName());
+                    if (bean.getWorkReportDetails() != null && !TextUtils.isEmpty(bean.getWorkReportDetails().get(0).getPictures())) {
+                        bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
+                    }
+                    bundle.putString("creatTime", String.valueOf(bean.getType()));
+                    bundle.putString("workerName", bean.getCreateUser().getAccountEntity().getRealName());
+                    bundle.putString("status", String.valueOf(bean.getStatus()));
+                    bundle.putString("shareType", "3");
+
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 }

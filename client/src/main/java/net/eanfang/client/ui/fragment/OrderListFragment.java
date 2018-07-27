@@ -344,7 +344,6 @@ public class OrderListFragment extends BaseFragment implements
         if (status != null) {
             int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab();
             if (status.equals(String.valueOf(index))) {
-                Log.e("zzw", "onResume == " + status);
                 page = 1;
                 getData();
             }

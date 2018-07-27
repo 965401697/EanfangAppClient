@@ -20,8 +20,10 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.WorkCheckInfoView;
 
@@ -116,7 +118,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
                 .upJson(jsonString)
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
-                        new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id).show();
+                        new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id, false).show();
                     });
                 }));
 

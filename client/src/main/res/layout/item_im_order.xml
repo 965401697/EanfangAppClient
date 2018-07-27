@@ -44,19 +44,21 @@
         android:layout_marginBottom="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_20"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen_38"
-        android:paddingRight="@dimen/dimen_22">
+ >
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_upload"
+            android:layout_marginLeft="@dimen/dimen_38"
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
+            android:visibility="visible"
             fresco:placeholderImage="@mipmap/ic_nodata" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dimen_30"
+
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -83,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="技师："
                 android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_12" />
+                android:textSize= "@dimen/textSize_12" />
 
 
         </LinearLayout>

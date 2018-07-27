@@ -1,9 +1,11 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +20,7 @@ import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.adapter.LookTaskDetailAdapter;
 
 import java.util.List;
@@ -60,16 +63,19 @@ public class WorkTaskInfoView extends BaseDialog {
     LinearLayout llDependPerson;
     @BindView(R.id.ll_phone_num)
     LinearLayout llPhoneNum;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
     private Activity mContext;
     private Long id;
     private LookTaskDetailAdapter detailAdapter;
     private List<WorkTaskInfoBean.WorkTaskDetailsBean> mDataList;
+    private boolean isVisible;
 
-
-    public WorkTaskInfoView(Activity context, boolean isfull, Long id) {
+    public WorkTaskInfoView(Activity context, boolean isfull, Long id, boolean isVisible) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
+        this.isVisible = isVisible;
     }
 
     @Override
@@ -91,10 +97,39 @@ public class WorkTaskInfoView extends BaseDialog {
         taskDetialList.setAdapter(detailAdapter);
     }
 
+    private void share(WorkTaskInfoBean bean) {
+        if (!isVisible) {
+            tvRight.setText("分享");
+            tvRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //分享聊天
+
+                    Intent intent = new Intent(mContext, SelectIMContactActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("id", String.valueOf(bean.getId()));
+                    bundle.putString("orderNum", bean.getCreateOrg().getOrgName());
+                    if (bean.getWorkTaskDetails() != null && !TextUtils.isEmpty(bean.getWorkTaskDetails().get(0).getPictures())) {
+                        bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
+                    }
+                    bundle.putString("creatTime", bean.getTitle());
+                    bundle.putString("workerName", bean.getCreateUser().getAccountEntity().getRealName());
+                    bundle.putString("status", String.valueOf(bean.getStatus()));
+                    bundle.putString("shareType", "4");
+
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+    }
+
     private void getData() {
         EanfangHttp.get(NewApiService.GET_WORK_TASK_INFO)
                 .params("id", id)
                 .execute(new EanfangCallback<WorkTaskInfoBean>(mContext, true, WorkTaskInfoBean.class, (bean) -> {
+                    share(bean);
                     etCompanyName.setText(bean.getCreateCompany().getOrgName());
                     etDepartmentName.setText(bean.getCreateOrg().getOrgName());
                     etTaskName.setText(bean.getTitle());

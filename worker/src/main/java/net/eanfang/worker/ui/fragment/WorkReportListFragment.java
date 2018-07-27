@@ -94,7 +94,7 @@ public class WorkReportListFragment extends BaseFragment implements
                     if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
                         getFirstLookData(mDataList, position);
                     }
-                    new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+                    new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId(),false).show();
                 }
             });
 
