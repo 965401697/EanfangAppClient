@@ -100,7 +100,6 @@
 ## ----------------------------------
 -keepattributes Exceptions,InnerClasses
 
--keepattributes Signature
 
 # RongCloud SDK
 -keep class io.rong.** {*;}
@@ -133,7 +132,6 @@
 -keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes InnerClasses
--keepattributes Signature
 -keepattributes SourceFile,LineNumberTable
 -keep class com.hianalytics.android.**{*;}
 -keep class com.huawei.updatesdk.**{*;}
@@ -144,14 +142,12 @@
 #魅族
 -dontwarn com.meizu.cloud.pushsdk.**
 -keep class com.meizu.cloud.pushsdk.**{*;}
-
+-dontskipnonpubliclibraryclassmembers
+-dontskipnonpubliclibraryclasses
 #fastJson
 -keepattributes Signature
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.**{*; }
--keep class * implements com.eanfang.model.IFastJson {
-public (***);
-}
 -keepattributes *Annotation*
 -keep class com.eanfang.model.*{*;}
 -keep class com.yaf.base.entity.*{*;}

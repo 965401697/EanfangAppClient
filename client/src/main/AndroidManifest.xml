@@ -477,7 +477,26 @@
         <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
         <!-- 创建团队 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity" />
-        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
+        <!-- 交接班列表 -->
+        <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferListActivity" />
+        <!-- 交接班创建 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 交接班确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferConfimActivity"
+            android:screenOrientation="portrait" />
+        <!-- 交接班详情-->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 交接班创建详情 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

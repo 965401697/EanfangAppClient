@@ -1,20 +1,20 @@
-package net.eanfang.client.ui.activity.worksapce.worktalk;
+package net.eanfang.client.ui.activity.worksapce.worktransfer;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.WorkTaskListActivity;
-import net.eanfang.client.ui.fragment.WorkReportListFragment;
-import net.eanfang.client.ui.fragment.WorkTaskListFragment;
+import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkListActivity;
 import net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment;
+import net.eanfang.client.ui.fragment.worktransfer.WorkTransferFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,33 +24,30 @@ import butterknife.ButterKnife;
 
 /**
  * @author Guanluocang
- * @date on 2018/7/11  16:38
- * @decision 面谈员工 列表
+ * @date on 2018/7/27  16:11
+ * @decision 交接班列表
  */
-public class WorkTalkListActivity extends BaseActivity {
+public class WorkTransferListActivity extends BaseActivity {
 
-    @BindView(R.id.sl_worktalk_list)
+    @BindView(R.id.sl_worktransfer_list)
     SlidingTabLayout slTabLayout;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
 
-    public final List<String> allmTitles = GetConstDataUtils.getWorkTalkStatus();
+    public final List<String> allmTitles = GetConstDataUtils.getWorkTransfer();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
 
-    private WorkTalkListFragment workTalkListFragment;
+    private WorkTransferFragment workTransferFragment;
 
     // 创建  收到 标示
     private String mType = "";
 
-    // 已读 未读 全部 标示
-    private int type;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wrok_talk_list);
+        setContentView(R.layout.activity_work_transfer_list);
         ButterKnife.bind(this);
         initView();
     }
@@ -63,7 +60,7 @@ public class WorkTalkListActivity extends BaseActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTalkListFragment.getInstance(title, type));
+            mFragments.add(WorkTransferFragment.getInstance(title));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -79,8 +76,7 @@ public class WorkTalkListActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                workTalkListFragment = (WorkTalkListFragment) mFragments.get(position);
-                workTalkListFragment.getData();
+                workTransferFragment = (WorkTransferFragment) mFragments.get(position);
             }
 
             @Override
@@ -88,7 +84,7 @@ public class WorkTalkListActivity extends BaseActivity {
 
             }
         });
-        workTalkListFragment = (WorkTalkListFragment) mFragments.get(0);
+        workTransferFragment = (WorkTransferFragment) mFragments.get(0);
     }
 
 

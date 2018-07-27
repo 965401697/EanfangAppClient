@@ -72,7 +72,8 @@
 
  #使用GSON、fastjson等框架时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象
     -keepclassmembers class * {
-        public <init>(org.json.JSONObject);
+    public <methods>;
+        #public <init>(org.json.JSONObject);
     }
 
 -keep class com.chad.library.adapter.** {
@@ -141,7 +142,6 @@
 -keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes InnerClasses
--keepattributes Signature
 -keepattributes SourceFile,LineNumberTable
 -keep class com.hianalytics.android.**{*;}
 -keep class com.huawei.updatesdk.**{*;}
@@ -157,7 +157,6 @@
 ## ----------------------------------
 -keepattributes Exceptions,InnerClasses
 
--keepattributes Signature
 
 # RongCloud SDK
 -keep class io.rong.** {*;}
@@ -167,6 +166,8 @@
 -dontnote com.google.android.gms.gcm.**
 -dontnote io.rong.**
 -keep class RongYunNotificationReceiver {*;}
+-dontskipnonpubliclibraryclassmembers
+-dontskipnonpubliclibraryclasses
 
 #fastJson
 -keepattributes Signature

@@ -42,6 +42,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 public class WorkReportListFragment extends BaseFragment implements
         OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {
+
     private static int page = 1;
     RecyclerView rvList;
     SwipyRefreshLayout swiprefresh;

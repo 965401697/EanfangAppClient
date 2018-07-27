@@ -30,7 +30,7 @@
             android:id="@+id/iv_repairNew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_repair_new" />
+            android:src="@mipmap/ic_client_create_log" />
     </LinearLayout>
 
 </LinearLayout>

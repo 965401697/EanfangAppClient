@@ -37,9 +37,15 @@ public class GetConstDataUtils {
 
     private static List<String> taskPublishStatus;
 
+    /**
+     * 面谈员工
+     */
     private static List<String> workTalkStatus;
 
-
+    /**
+     * 交接班
+     */
+    private static List<String> workTransfer;
     /**
      * 优先级
      */
@@ -301,11 +307,31 @@ public class GetConstDataUtils {
         if (workTalkStatus == null) {
             synchronized (GetConstDataUtils.class) {
                 if (workTalkStatus == null) {
-                    workTalkStatus = Config.get().getConstBean().getData().getConst().get(Constant.RED_UN_READ);
+                    workTalkStatus = Config.get().getConstBean().getData().getOAConst().get(Constant.WORKTALK_STATUS);
+                    workTalkStatus.add("全部");
+                    workTalkStatus.remove("已删除");
                 }
             }
         }
         return workTalkStatus;
+    }
+
+    /**
+     * 交接班状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTransfer() {
+        if (workTransfer == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransfer == null) {
+                    workTransfer = Config.get().getConstBean().getData().getOAConst().get(Constant.WORKTRANSFER_STATUS);
+                    workTransfer.add("全部");
+                    workTransfer.remove("已删除");
+                }
+            }
+        }
+        return workTransfer;
     }
 
     /**
@@ -475,7 +501,6 @@ public class GetConstDataUtils {
         }
         return bugDetailList;
     }
-
 
 
     /**
