@@ -44,8 +44,6 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
-    private WorkReportListFragment currentFragment;
-    private WorkReportListBean workReportListBean;
     private String type;
 
     @Override
@@ -65,7 +63,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkReportListFragment.getInstance(title, type));
+            mFragments.add(WorkReportListFragment.getInstance(title, Integer.parseInt(type)));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -73,73 +71,9 @@ public class WorkReportListActivity extends BaseWorkerActivity {
         tlWorkList.setViewPager(vpWorkList, mTitles, this, mFragments);
         vpWorkList.setCurrentItem(0);
 
-        vpWorkList.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentFragment = (WorkReportListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-//                initData(1);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        currentFragment = (WorkReportListFragment) mFragments.get(0);
-//        initData(1);
 
     }
 
-    private void initData(int page) {
-        String status = null;
-        if (!"全部".equals(currentFragment.getmTitle())) {
-            status = GetConstDataUtils.getWorkReportStatus().indexOf(currentFragment.getmTitle()) + "";
-        }
-
-        QueryEntry queryEntry = new QueryEntry();
-        if ("0".equals(type)) {
-            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
-        } else if ("1".equals(type)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
-        } else if ("2".equals(type)) {
-            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
-        }
-        if (!currentFragment.getmTitle().equals("全部")) {
-            queryEntry.getEquals().put("status", status);
-        }
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-
-        EanfangHttp.post(NewApiService.GET_WORK_REPORT_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkReportListBean>(this, true, WorkReportListBean.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        workReportListBean = bean;
-                        currentFragment.onDataReceived();
-                    });
-                }));
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        initData(1);
-    }
-
-    public WorkReportListBean getWorkReportListBean() {
-        return workReportListBean;
-    }
-
-    public void setWorkReportListBean(WorkReportListBean workReportListBean) {
-        this.workReportListBean = workReportListBean;
-    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

@@ -25,8 +25,8 @@ import java.util.List;
  */
 
 public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.ListBean, BaseViewHolder> {
-    public WorkReportListAdapter(List<WorkReportListBean.ListBean> data) {
-        super(R.layout.item_work_report_layout, data);
+    public WorkReportListAdapter() {
+        super(R.layout.item_work_report_layout);
 
     }
 
@@ -47,7 +47,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
             String[] urls = item.getWorkReportDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
+            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
         }
 
     }

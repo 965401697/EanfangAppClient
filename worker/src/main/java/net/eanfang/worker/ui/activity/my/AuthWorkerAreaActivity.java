@@ -106,6 +106,10 @@ public class AuthWorkerAreaActivity extends BaseActivity {
                 cityList.get(j).setChildren(countyList);
             }
             areaListBean.get(i).setChildren(cityList);
+
+
+
+
         }
     }
 

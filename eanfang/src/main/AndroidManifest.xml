@@ -112,6 +112,7 @@
         <!-- 二级折叠选择 -->
         <activity android:name=".ui.activity.SelectPresonActivity" />
         <activity android:name=".ui.activity.kpbs.KPBSActivity" />
+        <activity android:name=".ui.activity.AuthWorkerAreaNewActivity"></activity>
     </application>
 
 </manifest>

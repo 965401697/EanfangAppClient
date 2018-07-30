@@ -15,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.WorkerInfoBean;
+import com.eanfang.ui.activity.AuthWorkerAreaNewActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
