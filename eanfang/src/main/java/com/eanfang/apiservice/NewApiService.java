@@ -477,4 +477,9 @@ public interface NewApiService {
      */
     String WORK_TALK = BASE_URL + "/yaf_oa/facetoworker/list";
 
+    /**
+     * 首页统计数据
+     */
+    String HOME_DATASTASTISTICS = BASE_URL + "/yaf_statistics/repairOrderStatistics/app/Count";
+
 }

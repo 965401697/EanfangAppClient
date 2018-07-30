@@ -41,4 +41,5 @@
     <color name="color_home_data_two">#F59A49</color>
     <color name="color_home_data_three">#F55549</color>
     <color name="color_auth_list_unfinish">#F56549</color>
+    <color name="color_home_data_four">#CDCDCD</color>
 </resources>

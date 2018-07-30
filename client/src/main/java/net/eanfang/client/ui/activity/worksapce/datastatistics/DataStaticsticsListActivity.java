@@ -3,14 +3,19 @@ package net.eanfang.client.ui.activity.worksapce.datastatistics;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.eanfang.model.ClientData;
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
@@ -29,10 +34,10 @@ import butterknife.ButterKnife;
 
 public class DataStaticsticsListActivity extends BaseActivity {
 
-    @BindView(R.id.rv_data)
+    @BindView(R.id.rv_reapir_data)
     RecyclerView rvData;
     private HomeDataAdapter homeDataAdapter;
-    private List<ClientData> clientDataList = new ArrayList<>();
+    private List<HomeDatastisticeBean.GroupBean> clientDataList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,7 @@ public class DataStaticsticsListActivity extends BaseActivity {
         setContentView(R.layout.activity_data_staticstics_detail);
         ButterKnife.bind(this);
         initView();
-        initData();
+        doHttpDatastatistics();
     }
 
 
@@ -48,56 +53,31 @@ public class DataStaticsticsListActivity extends BaseActivity {
         setLeftBack();
         setTitle("统计数据");
         //设置布局样式
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         rvData.setLayoutManager(gridLayoutManager);
-        rvData.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class));
-            }
-        });
+        findViewById(R.id.ll_repair_datasticstics).setOnClickListener(v -> startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class)));
+
     }
 
-    private void initData() {
-        ClientData clientDataOne = new ClientData();
-        clientDataOne.setType(1);
-        clientDataOne.setTotal(23);
-        clientDataOne.setAdded(5);
-        clientDataOne.setStatusOne(16);
-        clientDataOne.setStatusTwo(2);
-        clientDataOne.setStatusThree(1);
-        clientDataOne.setStatusFour(14);
-        clientDataList.add(clientDataOne);
-        ClientData clientDataTwo = new ClientData();
-        clientDataTwo.setType(2);
-        clientDataTwo.setTotal(0);
-        clientDataTwo.setAdded(7);
-        clientDataTwo.setStatusOne(18);
-        clientDataTwo.setStatusTwo(9);
-        clientDataTwo.setStatusThree(4);
-        clientDataTwo.setStatusFour(2);
-        clientDataList.add(clientDataTwo);
-        ClientData clientDataThree = new ClientData();
-        clientDataThree.setType(3);
-        clientDataThree.setTotal(0);
-        clientDataThree.setAdded(3);
-        clientDataThree.setStatusOne(12);
-        clientDataThree.setStatusTwo(3);
-        clientDataThree.setStatusThree(6);
-        clientDataThree.setStatusFour(8);
-        clientDataList.add(clientDataThree);
-        ClientData clientDataFour = new ClientData();
-        clientDataFour.setType(4);
-        clientDataFour.setTotal(27);
-        clientDataFour.setAdded(7);
-        clientDataFour.setStatusOne(13);
-        clientDataFour.setStatusTwo(6);
-        clientDataFour.setStatusThree(8);
-        clientDataFour.setStatusFour(0);
-        clientDataList.add(clientDataFour);
+    /**
+     * 获取统计数据
+     */
+    private void doHttpDatastatistics() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("companyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
+        EanfangHttp.post(NewApiService.HOME_DATASTASTISTICS)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<HomeDatastisticeBean>(DataStaticsticsListActivity.this, false, HomeDatastisticeBean.class, bean -> {
+                    initDatastatisticsData(bean);
+                }));
+    }
 
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_data_item_list, clientDataList);
+    private void initDatastatisticsData(HomeDatastisticeBean bean) {
+        clientDataList = bean.getGroup();
+        homeDataAdapter = new HomeDataAdapter(R.layout.layout_data_item_list);
         rvData.setAdapter(homeDataAdapter);
+        homeDataAdapter.bindToRecyclerView(rvData);
+        homeDataAdapter.setNewData(clientDataList);
     }
 }

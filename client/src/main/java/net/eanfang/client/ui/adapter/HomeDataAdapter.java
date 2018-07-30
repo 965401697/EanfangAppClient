@@ -1,12 +1,12 @@
 package net.eanfang.client.ui.adapter;
 
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.amap.api.interfaces.IText;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.ClientData;
+import com.eanfang.config.Config;
+import com.eanfang.model.datastatistics.HomeDatastisticeBean;
+import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.client.R;
 
@@ -16,32 +16,24 @@ import java.util.List;
  * Created by admin on 2018/4/11.
  */
 
-public class HomeDataAdapter extends BaseQuickAdapter<ClientData, BaseViewHolder> {
+public class HomeDataAdapter extends BaseQuickAdapter<HomeDatastisticeBean.GroupBean, BaseViewHolder> {
 
-    public HomeDataAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
+    public HomeDataAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ClientData item) {
-        if (item.getType() == 1) {//报修
-            helper.setText(R.id.tv_title, "当日报修");
-        } else if (item.getType() == 2) {//报装
-            helper.setText(R.id.tv_title, "当日报装");
-        } else if (item.getType() == 3) {//报价
-            helper.setText(R.id.tv_title, "当日设计");
+    protected void convert(BaseViewHolder helper, HomeDatastisticeBean.GroupBean item) {
+        helper.setText(R.id.tv_repair_num, item.getCount() + "");
+        if ("已修复".equals(GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType())))) {
+            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_one);
+        } else if ("维修中".equals(GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType())))) {
+            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_two);
+        } else if ("报废".equals(GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType())))) {
+            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_three);
         } else {
-            helper.setText(R.id.tv_title, "其他");
+            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_four);
         }
-        if (item.getTotal() == 0) {
-            helper.getView(R.id.ll_num).setVisibility(View.GONE);
-        } else {
-            helper.setText(R.id.tv_total, item.getTotal() + "");
-            helper.setText(R.id.tv_add, item.getAdded() + "");
-            helper.setText(R.id.tv_repairOne, item.getStatusOne() + "");
-            helper.setText(R.id.tv_repairTwo, item.getStatusTwo() + "");
-            helper.setText(R.id.tv_repairThree, item.getStatusThree() + "");
-            helper.setText(R.id.tv_repairFour, item.getStatusFour() + "");
-        }
+        helper.setText(R.id.tv_repair_type, GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType())));
     }
 }
