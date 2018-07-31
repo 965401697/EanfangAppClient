@@ -27,6 +27,8 @@ public class EvaluateWorkerBean implements Serializable {
     private Long orderId;
     private String orderNum;
     private Long ownerId;
+    private int favorable_rate;
+    private int anonymous_evaluation;
 
     public int getItem1() {
         return item1;
@@ -90,5 +92,21 @@ public class EvaluateWorkerBean implements Serializable {
 
     public void setOwnerId(Long ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public int getFavorable_rate() {
+        return favorable_rate;
+    }
+
+    public void setFavorable_rate(int favorable_rate) {
+        this.favorable_rate = favorable_rate;
+    }
+
+    public int getAnonymous_evaluation() {
+        return anonymous_evaluation;
+    }
+
+    public void setAnonymous_evaluation(int anonymous_evaluation) {
+        this.anonymous_evaluation = anonymous_evaluation;
     }
 }

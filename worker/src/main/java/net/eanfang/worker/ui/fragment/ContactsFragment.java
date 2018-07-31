@@ -205,6 +205,7 @@ public class ContactsFragment extends BaseFragment {
                         Bundle bundle = new Bundle();
                         bundle.putLong("orgid", mDatas.get(position).getOrgId());
                         bundle.putString("orgName", mDatas.get(position).getOrgName());
+                        bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
                         JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle);
                         break;
                     default:

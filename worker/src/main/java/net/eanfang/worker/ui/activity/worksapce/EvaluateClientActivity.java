@@ -71,6 +71,9 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
 
     //是否匿名
     private boolean isAnonymous = false;
+    private int isAnonymousValue = 2;// 1 匿名 2 不匿名
+    // 赞的等级
+    private int mGoodStatus = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +98,7 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
         setTitle("评价客户");
         setLeftBack();
         tvSelect.setOnClickListener(v -> commit());
-
+        rgScore.setOnCheckedChangeListener(this);
     }
 
     private void commit() {
@@ -103,11 +106,13 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
         evaluateWorkerBean.setOrderNum(ordernum);
         evaluateWorkerBean.setItem1(rbStar1.getProgress());
         evaluateWorkerBean.setItem2(rbStar2.getProgress());
-        evaluateWorkerBean.setItem3(rbStar3.getProgress());
+        evaluateWorkerBean.setItem3(rbStar5.getProgress());
 //        evaluateWorkerBean.setItem4(rbStar4.getProgress());
 //        evaluateWorkerBean.setItem5(rbStar5.getProgress());
         evaluateWorkerBean.setOrderId(orderId);
         evaluateWorkerBean.setOwnerId(ownerId);
+        evaluateWorkerBean.setFavorable_rate(mGoodStatus);//是否好评
+        evaluateWorkerBean.setAnonymous_evaluation(isAnonymousValue);// 是否匿名
         EanfangHttp.post(RepairApi.POST_CLIENT_EVALUATE_CREATE)
                 .upJson(JSON.toJSONString(evaluateWorkerBean))
                 .execute(new EanfangCallback<JSONObject>(EvaluateClientActivity.this, true, JSONObject.class, (bean) -> {
@@ -121,23 +126,25 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
         if (!isAnonymous) {
             ivAnonyMous.setImageResource(R.mipmap.ic_evalute_worker_pressed);
             isAnonymous = true;
+            isAnonymousValue = 1;
         } else {
             ivAnonyMous.setImageResource(R.mipmap.ic_evalute_worker);
             isAnonymous = false;
+            isAnonymousValue = 2;
         }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (group.getCheckedRadioButtonId()) {
-            case R.id.tv_repair://超赞
-//                selectProjectType = "超赞";
+            case R.id.rb_wonderful://超赞
+                mGoodStatus = 1;
                 break;
-            case R.id.tv_check://一般
-//                selectProjectType = "一般";
+            case R.id.rb_good://一般
+                mGoodStatus = 2;
                 break;
-            case R.id.tv_task://差评
-//                selectProjectType = "差评";
+            case R.id.rb_bad://差评
+                mGoodStatus = 3;
                 break;
             default:
                 break;

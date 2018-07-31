@@ -9,6 +9,21 @@
     <include layout="@layout/header" />
 
     <RelativeLayout
+        android:id="@+id/rl_is_auth"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60"
+        android:background="@color/color_auth_top_back">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="您当前的资料认证认证中，无法修改"
+            android:textColor="@color/color_auth_top_text"
+            android:textSize="@dimen/textSize_12" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/rl_prefectInfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"

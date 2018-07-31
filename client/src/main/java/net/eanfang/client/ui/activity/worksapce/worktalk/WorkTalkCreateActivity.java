@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.witget.ScrollEditText;
 
 import net.eanfang.client.R;
 
@@ -39,27 +40,27 @@ public class WorkTalkCreateActivity extends BaseActivity {
     @BindView(R.id.tv_telphone)
     TextView tvTelphone;
     @BindView(R.id.et_wrok_talk_one)
-    EditText etWrokTalkOne;
+    ScrollEditText etWrokTalkOne;
     @BindView(R.id.et_wrok_talk_two)
-    EditText etWrokTalkTwo;
+    ScrollEditText etWrokTalkTwo;
     @BindView(R.id.et_wrok_talk_three)
-    EditText etWrokTalkThree;
+    ScrollEditText etWrokTalkThree;
     @BindView(R.id.et_wrok_talk_four)
-    EditText etWrokTalkFour;
+    ScrollEditText etWrokTalkFour;
     @BindView(R.id.et_wrok_talk_five)
-    EditText etWrokTalkFive;
+    ScrollEditText etWrokTalkFive;
     @BindView(R.id.et_wrok_talk_six)
-    EditText etWrokTalkSix;
+    ScrollEditText etWrokTalkSix;
     @BindView(R.id.et_wrok_talk_seven)
-    EditText etWrokTalkSeven;
+    ScrollEditText etWrokTalkSeven;
     @BindView(R.id.et_wrok_talk_eight)
-    EditText etWrokTalkEight;
+    ScrollEditText etWrokTalkEight;
     @BindView(R.id.et_wrok_talk_nine)
-    EditText etWrokTalkNine;
+    ScrollEditText etWrokTalkNine;
     @BindView(R.id.et_wrok_talk_ten)
-    EditText etWrokTalkTen;
+    ScrollEditText etWrokTalkTen;
     @BindView(R.id.et_wrok_talk_eleven)
-    EditText etWrokTalkEleven;
+    ScrollEditText etWrokTalkEleven;
     @BindView(R.id.rl_confirm)
     RelativeLayout rlConfirm;
 
