@@ -36,6 +36,7 @@ public class OrgSelectGroupMultipleItem extends TreeSelectItemGroup<TemplateBean
         return R.layout.item_second_level;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
 
@@ -50,34 +51,11 @@ public class OrgSelectGroupMultipleItem extends TreeSelectItemGroup<TemplateBean
 
         viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + ")");
 
-//        viewHolder.getView(R.id.tv_all_checked).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (data.isChecked()) {
-//                    //全不选
-//                    data.setChecked(false);
-//
-//                    viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + ")");
-//
-//                    viewHolder.setText(R.id.tv_all_checked, "全选");
-//                    for (TemplateBean.Preson p : data.getPresons()) {
-//                        p.setChecked(false);
-//                    }
-//                    getItemManager().notifyDataChanged();
-//                } else {
-//                    //全选
-//                    data.setChecked(true);
-//                    // TODO: 2018/6/1 不生效
-//                    viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getPresons().size() + "/" + data.getPresons().size() + ")");
-//
-//                    for (TemplateBean.Preson p : data.getPresons()) {
-//                        viewHolder.setText(R.id.tv_all_checked, "取消全选");
-//                        p.setChecked(true);
-//                    }
-//                    getItemManager().notifyDataChanged();
-//                }
-//            }
-//        });
+        if (isExpand())
+            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_two_open));
+        else {
+            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_two_close));
+        }
     }
 
     @Override
@@ -91,4 +69,5 @@ public class OrgSelectGroupMultipleItem extends TreeSelectItemGroup<TemplateBean
     public SelectFlag selectFlag() {
         return SelectFlag.MULTIPLE_CHOICE;
     }
+
 }

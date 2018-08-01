@@ -2,6 +2,7 @@ package com.eanfang.ui.items;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.CheckBox;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.item.TreeItem;
@@ -28,11 +29,23 @@ public class OrgThreeLevelItem extends TreeItem<SectionBean.ChildrenBean> {
 
         if (data.getFlag() == 2) {
             holder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
+            if (data.isAdd()) {
+                holder.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
+            } else {
+                holder.getView(R.id.cb_checked).setVisibility(View.INVISIBLE);
+            }
             if (data.getCountStaff() == 0) {
                 holder.setText(R.id.tv_company_name, data.getOrgName());
             } else {
                 holder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
             }
+
+            if (data.isChecked()) {
+                ((CheckBox) holder.getView(R.id.cb_checked)).setChecked(true);
+            } else {
+                ((CheckBox) holder.getView(R.id.cb_checked)).setChecked(false);
+            }
+
         } else if (data.getFlag() == 1 || data.getFlag() == 3 || data.getFlag() == 0) { // 0:多选
             if (data.getCountStaff() == 0) {
                 holder.setText(R.id.tv_company_name, data.getOrgName());

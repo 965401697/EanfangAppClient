@@ -55,6 +55,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
     TextView tvRole;
 
     private SectionBean mSectionBean;
+    private SectionBean.ChildrenBean mChildrenBean;
     private FriendListBean friendBean;
 
     private ArrayList<String> roleIdList = new ArrayList<>();
@@ -90,6 +91,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
             case R.id.ll_section:
                 Intent intent = new Intent(this, SelectOrganizationActivity.class);
                 intent.putExtra("isSection", "isSection");//是否是组织架构
+                intent.putExtra("isAdd", "isAdd");//是否是组织架构
                 startActivity(intent);
                 break;
             case R.id.ll_role:
@@ -115,7 +117,12 @@ public class AddStaffNextActivity extends BaseClientActivity {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
+
+        if (mSectionBean != null) {
+            userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
+        } else {
+            userEntity.setDepartmentId(Long.parseLong(mChildrenBean.getOrgId()));
+        }
 
         AccountEntity accountEntity = new AccountEntity();
 
@@ -154,6 +161,9 @@ public class AddStaffNextActivity extends BaseClientActivity {
     @Subscribe
     public void onEvent(Object o) {
 
+        mSectionBean = null;
+        mChildrenBean = null;
+
         if (o instanceof OrganizationBean) {
             OrganizationBean organizationBean = (OrganizationBean) o;
             tvSectionName.setText(organizationBean.getOrgName());
@@ -161,6 +171,10 @@ public class AddStaffNextActivity extends BaseClientActivity {
         } else if (o instanceof SectionBean) {
             mSectionBean = (SectionBean) o;
             tvSectionName.setText(mSectionBean.getOrgName());
+
+        } else if (o instanceof SectionBean.ChildrenBean) {
+            mChildrenBean = (SectionBean.ChildrenBean) o;
+            tvSectionName.setText(mChildrenBean.getOrgName());
 
         }
     }

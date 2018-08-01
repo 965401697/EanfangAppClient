@@ -1,7 +1,9 @@
 package com.eanfang.ui.items;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
@@ -21,7 +23,6 @@ import java.util.List;
 
 public class OrgSelectGroupSingleItem extends TreeItemGroup<TemplateBean> {
 
-
     @Nullable
     @Override
     protected List<TreeItem> initChildList(TemplateBean templateBean) {
@@ -33,9 +34,9 @@ public class OrgSelectGroupSingleItem extends TreeItemGroup<TemplateBean> {
         return R.layout.item_second_level;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
-
 
         viewHolder.getView(R.id.cb_all_checked).setVisibility(View.INVISIBLE);
         if (data.getPresons() != null) {
@@ -43,6 +44,11 @@ public class OrgSelectGroupSingleItem extends TreeItemGroup<TemplateBean> {
         } else {
             viewHolder.setText(R.id.tv_company_name, data.getOrgName());
         }
-
+        if (isExpand())
+            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_two_open));
+        else {
+            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_two_close));
+        }
     }
+
 }

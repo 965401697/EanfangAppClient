@@ -48,9 +48,11 @@ public class SelectOrganizationActivity extends BaseActivity {
     private OrganizationBean mOrganizationBean;
     private OrganizationBean organizationBean;
     private SectionBean mSectionBean;
+    private SectionBean.ChildrenBean mChildrenBean;
     private Object mOldObj;
     private String companyId;
     private String isOrganization;
+    private String isAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +63,11 @@ public class SelectOrganizationActivity extends BaseActivity {
         startTransaction(true);
         isRadio = getIntent().getStringExtra("isRadio");//单选
         isSection = getIntent().getStringExtra("isSection");//部门单选
+        isAdd = getIntent().getStringExtra("isAdd");//部门添加人员  要展示第三级的checkbox
         companyId = getIntent().getStringExtra("companyId");//组织架构
         isOrganization = getIntent().getStringExtra("isOrganization");//组织架构
 
-        organizationBean = (OrganizationBean) getIntent().getSerializableExtra("organizationBean");//组织架构
+        mOrganizationBean = (OrganizationBean) getIntent().getSerializableExtra("organizationBean");//组织架构
 
         if (TextUtils.isEmpty(isSection)) {
             setTitle("选择组织联系人");
@@ -100,7 +103,7 @@ public class SelectOrganizationActivity extends BaseActivity {
      */
     private void initData() {
 
-        if (TextUtils.isEmpty(companyId)) {
+//        if (TextUtils.isEmpty(companyId)) {
 
             EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_ALL)
                     .execute(new EanfangCallback<OrganizationBean>(this, true, OrganizationBean.class, true, (list) -> {
@@ -111,6 +114,11 @@ public class SelectOrganizationActivity extends BaseActivity {
                                 organizationBean.setFlag(1);//单选
                             } else if (!TextUtils.isEmpty(isSection)) {
                                 organizationBean.setFlag(2);//部门单选
+                                if (!TextUtils.isEmpty(isAdd)) {
+                                    organizationBean.setAdd(true);
+                                }
+                            } else if (mOrganizationBean != null) {
+                                organizationBean.setFlag(3);//组织架构
                             }
 
                             EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
@@ -126,20 +134,20 @@ public class SelectOrganizationActivity extends BaseActivity {
                                     }));
                         }
                     }));
-        } else {
-            EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
-                    .params("companyId", companyId)
-                    .execute(new EanfangCallback<SectionBean>(SelectOrganizationActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
-
-                        organizationBean.setSectionBeanList(sectionBeanList);
-                        organizationBean.setFlag(3);//组织架构
-                        List<OrganizationBean> list = new ArrayList<>();
-                        list.add(organizationBean);
-                        treeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(list, OrgOneLevelItem.class, null));
-                        recyclerView.setAdapter(treeRecyclerAdapter);
-
-                    }));
-        }
+//        }
+//        else {
+//            EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
+//                    .params("companyId", companyId)
+//                    .execute(new EanfangCallback<SectionBean>(SelectOrganizationActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
+//                        organizationBean.setSectionBeanList(sectionBeanList);
+//                        organizationBean.setFlag(3);//组织架构
+//                        List<OrganizationBean> list = new ArrayList<>();
+//                        list.add(organizationBean);
+//                        treeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(list, OrgOneLevelItem.class, null));
+//                        recyclerView.setAdapter(treeRecyclerAdapter);
+//
+//                    }));
+//        }
     }
 
     private void initViews() {
@@ -157,9 +165,9 @@ public class SelectOrganizationActivity extends BaseActivity {
                 Object o = treeRecyclerAdapter.getData(i).getData();
 
                 //如果是第三级就不做任何操作
-                if (o instanceof SectionBean.ChildrenBean) {
-                    return;
-                }
+//                if (o instanceof SectionBean.ChildrenBean) {
+//                    return;
+//                }
 
                 if (mOldObj == null) {
                     mOldObj = o;
@@ -174,6 +182,10 @@ public class SelectOrganizationActivity extends BaseActivity {
                     } else if (mOldObj instanceof SectionBean) {
                         mSectionBean = (SectionBean) mOldObj;
                         mSectionBean.setChecked(false);
+                    } else if (mOldObj instanceof SectionBean.ChildrenBean) {
+                        mChildrenBean = (SectionBean.ChildrenBean) mOldObj;
+                        mChildrenBean.setChecked(false);
+                        treeRecyclerAdapter.notifyDataSetChanged();
                     }
                 }
 
@@ -186,6 +198,10 @@ public class SelectOrganizationActivity extends BaseActivity {
                 } else if (o instanceof SectionBean) {
                     mSectionBean = (SectionBean) o;
                     mSectionBean.setChecked(true);
+                } else if (o instanceof SectionBean.ChildrenBean) {
+                    mChildrenBean = (SectionBean.ChildrenBean) o;
+                    mChildrenBean.setChecked(true);
+                    treeRecyclerAdapter.notifyDataSetChanged();
                 }
 
                 mOldObj = o;

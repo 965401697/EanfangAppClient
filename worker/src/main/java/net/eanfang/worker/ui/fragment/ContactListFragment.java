@@ -4,11 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,17 +25,19 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
+import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.facebook.common.internal.Sets;
+
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.GroupDetailActivity;
 import net.eanfang.worker.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyConversationListFragment;
-import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;
@@ -49,12 +55,12 @@ import q.rorbin.badgeview.QBadgeView;
 /**
  * Created by MrHou
  *
- * @on 2018/3/2  16:53
+ * @on 2018/3/1  16:23
  * @email houzhongzhou@yeah.net
  * @desc 消息
  */
 
-public class ContactListFragment extends BaseFragment {
+public class ContactListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private boolean isFrist = true;
     private List<String> invalidList = new ArrayList<>();//无效的会话id
@@ -67,6 +73,8 @@ public class ContactListFragment extends BaseFragment {
     private int mMessageCount = 0;
     private int mStystemCount = 0;
 
+    private View view;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -77,8 +85,28 @@ public class ContactListFragment extends BaseFragment {
 
     }
 
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_message, container, false);
+            initView();
+            setListener();
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if (parent != null) {
+            parent.removeView(view);
+        }
+
+        return view;
+    }
+
     @Override
     protected void initView() {
+
+        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+
         MyConversationListFragment fragment = new MyConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
@@ -114,17 +142,17 @@ public class ContactListFragment extends BaseFragment {
 
             }
         }, Conversation.ConversationType.GROUP);
+
+
         doHttpNoticeCount();
 
-
-/**
- * 设置会话列表界面操作的监听器。
- */
+        /**
+         * 设置会话列表界面操作的监听器。
+         */
         RongIM.setConversationListBehaviorListener(new RongIM.ConversationListBehaviorListener() {
 
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
-
                 if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
                     Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
                     intent.putExtra(EanfangConst.RONG_YUN_ID, s);
@@ -195,72 +223,71 @@ public class ContactListFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void setListener() {
-        // 业务通知
-        findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mMessageCount", mMessageCount);
-            JumpItent.jump(getActivity(), MessageListActivity.class, bundle);
-        });
-        // 系统消息
-        findViewById(R.id.ll_system_notice).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mStystemCount", mStystemCount);
-            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle);
-        });
-
-        findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-                morePopWindow.showPopupWindow(findViewById(R.id.iv_add));
-            }
-        });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        doHttpNoticeCount();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        doHttpNoticeCount();
+//    }
 
     private void doHttpNoticeCount() {
-        EanfangHttp.get(NewApiService.GET_PUSH_COUNT).execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-            if (bean.containsKey("sys")) {
-                initSysCount(bean.getInteger("sys"));
-                mStystemCount = bean.getInteger("sys");
-            } else {
-                initSysCount(0);
-                mStystemCount = 0;
-            }
-            if (bean.containsKey("biz")) {
-                initBizCount(bean.getInteger("biz"));
-                mMessageCount = bean.getInteger("biz");
-            } else {
-                initBizCount(0);
-                mMessageCount = 0;
-            }
-        }));
+
+        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
+
+        EanfangHttp.get(NewApiService.GET_PUSH_COUNT)
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
+
+
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        super.onSuccess(bean);
+
+                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+
+
+                        if (bean.containsKey("sys")) {
+                            initSysCount(bean.getInteger("sys"));
+                            mStystemCount = bean.getInteger("sys");
+                        } else {
+                            initSysCount(0);
+                            mStystemCount = 0;
+                        }
+                        if (bean.containsKey("biz")) {
+                            initBizCount(bean.getInteger("biz"));
+                            mMessageCount = bean.getInteger("biz");
+                        } else {
+                            initBizCount(0);
+                            mMessageCount = 0;
+                        }
+
+                    }
+
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+                    }
+                });
     }
 
     private void initBizCount(Integer biz) {
 
         if (biz > 0) {
-            ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("新消息");
+            ((TextView) view.findViewById(R.id.tv_bus_msg_info)).setText("新消息");
         } else {
-            ((TextView) findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
+            ((TextView) view.findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
         }
 
-        qBadgeViewBiz
-                .bindTarget(findViewById(R.id.tv_bus_msg))
+        qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
 
-
+//        if (biz <= 0) {
+//            qBadgeViewSys.setVisibility(View.GONE);
+//        }
 //                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
 //                    //清除成功
 //                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
@@ -273,17 +300,19 @@ public class ContactListFragment extends BaseFragment {
 
     private void initSysCount(Integer sys) {
         if (sys > 0) {
-            ((TextView) findViewById(R.id.tv_sys_msg_info)).setText("新消息");
+            ((TextView) view.findViewById(R.id.tv_sys_msg_info)).setText("新消息");
         } else {
-            ((TextView) findViewById(R.id.tv_sys_msg_info)).setText("没有新消息");
+            ((TextView) view.findViewById(R.id.tv_sys_msg_info)).setText("没有新消息");
         }
+
         qBadgeViewSys
-                .bindTarget(findViewById(R.id.tv_sys_msg))
+                .bindTarget(view.findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
+
 
 //                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
 //                    //清除成功
@@ -294,7 +323,6 @@ public class ContactListFragment extends BaseFragment {
 //                    }
 //                });
     }
-
 
     /**
      * 设置群组信息提供者
@@ -371,4 +399,29 @@ public class ContactListFragment extends BaseFragment {
         }
     }
 
+
+    @Override
+    protected void setListener() {
+        // 业务通知
+        view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mMessageCount", mMessageCount);
+            JumpItent.jump(getActivity(), MessageListActivity.class, bundle);
+        });
+        // 系统消息
+        view.findViewById(R.id.ll_system_notice).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mStystemCount", mStystemCount);
+            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle);
+        });
+        view.findViewById(R.id.iv_add).setOnClickListener(v -> {
+            MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
+            morePopWindow.showPopupWindow(view.findViewById(R.id.iv_add));
+        });
+    }
+
+    @Override
+    public void onRefresh() {
+        doHttpNoticeCount();
+    }
 }

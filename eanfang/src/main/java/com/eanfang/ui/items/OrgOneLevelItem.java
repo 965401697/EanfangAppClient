@@ -50,15 +50,24 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
                 sectionBeans.setFlag(1);
             } else if (data.getFlag() == 2) {
                 sectionBeans.setFlag(2);
+                if (data.isAdd()) {
+                    sectionBeans.setAdd(true);
+                }
             } else if (data.getFlag() == 3) {
                 sectionBeans.setFlag(3);
             }
         }
+        //公司下的人员
+        if (data.getStaff() != null) {
+            totle += data.getStaff().size();
+        }
+
         if (totle == 0) {
             viewHolder.setText(R.id.tv_company_name, data.getOrgName());
         } else {
             viewHolder.setText(R.id.tv_company_name, data.getOrgName() + "(" + totle + ")");
         }
+
 
         if (isExpand()) {
             viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_one_close));
@@ -72,11 +81,23 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
             } else {
                 viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
             }
+            int finalTotle = totle;
             viewHolder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if (finalTotle == 0) return;
+
                     Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
                     intent.putExtra("flag", 1);
+                    if (data.getFlag() == 1) {
+                        intent.putExtra("isRadio", "isRadio");
+                    }
+
+                    if (data.getFlag() == 3) {
+                        intent.putExtra("isOrganization", "isOrganization");
+                    }
+
                     intent.putExtra("bean", data);
                     viewHolder.getView(R.id.tv_unit).getContext().startActivity(intent);
                 }
@@ -92,5 +113,6 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
             }
         }
     }
+
 
 }

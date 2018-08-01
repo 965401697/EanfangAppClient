@@ -32,7 +32,16 @@ public class SectionBean extends BaseItemData implements Serializable {
     private boolean isChecked;// 选中
     private List<ChildrenBean> children;
     private List<StaffBeanX> staff;
+    private boolean isAdd;// 是否是部门的 添加人员
 
+
+    public boolean isAdd() {
+        return isAdd;
+    }
+
+    public void setAdd(boolean add) {
+        isAdd = add;
+    }
 
     public boolean isChecked() {
         return isChecked;
@@ -135,7 +144,24 @@ public class SectionBean extends BaseItemData implements Serializable {
         private String parentOrgId;
         private List<StaffBean> staff;
         private int flag;//是否是单选  和一些业务的选择
+        private boolean isAdd;// 是否是部门的 添加人员
+        private boolean isChecked;// 选中
 
+        public boolean isChecked() {
+            return isChecked;
+        }
+
+        public void setChecked(boolean checked) {
+            isChecked = checked;
+        }
+
+        public boolean isAdd() {
+            return isAdd;
+        }
+
+        public void setAdd(boolean add) {
+            isAdd = add;
+        }
 
         public int getFlag() {
             return flag;

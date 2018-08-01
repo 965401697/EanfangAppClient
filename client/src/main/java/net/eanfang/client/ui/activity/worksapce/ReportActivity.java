@@ -14,11 +14,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
@@ -87,6 +84,10 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     TextView etCompanyName;
     @BindView(R.id.et_department_name)
     TextView etDepartmentName;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
 
     private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
@@ -122,6 +123,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
         llComit.setOnClickListener(this);
         llDependPerson.setOnClickListener(this);
         llReportType.setOnClickListener(this);
+        tvSend.setOnClickListener(this);
 //        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
 
         addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, beanList);
@@ -188,7 +190,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 startActivityForResult(intent, 3);
                 break;
             case R.id.ll_depend_person://联系人
-                Intent in= new Intent(this, SelectOrganizationActivity.class);
+                Intent in = new Intent(this, SelectOrganizationActivity.class);
                 in.putExtra("isRadio", "isRadio");
                 startActivity(in);
                 break;
@@ -196,6 +198,9 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 PickerSelectUtil.singleTextPicker(this, "", etTaskName, GetConstDataUtils.getWorkReportTypeList());
                 break;
 
+            case R.id.tv_send://选择人员
+                startActivity(new Intent(ReportActivity.this, SelectOrganizationActivity.class));
+                break;
             case R.id.ll_comit://提交
                 submit();
                 break;

@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
+import com.baozi.treerecyclerview.adpater.TreeRecyclerType;
 import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
+import com.baozi.treerecyclerview.manager.ItemManager;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.model.OrganizationBean;
@@ -24,6 +26,7 @@ import com.eanfang.ui.items.OrgSelectGroupMultipleItem;
 import com.eanfang.ui.items.OrgSelectGroupSingleItem;
 import com.eanfang.ui.items.OrgSelectItem;
 import com.eanfang.util.ToastUtil;
+import com.yaf.sys.entity.UserEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -69,6 +72,8 @@ public class SelectPresonActivity extends BaseActivity {
             setTitle(sectionBean.getOrgName());
 //            for (SectionBean sectionBean : mSecondDataList) {//循环一个公司全部 部门和员工
             TemplateBean templateBean = new TemplateBean();
+            TemplateBean templateBean1 = new TemplateBean();
+            List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
             if (sectionBean.getChildren() != null) {
                 for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
                     List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
@@ -97,49 +102,44 @@ public class SelectPresonActivity extends BaseActivity {
                 }
             }
 
-//            TemplateBean templateBean1 = new TemplateBean();
-//            if (!TextUtils.isEmpty(isOrganization)) {
-//                templateBean1.setVisible(true);
-//            }
-//
-//            if (sectionBean.getStaff() != null) {
-//                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
-//
-//
-//                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
-//                templateBean1.setOrgName("本部门/本公司");
-//
-//                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
-//
-//                    TemplateBean.Preson preson = new TemplateBean.Preson();
-//                    preson.setId(staffBeanX.getAccId());
-//                    preson.setName(staffBeanX.getAccountEntity().getNickName());
-//                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
-//                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
-//                    preson.setUserId(staffBeanX.getUserId());
-//                    preson.setDepartmentId(staffBeanX.getDepartmentId());
-//                    if (!TextUtils.isEmpty(isOrganization)) {
-//                        preson.setVisible(true);
-//                    }
-//                    presonArrayList.add(preson);
-//
-//                }
-//                templateBean1.setPresons(presonArrayList);
-//            }
-//            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-//                mTemplateBeanList.add(templateBean1);
-//            }
             if (templateBean.getPresons() != null && templateBean.getPresons().size() > 0) {
                 mTemplateBeanList.add(templateBean);
             }
 
-//            }
+            if (!TextUtils.isEmpty(isOrganization)) {
+                templateBean1.setVisible(true);
+            }
+
+            if (sectionBean.getStaff() != null) {
+                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
+
+                templateBean1.setOrgName(sectionBean.getOrgName());
+
+                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setId(staffBeanX.getAccId());
+                    preson.setName(staffBeanX.getAccountEntity().getNickName());
+                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
+                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+                    preson.setUserId(staffBeanX.getUserId());
+                    preson.setDepartmentId(staffBeanX.getDepartmentId());
+                    if (!TextUtils.isEmpty(isOrganization)) {
+                        preson.setVisible(true);
+                    }
+                    presonArrayList1.add(preson);
+
+                }
+                templateBean1.setPresons(presonArrayList1);
+            }
+
+
+            mTemplateBeanList.add(0, templateBean1);
 
 
         } else if (mFlag == 3) {
             SectionBean.ChildrenBean childrenBean = (SectionBean.ChildrenBean) getIntent().getSerializableExtra("bean");
             setTitle(childrenBean.getOrgName());
-//            for (SectionBean.ChildrenBean bean : mThreeDataList) {
             TemplateBean templateBean = new TemplateBean();
             templateBean.setOrgName(childrenBean.getOrgName());
             if (!TextUtils.isEmpty(isOrganization)) {
@@ -162,14 +162,15 @@ public class SelectPresonActivity extends BaseActivity {
             }
             templateBean.setPresons(staffBeanList);
             mTemplateBeanList.add(templateBean);
-//            }
 
         } else {
 
             OrganizationBean organizationBean = (OrganizationBean) getIntent().getSerializableExtra("bean");
 
             TemplateBean templateBean1 = new TemplateBean();
+            TemplateBean templateBean2 = new TemplateBean();
             List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
+            List<TemplateBean.Preson> presonArrayList2 = new ArrayList<>();
 
             setTitle(organizationBean.getOrgName());
             for (SectionBean sectionBean : organizationBean.getSectionBeanList()) {//循环一个公司全部 部门和员工
@@ -204,8 +205,6 @@ public class SelectPresonActivity extends BaseActivity {
                 }
 
 
-
-
                 if (!TextUtils.isEmpty(isOrganization)) {
                     templateBean1.setVisible(true);
                 }
@@ -213,9 +212,7 @@ public class SelectPresonActivity extends BaseActivity {
                 if (sectionBean.getStaff() != null) {
                     List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
 
-
-
-                    templateBean1.setOrgName("本部门/本公司");
+                    templateBean1.setOrgName(sectionBean.getOrgName());
 
                     for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
 
@@ -238,9 +235,41 @@ public class SelectPresonActivity extends BaseActivity {
             }
 
 
-            mTemplateBeanList.add(0,templateBean1);
+            mTemplateBeanList.add(0, templateBean1);
+
+
+            if (organizationBean.getStaff() != null && organizationBean.getStaff().size() > 0) {
+                templateBean2.setOrgName("本部门/本公司");
+
+                List<UserEntity> userEntityList = organizationBean.getStaff();
+
+                for (UserEntity userEntity : userEntityList) {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setId(String.valueOf(userEntity.getAccountEntity().getAccId()));
+                    preson.setName(userEntity.getAccountEntity().getNickName());
+                    preson.setProtraivat(userEntity.getAccountEntity().getAvatar());
+                    preson.setMobile(userEntity.getAccountEntity().getMobile());
+                    preson.setUserId(String.valueOf(userEntity.getUserId()));
+                    preson.setDepartmentId(String.valueOf(userEntity.getDepartmentId()));
+                    if (!TextUtils.isEmpty(isOrganization)) {
+                        preson.setVisible(true);
+                    }
+                    presonArrayList2.add(preson);
+
+                }
+                templateBean2.setPresons(presonArrayList2);
+
+
+            }
+
+            if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
+                mTemplateBeanList.add(0, templateBean2);
+            }
 
         }
+
+
         initViews();
         if (TextUtils.isEmpty(isOrganization)) {
             setRightTitle("确定");
@@ -256,19 +285,38 @@ public class SelectPresonActivity extends BaseActivity {
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        mTreeRecyclerAdapter = new TreeRecyclerAdapter();
+        mTreeRecyclerAdapter = new TreeRecyclerAdapter(TreeRecyclerType.SHOW_EXPAND);
         if (!TextUtils.isEmpty(isRadio)) {// 单选
-            mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupSingleItem.class, null));
+
+            List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupSingleItem.class, null);
+            for (TreeItem t : treeItemList) {
+
+                if (t instanceof OrgSelectGroupSingleItem) {
+                    ((OrgSelectGroupSingleItem) t).setExpand(true);
+                }
+
+            }
+            mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
+
         } else {//多选
-            mTreeRecyclerAdapter.setDatas(ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null));
+
+            List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null);
+            for (TreeItem t : treeItemList) {
+
+                if (t instanceof OrgSelectGroupMultipleItem) {
+                    ((OrgSelectGroupMultipleItem) t).setExpand(true);
+                }
+
+            }
+            mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
         }
         recyclerView.setAdapter(mTreeRecyclerAdapter);
+
 
         mTreeRecyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ViewHolder viewHolder, int i) {
                 Object o = mTreeRecyclerAdapter.getData(i).getData();
-
                 if (o instanceof TemplateBean.Preson) {
                     TemplateBean.Preson b = (TemplateBean.Preson) o;
 

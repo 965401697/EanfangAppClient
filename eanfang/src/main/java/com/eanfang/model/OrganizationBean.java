@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import com.baozi.treerecyclerview.base.BaseItemData;
+import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -37,7 +38,26 @@ public class OrganizationBean extends BaseItemData implements Serializable {
     private String updateUser;
     private int verifyStatus;
     private int flag;// 是否是单选  一些逻辑的判断
+    private boolean isAdd;// 是否是部门的 添加人员
     private boolean isChecked;// 选中
+    private List<UserEntity> staff;
+
+
+    public boolean isAdd() {
+        return isAdd;
+    }
+
+    public void setAdd(boolean add) {
+        isAdd = add;
+    }
+
+    public List<UserEntity> getStaff() {
+        return staff;
+    }
+
+    public void setStaff(List<UserEntity> staff) {
+        this.staff = staff;
+    }
 
     private List<SectionBean> sectionBeanList;
 

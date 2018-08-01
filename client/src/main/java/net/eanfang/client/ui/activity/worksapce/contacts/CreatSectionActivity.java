@@ -115,6 +115,10 @@ public class CreatSectionActivity extends BaseClientActivity {
             SectionBean sectionBean = (SectionBean) o;
             tvSectionName.setText(sectionBean.getOrgName());
             parentOrgId = sectionBean.getOrgId();
+        }else if (o instanceof SectionBean.ChildrenBean) {
+            SectionBean.ChildrenBean childrenBean = (SectionBean.ChildrenBean) o;
+            tvSectionName.setText(childrenBean.getOrgName());
+            parentOrgId = childrenBean.getOrgId();
         }
     }
 }
