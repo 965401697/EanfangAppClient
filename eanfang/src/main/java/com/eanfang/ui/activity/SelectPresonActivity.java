@@ -167,13 +167,15 @@ public class SelectPresonActivity extends BaseActivity {
 
             OrganizationBean organizationBean = (OrganizationBean) getIntent().getSerializableExtra("bean");
 
-            TemplateBean templateBean1 = new TemplateBean();
             TemplateBean templateBean2 = new TemplateBean();
-            List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
             List<TemplateBean.Preson> presonArrayList2 = new ArrayList<>();
 
             setTitle(organizationBean.getOrgName());
             for (SectionBean sectionBean : organizationBean.getSectionBeanList()) {//循环一个公司全部 部门和员工
+
+                TemplateBean templateBean1 = new TemplateBean();
+                List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
+
                 TemplateBean templateBean = new TemplateBean();
                 if (sectionBean.getChildren() != null) {
                     for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
@@ -231,11 +233,10 @@ public class SelectPresonActivity extends BaseActivity {
                     }
                     templateBean1.setPresons(presonArrayList1);
                 }
-
+                if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                    mTemplateBeanList.add(templateBean1);
+                }
             }
-
-
-            mTemplateBeanList.add(0, templateBean1);
 
 
             if (organizationBean.getStaff() != null && organizationBean.getStaff().size() > 0) {
