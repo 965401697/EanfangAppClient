@@ -73,6 +73,9 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
 
     //是否匿名
     private boolean isAnonymous = false;
+    private int isAnonymousValue = 2;// 1 匿名 2 不匿名
+    // 赞的等级
+    private int mGoodStatus = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +100,7 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
         setTitle("评价技师");
         setLeftBack();
         tvSelect.setOnClickListener(v -> commit());
-
+        rgScore.setOnCheckedChangeListener(this);
     }
 
     private void commit() {
@@ -110,6 +113,8 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
         evaluateWorkerBean.setItem5(rbStar5.getProgress());
         evaluateWorkerBean.setOrderId(orderId);
         evaluateWorkerBean.setOwnerId(assigneeUserId);
+        evaluateWorkerBean.setFavorable_rate(mGoodStatus);
+        evaluateWorkerBean.setAnonymous_evaluation(isAnonymousValue);
         EanfangHttp.post(RepairApi.POST_WORKER_EVALUATE_CREATE)
                 .upJson(JSON.toJSONString(evaluateWorkerBean))
                 .execute(new EanfangCallback<JSONObject>(EvaluateWorkerActivity.this, true, JSONObject.class, (bean) -> {
@@ -120,26 +125,29 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
 
     @OnClick(R.id.ll_workerAnonymous)
     public void onViewClicked() {
+
         if (!isAnonymous) {
             ivAnonyMous.setImageResource(R.mipmap.ic_evalute_worker_pressed);
             isAnonymous = true;
+            isAnonymousValue = 1;
         } else {
             ivAnonyMous.setImageResource(R.mipmap.ic_evalute_worker);
             isAnonymous = false;
+            isAnonymousValue = 2;
         }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (group.getCheckedRadioButtonId()) {
-            case R.id.tv_repair://超赞
-//                selectProjectType = "超赞";
+            case R.id.rb_wonderful://超赞
+                mGoodStatus = 1;
                 break;
-            case R.id.tv_check://一般
-//                selectProjectType = "一般";
+            case R.id.rb_good://一般
+                mGoodStatus = 2;
                 break;
-            case R.id.tv_task://差评
-//                selectProjectType = "差评";
+            case R.id.rb_bad://差评
+                mGoodStatus = 3;
                 break;
             default:
                 break;

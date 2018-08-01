@@ -197,7 +197,7 @@
                 android:textSize="@dimen/textSize_13" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/rb_star5"
+                android:id="@+id/rb_star3"
                 style="@style/Widget.MaterialRatingBar.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
                 android:textSize="@dimen/textSize_13" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/rb_star3"
+                android:id="@+id/rb_star4"
                 style="@style/Widget.MaterialRatingBar.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -259,7 +259,7 @@
                 android:textSize="@dimen/textSize_13" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/rb_star4"
+                android:id="@+id/rb_star5"
                 style="@style/Widget.MaterialRatingBar.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

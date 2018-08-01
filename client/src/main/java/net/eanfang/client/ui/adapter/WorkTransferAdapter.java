@@ -7,7 +7,7 @@ import com.eanfang.model.WorkTalkBean;
 import net.eanfang.client.R;
 
 /**
- * 描述：
+ * 描述：交接班
  *
  * @author Guanluocang
  * @date on 2018/7/26$  17:21$

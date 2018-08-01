@@ -529,7 +529,7 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:gravity="center"
-            android:text="提交日志"
+            android:text="认证 情况属实"
             android:textColor="@color/color_white"
             android:textSize="@dimen/textSize_13" />
     </RelativeLayout>

@@ -15,7 +15,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.WorkerInfoBean;
-import com.eanfang.ui.activity.AuthWorkerAreaNewActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
@@ -59,6 +58,8 @@ public class AuthListActivity extends BaseActivity {
     RelativeLayout rlOtherInfo;
     @BindView(R.id.tv_confim)
     TextView tvConfim;
+    @BindView(R.id.rl_is_auth)
+    RelativeLayout rlIsAuth;
 
 
     private WorkerInfoBean workerInfoBean;
@@ -129,7 +130,11 @@ public class AuthListActivity extends BaseActivity {
     }
 
     private void doChange(int baseStatus, int serviceStatus, int bizStatus, int areaStatus, int verify) {
-
+        if (verify == 1) {
+            rlIsAuth.setVisibility(View.VISIBLE);
+        } else {
+            rlIsAuth.setVisibility(View.GONE);
+        }
         if (baseStatus > 0) {
             tvBaseInfo.setText("已完善");
             tvBaseInfo.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));

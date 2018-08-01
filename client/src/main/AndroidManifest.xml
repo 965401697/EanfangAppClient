@@ -496,6 +496,8 @@
         <!-- 交接班创建详情 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateDetailActivity"
+
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
     </application>
 

@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.V;
 
 import net.eanfang.client.R;
 
@@ -22,10 +23,16 @@ public class CompanyManagerActivity extends BaseActivity {
 
     @BindView(R.id.rl_prefectInfo)
     RelativeLayout rlPrefectInfo;
+    @BindView(R.id.rl_is_auth)
+    RelativeLayout rlIsAuth;
     //    @BindView(R.id.rl_auth)
 //    RelativeLayout rlAuth;
     private Long mOrgId;
+
     private String mOrgName = "";
+
+    //认证中显示标示
+    private String isAuth = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,12 @@ public class CompanyManagerActivity extends BaseActivity {
         setTitle("企业管理");
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
+        isAuth = getIntent().getStringExtra("isAuth");
+        if ("1".equals(isAuth)) {
+            rlIsAuth.setVisibility(View.VISIBLE);
+        } else {
+            rlIsAuth.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.rl_prefectInfo, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation})

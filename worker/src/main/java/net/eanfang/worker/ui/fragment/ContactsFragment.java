@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
- import android.widget.TextView;
+import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -147,7 +147,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 mOrgEntity = parentAdapter.getData().get(0);
                 mOrgEntity.setFlag(true);
             }
-
         }
     }
 
@@ -270,7 +269,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     intent.putExtra("organizationBean", organizationBean);
                     intent.putExtra("isOrganization", "isOrganization");//是否是组织架构
                     startActivity(intent);
-
                     break;
                 //子公司
                 case R.id.ll_child_company:
@@ -296,6 +294,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     Bundle bundle = new Bundle();
                     bundle.putLong("orgid", mDatas.get(position).getOrgId());
                     bundle.putString("orgName", mDatas.get(position).getOrgName());
+                    bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
                     JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle);
                     break;
                 default:

@@ -267,6 +267,11 @@ public interface Constant {
      */
     String WORKTRANSFER_STATUS = "ExchangeStatus";
 
+    /**
+     * 40.首页报修统计数据
+     */
+    String HOME_DATASTATISTICS = "BughandleDetailAppStatus";
+
     //业务通知
     int NOTICE_BUSINESS = 1;
 

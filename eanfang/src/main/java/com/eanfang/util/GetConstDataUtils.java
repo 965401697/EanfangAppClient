@@ -79,9 +79,9 @@ public class GetConstDataUtils {
      */
     private static List<String> bugDetailList;
     /**
-     * 故障处理明细状态
+     * 首页数据同居
      */
-    private static List<String> repairList;
+    private static List<String> homeRepairList;
     /**
      * 故障明细状态二级 的 key
      */
@@ -479,6 +479,24 @@ public class GetConstDataUtils {
         }
         return budgetList;
     }
+
+    /**
+     * 首页报修统计
+     * getRepairConstant
+     *
+     * @return
+     */
+    public static List<String> getHomeRepairStatuslList() {
+        if (homeRepairList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (homeRepairList == null) {
+                    homeRepairList = Config.get().getConstBean().getData().getRepairConstant().get(Constant.HOME_DATASTATISTICS);
+                }
+            }
+        }
+        return homeRepairList;
+    }
+
 
     /**
      * 故障处理明细
