@@ -44,9 +44,6 @@ public class WorkTalkListActivity extends BaseActivity {
     // 创建  收到 标示
     private String mType = "";
 
-    // 已读 未读 全部 标示
-    private int type;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +60,7 @@ public class WorkTalkListActivity extends BaseActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTalkListFragment.getInstance(title, type));
+            mFragments.add(WorkTalkListFragment.getInstance(title, mType));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

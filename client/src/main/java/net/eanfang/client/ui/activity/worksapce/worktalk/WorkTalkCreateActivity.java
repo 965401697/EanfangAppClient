@@ -170,6 +170,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
             if (!isWhitch) {// 面谈对象
                 tvTalkObject.setText(bean.getName());
                 mTalkId = bean.getUserId();
+                tvDepartmentName.setText(bean.getOrgName());
                 if (!TextUtils.isEmpty(bean.getOrgCode())) {
                     mDepartmentId = bean.getOrgCode();
                 }
