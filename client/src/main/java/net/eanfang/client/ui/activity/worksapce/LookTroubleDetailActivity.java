@@ -60,6 +60,11 @@ public class LookTroubleDetailActivity extends BaseClientActivity /*implements V
     private TextView tv_device_no;
 
     private TextView tv_device_location;
+
+    //位置编号
+    @BindView(R.id.tv_location_num)
+    TextView tvLocationNum;
+
     private TextView et_trouble_desc;
     private TextView et_trouble_point;
     private TextView et_trouble_reason;
@@ -129,6 +134,8 @@ public class LookTroubleDetailActivity extends BaseClientActivity /*implements V
             tv_device_no.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
 
             tv_device_location.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
+
+            tvLocationNum.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getLocationNumber()).orElse(""));
 
             et_trouble_desc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
         }

@@ -7,7 +7,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import com.annimon.stream.Stream;
+import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseEvent;
+import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
@@ -17,6 +20,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +33,8 @@ public class MaintenanceListActivity extends BaseWorkerActivity {
     @BindView(R.id.vp)
     ViewPager vp;
 
-    private String[] mTitles = {"待预约", "待上门", "维修中", "待验收", "订单完成"};
+    public final List<String> allmTitles = GetConstDataUtils.getMaintainStatusList();
+    private String[] mTitles;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private MaintenanceListFragment currentFragment;
@@ -40,6 +46,11 @@ public class MaintenanceListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
 
         int type = getIntent().getIntExtra("type", 0);
+
+        //剔除 待执行 订单取消
+        List tempList = Stream.of(allmTitles).filter(title -> !"待执行".equals(title) && !"订单取消".equals(title)).toList();
+        mTitles = new String[tempList.size()];
+        tempList.toArray(mTitles);
 
         for (String title : mTitles) {
             mFragments.add(MaintenanceListFragment.getInstance(type, title));

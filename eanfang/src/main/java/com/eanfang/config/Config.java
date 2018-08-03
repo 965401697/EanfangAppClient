@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author wen
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc app配置信息
  */
 public class Config {
@@ -58,6 +58,10 @@ public class Config {
         return constBean;
     }
 
+    public void cleanConstBean() {
+        this.constBean = null;
+    }
+
     public BaseDataBean getBaseDataBean() {
         if (baseDataBean == null) {
             synchronized (Config.class) {
@@ -69,6 +73,9 @@ public class Config {
         return baseDataBean;
     }
 
+    public void cleanBaseDataBean() {
+        this.baseDataBean = null;
+    }
 
     public List<BaseDataEntity> getBusinessList() {
         if (businessList == null) {

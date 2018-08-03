@@ -79,6 +79,11 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     // 设备位置
     @BindView(R.id.tv_device_location)
     TextView tvDeviceLocation;
+
+    //位置编号
+    @BindView(R.id.tv_location_num)
+    TextView tvLocationNum;
+
     //故障描述
     @BindView(R.id.et_trouble_desc)
     EditText etTroubleDesc;
@@ -200,6 +205,9 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         tvDeviceNo.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
         //故障位置
         tvDeviceLocation.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
+        //位置编号
+        tvLocationNum.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getLocationNumber()).orElse(""));
+
         //故障描述
         etTroubleDesc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
 

@@ -69,6 +69,11 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
     // 设备位置
     @BindView(R.id.tv_device_location)
     TextView tvDeviceLocation;
+
+    //位置编号
+    @BindView(R.id.tv_location_num)
+    TextView tvLocationNum;
+
     //设备参数
     @BindView(R.id.rl_add_device_param)
     RelativeLayout rlAddDeviceParam;
@@ -175,6 +180,9 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
             tvDeviceNo.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getDeviceNo()).orElse(""));
 
             tvDeviceLocation.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugPosition()).orElse(""));
+
+            tvLocationNum.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getLocationNumber()).orElse(""));
+
             //故障描述
             tvTroubleDesc.setText(Optional.ofNullable(bughandleDetailEntity.getFailureEntity().getBugDescription()).orElse(""));
         }
