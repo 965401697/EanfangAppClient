@@ -10,6 +10,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.WorkTalkListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
@@ -68,7 +69,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
 
         EanfangHttp.post(NewApiService.WORK_TALK)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkTalkBean>(getActivity(), true, WorkTalkBean.class, (bean) -> {
+                .execute(new EanfangCallback<WorkTalkListBean>(getActivity(), true, WorkTalkListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
 //                                workTalkBeanList = bean.getData().getList();
 //                                onDataReceived();

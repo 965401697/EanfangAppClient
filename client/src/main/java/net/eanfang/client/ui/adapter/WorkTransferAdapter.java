@@ -2,6 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.model.WorkTalkListBean;
 
 import net.eanfang.client.R;
 
@@ -11,7 +12,7 @@ import net.eanfang.client.R;
  * @author Guanluocang
  * @date on 2018/7/26$  17:21$
  */
-public class WorkTransferAdapter extends BaseQuickAdapter<WorkTalkBean.DataBean.ListBean, BaseViewHolder> {
+public class WorkTransferAdapter extends BaseQuickAdapter<WorkTalkListBean.DataBean.ListBean, BaseViewHolder> {
 
 
     public WorkTransferAdapter() {
@@ -19,7 +20,7 @@ public class WorkTransferAdapter extends BaseQuickAdapter<WorkTalkBean.DataBean.
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkTalkBean.DataBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, WorkTalkListBean.DataBean.ListBean item) {
         helper.setText(R.id.tv_worktalk_name, item.getId());
         if (item.getStatus() == 1) {
             helper.setText(R.id.tv_state, "已读");

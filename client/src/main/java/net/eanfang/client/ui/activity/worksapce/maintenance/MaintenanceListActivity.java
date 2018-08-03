@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.eanfang.ui.base.BaseEvent;
+import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 
@@ -18,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +31,8 @@ public class MaintenanceListActivity extends BaseClientActivity {
     @BindView(R.id.vp)
     ViewPager vp;
 
-    private String[] mTitles = {"待回电", "待上门", "维修中", "待验收", "订单完成"};
+    private final List<String> mAllTitle = GetConstDataUtils.getMaintainStatusList();
+    private String[] mTitles;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private MaintenanceListFragment currentFragment;
@@ -42,6 +45,11 @@ public class MaintenanceListActivity extends BaseClientActivity {
 
         int type = getIntent().getIntExtra("type", 0);
 
+        mAllTitle.remove(0);
+        mAllTitle.remove(mAllTitle.size() - 1);
+        mTitles = new String[mAllTitle.size()];
+
+        mAllTitle.toArray(mTitles);
         for (String title : mTitles) {
             mFragments.add(MaintenanceListFragment.getInstance(type, title));
         }

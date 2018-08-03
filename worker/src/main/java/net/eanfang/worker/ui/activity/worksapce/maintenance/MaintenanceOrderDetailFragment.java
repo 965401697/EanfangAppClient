@@ -19,6 +19,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
@@ -117,7 +118,11 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         emphasisDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(getActivity(), MaintenanceHandleActivity.class));
+//                ShopMaintenanceExamDeviceEntity examDeviceEntity = (ShopMaintenanceExamDeviceEntity) adapter.getData().get(position);
+//                Intent intent = new Intent(getActivity(), MaintenanceHandleEditShowActivity.class);
+//                intent.putExtra("bean", examDeviceEntity);
+////                intent.putExtra("isShow", true);//是否仅展示 不可编辑
+//                startActivity(intent);
             }
         });
     }

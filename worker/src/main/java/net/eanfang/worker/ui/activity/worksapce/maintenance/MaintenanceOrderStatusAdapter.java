@@ -32,15 +32,15 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
 
     @Override
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
-//        if (!TextUtils.isEmpty(item.getCreateTime())) {
-//            helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
-//                    .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
-//                    .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
-//        } else {
-//            helper.setText(R.id.tv_time, "")
-//                    .setText(R.id.tv_date, "")
-//                    .setText(R.id.tv_weeks, "");
-//        }
+        if (!TextUtils.isEmpty(item.getCreateTime())) {
+            helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
+                    .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
+                    .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
+        } else {
+            helper.setText(R.id.tv_time, "")
+                    .setText(R.id.tv_date, "")
+                    .setText(R.id.tv_weeks, "");
+        }
         timelineView = helper.getView(R.id.time_marker);
         mOrderFinish = helper.getView(R.id.ll_orderFinish);
         Drawable marker = mContext.getResources().getDrawable(R.drawable.ic_check_worker);

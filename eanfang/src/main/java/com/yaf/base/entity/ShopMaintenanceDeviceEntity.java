@@ -50,7 +50,7 @@ public class ShopMaintenanceDeviceEntity implements Serializable {
             private String specification;
             //单位
         //@TableField(value = "unit")
-            private Integer unit;
+            private String unit;
             //数量
         //@TableField(value = "amount")
             private Integer amount;
@@ -133,14 +133,14 @@ public class ShopMaintenanceDeviceEntity implements Serializable {
             /**
          * 设置：单位
          */
-        public void setUnit(Integer unit) {
+        public void setUnit(String unit) {
             this.unit = unit;
         }
 
         /**
          * 获取：单位
          */
-        public Integer getUnit() {
+        public String getUnit() {
             return unit;
         }
             /**
