@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity">
+
+    <include layout="@layout/header" />
+
+    <ImageView
+        android:id="@+id/iv_own"
+        android:layout_width="@dimen/dimen_548"
+        android:layout_height="@dimen/dimen_318"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_72"
+        android:scaleType="fitXY"
+        android:src="@drawable/mainten_own" />
+
+    <ImageView
+        android:id="@+id/iv_section"
+        android:layout_width="@dimen/dimen_548"
+        android:layout_height="@dimen/dimen_318"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:scaleType="fitXY"
+        android:src="@drawable/mainten_section" />
+
+
+    <ImageView
+        android:id="@+id/iv_company"
+        android:layout_width="@dimen/dimen_548"
+        android:layout_height="@dimen/dimen_318"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:scaleType="fitXY"
+        android:src="@drawable/mainten_company" />
+
+</LinearLayout>

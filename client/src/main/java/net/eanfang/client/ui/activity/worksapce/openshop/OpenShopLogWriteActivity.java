@@ -2,6 +2,9 @@ package net.eanfang.client.ui.activity.worksapce.openshop;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.TextureView;
 import android.view.View;
@@ -22,13 +25,19 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.ToastUtil;
+import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.client.ui.activity.worksapce.CheckActivity;
+import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
@@ -37,7 +46,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +78,10 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
     TextView etPhoneNum;
     @BindView(R.id.ev_faultDescripte)
     EditText evFaultDescripte;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
 
     private int posistion;
     private Long assigneeUserId;
@@ -79,6 +94,21 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
 
     private TimePickerView mTimeYearMonthDayHMS;
     private TextView currentTextView;
+
+
+    private boolean isSend = false;
+    private SendPersonAdapter sendPersonAdapter;
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            ToastUtil.get().showToast(OpenShopLogWriteActivity.this, "发送成功");
+            finishSelf();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +124,17 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         etSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvTeam.setLayoutManager(manager);
+
         getData();
         doSelectYearMonthDayHMS();
     }
 
 
-    @OnClick({R.id.ll_staff_in_time, R.id.ll_staff_out_time, R.id.ll_client_in_time, R.id.ll_client_out_time, R.id.ll_open_time, R.id.ll_close_time, R.id.ll_depend_person, R.id.ll_comit})
+    @OnClick({R.id.ll_staff_in_time, R.id.ll_staff_out_time, R.id.ll_client_in_time, R.id.ll_client_out_time, R.id.ll_open_time, R.id.ll_close_time, R.id.ll_depend_person, R.id.tv_send, R.id.ll_comit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_staff_in_time:
@@ -134,9 +169,18 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
                 break;
             case R.id.ll_depend_person:
 //                showDependPerson();
+
+                isSend = false;
+
                 Intent intent = new Intent(this, SelectOrganizationActivity.class);
                 intent.putExtra("isRadio", "isRadio");
                 startActivity(intent);
+                break;
+            case R.id.tv_send:
+                isSend = true;
+
+                startActivity(new Intent(OpenShopLogWriteActivity.this, SelectIMContactActivity.class).putExtra("flag", 2));
+
                 break;
             case R.id.ll_comit:
                 sub();
@@ -246,9 +290,25 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
 
         EanfangHttp.post(NewApiService.OA_SUB_OPEN_SHOP)
                 .upJson(object)
-                .execute(new EanfangCallback(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
-                    ToastUtil.get().showToast(OpenShopLogWriteActivity.this, "创建成功");
-                    finish();
+                .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
+                    //分享
+
+                    if (newPresonList.size() > 0) {
+
+                        Bundle b = new Bundle();
+
+                        b.putString("id", String.valueOf(bean.getId()));
+                        b.putString("orderNum", bean.getOrderNumber());
+
+                        b.putString("creatTime", GetDateUtils.dateToDateTimeStringForChinse(bean.getCreateTime()));
+                        b.putString("workerName", tvDependPerson.getText().toString().trim());
+                        b.putString("status", "0");
+                        b.putString("shareType", "8");
+
+                        new SendContactUtils(b, handler, newPresonList, DialogUtil.createLoadingDialog(OpenShopLogWriteActivity.this)).send();
+                    } else {
+                        finishSelf();
+                    }
                 }));
     }
 
@@ -309,19 +369,38 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
 
 
         if (presonList.size() > 0) {
-            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+            if (isSend) {
 
-            etPhoneNum.setText(bean.getMobile());
-            tvDependPerson.setText(bean.getName());
+                if (sendPersonAdapter == null) {
+                    sendPersonAdapter = new SendPersonAdapter();
+                    sendPersonAdapter.bindToRecyclerView(rvTeam);
+                }
 
-            assigneeUserId = Long.parseLong(bean.getUserId());
-            if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
-                assigneeOrgCode = bean.getOrgCode();
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendPersonAdapter.getData());
+                hashSet.addAll(presonList);
+
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
+                }
+                newPresonList.addAll(hashSet);
+                sendPersonAdapter.setNewData(newPresonList);
+
             } else {
-                assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+
+                etPhoneNum.setText(bean.getMobile());
+                tvDependPerson.setText(bean.getName());
+
+                assigneeUserId = Long.parseLong(bean.getUserId());
+                if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                    assigneeOrgCode = bean.getOrgCode();
+                } else {
+                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                }
+                assigneeTopCompanyId = EanfangApplication.getApplication().getTopCompanyId();
+                assigneeCompanyId = EanfangApplication.getApplication().getCompanyId();
             }
-            assigneeTopCompanyId = EanfangApplication.getApplication().getTopCompanyId();
-            assigneeCompanyId = EanfangApplication.getApplication().getCompanyId();
         }
     }
 

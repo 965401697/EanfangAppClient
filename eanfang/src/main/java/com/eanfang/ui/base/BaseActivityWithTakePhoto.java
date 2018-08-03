@@ -25,9 +25,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.camera.util.FileUtil;
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.FileUtils;
 import com.eanfang.util.PermissionsCallBack;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
@@ -42,12 +45,17 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.util.Date;
+
+import rx.Observable;
+
+import static com.camera.util.FileUtil.getSavePicPath;
 
 /**
  * BaseAppCompatFragmentActivity
  *
  * @author hr
- * Created at 2016/1/1 11:33
+ *         Created at 2016/1/1 11:33
  * @desc activity基类
  */
 
@@ -317,7 +325,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
                                     configTakePhotoOption(takePhoto);
 //        takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
 
-                                    File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+                                    File file = new File(Environment.getExternalStorageDirectory(), "/DCIM" + ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis())) + ".jpg");
                                     if (!file.getParentFile().exists()) {
                                         file.getParentFile().mkdirs();
                                     }

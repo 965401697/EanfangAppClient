@@ -18,6 +18,7 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.baozi.treerecyclerview.manager.ItemManager;
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
@@ -91,6 +92,7 @@ public class SelectPresonActivity extends BaseActivity {
                             preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                             preson.setMobile(staffBean.getAccountEntity().getMobile());
                             preson.setDepartmentId(staffBean.getDepartmentId());
+                            preson.setOrgName(childrens.getOrgName());
                             if (!TextUtils.isEmpty(isOrganization)) {
                                 preson.setVisible(true);
                             }
@@ -124,6 +126,7 @@ public class SelectPresonActivity extends BaseActivity {
                     preson.setMobile(staffBeanX.getAccountEntity().getMobile());
                     preson.setUserId(staffBeanX.getUserId());
                     preson.setDepartmentId(staffBeanX.getDepartmentId());
+                    preson.setOrgName(sectionBean.getOrgName());
                     if (!TextUtils.isEmpty(isOrganization)) {
                         preson.setVisible(true);
                     }
@@ -154,6 +157,7 @@ public class SelectPresonActivity extends BaseActivity {
                 preson.setName(staffBean.getAccountEntity().getNickName());
                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                 preson.setMobile(staffBean.getAccountEntity().getMobile());
+                preson.setOrgName(childrenBean.getOrgName());
                 preson.setDepartmentId(staffBean.getDepartmentId());
                 if (!TextUtils.isEmpty(isOrganization)) {
                     preson.setVisible(true);
@@ -191,6 +195,7 @@ public class SelectPresonActivity extends BaseActivity {
                                 preson.setOrgCode(sectionBean.getOrgCode());
                                 preson.setUserId(staffBean.getUserId());
                                 preson.setName(staffBean.getAccountEntity().getNickName());
+                                preson.setOrgName(childrens.getOrgName());
                                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                                 preson.setMobile(staffBean.getAccountEntity().getMobile());
                                 preson.setDepartmentId(staffBean.getDepartmentId());
@@ -225,6 +230,7 @@ public class SelectPresonActivity extends BaseActivity {
                         preson.setMobile(staffBeanX.getAccountEntity().getMobile());
                         preson.setUserId(staffBeanX.getUserId());
                         preson.setDepartmentId(staffBeanX.getDepartmentId());
+                        preson.setOrgName(sectionBean.getOrgName());
                         if (!TextUtils.isEmpty(isOrganization)) {
                             preson.setVisible(true);
                         }
@@ -253,6 +259,7 @@ public class SelectPresonActivity extends BaseActivity {
                     preson.setMobile(userEntity.getAccountEntity().getMobile());
                     preson.setUserId(String.valueOf(userEntity.getUserId()));
                     preson.setDepartmentId(String.valueOf(userEntity.getDepartmentId()));
+                    preson.setOrgName(organizationBean.getOrgName());
                     if (!TextUtils.isEmpty(isOrganization)) {
                         preson.setVisible(true);
                     }

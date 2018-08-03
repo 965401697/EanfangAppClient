@@ -30,6 +30,16 @@ public class TemplateBean extends BaseItemData implements Serializable {
         private boolean isChecked;
         private boolean isVisible;
         private String orgCode;
+        private String orgName;
+
+
+        public String getOrgName() {
+            return orgName;
+        }
+
+        public void setOrgName(String orgName) {
+            this.orgName = orgName;
+        }
 
         public String getUserId() {
             return userId;

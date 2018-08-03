@@ -53,6 +53,8 @@ import net.eanfang.client.ui.fragment.WorkspaceFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -316,6 +318,8 @@ public class MainActivity extends BaseClientActivity {
                         ClientApplication.connect(token);
                     }
                 }));
+
+
     }
 
 

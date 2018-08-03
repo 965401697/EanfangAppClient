@@ -499,6 +499,36 @@
 
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
+
+        <!--维保列表-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
+        <!--维保详情-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceDetailActivity" />
+        <!--维保处理-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivity" />
+        <!--维保添加故障检查-->
+        <activity
+            android:name=".ui.activity.worksapce.maintenance.MaintenanceAddCheckResultActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!--维保重点设备完善-->
+        <activity
+            android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleEditActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!--维保界面照片-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MeintenancePhotoActivity" />
+        <!--维保列表fragment的宿主activity-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceActivity"></activity>
+        <!--维保预约-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceAppointTimeActivity"></activity>
+        <!--维保处理activity的照片-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MeintenanceEditPhotoActivity"></activity>
+        <!--维保处理展示activity的照片-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleShowActivity"></activity>
+        <!--维保添加故障出路activity的照片-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceAddCheckResultShowActivity"></activity>
+        <!--维保添加故障出路展示activity的照片-->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleEditShowActivity"></activity>
+
     </application>
 
 </manifest>

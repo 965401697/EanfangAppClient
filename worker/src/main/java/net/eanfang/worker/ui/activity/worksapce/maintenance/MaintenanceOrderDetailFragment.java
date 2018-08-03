@@ -82,7 +82,6 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     private MaintenanceOrderDetailEmphasisDeviceAdapter emphasisDeviceAdapter;
     private MaintenanceOrderDetailDeviceListAdapter deviceListAdapter;
 
-    private List<String> test = new ArrayList<>();
     private long mId;
     private ShopMaintenanceOrderEntity orderEntity;
 
@@ -100,10 +99,6 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-        test.add("");
-        test.add("");
-        test.add("");
-        test.add("");
         getData();
     }
 
@@ -144,7 +139,11 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
 
     private void initViews() {
         ivReportHeader.setImageURI(BuildConfig.OSS_SERVER + orderEntity.getOwnerUserEntity().getAccountEntity().getAvatar());
-        tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getOwnerUserEntity().getAccountEntity().getGender() == 1 ? "男" : "女") + ")");
+        if (orderEntity.getOwnerUserEntity().getAccountEntity().getGender() != null) {
+            tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getOwnerUserEntity().getAccountEntity().getGender() == 1 ? "男" : "女") + ")");
+        } else {
+            tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName());
+        }
         tvCompanyName.setText(orderEntity.getOwnerUserEntity().getCompanyEntity().getOrgName());
         tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
         tvPhone.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getMobile());
@@ -167,7 +166,7 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         tvPlanEnd.setText("计划结束时间：" + GetDateUtils.dateToDateTimeString(orderEntity.getEndTime()));
 
 
-        tvStandard.setText("维保标准：\r\n" + GetConstDataUtils.getMaintainLevelList().get(Integer.parseInt(orderEntity.getStandard())));
+        tvStandard.setText("维保标准：\r\n" + orderEntity.getStandard());
         tvNotice.setText("维保标准：\r\n" + orderEntity.getContext());
 
 

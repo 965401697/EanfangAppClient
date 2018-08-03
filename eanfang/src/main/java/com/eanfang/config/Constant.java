@@ -244,6 +244,7 @@ public interface Constant {
     /**
      * 35.维保状态
      */
+
     String MAINTAIN_CONSTANT_STATUS = "status";
     /**
      * 36，处理的结果

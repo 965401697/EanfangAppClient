@@ -81,7 +81,7 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
     }
 
     private void initAdapter() {
-        MaintenanceOrderStatusAdapter orderProgressAdapter = new MaintenanceOrderStatusAdapter(R.layout.item_order_progress, mDataList);
+        MaintenanceOrderStatusAdapter orderProgressAdapter = new MaintenanceOrderStatusAdapter(R.layout.item_maintenance_progress, mDataList);
         mRecyclerView.setAdapter(orderProgressAdapter);
     }
 
