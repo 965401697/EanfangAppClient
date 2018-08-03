@@ -58,6 +58,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
         initData();
         initListener();
     }
+
     private void initView() {
         setLeftBack();
         setTitle("故障库");
@@ -99,17 +100,25 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     }
 
     private void initListener() {
-        rvFaultList.addOnItemTouchListener(new OnItemClickListener() {
+
+        faultLibraryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra("faultDes", mFaultListBeanList.get(position).getDescription());
-                intent.putExtra("faultImgs", mFaultListBeanList.get(position).getPictures());
-                intent.putExtra("datasId", mFaultListBeanList.get(position).getId());
+                intent.putExtra("faultDes", ((FaultListBean.ListBean) adapter.getData().get(position)).getDescription());
+                intent.putExtra("faultImgs", ((FaultListBean.ListBean) adapter.getData().get(position)).getPictures());
+                intent.putExtra("datasId", ((FaultListBean.ListBean) adapter.getData().get(position)).getId());
                 setResult(RESULT_DATACODE, intent);
                 finishSelf();
             }
         });
+
+//        rvFaultList.addOnItemTouchListener(new OnItemClickListener() {
+//            @Override
+//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//
+//            }
+//        });
     }
 
     @Override

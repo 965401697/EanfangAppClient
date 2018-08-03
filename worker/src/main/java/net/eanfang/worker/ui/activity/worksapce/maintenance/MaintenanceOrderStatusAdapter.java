@@ -71,7 +71,7 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
                 helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 3:
-                helper.setText(R.id.tv_progress, "维修中");
+                helper.setText(R.id.tv_progress, "维保中");
                 helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 4:
@@ -87,9 +87,6 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
             case 6:
                 helper.setText(R.id.tv_progress, "订单已取消");
                 helper.setText(R.id.tv_progressTime, tempText);
-                break;
-
-            default:
                 break;
         }
     }

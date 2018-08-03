@@ -98,7 +98,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dimen_40"
             android:gravity="center"
-            android:text="报修时间"
+            android:text="维保时间"
             android:textColor="@color/color_camera_input_radiobutton_stoke"
             android:textSize="@dimen/textSize_15" />
     </LinearLayout>
