@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.camera.CameraApplication;
-import com.eanfang.R;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.util.BarUtil.BarUtils;

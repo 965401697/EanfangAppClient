@@ -291,7 +291,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -306,7 +307,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_one"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -318,7 +319,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -333,7 +335,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_two"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -345,7 +347,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -360,7 +363,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_three"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -372,7 +375,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -387,7 +391,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_four"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -399,7 +403,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -414,7 +419,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_five"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -427,7 +432,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -442,7 +448,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_six"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -454,7 +460,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -469,7 +476,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_seven"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -481,7 +488,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -496,7 +504,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_eight"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -508,7 +516,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -523,7 +532,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_nine"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -535,7 +544,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -550,7 +560,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_ten"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"
@@ -562,7 +572,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -577,7 +588,7 @@
                 <TextView
                     android:id="@+id/tv_wrok_talk_eleven"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:padding="@dimen/dimen_30"

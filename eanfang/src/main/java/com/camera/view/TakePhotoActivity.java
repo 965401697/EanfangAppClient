@@ -18,6 +18,7 @@ import com.camera.util.ScreenSizeUtil;
 import com.camera.widget.CameraFocusView;
 import com.camera.widget.CameraSurfaceView;
 import com.eanfang.R;
+import com.eanfang.listener.MultiClickListener;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -77,7 +78,7 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         cameraSwitchBtn.setOnClickListener(v -> changeCamera());
         closeBtn.setOnClickListener(v -> finish());
         cancelBtn.setOnClickListener(v -> rephotograph());
-        takePhotoBtn.setOnClickListener(v -> takePhoto());
+        takePhotoBtn.setOnClickListener(new MultiClickListener(this, this::doTakePhoto, this::takePhoto));
         okBtn.setOnClickListener(v -> savePhoto());
     }
 
@@ -121,11 +122,10 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
     private void savePhoto() {
         mPermissionsModel.checkWriteSDCardPermission(isPermission -> {
             if (isPermission) {
-                Observable.just(photoData)
-                        .map(bytes -> {
-                            String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
-                            return path;
-                        })
+                Observable.just(photoData).map(bytes -> {
+                    String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
+                    return path;
+                })
                         .subscribeOn(Schedulers.io())
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .subscribe(path -> onResult(path));
@@ -168,6 +168,10 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         }
         openFlashImg.setSelected(false);
         cameraSurfaceView.changeCamera(mCameraId);
+    }
+
+    public boolean doTakePhoto() {
+        return true;
     }
 
     public void onResult(String path) {

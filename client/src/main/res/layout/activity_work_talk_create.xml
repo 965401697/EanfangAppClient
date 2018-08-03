@@ -40,8 +40,8 @@
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_13" />
 
-                    <EditText
-                        android:id="@+id/et_company_name"
+                    <TextView
+                        android:id="@+id/tv_company_name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dimen_36"
@@ -49,6 +49,37 @@
                         android:background="@null"
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_talk_object"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="面谈对象"
+                        android:textColor="@color/roll_content"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_talk_object"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:layout_weight="1"
+                        android:textColor="@color/roll_content"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_icon_right" />
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -82,36 +113,6 @@
                         android:src="@mipmap/ic_icon_right" />
                 </LinearLayout>
 
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:id="@+id/ll_talk_object"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="面谈对象"
-                        android:textColor="@color/roll_content"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:id="@+id/tv_talk_object"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:textColor="@color/roll_content"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_icon_right" />
-                </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
 
@@ -195,7 +196,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -207,10 +209,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_one"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -223,7 +225,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -235,10 +238,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_two"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -251,7 +254,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -263,10 +267,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_three"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -279,7 +283,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -291,10 +296,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_four"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -307,7 +312,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -319,10 +325,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_five"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -335,7 +341,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -347,10 +354,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_six"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -363,7 +370,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -375,10 +383,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_seven"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -391,7 +399,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -403,10 +412,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_eight"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -419,7 +428,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -431,10 +441,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_nine"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -447,7 +457,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -459,10 +470,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_ten"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
@@ -475,7 +486,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -487,10 +499,10 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.eanfang.witget.ScrollEditText
+                <EditText
                     android:id="@+id/et_wrok_talk_eleven"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_200"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="start"
                     android:hint="@string/text_work_talk_input"
