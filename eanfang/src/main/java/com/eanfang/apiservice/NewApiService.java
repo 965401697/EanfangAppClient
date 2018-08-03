@@ -473,10 +473,13 @@ public interface NewApiService {
     String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
 
     /**
-     * 面谈员工
+     * 面谈员工列表
      */
     String WORK_TALK = BASE_URL + "/yaf_oa/facetoworker/list";
-
+    /**
+     * 面谈员工添加
+     */
+    String WORK_TALK_ADD = BASE_URL + "/yaf_oa/facetoworker/insert";
     /**
      * 首页统计数据
      */

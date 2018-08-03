@@ -6,6 +6,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by MrHou
  *
@@ -13,7 +18,10 @@ import java.util.List;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginBean implements Serializable {
     /**
      * 权限列表

@@ -1,30 +1,21 @@
 package net.eanfang.client.ui.fragment.worktransfer;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkTalkBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.WorkTalkAdapter;
-import net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;

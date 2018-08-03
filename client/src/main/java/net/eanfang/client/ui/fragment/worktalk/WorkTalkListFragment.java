@@ -11,7 +11,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkTalkBean;
+import com.eanfang.model.WorkTalkListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
@@ -19,8 +19,6 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.WorkTalkAdapter;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
     private int page = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv_worktalk;
-    private List<WorkTalkBean.DataBean.ListBean> workTalkBeanList = new ArrayList<>();
+    private List<WorkTalkListBean.DataBean.ListBean> workTalkBeanList = new ArrayList<>();
     private WorkTalkAdapter workTalkAdapter;
 
     public static WorkTalkListFragment getInstance(String title, int type) {
@@ -76,13 +74,13 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.WORK_TALK)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkTalkBean>(getActivity(), true, WorkTalkBean.class, (bean) -> {
+                .execute(new EanfangCallback<WorkTalkListBean>(getActivity(), true, WorkTalkListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
-//                                workTalkBeanList = bean.getData().getList();
+                                workTalkBeanList = bean.getData().getList();
                                 onDataReceived();
                             });
                         })
@@ -104,7 +102,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         workTalkAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                WorkTalkBean.DataBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
+                WorkTalkListBean.DataBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
                 switch (view.getId()) {
                     // 查看详情
                     case R.id.tv_seedetail:

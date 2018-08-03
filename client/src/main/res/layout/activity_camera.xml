@@ -19,7 +19,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_arrow_back"
+            android:drawableLeft="@drawable/ic_back"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:onClick="backTakePhoto"
@@ -29,9 +29,9 @@
 
         <ImageView
             android:id="@+id/showTakePhotoImg"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <include layout="@layout/header" />
@@ -176,6 +176,7 @@
                         android:id="@+id/color_white"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_15"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:checked="true"
