@@ -29,7 +29,7 @@ public class MaintenanceListActivity extends BaseClientActivity {
     @BindView(R.id.vp)
     ViewPager vp;
 
-    private String[] mTitles = {"待预约", "待上门", "维修中", "待验收", "订单完成"};
+    private String[] mTitles = {"待回电", "待上门", "维修中", "待验收", "订单完成"};
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private MaintenanceListFragment currentFragment;

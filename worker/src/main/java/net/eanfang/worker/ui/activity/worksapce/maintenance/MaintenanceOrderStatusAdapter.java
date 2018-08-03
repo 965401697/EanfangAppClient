@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -31,9 +32,15 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
 
     @Override
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
-        helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
-                .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
-                .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
+//        if (!TextUtils.isEmpty(item.getCreateTime())) {
+//            helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
+//                    .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
+//                    .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
+//        } else {
+//            helper.setText(R.id.tv_time, "")
+//                    .setText(R.id.tv_date, "")
+//                    .setText(R.id.tv_weeks, "");
+//        }
         timelineView = helper.getView(R.id.time_marker);
         mOrderFinish = helper.getView(R.id.ll_orderFinish);
         Drawable marker = mContext.getResources().getDrawable(R.drawable.ic_check_worker);
@@ -51,24 +58,24 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
             tempText = "";
         }
         switch (status) {
-            case 0:
-                helper.setText(R.id.tv_progress, "待支付");
-                helper.setText(R.id.tv_progressTime, tempText);
-                break;
+//            case 0:
+//                helper.setText(R.id.tv_progress, "待预约");
+//                helper.setText(R.id.tv_progressTime, tempText);
+//                break;
             case 1:
                 helper.setText(R.id.tv_progress, "待回电");
                 helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 2:
-                helper.setText(R.id.tv_progress, "待签到");
+                helper.setText(R.id.tv_progress, "待上门");
                 helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 3:
-                helper.setText(R.id.tv_progress, "待完工");
+                helper.setText(R.id.tv_progress, "维修中");
                 helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 4:
-                helper.setText(R.id.tv_progress, "待确认");
+                helper.setText(R.id.tv_progress, "待验收");
                 helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 5:

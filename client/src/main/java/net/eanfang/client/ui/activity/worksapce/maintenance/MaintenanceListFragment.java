@@ -78,11 +78,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         if (mStatus == 1) {
-            queryEntry.getEquals().put("assigneeUserId", String.valueOf(EanfangApplication.getApplication().getUserId()));
+            queryEntry.getEquals().put("ownerUserId", String.valueOf(EanfangApplication.getApplication().getUserId()));
         } else if (mStatus == 2) {
-            queryEntry.getEquals().put("assigneeOrgCode", EanfangApplication.get().getOrgCode());
+            queryEntry.getEquals().put("ownerOrgCode", EanfangApplication.get().getOrgCode());
         } else if (mStatus == 3) {
-            queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+            queryEntry.getEquals().put("ownerCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
         }
 
         int status = GetConstDataUtils.getMaintainStatusList().indexOf(mTitle);
