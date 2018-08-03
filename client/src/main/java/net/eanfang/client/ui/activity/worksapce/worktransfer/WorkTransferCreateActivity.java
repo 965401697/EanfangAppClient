@@ -8,10 +8,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkCreateActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,8 +133,20 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 break;
             // 提交日志
             case R.id.rl_confirm:
+                doSubmit();
                 break;
         }
+    }
+
+    private void doSubmit() {
+//        if (!doCheckInfo())
+//            return;
+//        EanfangHttp.post(NewApiService.WORK_TRANSFER_ADD)
+//                .upJson(object)
+//                .execute(new EanfangCallback<JSONObject>(WorkTalkCreateActivity.this, true, JSONObject.class, (bean) -> {
+//                    showToast("添加完毕");
+//                    finishSelf();
+//                }));
     }
 
     @Override
@@ -157,4 +177,72 @@ public class WorkTransferCreateActivity extends BaseActivity {
             }
         }
     }
+
+//    public boolean doCheckInfo() {
+//        try {
+//            if (StringUtils.isEmpty(mUserId + "")) {
+//                showToast("用户id为空");
+//                return false;
+//            } else {
+//                object.put("owner_user_id", mUserId);
+//            }
+//
+//            if (StringUtils.isEmpty(mCompanyId + "")) {
+//                showToast("公司id为空");
+//                return false;
+//            } else {
+//                object.put("owner_top_company_id", mCompanyId);
+//            }
+//            if (StringUtils.isEmpty(tvTalkObject.getText().toString().trim()) && StringUtils.isEmpty(mTalkId)) {
+//                showToast("请选择面谈对象");
+//                return false;
+//            } else {
+//                object.put("worker_user_id", mTalkId);
+//                object.put("owner_department_id", mTalkId);
+//            }
+//            if (StringUtils.isEmpty(tvReceiverName.getText().toString().trim()) && StringUtils.isEmpty(mReceiverId)) {
+//                showToast("请选择接收人");
+//                return false;
+//            } else {
+//                object.put("assignee_user_id", mReceiverId);
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkOne.getText().toString().trim())) {
+//                object.put("question1", etWrokTalkOne.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkTwo.getText().toString().trim())) {
+//                object.put("question2", etWrokTalkTwo.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkThree.getText().toString().trim())) {
+//                object.put("question3", etWrokTalkThree.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkFour.getText().toString().trim())) {
+//                object.put("question4", etWrokTalkFour.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkFive.getText().toString().trim())) {
+//                object.put("question5", etWrokTalkFive.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkSix.getText().toString().trim())) {
+//                object.put("question6", etWrokTalkSix.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkSeven.getText().toString().trim())) {
+//                object.put("question7", etWrokTalkSeven.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkEight.getText().toString().trim())) {
+//                object.put("question8", etWrokTalkEight.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkNine.getText().toString().trim())) {
+//                object.put("question9", etWrokTalkNine.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkTen.getText().toString().trim())) {
+//                object.put("question10", etWrokTalkTen.getText().toString().trim());
+//            }
+//            if (!StringUtils.isEmpty(etWrokTalkEleven.getText().toString().trim())) {
+//                object.put("question11", etWrokTalkEleven.getText().toString().trim());
+//            }
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return true;
+//    }
 }
