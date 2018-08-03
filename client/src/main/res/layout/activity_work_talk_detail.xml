@@ -80,7 +80,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_22"
                                 android:layout_marginTop="@dimen/dimen_20"
-                                android:text=""
+                                android:text="2018-06"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/textSize_11" />
 
@@ -91,7 +91,7 @@
                                 android:layout_below="@+id/tv_year"
                                 android:layout_marginLeft="@dimen/dimen_22"
                                 android:layout_marginTop="@dimen/dimen_8"
-                                android:text=" "
+                                android:text="02"
                                 android:textSize="@dimen/textSize_11" />
 
                             <TextView
@@ -101,7 +101,7 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="@dimen/dimen_20"
                                 android:layout_marginTop="@dimen/dimen_10"
-                                android:text=" "
+                                android:text="06"
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="@dimen/textSize_30" />
 

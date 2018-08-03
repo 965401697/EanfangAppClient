@@ -4,20 +4,27 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTalkListBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.client.ui.adapter.WorkTalkAdapter;
 
 import java.util.ArrayList;
@@ -39,10 +46,15 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
     private int page = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv_worktalk;
-    private List<WorkTalkListBean.DataBean.ListBean> workTalkBeanList = new ArrayList<>();
+    private TextView tvNoData;
+    private List<WorkTalkListBean.ListBean> workTalkBeanList = new ArrayList<>();
     private WorkTalkAdapter workTalkAdapter;
+    /**
+     * 用户ID
+     */
+    private Long mUserId;
 
-    public static WorkTalkListFragment getInstance(String title, int type) {
+    public static WorkTalkListFragment getInstance(String title, String type) {
         WorkTalkListFragment workTalkListFragment = new WorkTalkListFragment();
         workTalkListFragment.mTitle = title;
         workTalkListFragment.mType = String.valueOf(type);
@@ -61,6 +73,11 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected void initData(Bundle arguments) {
+    }
+
+    @Override
+    protected void onLazyLoad() {
+        super.onLazyLoad();
         getData();
     }
 
@@ -68,10 +85,18 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
      * 获取数据
      */
     public void getData() {
+        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
             String status = GetConstDataUtils.getWorkTalkStatus().indexOf(getmTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
+        }
+        // 我接收的
+        if (mType.equals("我接收的")) {
+            queryEntry.getEquals().put("assigneeUserId ", mUserId + "");
+        } else {
+            // 我创建的
+            queryEntry.getEquals().put("ownerUserId  ", mUserId + "");
         }
         queryEntry.setPage(page);
         queryEntry.setSize(10);
@@ -80,8 +105,16 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<WorkTalkListBean>(getActivity(), true, WorkTalkListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
-                                workTalkBeanList = bean.getData().getList();
-                                onDataReceived();
+                                if (bean.getList() != null) {
+                                    tvNoData.setVisibility(View.GONE);
+                                    rv_worktalk.setVisibility(View.VISIBLE);
+                                    workTalkBeanList = bean.getList();
+                                    onDataReceived();
+                                    swipeRefreshLayout.setRefreshing(false);
+                                } else {
+                                    tvNoData.setVisibility(View.VISIBLE);
+                                    rv_worktalk.setVisibility(View.GONE);
+                                }
                             });
                         })
                 );
@@ -95,22 +128,30 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         workTalkAdapter = new WorkTalkAdapter();
         rv_worktalk.setLayoutManager(new LinearLayoutManager(getContext()));
         workTalkAdapter.bindToRecyclerView(rv_worktalk);
+        tvNoData = findViewById(R.id.tv_no_data);
+        workTalkAdapter.setOnLoadMoreListener(this, rv_worktalk);
     }
 
     @Override
     protected void setListener() {
-        workTalkAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                WorkTalkListBean.DataBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
-                switch (view.getId()) {
-                    // 查看详情
-                    case R.id.tv_seedetail:
-                        break;
-                    //联系汇报人
-                    case R.id.tv_contact:
-                        break;
-                }
+        workTalkAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            WorkTalkListBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
+            switch (view.getId()) {
+                // 查看详情
+                case R.id.tv_seedetail:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
+                    JumpItent.jump(getActivity(), WorkTalkDetailActivity.class, bundle);
+                    break;
+                //联系汇报人
+                case R.id.tv_contact:
+                    // 我接收的 我创建的
+                    if (mType.equals("我接收的")) {
+                        CallUtils.call(getActivity(), workTalkBean.getOwnerUserEntity().getAccountEntity().getMobile());
+                    } else {//我创建的
+                        CallUtils.call(getActivity(), workTalkBean.getAssigneeUserEntity().getAccountEntity().getMobile());
+                    }
+                    break;
             }
         });
     }
@@ -154,6 +195,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
             } else {
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.setNewData(workTalkBeanList);
+                workTalkAdapter.disableLoadMoreIfNotFullPage();
             }
         } else {
             if (workTalkBeanList.size() == 0 || workTalkBeanList == null) {
@@ -164,7 +206,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
             } else {
                 workTalkAdapter.addData(workTalkBeanList);
                 workTalkAdapter.loadMoreComplete();
-                if (workTalkBeanList.size() < 5) {
+                if (workTalkBeanList.size() < 10) {
                     workTalkAdapter.loadMoreEnd();
                 }
             }

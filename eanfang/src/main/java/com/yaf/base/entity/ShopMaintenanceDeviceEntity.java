@@ -90,7 +90,7 @@ public class ShopMaintenanceDeviceEntity implements Serializable {
         return shopMaintenanceOrderId;
     }
 
- 
+
     /**
      * 设置：单位
      */

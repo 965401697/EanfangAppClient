@@ -1,6 +1,7 @@
 package com.eanfang.apiservice;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.util.BarUtil.BaseUtil;
 
 import static com.eanfang.apiservice.BaseService.BASE_URL;
 
@@ -480,6 +481,22 @@ public interface NewApiService {
      * 面谈员工添加
      */
     String WORK_TALK_ADD = BASE_URL + "/yaf_oa/facetoworker/insert";
+    /**
+     * 面谈员工详情
+     */
+    String WORK_TALK_DETAIL = BASE_URL + "/yaf_oa/facetoworker/info/";
+    /**
+     * 交接班创建
+     */
+    String WORK_TRANSFER_ADD = BASE_URL + "/yaf_oa/exchangelog/insert";
+    /**
+     * 交接班列表
+     */
+    String WORK_TRANSFER_LIST = BASE_URL + "/yaf_oa/exchangelog/list";
+    /**
+     * 交接班详情
+     */
+    String WORK_TRANSFER_DETAIL = BASE_URL + "/yaf_oa/exchangelog/info/";
     /**
      * 首页统计数据
      */
