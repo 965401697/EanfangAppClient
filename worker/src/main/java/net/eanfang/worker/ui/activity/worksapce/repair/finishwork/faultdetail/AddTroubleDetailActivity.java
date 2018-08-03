@@ -75,6 +75,11 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
     TextView tvDeviceNo;
     @BindView(R.id.tv_device_location)
     TextView tvDeviceLocation;
+
+    //位置编号
+    @BindView(R.id.tv_location_num)
+    TextView tvLocationNum;
+
     // 故障简述
     @BindView(R.id.et_trouble_sketch)
     EditText etTroubleSketch;
@@ -243,6 +248,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         }
         tvDeviceNo.setText(Optional.ofNullable(failureEntity.getDeviceNo()).orElse(""));
         tvDeviceLocation.setText(Optional.ofNullable(failureEntity.getBugPosition()).orElse(""));
+        tvLocationNum.setText(Optional.ofNullable(failureEntity.getLocationNumber()).orElse(""));
         etTroubleSketch.setText(Optional.ofNullable(failureEntity.getSketch()).orElse(""));
         etTroubleDesc.setText(Optional.ofNullable(failureEntity.getBugDescription()).orElse(""));
 

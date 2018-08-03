@@ -227,6 +227,7 @@ public class MainActivity extends BaseClientActivity {
                         if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
 //                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
                             EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
+                            Config.get().cleanBaseDataBean();
                         }
                     }).start();
                 }));
@@ -250,6 +251,7 @@ public class MainActivity extends BaseClientActivity {
                         if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
 //                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
                             EanfangApplication.get().set(ConstAllBean.class.getName(), jsonObject.toJSONString());
+                            Config.get().cleanConstBean();
                         }
                     }).start();
                 }));
