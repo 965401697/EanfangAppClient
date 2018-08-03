@@ -24,6 +24,7 @@ import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
+import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
@@ -139,7 +140,7 @@ public class WorkspaceFragment extends BaseFragment {
         //维保管控
         findViewById(R.id.tv_work_maintain).setOnClickListener((v) -> {
 //            new MaintainCtrlView(getActivity(), true).show();
-            showToast("暂缓开通");
+            startActivity(new Intent(getActivity(), MaintenanceActivity.class));
         });
 
 

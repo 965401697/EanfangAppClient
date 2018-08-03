@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,19 +29,27 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddCheckBean;
+import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.adapter.AddCheckDetailAdapter;
+import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CheckInfoView;
+import net.eanfang.worker.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,6 +88,10 @@ public class CheckActivity extends BaseWorkerActivity {
     LinearLayout llPhoneNum;
     @BindView(R.id.tv_depend_person)
     TextView tvDependPerson;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
     private static final int REQUEST_ADD_CODE = 1;
 
     private OptionsPickerView pvOptions_NoLink;
@@ -91,6 +104,21 @@ public class CheckActivity extends BaseWorkerActivity {
     private AddCheckDetailAdapter maintenanceDetailAdapter;
     private Long assigneeUserId;
     private String assigneeOrgCode;
+
+
+    private boolean isSend = false;
+    private SendPersonAdapter sendPersonAdapter;
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            ToastUtil.get().showToast(CheckActivity.this, "发送成功");
+            finishSelf();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +138,24 @@ public class CheckActivity extends BaseWorkerActivity {
         });
         //责任人
         llDependPerson.setOnClickListener((v) -> {
+
+            isSend = false;
+
             Intent intent = new Intent(this, SelectOrganizationActivity.class);
             intent.putExtra("isRadio", "isRadio");
             startActivity(intent);
         });
+
+        tvSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isSend = true;
+
+                startActivity(new Intent(CheckActivity.this, SelectIMContactActivity.class).putExtra("flag", 2));
+            }
+        });
+
+
         //提交
         llComit.setOnClickListener((v) -> {
             submit();
@@ -137,6 +179,12 @@ public class CheckActivity extends BaseWorkerActivity {
                 }
             }
         });
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvTeam.setLayoutManager(manager);
+
     }
 
 
@@ -215,18 +263,38 @@ public class CheckActivity extends BaseWorkerActivity {
 
 
         if (presonList.size() > 0) {
-            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 
-            etPhoneNum.setText(bean.getMobile());
-            tvDependPerson.setText(bean.getName());
+            if (isSend) {
 
-            assigneeUserId = Long.parseLong(bean.getUserId());
-            if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
-                assigneeOrgCode = bean.getOrgCode();
+                if (sendPersonAdapter == null) {
+                    sendPersonAdapter = new SendPersonAdapter();
+                    sendPersonAdapter.bindToRecyclerView(rvTeam);
+                }
+
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendPersonAdapter.getData());
+                hashSet.addAll(presonList);
+
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
+                }
+                newPresonList.addAll(hashSet);
+                sendPersonAdapter.setNewData(newPresonList);
+
             } else {
-                assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
-            }
 
+                TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+
+                etPhoneNum.setText(bean.getMobile());
+                tvDependPerson.setText(bean.getName());
+
+                assigneeUserId = Long.parseLong(bean.getUserId());
+                if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                    assigneeOrgCode = bean.getOrgCode();
+                } else {
+                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                }
+            }
         }
     }
 //    private void showDependPerson() {
@@ -252,7 +320,7 @@ public class CheckActivity extends BaseWorkerActivity {
     private void doHttp(String jsonString) {
         EanfangHttp.post(NewApiService.ADD_WORK_CHECK)
                 .upJson(jsonString)
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
                             runOnUiThread(() -> {
                                 Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
                                 Bundle bundle = new Bundle();
@@ -266,7 +334,29 @@ public class CheckActivity extends BaseWorkerActivity {
                                 bundle.putSerializable("message", message);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
-                                finishSelf();
+
+
+                                //分享
+
+                                if (newPresonList.size() > 0) {
+
+                                    Bundle b = new Bundle();
+
+                                    b.putString("id", String.valueOf(bean.getId()));
+                                    b.putString("orderNum", EanfangApplication.get().getUser().getAccount().getRealName());
+                                    if (bean.getWorkInspectDetails() != null && bean.getWorkInspectDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkInspectDetails().get(0).getPictures())) {
+                                        bundle.putString("picUrl", bean.getWorkInspectDetails().get(0).getPictures().split(",")[0]);
+                                    }
+                                    b.putString("creatTime", tvDependPerson.getText().toString().trim());
+                                    b.putString("workerName", tvEndTime.getText().toString().trim());
+                                    b.putString("status", "0");
+                                    b.putString("shareType", "5");
+
+                                    new SendContactUtils(b, handler, newPresonList, DialogUtil.createLoadingDialog(CheckActivity.this)).send();
+
+                                } else {
+                                    finishSelf();
+                                }
                             });
                         })
 //                {

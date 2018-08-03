@@ -63,7 +63,7 @@ public class CustomizeMessage extends MessageContent {
     }
 
 
-    protected CustomizeMessage() {
+    public CustomizeMessage() {
 
     }
 

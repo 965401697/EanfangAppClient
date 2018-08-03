@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,19 +27,27 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddCheckBean;
+import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.adapter.AddCheckDetailAdapter;
+import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.CheckInfoView;
+import net.eanfang.client.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +85,10 @@ public class CheckActivity extends BaseClientActivity {
     LinearLayout llPhoneNum;
     @BindView(R.id.tv_depend_person)
     TextView tvDependPerson;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
 
     private OptionsPickerView pvOptions_NoLink;
     private int posistion;
@@ -88,6 +101,20 @@ public class CheckActivity extends BaseClientActivity {
     private Long assigneeUserId;
     private String assigneeOrgCode;
     private static int CHECK_REQUEST_CODE = 101;
+
+    private boolean isSend = false;
+    private SendPersonAdapter sendPersonAdapter;
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            ToastUtil.get().showToast(CheckActivity.this, "发送成功");
+            finishSelf();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +134,21 @@ public class CheckActivity extends BaseClientActivity {
         });
         //责任人
         llDependPerson.setOnClickListener((v) -> {
+            isSend = false;
             Intent intent = new Intent(this, SelectOrganizationActivity.class);
             intent.putExtra("isRadio", "isRadio");
             startActivity(intent);
         });
+
+        tvSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isSend = true;
+
+                startActivity(new Intent(CheckActivity.this, SelectIMContactActivity.class).putExtra("flag", 2));
+            }
+        });
+
         //提交
         llComit.setOnClickListener((v) -> {
             submit();
@@ -134,6 +172,12 @@ public class CheckActivity extends BaseClientActivity {
                 }
             }
         });
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvTeam.setLayoutManager(manager);
+
     }
 
 
@@ -209,18 +253,37 @@ public class CheckActivity extends BaseClientActivity {
 
 
         if (presonList.size() > 0) {
-            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+            if (isSend) {
 
-            etPhoneNum.setText(bean.getMobile());
-            tvDependPerson.setText(bean.getName());
+                if (sendPersonAdapter == null) {
+                    sendPersonAdapter = new SendPersonAdapter();
+                    sendPersonAdapter.bindToRecyclerView(rvTeam);
+                }
 
-            assigneeUserId = Long.parseLong(bean.getUserId());
-            if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
-                assigneeOrgCode = bean.getOrgCode();
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendPersonAdapter.getData());
+                hashSet.addAll(presonList);
+
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
+                }
+                newPresonList.addAll(hashSet);
+                sendPersonAdapter.setNewData(newPresonList);
+
             } else {
-                assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
-            }
+                TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 
+                etPhoneNum.setText(bean.getMobile());
+                tvDependPerson.setText(bean.getName());
+
+                assigneeUserId = Long.parseLong(bean.getUserId());
+                if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                    assigneeOrgCode = bean.getOrgCode();
+                } else {
+                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                }
+
+            }
         }
     }
 
@@ -245,7 +308,7 @@ public class CheckActivity extends BaseClientActivity {
     private void doHttp(String jsonString) {
         EanfangHttp.post(NewApiService.ADD_WORK_CHECK)
                 .upJson(jsonString)
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
                             runOnUiThread(() -> {
                                 Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
                                 Bundle bundle = new Bundle();
@@ -259,7 +322,29 @@ public class CheckActivity extends BaseClientActivity {
                                 bundle.putSerializable("message", message);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
-                                finishSelf();
+
+
+                                //分享
+
+                                if (newPresonList.size() > 0) {
+
+                                    Bundle b = new Bundle();
+
+                                    b.putString("id", String.valueOf(bean.getId()));
+                                    b.putString("orderNum", EanfangApplication.get().getUser().getAccount().getRealName());
+                                    if (bean.getWorkInspectDetails() != null && bean.getWorkInspectDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkInspectDetails().get(0).getPictures())) {
+                                        bundle.putString("picUrl", bean.getWorkInspectDetails().get(0).getPictures().split(",")[0]);
+                                    }
+                                    b.putString("creatTime", tvDependPerson.getText().toString().trim());
+                                    b.putString("workerName", tvEndTime.getText().toString().trim());
+                                    b.putString("status", "0");
+                                    b.putString("shareType", "5");
+
+                                    new SendContactUtils(b, handler, newPresonList, DialogUtil.createLoadingDialog(CheckActivity.this)).send();
+
+                                } else {
+                                    finishSelf();
+                                }
                             });
                         })
                 );

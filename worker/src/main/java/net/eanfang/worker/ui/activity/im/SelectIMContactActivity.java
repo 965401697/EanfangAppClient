@@ -36,6 +36,7 @@ import com.eanfang.util.compound.CompoundHelper;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -113,6 +114,8 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             //创建群组
             setRightTitle("创建");
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
+        }  else if (mFlag == 2) {//创建是分享
+            setRightTitle("确定");
         } else {
             setRightTitle("发送");
         }
@@ -123,6 +126,13 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             public void onClick(View v) {
                 if (mFlag == 1) {
                     compoundPhoto();
+                } else if (mFlag == 2) {//创建是分享
+                    if (newPresonList.size() > 0) {
+                        EventBus.getDefault().post(newPresonList);
+                        finishSelf();
+                    } else {
+                        ToastUtil.get().showToast(SelectIMContactActivity.this, "请选择要发送的好友后者群组");
+                    }
                 } else {
                     //发送分享的群组
                     handler.post(runnable);//立马发送

@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,22 +27,30 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.model.WorkReportInfoBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.adapter.AddReportDetailAdapter;
+import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CompleteWorkView;
 import net.eanfang.worker.ui.widget.FindTroubleView;
 import net.eanfang.worker.ui.widget.WorkPlanView;
+import net.eanfang.worker.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +95,10 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     TextView etCompanyName;
     @BindView(R.id.et_department_name)
     TextView etDepartmentName;
+    @BindView(R.id.tv_send)
+    TextView tvSend;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
 
     private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
@@ -102,6 +115,22 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     private AddReportDetailAdapter planAdapter;
     private Long assigneeUserId;
     private String assigneeOrgCode;
+
+    private boolean isSend = false;
+    private SendPersonAdapter sendPersonAdapter;
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            super.handleMessage(msg);
+            ToastUtil.get().showToast(ReportActivity.this, "发送成功");
+            finishSelf();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +155,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         llComit.setOnClickListener(this);
         llDependPerson.setOnClickListener(this);
         llReportType.setOnClickListener(this);
+        tvSend.setOnClickListener(this);
 //        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
 
         addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, beanList);
@@ -136,7 +166,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         addReportDetialAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if(view.getId()==R.id.tv_delete){
+                if (view.getId() == R.id.tv_delete) {
                     addReportDetialAdapter.remove(position);
                 }
             }
@@ -150,7 +180,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         findAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if(view.getId()==R.id.tv_delete){
+                if (view.getId() == R.id.tv_delete) {
                     findAdapter.remove(position);
                 }
             }
@@ -165,11 +195,18 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         planAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if(view.getId()==R.id.tv_delete){
+                if (view.getId() == R.id.tv_delete) {
                     planAdapter.remove(position);
                 }
             }
         });
+
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvTeam.setLayoutManager(manager);
+
 
         getData();
     }
@@ -191,9 +228,18 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 startActivityForResult(intent, 3);
                 break;
             case R.id.ll_depend_person://联系人
-                Intent in= new Intent(this, SelectOrganizationActivity.class);
+
+                isSend = false;
+                Intent in = new Intent(this, SelectOrganizationActivity.class);
                 in.putExtra("isRadio", "isRadio");
                 startActivity(in);
+                break;
+
+            case R.id.tv_send://选择人员
+
+                isSend = true;
+
+                startActivity(new Intent(ReportActivity.this, SelectIMContactActivity.class).putExtra("flag", 2));
                 break;
             case R.id.ll_report_type://类型
                 PickerSelectUtil.singleTextPicker(this, "", etTaskName, GetConstDataUtils.getWorkReportTypeList());
@@ -232,7 +278,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     private void doHttp(String jsonString) {
         EanfangHttp.post(NewApiService.ADD_WORK_REPORT)
                 .upJson(jsonString)
-                .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<WorkReportInfoBean>(this, true, WorkReportInfoBean.class, (bean) -> {
                     runOnUiThread(() -> {
                         Intent intent = new Intent(ReportActivity.this, StateChangeActivity.class);
                         Bundle bundle = new Bundle();
@@ -246,7 +292,30 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                         bundle.putSerializable("message", message);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        finishSelf();
+
+
+                        //分享
+
+                        if (newPresonList.size() > 0) {
+
+                            Bundle b = new Bundle();
+
+                            b.putString("id", String.valueOf(bean.getId()));
+                            b.putString("orderNum", etDepartmentName.getText().toString().trim());
+                            if (bean.getWorkReportDetails() != null && bean.getWorkReportDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkReportDetails().get(0).getPictures())) {
+                                bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
+                            }
+                            b.putString("creatTime", String.valueOf(GetConstDataUtils.getWorkReportTypeList().indexOf(etTaskName.getText().toString().trim())));
+                            b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                            b.putString("status", "0");
+                            b.putString("shareType", "3");
+
+                            new SendContactUtils(b, handler, newPresonList, DialogUtil.createLoadingDialog(ReportActivity.this)).send();
+
+                        } else {
+                            finishSelf();
+                        }
+
                     });
                 }));
 
@@ -275,18 +344,39 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
 
 
         if (presonList.size() > 0) {
-            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 
-            etPhoneNum.setText(bean.getMobile());
-            tvDependPerson.setText(bean.getName());
 
-            assigneeUserId = Long.parseLong(bean.getUserId());
-            if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
-                assigneeOrgCode = bean.getOrgCode();
+            if (isSend) {
+
+                if (sendPersonAdapter == null) {
+                    sendPersonAdapter = new SendPersonAdapter();
+                    sendPersonAdapter.bindToRecyclerView(rvTeam);
+                }
+
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendPersonAdapter.getData());
+                hashSet.addAll(presonList);
+
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
+                }
+                newPresonList.addAll(hashSet);
+                sendPersonAdapter.setNewData(newPresonList);
+
             } else {
-                assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
-            }
 
+                TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+
+                etPhoneNum.setText(bean.getMobile());
+                tvDependPerson.setText(bean.getName());
+
+                assigneeUserId = Long.parseLong(bean.getUserId());
+                if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                    assigneeOrgCode = bean.getOrgCode();
+                } else {
+                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                }
+            }
         }
     }
 //    private void showDependPerson() {
