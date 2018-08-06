@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18072701
-        versionName "2.3.13"
+        versionCode 18080301
+        versionName "2.3.14"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -30,8 +30,8 @@ android {
         buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
         buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
-        buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
-        buildConfigField("String", "API_HOST", "\"http://192.168.0.30:8080\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.30:8080\"")
 
     }
 
