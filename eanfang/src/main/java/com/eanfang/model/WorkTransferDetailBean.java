@@ -12,20 +12,52 @@ import java.util.List;
 public class WorkTransferDetailBean implements Serializable {
 
 
+    private String assigneeCompanyId;
+    private String assigneeOrgCode;
+    private String assigneeTopCompanyId;
     private AssigneeUserEntityBean assigneeUserEntity;
     private String assigneeUserId;
-    private CompanyEntityBeanX companyEntity;
     private String createTime;
-    private DepartmentEntityBeanX departmentEntity;
     private String id;
     private String orderNum;
+    private OwnerCompanyEntityBean ownerCompanyEntity;
     private String ownerCompanyId;
-    private String ownerDepartmentId;
+    private OwnerDepartmentEntityBean ownerDepartmentEntity;
+    private String ownerOrgCode;
+    private String ownerTopCompanyId;
     private OwnerUserEntityBean ownerUserEntity;
     private String ownerUserId;
     private int status;
     private int workClasses;
-    private List<InfoEntityListBean> infoEntityList;
+    private List<ChangeGoodEntityListBean> changeGoodEntityList;
+    private List<FinishWorkEntityListBean> finishWorkEntityList;
+    private List<FollowUpEntityListBean> followUpEntityList;
+    private List<NotDidEntityListBean> notDidEntityList;
+    private List<NoticeEntityListBean> noticeEntityList;
+
+    public String getAssigneeCompanyId() {
+        return assigneeCompanyId;
+    }
+
+    public void setAssigneeCompanyId(String assigneeCompanyId) {
+        this.assigneeCompanyId = assigneeCompanyId;
+    }
+
+    public String getAssigneeOrgCode() {
+        return assigneeOrgCode;
+    }
+
+    public void setAssigneeOrgCode(String assigneeOrgCode) {
+        this.assigneeOrgCode = assigneeOrgCode;
+    }
+
+    public String getAssigneeTopCompanyId() {
+        return assigneeTopCompanyId;
+    }
+
+    public void setAssigneeTopCompanyId(String assigneeTopCompanyId) {
+        this.assigneeTopCompanyId = assigneeTopCompanyId;
+    }
 
     public AssigneeUserEntityBean getAssigneeUserEntity() {
         return assigneeUserEntity;
@@ -43,28 +75,12 @@ public class WorkTransferDetailBean implements Serializable {
         this.assigneeUserId = assigneeUserId;
     }
 
-    public CompanyEntityBeanX getCompanyEntity() {
-        return companyEntity;
-    }
-
-    public void setCompanyEntity(CompanyEntityBeanX companyEntity) {
-        this.companyEntity = companyEntity;
-    }
-
     public String getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public DepartmentEntityBeanX getDepartmentEntity() {
-        return departmentEntity;
-    }
-
-    public void setDepartmentEntity(DepartmentEntityBeanX departmentEntity) {
-        this.departmentEntity = departmentEntity;
     }
 
     public String getId() {
@@ -83,6 +99,14 @@ public class WorkTransferDetailBean implements Serializable {
         this.orderNum = orderNum;
     }
 
+    public OwnerCompanyEntityBean getOwnerCompanyEntity() {
+        return ownerCompanyEntity;
+    }
+
+    public void setOwnerCompanyEntity(OwnerCompanyEntityBean ownerCompanyEntity) {
+        this.ownerCompanyEntity = ownerCompanyEntity;
+    }
+
     public String getOwnerCompanyId() {
         return ownerCompanyId;
     }
@@ -91,12 +115,28 @@ public class WorkTransferDetailBean implements Serializable {
         this.ownerCompanyId = ownerCompanyId;
     }
 
-    public String getOwnerDepartmentId() {
-        return ownerDepartmentId;
+    public OwnerDepartmentEntityBean getOwnerDepartmentEntity() {
+        return ownerDepartmentEntity;
     }
 
-    public void setOwnerDepartmentId(String ownerDepartmentId) {
-        this.ownerDepartmentId = ownerDepartmentId;
+    public void setOwnerDepartmentEntity(OwnerDepartmentEntityBean ownerDepartmentEntity) {
+        this.ownerDepartmentEntity = ownerDepartmentEntity;
+    }
+
+    public String getOwnerOrgCode() {
+        return ownerOrgCode;
+    }
+
+    public void setOwnerOrgCode(String ownerOrgCode) {
+        this.ownerOrgCode = ownerOrgCode;
+    }
+
+    public String getOwnerTopCompanyId() {
+        return ownerTopCompanyId;
+    }
+
+    public void setOwnerTopCompanyId(String ownerTopCompanyId) {
+        this.ownerTopCompanyId = ownerTopCompanyId;
     }
 
     public OwnerUserEntityBean getOwnerUserEntity() {
@@ -131,31 +171,63 @@ public class WorkTransferDetailBean implements Serializable {
         this.workClasses = workClasses;
     }
 
-    public List<InfoEntityListBean> getInfoEntityList() {
-        return infoEntityList;
+    public List<ChangeGoodEntityListBean> getChangeGoodEntityList() {
+        return changeGoodEntityList;
     }
 
-    public void setInfoEntityList(List<InfoEntityListBean> infoEntityList) {
-        this.infoEntityList = infoEntityList;
+    public void setChangeGoodEntityList(List<ChangeGoodEntityListBean> changeGoodEntityList) {
+        this.changeGoodEntityList = changeGoodEntityList;
+    }
+
+    public List<FinishWorkEntityListBean> getFinishWorkEntityList() {
+        return finishWorkEntityList;
+    }
+
+    public void setFinishWorkEntityList(List<FinishWorkEntityListBean> finishWorkEntityList) {
+        this.finishWorkEntityList = finishWorkEntityList;
+    }
+
+    public List<FollowUpEntityListBean> getFollowUpEntityList() {
+        return followUpEntityList;
+    }
+
+    public void setFollowUpEntityList(List<FollowUpEntityListBean> followUpEntityList) {
+        this.followUpEntityList = followUpEntityList;
+    }
+
+    public List<NotDidEntityListBean> getNotDidEntityList() {
+        return notDidEntityList;
+    }
+
+    public void setNotDidEntityList(List<NotDidEntityListBean> notDidEntityList) {
+        this.notDidEntityList = notDidEntityList;
+    }
+
+    public List<NoticeEntityListBean> getNoticeEntityList() {
+        return noticeEntityList;
+    }
+
+    public void setNoticeEntityList(List<NoticeEntityListBean> noticeEntityList) {
+        this.noticeEntityList = noticeEntityList;
     }
 
     public static class AssigneeUserEntityBean {
         /**
-         * accId : 984353134128418818
-         * accountEntity : {"accId":"984353134128418818","accType":0,"address":"北京农商银行24小时自助银行(定福家园分理处)","areaCode":"3.11.1.5","avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"","gender":1,"idCard":"410926199005104491","mobile":"18611154430","nickName":"啊武30","qrCode":"3b523fe5a1be4c4b8124b6862d44bc36.png","realName":"义乌","regTime":"2018-04-12 16:50:50","status":0}
+         * accId : 979177961461190657
+         * accountEntity : {"accId":"979177961461190657","accType":3,"address":"首开东都汇(五里桥一街)","areaCode":"3.11.1.5","avatar":"2cea9218e3a0494c9db30f981e0e7345.png","email":"","gender":1,"idCard":"140311198806215047","mobile":"17600738557","nickName":"管罗苍啊","qrCode":"61a363e82e7148ffa6795dfe3693fe4a.png","realName":"管罗苍","regTime":"2018-03-29 10:06:33","status":0}
          * companyAdmin : false
-         * companyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","verifyStatus":0}
-         * companyId : 1005473308202094594
-         * departmentEntity : {"companyId":"1005473308202094594","countStaff":0,"level":2,"orgCode":"c.2","orgId":"1005473367119482882","orgName":"一组","orgType":2,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595"}
-         * departmentId : 1005473367119482882
+         * companyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-06-29 14:10:08","updateUser":"958589807934590979","verifyStatus":0}
+         * companyId : 958589807934590978
+         * departmentEntity : {"companyId":"958589807934590978","countStaff":0,"level":2,"orgCode":"c.2","orgId":"973097885401395202","orgName":"防损部","orgType":2,"topCompanyId":"958589807934590978","updateTime":"2018-06-29 14:10:08","updateUser":"958589807934590979"}
+         * departmentId : 973097885401395202
          * status : 0
          * superAdmin : false
          * sysAdmin : false
-         * topCompanyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","verifyStatus":0}
-         * topCompanyId : 1005473308202094594
-         * updateTime : 2018-06-15 15:37:04
-         * updateUser : 1005473308202094595
-         * userId : 1007527392761348098
+         * topCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-06-29 14:10:08","updateUser":"958589807934590979","verifyStatus":0}
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-06-29 14:10:08
+         * updateUser : 958589807934590979
+         * userId : 1012578947227197442
          * userType : 6
          */
 
@@ -306,19 +378,19 @@ public class WorkTransferDetailBean implements Serializable {
 
         public static class AccountEntityBean {
             /**
-             * accId : 984353134128418818
-             * accType : 0
-             * address : 北京农商银行24小时自助银行(定福家园分理处)
+             * accId : 979177961461190657
+             * accType : 3
+             * address : 首开东都汇(五里桥一街)
              * areaCode : 3.11.1.5
-             * avatar : ecbd2972163f425bacfbfed943e71553.png
+             * avatar : 2cea9218e3a0494c9db30f981e0e7345.png
              * email :
              * gender : 1
-             * idCard : 410926199005104491
-             * mobile : 18611154430
-             * nickName : 啊武30
-             * qrCode : 3b523fe5a1be4c4b8124b6862d44bc36.png
-             * realName : 义乌
-             * regTime : 2018-04-12 16:50:50
+             * idCard : 140311198806215047
+             * mobile : 17600738557
+             * nickName : 管罗苍啊
+             * qrCode : 61a363e82e7148ffa6795dfe3693fe4a.png
+             * realName : 管罗苍
+             * regTime : 2018-03-29 10:06:33
              * status : 0
              */
 
@@ -452,16 +524,16 @@ public class WorkTransferDetailBean implements Serializable {
 
         public static class CompanyEntityBean {
             /**
-             * companyId : 1005473308202094594
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 1005473308202094594
-             * orgName : 四组
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 1005473308202094594
-             * updateTime : 2018-06-15 15:37:04
-             * updateUser : 1005473308202094595
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-06-29 14:10:08
+             * updateUser : 958589807934590979
              * verifyStatus : 0
              */
 
@@ -568,16 +640,16 @@ public class WorkTransferDetailBean implements Serializable {
 
         public static class DepartmentEntityBean {
             /**
-             * companyId : 1005473308202094594
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 2
              * orgCode : c.2
-             * orgId : 1005473367119482882
-             * orgName : 一组
+             * orgId : 973097885401395202
+             * orgName : 防损部
              * orgType : 2
-             * topCompanyId : 1005473308202094594
-             * updateTime : 2018-06-15 15:37:04
-             * updateUser : 1005473308202094595
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-06-29 14:10:08
+             * updateUser : 958589807934590979
              */
 
             private String companyId;
@@ -674,16 +746,16 @@ public class WorkTransferDetailBean implements Serializable {
 
         public static class TopCompanyEntityBean {
             /**
-             * companyId : 1005473308202094594
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 1005473308202094594
-             * orgName : 四组
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 1005473308202094594
-             * updateTime : 2018-06-15 15:37:04
-             * updateUser : 1005473308202094595
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-06-29 14:10:08
+             * updateUser : 958589807934590979
              * verifyStatus : 0
              */
 
@@ -789,22 +861,22 @@ public class WorkTransferDetailBean implements Serializable {
         }
     }
 
-    public static class CompanyEntityBeanX {
+    public static class OwnerCompanyEntityBean {
         /**
-         * adminUserId : 1005473308202094595
-         * companyId : 1005473308202094594
+         * adminUserId : 958589807934590979
+         * companyId : 958589807934590978
          * countStaff : 0
          * level : 1
          * orgCode : c
-         * orgId : 1005473308202094594
-         * orgName : 四组
+         * orgId : 958589807934590978
+         * orgName : 褡裢坡烟酒连锁
          * orgType : 0
-         * orgUnitEntity : {"accId":"958589123373846529","adminUserId":"1005473308202094595","createTime":"2018-06-09 23:34:52","logoPic":"ecbd2972163f425bacfbfed943e71553.png","name":"四组","orgId":"1005473308202094594","status":0,"unitType":2,"updateTime":"2018-06-09 23:34:52"}
+         * orgUnitEntity : {"accId":"958589123373846529","adminUserId":"958589807934590979","areaCode":"3.11.1.1","createTime":"2018-02-06 14:57:00","defaultAddress":"朝阳北路青年路大悦城3层超市","defaultLat":"39.929287","defaultLon":"116.576013","defaultPlaceCode":"3.11.1.5","legalName":"","licenseCode":"911625884574135","logoPic":"ecbd2972163f425bacfbfed943e71553.png","name":"褡裢坡烟酒连锁","officeAddress":"定福家园","orgId":"958589807934590978","registerAssets":"500","scale":1,"status":0,"telPhone":"010-65535","tradeTypeCode":"4.5.3","unitType":2,"verifyTime":"2018-02-06 15:38:35","verifyUserName":"平台管理"}
          * parentOrgId : 0
          * sortNum : 0
-         * topCompanyId : 1005473308202094594
-         * updateTime : 2018-06-09 23:34:52
-         * updateUser : 1005473308202094595
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-01-31 14:36:35
+         * updateUser : 958589807934590979
          * verifyStatus : 0
          */
 
@@ -947,25 +1019,51 @@ public class WorkTransferDetailBean implements Serializable {
         public static class OrgUnitEntityBean {
             /**
              * accId : 958589123373846529
-             * adminUserId : 1005473308202094595
-             * createTime : 2018-06-09 23:34:52
+             * adminUserId : 958589807934590979
+             * areaCode : 3.11.1.1
+             * createTime : 2018-02-06 14:57:00
+             * defaultAddress : 朝阳北路青年路大悦城3层超市
+             * defaultLat : 39.929287
+             * defaultLon : 116.576013
+             * defaultPlaceCode : 3.11.1.5
+             * legalName :
+             * licenseCode : 911625884574135
              * logoPic : ecbd2972163f425bacfbfed943e71553.png
-             * name : 四组
-             * orgId : 1005473308202094594
+             * name : 褡裢坡烟酒连锁
+             * officeAddress : 定福家园
+             * orgId : 958589807934590978
+             * registerAssets : 500
+             * scale : 1
              * status : 0
+             * telPhone : 010-65535
+             * tradeTypeCode : 4.5.3
              * unitType : 2
-             * updateTime : 2018-06-09 23:34:52
+             * verifyTime : 2018-02-06 15:38:35
+             * verifyUserName : 平台管理
              */
 
             private String accId;
             private String adminUserId;
+            private String areaCode;
             private String createTime;
+            private String defaultAddress;
+            private String defaultLat;
+            private String defaultLon;
+            private String defaultPlaceCode;
+            private String legalName;
+            private String licenseCode;
             private String logoPic;
             private String name;
+            private String officeAddress;
             private String orgId;
+            private String registerAssets;
+            private int scale;
             private int status;
+            private String telPhone;
+            private String tradeTypeCode;
             private int unitType;
-            private String updateTime;
+            private String verifyTime;
+            private String verifyUserName;
 
             public String getAccId() {
                 return accId;
@@ -983,12 +1081,68 @@ public class WorkTransferDetailBean implements Serializable {
                 this.adminUserId = adminUserId;
             }
 
+            public String getAreaCode() {
+                return areaCode;
+            }
+
+            public void setAreaCode(String areaCode) {
+                this.areaCode = areaCode;
+            }
+
             public String getCreateTime() {
                 return createTime;
             }
 
             public void setCreateTime(String createTime) {
                 this.createTime = createTime;
+            }
+
+            public String getDefaultAddress() {
+                return defaultAddress;
+            }
+
+            public void setDefaultAddress(String defaultAddress) {
+                this.defaultAddress = defaultAddress;
+            }
+
+            public String getDefaultLat() {
+                return defaultLat;
+            }
+
+            public void setDefaultLat(String defaultLat) {
+                this.defaultLat = defaultLat;
+            }
+
+            public String getDefaultLon() {
+                return defaultLon;
+            }
+
+            public void setDefaultLon(String defaultLon) {
+                this.defaultLon = defaultLon;
+            }
+
+            public String getDefaultPlaceCode() {
+                return defaultPlaceCode;
+            }
+
+            public void setDefaultPlaceCode(String defaultPlaceCode) {
+                this.defaultPlaceCode = defaultPlaceCode;
+            }
+
+            public String getLegalName() {
+                return legalName;
+            }
+
+            public void setLegalName(String legalName) {
+                this.legalName = legalName;
+            }
+
+            public String getLicenseCode() {
+                return licenseCode;
+            }
+
+            public void setLicenseCode(String licenseCode) {
+                this.licenseCode = licenseCode;
             }
 
             public String getLogoPic() {
@@ -1007,12 +1161,36 @@ public class WorkTransferDetailBean implements Serializable {
                 this.name = name;
             }
 
+            public String getOfficeAddress() {
+                return officeAddress;
+            }
+
+            public void setOfficeAddress(String officeAddress) {
+                this.officeAddress = officeAddress;
+            }
+
             public String getOrgId() {
                 return orgId;
             }
 
             public void setOrgId(String orgId) {
                 this.orgId = orgId;
+            }
+
+            public String getRegisterAssets() {
+                return registerAssets;
+            }
+
+            public void setRegisterAssets(String registerAssets) {
+                this.registerAssets = registerAssets;
+            }
+
+            public int getScale() {
+                return scale;
+            }
+
+            public void setScale(int scale) {
+                this.scale = scale;
             }
 
             public int getStatus() {
@@ -1023,6 +1201,22 @@ public class WorkTransferDetailBean implements Serializable {
                 this.status = status;
             }
 
+            public String getTelPhone() {
+                return telPhone;
+            }
+
+            public void setTelPhone(String telPhone) {
+                this.telPhone = telPhone;
+            }
+
+            public String getTradeTypeCode() {
+                return tradeTypeCode;
+            }
+
+            public void setTradeTypeCode(String tradeTypeCode) {
+                this.tradeTypeCode = tradeTypeCode;
+            }
+
             public int getUnitType() {
                 return unitType;
             }
@@ -1031,33 +1225,43 @@ public class WorkTransferDetailBean implements Serializable {
                 this.unitType = unitType;
             }
 
-            public String getUpdateTime() {
-                return updateTime;
+            public String getVerifyTime() {
+                return verifyTime;
             }
 
-            public void setUpdateTime(String updateTime) {
-                this.updateTime = updateTime;
+            public void setVerifyTime(String verifyTime) {
+                this.verifyTime = verifyTime;
+            }
+
+            public String getVerifyUserName() {
+                return verifyUserName;
+            }
+
+            public void setVerifyUserName(String verifyUserName) {
+                this.verifyUserName = verifyUserName;
             }
         }
     }
 
-    public static class DepartmentEntityBeanX {
+    public static class OwnerDepartmentEntityBean {
         /**
-         * companyId : 1005473308202094594
+         * adminUserId : 958589807934590979
+         * companyId : 958589807934590978
          * countStaff : 0
-         * level : 2
-         * orgCode : c.2
-         * orgId : 1005473367119482882
-         * orgName : 一组
-         * orgType : 2
-         * parentOrgId : 1005473308202094594
+         * level : 1
+         * orgCode : c
+         * orgId : 958589807934590978
+         * orgName : 褡裢坡烟酒连锁
+         * orgType : 0
+         * parentOrgId : 0
          * sortNum : 0
-         * topCompanyId : 1005473308202094594
-         * updateTime : 2018-06-09 23:35:06
-         * updateUser : 1005473308202094595
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-01-31 14:36:35
+         * updateUser : 958589807934590979
          * verifyStatus : 0
          */
 
+        private String adminUserId;
         private String companyId;
         private int countStaff;
         private int level;
@@ -1065,12 +1269,20 @@ public class WorkTransferDetailBean implements Serializable {
         private String orgId;
         private String orgName;
         private int orgType;
-        private String parentOrgId;
+        private int parentOrgId;
         private int sortNum;
         private String topCompanyId;
         private String updateTime;
         private String updateUser;
         private int verifyStatus;
+
+        public String getAdminUserId() {
+            return adminUserId;
+        }
+
+        public void setAdminUserId(String adminUserId) {
+            this.adminUserId = adminUserId;
+        }
 
         public String getCompanyId() {
             return companyId;
@@ -1128,11 +1340,11 @@ public class WorkTransferDetailBean implements Serializable {
             this.orgType = orgType;
         }
 
-        public String getParentOrgId() {
+        public int getParentOrgId() {
             return parentOrgId;
         }
 
-        public void setParentOrgId(String parentOrgId) {
+        public void setParentOrgId(int parentOrgId) {
             this.parentOrgId = parentOrgId;
         }
 
@@ -1179,30 +1391,30 @@ public class WorkTransferDetailBean implements Serializable {
 
     public static class OwnerUserEntityBean {
         /**
-         * accId : 958589123373846529
-         * accountEntity : {"accId":"958589123373846529","accType":3,"address":"幻眼国际(朝阳北路与高安屯路交叉口东150米)","areaCode":"","avatar":"2c00d1b320d74bdaa66d7773c056989b.png","birthday":"2014-06-03 00:00:00","email":"101@qq.com","gender":1,"idCard":"110101200001015778","mobile":"13800138010","nickName":"烟酒梁还不知","qrCode":"b4e6ecd7946c432085b63ccef5bb75d9.png","realName":"烟酒梁","regTime":"2018-01-31 14:33:51","status":0}
-         * companyAdmin : true
-         * companyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"verifyStatus":0}
-         * companyId : 1005473308202094594
-         * departmentEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0}
-         * departmentId : 1005473308202094594
+         * accId : 980695065603649538
+         * accountEntity : {"accId":"980695065603649538","accType":0,"avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"15940525877@163.com","mobile":"15900000005","nickName":"李旭","qrCode":"4e70fea2a725445a85433ef94eff56c2.png","realName":"李旭","regTime":"2018-04-02 14:34:59","status":0}
+         * companyAdmin : false
+         * companyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-04-02 14:34:59","updateUser":"978946335464579075","verifyStatus":0}
+         * companyId : 958589807934590978
+         * departmentEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-04-02 14:34:59","updateUser":"978946335464579075"}
+         * departmentId : 958589807934590978
          * status : 0
          * superAdmin : false
          * sysAdmin : false
-         * topCompanyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"verifyStatus":0}
-         * topCompanyId : 1005473308202094594
-         * updateTime : 2018-06-09 23:34:52
-         * updateUser : 0
-         * userId : 1005473308202094595
-         * userType : 3
+         * topCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-04-02 14:34:59","updateUser":"978946335464579075","verifyStatus":0}
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-04-02 14:34:59
+         * updateUser : 978946335464579075
+         * userId : 980695066010497026
+         * userType : 6
          */
 
         private String accId;
         private AccountEntityBeanX accountEntity;
         private boolean companyAdmin;
-        private CompanyEntityBeanXX companyEntity;
+        private CompanyEntityBeanX companyEntity;
         private String companyId;
-        private DepartmentEntityBeanXX departmentEntity;
+        private DepartmentEntityBeanX departmentEntity;
         private String departmentId;
         private int status;
         private boolean superAdmin;
@@ -1210,7 +1422,7 @@ public class WorkTransferDetailBean implements Serializable {
         private TopCompanyEntityBeanX topCompanyEntity;
         private String topCompanyId;
         private String updateTime;
-        private int updateUser;
+        private String updateUser;
         private String userId;
         private int userType;
 
@@ -1238,11 +1450,11 @@ public class WorkTransferDetailBean implements Serializable {
             this.companyAdmin = companyAdmin;
         }
 
-        public CompanyEntityBeanXX getCompanyEntity() {
+        public CompanyEntityBeanX getCompanyEntity() {
             return companyEntity;
         }
 
-        public void setCompanyEntity(CompanyEntityBeanXX companyEntity) {
+        public void setCompanyEntity(CompanyEntityBeanX companyEntity) {
             this.companyEntity = companyEntity;
         }
 
@@ -1254,11 +1466,11 @@ public class WorkTransferDetailBean implements Serializable {
             this.companyId = companyId;
         }
 
-        public DepartmentEntityBeanXX getDepartmentEntity() {
+        public DepartmentEntityBeanX getDepartmentEntity() {
             return departmentEntity;
         }
 
-        public void setDepartmentEntity(DepartmentEntityBeanXX departmentEntity) {
+        public void setDepartmentEntity(DepartmentEntityBeanX departmentEntity) {
             this.departmentEntity = departmentEntity;
         }
 
@@ -1318,11 +1530,11 @@ public class WorkTransferDetailBean implements Serializable {
             this.updateTime = updateTime;
         }
 
-        public int getUpdateUser() {
+        public String getUpdateUser() {
             return updateUser;
         }
 
-        public void setUpdateUser(int updateUser) {
+        public void setUpdateUser(String updateUser) {
             this.updateUser = updateUser;
         }
 
@@ -1344,32 +1556,22 @@ public class WorkTransferDetailBean implements Serializable {
 
         public static class AccountEntityBeanX {
             /**
-             * accId : 958589123373846529
-             * accType : 3
-             * address : 幻眼国际(朝阳北路与高安屯路交叉口东150米)
-             * areaCode :
-             * avatar : 2c00d1b320d74bdaa66d7773c056989b.png
-             * birthday : 2014-06-03 00:00:00
-             * email : 101@qq.com
-             * gender : 1
-             * idCard : 110101200001015778
-             * mobile : 13800138010
-             * nickName : 烟酒梁还不知
-             * qrCode : b4e6ecd7946c432085b63ccef5bb75d9.png
-             * realName : 烟酒梁
-             * regTime : 2018-01-31 14:33:51
+             * accId : 980695065603649538
+             * accType : 0
+             * avatar : ecbd2972163f425bacfbfed943e71553.png
+             * email : 15940525877@163.com
+             * mobile : 15900000005
+             * nickName : 李旭
+             * qrCode : 4e70fea2a725445a85433ef94eff56c2.png
+             * realName : 李旭
+             * regTime : 2018-04-02 14:34:59
              * status : 0
              */
 
             private String accId;
             private int accType;
-            private String address;
-            private String areaCode;
             private String avatar;
-            private String birthday;
             private String email;
-            private int gender;
-            private String idCard;
             private String mobile;
             private String nickName;
             private String qrCode;
@@ -1393,22 +1595,6 @@ public class WorkTransferDetailBean implements Serializable {
                 this.accType = accType;
             }
 
-            public String getAddress() {
-                return address;
-            }
-
-            public void setAddress(String address) {
-                this.address = address;
-            }
-
-            public String getAreaCode() {
-                return areaCode;
-            }
-
-            public void setAreaCode(String areaCode) {
-                this.areaCode = areaCode;
-            }
-
             public String getAvatar() {
                 return avatar;
             }
@@ -1417,36 +1603,12 @@ public class WorkTransferDetailBean implements Serializable {
                 this.avatar = avatar;
             }
 
-            public String getBirthday() {
-                return birthday;
-            }
-
-            public void setBirthday(String birthday) {
-                this.birthday = birthday;
-            }
-
             public String getEmail() {
                 return email;
             }
 
             public void setEmail(String email) {
                 this.email = email;
-            }
-
-            public int getGender() {
-                return gender;
-            }
-
-            public void setGender(int gender) {
-                this.gender = gender;
-            }
-
-            public String getIdCard() {
-                return idCard;
-            }
-
-            public void setIdCard(String idCard) {
-                this.idCard = idCard;
             }
 
             public String getMobile() {
@@ -1498,18 +1660,18 @@ public class WorkTransferDetailBean implements Serializable {
             }
         }
 
-        public static class CompanyEntityBeanXX {
+        public static class CompanyEntityBeanX {
             /**
-             * companyId : 1005473308202094594
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 1005473308202094594
-             * orgName : 四组
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 1005473308202094594
-             * updateTime : 2018-06-09 23:34:52
-             * updateUser : 0
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-04-02 14:34:59
+             * updateUser : 978946335464579075
              * verifyStatus : 0
              */
 
@@ -1522,7 +1684,7 @@ public class WorkTransferDetailBean implements Serializable {
             private int orgType;
             private String topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private String updateUser;
             private int verifyStatus;
 
             public String getCompanyId() {
@@ -1597,11 +1759,11 @@ public class WorkTransferDetailBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public String getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(String updateUser) {
                 this.updateUser = updateUser;
             }
 
@@ -1614,18 +1776,18 @@ public class WorkTransferDetailBean implements Serializable {
             }
         }
 
-        public static class DepartmentEntityBeanXX {
+        public static class DepartmentEntityBeanX {
             /**
-             * companyId : 1005473308202094594
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 1005473308202094594
-             * orgName : 四组
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 1005473308202094594
-             * updateTime : 2018-06-09 23:34:52
-             * updateUser : 0
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-04-02 14:34:59
+             * updateUser : 978946335464579075
              */
 
             private String companyId;
@@ -1637,7 +1799,7 @@ public class WorkTransferDetailBean implements Serializable {
             private int orgType;
             private String topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private String updateUser;
 
             public String getCompanyId() {
                 return companyId;
@@ -1711,27 +1873,27 @@ public class WorkTransferDetailBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public String getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(String updateUser) {
                 this.updateUser = updateUser;
             }
         }
 
         public static class TopCompanyEntityBeanX {
             /**
-             * companyId : 1005473308202094594
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 1005473308202094594
-             * orgName : 四组
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 1005473308202094594
-             * updateTime : 2018-06-09 23:34:52
-             * updateUser : 0
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-04-02 14:34:59
+             * updateUser : 978946335464579075
              * verifyStatus : 0
              */
 
@@ -1744,7 +1906,7 @@ public class WorkTransferDetailBean implements Serializable {
             private int orgType;
             private String topCompanyId;
             private String updateTime;
-            private int updateUser;
+            private String updateUser;
             private int verifyStatus;
 
             public String getCompanyId() {
@@ -1819,11 +1981,11 @@ public class WorkTransferDetailBean implements Serializable {
                 this.updateTime = updateTime;
             }
 
-            public int getUpdateUser() {
+            public String getUpdateUser() {
                 return updateUser;
             }
 
-            public void setUpdateUser(int updateUser) {
+            public void setUpdateUser(String updateUser) {
                 this.updateUser = updateUser;
             }
 
@@ -1837,16 +1999,360 @@ public class WorkTransferDetailBean implements Serializable {
         }
     }
 
-    public static class InfoEntityListBean {
+    public static class ChangeGoodEntityListBean implements Serializable {
         /**
-         * content : 扫帚
-         * context : 申请换新的
-         * description : 扫帚比光头强的头还秃
-         * id : 1025217857564737538
-         * oaExchangeLogId : 1025217857497628674
-         * picture : 要什么其他附加信息，还不够秃吗？？？？
-         * status : 0
+         * content : 太阳雨
+         * context : 快快乐乐
+         * description : 好好聚
+         * id : 1027075433961119745
+         * oaExchangeLogId : 1027075433927565313
+         * picture : af2c2e5161d447f9ac4fcee8c3427a28.png
+         * status : 1
          * type : 1
+         */
+
+        private String content;
+        private String context;
+        private String description;
+        private String id;
+        private String oaExchangeLogId;
+        private String picture;
+        private int status;
+        private int type;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getContext() {
+            return context;
+        }
+
+        public void setContext(String context) {
+            this.context = context;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getOaExchangeLogId() {
+            return oaExchangeLogId;
+        }
+
+        public void setOaExchangeLogId(String oaExchangeLogId) {
+            this.oaExchangeLogId = oaExchangeLogId;
+        }
+
+        public String getPicture() {
+            return picture;
+        }
+
+        public void setPicture(String picture) {
+            this.picture = picture;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
+
+    public static class FinishWorkEntityListBean implements Serializable {
+        /**
+         * content : 雨衣
+         * context : 几口怕9
+         * description : 不将就
+         * id : 1027075433982091265
+         * oaExchangeLogId : 1027075433927565313
+         * picture : 1e8f62e859d64e09bb074efc8a25fb70.png
+         * status : 1
+         * type : 2
+         */
+
+        private String content;
+        private String context;
+        private String description;
+        private String id;
+        private String oaExchangeLogId;
+        private String picture;
+        private int status;
+        private int type;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getContext() {
+            return context;
+        }
+
+        public void setContext(String context) {
+            this.context = context;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getOaExchangeLogId() {
+            return oaExchangeLogId;
+        }
+
+        public void setOaExchangeLogId(String oaExchangeLogId) {
+            this.oaExchangeLogId = oaExchangeLogId;
+        }
+
+        public String getPicture() {
+            return picture;
+        }
+
+        public void setPicture(String picture) {
+            this.picture = picture;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
+
+    public static class FollowUpEntityListBean implements Serializable {
+        /**
+         * content : 让他与你
+         * context : 好几节课看
+         * description : 推理
+         * id : 1027075434053394434
+         * oaExchangeLogId : 1027075433927565313
+         * picture :
+         * status : 1
+         * type : 4
+         */
+
+        private String content;
+        private String context;
+        private String description;
+        private String id;
+        private String oaExchangeLogId;
+        private String picture;
+        private int status;
+        private int type;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getContext() {
+            return context;
+        }
+
+        public void setContext(String context) {
+            this.context = context;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getOaExchangeLogId() {
+            return oaExchangeLogId;
+        }
+
+        public void setOaExchangeLogId(String oaExchangeLogId) {
+            this.oaExchangeLogId = oaExchangeLogId;
+        }
+
+        public String getPicture() {
+            return picture;
+        }
+
+        public void setPicture(String picture) {
+            this.picture = picture;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
+
+    public static class NotDidEntityListBean implements Serializable {
+        /**
+         * content : 天天鱼鱼
+         * context : 刚刚还回家
+         * description : 把好好聚聚
+         * id : 1027075434003062785
+         * oaExchangeLogId : 1027075433927565313
+         * picture :
+         * status : 1
+         * type : 3
+         */
+
+        private String content;
+        private String context;
+        private String description;
+        private String id;
+        private String oaExchangeLogId;
+        private String picture;
+        private int status;
+        private int type;
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getContext() {
+            return context;
+        }
+
+        public void setContext(String context) {
+            this.context = context;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getOaExchangeLogId() {
+            return oaExchangeLogId;
+        }
+
+        public void setOaExchangeLogId(String oaExchangeLogId) {
+            this.oaExchangeLogId = oaExchangeLogId;
+        }
+
+        public String getPicture() {
+            return picture;
+        }
+
+        public void setPicture(String picture) {
+            this.picture = picture;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
+
+    public static class NoticeEntityListBean implements Serializable {
+        /**
+         * content : 让他雨
+         * context : 回家看看
+         * description : 任天堂雨
+         * id : 1027075434070171649
+         * oaExchangeLogId : 1027075433927565313
+         * picture : b119545ae57d4e819e8216a677b73817.png
+         * status : 0
+         * type : 5
          */
 
         private String content;

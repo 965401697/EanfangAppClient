@@ -9,11 +9,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.model.WorkTalkDetailBean;
+import com.eanfang.model.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
@@ -21,9 +25,8 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -93,6 +96,10 @@ public class WorkTalkCreateActivity extends BaseActivity {
      */
     private Long mCompanyId;
     /**
+     * 当前顶级公司Id
+     */
+    private Long mTopCompanyId;
+    /**
      * 部门ID
      */
     private String mDepartmentId = "";
@@ -105,9 +112,18 @@ public class WorkTalkCreateActivity extends BaseActivity {
      */
     private String mReceiverId = "";
     /**
+     * 接收人部门id
+     */
+    private String mReceiverDeparrmentID = "";
+    /**
      * 数据对象
      */
-    private JSONObject object = new JSONObject();
+    private WorkTalkDetailBean workTalkDetailBean = new WorkTalkDetailBean();
+    private List<WorkTransferDetailBean.ChangeGoodEntityListBean> changeGoodList = new ArrayList<>();
+    private List<WorkTransferDetailBean.FinishWorkEntityListBean> finishWorkList = new ArrayList<>();
+    private List<WorkTransferDetailBean.NotDidEntityListBean> unFinishList = new ArrayList<>();
+    private List<WorkTransferDetailBean.FollowUpEntityListBean> followList = new ArrayList<>();
+    private List<WorkTransferDetailBean.NoticeEntityListBean> noticeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +138,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
         setTitle("面谈员工");
         mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
         mCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mTopCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getTopCompanyId();
         tv_company_name.setText(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
     }
 
@@ -153,7 +170,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
         if (!doCheckInfo())
             return;
         EanfangHttp.post(NewApiService.WORK_TALK_ADD)
-                .upJson(object)
+                .upJson(JSONObject.toJSONString(workTalkDetailBean))
                 .execute(new EanfangCallback<JSONObject>(WorkTalkCreateActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("添加完毕");
                     finishSelf();
@@ -178,6 +195,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 tvReceiverName.setText(bean.getName());
                 mReceiverId = bean.getUserId();
                 tvTelphone.setText(bean.getMobile());
+                if (!TextUtils.isEmpty(bean.getOrgCode())) {
+                    mReceiverDeparrmentID = bean.getOrgCode();
+                }
             }
         }
     }
@@ -188,60 +208,67 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 showToast("用户id为空");
                 return false;
             } else {
-                object.put("owner_user_id", mUserId);
+                workTalkDetailBean.setOwnerUserId(mUserId + "");
             }
 
             if (StringUtils.isEmpty(mCompanyId + "")) {
                 showToast("公司id为空");
                 return false;
             } else {
-                object.put("owner_top_company_id", mCompanyId);
+                workTalkDetailBean.setOwnerCompanyId(mCompanyId + "");
+                workTalkDetailBean.setOwnerTopCompanyId(mTopCompanyId + "");
+                workTalkDetailBean.setOwnerOrgCode(mDepartmentId);
             }
             if (StringUtils.isEmpty(tvTalkObject.getText().toString().trim()) && StringUtils.isEmpty(mTalkId)) {
                 showToast("请选择面谈对象");
                 return false;
             } else {
-                object.put("worker_user_id", mTalkId);
-                object.put("owner_department_id", mTalkId);
+                workTalkDetailBean.setWorkerUserId(mTalkId);
             }
             if (StringUtils.isEmpty(tvReceiverName.getText().toString().trim()) && StringUtils.isEmpty(mReceiverId)) {
                 showToast("请选择接收人");
                 return false;
             } else {
-                object.put("assignee_user_id", mReceiverId);
+                workTalkDetailBean.setAssigneeUserId(mReceiverId);
+                //接收人所在公司
+                workTalkDetailBean.setAssigneeCompanyId(mCompanyId + "");
+                //接收人顶级公司
+                workTalkDetailBean.setAssigneeTopCompanyId(mTopCompanyId + "");
+                //接收人部门编码
+                workTalkDetailBean.setAssigneeOrgCode(mReceiverDeparrmentID);
             }
             if (!StringUtils.isEmpty(etWrokTalkOne.getText().toString().trim())) {
-                object.put("question1", etWrokTalkOne.getText().toString().trim());
+                workTalkDetailBean.setQuestion1(etWrokTalkOne.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkTwo.getText().toString().trim())) {
-                object.put("question2", etWrokTalkTwo.getText().toString().trim());
+                workTalkDetailBean.setQuestion2(etWrokTalkTwo.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkThree.getText().toString().trim())) {
-                object.put("question3", etWrokTalkThree.getText().toString().trim());
+                workTalkDetailBean.setQuestion3(etWrokTalkThree.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkFour.getText().toString().trim())) {
-                object.put("question4", etWrokTalkFour.getText().toString().trim());
+                workTalkDetailBean.setQuestion4(etWrokTalkFour.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkFive.getText().toString().trim())) {
-                object.put("question5", etWrokTalkFive.getText().toString().trim());
+                workTalkDetailBean.setQuestion5(etWrokTalkFive.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkSix.getText().toString().trim())) {
-                object.put("question6", etWrokTalkSix.getText().toString().trim());
+                workTalkDetailBean.setQuestion6(etWrokTalkSix.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkSeven.getText().toString().trim())) {
-                object.put("question7", etWrokTalkSeven.getText().toString().trim());
+                workTalkDetailBean.setQuestion7(etWrokTalkSeven.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkEight.getText().toString().trim())) {
-                object.put("question8", etWrokTalkEight.getText().toString().trim());
+                workTalkDetailBean.setQuestion8(etWrokTalkEight.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkNine.getText().toString().trim())) {
-                object.put("question9", etWrokTalkNine.getText().toString().trim());
+                workTalkDetailBean.setQuestion9(etWrokTalkNine.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkTen.getText().toString().trim())) {
-                object.put("question10", etWrokTalkTen.getText().toString().trim());
+                workTalkDetailBean.setQuestion10(etWrokTalkTen.getText().toString().trim());
             }
             if (!StringUtils.isEmpty(etWrokTalkEleven.getText().toString().trim())) {
-                object.put("question11", etWrokTalkEleven.getText().toString().trim());
+                workTalkDetailBean.setQuestion11(etWrokTalkEleven.getText().toString().trim());
             }
 
         } catch (JSONException e) {

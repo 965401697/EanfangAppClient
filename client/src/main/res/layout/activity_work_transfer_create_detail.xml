@@ -67,11 +67,12 @@
                         android:id="@+id/tv_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="请选择当前状态"
+                        android:hint="请选择当前状态"
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_13" />
 
                     <ImageView
+                        android:id="@+id/iv_select_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -130,7 +131,7 @@
                     android:id="@+id/snpl_moment_add_photos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_margin="@dimen/dimen_30"
                     app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                     app:bga_snpl_deleteDrawableOverlapQuarter="false"
                     app:bga_snpl_editable="true"

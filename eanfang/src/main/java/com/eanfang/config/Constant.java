@@ -272,6 +272,21 @@ public interface Constant {
      */
     String HOME_DATASTATISTICS = "BughandleDetailAppStatus";
 
+    /**
+     * 41.交接班详情(完好 破损)状态
+     */
+    String WORK_TRANSFER_DETAIL = "thisTimeStatus";
+
+    /**
+     * 42.交接班列表(待确认 完成交接)状态
+     */
+    String WORK_TRANSFER_LIST = "changeStatus";
+    /**
+     * 43.交接班创建班次状态
+     */
+    String WORK_TRANSFER_CREATE = "workClasses";
+
+
     //业务通知
     int NOTICE_BUSINESS = 1;
 

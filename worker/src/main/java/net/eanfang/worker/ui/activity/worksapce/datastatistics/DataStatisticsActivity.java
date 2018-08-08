@@ -141,6 +141,8 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private Long mOrgId;
     // 当前公司名称
     private String mOrgName = "";
+    // 业务类型
+    private String mBussiness = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,6 +315,8 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             llFault.setVisibility(View.GONE);
         } else {
             tvPieNoresult.setVisibility(View.GONE);
+            llIntact.setVisibility(View.VISIBLE);
+            llFault.setVisibility(View.VISIBLE);
         }
 
 
@@ -324,6 +328,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tvDataSelectType.setText(mDataType.get(i).getDataName());
+                mBussiness = mDataType.get(i).getDataCode();
                 doGetData(mDataType.get(i).getDataCode());
                 dataSelectPopWindow.dismiss();
             }
@@ -346,12 +351,12 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             case R.id.rb_dataTimeToday:
                 mData = "1";
                 // 获取统计数据
-                doGetData("");
+                doGetData(mBussiness);
                 break;
             case R.id.rb_dataTimeMonth:
                 mData = "2";
                 // 获取统计数据
-                doGetData("");
+                doGetData(mBussiness);
                 break;
         }
     }

@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -104,9 +105,9 @@ public class HomeFragment extends BaseFragment {
         initIconClick();
         initLoopView();
         //设置布局样式
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvData.setLayoutManager(linearLayoutManager);
+        //设置布局样式
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        rvData.setLayoutManager(gridLayoutManager);
         initCount();
         initFalseData();
         doHttpNews();
@@ -196,6 +197,12 @@ public class HomeFragment extends BaseFragment {
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
         findViewById(R.id.ll_repair_datasticstics).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataStatisticsActivity.class)));
+        rvData.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
+            }
+        });
     }
 
     /**
