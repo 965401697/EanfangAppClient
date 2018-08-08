@@ -27,6 +27,8 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.RollTextView;
 
@@ -246,26 +248,35 @@ public class HomeFragment extends BaseFragment {
         List<String> titleList = new ArrayList<>();
 
         String repairStr = "通过易安防接到了一个报修订单。";
-        String installStr = "通过易安防完成了一次报装订单。";
-        String quoteStr = "通过易安防进行了一次报价。";
-        String applyStr = "通过易安防接到了一个大工程。";
+        String installStr = "通过易安防接到了一个报装订单。";
+        String quoteStr = "通过易安防发送了一次报价。";
         String designStr = "通过易安防接到了一个设计订单。";
+        String maintainStr = "通过易安防进行了一次日常维保。";
 
         if (list != null && !list.isEmpty()) {
             for (int i = 0; i < list.size(); i++) {
                 NoticeEntity noticeEntity = list.get(i);
+
+                String realName = V.v(() -> noticeEntity.getReciveAccEntity().getRealName());
+                if (StringUtils.isEmpty(realName)) {
+                    continue;
+                }
+
                 if (noticeEntity.getNoticeType() == 12) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 27) {
                     data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 29) {
                     data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 33) {
-                    data.add(applyStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 37) {
                     data.add(designStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                } else if (noticeEntity.getNoticeType() == 61) {
+                    data.add(maintainStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                } else {
+                    continue;
                 }
-                String realName = noticeEntity.getReciveAccEntity().getRealName();
+
+
                 StringBuilder showName = new StringBuilder();
                 if (realName.length() >= 1) {
                     showName.append(realName.charAt(0));
@@ -298,7 +309,7 @@ public class HomeFragment extends BaseFragment {
 
     public void doHttpNews() {
 
-        EanfangHttp.get(NewApiService.GET_PUSH_NEWS).execute(new EanfangCallback<NoticeEntity>(getActivity(), false, NoticeEntity.class, true, (list -> {
+        EanfangHttp.get(NewApiService.GET_PUSH_NEWS_WORKER).execute(new EanfangCallback<NoticeEntity>(getActivity(), false, NoticeEntity.class, true, (list -> {
             initRollTextView(list);
         })));
 

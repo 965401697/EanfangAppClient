@@ -153,7 +153,11 @@ public interface NewApiService {
     /**
      * app首页 获取最新通知
      */
-    String GET_PUSH_NEWS = BuildConfig.API_HOST + "/yaf_sys/notice/news";
+//    String GET_PUSH_NEWS = BuildConfig.API_HOST + "/yaf_sys/notice/news";
+
+    String GET_PUSH_NEWS_CLIENT = BuildConfig.API_HOST + "/yaf_sys/notice/newsClient";
+
+    String GET_PUSH_NEWS_WORKER= BuildConfig.API_HOST + "/yaf_sys/notice/newsWorker";
 
 
     /**
