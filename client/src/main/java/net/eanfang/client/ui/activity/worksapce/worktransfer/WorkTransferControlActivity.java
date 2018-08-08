@@ -31,7 +31,7 @@ public class WorkTransferControlActivity extends BaseActivity {
     }
 
     private void initView() {
-        setTitle("面谈员工");
+        setTitle("交接班");
         setLeftBack();
     }
 

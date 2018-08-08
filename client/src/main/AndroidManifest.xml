@@ -453,6 +453,7 @@
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity" />
         <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
         <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkControlActivity" />
+        <!-- 面谈员工控制中心 -->
         <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferControlActivity" />
         <!-- 面谈员工列表 -->
         <activity
@@ -496,9 +497,8 @@
         <!-- 交接班创建详情 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateDetailActivity"
-
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
 
         <!--维保列表-->
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />

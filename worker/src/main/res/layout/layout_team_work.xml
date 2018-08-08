@@ -56,30 +56,29 @@
         <TextView
             android:id="@+id/tv_work_point_check"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:onClick="noOpen"
             android:text="@string/text_worker_point_check" />
 
         <TextView
             android:id="@+id/tv_work_apply_goods"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:onClick="noOpen"
             android:text="@string/text_worker_apply_goods" />
 
         <TextView
             android:id="@+id/tv_work_talk"
             style="@style/style_client_work_meun"
-            android:onClick="noOpen"
             android:drawableTop="@mipmap/ic_worker_work_create_project"
             android:text="@string/text_work_talk" />
 
-        <LinearLayout
-            android:id="@+id/ll_accept_apply"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical" />
+        <TextView
+            android:id="@+id/tv_work_transfer"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_worker_work_create_project"
+            android:text="@string/text_work_transfer" />
+
     </LinearLayout>
 
 

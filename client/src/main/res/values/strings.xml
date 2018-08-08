@@ -53,17 +53,6 @@
     <string name="text_next">下一步</string>
     <string name="text_fault">故障</string>
     <string name="text_worker_detail_see_more_type">查看所有标签</string>
-    <string name="text_work_talk_one">1.如果还有进步空间，应从哪方面入手？</string>
-    <string name="text_work_talk_two">2.所在部门存在的最大问题及原因</string>
-    <string name="text_work_talk_three">3.你会如何解决这些问题？</string>
-    <string name="text_work_talk_four">4.工作中，不愉快的事情？</string>
-    <string name="text_work_talk_five">5.公司中，最优秀的人？最敬佩的人？进步最大的人？</string>
-    <string name="text_work_talk_six">6.针对当前工作，哪些方面不尽人意</string>
-    <string name="text_work_talk_seven">7.哪些事情，应该做而没有去做？</string>
-    <string name="text_work_talk_eight">8.如何才能帮助到你？</string>
-    <string name="text_work_talk_nine">9.如何知道你需要帮助？</string>
-    <string name="text_work_talk_ten">10.如何能更容易理解我想要表达的意思</string>
-    <string name="text_work_talk_eleven">11.你觉得我们错失的最大机遇是什么</string>
-    <string name="text_work_talk_input">请输入文字内容</string>
+
 
 </resources>

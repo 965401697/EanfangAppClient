@@ -54,6 +54,8 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
      */
     private Long mUserId;
 
+    private boolean isCreate = false;
+
     public static WorkTalkListFragment getInstance(String title, String type) {
         WorkTalkListFragment workTalkListFragment = new WorkTalkListFragment();
         workTalkListFragment.mTitle = title;
@@ -94,9 +96,11 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         // 我接收的
         if (mType.equals("我接收的")) {
             queryEntry.getEquals().put("assigneeUserId ", mUserId + "");
+            isCreate = false;
         } else {
             // 我创建的
             queryEntry.getEquals().put("ownerUserId  ", mUserId + "");
+            isCreate = true;
         }
         queryEntry.setPage(page);
         queryEntry.setSize(10);
@@ -125,7 +129,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         swipeRefreshLayout = findViewById(R.id.srl_worktalk);
         swipeRefreshLayout.setOnRefreshListener(this);
         rv_worktalk = findViewById(R.id.rv_worktalk);
-        workTalkAdapter = new WorkTalkAdapter();
+        workTalkAdapter = new WorkTalkAdapter(isCreate);
         rv_worktalk.setLayoutManager(new LinearLayoutManager(getContext()));
         workTalkAdapter.bindToRecyclerView(rv_worktalk);
         tvNoData = findViewById(R.id.tv_no_data);

@@ -856,7 +856,7 @@ public class WorkTransferListBean implements Serializable {
                 private TopCompanyEntityBeanX topCompanyEntity;
                 private String topCompanyId;
                 private String updateTime;
-                private int updateUser;
+                private String updateUser;
                 private String userId;
                 private int userType;
 
@@ -964,11 +964,11 @@ public class WorkTransferListBean implements Serializable {
                     this.updateTime = updateTime;
                 }
 
-                public int getUpdateUser() {
+                public String getUpdateUser() {
                     return updateUser;
                 }
 
-                public void setUpdateUser(int updateUser) {
+                public void setUpdateUser(String updateUser) {
                     this.updateUser = updateUser;
                 }
 
@@ -1168,7 +1168,7 @@ public class WorkTransferListBean implements Serializable {
                     private int orgType;
                     private String topCompanyId;
                     private String updateTime;
-                    private int updateUser;
+                    private String updateUser;
                     private int verifyStatus;
 
                     public String getCompanyId() {
@@ -1243,11 +1243,11 @@ public class WorkTransferListBean implements Serializable {
                         this.updateTime = updateTime;
                     }
 
-                    public int getUpdateUser() {
+                    public String getUpdateUser() {
                         return updateUser;
                     }
 
-                    public void setUpdateUser(int updateUser) {
+                    public void setUpdateUser(String updateUser) {
                         this.updateUser = updateUser;
                     }
 
@@ -1283,7 +1283,7 @@ public class WorkTransferListBean implements Serializable {
                     private int orgType;
                     private String topCompanyId;
                     private String updateTime;
-                    private int updateUser;
+                    private String updateUser;
 
                     public String getCompanyId() {
                         return companyId;
@@ -1357,11 +1357,11 @@ public class WorkTransferListBean implements Serializable {
                         this.updateTime = updateTime;
                     }
 
-                    public int getUpdateUser() {
+                    public String getUpdateUser() {
                         return updateUser;
                     }
 
-                    public void setUpdateUser(int updateUser) {
+                    public void setUpdateUser(String updateUser) {
                         this.updateUser = updateUser;
                     }
                 }
@@ -1390,7 +1390,7 @@ public class WorkTransferListBean implements Serializable {
                     private int orgType;
                     private String topCompanyId;
                     private String updateTime;
-                    private int updateUser;
+                    private String updateUser;
                     private int verifyStatus;
 
                     public String getCompanyId() {
@@ -1465,11 +1465,11 @@ public class WorkTransferListBean implements Serializable {
                         this.updateTime = updateTime;
                     }
 
-                    public int getUpdateUser() {
+                    public String getUpdateUser() {
                         return updateUser;
                     }
 
-                    public void setUpdateUser(int updateUser) {
+                    public void setUpdateUser(String updateUser) {
                         this.updateUser = updateUser;
                     }
 

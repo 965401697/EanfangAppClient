@@ -101,7 +101,8 @@ public class DataStatisticsCompanyListView extends BaseDialog {
                 dismiss();
             }
         });
-        revCompanyList.setAdapter(adapter);
+        adapter.setNewData(beanList);
+        adapter.bindToRecyclerView(revCompanyList);
     }
 
 

@@ -77,7 +77,6 @@ public class WorkTalkListActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 workTalkListFragment = (WorkTalkListFragment) mFragments.get(position);
-                workTalkListFragment.getData();
             }
 
             @Override

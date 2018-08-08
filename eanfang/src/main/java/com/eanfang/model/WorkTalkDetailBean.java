@@ -11,12 +11,18 @@ import java.io.Serializable;
 public class WorkTalkDetailBean implements Serializable {
 
 
+    private String assigneeCompanyId;
+    private String assigneeOrgCode;
+    private String assigneeTopCompanyId;
     private AssigneeUserEntityBean assigneeUserEntity;
     private String assigneeUserId;
     private String createTime;
     private String id;
     private String orderNum;
-    private String ownerDepartmentId;
+    private OwnerCompanyEntityBean ownerCompanyEntity;
+    private String ownerCompanyId;
+    private OwnerDepartmentEntityBean ownerDepartmentEntity;
+    private String ownerOrgCode;
     private String ownerTopCompanyId;
     private OwnerUserEntityBean ownerUserEntity;
     private String ownerUserId;
@@ -34,6 +40,30 @@ public class WorkTalkDetailBean implements Serializable {
     private int status;
     private WorkerUserEntityBean workerUserEntity;
     private String workerUserId;
+
+    public String getAssigneeCompanyId() {
+        return assigneeCompanyId;
+    }
+
+    public void setAssigneeCompanyId(String assigneeCompanyId) {
+        this.assigneeCompanyId = assigneeCompanyId;
+    }
+
+    public String getAssigneeOrgCode() {
+        return assigneeOrgCode;
+    }
+
+    public void setAssigneeOrgCode(String assigneeOrgCode) {
+        this.assigneeOrgCode = assigneeOrgCode;
+    }
+
+    public String getAssigneeTopCompanyId() {
+        return assigneeTopCompanyId;
+    }
+
+    public void setAssigneeTopCompanyId(String assigneeTopCompanyId) {
+        this.assigneeTopCompanyId = assigneeTopCompanyId;
+    }
 
     public AssigneeUserEntityBean getAssigneeUserEntity() {
         return assigneeUserEntity;
@@ -75,12 +105,36 @@ public class WorkTalkDetailBean implements Serializable {
         this.orderNum = orderNum;
     }
 
-    public String getOwnerDepartmentId() {
-        return ownerDepartmentId;
+    public OwnerCompanyEntityBean getOwnerCompanyEntity() {
+        return ownerCompanyEntity;
     }
 
-    public void setOwnerDepartmentId(String ownerDepartmentId) {
-        this.ownerDepartmentId = ownerDepartmentId;
+    public void setOwnerCompanyEntity(OwnerCompanyEntityBean ownerCompanyEntity) {
+        this.ownerCompanyEntity = ownerCompanyEntity;
+    }
+
+    public String getOwnerCompanyId() {
+        return ownerCompanyId;
+    }
+
+    public void setOwnerCompanyId(String ownerCompanyId) {
+        this.ownerCompanyId = ownerCompanyId;
+    }
+
+    public OwnerDepartmentEntityBean getOwnerDepartmentEntity() {
+        return ownerDepartmentEntity;
+    }
+
+    public void setOwnerDepartmentEntity(OwnerDepartmentEntityBean ownerDepartmentEntity) {
+        this.ownerDepartmentEntity = ownerDepartmentEntity;
+    }
+
+    public String getOwnerOrgCode() {
+        return ownerOrgCode;
+    }
+
+    public void setOwnerOrgCode(String ownerOrgCode) {
+        this.ownerOrgCode = ownerOrgCode;
     }
 
     public String getOwnerTopCompanyId() {
@@ -114,7 +168,6 @@ public class WorkTalkDetailBean implements Serializable {
     public void setQuestion1(String question1) {
         this.question1 = question1;
     }
-
     public String getQuestion10() {
         return question10;
     }
@@ -221,22 +274,22 @@ public class WorkTalkDetailBean implements Serializable {
 
     public static class AssigneeUserEntityBean {
         /**
-         * accId : 958589123373846529
-         * accountEntity : {"accId":"958589123373846529","accType":3,"address":"幻眼国际(朝阳北路与高安屯路交叉口东150米)","areaCode":"","avatar":"2c00d1b320d74bdaa66d7773c056989b.png","birthday":"2014-06-03 00:00:00","email":"101@qq.com","gender":1,"idCard":"110101200001015778","mobile":"13800138010","nickName":"烟酒梁还不知","qrCode":"b4e6ecd7946c432085b63ccef5bb75d9.png","realName":"烟酒梁","regTime":"2018-01-31 14:33:51","status":0}
-         * companyAdmin : true
-         * companyEntity : {"companyId":"981406915978862593","countStaff":0,"level":1,"orgCode":"c","orgId":"981406915978862593","orgName":"在人间","orgType":0,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 20:25:38","updateUser":"958589123440955393","verifyStatus":1}
-         * companyId : 981406915978862593
-         * departmentEntity : {"companyId":"981406915978862593","countStaff":0,"level":3,"orgCode":"c.2.2","orgId":"1001659535615930369","orgName":"地狱波二级","orgType":2,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 20:25:38","updateUser":"958589123440955393"}
-         * departmentId : 1001659535615930369
+         * accId : 979177961461190657
+         * accountEntity : {"accId":"979177961461190657","accType":3,"address":"首开东都汇(五里桥一街)","areaCode":"3.11.1.5","avatar":"2cea9218e3a0494c9db30f981e0e7345.png","email":"","gender":1,"idCard":"140311198806215047","mobile":"17600738557","nickName":"管罗苍啊","qrCode":"61a363e82e7148ffa6795dfe3693fe4a.png","realName":"管罗苍","regTime":"2018-03-29 10:06:33","status":0}
+         * companyAdmin : false
+         * companyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-06-29 14:10:08","updateUser":"958589807934590979","verifyStatus":0}
+         * companyId : 958589807934590978
+         * departmentEntity : {"companyId":"958589807934590978","countStaff":0,"level":2,"orgCode":"c.2","orgId":"973097885401395202","orgName":"防损部","orgType":2,"topCompanyId":"958589807934590978","updateTime":"2018-06-29 14:10:08","updateUser":"958589807934590979"}
+         * departmentId : 973097885401395202
          * status : 0
          * superAdmin : false
          * sysAdmin : false
-         * topCompanyEntity : {"companyId":"981406915978862593","countStaff":0,"level":1,"orgCode":"c","orgId":"981406915978862593","orgName":"在人间","orgType":0,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 20:25:38","updateUser":"958589123440955393","verifyStatus":1}
-         * topCompanyId : 981406915978862593
-         * updateTime : 2018-06-01 20:25:38
-         * updateUser : 958589123440955393
-         * userId : 981406915978862594
-         * userType : 3
+         * topCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-06-29 14:10:08","updateUser":"958589807934590979","verifyStatus":0}
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-06-29 14:10:08
+         * updateUser : 958589807934590979
+         * userId : 1012578947227197442
+         * userType : 6
          */
 
         private String accId;
@@ -249,6 +302,7 @@ public class WorkTalkDetailBean implements Serializable {
         private int status;
         private boolean superAdmin;
         private boolean sysAdmin;
+        private TopCompanyEntityBean topCompanyEntity;
         private String topCompanyId;
         private String updateTime;
         private String updateUser;
@@ -335,6 +389,13 @@ public class WorkTalkDetailBean implements Serializable {
             this.sysAdmin = sysAdmin;
         }
 
+        public TopCompanyEntityBean getTopCompanyEntity() {
+            return topCompanyEntity;
+        }
+
+        public void setTopCompanyEntity(TopCompanyEntityBean topCompanyEntity) {
+            this.topCompanyEntity = topCompanyEntity;
+        }
 
         public String getTopCompanyId() {
             return topCompanyId;
@@ -378,20 +439,19 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class AccountEntityBean {
             /**
-             * accId : 958589123373846529
+             * accId : 979177961461190657
              * accType : 3
-             * address : 幻眼国际(朝阳北路与高安屯路交叉口东150米)
-             * areaCode :
-             * avatar : 2c00d1b320d74bdaa66d7773c056989b.png
-             * birthday : 2014-06-03 00:00:00
-             * email : 101@qq.com
+             * address : 首开东都汇(五里桥一街)
+             * areaCode : 3.11.1.5
+             * avatar : 2cea9218e3a0494c9db30f981e0e7345.png
+             * email :
              * gender : 1
-             * idCard : 110101200001015778
-             * mobile : 13800138010
-             * nickName : 烟酒梁还不知
-             * qrCode : b4e6ecd7946c432085b63ccef5bb75d9.png
-             * realName : 烟酒梁
-             * regTime : 2018-01-31 14:33:51
+             * idCard : 140311198806215047
+             * mobile : 17600738557
+             * nickName : 管罗苍啊
+             * qrCode : 61a363e82e7148ffa6795dfe3693fe4a.png
+             * realName : 管罗苍
+             * regTime : 2018-03-29 10:06:33
              * status : 0
              */
 
@@ -400,7 +460,6 @@ public class WorkTalkDetailBean implements Serializable {
             private String address;
             private String areaCode;
             private String avatar;
-            private String birthday;
             private String email;
             private int gender;
             private String idCard;
@@ -449,14 +508,6 @@ public class WorkTalkDetailBean implements Serializable {
 
             public void setAvatar(String avatar) {
                 this.avatar = avatar;
-            }
-
-            public String getBirthday() {
-                return birthday;
-            }
-
-            public void setBirthday(String birthday) {
-                this.birthday = birthday;
             }
 
             public String getEmail() {
@@ -534,17 +585,17 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class CompanyEntityBean {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 981406915978862593
-             * orgName : 在人间
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 20:25:38
-             * updateUser : 958589123440955393
-             * verifyStatus : 1
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-06-29 14:10:08
+             * updateUser : 958589807934590979
+             * verifyStatus : 0
              */
 
             private String companyId;
@@ -650,16 +701,16 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class DepartmentEntityBean {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
-             * level : 3
-             * orgCode : c.2.2
-             * orgId : 1001659535615930369
-             * orgName : 地狱波二级
+             * level : 2
+             * orgCode : c.2
+             * orgId : 973097885401395202
+             * orgName : 防损部
              * orgType : 2
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 20:25:38
-             * updateUser : 958589123440955393
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-06-29 14:10:08
+             * updateUser : 958589807934590979
              */
 
             private String companyId;
@@ -754,33 +805,675 @@ public class WorkTalkDetailBean implements Serializable {
             }
         }
 
+        public static class TopCompanyEntityBean {
+            /**
+             * companyId : 958589807934590978
+             * countStaff : 0
+             * level : 1
+             * orgCode : c
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
+             * orgType : 0
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-06-29 14:10:08
+             * updateUser : 958589807934590979
+             * verifyStatus : 0
+             */
+
+            private String companyId;
+            private int countStaff;
+            private int level;
+            private String orgCode;
+            private String orgId;
+            private String orgName;
+            private int orgType;
+            private String topCompanyId;
+            private String updateTime;
+            private String updateUser;
+            private int verifyStatus;
+
+            public String getCompanyId() {
+                return companyId;
+            }
+
+            public void setCompanyId(String companyId) {
+                this.companyId = companyId;
+            }
+
+            public int getCountStaff() {
+                return countStaff;
+            }
+
+            public void setCountStaff(int countStaff) {
+                this.countStaff = countStaff;
+            }
+
+            public int getLevel() {
+                return level;
+            }
+
+            public void setLevel(int level) {
+                this.level = level;
+            }
+
+            public String getOrgCode() {
+                return orgCode;
+            }
+
+            public void setOrgCode(String orgCode) {
+                this.orgCode = orgCode;
+            }
+
+            public String getOrgId() {
+                return orgId;
+            }
+
+            public void setOrgId(String orgId) {
+                this.orgId = orgId;
+            }
+
+            public String getOrgName() {
+                return orgName;
+            }
+
+            public void setOrgName(String orgName) {
+                this.orgName = orgName;
+            }
+
+            public int getOrgType() {
+                return orgType;
+            }
+
+            public void setOrgType(int orgType) {
+                this.orgType = orgType;
+            }
+
+            public String getTopCompanyId() {
+                return topCompanyId;
+            }
+
+            public void setTopCompanyId(String topCompanyId) {
+                this.topCompanyId = topCompanyId;
+            }
+
+            public String getUpdateTime() {
+                return updateTime;
+            }
+
+            public void setUpdateTime(String updateTime) {
+                this.updateTime = updateTime;
+            }
+
+            public String getUpdateUser() {
+                return updateUser;
+            }
+
+            public void setUpdateUser(String updateUser) {
+                this.updateUser = updateUser;
+            }
+
+            public int getVerifyStatus() {
+                return verifyStatus;
+            }
+
+            public void setVerifyStatus(int verifyStatus) {
+                this.verifyStatus = verifyStatus;
+            }
+        }
     }
 
+    public static class OwnerCompanyEntityBean {
+        /**
+         * adminUserId : 958589807934590979
+         * companyId : 958589807934590978
+         * countStaff : 0
+         * level : 1
+         * orgCode : c
+         * orgId : 958589807934590978
+         * orgName : 褡裢坡烟酒连锁
+         * orgType : 0
+         * orgUnitEntity : {"accId":"958589123373846529","adminUserId":"958589807934590979","areaCode":"3.11.1.1","createTime":"2018-02-06 14:57:00","defaultAddress":"朝阳北路青年路大悦城3层超市","defaultLat":"39.929287","defaultLon":"116.576013","defaultPlaceCode":"3.11.1.5","legalName":"","licenseCode":"911625884574135","logoPic":"ecbd2972163f425bacfbfed943e71553.png","name":"褡裢坡烟酒连锁","officeAddress":"定福家园","orgId":"958589807934590978","registerAssets":"500","scale":1,"status":0,"telPhone":"010-65535","tradeTypeCode":"4.5.3","unitType":2,"verifyTime":"2018-02-06 15:38:35","verifyUserName":"平台管理"}
+         * parentOrgId : 0
+         * sortNum : 0
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-01-31 14:36:35
+         * updateUser : 958589807934590979
+         * verifyStatus : 0
+         */
+
+        private String adminUserId;
+        private String companyId;
+        private int countStaff;
+        private int level;
+        private String orgCode;
+        private String orgId;
+        private String orgName;
+        private int orgType;
+        private OrgUnitEntityBean orgUnitEntity;
+        private int parentOrgId;
+        private int sortNum;
+        private String topCompanyId;
+        private String updateTime;
+        private String updateUser;
+        private int verifyStatus;
+
+        public String getAdminUserId() {
+            return adminUserId;
+        }
+
+        public void setAdminUserId(String adminUserId) {
+            this.adminUserId = adminUserId;
+        }
+
+        public String getCompanyId() {
+            return companyId;
+        }
+
+        public void setCompanyId(String companyId) {
+            this.companyId = companyId;
+        }
+
+        public int getCountStaff() {
+            return countStaff;
+        }
+
+        public void setCountStaff(int countStaff) {
+            this.countStaff = countStaff;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public String getOrgCode() {
+            return orgCode;
+        }
+
+        public void setOrgCode(String orgCode) {
+            this.orgCode = orgCode;
+        }
+
+        public String getOrgId() {
+            return orgId;
+        }
+
+        public void setOrgId(String orgId) {
+            this.orgId = orgId;
+        }
+
+        public String getOrgName() {
+            return orgName;
+        }
+
+        public void setOrgName(String orgName) {
+            this.orgName = orgName;
+        }
+
+        public int getOrgType() {
+            return orgType;
+        }
+
+        public void setOrgType(int orgType) {
+            this.orgType = orgType;
+        }
+
+        public OrgUnitEntityBean getOrgUnitEntity() {
+            return orgUnitEntity;
+        }
+
+        public void setOrgUnitEntity(OrgUnitEntityBean orgUnitEntity) {
+            this.orgUnitEntity = orgUnitEntity;
+        }
+
+        public int getParentOrgId() {
+            return parentOrgId;
+        }
+
+        public void setParentOrgId(int parentOrgId) {
+            this.parentOrgId = parentOrgId;
+        }
+
+        public int getSortNum() {
+            return sortNum;
+        }
+
+        public void setSortNum(int sortNum) {
+            this.sortNum = sortNum;
+        }
+
+        public String getTopCompanyId() {
+            return topCompanyId;
+        }
+
+        public void setTopCompanyId(String topCompanyId) {
+            this.topCompanyId = topCompanyId;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public String getUpdateUser() {
+            return updateUser;
+        }
+
+        public void setUpdateUser(String updateUser) {
+            this.updateUser = updateUser;
+        }
+
+        public int getVerifyStatus() {
+            return verifyStatus;
+        }
+
+        public void setVerifyStatus(int verifyStatus) {
+            this.verifyStatus = verifyStatus;
+        }
+
+        public static class OrgUnitEntityBean {
+            /**
+             * accId : 958589123373846529
+             * adminUserId : 958589807934590979
+             * areaCode : 3.11.1.1
+             * createTime : 2018-02-06 14:57:00
+             * defaultAddress : 朝阳北路青年路大悦城3层超市
+             * defaultLat : 39.929287
+             * defaultLon : 116.576013
+             * defaultPlaceCode : 3.11.1.5
+             * legalName :
+             * licenseCode : 911625884574135
+             * logoPic : ecbd2972163f425bacfbfed943e71553.png
+             * name : 褡裢坡烟酒连锁
+             * officeAddress : 定福家园
+             * orgId : 958589807934590978
+             * registerAssets : 500
+             * scale : 1
+             * status : 0
+             * telPhone : 010-65535
+             * tradeTypeCode : 4.5.3
+             * unitType : 2
+             * verifyTime : 2018-02-06 15:38:35
+             * verifyUserName : 平台管理
+             */
+
+            private String accId;
+            private String adminUserId;
+            private String areaCode;
+            private String createTime;
+            private String defaultAddress;
+            private String defaultLat;
+            private String defaultLon;
+            private String defaultPlaceCode;
+            private String legalName;
+            private String licenseCode;
+            private String logoPic;
+            private String name;
+            private String officeAddress;
+            private String orgId;
+            private String registerAssets;
+            private int scale;
+            private int status;
+            private String telPhone;
+            private String tradeTypeCode;
+            private int unitType;
+            private String verifyTime;
+            private String verifyUserName;
+
+            public String getAccId() {
+                return accId;
+            }
+
+            public void setAccId(String accId) {
+                this.accId = accId;
+            }
+
+            public String getAdminUserId() {
+                return adminUserId;
+            }
+
+            public void setAdminUserId(String adminUserId) {
+                this.adminUserId = adminUserId;
+            }
+
+            public String getAreaCode() {
+                return areaCode;
+            }
+
+            public void setAreaCode(String areaCode) {
+                this.areaCode = areaCode;
+            }
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
+            }
+
+            public String getDefaultAddress() {
+                return defaultAddress;
+            }
+
+            public void setDefaultAddress(String defaultAddress) {
+                this.defaultAddress = defaultAddress;
+            }
+
+            public String getDefaultLat() {
+                return defaultLat;
+            }
+
+            public void setDefaultLat(String defaultLat) {
+                this.defaultLat = defaultLat;
+            }
+
+            public String getDefaultLon() {
+                return defaultLon;
+            }
+
+            public void setDefaultLon(String defaultLon) {
+                this.defaultLon = defaultLon;
+            }
+
+            public String getDefaultPlaceCode() {
+                return defaultPlaceCode;
+            }
+
+            public void setDefaultPlaceCode(String defaultPlaceCode) {
+                this.defaultPlaceCode = defaultPlaceCode;
+            }
+
+            public String getLegalName() {
+                return legalName;
+            }
+
+            public void setLegalName(String legalName) {
+                this.legalName = legalName;
+            }
+
+            public String getLicenseCode() {
+                return licenseCode;
+            }
+
+            public void setLicenseCode(String licenseCode) {
+                this.licenseCode = licenseCode;
+            }
+
+            public String getLogoPic() {
+                return logoPic;
+            }
+
+            public void setLogoPic(String logoPic) {
+                this.logoPic = logoPic;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getOfficeAddress() {
+                return officeAddress;
+            }
+
+            public void setOfficeAddress(String officeAddress) {
+                this.officeAddress = officeAddress;
+            }
+
+            public String getOrgId() {
+                return orgId;
+            }
+
+            public void setOrgId(String orgId) {
+                this.orgId = orgId;
+            }
+
+            public String getRegisterAssets() {
+                return registerAssets;
+            }
+
+            public void setRegisterAssets(String registerAssets) {
+                this.registerAssets = registerAssets;
+            }
+
+            public int getScale() {
+                return scale;
+            }
+
+            public void setScale(int scale) {
+                this.scale = scale;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public String getTelPhone() {
+                return telPhone;
+            }
+
+            public void setTelPhone(String telPhone) {
+                this.telPhone = telPhone;
+            }
+
+            public String getTradeTypeCode() {
+                return tradeTypeCode;
+            }
+
+            public void setTradeTypeCode(String tradeTypeCode) {
+                this.tradeTypeCode = tradeTypeCode;
+            }
+
+            public int getUnitType() {
+                return unitType;
+            }
+
+            public void setUnitType(int unitType) {
+                this.unitType = unitType;
+            }
+
+            public String getVerifyTime() {
+                return verifyTime;
+            }
+
+            public void setVerifyTime(String verifyTime) {
+                this.verifyTime = verifyTime;
+            }
+
+            public String getVerifyUserName() {
+                return verifyUserName;
+            }
+
+            public void setVerifyUserName(String verifyUserName) {
+                this.verifyUserName = verifyUserName;
+            }
+        }
+    }
+
+    public static class OwnerDepartmentEntityBean {
+        /**
+         * adminUserId : 958589807934590979
+         * companyId : 958589807934590978
+         * countStaff : 0
+         * level : 1
+         * orgCode : c
+         * orgId : 958589807934590978
+         * orgName : 褡裢坡烟酒连锁
+         * orgType : 0
+         * parentOrgId : 0
+         * sortNum : 0
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-01-31 14:36:35
+         * updateUser : 958589807934590979
+         * verifyStatus : 0
+         */
+
+        private String adminUserId;
+        private String companyId;
+        private int countStaff;
+        private int level;
+        private String orgCode;
+        private String orgId;
+        private String orgName;
+        private int orgType;
+        private int parentOrgId;
+        private int sortNum;
+        private String topCompanyId;
+        private String updateTime;
+        private String updateUser;
+        private int verifyStatus;
+
+        public String getAdminUserId() {
+            return adminUserId;
+        }
+
+        public void setAdminUserId(String adminUserId) {
+            this.adminUserId = adminUserId;
+        }
+
+        public String getCompanyId() {
+            return companyId;
+        }
+
+        public void setCompanyId(String companyId) {
+            this.companyId = companyId;
+        }
+
+        public int getCountStaff() {
+            return countStaff;
+        }
+
+        public void setCountStaff(int countStaff) {
+            this.countStaff = countStaff;
+        }
+
+        public int getLevel() {
+            return level;
+        }
+
+        public void setLevel(int level) {
+            this.level = level;
+        }
+
+        public String getOrgCode() {
+            return orgCode;
+        }
+
+        public void setOrgCode(String orgCode) {
+            this.orgCode = orgCode;
+        }
+
+        public String getOrgId() {
+            return orgId;
+        }
+
+        public void setOrgId(String orgId) {
+            this.orgId = orgId;
+        }
+
+        public String getOrgName() {
+            return orgName;
+        }
+
+        public void setOrgName(String orgName) {
+            this.orgName = orgName;
+        }
+
+        public int getOrgType() {
+            return orgType;
+        }
+
+        public void setOrgType(int orgType) {
+            this.orgType = orgType;
+        }
+
+        public int getParentOrgId() {
+            return parentOrgId;
+        }
+
+        public void setParentOrgId(int parentOrgId) {
+            this.parentOrgId = parentOrgId;
+        }
+
+        public int getSortNum() {
+            return sortNum;
+        }
+
+        public void setSortNum(int sortNum) {
+            this.sortNum = sortNum;
+        }
+
+        public String getTopCompanyId() {
+            return topCompanyId;
+        }
+
+        public void setTopCompanyId(String topCompanyId) {
+            this.topCompanyId = topCompanyId;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+
+        public String getUpdateUser() {
+            return updateUser;
+        }
+
+        public void setUpdateUser(String updateUser) {
+            this.updateUser = updateUser;
+        }
+
+        public int getVerifyStatus() {
+            return verifyStatus;
+        }
+
+        public void setVerifyStatus(int verifyStatus) {
+            this.verifyStatus = verifyStatus;
+        }
+    }
 
     public static class OwnerUserEntityBean {
         /**
-         * accId : 1002036264188542978
-         * accountEntity : {"accId":"1002036264188542978","accType":0,"avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"","mobile":"13800138015","nickName":"宝宝","realName":"宝宝","regTime":"2018-05-31 11:57:17","status":0}
+         * accId : 980695065603649538
+         * accountEntity : {"accId":"980695065603649538","accType":0,"avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"15940525877@163.com","mobile":"15900000005","nickName":"李旭","qrCode":"4e70fea2a725445a85433ef94eff56c2.png","realName":"李旭","regTime":"2018-04-02 14:34:59","status":0}
          * companyAdmin : false
-         * companyEntity : {"companyId":"981406915978862593","countStaff":0,"level":1,"orgCode":"c","orgId":"981406915978862593","orgName":"在人间","orgType":0,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 14:59:26","updateUser":"981406915978862594","verifyStatus":1}
-         * companyId : 981406915978862593
-         * departmentEntity : {"companyId":"981406915978862593","countStaff":0,"level":3,"orgCode":"c.2.2","orgId":"1001659535615930369","orgName":"地狱波二级","orgType":2,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 14:59:26","updateUser":"981406915978862594"}
-         * departmentId : 1001659535615930369
+         * companyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-04-02 14:34:59","updateUser":"978946335464579075","verifyStatus":0}
+         * companyId : 958589807934590978
+         * departmentEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-04-02 14:34:59","updateUser":"978946335464579075"}
+         * departmentId : 958589807934590978
          * status : 0
          * superAdmin : false
          * sysAdmin : false
-         * topCompanyEntity : {"companyId":"981406915978862593","countStaff":0,"level":1,"orgCode":"c","orgId":"981406915978862593","orgName":"在人间","orgType":0,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 14:59:26","updateUser":"981406915978862594","verifyStatus":1}
-         * topCompanyId : 981406915978862593
-         * updateTime : 2018-06-01 14:59:26
-         * updateUser : 981406915978862594
-         * userId : 1002444492261064705
+         * topCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-04-02 14:34:59","updateUser":"978946335464579075","verifyStatus":0}
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-04-02 14:34:59
+         * updateUser : 978946335464579075
+         * userId : 980695066010497026
          * userType : 6
          */
 
         private String accId;
         private AccountEntityBeanX accountEntity;
         private boolean companyAdmin;
-        private CompanyEntityBeanXX companyEntity;
+        private CompanyEntityBeanX companyEntity;
         private String companyId;
         private DepartmentEntityBeanX departmentEntity;
         private String departmentId;
@@ -818,11 +1511,11 @@ public class WorkTalkDetailBean implements Serializable {
             this.companyAdmin = companyAdmin;
         }
 
-        public CompanyEntityBeanXX getCompanyEntity() {
+        public CompanyEntityBeanX getCompanyEntity() {
             return companyEntity;
         }
 
-        public void setCompanyEntity(CompanyEntityBeanXX companyEntity) {
+        public void setCompanyEntity(CompanyEntityBeanX companyEntity) {
             this.companyEntity = companyEntity;
         }
 
@@ -924,14 +1617,15 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class AccountEntityBeanX {
             /**
-             * accId : 1002036264188542978
+             * accId : 980695065603649538
              * accType : 0
              * avatar : ecbd2972163f425bacfbfed943e71553.png
-             * email :
-             * mobile : 13800138015
-             * nickName : 宝宝
-             * realName : 宝宝
-             * regTime : 2018-05-31 11:57:17
+             * email : 15940525877@163.com
+             * mobile : 15900000005
+             * nickName : 李旭
+             * qrCode : 4e70fea2a725445a85433ef94eff56c2.png
+             * realName : 李旭
+             * regTime : 2018-04-02 14:34:59
              * status : 0
              */
 
@@ -941,6 +1635,7 @@ public class WorkTalkDetailBean implements Serializable {
             private String email;
             private String mobile;
             private String nickName;
+            private String qrCode;
             private String realName;
             private String regTime;
             private int status;
@@ -993,6 +1688,14 @@ public class WorkTalkDetailBean implements Serializable {
                 this.nickName = nickName;
             }
 
+            public String getQrCode() {
+                return qrCode;
+            }
+
+            public void setQrCode(String qrCode) {
+                this.qrCode = qrCode;
+            }
+
             public String getRealName() {
                 return realName;
             }
@@ -1018,19 +1721,19 @@ public class WorkTalkDetailBean implements Serializable {
             }
         }
 
-        public static class CompanyEntityBeanXX {
+        public static class CompanyEntityBeanX {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 981406915978862593
-             * orgName : 在人间
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 14:59:26
-             * updateUser : 981406915978862594
-             * verifyStatus : 1
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-04-02 14:34:59
+             * updateUser : 978946335464579075
+             * verifyStatus : 0
              */
 
             private String companyId;
@@ -1136,16 +1839,16 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class DepartmentEntityBeanX {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
-             * level : 3
-             * orgCode : c.2.2
-             * orgId : 1001659535615930369
-             * orgName : 地狱波二级
-             * orgType : 2
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 14:59:26
-             * updateUser : 981406915978862594
+             * level : 1
+             * orgCode : c
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
+             * orgType : 0
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-04-02 14:34:59
+             * updateUser : 978946335464579075
              */
 
             private String companyId;
@@ -1242,17 +1945,17 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class TopCompanyEntityBeanX {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 981406915978862593
-             * orgName : 在人间
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 14:59:26
-             * updateUser : 981406915978862594
-             * verifyStatus : 1
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-04-02 14:34:59
+             * updateUser : 978946335464579075
+             * verifyStatus : 0
              */
 
             private String companyId;
@@ -1359,28 +2062,28 @@ public class WorkTalkDetailBean implements Serializable {
 
     public static class WorkerUserEntityBean {
         /**
-         * accId : 958589123373846529
-         * accountEntity : {"accId":"958589123373846529","accType":3,"address":"幻眼国际(朝阳北路与高安屯路交叉口东150米)","areaCode":"","avatar":"2c00d1b320d74bdaa66d7773c056989b.png","birthday":"2014-06-03 00:00:00","email":"101@qq.com","gender":1,"idCard":"110101200001015778","mobile":"13800138010","nickName":"烟酒梁还不知","qrCode":"b4e6ecd7946c432085b63ccef5bb75d9.png","realName":"烟酒梁","regTime":"2018-01-31 14:33:51","status":0}
-         * companyAdmin : true
-         * companyEntity : {"companyId":"981406915978862593","countStaff":0,"level":1,"orgCode":"c","orgId":"981406915978862593","orgName":"在人间","orgType":0,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 20:25:38","updateUser":"958589123440955393","verifyStatus":1}
-         * companyId : 981406915978862593
-         * departmentEntity : {"companyId":"981406915978862593","countStaff":0,"level":3,"orgCode":"c.2.2","orgId":"1001659535615930369","orgName":"地狱波二级","orgType":2,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 20:25:38","updateUser":"958589123440955393"}
-         * departmentId : 1001659535615930369
-         * status : 0
+         * accId : 958600990552657921
+         * accountEntity : {"accId":"958600990552657921","accType":2,"address":"","areaCode":"3.12.1.1","avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"abc@qq.com","gender":1,"idCard":"120109198402020116","mobile":"13911054008","nickName":"上帝","qrCode":"ac4de2c3827743f9b90737b3b6a16e51.png","realName":"张生","regTime":"2018-01-31 15:21:00","status":2}
+         * companyAdmin : false
+         * companyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-03-12 15:27:55","updateUser":"958589807934590979","verifyStatus":0}
+         * companyId : 958589807934590978
+         * departmentEntity : {"companyId":"958589807934590978","countStaff":0,"level":2,"orgCode":"c.2","orgId":"973097885401395202","orgName":"防损部","orgType":2,"topCompanyId":"958589807934590978","updateTime":"2018-03-12 15:27:55","updateUser":"958589807934590979"}
+         * departmentId : 973097885401395202
+         * status : 2
          * superAdmin : false
          * sysAdmin : false
-         * topCompanyEntity : {"companyId":"981406915978862593","countStaff":0,"level":1,"orgCode":"c","orgId":"981406915978862593","orgName":"在人间","orgType":0,"topCompanyId":"981406915978862593","updateTime":"2018-06-01 20:25:38","updateUser":"958589123440955393","verifyStatus":1}
-         * topCompanyId : 981406915978862593
-         * updateTime : 2018-06-01 20:25:38
-         * updateUser : 958589123440955393
-         * userId : 981406915978862594
-         * userType : 3
+         * topCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgType":0,"topCompanyId":"958589807934590978","updateTime":"2018-03-12 15:27:55","updateUser":"958589807934590979","verifyStatus":0}
+         * topCompanyId : 958589807934590978
+         * updateTime : 2018-03-12 15:27:55
+         * updateUser : 958589807934590979
+         * userId : 973098243016142849
+         * userType : 6
          */
 
         private String accId;
         private AccountEntityBeanXX accountEntity;
         private boolean companyAdmin;
-        private CompanyEntityBeanXXX companyEntity;
+        private CompanyEntityBeanXX companyEntity;
         private String companyId;
         private DepartmentEntityBeanXX departmentEntity;
         private String departmentId;
@@ -1418,11 +2121,11 @@ public class WorkTalkDetailBean implements Serializable {
             this.companyAdmin = companyAdmin;
         }
 
-        public CompanyEntityBeanXXX getCompanyEntity() {
+        public CompanyEntityBeanXX getCompanyEntity() {
             return companyEntity;
         }
 
-        public void setCompanyEntity(CompanyEntityBeanXXX companyEntity) {
+        public void setCompanyEntity(CompanyEntityBeanXX companyEntity) {
             this.companyEntity = companyEntity;
         }
 
@@ -1524,21 +2227,20 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class AccountEntityBeanXX {
             /**
-             * accId : 958589123373846529
-             * accType : 3
-             * address : 幻眼国际(朝阳北路与高安屯路交叉口东150米)
-             * areaCode :
-             * avatar : 2c00d1b320d74bdaa66d7773c056989b.png
-             * birthday : 2014-06-03 00:00:00
-             * email : 101@qq.com
+             * accId : 958600990552657921
+             * accType : 2
+             * address :
+             * areaCode : 3.12.1.1
+             * avatar : ecbd2972163f425bacfbfed943e71553.png
+             * email : abc@qq.com
              * gender : 1
-             * idCard : 110101200001015778
-             * mobile : 13800138010
-             * nickName : 烟酒梁还不知
-             * qrCode : b4e6ecd7946c432085b63ccef5bb75d9.png
-             * realName : 烟酒梁
-             * regTime : 2018-01-31 14:33:51
-             * status : 0
+             * idCard : 120109198402020116
+             * mobile : 13911054008
+             * nickName : 上帝
+             * qrCode : ac4de2c3827743f9b90737b3b6a16e51.png
+             * realName : 张生
+             * regTime : 2018-01-31 15:21:00
+             * status : 2
              */
 
             private String accId;
@@ -1546,7 +2248,6 @@ public class WorkTalkDetailBean implements Serializable {
             private String address;
             private String areaCode;
             private String avatar;
-            private String birthday;
             private String email;
             private int gender;
             private String idCard;
@@ -1595,14 +2296,6 @@ public class WorkTalkDetailBean implements Serializable {
 
             public void setAvatar(String avatar) {
                 this.avatar = avatar;
-            }
-
-            public String getBirthday() {
-                return birthday;
-            }
-
-            public void setBirthday(String birthday) {
-                this.birthday = birthday;
             }
 
             public String getEmail() {
@@ -1678,19 +2371,19 @@ public class WorkTalkDetailBean implements Serializable {
             }
         }
 
-        public static class CompanyEntityBeanXXX {
+        public static class CompanyEntityBeanXX {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 981406915978862593
-             * orgName : 在人间
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 20:25:38
-             * updateUser : 958589123440955393
-             * verifyStatus : 1
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-03-12 15:27:55
+             * updateUser : 958589807934590979
+             * verifyStatus : 0
              */
 
             private String companyId;
@@ -1796,16 +2489,16 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class DepartmentEntityBeanXX {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
-             * level : 3
-             * orgCode : c.2.2
-             * orgId : 1001659535615930369
-             * orgName : 地狱波二级
+             * level : 2
+             * orgCode : c.2
+             * orgId : 973097885401395202
+             * orgName : 防损部
              * orgType : 2
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 20:25:38
-             * updateUser : 958589123440955393
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-03-12 15:27:55
+             * updateUser : 958589807934590979
              */
 
             private String companyId;
@@ -1902,17 +2595,17 @@ public class WorkTalkDetailBean implements Serializable {
 
         public static class TopCompanyEntityBeanXX {
             /**
-             * companyId : 981406915978862593
+             * companyId : 958589807934590978
              * countStaff : 0
              * level : 1
              * orgCode : c
-             * orgId : 981406915978862593
-             * orgName : 在人间
+             * orgId : 958589807934590978
+             * orgName : 褡裢坡烟酒连锁
              * orgType : 0
-             * topCompanyId : 981406915978862593
-             * updateTime : 2018-06-01 20:25:38
-             * updateUser : 958589123440955393
-             * verifyStatus : 1
+             * topCompanyId : 958589807934590978
+             * updateTime : 2018-03-12 15:27:55
+             * updateUser : 958589807934590979
+             * verifyStatus : 0
              */
 
             private String companyId;

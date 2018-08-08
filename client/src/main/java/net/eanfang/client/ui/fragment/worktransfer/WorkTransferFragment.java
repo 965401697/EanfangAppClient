@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -12,7 +11,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkTalkListBean;
 import com.eanfang.model.WorkTransferListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
@@ -22,12 +20,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
-import net.eanfang.client.ui.adapter.WorkTalkAdapter;
-import net.eanfang.client.ui.adapter.WorkTransferAdapter;
-
-import org.json.JSONObject;
+import net.eanfang.client.ui.adapter.worktransfer.WorkTransferAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +49,8 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
      * 用户ID
      */
     private Long mUserId;
+
+    private boolean mIsCreate = false;
 
     public static WorkTransferFragment getInstance(String title, String type) {
         WorkTransferFragment workTransferFragment = new WorkTransferFragment();
@@ -90,18 +86,20 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
         mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
-            String status = GetConstDataUtils.getWorkTalkStatus().indexOf(getmTitle()) + "";
+            String status = GetConstDataUtils.getWorkTransfer().indexOf(getmTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
         queryEntry.setPage(page);
         queryEntry.setSize(5);
         // 我接收的
-//        if (mType.equals("我接收的")) {
-//            queryEntry.getEquals().put("assigneeUserId", mUserId + "");
-//        } else {
-//            // 我创建的
-//            queryEntry.getEquals().put("ownerUserId", mUserId + "");
-//        }
+        if (mType.equals("我接收的")) {
+            queryEntry.getEquals().put("assigneeUserId", mUserId + "");
+            mIsCreate = false;
+        } else {
+            // 我创建的
+            queryEntry.getEquals().put("ownerUserId", mUserId + "");
+            mIsCreate = true;
+        }
 
         EanfangHttp.post(NewApiService.WORK_TRANSFER_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -123,7 +121,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
         swipeRefreshLayout = findViewById(R.id.srl_worktransfer);
         swipeRefreshLayout.setOnRefreshListener(this);
         rv_worktalk = findViewById(R.id.rv_worktransfer);
-        workTalkAdapter = new WorkTransferAdapter();
+        workTalkAdapter = new WorkTransferAdapter(mIsCreate);
         rv_worktalk.setLayoutManager(new LinearLayoutManager(getContext()));
         workTalkAdapter.bindToRecyclerView(rv_worktalk);
         workTalkAdapter.setOnLoadMoreListener(this, rv_worktalk);
@@ -139,6 +137,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
                 case R.id.tv_seedetail:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
+                    bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());
                     JumpItent.jump(getActivity(), WorkTransferDetailActivity.class, bundle);
                     break;
                 //联系汇报人
