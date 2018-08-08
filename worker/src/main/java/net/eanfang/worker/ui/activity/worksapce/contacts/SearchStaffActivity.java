@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.contacts;
+package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -17,15 +17,15 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 import com.yaf.sys.entity.AccountEntity;
 
-
-import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchStaffActivity extends BaseClientActivity {
+public class SearchStaffActivity extends BaseWorkerActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;

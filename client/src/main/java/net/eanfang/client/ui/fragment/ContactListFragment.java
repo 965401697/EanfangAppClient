@@ -73,6 +73,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private int mStystemCount = 0;
 
     private View view;
+    private MyConversationListFragment myConversationListFragment;
+    private Uri uri;
 
     @Override
     protected int setLayoutResouceId() {
@@ -106,17 +108,20 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
-        MyConversationListFragment fragment = new MyConversationListFragment();
-        Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
+        myConversationListFragment = new MyConversationListFragment();
+        //设置私聊会话，该会话聚合显示
+//设置群组会话，该会话非聚合显示
+//系统
+        uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                 .build();
-        fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
+//        fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, fragment);
+        transaction.add(R.id.rong_content, myConversationListFragment);
         transaction.commit();
 
         setGroupInfo();//对比数据
@@ -222,11 +227,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
+    @Override
+    public void onResume() {
+        super.onResume();
 //        doHttpNoticeCount();
-//    }
+        if (myConversationListFragment != null && uri != null)
+            myConversationListFragment.setUri(uri);
+    }
 
     private void doHttpNoticeCount() {
 

@@ -536,7 +536,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.worksapce.contacts.SearchStaffActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.SearchStaffActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity"></activity>
     </application>
 
 </manifest>

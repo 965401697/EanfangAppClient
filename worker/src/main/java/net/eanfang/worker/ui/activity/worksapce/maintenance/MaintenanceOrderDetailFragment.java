@@ -155,8 +155,8 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
 
 
         tvOrderNum.setText("订单编号：" + orderEntity.getOrderNum());
-        tvContact.setText("现场联系人：" + orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName());
-        tvContactPhone.setText("联系电话：" + orderEntity.getAssigneeUserEntity().getAccountEntity().getMobile());
+        tvContact.setText("现场联系人：" + orderEntity.getRepairContacts());
+        tvContactPhone.setText("联系电话：" + orderEntity.getRepairContactPhone());
         if (orderEntity.getPeriod() == 0) {
             tvPeriodType.setText("维保类型：周检");
         } else if (orderEntity.getPeriod() == 1) {

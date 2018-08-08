@@ -82,7 +82,7 @@ public class CompanyManagerActivity extends BaseActivity {
 
                 break;
             case R.id.rl_add_staff:
-                JumpItent.jump(CompanyManagerActivity.this, AddStaffActivity.class);
+                JumpItent.jump(CompanyManagerActivity.this, SearchStaffActivity.class);
 
                 break;
             case R.id.rl_permission:

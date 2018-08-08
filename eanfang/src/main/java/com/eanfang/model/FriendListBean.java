@@ -29,9 +29,18 @@ public class FriendListBean implements Serializable, Comparator<FriendListBean> 
     private int status;//是不是禁言
 
     private String nickName;   // 姓名
+    private String realName; //添加通讯录的员工 的真实名字
     private String pinyin; // 姓名对应的拼音
     private String firstLetter; // 拼音的首字母
 
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public String getAddress() {
         return address;

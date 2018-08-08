@@ -461,7 +461,7 @@ public class CheckActivity extends BaseWorkerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK || resultCode == REQUEST_ADD_CODE) {
-
+            // TODO: 2018/8/8 禁言的群組會有問題 
             if (requestCode == REQUEST_ADD_CODE) {
 
                 if (data == null || data.getSerializableExtra("result") == null) {

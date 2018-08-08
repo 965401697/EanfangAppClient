@@ -217,9 +217,13 @@ public interface UserApi {
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
     /**
-     * 获取好有列表
+     * 根據accid 獲得用戶信息
      */
     String GET_ACC_INFO = BuildConfig.API_HOST + "/yaf_sys/account/getAccInfo";
+    /**
+     * 根据手机号查用户信息
+     */
+    String GET_MOBILE_INFO = BuildConfig.API_HOST + "/yaf_sys/account/getAccInfo/mobile";
 
     /**
      * 获取好有列表

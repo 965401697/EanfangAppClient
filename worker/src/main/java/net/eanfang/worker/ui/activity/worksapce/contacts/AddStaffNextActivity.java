@@ -73,7 +73,9 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
 
         ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + friendBean.getAvatar());
         tvNamePhone.setText(friendBean.getNickName() + "(" + friendBean.getMobile() + ")");
-        tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());
+        if (!TextUtils.isEmpty(friendBean.getAreaCode())) {
+            tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());
+        }
 
         setRightTitle("确定");
         setRightTitleOnClickListener(new View.OnClickListener() {
