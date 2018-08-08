@@ -13,15 +13,27 @@ import net.eanfang.client.R;
  * @date on 2018/7/26$  17:21$
  */
 public class WorkTalkAdapter extends BaseQuickAdapter<WorkTalkListBean.ListBean, BaseViewHolder> {
+    private boolean mIsCreate = false;
 
-
-    public WorkTalkAdapter() {
+    public WorkTalkAdapter(boolean isCreate) {
         super(R.layout.layout_item_worktalk);
+        this.mIsCreate = isCreate;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, WorkTalkListBean.ListBean item) {
-        helper.setText(R.id.tv_worktalk_name, item.getOwnerUserEntity().getDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getNickName() + ")");
+        if (mIsCreate) {// 我创建的
+            // 创建人
+            helper.setText(R.id.tv_worktalk_name, item.getOwnerUserEntity().getDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getNickName() + ")");
+            // 接收人
+            helper.setText(R.id.tv_receiver_name, "接收人：" + item.getAssigneeUserEntity().getAccountEntity().getNickName());
+        } else {// 我接收的
+            // 创建人
+            helper.setText(R.id.tv_worktalk_name, item.getAssigneeUserEntity().getDepartmentEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getNickName() + ")");
+            //接收人
+            helper.setText(R.id.tv_receiver_name, "接收人：" + item.getOwnerUserEntity().getAccountEntity().getNickName());
+        }
+
         if (item.getStatus() == 1) {
             helper.setText(R.id.tv_state, "已读");
         } else {
@@ -29,7 +41,6 @@ public class WorkTalkAdapter extends BaseQuickAdapter<WorkTalkListBean.ListBean,
         }
         helper.setText(R.id.tv_order_id, "编号：" + item.getOrderNum());
         helper.setText(R.id.tv_create_time, "创建时间：" + item.getCreateTime());
-        helper.setText(R.id.tv_receiver_name, "接收人：" + item.getAssigneeUserEntity().getAccountEntity().getNickName());
         helper.setText(R.id.tv_telphone, "联系电话：" + item.getAssigneeUserEntity().getAccountEntity().getMobile());
         helper.addOnClickListener(R.id.tv_seedetail);
         helper.addOnClickListener(R.id.tv_contact);

@@ -140,6 +140,19 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private Long mOrgId;
     // 当前公司名称
     private String mOrgName = "";
+    // 业务类型
+    private String mBussiness = "";
+
+    public static final int[] LIBERTY_TWO_COLORS = {
+            Color.rgb(153, 150, 249), Color.rgb(130, 104, 234),
+            Color.rgb(72, 205, 210), Color.rgb(117, 226, 228),
+            Color.rgb(166, 98, 247)
+    };
+    public static final int[] LIBERTY_COLORS = {
+            Color.rgb(255, 202, 115), Color.rgb(0, 206, 161),
+            Color.rgb(255, 98, 0), Color.rgb(255, 211, 0),
+            Color.rgb(255, 159, 0)
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,13 +298,16 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             //设置数据
             bussinessEntryList.clear();
             for (int i = 0; i < bussinessBeanList.size(); i++) {
-
                 if (bussinessBeanList.get(i).getCount() != 0) {
                     bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getCount(), bussinessBeanList.get(i).getTypeStr()));
                 }
             }
+            if (bussinessEntryList.size() <= 5) {
+                setFaultData(bussinessEntryList, true);
+            } else {
+                setFaultData(bussinessEntryList, false);
+            }
 
-            setFaultData(bussinessEntryList);
 
         }
         if (bean.getFailure().size() > 0) {
@@ -303,8 +319,12 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
                     failureEntryList.add(new PieEntry(failureBeanList.get(i).getCount(), failureBeanList.get(i).getTypeStr()));
                 }
             }
+            if (failureEntryList.size() <= 5) {
+                setIntactData(failureEntryList, true);
+            } else {
+                setIntactData(failureEntryList, false);
+            }
 
-            setIntactData(failureEntryList);
         }
         if (bussinessEntryList.size() <= 0 && failureEntryList.size() <= 0) {
             tvPieNoresult.setVisibility(View.VISIBLE);
@@ -312,6 +332,8 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             llFault.setVisibility(View.GONE);
         } else {
             tvPieNoresult.setVisibility(View.GONE);
+            llIntact.setVisibility(View.VISIBLE);
+            llFault.setVisibility(View.VISIBLE);
         }
 
 
@@ -323,6 +345,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tvDataSelectType.setText(mDataType.get(i).getDataName());
+                mBussiness = mDataType.get(i).getDataCode();
                 doGetData(mDataType.get(i).getDataCode());
                 dataSelectPopWindow.dismiss();
             }
@@ -345,41 +368,33 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             case R.id.rb_dataTimeToday:
                 mData = "1";
                 // 获取统计数据
-                doGetData("");
+                doGetData(mBussiness);
                 break;
             case R.id.rb_dataTimeMonth:
                 mData = "2";
                 // 获取统计数据
-                doGetData("");
+                doGetData(mBussiness);
                 break;
         }
     }
 
     //设置数据
-    private void setFaultData(ArrayList<PieEntry> entries) {
+    private void setFaultData(ArrayList<PieEntry> entries, boolean isFive) {
         pcFault.clear();
         PieDataSet dataSet = new PieDataSet(entries, "故障类型");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
+        if (isFive) {
+            for (int c : LIBERTY_COLORS)
+                colors.add(c);
+        } else {
+            for (int c : LIBERTY_COLORS)
+                colors.add(c);
+            for (int c : LIBERTY_TWO_COLORS)
+                colors.add(c);
+        }
         dataSet.setColors(colors);
 
 //        dataSet.setValueLinePart1OffsetPercentage(80.f);
@@ -409,34 +424,23 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     }
 
     //设置数据
-    private void setIntactData(ArrayList<PieEntry> entries) {
+    private void setIntactData(ArrayList<PieEntry> entries, boolean isFive) {
         pcIntact.clear();
         PieDataSet dataSet = new PieDataSet(entries, "故障修复率");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-//        ArrayList<Integer> colors = new ArrayList<Integer>();
-//        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.JOYFUL_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.COLORFUL_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.LIBERTY_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.PASTEL_COLORS)
-//            colors.add(c);
-//
-//        colors.add(ColorTemplate.getHoloBlue());
-        final int[] MY_COLORS = {Color.rgb(192, 0, 0), Color.rgb(255, 0, 0), Color.rgb(255, 192, 0),
-                Color.rgb(127, 127, 127), Color.rgb(146, 208, 80), Color.rgb(0, 176, 80), Color.rgb(79, 129, 189)};
         ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : MY_COLORS) colors.add(c);
+        colors.add(ColorTemplate.getHoloBlue());
+        if (isFive) {
+            for (int c : LIBERTY_COLORS)
+                colors.add(c);
+        } else {
+            for (int c : LIBERTY_COLORS)
+                colors.add(c);
+            for (int c : LIBERTY_TWO_COLORS)
+                colors.add(c);
+        }
         dataSet.setColors(colors);
 
 //        dataSet.setValueLinePart1OffsetPercentage(80.f);
@@ -545,7 +549,6 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         //设置比例块换行...
         l.setWordWrapEnabled(true);
         l.setDrawInside(false);
-
     }
 
     public void initMyPieChart(PieChart pieChart) {
@@ -557,6 +560,11 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
          * 设置pieChart图表的描述
          * */
         pieChart.getDescription().setEnabled(false);
+        /**
+         * 是否显示图标上文字
+         * */
+        pieChart.setDrawEntryLabels(true);
+        pieChart.setEntryLabelColor(Color.BLACK);
     }
 
 }

@@ -502,6 +502,10 @@ public interface NewApiService {
      */
     String WORK_TRANSFER_DETAIL = BASE_URL + "/yaf_oa/exchangelog/info/";
     /**
+     * 交接班确认交接
+     */
+    String WORK_TRANSFER_CONFIM = BASE_URL + "/yaf_oa/exchangelog/update/";
+    /**
      * 首页统计数据
      */
     String HOME_DATASTASTISTICS = BASE_URL + "/yaf_statistics/repairOrderStatistics/app/Count";

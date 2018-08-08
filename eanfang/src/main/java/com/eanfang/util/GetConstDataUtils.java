@@ -41,11 +41,22 @@ public class GetConstDataUtils {
      * 面谈员工
      */
     private static List<String> workTalkStatus;
-
+    /**
+     * 交接班详情 当前状态
+     */
+    private static List<String> workTransferDetailStatus;
     /**
      * 交接班
      */
     private static List<String> workTransfer;
+    /**
+     * 交接班 创建 班次 状态
+     */
+    private static List<String> workTransferCreateClass;
+    /**
+     * 交接班 列表(待确认 完成交接) 状态
+     */
+    private static List<String> workTransferListStatus;
     /**
      * 优先级
      */
@@ -317,6 +328,23 @@ public class GetConstDataUtils {
     }
 
     /**
+     * 交接班 详情(完好 破损) 状态
+     *
+     * @return
+     */
+    public static List<String> getWokrTransferDetailStatus() {
+        if (workTransferDetailStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransferDetailStatus == null) {
+                    workTransferDetailStatus = Config.get().getConstBean().getData().getExchangeLogConstant().get(Constant.WORK_TRANSFER_DETAIL);
+                }
+            }
+        }
+        return workTransferDetailStatus;
+    }
+
+
+    /**
      * 交接班状态
      *
      * @return
@@ -332,6 +360,38 @@ public class GetConstDataUtils {
             }
         }
         return workTransfer;
+    }
+
+    /**
+     * 交接班 创建 班次 状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTransferCreateClass() {
+        if (workTransferCreateClass == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransferCreateClass == null) {
+                    workTransferCreateClass = Config.get().getConstBean().getData().getExchangeLogConstant().get(Constant.WORK_TRANSFER_CREATE);
+                }
+            }
+        }
+        return workTransferCreateClass;
+    }
+
+    /**
+     * 交接班 列表(待确认 完成交接) 状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTransferList() {
+        if (workTransferListStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransferListStatus == null) {
+                    workTransferListStatus = Config.get().getConstBean().getData().getExchangeLogConstant().get(Constant.WORK_TRANSFER_LIST);
+                }
+            }
+        }
+        return workTransferListStatus;
     }
 
     /**

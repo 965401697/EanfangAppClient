@@ -96,7 +96,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
         // 创建人
         tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getNickName() + "(汇报人)");
         // 部门
-        tvDepartment.setText(bean.getOwnerUserEntity().getDepartmentEntity().getOrgName());
+        tvDepartment.setText(bean.getOwnerDepartmentEntity().getOrgName());
         //时间
         String[] dataOne = bean.getCreateTime().split("-");
         String[] dateTwo = dataOne[2].split(" ");
@@ -104,7 +104,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
         tvWeek.setText(GetDateUtils.dateToWeek(dataOne[0] + "-" + dataOne[1] + "-" + dateTwo[0]));
         tvData.setText(dateTwo[0]);
         //单位名称
-        tvCompanyName.setText(bean.getOwnerUserEntity().getCompanyEntity().getOrgName());
+        tvCompanyName.setText(bean.getOwnerCompanyEntity().getOrgName());
         // 单位电话
         tvCompanyPhone.setText(bean.getOwnerUserEntity().getAccountEntity().getMobile());
         // 接收人

@@ -35,6 +35,7 @@ public class ConstAllBean implements Serializable {
         private Map<String, List<String>> TaskPublishConstant;
         private Map<String, List<String>> NoticeConst;
         private Map<String, List<String>> OAConst;
+        private Map<String, List<String>> ExchangeLogConstant;
     }
 
     public ConstBean getData() {
