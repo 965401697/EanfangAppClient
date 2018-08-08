@@ -72,7 +72,7 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
                 @Override
                 public void onClick(View v) {
                     EventBus.getDefault().post(groupPresonList);
-                    MyGroupsListActivity.this.finishSelf();
+                    endTransaction(true);
                 }
             });
         }

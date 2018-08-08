@@ -94,8 +94,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.title.setText("设备点检");
             holder.orderNum.setText("检查人：" + customizeMessage.getOrderNum());
             holder.simpleDraweeView.setVisibility(View.GONE);
-            holder.creatTime.setText("负责人：" + customizeMessage.getCreatTime());
-            holder.workerName.setText("整改期限：" + customizeMessage.getWorkerName());
+            holder.creatTime.setText("整改期限：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("检查时间：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.INVISIBLE);
         } else if (customizeMessage.getShareType().equals("6")) {
 
@@ -106,14 +106,15 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.orderNum.setText("单号编号：" + customizeMessage.getOrderNum());
             holder.simpleDraweeView.setVisibility(View.GONE);
             holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
-            holder.workerName.setText("接收人：" + customizeMessage.getWorkerName());
+//            holder.workerName.setText("接收人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+            holder.workerName.setVisibility(View.GONE);
         } else if (customizeMessage.getShareType().equals("9")) {
             holder.title.setText("布防日志");
             holder.orderNum.setText("单号编号：" + customizeMessage.getOrderNum());
             holder.simpleDraweeView.setVisibility(View.GONE);
             holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
-            holder.workerName.setText("接收人：" + customizeMessage.getWorkerName());
+            holder.workerName.setVisibility(View.GONE);
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
         }
     }
@@ -158,7 +159,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("4")) {
             new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
         } else if (customizeMessage.getShareType().equals("5")) {
-            new WorkCheckInfoView((Activity) view.getContext(), true,  Long.parseLong(customizeMessage.getOrderId()),true).show();
+            new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
 
         } else if (customizeMessage.getShareType().equals("6")) {
 

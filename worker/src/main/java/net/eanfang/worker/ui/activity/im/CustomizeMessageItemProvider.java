@@ -84,8 +84,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.title.setText("设备点检");
             holder.orderNum.setText("检查人：" + customizeMessage.getOrderNum());
             holder.simpleDraweeView.setVisibility(View.GONE);
-            holder.creatTime.setText("负责人：" + customizeMessage.getCreatTime());
-            holder.workerName.setText("整改期限：" + customizeMessage.getWorkerName());
+            holder.creatTime.setText("整改期限：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("检查时间：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.INVISIBLE);
         }
     }

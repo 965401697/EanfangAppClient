@@ -133,8 +133,8 @@ public class WorkTaskInfoView extends BaseDialog {
                     etCompanyName.setText(bean.getCreateCompany().getOrgName());
                     etDepartmentName.setText(bean.getCreateOrg().getOrgName());
                     etTaskName.setText(bean.getTitle());
-                    tvDependPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
-                    etPhoneNum.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
+//                    tvDependPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
+//                    etPhoneNum.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
                     etPubTime.setText(bean.getCreateTime());
                     tvPubName.setText(bean.getCreateUser().getAccountEntity().getRealName());
                     mDataList = bean.getWorkTaskDetails();

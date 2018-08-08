@@ -24,6 +24,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dimen_44"
         android:layout_marginTop="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLength="20"
+        android:singleLine="true"
         android:textColor="@color/color_bottom"
         android:textSize="@dimen/textSize_12" />
 

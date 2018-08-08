@@ -36,7 +36,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
         helper.setText(R.id.tv_depart_name, "部门：" + item.getCreateOrg().getOrgName());
         helper.setText(R.id.tv_type, "类型：" + GetConstDataUtils.getWorkReportTypeList().get(item.getType()));
         helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreateUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
+//        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_pub_time, "提交时间：" + item.getCreateTime());
         if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
             helper.setText(R.id.tv_read_ns, "已读");

@@ -195,6 +195,7 @@
                 android:layout_height="@dimen/dimen_80"
                 android:background="@drawable/bg_ll_selctor"
                 android:focusable="true"
+                android:visibility="gone"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 
@@ -226,6 +227,7 @@
                 android:layout_height="@dimen/dimen_80"
                 android:background="@drawable/bg_ll_selctor"
                 android:focusable="true"
+                android:visibility="gone"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal">
 

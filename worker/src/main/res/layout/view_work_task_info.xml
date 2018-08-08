@@ -205,6 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:padding="15dp">
 
@@ -232,6 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:padding="15dp">
 

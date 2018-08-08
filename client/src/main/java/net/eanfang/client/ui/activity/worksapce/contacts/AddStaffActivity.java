@@ -1,7 +1,11 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -117,5 +121,33 @@ public class AddStaffActivity extends BaseClientActivity {
                         ToastUtil.get().showToast(AddStaffActivity.this, "没有搜索到好友");
                     }
                 }));
+    }
+
+
+    private String[] getPhoneContacts(Uri uri) {
+        String[] contact = new String[2];
+        //得到ContentResolver对象**
+        ContentResolver cr = getContentResolver();
+        //取得电话本中开始一项的光标**
+        Cursor cursor = cr.query(uri, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            //取得联系人姓名**
+            int nameFieldColumnIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+            contact[0] = cursor.getString(nameFieldColumnIndex);
+            //取得电话号码**
+            String ContactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            Cursor phone = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + ContactId, null, null);
+            if (phone != null) {
+                phone.moveToFirst();
+                contact[1] = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            }
+            phone.close();
+            cursor.close();
+        } else {
+            return null;
+        }
+        return contact;
     }
 }

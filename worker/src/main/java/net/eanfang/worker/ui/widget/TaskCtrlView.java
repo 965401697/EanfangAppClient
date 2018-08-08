@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.TaskActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.TaskActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkTaskListActivity;
 
 import butterknife.BindView;

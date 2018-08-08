@@ -171,9 +171,9 @@
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
         <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
-        <activity android:name=".ui.activity.worksapce.CheckActivity" />
-        <activity android:name=".ui.activity.worksapce.ReportActivity" />
-        <activity android:name=".ui.activity.worksapce.TaskActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.CheckActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairCtrlActivity" />
         <activity android:name=".ui.activity.pay.PayActivity" />
@@ -516,7 +516,14 @@
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceAddCheckResultShowActivity"></activity>
         <!--维保添加故障出路展示activity的照片-->
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleEditShowActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.oa.SelectOAGroupActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.OASearchActivity">
+            <intent-filter>
+                <action android:name="com.eanfang.net.intent.action.OA_SEARCH" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import com.annimon.stream.Stream;
 import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -45,11 +46,11 @@ public class MaintenanceListActivity extends BaseClientActivity {
 
         int type = getIntent().getIntExtra("type", 0);
 
-        mAllTitle.remove(0);
-        mAllTitle.remove(mAllTitle.size() - 1);
-        mTitles = new String[mAllTitle.size()];
+        //剔除 待执行 订单取消
+        List tempList = Stream.of(mAllTitle).filter(title -> !"待执行".equals(title) && !"订单取消".equals(title)).toList();
+        mTitles = new String[tempList.size()];
 
-        mAllTitle.toArray(mTitles);
+        tempList.toArray(mTitles);
         for (String title : mTitles) {
             mFragments.add(MaintenanceListFragment.getInstance(type, title));
         }

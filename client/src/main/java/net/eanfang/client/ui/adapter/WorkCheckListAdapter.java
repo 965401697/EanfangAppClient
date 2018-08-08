@@ -33,7 +33,7 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
     protected void convert(BaseViewHolder helper, WorkCheckListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getCompanyName());
         helper.setText(R.id.tv_check_person, "检查人：" + item.getCreateUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_duty_person, "负责人：" + item.getAssigneeUser().getAccountEntity().getRealName());
+//        helper.setText(R.id.tv_duty_person, "负责人：" + item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_check_time, "检查时间：" + item.getCreateTime());
         helper.setText(R.id.tv_change_tiem, "整改期限：" + item.getChangeDeadlineTime());
 

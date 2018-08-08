@@ -40,7 +40,6 @@ public class OrgSelectGroupMultipleItem extends TreeSelectItemGroup<TemplateBean
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
 
-//        if (data == null || data.getPresons() == null) return;
 
         if (data.isVisible()) {
             viewHolder.getView(R.id.cb_all_checked).setVisibility(View.INVISIBLE);

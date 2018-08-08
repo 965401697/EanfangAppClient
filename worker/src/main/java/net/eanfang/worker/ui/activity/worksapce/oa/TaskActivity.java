@@ -1,9 +1,10 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.oa;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,10 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -29,19 +27,21 @@ import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkTaskBean;
 import com.eanfang.model.WorkTaskInfoBean;
+import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
-import net.eanfang.client.ui.adapter.AddTaskDetailAdapter;
-import net.eanfang.client.ui.adapter.SendPersonAdapter;
-import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.widget.TaskInfoView;
-import net.eanfang.client.util.SendContactUtils;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.worker.ui.activity.worksapce.AddWorkTaskDeitailActivity;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.adapter.AddTaskDetailAdapter;
+import net.eanfang.worker.ui.adapter.SendPersonAdapter;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.widget.TaskInfoView;
+import net.eanfang.worker.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -53,6 +53,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
  * Created by MrHou
  *
@@ -61,9 +62,7 @@ import butterknife.ButterKnife;
  * @desc 布置任务
  */
 
-public class TaskActivity extends BaseClientActivity implements View.OnClickListener {
-
-
+public class TaskActivity extends BaseWorkerActivity implements View.OnClickListener {
     @BindView(R.id.btn_add_task)
     TextView btnAddTask;
     @BindView(R.id.task_detial_list)
@@ -86,10 +85,13 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     TextView tvSend;
     @BindView(R.id.rv_team)
     RecyclerView rvTeam;
+    @BindView(R.id.tv_send_group)
+    TextView tvSendGroup;
+    @BindView(R.id.rv_group)
+    RecyclerView rvGroup;
+    private int posistion;
 
     private OptionsPickerView pvOptions_NoLink;
-
-    private int posistion;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private List<WorkTaskBean.WorkTaskDetailsBean> beanList = new ArrayList<>();
@@ -98,9 +100,11 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     private WorkTaskBean.WorkTaskDetailsBean detailsBean;
     private Long assigneeUserId;
     private String assigneeOrgCode;
-    private static int TASK_REQUEST_CODE = 200;
 
-    private boolean isSend = false;
+    private SendPersonAdapter sendGroupAdapter;
+    private final int REQUEST_CODE_GROUP = 101;
+    private int isSend = -1;
+    private ArrayList<TemplateBean.Preson> newGroupList = new ArrayList<>();
     private SendPersonAdapter sendPersonAdapter;
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
 
@@ -129,6 +133,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         llDependPerson.setOnClickListener(this);
         llComit.setOnClickListener(this);
         tvSend.setOnClickListener(this);
+        tvSendGroup.setOnClickListener(this);
 
         maintenanceDetailAdapter = new AddTaskDetailAdapter(R.layout.item_question_detail, beanList);
         taskDetialList.addItemDecoration(new DividerItemDecoration(this,
@@ -147,10 +152,35 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        rvTeam.setLayoutManager(manager);
+        GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
+        rvTeam.setLayoutManager(layoutManage);
+
+        GridLayoutManager manage = new GridLayoutManager(this, 5);
+        rvGroup.setLayoutManager(manage);
+
+
+        sendPersonAdapter = new SendPersonAdapter();
+        sendPersonAdapter.bindToRecyclerView(rvTeam);
+        sendPersonAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) adapter.getData().get(position);
+                adapter.getData().remove(preson);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        sendGroupAdapter = new SendPersonAdapter();
+        sendGroupAdapter.bindToRecyclerView(rvGroup);
+        sendGroupAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) adapter.getData().get(position);
+                adapter.getData().remove(preson);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         getData();
     }
@@ -160,25 +190,29 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_add_task:
                 Intent intent = new Intent(TaskActivity.this, AddWorkTaskDeitailActivity.class);
-                startActivityForResult(intent, TASK_REQUEST_CODE);
+                startActivityForResult(intent, 1);
                 break;
-            //责任人
-            case R.id.ll_depend_person:
+            case R.id.ll_depend_person://责任人
 
-                isSend = false;
+                isSend = 0;
 
                 Intent in = new Intent(this, SelectOrganizationActivity.class);
                 in.putExtra("isRadio", "isRadio");
                 startActivity(in);
                 break;
-            case R.id.ll_comit:
-                submit();
-                break;
             case R.id.tv_send://选择人员
 
-                isSend = true;
+                isSend = 1;
 
-                startActivity(new Intent(TaskActivity.this, SelectIMContactActivity.class).putExtra("flag", 2));
+                startActivity(new Intent(TaskActivity.this, SelectOAPresonActivity.class));
+                break;
+
+            case R.id.tv_send_group://选择群组
+                isSend = 2;
+                startActivityForResult(new Intent(TaskActivity.this, SelectOAGroupActivity.class), REQUEST_CODE_GROUP);
+                break;
+            case R.id.ll_comit:
+                submit();
                 break;
             default:
                 break;
@@ -207,17 +241,15 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     /**
      * 责任人
      */
+    /**
+     * 责任人
+     */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
 
         if (presonList.size() > 0) {
-            if (isSend) {
-
-                if (sendPersonAdapter == null) {
-                    sendPersonAdapter = new SendPersonAdapter();
-                    sendPersonAdapter.bindToRecyclerView(rvTeam);
-                }
+            if (isSend == 1) {
 
                 Set hashSet = new HashSet();
                 hashSet.addAll(sendPersonAdapter.getData());
@@ -229,7 +261,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                 newPresonList.addAll(hashSet);
                 sendPersonAdapter.setNewData(newPresonList);
 
-            } else {
+            } else if (isSend == 0) {
                 TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 
                 etPhoneNum.setText(bean.getMobile());
@@ -241,47 +273,55 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                 } else {
                     assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
                 }
+            } else {
+
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendGroupAdapter.getData());
+                hashSet.addAll(presonList);
+
+                if (newGroupList.size() > 0) {
+                    newGroupList.clear();
+                }
+                newGroupList.addAll(hashSet);
+
+                sendGroupAdapter.setNewData(newGroupList);
             }
         }
     }
 
-
-//    private void showDependPerson() {
-//        if (userlist == null || userlist.isEmpty()) {
-//            showToast("暂无其他员工可选");
-//            return;
-//        }
-//        pvOptions_NoLink = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//                posistion = options1;
-//                etPhoneNum.setText(userlist.get(posistion).getAccountEntity().getMobile());
-//                tvDependPerson.setText(userlist.get(posistion).getAccountEntity().getRealName());
-//                assigneeUserId = userlist.get(posistion).getUserId();
-//                assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
-//
-//            }
-//        }).build();
-//        pvOptions_NoLink.setPicker(userNameList);
-//        pvOptions_NoLink.show();
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK || resultCode == 1) {
 
-        if (data == null || data.getSerializableExtra("result") == null) {
-            return;
-        }
+            if (requestCode == 1) {
 
-        detailsBean = (WorkTaskBean.WorkTaskDetailsBean) data.getSerializableExtra("result");
-        beanList.add(detailsBean);
-        maintenanceDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new TaskInfoView(TaskActivity.this, true, detailsBean).show();
+                if (data == null || data.getSerializableExtra("result") == null) {
+                    return;
+                }
+
+                detailsBean = (WorkTaskBean.WorkTaskDetailsBean) data.getSerializableExtra("result");
+                beanList.add(detailsBean);
+                maintenanceDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        new TaskInfoView(TaskActivity.this, true, detailsBean).show();
+                    }
+                });
+                maintenanceDetailAdapter.notifyDataSetChanged();
+            } else if (requestCode == REQUEST_CODE_GROUP) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) data.getSerializableExtra("bean");
+                if (sendGroupAdapter.getData().size() > 0) {
+                    if (!sendGroupAdapter.getData().contains(preson)) {
+                        sendGroupAdapter.addData(preson);
+                        newGroupList.add(preson);
+                    }
+                } else {
+
+                    sendGroupAdapter.addData(preson);
+                    newGroupList.add(preson);
+                }
             }
-        });
-        maintenanceDetailAdapter.notifyDataSetChanged();
+        }
 
     }
 
@@ -292,20 +332,29 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
             showToast("请输入任务标题");
             return;
         }
-
         if (maintenanceDetailAdapter.getData().size() == 0) {
             showToast("请添加任务明细");
             return;
         }
-        if (TextUtils.isEmpty(tvDependPerson.getText().toString().trim())) {
-            showToast("请选择责任人");
-            return;
+//        if (TextUtils.isEmpty(tvDependPerson.getText().toString().trim())) {
+//            showToast("请选择责任人");
+//            return;
+//        }
+
+        if (newPresonList.size() == 0) {
+            //工作协同默认值
+            workTaskBean.setAssigneeUserId(EanfangApplication.get().getUserId());
+            workTaskBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+        } else {
+            //工作协同默认值
+            workTaskBean.setAssigneeUserId(Long.parseLong(newPresonList.get(0).getUserId()));
+            workTaskBean.setAssigneeOrgCode(newPresonList.get(0).getOrgCode());
         }
 
         workTaskBean.setTitle(task_title);
 
-        workTaskBean.setAssigneeUserId(assigneeUserId);
-        workTaskBean.setAssigneeOrgCode(assigneeOrgCode);
+//        workTaskBean.setAssigneeUserId(assigneeUserId);
+//        workTaskBean.setAssigneeOrgCode(assigneeOrgCode);
         workTaskBean.setWorkTaskDetails(beanList);
 
         doHttp(JSON.toJSONString(workTaskBean));
@@ -332,25 +381,39 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                         startActivity(intent);
 
                         //分享
+                        if (newPresonList.size() == 0 && newGroupList.size() == 0) return;
 
-                        if (newPresonList.size() > 0) {
+                        if (newGroupList.size() > 0) {
 
-                            Bundle b = new Bundle();
 
-                            b.putString("id", String.valueOf(bean.getId()));
-                            b.putString("orderNum", etDepartmentName.getText().toString().trim());
-                            if (bean.getWorkTaskDetails() != null && bean.getWorkTaskDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkTaskDetails().get(0).getPictures())) {
-                                bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
+                            Set hashSet = new HashSet();
+                            hashSet.addAll(sendGroupAdapter.getData());
+                            hashSet.addAll(sendPersonAdapter.getData());
+
+                            if (newGroupList.size() > 0) {
+                                newGroupList.clear();
                             }
-                            b.putString("creatTime", etTaskName.getText().toString().trim());
-                            b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
-                            b.putString("status", "0");
-                            b.putString("shareType", "4");
 
-                            new SendContactUtils(b, handler, newPresonList, DialogUtil.createLoadingDialog(TaskActivity.this)).send();
+                            newGroupList.addAll(hashSet);
                         } else {
-                            finishSelf();
+                            newGroupList.addAll(newPresonList);
                         }
+
+                        Bundle b = new Bundle();
+
+                        b.putString("id", String.valueOf(bean.getId()));
+                        b.putString("orderNum", etDepartmentName.getText().toString().trim());
+                        if (bean.getWorkTaskDetails() != null && bean.getWorkTaskDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkTaskDetails().get(0).getPictures())) {
+                            bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
+                        }
+                        b.putString("creatTime", etTaskName.getText().toString().trim());
+                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("status", "0");
+                        b.putString("shareType", "4");
+
+                        new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(TaskActivity.this)).send();
+
+
                     });
 
 
@@ -358,4 +421,6 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
 
     }
 
+
 }
+

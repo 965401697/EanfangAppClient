@@ -1,9 +1,10 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.oa;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,11 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -30,6 +27,7 @@ import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddCheckBean;
 import com.eanfang.model.WorkCheckInfoBean;
+import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PickerSelectUtil;
@@ -38,6 +36,8 @@ import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.worker.ui.activity.worksapce.AddWorkCheckDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.adapter.AddCheckDetailAdapter;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -92,7 +92,11 @@ public class CheckActivity extends BaseWorkerActivity {
     TextView tvSend;
     @BindView(R.id.rv_team)
     RecyclerView rvTeam;
-    private static final int REQUEST_ADD_CODE = 1;
+    @BindView(R.id.tv_send_group)
+    TextView tvSendGroup;
+    @BindView(R.id.rv_group)
+    RecyclerView rvGroup;
+    private static final int REQUEST_ADD_CODE = 101;
 
     private OptionsPickerView pvOptions_NoLink;
     private int posistion;
@@ -106,7 +110,10 @@ public class CheckActivity extends BaseWorkerActivity {
     private String assigneeOrgCode;
 
 
-    private boolean isSend = false;
+    private final int REQUEST_CODE_GROUP = 102;
+    private ArrayList<TemplateBean.Preson> newGroupList = new ArrayList<>();
+    private SendPersonAdapter sendGroupAdapter;
+    private int isSend = -1;
     private SendPersonAdapter sendPersonAdapter;
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
 
@@ -139,7 +146,7 @@ public class CheckActivity extends BaseWorkerActivity {
         //责任人
         llDependPerson.setOnClickListener((v) -> {
 
-            isSend = false;
+            isSend = 0;
 
             Intent intent = new Intent(this, SelectOrganizationActivity.class);
             intent.putExtra("isRadio", "isRadio");
@@ -149,9 +156,17 @@ public class CheckActivity extends BaseWorkerActivity {
         tvSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isSend = true;
+                isSend = 1;
 
-                startActivity(new Intent(CheckActivity.this, SelectIMContactActivity.class).putExtra("flag", 2));
+                startActivity(new Intent(CheckActivity.this, SelectOAPresonActivity.class));
+            }
+        });
+
+        tvSendGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isSend = 2;
+                startActivityForResult(new Intent(CheckActivity.this, SelectOAGroupActivity.class), REQUEST_CODE_GROUP);
             }
         });
 
@@ -180,10 +195,35 @@ public class CheckActivity extends BaseWorkerActivity {
             }
         });
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
+        rvTeam.setLayoutManager(layoutManage);
 
-        rvTeam.setLayoutManager(manager);
+        GridLayoutManager manage = new GridLayoutManager(this, 5);
+        rvGroup.setLayoutManager(manage);
+
+
+        sendPersonAdapter = new SendPersonAdapter();
+        sendPersonAdapter.bindToRecyclerView(rvTeam);
+        sendPersonAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) adapter.getData().get(position);
+                adapter.getData().remove(preson);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        sendGroupAdapter = new SendPersonAdapter();
+        sendGroupAdapter.bindToRecyclerView(rvGroup);
+        sendGroupAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) adapter.getData().get(position);
+                adapter.getData().remove(preson);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
 
     }
 
@@ -217,15 +257,24 @@ public class CheckActivity extends BaseWorkerActivity {
         }
         bean.setChangeInfo(changeContent);
 
-        String receiveUser = tvDependPerson.getText().toString().trim();
-        if (TextUtils.isEmpty(receiveUser)) {
-            showToast("请选择联系人");
-            return;
+//        String receiveUser = tvDependPerson.getText().toString().trim();
+//        if (TextUtils.isEmpty(receiveUser)) {
+//            showToast("请选择联系人");
+//            return;
+//        }
+        if (newPresonList.size() == 0) {
+            //工作协同默认值
+            bean.setAssigneeUserId(EanfangApplication.get().getUserId());
+            bean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+        } else {
+            //工作协同默认值
+            bean.setAssigneeUserId(Long.parseLong(newPresonList.get(0).getUserId()));
+            bean.setAssigneeOrgCode(newPresonList.get(0).getOrgCode());
         }
 
         //接收者
-        bean.setAssigneeUserId(assigneeUserId);
-        bean.setAssigneeOrgCode(assigneeOrgCode);
+//        bean.setAssigneeUserId(assigneeUserId);
+//        bean.setAssigneeOrgCode(assigneeOrgCode);
         //手机号
         String phone_num = etPhoneNum.getText().toString().trim();
         // TODO: 2017/12/18 手机号
@@ -263,36 +312,43 @@ public class CheckActivity extends BaseWorkerActivity {
 
 
         if (presonList.size() > 0) {
+            if (presonList.size() > 0) {
+                if (isSend == 1) {
 
-            if (isSend) {
+                    Set hashSet = new HashSet();
+                    hashSet.addAll(sendPersonAdapter.getData());
+                    hashSet.addAll(presonList);
 
-                if (sendPersonAdapter == null) {
-                    sendPersonAdapter = new SendPersonAdapter();
-                    sendPersonAdapter.bindToRecyclerView(rvTeam);
-                }
+                    if (newPresonList.size() > 0) {
+                        newPresonList.clear();
+                    }
+                    newPresonList.addAll(hashSet);
+                    sendPersonAdapter.setNewData(newPresonList);
 
-                Set hashSet = new HashSet();
-                hashSet.addAll(sendPersonAdapter.getData());
-                hashSet.addAll(presonList);
+                } else if (isSend == 0) {
+                    TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 
-                if (newPresonList.size() > 0) {
-                    newPresonList.clear();
-                }
-                newPresonList.addAll(hashSet);
-                sendPersonAdapter.setNewData(newPresonList);
+                    etPhoneNum.setText(bean.getMobile());
+                    tvDependPerson.setText(bean.getName());
 
-            } else {
-
-                TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
-
-                etPhoneNum.setText(bean.getMobile());
-                tvDependPerson.setText(bean.getName());
-
-                assigneeUserId = Long.parseLong(bean.getUserId());
-                if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
-                    assigneeOrgCode = bean.getOrgCode();
+                    assigneeUserId = Long.parseLong(bean.getUserId());
+                    if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
+                        assigneeOrgCode = bean.getOrgCode();
+                    } else {
+                        assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                    }
                 } else {
-                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+
+                    Set hashSet = new HashSet();
+                    hashSet.addAll(sendGroupAdapter.getData());
+                    hashSet.addAll(presonList);
+
+                    if (newGroupList.size() > 0) {
+                        newGroupList.clear();
+                    }
+                    newGroupList.addAll(hashSet);
+
+                    sendGroupAdapter.setNewData(newGroupList);
                 }
             }
         }
@@ -335,28 +391,38 @@ public class CheckActivity extends BaseWorkerActivity {
                                 intent.putExtras(bundle);
                                 startActivity(intent);
 
-
                                 //分享
+                                if (newPresonList.size() == 0 && newGroupList.size() == 0) return;
 
-                                if (newPresonList.size() > 0) {
+                                if (newGroupList.size() > 0) {
 
-                                    Bundle b = new Bundle();
 
-                                    b.putString("id", String.valueOf(bean.getId()));
-                                    b.putString("orderNum", EanfangApplication.get().getUser().getAccount().getRealName());
-                                    if (bean.getWorkInspectDetails() != null && bean.getWorkInspectDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkInspectDetails().get(0).getPictures())) {
-                                        bundle.putString("picUrl", bean.getWorkInspectDetails().get(0).getPictures().split(",")[0]);
+                                    Set hashSet = new HashSet();
+                                    hashSet.addAll(sendGroupAdapter.getData());
+                                    hashSet.addAll(sendPersonAdapter.getData());
+
+                                    if (newGroupList.size() > 0) {
+                                        newGroupList.clear();
                                     }
-                                    b.putString("creatTime", tvDependPerson.getText().toString().trim());
-                                    b.putString("workerName", tvEndTime.getText().toString().trim());
-                                    b.putString("status", "0");
-                                    b.putString("shareType", "5");
 
-                                    new SendContactUtils(b, handler, newPresonList, DialogUtil.createLoadingDialog(CheckActivity.this)).send();
-
+                                    newGroupList.addAll(hashSet);
                                 } else {
-                                    finishSelf();
+                                    newGroupList.addAll(newPresonList);
                                 }
+
+                                Bundle b = new Bundle();
+
+                                b.putString("id", String.valueOf(bean.getId()));
+                                b.putString("orderNum", EanfangApplication.get().getUser().getAccount().getRealName());
+                                if (bean.getWorkInspectDetails() != null && bean.getWorkInspectDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkInspectDetails().get(0).getPictures())) {
+                                    bundle.putString("picUrl", bean.getWorkInspectDetails().get(0).getPictures().split(",")[0]);
+                                }
+                                b.putString("creatTime", tvEndTime.getText().toString().trim());
+                                b.putString("workerName", bean.getCreateTime());
+                                b.putString("status", "0");
+                                b.putString("shareType", "5");
+
+                                new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(CheckActivity.this)).send();
                             });
                         })
 //                {
@@ -394,19 +460,36 @@ public class CheckActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null || data.getSerializableExtra("result") == null) {
-            return;
-        }
+        if (resultCode == RESULT_OK || resultCode == REQUEST_ADD_CODE) {
 
-        detailBean = (WorkAddCheckBean.WorkInspectDetailsBean) data.getSerializableExtra("result");
-        beanList.add(detailBean);
-        checkDetailList.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new CheckInfoView(CheckActivity.this, true, beanList.get(position)).show();
+            if (requestCode == REQUEST_ADD_CODE) {
+
+                if (data == null || data.getSerializableExtra("result") == null) {
+                    return;
+                }
+
+                detailBean = (WorkAddCheckBean.WorkInspectDetailsBean) data.getSerializableExtra("result");
+                beanList.add(detailBean);
+                maintenanceDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        new CheckInfoView(CheckActivity.this, true, detailBean).show();
+                    }
+                });
+                maintenanceDetailAdapter.notifyDataSetChanged();
+            } else if (requestCode == REQUEST_CODE_GROUP) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) data.getSerializableExtra("bean");
+                if (sendGroupAdapter.getData().size() > 0) {
+                    if (!sendGroupAdapter.getData().contains(preson)) {
+                        sendGroupAdapter.addData(preson);
+                        newGroupList.add(preson);
+                    }
+                } else {
+                    newGroupList.add(preson);
+                    sendGroupAdapter.addData(preson);
+                }
             }
-        });
-        maintenanceDetailAdapter.notifyDataSetChanged();
+        }
     }
 }
 

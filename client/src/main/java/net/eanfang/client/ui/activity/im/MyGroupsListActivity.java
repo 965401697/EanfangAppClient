@@ -71,7 +71,7 @@ public class MyGroupsListActivity extends BaseClientActivity {
                 @Override
                 public void onClick(View v) {
                     EventBus.getDefault().post(groupPresonList);
-                    MyGroupsListActivity.this.finishSelf();
+                    endTransaction(true);
                 }
             });
         }

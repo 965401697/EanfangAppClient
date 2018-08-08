@@ -37,12 +37,12 @@ public class DefendLogListAdapter extends BaseQuickAdapter<ProtectionLogEntity, 
         helper.setText(R.id.tv_person_name, item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_preson_phone, item.getAssigneeUser().getAccountEntity().getMobile());
 
-        helper.addOnClickListener(R.id.tv_do_first);
-        if (mType == 1) {//汇报人
-            helper.setText(R.id.tv_do_first, "联系汇报人");
-        } else {
-            helper.setText(R.id.tv_do_first, "联系创建人");
-        }
+//        helper.addOnClickListener(R.id.tv_do_first);
+//        if (mType == 1) {//汇报人
+//            helper.setText(R.id.tv_do_first, "联系汇报人");
+//        } else {
+//            helper.setText(R.id.tv_do_first, "联系创建人");
+//        }
         helper.addOnClickListener(R.id.tv_detail);
     }
 }

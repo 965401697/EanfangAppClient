@@ -216,6 +216,10 @@ public interface UserApi {
      * 获取好有列表
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
+    /**
+     * 获取好有列表
+     */
+    String GET_ACC_INFO = BuildConfig.API_HOST + "/yaf_sys/account/getAccInfo";
 
     /**
      * 获取好有列表

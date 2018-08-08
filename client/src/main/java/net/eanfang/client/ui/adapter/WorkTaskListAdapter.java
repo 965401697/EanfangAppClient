@@ -44,7 +44,7 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
         helper.setText(R.id.tv_title_name, "标题：" + item.getTitle());
         helper.setText(R.id.tv_pub_time, "发布时间：" + item.getCreateTime());
         helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreateUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
+//        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
 
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
