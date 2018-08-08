@@ -88,7 +88,7 @@ public class SelectPresonActivity extends BaseActivity {
                             preson.setId(staffBean.getAccId());
                             preson.setOrgCode(sectionBean.getOrgCode());
                             preson.setUserId(staffBean.getUserId());
-                            preson.setName(staffBean.getAccountEntity().getNickName());
+                            preson.setName(staffBean.getAccountEntity().getRealName());
                             preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                             preson.setMobile(staffBean.getAccountEntity().getMobile());
                             preson.setDepartmentId(staffBean.getDepartmentId());
@@ -121,11 +121,12 @@ public class SelectPresonActivity extends BaseActivity {
 
                     TemplateBean.Preson preson = new TemplateBean.Preson();
                     preson.setId(staffBeanX.getAccId());
-                    preson.setName(staffBeanX.getAccountEntity().getNickName());
+                    preson.setName(staffBeanX.getAccountEntity().getRealName());
                     preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
                     preson.setMobile(staffBeanX.getAccountEntity().getMobile());
                     preson.setUserId(staffBeanX.getUserId());
                     preson.setDepartmentId(staffBeanX.getDepartmentId());
+                    preson.setOrgCode(sectionBean.getOrgCode());
                     preson.setOrgName(sectionBean.getOrgName());
                     if (!TextUtils.isEmpty(isOrganization)) {
                         preson.setVisible(true);
@@ -154,7 +155,7 @@ public class SelectPresonActivity extends BaseActivity {
                 preson.setId(staffBean.getAccId());
                 preson.setOrgCode(childrenBean.getOrgCode());
                 preson.setUserId(staffBean.getUserId());
-                preson.setName(staffBean.getAccountEntity().getNickName());
+                preson.setName(staffBean.getAccountEntity().getRealName());
                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                 preson.setMobile(staffBean.getAccountEntity().getMobile());
                 preson.setOrgName(childrenBean.getOrgName());
@@ -194,7 +195,7 @@ public class SelectPresonActivity extends BaseActivity {
                                 preson.setId(staffBean.getAccId());
                                 preson.setOrgCode(sectionBean.getOrgCode());
                                 preson.setUserId(staffBean.getUserId());
-                                preson.setName(staffBean.getAccountEntity().getNickName());
+                                preson.setName(staffBean.getAccountEntity().getRealName());
                                 preson.setOrgName(childrens.getOrgName());
                                 preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
                                 preson.setMobile(staffBean.getAccountEntity().getMobile());
@@ -225,10 +226,11 @@ public class SelectPresonActivity extends BaseActivity {
 
                         TemplateBean.Preson preson = new TemplateBean.Preson();
                         preson.setId(staffBeanX.getAccId());
-                        preson.setName(staffBeanX.getAccountEntity().getNickName());
+                        preson.setName(staffBeanX.getAccountEntity().getRealName());
                         preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
                         preson.setMobile(staffBeanX.getAccountEntity().getMobile());
                         preson.setUserId(staffBeanX.getUserId());
+                        preson.setOrgCode(sectionBean.getOrgCode());
                         preson.setDepartmentId(staffBeanX.getDepartmentId());
                         preson.setOrgName(sectionBean.getOrgName());
                         if (!TextUtils.isEmpty(isOrganization)) {
@@ -254,12 +256,13 @@ public class SelectPresonActivity extends BaseActivity {
 
                     TemplateBean.Preson preson = new TemplateBean.Preson();
                     preson.setId(String.valueOf(userEntity.getAccountEntity().getAccId()));
-                    preson.setName(userEntity.getAccountEntity().getNickName());
+                    preson.setName(userEntity.getAccountEntity().getRealName());
                     preson.setProtraivat(userEntity.getAccountEntity().getAvatar());
                     preson.setMobile(userEntity.getAccountEntity().getMobile());
                     preson.setUserId(String.valueOf(userEntity.getUserId()));
                     preson.setDepartmentId(String.valueOf(userEntity.getDepartmentId()));
                     preson.setOrgName(organizationBean.getOrgName());
+                    preson.setOrgCode(organizationBean.getOrgCode());
                     if (!TextUtils.isEmpty(isOrganization)) {
                         preson.setVisible(true);
                     }
