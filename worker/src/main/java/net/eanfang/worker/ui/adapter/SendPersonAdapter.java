@@ -21,7 +21,11 @@ public class SendPersonAdapter extends BaseQuickAdapter<TemplateBean.Preson, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+        if (item.getProtraivat().contains("http")) {
+            ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(item.getProtraivat());
+        } else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(BuildConfig.OSS_SERVER + item.getProtraivat());
+        }
         helper.setText(R.id.tv_name, item.getName());
     }
 }
