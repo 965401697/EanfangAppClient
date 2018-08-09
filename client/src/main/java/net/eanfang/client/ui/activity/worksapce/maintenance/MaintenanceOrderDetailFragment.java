@@ -173,7 +173,7 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         tvNotice.setText("备注信息：\r\n" + orderEntity.getContext());
 
 
-        tvWorkerCompany.setText("维保单位：" + orderEntity.getAssigneeOrgEntity().getBelongCompany().getOrgName());
+        tvWorkerCompany.setText("维保单位：" + orderEntity.getAssigneeOrgEntity().getOrgName());
         tvWorkerName.setText("负责技师：" + orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName());
         tvWorkerPhone.setText("联系电话：" + orderEntity.getAssigneeUserEntity().getAccountEntity().getMobile());
 
