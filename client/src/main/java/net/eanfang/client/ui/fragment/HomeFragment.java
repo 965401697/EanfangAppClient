@@ -35,9 +35,11 @@ import com.eanfang.witget.RollTextView;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
+import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
+import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
@@ -138,11 +140,14 @@ public class HomeFragment extends BaseFragment {
         });
         //我要报装
         findViewById(R.id.tv_install).setOnClickListener((v) -> {
-            new InstallCtrlView(getActivity(), true).show();
+//            new InstallCtrlView(getActivity(), true).show();
+            startActivity(new Intent(getActivity(), InstallOrderParentActivity.class));
+
         });
         //免费设计
         findViewById(R.id.tv_design).setOnClickListener((v) -> {
-            new DesignCtrlView(getActivity(), true).show();
+//            new DesignCtrlView(getActivity(), true).show();
+            startActivity(new Intent(getActivity(), DesignOrderActivity.class));
         });
         //开锁
         findViewById(R.id.tv_unlock).setOnClickListener(v -> showToast("暂缓开通"));

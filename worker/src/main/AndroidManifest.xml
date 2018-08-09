@@ -525,7 +525,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.worksapce.contacts.SearchStaffActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity" />
         <!-- 交接班列表 -->
         <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferListActivity" />
         <!-- 交接班创建 -->
@@ -537,7 +537,7 @@
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferConfimActivity"
             android:screenOrientation="portrait" />
-        <!-- 交接班详情-->
+        <!-- 交接班详情 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferDetailActivity"
             android:screenOrientation="portrait" />
@@ -548,7 +548,6 @@
             android:windowSoftInputMode="adjustPan" />
         <!-- 面谈员工控制中心 -->
         <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferControlActivity" />
-
         <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkControlActivity" />
         <!-- 面谈员工列表 -->
         <activity
@@ -562,6 +561,13 @@
         <activity
             android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.oa.ReportParentActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.CheckParentActivity" />
+        <activity android:name=".ui.activity.worksapce.InstallOrderParentActivity" />
+        <activity android:name=".ui.activity.worksapce.OfferAndPayOrderParentActivity" />
+        <activity android:name=".ui.activity.worksapce.MineTakePublishListReceiveParentActivity" />
+        <activity android:name=".ui.activity.worksapce.MineTaskPublishListSendParentActivity"></activity>
     </application>
 
 </manifest>

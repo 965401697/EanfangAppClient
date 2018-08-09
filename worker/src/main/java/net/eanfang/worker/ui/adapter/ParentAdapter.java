@@ -56,6 +56,8 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
         if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
             ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));
+        }else {
+            ivCompanyHead.setImageURI(Uri.parse(""));
         }
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");

@@ -501,7 +501,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!--维保列表-->
+        <!-- 维保列表 -->
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
         <!-- 维保详情 -->
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceDetailActivity" />
@@ -538,7 +538,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.worksapce.contacts.SearchStaffActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.ReportParentActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.CheckParentActivity" />
+        <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogParentActivity" />
+        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogParentActivity" />
+        <activity android:name=".ui.activity.worksapce.install.InstallOrderParentActivity" />
+        <activity android:name=".ui.activity.worksapce.DesignOrderActivity"></activity>
     </application>
 
 </manifest>

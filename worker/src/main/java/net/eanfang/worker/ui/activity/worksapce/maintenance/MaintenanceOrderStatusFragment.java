@@ -94,9 +94,10 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
                 mTvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime().substring(0, 10)));
             }
         }
-
-        MaintenanceOrderStatusAdapter orderProgressAdapter = new MaintenanceOrderStatusAdapter(R.layout.item_maintenance_progress, list);
-        mRecyclerView.setAdapter(orderProgressAdapter);
+        if (list.size() > 0) {
+            MaintenanceOrderStatusAdapter orderProgressAdapter = new MaintenanceOrderStatusAdapter(R.layout.item_maintenance_progress, list);
+            mRecyclerView.setAdapter(orderProgressAdapter);
+        }
     }
 
 }

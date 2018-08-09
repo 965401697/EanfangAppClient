@@ -10,13 +10,7 @@ import java.util.List;
 
 public class CheckSignPermission {
     public static boolean isCheckSign(List<String> permissinList) {
-        if (permissinList.size() != 0 || permissinList != null) {
-            for (int i = 0; i < permissinList.size(); i++)
-                if ("top:sign:userlist".equals(permissinList.get(i))) {
-                    return true;
-                }
-        }
-        return false;
+        return true;
     }
 
 }

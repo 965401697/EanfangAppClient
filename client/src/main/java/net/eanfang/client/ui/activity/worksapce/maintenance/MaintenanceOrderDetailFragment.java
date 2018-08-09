@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -17,6 +18,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
@@ -24,6 +26,7 @@ import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 import net.eanfang.client.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -143,7 +146,7 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
 
     private void initViews() {
         ivReportHeader.setImageURI(BuildConfig.OSS_SERVER + orderEntity.getOwnerUserEntity().getAccountEntity().getAvatar());
-        tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getOwnerUserEntity().getAccountEntity().getGender() == 1 ? "男" : "女") + ")");
+        tvName.setText(orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getAssigneeUserEntity().getAccountEntity().getGender() == 1 ? "先生" : "女士") + ")");
         tvCompanyName.setText(orderEntity.getOwnerUserEntity().getCompanyEntity().getOrgName());
         tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
         tvPhone.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getMobile());
@@ -166,14 +169,22 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         tvPlanEnd.setText("计划结束时间：" + GetDateUtils.dateToDateTimeString(orderEntity.getEndTime()));
 
 
-        tvStandard.setText("维保标准：\r\n" + GetConstDataUtils.getMaintainLevelList().get(Integer.parseInt(orderEntity.getStandard())));
-        tvNotice.setText("维保标准：\r\n" + orderEntity.getContext());
+        tvStandard.setText("维保标准：\r\n" + orderEntity.getStandard());
+        tvNotice.setText("备注信息：\r\n" + orderEntity.getContext());
 
 
-        tvWorkerCompany.setText("维保单位：" + orderEntity.getRepairCompany());
-        tvWorkerName.setText("负责技师：" + orderEntity.getRepairContacts());
-        tvWorkerPhone.setText("联系电话：" + orderEntity.getRepairContactPhone());
-        tvOsType.setText("系统类别：测试");
+        tvWorkerCompany.setText("维保单位：" + orderEntity.getAssigneeOrgEntity().getOrgName());
+        tvWorkerName.setText("负责技师：" + orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName());
+        tvWorkerPhone.setText("联系电话：" + orderEntity.getAssigneeUserEntity().getAccountEntity().getMobile());
+
+        String bizStr = "";
+        String[] bizOneArr = V.v(() -> orderEntity.getBusinessOneCode().split(","));
+        List<String> bizList = Stream.of(Arrays.asList(bizOneArr)).map(biz -> Config.get().getBusinessNameByCode(biz, 1)).toList();
+
+        for (int i = 0; i < bizList.size(); i++) {
+            bizStr = bizStr + "  " + bizList.get(i);
+        }
+        tvOsType.setText("系统类别：" + bizStr);
 
         emphasisDeviceAdapter.setNewData(orderEntity.getExamDeviceEntityList());
         deviceListAdapter.setNewData(orderEntity.getDeviceEntityList());

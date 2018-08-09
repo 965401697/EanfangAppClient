@@ -28,6 +28,9 @@ import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.CheckParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.ReportParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
@@ -210,23 +213,25 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
-            if (workerApprove()) {
-                new ReportCtrlView(getActivity(), true).show();
-            }
+//            new ReportCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+            startActivity(intent);
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
-            if (workerApprove()) {
-                new TaskCtrlView(getActivity(), true).show();
-            }
+//            new TaskCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+            startActivity(intent);
         });
+
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
-            if (workerApprove()) {
-                new WorkCheckCtrlView(getActivity(), true).show();
-            }
+//            new WorkCheckCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
+            startActivity(intent);
         });
+
 
         //故障记录
         findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
