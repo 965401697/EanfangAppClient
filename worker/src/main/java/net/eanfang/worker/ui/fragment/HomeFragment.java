@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,10 @@ import com.eanfang.witget.RollTextView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
+import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.MineTakePublishListReceiveParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
@@ -43,10 +46,7 @@ import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
-import net.eanfang.worker.ui.widget.InstallCtrlView;
-import net.eanfang.worker.ui.widget.PayOrderListCtrlView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
-import net.eanfang.worker.ui.widget.TakePubCtrlView;
 import net.eanfang.worker.ui.widget.TaskPubCtrlView;
 
 import java.util.ArrayList;
@@ -140,7 +140,8 @@ public class HomeFragment extends BaseFragment {
         //报装订单
         findViewById(R.id.tv_install_order).setOnClickListener((v) -> {
             if (workerApprove()) {
-                new InstallCtrlView(getActivity(), true).show();
+//                new InstallCtrlView(getActivity(), true).show();
+                startActivity(new Intent(getActivity(), InstallOrderParentActivity.class));
             }
         });
         //设计订单
@@ -159,19 +160,22 @@ public class HomeFragment extends BaseFragment {
         //项目发包
         findViewById(R.id.tv_project_send).setOnClickListener((v) -> {
             if (workerApprove()) {
-                new TaskPubCtrlView(getActivity(), true).show();
+//                new TaskPubCtrlView(getActivity(), true).show();
+                startActivity(new Intent(getActivity(), MineTaskPublishListSendParentActivity.class));
             }
         });
         //项目接包
         findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
             if (workerApprove()) {
-                new TakePubCtrlView(getActivity(), true).show();
+//                new TakePubCtrlView(getActivity(), true).show();
+                startActivity(new Intent(getActivity(), MineTakePublishListReceiveParentActivity.class));
             }
         });
         //内部报价
         findViewById(R.id.tv_inside_price).setOnClickListener((v) -> {
             if (workerApprove()) {
-                new PayOrderListCtrlView(getActivity(), true).show();
+//                new PayOrderListCtrlView(getActivity(), true).show();
+                startActivity(new Intent(getActivity(), OfferAndPayOrderParentActivity.class));
             }
         });
         //签到

@@ -23,17 +23,18 @@ import net.eanfang.client.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
+import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.CheckParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.ReportParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
 import net.eanfang.client.ui.widget.DefendLogView;
-import net.eanfang.client.ui.widget.OpenShopLogView;
-import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.SignCtrlView;
-import net.eanfang.client.ui.widget.TaskCtrlView;
-import net.eanfang.client.ui.widget.WorkCheckCtrlView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -189,27 +190,37 @@ public class WorkspaceFragment extends BaseFragment {
 
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
-            new ReportCtrlView(getActivity(), true).show();
+//            new ReportCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+            startActivity(intent);
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
-            new TaskCtrlView(getActivity(), true).show();
+//            new TaskCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+            startActivity(intent);
         });
 
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
-            new WorkCheckCtrlView(getActivity(), true).show();
+//            new WorkCheckCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
+            startActivity(intent);
         });
 
         //开店日志
         findViewById(R.id.tv_shop_log).setOnClickListener((v) -> {
-            new OpenShopLogView(getActivity(), true).show();
+//            new OpenShopLogView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), OpenShopLogParentActivity.class);
+            startActivity(intent);
         });
 
         //布防日志
         findViewById(R.id.tv_defend_log).setOnClickListener((v) -> {
-            new DefendLogView(getActivity(), true).show();
+//            new DefendLogView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), DefendLogParentActivity.class);
+            startActivity(intent);
         });
 
 
