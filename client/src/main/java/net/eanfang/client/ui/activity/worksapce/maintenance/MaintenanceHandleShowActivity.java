@@ -83,7 +83,7 @@ public class MaintenanceHandleShowActivity extends BaseClientActivity {
 
 
         EanfangHttp.post(NewApiService.MAINTENANCE_DETAIL_DISPOSE)
-                .params("id", "111")
+                .params("id", mId)
                 .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, (bean) -> {
                     orderEntity = bean;
                     initViews();

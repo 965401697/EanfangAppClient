@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrderProgressBean;
@@ -14,10 +15,11 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+
 
 import net.eanfang.client.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,11 +69,11 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
         mTvData = findViewById(R.id.tv_date);
         mTvWeek = findViewById(R.id.tv_weeks);
         mTvTime = findViewById(R.id.tv_time);
-        if (!StringUtils.isEmpty(mOrderTime)) {
-            mTvTime.setText(mOrderTime.substring(11));
-            mTvData.setText(mOrderTime.substring(5, 10));
-            mTvWeek.setText(GetDateUtils.dateToWeek(mOrderTime.substring(0, 10)));
-        }
+//        if (!StringUtils.isEmpty(mOrderTime)) {
+//            mTvTime.setText(mOrderTime.substring(11));
+//            mTvData.setText(mOrderTime.substring(5, 10));
+//            mTvWeek.setText(GetDateUtils.dateToWeek(mOrderTime.substring(0, 10)));
+//        }
     }
 
     @Override
@@ -80,8 +82,22 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
     }
 
     private void initAdapter() {
-        MaintenanceOrderStatusAdapter orderProgressAdapter = new MaintenanceOrderStatusAdapter(R.layout.item_order_progress, mDataList);
-        mRecyclerView.setAdapter(orderProgressAdapter);
+
+        List<OrderProgressBean> list = new ArrayList<>();
+
+        for (OrderProgressBean bean : mDataList) {
+            if (bean.getNodeCode() != 0) {
+                list.add(bean);
+            } else {
+                mTvTime.setText(bean.getCreateTime().substring(11));
+                mTvData.setText(bean.getCreateTime().substring(5, 10));
+                mTvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime().substring(0, 10)));
+            }
+        }
+        if (list.size() > 0) {
+            MaintenanceOrderStatusAdapter orderProgressAdapter = new MaintenanceOrderStatusAdapter(R.layout.item_order_progress, list);
+            mRecyclerView.setAdapter(orderProgressAdapter);
+        }
     }
 
 }

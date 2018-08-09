@@ -54,19 +54,22 @@ android {
         debug {
             signingConfig signingConfigs.release
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "true")
         }
         release {
             //签名配置
             signingConfig signingConfigs.release
 
             buildConfigField("String", "BUGLY_WORKER", "\"a6bae9f6ee\"")
-
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "true")
             //Zipalign优化
             zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
+            // 移除无用的resource文件 表示去掉没有引用的资源，可以减少应用的体积，但这个只有在混淆开启后才有效。
+//            shrinkResources false
             //混淆
-            minifyEnabled false
+            minifyEnabled true
             //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
