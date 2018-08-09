@@ -17,7 +17,6 @@ import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

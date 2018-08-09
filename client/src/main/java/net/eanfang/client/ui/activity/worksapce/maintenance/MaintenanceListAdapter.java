@@ -62,24 +62,22 @@ public class MaintenanceListAdapter extends BaseQuickAdapter<ShopMaintenanceOrde
 
         } else if (item.getStatus() == 2) {
             helper.setText(R.id.tv_state, "待上门");
-            helper.setText(R.id.tv_do_first, "改约");
-            helper.setText(R.id.tv_do_second, "签到");
-            helper.getView(R.id.tv_do_first).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_do_second, "马上回电");
+            helper.getView(R.id.tv_do_first).setVisibility(View.GONE);
             helper.getView(R.id.tv_do_second).setVisibility(View.VISIBLE);
         } else if (item.getStatus() == 3) {
             helper.setText(R.id.tv_state, "维修中");
-            helper.setText(R.id.tv_do_first, "联系客户");
-            helper.setText(R.id.tv_do_second, "完工");
-            helper.getView(R.id.tv_do_first).setVisibility(View.VISIBLE);
+            helper.setText(R.id.tv_do_second, "马上回电");
+            helper.getView(R.id.tv_do_first).setVisibility(View.GONE);
             helper.getView(R.id.tv_do_second).setVisibility(View.VISIBLE);
         } else if (item.getStatus() == 4) {
             helper.setText(R.id.tv_state, "待验收");
-            helper.setText(R.id.tv_do_second, "查看故障处理");
+            helper.setText(R.id.tv_do_second, "确认完工");
             helper.getView(R.id.tv_do_first).setVisibility(View.GONE);
             helper.getView(R.id.tv_do_second).setVisibility(View.VISIBLE);
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_state, "订单完成");
-            helper.setText(R.id.tv_do_second, "查看故障处理");
+            helper.setText(R.id.tv_do_second, "查看维保处理");
             helper.getView(R.id.tv_do_first).setVisibility(View.GONE);
             helper.getView(R.id.tv_do_second).setVisibility(View.VISIBLE);
         }
