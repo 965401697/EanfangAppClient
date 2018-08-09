@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:paddingLeft="@dimen/dimen_40"
-                    android:text="用户地址"
+                    android:text="维保地址"
                     android:textColor="@color/roll_content"
                     android:textSize="@dimen/textSize_13" />
 
@@ -133,7 +133,7 @@
                     android:layout_height="@dimen/dimen_92"
                     android:layout_marginLeft="@dimen/dimen_39"
                     android:gravity="center"
-                    android:text="备注信息"
+                    android:text="订单信息"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_15" />
 
