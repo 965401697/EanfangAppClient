@@ -56,15 +56,15 @@ android {
         }
         release {
 
-            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
 
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources false
+//            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件
