@@ -175,8 +175,8 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         tvPlanEnd.setText("计划结束时间：" + GetDateUtils.dateToDateTimeString(orderEntity.getEndTime()));
 
 
-        tvStandard.setText("维保标准：\r\n" + orderEntity.getStandard());
-        tvNotice.setText("维保标准：\r\n" + orderEntity.getContext());
+        tvStandard.setText("维保标准：\r\n\t" + orderEntity.getStandard());
+        tvNotice.setText("备注信息：\r\n\t" + orderEntity.getContext());
 
 
         tvWorkerCompany.setText("维保单位：" + orderEntity.getAssigneeOrgEntity().getOrgName());
