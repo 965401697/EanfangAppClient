@@ -53,7 +53,7 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
     @BindView(R.id.rl_checked_staff)
     RelativeLayout rlCheckedStaff;
 
-    private User mBean;
+    private TemplateBean.Preson mBean;
 
     private ArrayList<String> roleIdList = new ArrayList<>();
     private ArrayList<String> roleNameList = new ArrayList<>();
@@ -108,7 +108,7 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
         }
 
         //添加角色
-        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + mBean.getAccId())
+        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + mBean.getUserId())
                 .upJson(JSON.toJSONString(roleIdList))
                 .execute(new EanfangCallback<JSONObject>(PermissionManagerActivity.this, true, JSONObject.class) {
 
@@ -129,23 +129,21 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
 
 
         if (presonList.size() > 0) {
-            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
-            departmentId = bean.getDepartmentId();
+            mBean = (TemplateBean.Preson) presonList.get(0);
+            departmentId = mBean.getDepartmentId();
             llSelectStaff.setVisibility(View.GONE);
             rlCheckedStaff.setVisibility(View.VISIBLE);
             llRole.setVisibility(View.VISIBLE);
 
 
-            EanfangHttp.get(UserApi.POST_USER_INFO + bean.getId())
+            EanfangHttp.get(UserApi.POST_USER_INFO + mBean.getId())
                     .execute(new EanfangCallback<User>(this, true, User.class, (b) -> {
-                        mBean = b;
-
                         ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + b.getAvatar());
                         tvNamePhone.setText(b.getNickName() + "(" + b.getMobile() + ")");
                         tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());
 
 
-                        EanfangHttp.get(NewApiService.MY_CURREMT_LIST_ROLE + mBean.getAccId())
+                        EanfangHttp.get(NewApiService.MY_CURREMT_LIST_ROLE + mBean.getUserId())
                                 .execute(new EanfangCallback<RoleBean>(PermissionManagerActivity.this, true, RoleBean.class, true, (list) -> {
                                     for (RoleBean roleBean : list) {
                                         roleNameList.add(roleBean.getRoleName());
