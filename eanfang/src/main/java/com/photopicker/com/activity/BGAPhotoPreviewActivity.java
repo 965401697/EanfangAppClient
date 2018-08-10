@@ -42,7 +42,7 @@ import com.photopicker.photoview.PhotoViewAttacher;
 import java.io.File;
 import java.util.ArrayList;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAOnNoDoubleClickListener;
+import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 
 
 /**

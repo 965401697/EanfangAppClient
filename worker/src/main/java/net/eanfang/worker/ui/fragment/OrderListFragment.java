@@ -129,7 +129,7 @@ public class OrderListFragment extends BaseFragment implements
                         // 解决方式
                         Bundle bundle = new Bundle();
                         bundle.putLong("orderId", item.getId());
-                        JumpItent.jump(getActivity(), SolveModeActivity.class, bundle,((RepairCtrlActivity) getActivity()).REFREST_ITEM);
+                        JumpItent.jump(getActivity(), SolveModeActivity.class, bundle, ((RepairCtrlActivity) getActivity()).REFREST_ITEM);
                         //给客户联系人打电话
                         CallUtils.call(getActivity(), V.v(() -> item.getOwnerUser().getAccountEntity().getMobile()));
                         break;
@@ -305,6 +305,7 @@ public class OrderListFragment extends BaseFragment implements
                                  } else {
                                      findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
                                  }
+                                 adapter.notifyDataSetChanged();
 
 //                                 page--;
 //                                 getActivity().runOnUiThread(() -> {

@@ -5,6 +5,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:orientation="vertical">
 
     <include layout="@layout/header" />
@@ -347,7 +348,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_30"
                 android:visibility="visible">
 
                 <LinearLayout
@@ -458,7 +458,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_30">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -671,7 +672,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_14"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="@color/color_white"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_38"
@@ -700,7 +701,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="@color/color_white"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_38"
@@ -742,7 +743,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_14"
-                android:background="@drawable/bg_ll_selctor"
+                android:background="@color/color_white"
                 android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_38"
                 android:paddingTop="@dimen/dimen_20"
@@ -753,8 +754,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/color_white"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_38">
+                android:paddingLeft="@dimen/dimen_30">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -802,6 +804,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
                 android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_38"

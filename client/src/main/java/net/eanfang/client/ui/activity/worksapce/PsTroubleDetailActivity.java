@@ -98,7 +98,7 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
                         bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
                     }
                     bundle.putString("creatTime", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getBugPosition());
-                    if (bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount()!=null) {
+                    if (bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount() != null) {
                         bundle.putString("workerName", String.valueOf(bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount()));
                     }
                     bundle.putString("status", String.valueOf(1));//电话解决
@@ -152,14 +152,12 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
     private void setData() {
 
         initAdapter();
-        initNinePhoto();
         picList4 = new ArrayList<>();
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
             picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
-
-
+        initNinePhoto();
     }
 
     private void initAdapter() {

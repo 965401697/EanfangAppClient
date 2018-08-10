@@ -138,8 +138,8 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
                 detailEntity = new BughandleDetailEntity();
             }
         }
-        initNinePhoto();
         initImgUrlList();
+        initNinePhoto();
     }
 
 
