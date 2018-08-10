@@ -83,7 +83,6 @@ public class MaintenanceListActivity extends BaseClientActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageReceived(BaseEvent baseEvent) {
         currentFragment.getmAdapter().remove(currentFragment.getCurrentPosition());
-        Log.e("zzw", "刷新");
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

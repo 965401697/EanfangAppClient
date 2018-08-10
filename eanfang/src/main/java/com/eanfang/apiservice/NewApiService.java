@@ -430,7 +430,6 @@ public interface NewApiService {
      */
     String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
     /**
-     * <<<<<<< HEAD
      * 维保管控列表接口
      */
     String MAINTENANCE_GET_LIST = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/list";
@@ -450,6 +449,10 @@ public interface NewApiService {
      * 维保管控预约签到
      */
     String MAINTENANCE_SINGIN = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/signIn";
+    /**
+     * 客户端确认维保完工
+     */
+    String MAINTENANCE_CLIENT_CONFIRM = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/confirm";
     /**
      * 维保处理提交
      */

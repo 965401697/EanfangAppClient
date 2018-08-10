@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.worksapce.maintenance;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -10,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.MaintenanceOrderListBean;
+import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
@@ -21,6 +23,9 @@ import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -157,10 +162,24 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
                 break;
             case 4:
+                EanfangHttp.post(NewApiService.MAINTENANCE_CLIENT_CONFIRM)
+                        .params("id", item.getId())
+                        .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
+                            @Override
+                            public void onSuccess(JSONObject bean) {
+                                Toast.makeText(getActivity(), "确认完工成功", Toast.LENGTH_SHORT).show();
+                                EventBus.getDefault().post(new BaseEvent());//刷新item
+                            }
+
+                            @Override
+                            public void onCommitAgain() {
+                            }
+                        });
                 break;
+
+
             case 5:
                 switch (view.getId()) {
-
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
                         intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
@@ -168,15 +187,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                         startActivity(intent);
 
                         break;
-
                 }
                 //待确认
                 break;
-
-
             default:
                 break;
-
         }
     }
 

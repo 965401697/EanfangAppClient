@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen_14"
-    android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceHandleEditActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 
@@ -42,8 +40,11 @@
                 <EditText
                     android:id="@+id/et_question"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dimen_30"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_10"
                     android:background="@null"
                     android:focusable="false"
                     android:gravity="left"
@@ -79,8 +80,11 @@
                 <EditText
                     android:id="@+id/et_handle"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dimen_30"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_10"
                     android:background="@null"
                     android:focusable="false"
                     android:gravity="left"
@@ -116,8 +120,11 @@
                 <EditText
                     android:id="@+id/et_notice"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dimen_30"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_10"
                     android:background="@null"
                     android:focusable="false"
                     android:gravity="left"
