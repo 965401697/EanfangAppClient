@@ -420,6 +420,28 @@ public class MainActivity extends BaseClientActivity {
 
     }
 
+    public void getIMUnreadMessageCount() {
+        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+            @Override
+            public void onSuccess(List<Conversation> conversations) {
+                int mUnreadMessageCount = 0;
+                if (conversations != null && conversations.size() > 0) {
+                    for (Conversation s : conversations) {
+                        mUnreadMessageCount += s.getUnreadMessageCount();
+                    }
+                }
+                Var.get("MainActivity.initMessageCount").setUnreadMessageCount(mUnreadMessageCount);
+//                Log.e("zzw0", "IM未读=" + mUnreadMessageCount);
+//                Log.e("zzw1", "通知未读=" + Var.get("MainActivity.initMessageCount").getVar());
+//                Log.e("zzw2", "总未读=" + Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount());
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        }, Conversation.ConversationType.GROUP, Conversation.ConversationType.PRIVATE);
+    }
+
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
 
         @Override

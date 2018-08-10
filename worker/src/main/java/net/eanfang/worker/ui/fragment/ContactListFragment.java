@@ -32,6 +32,7 @@ import com.facebook.common.internal.Sets;
 
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.im.GroupDetailActivity;
 import net.eanfang.worker.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
@@ -234,6 +235,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //        doHttpNoticeCount();
         if (myConversationListFragment != null && uri != null)
             myConversationListFragment.setUri(uri);
+
+        ((MainActivity) getActivity()).getIMUnreadMessageCount();
     }
 
     private void doHttpNoticeCount() {

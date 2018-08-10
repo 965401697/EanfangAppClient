@@ -35,6 +35,7 @@ import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CleanMessageUtil;
@@ -69,7 +70,9 @@ import net.eanfang.worker.ui.receiver.ReceiverInit;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -208,12 +211,14 @@ public class MainActivity extends BaseActivity {
 
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
         redPoint = indicator.findViewById(R.id.redPoint);
+
+
     }
 
     private void initMessageCount(View indicator) {
         Badge qBadgeView = new QBadgeView(this)
                 .bindTarget(indicator.findViewById(R.id.tabImg))
-                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getVar() > 0 ? -1 : 0)
+                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0 ? -1 : 0)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
@@ -446,6 +451,29 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+    public void getIMUnreadMessageCount() {
+        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+            @Override
+            public void onSuccess(List<Conversation> conversations) {
+                int mUnreadMessageCount = 0;
+                if (conversations != null && conversations.size() > 0) {
+                    for (Conversation s : conversations) {
+                        mUnreadMessageCount += s.getUnreadMessageCount();
+                    }
+                }
+                Var.get("MainActivity.initMessageCount").setUnreadMessageCount(mUnreadMessageCount);
+//                Log.e("zzw0", "IM未读=" + mUnreadMessageCount);
+//                Log.e("zzw1", "通知未读=" + Var.get("MainActivity.initMessageCount").getVar());
+//                Log.e("zzw2", "总未读=" + Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount());
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        }, Conversation.ConversationType.GROUP, Conversation.ConversationType.PRIVATE);
+    }
+
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
 
         @Override
@@ -456,7 +484,7 @@ public class MainActivity extends BaseActivity {
                 case CONNECTED://连接成功。
 
                     Log.i("zzw", "--------------------连接成功");
-
+                    getIMUnreadMessageCount();
                     break;
 
                 case DISCONNECTED://断开连接。

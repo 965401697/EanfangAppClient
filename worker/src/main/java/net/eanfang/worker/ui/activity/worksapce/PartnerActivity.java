@@ -1,6 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -17,9 +20,15 @@ import com.eanfang.model.PartnerBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationSearchClientActivity;
+import net.eanfang.worker.ui.adapter.CooperationRelationAdapter;
 import net.eanfang.worker.ui.adapter.PartnerAdapter;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.PartnerOrgTypeListView;
 import net.eanfang.worker.ui.widget.SearchCompanyListView;
 
@@ -36,58 +45,138 @@ import butterknife.ButterKnife;
  * @desc 合作公司
  */
 
-public class PartnerActivity extends BaseActivity {
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.tv_right)
-    TextView tvRight;
-    @BindView(R.id.rev_list)
-    RecyclerView revList;
-    private PartnerAdapter parentAdapter;
-    PartnerBean partnerBean;
+public class PartnerActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+    @BindView(R.id.rv_list)
+    RecyclerView rvList;
+    @BindView(R.id.tv_no_datas)
+    TextView mTvNoData;
+    @BindView(R.id.swipre_fresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+
+    private int mPage = 1;
+    private CooperationRelationAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partner);
         ButterKnife.bind(this);
+
         initView();
+        mPage = 1;
+        startTransaction(true);
     }
+
 
     private void initView() {
         setTitle("合作公司");
-        setRightTitle("添加");
         setLeftBack();
-        initData();
-        setRightTitleOnClickListener(v -> new SearchCompanyListView(PartnerActivity.this, true).show());
-
-    }
-
-
-    private void initData() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("ownerOrgId", EanfangApplication.getApplication().getUser()
-                .getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
-        EanfangHttp.post(UserApi.GET_COOPERATION_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<PartnerBean>(this, true, PartnerBean.class, (bean) -> {
-                    partnerBean = bean;
-                    initAdapter(bean.getList());
-                }));
-    }
-
-    private void initAdapter(List<PartnerBean.ListBean> mDataList) {
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        parentAdapter = new PartnerAdapter(R.layout.item_quotation_detail, mDataList);
-        revList.addOnItemTouchListener(new OnItemClickListener() {
+        setRightImageResId(R.mipmap.ic_news_add);
+        setRightImageOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new PartnerOrgTypeListView(PartnerActivity.this, true, mDataList).show();
+            public void onClick(View v) {
+                Intent intent = new Intent(PartnerActivity.this, CooperationSearchClientActivity.class);
+                startActivity(intent);
             }
         });
-        revList.setAdapter(parentAdapter);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        rvList.setLayoutManager(new LinearLayoutManager(this));
 
+
+        mAdapter = new CooperationRelationAdapter(R.layout.item_cooperation_relation);
+        mAdapter.bindToRecyclerView(rvList);
+
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(PartnerActivity.this, CooperationRelationDetailActivity.class);
+                intent.putExtra("bean", (CooperationEntity) adapter.getData().get(position));
+                startActivity(intent);
+            }
+        });
+
+        getData();
+    }
+
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    public void refresh() {
+        mPage = 1;//下拉永远第一页
+        getData();
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        getData();
+    }
+
+
+    private void getData() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setSize(5);
+        queryEntry.setPage(mPage);
+
+        queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+
+        EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, true, (list) -> {
+
+
+                    if (mPage == 1) {
+                        mAdapter.getData().clear();
+                        mAdapter.setNewData(list);
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreComplete();
+                        if (list.size() < 10) {
+                            mAdapter.loadMoreEnd();
+                        }
+
+                        if (list.size() > 0) {
+                            mTvNoData.setVisibility(View.GONE);
+                        } else {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        }
+
+
+                    } else {
+                        mAdapter.addData(list);
+                        mAdapter.loadMoreComplete();
+                        if (list.size() < 10) {
+                            mAdapter.loadMoreEnd();
+                        }
+                    }
+
+
+//                    @Override
+//                    public void onNoData(String message) {
+//                        mSwipeRefreshLayout.setRefreshing(false);
+//                        mAdapter.loadMoreEnd();//没有数据了
+//                        if (mAdapter.getData().size() == 0) {
+//                            mTvNoData.setVisibility(View.VISIBLE);
+//                        } else {
+//                            mTvNoData.setVisibility(View.GONE);
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCommitAgain() {
+//                        mSwipeRefreshLayout.setRefreshing(false);
+//                    }
+                }));
     }
 }
