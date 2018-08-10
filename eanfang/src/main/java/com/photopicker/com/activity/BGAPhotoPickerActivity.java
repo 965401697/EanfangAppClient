@@ -45,8 +45,8 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 import java.io.File;
 import java.util.ArrayList;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAOnItemChildClickListener;
-import cn.bingoogolapple.androidcommon.adapter.BGAOnNoDoubleClickListener;
+import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
+import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
 
 
 /**

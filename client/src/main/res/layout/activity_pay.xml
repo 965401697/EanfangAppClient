@@ -247,7 +247,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bga_adapter_divider_shape"
+                    android:background="@drawable/bg_pay_cancel"
                     android:padding="10dp"
                     android:paddingTop="20dp"
                     android:text="稍后付款"

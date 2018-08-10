@@ -168,6 +168,15 @@ public <methods>;
 -dontwarn com.android.volley.toolbox.**
 -dontwarn com.facebook.infer.**
 #======================================================fresco end=======================================
+#======================================================glide end=======================================
+#keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+#======================================================glide end=======================================
 
 #-------------------------------------------------------------------------
 

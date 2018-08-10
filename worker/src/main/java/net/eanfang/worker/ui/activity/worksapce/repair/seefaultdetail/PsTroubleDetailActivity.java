@@ -131,11 +131,11 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
         //遗留问题
         tvRemainQuestion.setText(bughandleConfirmEntity.getLeftoverProblem());
         initAdapter();
-        initNinePhoto();
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
             picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
+        initNinePhoto();
     }
 
     private void initAdapter() {

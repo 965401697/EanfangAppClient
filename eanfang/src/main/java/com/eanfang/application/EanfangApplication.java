@@ -28,6 +28,8 @@ import com.okgo.cookie.store.DBCookieStore;
 import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
+import com.photopicker.com.imageloader.BGAGlideImageLoader;
+import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
 
 import java.util.List;
@@ -38,7 +40,7 @@ import okhttp3.OkHttpClient;
 
 /**
  * @author Mr.hou
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
 public class EanfangApplication extends CustomeApplication {
@@ -83,6 +85,8 @@ public class EanfangApplication extends CustomeApplication {
         // 初始化讯飞
         // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
         SpeechUtility.createUtility(EanfangApplication.this, "appid=5a4445e3");
+        // 初始化BGA 图片选择
+        BGAImage.setImageLoader(new BGAGlideImageLoader());
     }
 
 

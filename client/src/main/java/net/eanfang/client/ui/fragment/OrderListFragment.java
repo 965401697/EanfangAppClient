@@ -318,6 +318,7 @@ public class OrderListFragment extends BaseFragment implements
                         } else {
                             findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
                         }
+                        adapter.notifyDataSetChanged();
 //                        page--;
 //                        getActivity().runOnUiThread(() -> {
 //                            //如果是第一页 没有数据了 则清空 bean

@@ -50,6 +50,7 @@ import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
+import net.eanfang.client.ui.receiver.ReceiverInit;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -276,25 +277,7 @@ public class MainActivity extends BaseClientActivity {
 
 
     private void registerXinGe() {
-        //开启信鸽日志输出
-//        XGPushConfig.enableDebug(this, false);
-        if (!StringUtils.isEmpty(user.getAccount().getMobile()) && user.getAccount() != null) {
-            //信鸽注册代码
-            XGPushManager.registerPush(this, user.getAccount().getMobile(), new XGIOperateCallback() {
-                @Override
-                public void onSuccess(Object data, int flag) {
-                    Log.d("TPush", "注册成功，设备token为：" + data);
-//                    Var.get("MainActivity.initXinGe").setVar(1);
-                }
-
-                @Override
-                public void onFail(Object data, int errCode, String msg) {
-                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-//                    Var.get("MainActivity.initXinGe").setVar(0);
-                    registerXinGe();
-                }
-            });
-        }
+        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
 
     public void setHeaders() {

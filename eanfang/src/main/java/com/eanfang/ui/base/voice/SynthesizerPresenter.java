@@ -99,17 +99,18 @@ public class SynthesizerPresenter extends MySynthesizerListener {
     }
 
     public void doAnswer(String answer) {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Thread() {
             @Override
             public void run() {
-                /**
-                 *要执行的操作
-                 */
-                mTts.startSpeaking(answer, mTtsListener);
-            }
-        }, 300);//3秒后执行Runnable中的run方法
+                super.run();
+                try {
+                    Thread.sleep(1500);//休眠3秒
+                    mTts.startSpeaking(answer, mTtsListener);
 
+                } catch (InterruptedException e) {
+                }
+            }
+        }.start();
     }
 
 }
