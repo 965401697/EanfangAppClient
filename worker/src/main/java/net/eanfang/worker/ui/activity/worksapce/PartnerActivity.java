@@ -71,7 +71,7 @@ public class PartnerActivity extends BaseWorkerActivity implements SwipeRefreshL
 
 
     private void initView() {
-        setTitle("合作公司");
+        setTitle("合作业务");
         setLeftBack();
         setRightImageResId(R.mipmap.ic_news_add);
         setRightImageOnClickListener(new View.OnClickListener() {

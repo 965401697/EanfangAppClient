@@ -139,8 +139,10 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
             EanfangHttp.get(UserApi.POST_USER_INFO + mBean.getId())
                     .execute(new EanfangCallback<User>(this, true, User.class, (b) -> {
                         ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + b.getAvatar());
-                        tvNamePhone.setText(b.getNickName() + "(" + b.getMobile() + ")");
-                        tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());
+                        tvNamePhone.setText(b.getRealName() + "(" + b.getMobile() + ")");
+                        if(!TextUtils.isEmpty(b.getAreaCode())) {
+                            tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());
+                        }
 
 
                         EanfangHttp.get(NewApiService.MY_CURREMT_LIST_ROLE + mBean.getUserId())

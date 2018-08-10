@@ -4,21 +4,19 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.CustDeviceParamEntity;
-import com.yaf.base.entity.ShopDeviceEntity;
-import com.yaf.base.entity.ShopDeviceParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -81,7 +79,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     TextView tvNotice;
 
     private long id;
-    private ShopDeviceEntity mBean;
+    private CustDeviceEntity mBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,27 +94,30 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
 
     private void initData() {
 
-        EanfangHttp.post(NewApiService.DEVICE_DETAIL_WORKER)
+        EanfangHttp.post(NewApiService.DEVICE_DETAIL)
                 .params("id", id)
-                .execute(new EanfangCallback<ShopDeviceEntity>(this, true, ShopDeviceEntity.class) {
+                .params("ownerCompanyId", getIntent().getStringExtra("ownerCompanyId"))
+                .params("assigneeCompanyId", getIntent().getStringExtra("assigneeCompanyId"))
+                .params("businessOneCode", getIntent().getStringExtra("businessOneCode"))
+                .execute(new EanfangCallback<CustDeviceEntity>(this, true, CustDeviceEntity.class) {
 
                     @Override
-                    public void onSuccess(ShopDeviceEntity bean) {
+                    public void onSuccess(CustDeviceEntity bean) {
                         mBean = bean;
                         initViews(bean);
                     }
                 });
     }
 
-    private void initViews(ShopDeviceEntity bean) {
+    private void initViews(CustDeviceEntity bean) {
         tvEquipmentClassfiy.setText(Config.get().getBaseNameByCode(bean.getBusinessThreeCode(), 1));
         tvBrandModel.setText(Config.get().getModelNameByCode(bean.getModelCode(), 2));
         tvEquipmentName.setText(bean.getDeviceName());
-        tvUnit.setText(String.valueOf(bean.getUnit()));
+        tvUnit.setText(bean.getSellUnit());
         tvMade.setText(bean.getProducerName());
         tvPlace.setText(bean.getProducerPlace());
-        tvEquipmentNum.setText(bean.getDeviceNo());
-        tvEquipmentPrice.setText(String.valueOf(bean.getAdvicePrice()));
+        tvEquipmentNum.setText(bean.getSerialNumber());
+        tvEquipmentPrice.setText(String.valueOf(bean.getDevicePrice()));
 
         String[] picture = bean.getPicture().split(",");
         if (picture != null && picture.length >= 1) {
@@ -127,59 +128,53 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
             ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
         }
 
-//        tvNotice.setText(bean.getDeviceName());
+        tvNotice.setText(bean.getDeviceInfo());
 
-//        tvPosition.setText(bean.getLocation());
-//        tvPositionNum.setText(bean.getLocationNumber());
-//        if (bean.getInstallDate() != null) {
-//            tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
-//        }
-//        if (bean.getStatus() == 0) {
-//            tvEquipmentStatus.setText("出厂");
-//        } else if (bean.getStatus() == 1) {
-//            tvEquipmentStatus.setText("仓储运输");
-//        } else if (bean.getStatus() == 2) {
-//            tvEquipmentStatus.setText("正常运行");
-//        } else if (bean.getStatus() == 3) {
-//            tvEquipmentStatus.setText("故障待修复");
-//        } else if (bean.getStatus() == 4) {
-//            tvEquipmentStatus.setText("备用");
-//        } else if (bean.getStatus() == 5) {
-//            tvEquipmentStatus.setText("禁用");
-//        } else {
-//            tvEquipmentStatus.setText("报废");
-//        }
-//        if (bean.getChargeOrgEntity() != null && bean.getChargeOrgEntity().getBelongTopCompany() != null) {
-//            tvSection.setText(bean.getChargeOrgEntity().getBelongTopCompany().getOrgName());
-//        }
-//
-//        if (bean.getChargeUserEntity() != null && bean.getChargeUserEntity().getAccountEntity() != null) {
-//            tvPreson.setText(bean.getChargeUserEntity().getAccountEntity().getRealName());
-//        }
-//
-//        tvYear.setText(bean.getWarrantyPeriod());
-//        if (bean.getWarrantyStatus() != null) {
-//            //1:保外 0：保内
-//            if (bean.getWarrantyStatus() == 0) {
-//                tvStatus.setText("保内");
-//            } else {
-//                tvStatus.setText("保外");
-//            }
-//        }
-//        tvCompanyName.setText(bean.getRepairCompany());
-//        tvServicePerson.setText(bean.getRepairUser());
-//
-//        if (!TextUtils.isEmpty(bean.getLocationPictures())) {
-//
-//            String[] locationPictures = bean.getLocationPictures().split(",");
-//            if (locationPictures != null && locationPictures.length >= 1) {
-//                ivLocaleOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[0]));
-//            } else if (locationPictures != null && locationPictures.length >= 2) {
-//                ivLocaleTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[1]));
-//            } else if (locationPictures != null && locationPictures.length >= 3) {
-//                ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
-//            }
-//        }
+        tvPosition.setText(bean.getLocation());
+        tvPositionNum.setText(bean.getLocationNumber());
+        tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
+        if (bean.getStatus() == 0) {
+            tvEquipmentStatus.setText("出厂");
+        } else if (bean.getStatus() == 1) {
+            tvEquipmentStatus.setText("仓储运输");
+        } else if (bean.getStatus() == 2) {
+            tvEquipmentStatus.setText("正常运行");
+        } else if (bean.getStatus() == 3) {
+            tvEquipmentStatus.setText("故障待修复");
+        } else if (bean.getStatus() == 4) {
+            tvEquipmentStatus.setText("备用");
+        } else if (bean.getStatus() == 5) {
+            tvEquipmentStatus.setText("禁用");
+        } else {
+            tvEquipmentStatus.setText("报废");
+        }
+        if (bean.getChargeOrgEntity() != null && bean.getChargeOrgEntity().getBelongTopCompany() != null) {
+            tvSection.setText(bean.getChargeOrgEntity().getBelongTopCompany().getOrgName());
+        }
+
+        if (bean.getChargeUserEntity() != null && bean.getChargeUserEntity().getAccountEntity() != null) {
+            tvPreson.setText(bean.getChargeUserEntity().getAccountEntity().getRealName());
+        }
+
+        tvYear.setText(bean.getWarrantyPeriod());
+
+        //1:保外 0：保内
+        if (bean.getWarrantyStatus() == 0) {
+            tvStatus.setText("保内");
+        } else {
+            tvStatus.setText("保外");
+        }
+
+        tvCompanyName.setText(bean.getRepairCompany());
+        tvServicePerson.setText(bean.getRepairUser());
+        String[] locationPictures = bean.getLocationPictures().split(",");
+        if (locationPictures != null && locationPictures.length >= 1) {
+            ivLocaleOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[0]));
+        } else if (locationPictures != null && locationPictures.length >= 2) {
+            ivLocaleTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[1]));
+        } else if (locationPictures != null && locationPictures.length >= 3) {
+            ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
+        }
     }
 
     @OnClick({R.id.tv_equipment_paramter, R.id.tv_history})
@@ -189,7 +184,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
                 Intent intent = new Intent(this, EquipmentParameterActivity.class);
                 ContentValues contentValues = new ContentValues();
                 if (mBean.getParams() != null && mBean.getParams().size() > 0) {
-                    for (ShopDeviceParamEntity bean : mBean.getParams()) {
+                    for (CustDeviceParamEntity bean : mBean.getParams()) {
                         if (bean.getParamName().equals("电压")) {
                             contentValues.put("0", bean.getParamValue());
                         } else if (bean.getParamName().equals("电流")) {

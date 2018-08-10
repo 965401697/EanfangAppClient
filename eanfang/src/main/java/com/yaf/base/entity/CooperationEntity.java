@@ -27,6 +27,8 @@ public class CooperationEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
+    private boolean isChecked;
+
     //主键自增
     //@TableField(value = "id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER
@@ -233,6 +235,14 @@ public class CooperationEntity implements Serializable {
     @Override
     public String toString() {
         return JSON.toJSONString(this);
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
 

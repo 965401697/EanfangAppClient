@@ -1,13 +1,24 @@
 package net.eanfang.worker.ui.activity.worksapce.equipment;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.yaf.base.entity.CooperationEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -33,14 +44,29 @@ public class EquipmentListActivity extends BaseWorkerActivity {
     private List<String> mTitlesList = new ArrayList<>();
     private String[] mTitles;
     private Bundle mBundle;
+    private final int REQUEST_COMPANY_ID = 101;
+    public String ownerCompanyId;
+    public String title;
+    public Dialog loadingDialog;
+    private EquipmentListFragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_list);
         ButterKnife.bind(this);
-        setTitle("设备列表");
         setLeftBack();
+
+        setRightTitle("切换客户");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EquipmentListActivity.this, EquipmentCooperationCompanyActivity.class);
+                intent.putExtra("ownerCompanyId", ownerCompanyId);
+                startActivityForResult(intent, REQUEST_COMPANY_ID);
+            }
+        });
+        loadingDialog = DialogUtil.createLoadingDialog(this);
         initView();
         mBundle = getIntent().getExtras();
     }
@@ -56,7 +82,23 @@ public class EquipmentListActivity extends BaseWorkerActivity {
         vpEquipment.setAdapter(mAdapter);
         tlEquipment.setViewPager(vpEquipment, mTitles, this, mFragments);
         vpEquipment.setCurrentItem(0);
+        currentFragment = (EquipmentListFragment) mFragments.get(0);
+        vpEquipment.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentFragment = (EquipmentListFragment) mFragments.get(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
@@ -83,6 +125,12 @@ public class EquipmentListActivity extends BaseWorkerActivity {
 
     public Bundle getmBundle() {
         return mBundle;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        currentFragment.onActivityResult(requestCode, resultCode, data);
     }
 }
 

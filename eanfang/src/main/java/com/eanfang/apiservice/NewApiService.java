@@ -157,7 +157,7 @@ public interface NewApiService {
 
     String GET_PUSH_NEWS_CLIENT = BuildConfig.API_HOST + "/yaf_sys/notice/newsClient";
 
-    String GET_PUSH_NEWS_WORKER= BuildConfig.API_HOST + "/yaf_sys/notice/newsWorker";
+    String GET_PUSH_NEWS_WORKER = BuildConfig.API_HOST + "/yaf_sys/notice/newsWorker";
 
 
     /**
@@ -386,30 +386,21 @@ public interface NewApiService {
      */
     String FAULT_RECORD_TOTAL = BASE_URL + "/yaf_repair/failure/record/total";
     /**
-     * 客户端设备列表
+     * 客户端设备列表  技师端设备列表 用一个
      * post
      */
     String DEVICE_LIST_CLIENT = BASE_URL + "/yaf_device/custDevice/list";
-    /**
-     * 技师端设备列表
-     * post
-     */
-    String DEVICE_LIST_WORKER = BASE_URL + "/yaf_device/shopDevice/list";
     /**
      * 添加设备库列表
      * post
      */
     String DEVICE_LIST_ADD = BASE_URL + "/yaf_device/custDevice/choose";
     /**
-     * 设备詳情
+     * 设备詳情  客户端 和技师端 共用
      * post
      */
     String DEVICE_DETAIL = BASE_URL + "/yaf_device/custDevice/detail";
-    /**
-     * 技师端设备詳情
-     * post
-     */
-    String DEVICE_DETAIL_WORKER = BASE_URL + "/yaf_device/shopDevice/detail";
+
     /**
      * 变更记录列表
      * post

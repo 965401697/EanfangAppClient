@@ -69,7 +69,7 @@ public class PartnerActivity extends BaseClientActivity implements SwipeRefreshL
     }
 
     private void initView() {
-        setTitle("合作公司");
+        setTitle("合作业务");
         setLeftBack();
         mSwipeRefreshLayout.setOnRefreshListener(this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
