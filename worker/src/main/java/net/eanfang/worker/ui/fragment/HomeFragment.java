@@ -47,6 +47,7 @@ import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 import net.eanfang.worker.ui.widget.SignCtrlView;
+import net.eanfang.worker.ui.widget.TakePubCtrlView;
 import net.eanfang.worker.ui.widget.TaskPubCtrlView;
 
 import java.util.ArrayList;

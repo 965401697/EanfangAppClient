@@ -42,15 +42,15 @@ public class MineTakePublishListReceiveParentActivity extends BaseWorkerActivity
     private void initView() {
         tvTitle.setText("我的接包");
         tvMine.setText("我负责的");
-        llMineAssignment.setOnClickListener(v -> jump("我负责的", "1"));
-        llMineCompany.setOnClickListener(v -> jump("我公司的", "2"));
+        llMineAssignment.setOnClickListener(v -> jump("我负责的", 1));
+        llMineCompany.setOnClickListener(v -> jump("我公司的", 2));
         ivAdd.setOnClickListener((v) -> {
             startActivity(new Intent(this, TakeTaskListActivity.class));
         });
     }
 
-    private void jump(String title, String type) {
-        Intent intent = new Intent(this, MineTaskPublishListActivity.class);
+    private void jump(String title, int type) {
+        Intent intent = new Intent(this, MineTakePublishListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);
         startActivity(intent);

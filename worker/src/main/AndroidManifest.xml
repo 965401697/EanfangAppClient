@@ -568,7 +568,8 @@
         <activity android:name=".ui.activity.worksapce.OfferAndPayOrderParentActivity" />
         <activity android:name=".ui.activity.worksapce.MineTakePublishListReceiveParentActivity" />
         <activity android:name=".ui.activity.worksapce.MineTaskPublishListSendParentActivity" />
-        <activity android:name=".ui.activity.worksapce.equipment.EquipmentCooperationCompanyActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentCooperationCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.TaskPublishDetailActivitty"></activity>
     </application>
 
 </manifest>

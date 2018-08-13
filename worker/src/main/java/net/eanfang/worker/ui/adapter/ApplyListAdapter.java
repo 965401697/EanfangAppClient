@@ -22,8 +22,8 @@ import java.util.List;
 public class ApplyListAdapter extends BaseQuickAdapter<ApplyTaskListBean.ListBean, BaseViewHolder> {
 
 
-    public ApplyListAdapter(List<ApplyTaskListBean.ListBean> data) {
-        super(R.layout.item_apply_task, data);
+    public ApplyListAdapter() {
+        super(R.layout.item_apply_task);
     }
 
     @Override
@@ -32,6 +32,7 @@ public class ApplyListAdapter extends BaseQuickAdapter<ApplyTaskListBean.ListBea
         helper.setText(R.id.tv_apply_time, item.getConfirmTime());
         helper.setText(R.id.tv_state, item.getApplyCompanyName());
         helper.setText(R.id.tv_appointment_time, item.getToDoorTime());
+//         TODO: 2018/8/13  随便输入工期
         helper.setText(R.id.tv_appointment_day, GetConstDataUtils.getPredictList().get(item.getPredictTime()));
         helper.setText(R.id.tv_apply_name, item.getApplyContacts());
         helper.setText(R.id.tv_apply_phone, item.getApplyConstactsPhone());

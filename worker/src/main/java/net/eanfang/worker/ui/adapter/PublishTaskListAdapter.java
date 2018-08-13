@@ -23,8 +23,8 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
             "待确认", "待支付", "待完工", "待验收", "已完成"
     };
 
-    public PublishTaskListAdapter(List<MineTaskListBean.ListBean> data) {
-        super(R.layout.item_task_list, data);
+    public PublishTaskListAdapter() {
+        super(R.layout.item_task_list);
 
     }
 
@@ -32,7 +32,7 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
     protected void convert(BaseViewHolder helper, MineTaskListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getProjectCompanyName());
 
-        helper.setText(R.id.tv_type, GetConstDataUtils.getCooperationTypeList().get(item.getType()));
+        helper.setText(R.id.tv_type,  GetConstDataUtils.getTaskPublishTypeList().get(item.getType()));
 
         int status = item.getStatus();
         helper.setText(R.id.tv_state, mTitles[status]);
@@ -74,6 +74,8 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
         if (item.getPictures() != null) {
             String[] urls = item.getPictures().split(",");
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(BuildConfig.OSS_SERVER + urls[0]);
+        } else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(BuildConfig.OSS_SERVER);
         }
 
 
