@@ -11,7 +11,7 @@ import android.Manifest.permission;
 /**
  * Created by admin on 2018/4/11.
  */
-
+@Deprecated
 @SuppressLint("InlinedApi")
 public final class PermissionConstants {
 

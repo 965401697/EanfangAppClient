@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
-                    android:text="防区次数"
+                    android:text="报警次数"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 
@@ -123,7 +123,7 @@
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="请输入防区次数"
+                    android:hint="请输入报警次数"
                     android:inputType="number"
                     android:textColor="@color/color_client_neworder"
                     android:textColorHint="@color/font_color"

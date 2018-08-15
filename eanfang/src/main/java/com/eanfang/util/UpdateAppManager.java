@@ -130,7 +130,7 @@ public class UpdateAppManager {
                      */
                     @Override
                     public void noNewApp(String error) {
-                        Toast.makeText(activity, "没有新版本", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity, "没有新版本", Toast.LENGTH_SHORT).show();
                     }
                 });
 

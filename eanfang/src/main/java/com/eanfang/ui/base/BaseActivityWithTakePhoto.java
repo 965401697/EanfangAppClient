@@ -31,7 +31,7 @@ import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.FileUtils;
-import com.eanfang.util.PermissionsCallBack;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoActivity;
@@ -55,7 +55,7 @@ import static com.camera.util.FileUtil.getSavePicPath;
  * BaseAppCompatFragmentActivity
  *
  * @author hr
- *         Created at 2016/1/1 11:33
+ * Created at 2016/1/1 11:33
  * @desc activity基类
  */
 
@@ -64,7 +64,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
 
     private int resultCode;
     private int limit = 0;
-    private PermissionsCallBack permissionsCallBack;
+    private PermissionUtils.PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
 
     private AlertDialog.Builder builder;
@@ -75,7 +75,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             // requestCode即所声明的权限获取码，在checkSelfPermission时传入
-            case PermissionsCallBack.callBackCode:
+            case PermissionUtils.PermissionsCallBack.callBackCode:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 获取到权限，作相应处理
                     permissionsCallBack.callBack();
@@ -91,7 +91,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         }
     }
 
-    public void setPermissionsCallBack(PermissionsCallBack permissionsCallBack) {
+    public void setPermissionsCallBack(PermissionUtils.PermissionsCallBack permissionsCallBack) {
         this.permissionsCallBack = permissionsCallBack;
     }
 

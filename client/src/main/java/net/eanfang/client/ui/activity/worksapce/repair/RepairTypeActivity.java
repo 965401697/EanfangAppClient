@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 
@@ -42,10 +43,14 @@ public class RepairTypeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_repairList:
-                JumpItent.jump(RepairTypeActivity.this, RepairCtrlActivity.class);
+                if (PermKit.get().getRepairListPerm()) {
+                    JumpItent.jump(RepairTypeActivity.this, RepairCtrlActivity.class);
+                }
                 break;
             case R.id.iv_repairNew:
-                JumpItent.jump(RepairTypeActivity.this, RepairActivity.class);
+                if (PermKit.get().getRepairCreatePerm()) {
+                    JumpItent.jump(RepairTypeActivity.this, RepairActivity.class);
+                }
                 break;
         }
     }

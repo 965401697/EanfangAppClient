@@ -152,7 +152,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
             return false;
         }
         if (TextUtils.isEmpty(etDefendNext.getText().toString().trim())) {
-            showToast("防区次数不能为空");
+            showToast("报警次数不能为空");
             return false;
         }
         if (TextUtils.isEmpty(tvDefendReason.getText().toString().trim())) {

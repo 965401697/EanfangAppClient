@@ -62,7 +62,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
     @Override
     protected void getData() {
         if (!TextUtils.isEmpty(((EquipmentListActivity) getActivity()).ownerCompanyId)) {
-            ((EquipmentListActivity) getActivity()).loadingDialog.show();
+//            ((EquipmentListActivity) getActivity()).loadingDialog.show();
             ((EquipmentListActivity) getActivity()).setTitle(((EquipmentListActivity) getActivity()).title + "设备列表");
             getList();
         } else {
@@ -71,18 +71,20 @@ public class EquipmentListFragment extends TemplateItemListFragment {
             queryEntry.getEquals().put("status", "1");
             queryEntry.setPage(1);
             queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-            ((EquipmentListActivity) getActivity()).loadingDialog.show();
+//            ((EquipmentListActivity) getActivity()).loadingDialog.show();
             EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
                     .upJson(JsonUtils.obj2String(queryEntry))
-                    .execute(new EanfangCallback<CooperationEntity>(getActivity(), false, CooperationEntity.class, true, (list) -> {
+                    .execute(new EanfangCallback<CooperationEntity>(getActivity(), true, CooperationEntity.class, true, (list) -> {
                         if (list.size() > 0) {
                             ((EquipmentListActivity) getActivity()).ownerCompanyId = String.valueOf(((CooperationEntity) list.get(0)).getAssigneeOrgId());
                             ((EquipmentListActivity) getActivity()).title = String.valueOf(((CooperationEntity) list.get(0)).getAssigneeOrg().getOrgName());
                             ((EquipmentListActivity) getActivity()).setTitle(((EquipmentListActivity) getActivity()).title + "设备列表");
-                            mTvNoData.setVisibility(View.VISIBLE);
+                            mTvNoData.setVisibility(View.GONE);
                             getList();
                         } else {
-                            mTvNoData.setVisibility(View.GONE);
+//                            ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
+                            mTvNoData.setVisibility(View.VISIBLE);
+                            ((EquipmentListActivity) getActivity()).setTitle("设备列表");
                         }
                     }));
         }
@@ -116,10 +118,10 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         queryEntry.getEquals().put("businessOneCode", mType);
         EanfangHttp.post(NewApiService.DEVICE_LIST_CLIENT)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<EquipmentBean>(getActivity(), false, EquipmentBean.class) {
+                .execute(new EanfangCallback<EquipmentBean>(getActivity(), true, EquipmentBean.class) {
                     @Override
                     public void onSuccess(EquipmentBean bean) {
-                        ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
+//                        ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
@@ -148,7 +150,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onNoData(String message) {
-                        ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
+//                        ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
                         mSwipeRefreshLayout.setRefreshing(false);
                         mAdapter.loadMoreEnd();//没有数据了
                         if (mAdapter.getData().size() == 0) {
@@ -161,7 +163,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onCommitAgain() {
-                        ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
+//                        ((EquipmentListActivity) getActivity()).loadingDialog.dismiss();
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });

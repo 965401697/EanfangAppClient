@@ -15,8 +15,8 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.CheckSignPermission;
 import com.eanfang.util.LocationUtil;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
@@ -34,10 +34,7 @@ import net.eanfang.worker.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
-import net.eanfang.worker.ui.widget.ReportCtrlView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
-import net.eanfang.worker.ui.widget.TaskCtrlView;
-import net.eanfang.worker.ui.widget.WorkCheckCtrlView;
 import net.eanfang.worker.ui.widget.WorkSpaceSelectMapPopWindow;
 
 import java.io.File;
@@ -204,11 +201,7 @@ public class WorkspaceFragment extends BaseFragment {
             if (workerApprove()) {
                 // 检查有无权限
                 List<String> ss = new ArrayList<>();
-                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                    new SignCtrlView(getActivity()).show();
-                } else {
-                    showToast("暂无权限");
-                }
+                new SignCtrlView(getActivity()).show();
             }
         });
         //工作汇报
@@ -235,12 +228,10 @@ public class WorkspaceFragment extends BaseFragment {
 
         //故障记录
         findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
-            if (workerApprove()) {
-                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
+            if (PermKit.get().getFailureListPerm()) {
+                if (workerApprove()) {
                     Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
                     startActivity(intent);
-                } else {
-                    showToast("暂无权限");
                 }
             }
         });
@@ -248,12 +239,8 @@ public class WorkspaceFragment extends BaseFragment {
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
             if (workerApprove()) {
-                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                    Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
-                    startActivity(intent);
-                } else {
-                    showToast("暂无权限");
-                }
+                Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+                startActivity(intent);
             }
         });
         //面谈员工

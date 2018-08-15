@@ -30,7 +30,7 @@ import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionsCallBack;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.model.LoginBean;
 import com.jaeger.library.StatusBarUtil;
@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public Dialog loadingDialog;
-    private PermissionsCallBack permissionsCallBack;
+    private PermissionUtils.PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
     private ExitListenerReceiver exitre;
 
@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity implements
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             // requestCode即所声明的权限获取码，在checkSelfPermission时传入
-            case PermissionsCallBack.callBackCode:
+            case PermissionUtils.PermissionsCallBack.callBackCode:
                 if (grantResults == null || grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     // 没有获取到权限，做特殊处理
                     runOnUiThread(() -> {
@@ -83,7 +83,7 @@ public class BaseActivity extends AppCompatActivity implements
         }
     }
 
-    public void setPermissionsCallBack(PermissionsCallBack permissionsCallBack) {
+    public void setPermissionsCallBack(PermissionUtils.PermissionsCallBack permissionsCallBack) {
         this.permissionsCallBack = permissionsCallBack;
     }
 

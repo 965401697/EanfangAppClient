@@ -29,7 +29,7 @@ import static android.Manifest.permission.EXPAND_STATUS_BAR;
 /**
  * Created by admin on 2018/4/11.
  */
-
+@Deprecated
 public class BarUtils {
     ///////////////////////////////////////////////////////////////////////////
     // status bar

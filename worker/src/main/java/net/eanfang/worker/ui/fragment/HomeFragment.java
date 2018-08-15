@@ -22,7 +22,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.CheckSignPermission;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -47,7 +46,6 @@ import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 import net.eanfang.worker.ui.widget.SignCtrlView;
-import net.eanfang.worker.ui.widget.TaskPubCtrlView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,11 +181,7 @@ public class HomeFragment extends BaseFragment {
             if (workerApprove()) {
                 // 检查有无权限
                 List<String> ss = new ArrayList<>();
-                if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                    new SignCtrlView(getActivity()).show();
-                } else {
-                    showToast("暂无权限");
-                }
+                new SignCtrlView(getActivity()).show();
             }
         });
         //扫描二维码

@@ -47,7 +47,7 @@ public class EquipmentListActivity extends BaseWorkerActivity {
     private final int REQUEST_COMPANY_ID = 101;
     public String ownerCompanyId;
     public String title;
-    public Dialog loadingDialog;
+//    public Dialog loadingDialog;
     private EquipmentListFragment currentFragment;
 
     @Override
@@ -66,7 +66,7 @@ public class EquipmentListActivity extends BaseWorkerActivity {
                 startActivityForResult(intent, REQUEST_COMPANY_ID);
             }
         });
-        loadingDialog = DialogUtil.createLoadingDialog(this);
+//        loadingDialog = DialogUtil.createLoadingDialog(this);
         initView();
         mBundle = getIntent().getExtras();
     }

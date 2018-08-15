@@ -11,7 +11,7 @@ import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.CheckSignPermission;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
@@ -33,7 +33,6 @@ import net.eanfang.client.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
-import net.eanfang.client.ui.widget.DefendLogView;
 import net.eanfang.client.ui.widget.SignCtrlView;
 
 import java.util.ArrayList;
@@ -181,11 +180,7 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_sign).setOnClickListener((v) -> {
             // 检查有无权限
             List<String> ss = new ArrayList<>();
-            if (CheckSignPermission.isCheckSign(CustomeApplication.get().getUser().getPerms())) {
-                new SignCtrlView(getActivity()).show();
-            } else {
-                showToast("暂无权限");
-            }
+            new SignCtrlView(getActivity()).show();
         });
 
         //工作汇报
@@ -226,8 +221,10 @@ public class WorkspaceFragment extends BaseFragment {
 
         //故障记录
         findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
-            Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
-            startActivity(intent);
+            if (PermKit.get().getFailureListPerm()) {
+                Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
+                startActivity(intent);
+            }
         });
 
         //设备库

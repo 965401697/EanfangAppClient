@@ -10,6 +10,10 @@ import android.widget.FrameLayout;
  * Created by O u r on 2018/4/22.
  */
 
+/**
+ * 2018年8月10日 14:33:37
+ */
+@Deprecated
 public class SoftHideKeyBoardUtil {
 
     public static void assistActivity(Activity activity) {
