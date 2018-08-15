@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.ViewGroup;
 
 import com.camera.util.LogUtil;
 import com.camera.util.ScreenSizeUtil;
@@ -129,6 +130,10 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     private void setCameraParams(int width, int height) {
         LogUtil.i(TAG, "setCameraParams  width=" + width + "  height=" + height);
 
+
+//        String s = getSurfaceViewSize(width, height);
+//        setSurfaceViewSize(s);
+
         Camera.Parameters parameters = mCamera.getParameters();
 
 
@@ -147,16 +152,16 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         // 根据选出的PictureSize重新设置SurfaceView大小
         parameters.setPictureSize(picSize.width, picSize.height);
 
-
         /*************************** 获取摄像头支持的PreviewSize列表********************/
-        List<Camera.Size> previewSizeList = parameters.getSupportedPreviewSizes();
-        sort(previewSizeList);
-        for (Camera.Size size : previewSizeList) {
+//        List<Camera.Size> previewSizeList = parameters.getSupportedPreviewSizes();
+        sort(pictureSizeList);
+        for (Camera.Size size : pictureSizeList) {
             LogUtil.i(TAG, "摄像支持可预览的分辨率：" + " size.width=" + size.width + "  size.height=" + size.height);
         }
-        Camera.Size preSize = getBestSupportedSize(previewSizeList, ((float) height) / width);
+        Camera.Size preSize = getBestSupportedSize(pictureSizeList, ((float) height) / width);
         if (null != preSize) {
             LogUtil.e(TAG, "我们选择的预览分辨率：" + "preSize.width=" + preSize.width + "  preSize.height=" + preSize.height);
+//            parameters.setPreviewSize(3264, 1836);
             parameters.setPreviewSize(preSize.width, preSize.height);
         }
 
@@ -220,6 +225,40 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         });
     }
 
+
+    //    计算预览分辨率的宽高比：
+    public String getSurfaceViewSize(int width, int height) {
+        if (equalRate(width, height, 1.33f)) {
+            return "4:3";
+        } else {
+            return "16:9";
+        }
+    }
+
+    public boolean equalRate(int width, int height, float rate) {
+        float r = (float) width / (float) height;
+        if (Math.abs(r - rate) <= 0.2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 根据分辨率设置预览SurfaceView的大小以防止变形
+     *
+     * @param surfaceSize
+     */
+    private void setSurfaceViewSize(String surfaceSize) {
+        ViewGroup.LayoutParams params = this.getLayoutParams();
+        if (surfaceSize.equals("16:9")) {
+            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        } else if (surfaceSize.equals("4:3")) {
+            params.height = 4 * DEFAULT_PHOTO_WIDTH / 3;
+        }
+        this.setLayoutParams(params);
+    }
+
     /**
      * 如包含默认尺寸，则选默认尺寸，如没有，则选最大的尺寸
      * 规则：在相同比例下，1.优先寻找长宽分辨率相同的->2.找长宽有一个相同的分辨率->3.找最大的分辨率
@@ -251,7 +290,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             }
         }
         if (largestSize == null) {
-            largestSize = sizes.get(sizes.size() - 1);
+            largestSize = sizes.get(0);
         }
         return largestSize;
     }

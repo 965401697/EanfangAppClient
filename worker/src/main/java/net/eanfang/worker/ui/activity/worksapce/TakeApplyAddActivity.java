@@ -23,12 +23,15 @@ import com.eanfang.model.TakeApplyAddBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
+import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+
 import net.eanfang.worker.R;
 
 import java.util.Calendar;
@@ -60,7 +63,7 @@ public class TakeApplyAddActivity extends BaseActivity {
     @BindView(R.id.ll_doorTime)
     LinearLayout llDoorTime;
     @BindView(R.id.et_time_limit)
-    EditText etTimeLimit;
+    TextView etTimeLimit;
     @BindView(R.id.tv_budget)
     EditText tvBudget;
     @BindView(R.id.et_need_desc)
@@ -69,6 +72,8 @@ public class TakeApplyAddActivity extends BaseActivity {
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.tv_ok)
     TextView tvOk;
+    @BindView(R.id.ll_time_limit)
+    LinearLayout llTimeLimit;
     private TakeApplyAddBean applyTaskBean;
     private Long entTaskPublishId;
     private HashMap<String, String> uploadMap = new HashMap<>();
@@ -91,6 +96,7 @@ public class TakeApplyAddActivity extends BaseActivity {
         setLeftBack();
         llDoorTime.setOnClickListener(v -> pvEndTime.show());
         tvOk.setOnClickListener(v -> commit());
+        llTimeLimit.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", etTimeLimit, GetConstDataUtils.getPredictList()));
     }
 
     private void initData() {
@@ -151,7 +157,7 @@ public class TakeApplyAddActivity extends BaseActivity {
 //            showToast("请输入预计工期");
 //            return;
 //        }
-        applyTaskBean.setPredictTime(Integer.parseInt(timeLimit));
+        applyTaskBean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(timeLimit));
 
         String doorTime = tvDoorTime.getText().toString().trim();
 //        if (TextUtils.isEmpty(doorTime)) {
@@ -177,10 +183,13 @@ public class TakeApplyAddActivity extends BaseActivity {
             });
         } else {
             doHttp(json);
+
         }
+
     }
 
     private void doHttp(String json) {
+//    private void doHttp() {
         EanfangHttp.post(NewApiService.TAKE_APPLY_LIST_ADD)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
@@ -190,7 +199,7 @@ public class TakeApplyAddActivity extends BaseActivity {
 
     private void submitSuccess() {
         showToast("接单成功");
-        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
+//        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
         Intent intent = new Intent(TakeApplyAddActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
@@ -204,7 +213,8 @@ public class TakeApplyAddActivity extends BaseActivity {
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-        finishSelf();
+        setResult(RESULT_OK);
+        finish();
     }
 
     private void initEndTimePicker() {

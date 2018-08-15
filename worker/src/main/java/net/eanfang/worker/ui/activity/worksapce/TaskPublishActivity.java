@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -171,6 +172,7 @@ public class TaskPublishActivity extends BaseActivity {
         });
         llProjectType.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", tvProjectType, GetConstDataUtils.getTaskPublishTypeList());
+            Log.e("zzw", tvProjectType.getText().toString());
 
         });
         btnConfirm.setOnClickListener((v) -> {

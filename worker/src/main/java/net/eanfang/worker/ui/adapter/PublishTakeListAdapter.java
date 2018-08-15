@@ -23,8 +23,8 @@ public class PublishTakeListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
             "待确认", "待支付", "待完工", "待验收", "已完成"
     };
 
-    public PublishTakeListAdapter(List<MineTaskListBean.ListBean> data) {
-        super(R.layout.item_task_list, data);
+    public PublishTakeListAdapter() {
+        super(R.layout.item_task_list);
 
     }
 
@@ -48,11 +48,11 @@ public class PublishTakeListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
                 helper.setText(R.id.tv_do_second, "查看详情");
                 break;
             case 2://带完工，指的是等待接包方完工
-                helper.setText(R.id.tv_do_first, "联系接包人");
+                helper.setText(R.id.tv_do_first, "联系发包人");
                 helper.setText(R.id.tv_do_second, "申请验收");
                 break;
             case 3://待验收，指的是等到发包方验收工作
-                helper.setText(R.id.tv_do_first, "联系接包人");
+                helper.setText(R.id.tv_do_first, "联系发包人");
                 helper.setText(R.id.tv_do_second, "查看详情");
                 break;
             case 4://已完成 ，就是订单已完成
@@ -75,6 +75,8 @@ public class PublishTakeListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
             if (urls.length >= 1) {
                 ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(BuildConfig.OSS_SERVER + urls[0]);
             }
+        } else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(BuildConfig.OSS_SERVER);
         }
 
 

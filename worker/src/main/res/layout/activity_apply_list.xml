@@ -5,24 +5,6 @@
     android:orientation="vertical">
     <include layout="@layout/header"/>
 
-    <TextView
-        android:id="@+id/tv_no_datas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂时没有数据"
-        android:visibility="gone" />
-
-    <com.eanfang.swipefresh.SwipyRefreshLayout
-        android:id="@+id/swiprefresh"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        my:direction="both">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.eanfang.swipefresh.SwipyRefreshLayout>
+    <include layout="@layout/fragment_template_item_list" />
 
 </LinearLayout>

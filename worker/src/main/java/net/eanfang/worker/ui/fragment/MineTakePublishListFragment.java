@@ -43,21 +43,22 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc
  */
 
-public class MineTakePublishListFragment extends BaseFragment implements
-        OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {
-    RecyclerView rvList;
-    SwipyRefreshLayout swiprefresh;
-    PublishTakeListAdapter adapter;
-    private List<MineTaskListBean.ListBean> mDataList = new ArrayList<>();
+public class MineTakePublishListFragment extends TemplateItemListFragment {
+    //    RecyclerView rvList;
+//    SwipyRefreshLayout swiprefresh;
+    PublishTakeListAdapter mAdapter;
+    //    private List<MineTaskListBean.ListBean> mDataList = new ArrayList<>();
     private String mTitle;
     private int mType;
 
-    private static int page = 1;
+    private int mCurrentPosition = 0;
+
+//    private static int page = 1;
 
     public static MineTakePublishListFragment getInstance(String title, int type) {
         MineTakePublishListFragment sf = new MineTakePublishListFragment();
         sf.mTitle = title;
-        page = 1;
+//        page = 1;
         sf.mType = type;
         return sf;
 
@@ -67,49 +68,60 @@ public class MineTakePublishListFragment extends BaseFragment implements
         return mTitle;
     }
 
+//    @Override
+//    protected int setLayoutResouceId() {
+//        return R.layout.fragment_work_report_list;
+//    }
+
+//    @Override
+//    protected void initData(Bundle arguments) {
+//
+//    }
+
+//    @Override
+//    protected void initView() {
+//        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
+//        swiprefresh.setOnRefreshListener(this);
+//        rvList = (RecyclerView) findViewById(R.id.rv_list);
+//    }
+
+    //    @Override
+//    protected void setListener() {
+//    }
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_work_report_list;
-    }
+    protected void initAdapter() {
+//        if (V.v(() -> ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList()) != null) {
+//            mDataList = ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList();
+//        }
+        mAdapter = new PublishTakeListAdapter();
+        mAdapter.bindToRecyclerView(mRecyclerView);
+        mAdapter.setOnLoadMoreListener(this);
+//        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-    @Override
-    protected void initData(Bundle arguments) {
-
-    }
-
-    @Override
-    protected void initView() {
-        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
-        swiprefresh.setOnRefreshListener(this);
-        rvList = (RecyclerView) findViewById(R.id.rv_list);
-    }
-
-    @Override
-    protected void setListener() {
-    }
-
-    private void initAdapter() {
-        if (V.v(() -> ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList()) != null) {
-            mDataList = ((MineTakePublishListActivity) getActivity()).getWorkReportListBean().getList();
-        }
-        adapter = new PublishTakeListAdapter(mDataList);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvList.addOnItemTouchListener(new OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new TaskPublishDetailView(getActivity(), true, mDataList.get(position), false).show();
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                new TaskPublishDetailView(getActivity(), true, (MineTaskListBean.ListBean) adapter.getData().get(position), false).show();
             }
         });
-        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+
+//        rvList.addOnItemTouchListener(new OnItemClickListener() {
+//            @Override
+//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                new TaskPublishDetailView(getActivity(), true, mDataList.get(position), false).show();
+//            }
+//        });
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            MineTaskListBean.ListBean bean = (MineTaskListBean.ListBean) adapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_do_first:
-                    switch (mDataList.get(position).getStatus()) {
+                    switch (bean.getStatus()) {
                         //关闭任务
                         case 0:
                         case 1:
                         case 2:
                         case 3:
-                            CallUtils.call(getContext(), mDataList.get(position).getContactsPhone());
+                            CallUtils.call(getContext(), bean.getContactsPhone());
                             break;
 
                         default:
@@ -117,18 +129,18 @@ public class MineTakePublishListFragment extends BaseFragment implements
                     }
                     break;
                 case R.id.tv_do_second:
-                    switch (mDataList.get(position).getStatus()) {
+                    switch (bean.getStatus()) {
                         //查看申请
                         case 0:
                         case 1:
                         case 3:
                         case 4:
-                            new TaskPublishDetailView(getActivity(), true, mDataList.get(position), false).show();
+                            new TaskPublishDetailView(getActivity(), true, bean, false).show();
                             break;
                         //确认验收
                         case 2:
-                            acceptance(mDataList.get(position).getId(), mDataList.get(position).getCreateUserId(),
-                                    mDataList.get(position).getShopTaskApplyId(), mDataList.get(position).getContactsPhone());
+                            acceptance(bean.getId(), bean.getCreateUserId(),
+                                    bean.getShopTaskApplyId(), bean.getContactsPhone());
                             break;
 
 
@@ -140,7 +152,7 @@ public class MineTakePublishListFragment extends BaseFragment implements
                     break;
             }
         });
-        rvList.setAdapter(adapter);
+//        rvList.setAdapter(adapter);
     }
 
 
@@ -158,54 +170,56 @@ public class MineTakePublishListFragment extends BaseFragment implements
         EanfangHttp.post(NewApiService.TAKE_APPLY_LIST_CHECK)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
+                    mAdapter.remove(mCurrentPosition);
                     showToast("申请验收");
                 }));
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getData();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        getData();
+//    }
+//
+//    /**
+//     * 刷新
+//     */
+//    @Override
+//    public void onRefresh(int index) {
+//        dataOption(TOP_REFRESH);
+//
+//    }
 
-    /**
-     * 刷新
-     */
-    @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
+//    @Override
+//    public void onLoad(int index) {
+//        dataOption(BOTTOM_REFRESH);
+//    }
 
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                getData();
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                getData();
-                break;
-            default:
-                break;
-        }
-    }
+//    private void dataOption(int option) {
+//        switch (option) {
+//            case TOP_REFRESH:
+//                //下拉刷新
+//                page--;
+//                if (page <= 0) {
+//                    page = 1;
+//                }
+//                getData();
+//                break;
+//            case BOTTOM_REFRESH:
+//                //上拉加载更多
+//                page++;
+//                getData();
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
     /**
      * 获取发包列表
      */
-    private void getData() {
+    @Override
+    protected void getData() {
         int status = GetConstDataUtils.getTaskPublishStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
@@ -216,25 +230,65 @@ public class MineTakePublishListFragment extends BaseFragment implements
         }
         queryEntry.getEquals().put(Constant.STATUS, status + "");
 
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setPage(mPage);
+        queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.TASK_APPLY_PUBLISH_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<MineTaskListBean>(getActivity(), true, MineTaskListBean.class, (bean) -> {
-                            getActivity().runOnUiThread(() -> {
-                                ((MineTakePublishListActivity) getActivity()).setWorkReportListBean(bean);
-                                onDataReceived();
-                            });
-                        })
-                );
+                .execute(new EanfangCallback<MineTaskListBean>(getActivity(), true, MineTaskListBean.class) {
+                    @Override
+                    public void onSuccess(MineTaskListBean bean) {
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
 
-    @Override
-    public void onDataReceived() {
-//        initView();
-        initAdapter();
-        swiprefresh.setRefreshing(false);
-    }
+//    @Override
+//    public void onDataReceived() {
+////        initView();
+//        initAdapter();
+//        swiprefresh.setRefreshing(false);
+//    }
 }
