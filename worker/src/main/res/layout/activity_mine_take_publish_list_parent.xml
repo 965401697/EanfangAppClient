@@ -75,6 +75,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_40">
 

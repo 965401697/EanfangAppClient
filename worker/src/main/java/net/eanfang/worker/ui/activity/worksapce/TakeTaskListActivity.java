@@ -24,6 +24,7 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FaultRecordAdapter;
 import net.eanfang.worker.ui.adapter.TakeTaskAdapter;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.TaskPublishDetailView;
 
@@ -44,7 +45,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc 我要接包
  */
 
-public class TakeTaskListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.tv_no_datas)
@@ -53,9 +54,9 @@ public class TakeTaskListActivity extends BaseActivity implements SwipeRefreshLa
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private int mPage = 1;
-    //    private List<MineTaskListBean.ListBean> mDataList;
     private TakeTaskAdapter mAdapter;
     private final int REQEST_TAKE_CODE = 101;
+    private int mCurrentPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,13 @@ public class TakeTaskListActivity extends BaseActivity implements SwipeRefreshLa
         setContentView(R.layout.activity_apply_list);
         ButterKnife.bind(this);
         setTitle("我要接包");
+        setRightTitle("查看");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(TakeTaskListActivity.this, MineTakePublishListReceiveParentActivity.class));
+            }
+        });
         setLeftBack();
         initView();
 
@@ -81,20 +89,22 @@ public class TakeTaskListActivity extends BaseActivity implements SwipeRefreshLa
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 //                new TaskPublishDetailView(TakeTaskListActivity.this, true, (MineTaskListBean.ListBean) mAdapter.getData().get(position), true).show();
+                mCurrentPosition = position;
                 Intent intent = new Intent(TakeTaskListActivity.this, TaskPublishDetailActivitty.class);
                 intent.putExtra("bean", (MineTaskListBean.ListBean) mAdapter.getData().get(position));
                 intent.putExtra("isTakePackpage", true);
-                startActivity(intent);
+                startActivityForResult(intent, REQEST_TAKE_CODE);
             }
         });
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mCurrentPosition = position;
             switch (view.getId()) {
                 case R.id.tv_select:
                     Intent intent = new Intent(TakeTaskListActivity.this, TaskPublishDetailActivitty.class);
                     intent.putExtra("bean", (MineTaskListBean.ListBean) mAdapter.getData().get(position));
                     intent.putExtra("isTakePackpage", true);
-                    startActivity(intent);
+                    startActivityForResult(intent, REQEST_TAKE_CODE);
 //                    new TaskPublishDetailView(TakeTaskListActivity.this, true, (MineTaskListBean.ListBean) mAdapter.getData().get(position), true).show();
                     break;
                 default:
@@ -183,6 +193,15 @@ public class TakeTaskListActivity extends BaseActivity implements SwipeRefreshLa
     public void onLoadMoreRequested() {
         mPage++;
         getData();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (RESULT_OK == resultCode && requestCode == REQEST_TAKE_CODE) {
+            mAdapter.remove(mCurrentPosition);
+        }
+
     }
 
 }

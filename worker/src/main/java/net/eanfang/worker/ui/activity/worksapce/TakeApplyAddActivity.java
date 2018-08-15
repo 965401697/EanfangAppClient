@@ -183,10 +183,13 @@ public class TakeApplyAddActivity extends BaseActivity {
             });
         } else {
             doHttp(json);
+
         }
+
     }
 
     private void doHttp(String json) {
+//    private void doHttp() {
         EanfangHttp.post(NewApiService.TAKE_APPLY_LIST_ADD)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
@@ -196,7 +199,7 @@ public class TakeApplyAddActivity extends BaseActivity {
 
     private void submitSuccess() {
         showToast("接单成功");
-        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
+//        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
         Intent intent = new Intent(TakeApplyAddActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
@@ -210,7 +213,8 @@ public class TakeApplyAddActivity extends BaseActivity {
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-        finishSelf();
+        setResult(RESULT_OK);
+        finish();
     }
 
     private void initEndTimePicker() {

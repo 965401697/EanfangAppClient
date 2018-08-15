@@ -127,12 +127,21 @@ public class TaskPublishDetailActivitty extends BaseWorkerActivity {
     }
 
     private void tvOk() {
-        Intent intent = new Intent(this, TakeApplyAddActivity.class);
+        Intent intent = new Intent();
+        intent.setClass(this, TakeApplyAddActivity.class);
         intent.putExtra("entTaskPublishId", listBean.getId());
         intent.putExtra("makeTime", listBean.getToDoorTime());
-        startActivity(intent);
-        finishSelf();
+        startActivityForResult(intent, 101);
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 101) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+    }
 
 }
