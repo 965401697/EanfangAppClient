@@ -9,7 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 18081701
-        versionName "2.3.18"
+        versionName "2.3.17"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
@@ -75,7 +75,7 @@ android {
             applicationVariants.all { variant ->
                 if (variant.buildType.name.equals('release')) {
                     variant.outputs.all {
-                        outputFileName ="worker_releace_v${defaultConfig.versionName}_${releaseTime()}_${variant.flavorName}.apk"
+                        outputFileName = "worker_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
                     }
                 }
             }
