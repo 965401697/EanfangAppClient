@@ -1,14 +1,11 @@
 package net.eanfang.worker.ui.receiver;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.StringUtils;
-import com.xiaomi.mipush.sdk.MessageHandleService;
+import com.eanfang.util.Var;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;
@@ -40,9 +37,11 @@ public class XiaoMiReceiver extends PushMessageReceiver {
         super.onNotificationMessageArrived(context, miPushMessage);
         Log.e("xiaomi", "onNotificationMessageArrived" + miPushMessage.getContent());
 
+        Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
+        Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
         System.err.println("---------------------extra:" + miPushMessage.getExtra().get("audio"));
         if (!StringUtils.isEmpty(miPushMessage.getExtra().get("audio"))) {
-            SynthesizerPresenter.getInstance().initTts(miPushMessage.getExtra().get("audio"));
+            SynthesizerPresenter.getInstance().start(miPushMessage.getExtra().get("audio"));
         }
 
     }

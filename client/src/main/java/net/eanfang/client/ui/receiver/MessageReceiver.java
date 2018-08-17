@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.camera.util.LogUtil;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
@@ -47,7 +48,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
             System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
             if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
-                SynthesizerPresenter.getInstance().initTts(jsonObject.getString("audio"));
+                SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
             }
         }
 
@@ -55,14 +56,17 @@ public class MessageReceiver extends XGPushBaseReceiver {
 
     @Override
     public void onUnregisterResult(Context context, int errorCode) {
+        LogUtil.e(LogTag, "onUnregisterResult");
     }
 
     @Override
     public void onSetTagResult(Context context, int errorCode, String tagName) {
+        LogUtil.e(LogTag, "onSetTagResult");
     }
 
     @Override
     public void onDeleteTagResult(Context context, int errorCode, String tagName) {
+        LogUtil.e(LogTag, "onDeleteTagResult");
     }
 
     // 通知点击回调 actionType=1为该消息被清除，actionType=0为该消息被点击
@@ -86,10 +90,12 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onRegisterResult(Context context, int errorCode,
                                  XGPushRegisterResult message) {
+        LogUtil.e(LogTag, "onRegisterResult");
     }
 
     // 消息透传
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
+        LogUtil.e(LogTag, "onTextMessage");
     }
 }

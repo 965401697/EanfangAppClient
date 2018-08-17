@@ -5,15 +5,8 @@ import android.util.Log;
 
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
-import net.eanfang.worker.ui.activity.MainActivity;
-
-import static com.eanfang.config.EanfangConst.MEIZU_APPID;
-import static com.eanfang.config.EanfangConst.MEIZU_APPKEY;
-import static com.eanfang.config.EanfangConst.XIAOMI_APPID;
-import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY;
 
 /**
  * 描述：
@@ -37,23 +30,6 @@ public class ReceiverInit {
     }
 
     public void inits(Context context, String telPhone) {
-        // 打开第三方推送
-        XGPushConfig.enableOtherPush(context, true);
-        //开启信鸽日志输出
-        XGPushConfig.enableDebug(context, true);
-        /**
-         * 小米
-         * */
-        XGPushConfig.setMiPushAppId(context, XIAOMI_APPID);
-        XGPushConfig.setMiPushAppKey(context, XIAOMI_APPKEY);
-        /**
-         * 魅族
-         * */
-        XGPushConfig.setMzPushAppId(context, MEIZU_APPID);
-        XGPushConfig.setMzPushAppKey(context, MEIZU_APPKEY);
-        XGPushConfig.setHuaweiDebug(true);
-
-
         //信鸽注册代码
         XGPushManager.registerPush(context, telPhone, new XGIOperateCallback() {
             @Override

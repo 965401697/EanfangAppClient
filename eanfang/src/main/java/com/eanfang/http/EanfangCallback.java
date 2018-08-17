@@ -136,7 +136,7 @@ public class EanfangCallback<T> extends StringCallback {
     }
 
     @Override
-        public final void onSuccess(Response<String> response) {
+    public final void onSuccess(Response<String> response) {
         try {
             if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
                 onServerError("服务器无响应");
@@ -214,6 +214,7 @@ public class EanfangCallback<T> extends StringCallback {
                 case MISSING_LOGIN:
                 case 50012:
                 case 50013:
+                    onFail(code, message, null);
                 case 50014:
 //                    onFail(code, message, null);
                     //taoken 过期  只弹出toast

@@ -89,9 +89,16 @@ public class EanfangConst {
     public static final String ACTION_WX_PAY_SUCCESS = "net.eanfang.client.action.repair_wx_pay_success";
 
     // 小米推送 Appid Appkey
-    public static final String XIAOMI_APPID = "2882303761517837079";
-    public static final String XIAOMI_APPKEY = "5641783759079";
+    public static final String XIAOMI_APPID_WORKER = "2882303761517837079";
+    public static final String XIAOMI_APPKEY_WORKER = "5641783759079";
+
+    public static final String XIAOMI_APPID_CLIENT = "2882303761517848571";
+    public static final String XIAOMI_APPKEY_CLIENT = "5151784822571";
+
     // 魅族 Appid Appkey
-    public static final String MEIZU_APPID = "1001122";
-    public static final String MEIZU_APPKEY = "27052f4accf34d49934941f28db1c2e4";
+    public static final String MEIZU_APPID_WORKER = "114610";
+    public static final String MEIZU_APPKEY_WORKER = "0415a897aa1e48b2a850e6896de87a18";
+
+    public static final String MEIZU_APPID_CLIENT = "115184";
+    public static final String MEIZU_APPKEY_CLIENT = "2762bc44bf064b21ad851a26e19083bf";
 }
