@@ -59,31 +59,89 @@ public class WorkTransferListBean implements Serializable {
         }
 
         public static class ListBean {
+
+
             /**
-             * assigneeUserEntity : {"accId":"984353134128418818","accountEntity":{"accId":"984353134128418818","accType":0,"address":"北京农商银行24小时自助银行(定福家园分理处)","areaCode":"3.11.1.5","avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"","gender":1,"idCard":"410926199005104491","mobile":"18611154430","nickName":"啊武30","qrCode":"3b523fe5a1be4c4b8124b6862d44bc36.png","realName":"义乌","regTime":"2018-04-12 16:50:50","status":0},"companyAdmin":false,"companyEntity":{"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","verifyStatus":0},"companyId":"1005473308202094594","departmentEntity":{"companyId":"1005473308202094594","countStaff":0,"level":2,"orgCode":"c.2","orgId":"1005473367119482882","orgName":"一组","orgType":2,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595"},"departmentId":"1005473367119482882","status":0,"superAdmin":false,"sysAdmin":false,"topCompanyEntity":{"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","verifyStatus":0},"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","userId":"1007527392761348098","userType":6}
-             * assigneeUserId : 1007527392761348098
-             * createTime : 2018-08-03 11:12:39
-             * id : 1025217857497628674
-             * orderNum : MO1808031112940
-             * ownerCompanyId : 1005473308202094594
-             * ownerDepartmentId : 1005473367119482882
-             * ownerUserEntity : {"accId":"958589123373846529","accountEntity":{"accId":"958589123373846529","accType":3,"address":"幻眼国际(朝阳北路与高安屯路交叉口东150米)","areaCode":"","avatar":"2c00d1b320d74bdaa66d7773c056989b.png","birthday":"2014-06-03 00:00:00","email":"101@qq.com","gender":1,"idCard":"110101200001015778","mobile":"13800138010","nickName":"烟酒梁还不知","qrCode":"b4e6ecd7946c432085b63ccef5bb75d9.png","realName":"烟酒梁","regTime":"2018-01-31 14:33:51","status":0},"companyAdmin":true,"companyEntity":{"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"verifyStatus":0},"companyId":"1005473308202094594","departmentEntity":{"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0},"departmentId":"1005473308202094594","status":0,"superAdmin":false,"sysAdmin":false,"topCompanyEntity":{"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"verifyStatus":0},"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"userId":"1005473308202094595","userType":3}
-             * ownerUserId : 1005473308202094595
+             * assigneeCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgUnitEntity":{"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2},"topCompanyId":"958589807934590978"}
+             * assigneeCompanyId : 958589807934590978
+             * assigneeDepartmentEntity : {"belongCompany":{"$ref":"$.data.list[0].assigneeCompanyEntity"},"belongTopCompany":{"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgUnitEntity":{"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2},"topCompanyId":"958589807934590978"},"companyId":"958589807934590978","countStaff":0,"level":2,"orgCode":"c.2","orgId":"973097885401395202","orgName":"防损部","topCompanyId":"958589807934590978"}
+             * assigneeOrgCode : c.2
+             * assigneeTopCompanyId : 958589807934590978
+             * assigneeUserEntity : {"accId":"984379128553951234","accountEntity":{"accId":"984379128553951234","accType":2,"avatar":"ecbd2972163f425bacfbfed943e71553.png","mobile":"13001011991","realName":"小赵"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"topCompanyId":"958589807934590978","userId":"1005457734260609026"}
+             * assigneeUserId : 1005457734260609026
+             * createTime : 2018-08-17 15:03:59
+             * id : 1030349500529000449
+             * orderNum : MO1808171503508
+             * ownerCompanyEntity : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgUnitEntity":{"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2},"topCompanyId":"958589807934590978"}
+             * ownerCompanyId : 958589807934590978
+             * ownerDepartmentEntity : {"belongCompany":{"$ref":"$.data.list[0].ownerCompanyEntity"},"belongTopCompany":{"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgUnitEntity":{"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2},"topCompanyId":"958589807934590978"},"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","topCompanyId":"958589807934590978"}
+             * ownerOrgCode : c
+             * ownerTopCompanyId : 958589807934590978
+             * ownerUserEntity : {"accId":"958589123373846529","accountEntity":{"accId":"958589123373846529","accType":3,"avatar":"2c00d1b320d74bdaa66d7773c056989b.png","mobile":"13800138010","realName":"烟酒梁"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"topCompanyId":"958589807934590978","userId":"958589807934590979"}
+             * ownerUserId : 958589807934590979
              * status : 0
-             * workClasses : 0
+             * workClasses : 1
              */
 
+            private AssigneeCompanyEntityBean assigneeCompanyEntity;
+            private String assigneeCompanyId;
+            private AssigneeDepartmentEntityBean assigneeDepartmentEntity;
+            private String assigneeOrgCode;
+            private String assigneeTopCompanyId;
             private AssigneeUserEntityBean assigneeUserEntity;
             private String assigneeUserId;
             private String createTime;
             private String id;
             private String orderNum;
+            private OwnerCompanyEntityBean ownerCompanyEntity;
             private String ownerCompanyId;
-            private String ownerDepartmentId;
+            private OwnerDepartmentEntityBean ownerDepartmentEntity;
+            private String ownerOrgCode;
+            private String ownerTopCompanyId;
             private OwnerUserEntityBean ownerUserEntity;
             private String ownerUserId;
             private int status;
             private int workClasses;
+
+            public AssigneeCompanyEntityBean getAssigneeCompanyEntity() {
+                return assigneeCompanyEntity;
+            }
+
+            public void setAssigneeCompanyEntity(AssigneeCompanyEntityBean assigneeCompanyEntity) {
+                this.assigneeCompanyEntity = assigneeCompanyEntity;
+            }
+
+            public String getAssigneeCompanyId() {
+                return assigneeCompanyId;
+            }
+
+            public void setAssigneeCompanyId(String assigneeCompanyId) {
+                this.assigneeCompanyId = assigneeCompanyId;
+            }
+
+            public AssigneeDepartmentEntityBean getAssigneeDepartmentEntity() {
+                return assigneeDepartmentEntity;
+            }
+
+            public void setAssigneeDepartmentEntity(AssigneeDepartmentEntityBean assigneeDepartmentEntity) {
+                this.assigneeDepartmentEntity = assigneeDepartmentEntity;
+            }
+
+            public String getAssigneeOrgCode() {
+                return assigneeOrgCode;
+            }
+
+            public void setAssigneeOrgCode(String assigneeOrgCode) {
+                this.assigneeOrgCode = assigneeOrgCode;
+            }
+
+            public String getAssigneeTopCompanyId() {
+                return assigneeTopCompanyId;
+            }
+
+            public void setAssigneeTopCompanyId(String assigneeTopCompanyId) {
+                this.assigneeTopCompanyId = assigneeTopCompanyId;
+            }
 
             public AssigneeUserEntityBean getAssigneeUserEntity() {
                 return assigneeUserEntity;
@@ -125,6 +183,14 @@ public class WorkTransferListBean implements Serializable {
                 this.orderNum = orderNum;
             }
 
+            public OwnerCompanyEntityBean getOwnerCompanyEntity() {
+                return ownerCompanyEntity;
+            }
+
+            public void setOwnerCompanyEntity(OwnerCompanyEntityBean ownerCompanyEntity) {
+                this.ownerCompanyEntity = ownerCompanyEntity;
+            }
+
             public String getOwnerCompanyId() {
                 return ownerCompanyId;
             }
@@ -133,12 +199,28 @@ public class WorkTransferListBean implements Serializable {
                 this.ownerCompanyId = ownerCompanyId;
             }
 
-            public String getOwnerDepartmentId() {
-                return ownerDepartmentId;
+            public OwnerDepartmentEntityBean getOwnerDepartmentEntity() {
+                return ownerDepartmentEntity;
             }
 
-            public void setOwnerDepartmentId(String ownerDepartmentId) {
-                this.ownerDepartmentId = ownerDepartmentId;
+            public void setOwnerDepartmentEntity(OwnerDepartmentEntityBean ownerDepartmentEntity) {
+                this.ownerDepartmentEntity = ownerDepartmentEntity;
+            }
+
+            public String getOwnerOrgCode() {
+                return ownerOrgCode;
+            }
+
+            public void setOwnerOrgCode(String ownerOrgCode) {
+                this.ownerOrgCode = ownerOrgCode;
+            }
+
+            public String getOwnerTopCompanyId() {
+                return ownerTopCompanyId;
+            }
+
+            public void setOwnerTopCompanyId(String ownerTopCompanyId) {
+                this.ownerTopCompanyId = ownerTopCompanyId;
             }
 
             public OwnerUserEntityBean getOwnerUserEntity() {
@@ -173,42 +255,380 @@ public class WorkTransferListBean implements Serializable {
                 this.workClasses = workClasses;
             }
 
+            public static class AssigneeCompanyEntityBean {
+                /**
+                 * companyId : 958589807934590978
+                 * countStaff : 0
+                 * level : 1
+                 * orgCode : c
+                 * orgId : 958589807934590978
+                 * orgName : 褡裢坡烟酒连锁
+                 * orgUnitEntity : {"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2}
+                 * topCompanyId : 958589807934590978
+                 */
+
+                private String companyId;
+                private int countStaff;
+                private int level;
+                private String orgCode;
+                private String orgId;
+                private String orgName;
+                private OrgUnitEntityBean orgUnitEntity;
+                private String topCompanyId;
+
+                public String getCompanyId() {
+                    return companyId;
+                }
+
+                public void setCompanyId(String companyId) {
+                    this.companyId = companyId;
+                }
+
+                public int getCountStaff() {
+                    return countStaff;
+                }
+
+                public void setCountStaff(int countStaff) {
+                    this.countStaff = countStaff;
+                }
+
+                public int getLevel() {
+                    return level;
+                }
+
+                public void setLevel(int level) {
+                    this.level = level;
+                }
+
+                public String getOrgCode() {
+                    return orgCode;
+                }
+
+                public void setOrgCode(String orgCode) {
+                    this.orgCode = orgCode;
+                }
+
+                public String getOrgId() {
+                    return orgId;
+                }
+
+                public void setOrgId(String orgId) {
+                    this.orgId = orgId;
+                }
+
+                public String getOrgName() {
+                    return orgName;
+                }
+
+                public void setOrgName(String orgName) {
+                    this.orgName = orgName;
+                }
+
+                public OrgUnitEntityBean getOrgUnitEntity() {
+                    return orgUnitEntity;
+                }
+
+                public void setOrgUnitEntity(OrgUnitEntityBean orgUnitEntity) {
+                    this.orgUnitEntity = orgUnitEntity;
+                }
+
+                public String getTopCompanyId() {
+                    return topCompanyId;
+                }
+
+                public void setTopCompanyId(String topCompanyId) {
+                    this.topCompanyId = topCompanyId;
+                }
+
+                public static class OrgUnitEntityBean {
+                    /**
+                     * logoPic : ecbd2972163f425bacfbfed943e71553.png
+                     * orgId : 958589807934590978
+                     * unitType : 2
+                     */
+
+                    private String logoPic;
+                    private String orgId;
+                    private int unitType;
+
+                    public String getLogoPic() {
+                        return logoPic;
+                    }
+
+                    public void setLogoPic(String logoPic) {
+                        this.logoPic = logoPic;
+                    }
+
+                    public String getOrgId() {
+                        return orgId;
+                    }
+
+                    public void setOrgId(String orgId) {
+                        this.orgId = orgId;
+                    }
+
+                    public int getUnitType() {
+                        return unitType;
+                    }
+
+                    public void setUnitType(int unitType) {
+                        this.unitType = unitType;
+                    }
+                }
+            }
+
+            public static class AssigneeDepartmentEntityBean {
+                /**
+                 * belongCompany : {"$ref":"$.data.list[0].assigneeCompanyEntity"}
+                 * belongTopCompany : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgUnitEntity":{"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2},"topCompanyId":"958589807934590978"}
+                 * companyId : 958589807934590978
+                 * countStaff : 0
+                 * level : 2
+                 * orgCode : c.2
+                 * orgId : 973097885401395202
+                 * orgName : 防损部
+                 * topCompanyId : 958589807934590978
+                 */
+
+                private BelongCompanyBean belongCompany;
+                private BelongTopCompanyBean belongTopCompany;
+                private String companyId;
+                private int countStaff;
+                private int level;
+                private String orgCode;
+                private String orgId;
+                private String orgName;
+                private String topCompanyId;
+
+                public BelongCompanyBean getBelongCompany() {
+                    return belongCompany;
+                }
+
+                public void setBelongCompany(BelongCompanyBean belongCompany) {
+                    this.belongCompany = belongCompany;
+                }
+
+                public BelongTopCompanyBean getBelongTopCompany() {
+                    return belongTopCompany;
+                }
+
+                public void setBelongTopCompany(BelongTopCompanyBean belongTopCompany) {
+                    this.belongTopCompany = belongTopCompany;
+                }
+
+                public String getCompanyId() {
+                    return companyId;
+                }
+
+                public void setCompanyId(String companyId) {
+                    this.companyId = companyId;
+                }
+
+                public int getCountStaff() {
+                    return countStaff;
+                }
+
+                public void setCountStaff(int countStaff) {
+                    this.countStaff = countStaff;
+                }
+
+                public int getLevel() {
+                    return level;
+                }
+
+                public void setLevel(int level) {
+                    this.level = level;
+                }
+
+                public String getOrgCode() {
+                    return orgCode;
+                }
+
+                public void setOrgCode(String orgCode) {
+                    this.orgCode = orgCode;
+                }
+
+                public String getOrgId() {
+                    return orgId;
+                }
+
+                public void setOrgId(String orgId) {
+                    this.orgId = orgId;
+                }
+
+                public String getOrgName() {
+                    return orgName;
+                }
+
+                public void setOrgName(String orgName) {
+                    this.orgName = orgName;
+                }
+
+                public String getTopCompanyId() {
+                    return topCompanyId;
+                }
+
+                public void setTopCompanyId(String topCompanyId) {
+                    this.topCompanyId = topCompanyId;
+                }
+
+                public static class BelongCompanyBean {
+                    /**
+                     * $ref : $.data.list[0].assigneeCompanyEntity
+                     */
+
+                    private String $ref;
+
+                    public String get$ref() {
+                        return $ref;
+                    }
+
+                    public void set$ref(String $ref) {
+                        this.$ref = $ref;
+                    }
+                }
+
+                public static class BelongTopCompanyBean {
+                    /**
+                     * companyId : 958589807934590978
+                     * countStaff : 0
+                     * level : 1
+                     * orgCode : c
+                     * orgId : 958589807934590978
+                     * orgName : 褡裢坡烟酒连锁
+                     * orgUnitEntity : {"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2}
+                     * topCompanyId : 958589807934590978
+                     */
+
+                    private String companyId;
+                    private int countStaff;
+                    private int level;
+                    private String orgCode;
+                    private String orgId;
+                    private String orgName;
+                    private OrgUnitEntityBeanX orgUnitEntity;
+                    private String topCompanyId;
+
+                    public String getCompanyId() {
+                        return companyId;
+                    }
+
+                    public void setCompanyId(String companyId) {
+                        this.companyId = companyId;
+                    }
+
+                    public int getCountStaff() {
+                        return countStaff;
+                    }
+
+                    public void setCountStaff(int countStaff) {
+                        this.countStaff = countStaff;
+                    }
+
+                    public int getLevel() {
+                        return level;
+                    }
+
+                    public void setLevel(int level) {
+                        this.level = level;
+                    }
+
+                    public String getOrgCode() {
+                        return orgCode;
+                    }
+
+                    public void setOrgCode(String orgCode) {
+                        this.orgCode = orgCode;
+                    }
+
+                    public String getOrgId() {
+                        return orgId;
+                    }
+
+                    public void setOrgId(String orgId) {
+                        this.orgId = orgId;
+                    }
+
+                    public String getOrgName() {
+                        return orgName;
+                    }
+
+                    public void setOrgName(String orgName) {
+                        this.orgName = orgName;
+                    }
+
+                    public OrgUnitEntityBeanX getOrgUnitEntity() {
+                        return orgUnitEntity;
+                    }
+
+                    public void setOrgUnitEntity(OrgUnitEntityBeanX orgUnitEntity) {
+                        this.orgUnitEntity = orgUnitEntity;
+                    }
+
+                    public String getTopCompanyId() {
+                        return topCompanyId;
+                    }
+
+                    public void setTopCompanyId(String topCompanyId) {
+                        this.topCompanyId = topCompanyId;
+                    }
+
+                    public static class OrgUnitEntityBeanX {
+                        /**
+                         * logoPic : ecbd2972163f425bacfbfed943e71553.png
+                         * orgId : 958589807934590978
+                         * unitType : 2
+                         */
+
+                        private String logoPic;
+                        private String orgId;
+                        private int unitType;
+
+                        public String getLogoPic() {
+                            return logoPic;
+                        }
+
+                        public void setLogoPic(String logoPic) {
+                            this.logoPic = logoPic;
+                        }
+
+                        public String getOrgId() {
+                            return orgId;
+                        }
+
+                        public void setOrgId(String orgId) {
+                            this.orgId = orgId;
+                        }
+
+                        public int getUnitType() {
+                            return unitType;
+                        }
+
+                        public void setUnitType(int unitType) {
+                            this.unitType = unitType;
+                        }
+                    }
+                }
+            }
+
             public static class AssigneeUserEntityBean {
                 /**
-                 * accId : 984353134128418818
-                 * accountEntity : {"accId":"984353134128418818","accType":0,"address":"北京农商银行24小时自助银行(定福家园分理处)","areaCode":"3.11.1.5","avatar":"ecbd2972163f425bacfbfed943e71553.png","email":"","gender":1,"idCard":"410926199005104491","mobile":"18611154430","nickName":"啊武30","qrCode":"3b523fe5a1be4c4b8124b6862d44bc36.png","realName":"义乌","regTime":"2018-04-12 16:50:50","status":0}
+                 * accId : 984379128553951234
+                 * accountEntity : {"accId":"984379128553951234","accType":2,"avatar":"ecbd2972163f425bacfbfed943e71553.png","mobile":"13001011991","realName":"小赵"}
                  * companyAdmin : false
-                 * companyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","verifyStatus":0}
-                 * companyId : 1005473308202094594
-                 * departmentEntity : {"companyId":"1005473308202094594","countStaff":0,"level":2,"orgCode":"c.2","orgId":"1005473367119482882","orgName":"一组","orgType":2,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595"}
-                 * departmentId : 1005473367119482882
-                 * status : 0
                  * superAdmin : false
                  * sysAdmin : false
-                 * topCompanyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-15 15:37:04","updateUser":"1005473308202094595","verifyStatus":0}
-                 * topCompanyId : 1005473308202094594
-                 * updateTime : 2018-06-15 15:37:04
-                 * updateUser : 1005473308202094595
-                 * userId : 1007527392761348098
-                 * userType : 6
+                 * topCompanyId : 958589807934590978
+                 * userId : 1005457734260609026
                  */
 
                 private String accId;
                 private AccountEntityBean accountEntity;
                 private boolean companyAdmin;
-                private CompanyEntityBean companyEntity;
-                private String companyId;
-                private DepartmentEntityBean ownerDepartmentEntity;
-                private String departmentId;
-                private int status;
                 private boolean superAdmin;
                 private boolean sysAdmin;
-                private TopCompanyEntityBean topCompanyEntity;
                 private String topCompanyId;
-                private String updateTime;
-                private String updateUser;
                 private String userId;
-                private int userType;
 
                 public String getAccId() {
                     return accId;
@@ -234,46 +654,6 @@ public class WorkTransferListBean implements Serializable {
                     this.companyAdmin = companyAdmin;
                 }
 
-                public CompanyEntityBean getCompanyEntity() {
-                    return companyEntity;
-                }
-
-                public void setCompanyEntity(CompanyEntityBean companyEntity) {
-                    this.companyEntity = companyEntity;
-                }
-
-                public String getCompanyId() {
-                    return companyId;
-                }
-
-                public void setCompanyId(String companyId) {
-                    this.companyId = companyId;
-                }
-
-                public DepartmentEntityBean getDepartmentEntity() {
-                    return ownerDepartmentEntity;
-                }
-
-                public void setDepartmentEntity(DepartmentEntityBean departmentEntity) {
-                    this.ownerDepartmentEntity = departmentEntity;
-                }
-
-                public String getDepartmentId() {
-                    return departmentId;
-                }
-
-                public void setDepartmentId(String departmentId) {
-                    this.departmentId = departmentId;
-                }
-
-                public int getStatus() {
-                    return status;
-                }
-
-                public void setStatus(int status) {
-                    this.status = status;
-                }
-
                 public boolean isSuperAdmin() {
                     return superAdmin;
                 }
@@ -290,36 +670,12 @@ public class WorkTransferListBean implements Serializable {
                     this.sysAdmin = sysAdmin;
                 }
 
-                public TopCompanyEntityBean getTopCompanyEntity() {
-                    return topCompanyEntity;
-                }
-
-                public void setTopCompanyEntity(TopCompanyEntityBean topCompanyEntity) {
-                    this.topCompanyEntity = topCompanyEntity;
-                }
-
                 public String getTopCompanyId() {
                     return topCompanyId;
                 }
 
                 public void setTopCompanyId(String topCompanyId) {
                     this.topCompanyId = topCompanyId;
-                }
-
-                public String getUpdateTime() {
-                    return updateTime;
-                }
-
-                public void setUpdateTime(String updateTime) {
-                    this.updateTime = updateTime;
-                }
-
-                public String getUpdateUser() {
-                    return updateUser;
-                }
-
-                public void setUpdateUser(String updateUser) {
-                    this.updateUser = updateUser;
                 }
 
                 public String getUserId() {
@@ -330,46 +686,20 @@ public class WorkTransferListBean implements Serializable {
                     this.userId = userId;
                 }
 
-                public int getUserType() {
-                    return userType;
-                }
-
-                public void setUserType(int userType) {
-                    this.userType = userType;
-                }
-
                 public static class AccountEntityBean {
                     /**
-                     * accId : 984353134128418818
-                     * accType : 0
-                     * address : 北京农商银行24小时自助银行(定福家园分理处)
-                     * areaCode : 3.11.1.5
+                     * accId : 984379128553951234
+                     * accType : 2
                      * avatar : ecbd2972163f425bacfbfed943e71553.png
-                     * email :
-                     * gender : 1
-                     * idCard : 410926199005104491
-                     * mobile : 18611154430
-                     * nickName : 啊武30
-                     * qrCode : 3b523fe5a1be4c4b8124b6862d44bc36.png
-                     * realName : 义乌
-                     * regTime : 2018-04-12 16:50:50
-                     * status : 0
+                     * mobile : 13001011991
+                     * realName : 小赵
                      */
 
                     private String accId;
                     private int accType;
-                    private String address;
-                    private String areaCode;
                     private String avatar;
-                    private String email;
-                    private int gender;
-                    private String idCard;
                     private String mobile;
-                    private String nickName;
-                    private String qrCode;
                     private String realName;
-                    private String regTime;
-                    private int status;
 
                     public String getAccId() {
                         return accId;
@@ -387,52 +717,12 @@ public class WorkTransferListBean implements Serializable {
                         this.accType = accType;
                     }
 
-                    public String getAddress() {
-                        return address;
-                    }
-
-                    public void setAddress(String address) {
-                        this.address = address;
-                    }
-
-                    public String getAreaCode() {
-                        return areaCode;
-                    }
-
-                    public void setAreaCode(String areaCode) {
-                        this.areaCode = areaCode;
-                    }
-
                     public String getAvatar() {
                         return avatar;
                     }
 
                     public void setAvatar(String avatar) {
                         this.avatar = avatar;
-                    }
-
-                    public String getEmail() {
-                        return email;
-                    }
-
-                    public void setEmail(String email) {
-                        this.email = email;
-                    }
-
-                    public int getGender() {
-                        return gender;
-                    }
-
-                    public void setGender(int gender) {
-                        this.gender = gender;
-                    }
-
-                    public String getIdCard() {
-                        return idCard;
-                    }
-
-                    public void setIdCard(String idCard) {
-                        this.idCard = idCard;
                     }
 
                     public String getMobile() {
@@ -443,22 +733,6 @@ public class WorkTransferListBean implements Serializable {
                         this.mobile = mobile;
                     }
 
-                    public String getNickName() {
-                        return nickName;
-                    }
-
-                    public void setNickName(String nickName) {
-                        this.nickName = nickName;
-                    }
-
-                    public String getQrCode() {
-                        return qrCode;
-                    }
-
-                    public void setQrCode(String qrCode) {
-                        this.qrCode = qrCode;
-                    }
-
                     public String getRealName() {
                         return realName;
                     }
@@ -466,37 +740,252 @@ public class WorkTransferListBean implements Serializable {
                     public void setRealName(String realName) {
                         this.realName = realName;
                     }
+                }
+            }
 
-                    public String getRegTime() {
-                        return regTime;
+            public static class OwnerCompanyEntityBean {
+                /**
+                 * companyId : 958589807934590978
+                 * countStaff : 0
+                 * level : 1
+                 * orgCode : c
+                 * orgId : 958589807934590978
+                 * orgName : 褡裢坡烟酒连锁
+                 * orgUnitEntity : {"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2}
+                 * topCompanyId : 958589807934590978
+                 */
+
+                private String companyId;
+                private int countStaff;
+                private int level;
+                private String orgCode;
+                private String orgId;
+                private String orgName;
+                private OrgUnitEntityBeanXX orgUnitEntity;
+                private String topCompanyId;
+
+                public String getCompanyId() {
+                    return companyId;
+                }
+
+                public void setCompanyId(String companyId) {
+                    this.companyId = companyId;
+                }
+
+                public int getCountStaff() {
+                    return countStaff;
+                }
+
+                public void setCountStaff(int countStaff) {
+                    this.countStaff = countStaff;
+                }
+
+                public int getLevel() {
+                    return level;
+                }
+
+                public void setLevel(int level) {
+                    this.level = level;
+                }
+
+                public String getOrgCode() {
+                    return orgCode;
+                }
+
+                public void setOrgCode(String orgCode) {
+                    this.orgCode = orgCode;
+                }
+
+                public String getOrgId() {
+                    return orgId;
+                }
+
+                public void setOrgId(String orgId) {
+                    this.orgId = orgId;
+                }
+
+                public String getOrgName() {
+                    return orgName;
+                }
+
+                public void setOrgName(String orgName) {
+                    this.orgName = orgName;
+                }
+
+                public OrgUnitEntityBeanXX getOrgUnitEntity() {
+                    return orgUnitEntity;
+                }
+
+                public void setOrgUnitEntity(OrgUnitEntityBeanXX orgUnitEntity) {
+                    this.orgUnitEntity = orgUnitEntity;
+                }
+
+                public String getTopCompanyId() {
+                    return topCompanyId;
+                }
+
+                public void setTopCompanyId(String topCompanyId) {
+                    this.topCompanyId = topCompanyId;
+                }
+
+                public static class OrgUnitEntityBeanXX {
+                    /**
+                     * logoPic : ecbd2972163f425bacfbfed943e71553.png
+                     * orgId : 958589807934590978
+                     * unitType : 2
+                     */
+
+                    private String logoPic;
+                    private String orgId;
+                    private int unitType;
+
+                    public String getLogoPic() {
+                        return logoPic;
                     }
 
-                    public void setRegTime(String regTime) {
-                        this.regTime = regTime;
+                    public void setLogoPic(String logoPic) {
+                        this.logoPic = logoPic;
                     }
 
-                    public int getStatus() {
-                        return status;
+                    public String getOrgId() {
+                        return orgId;
                     }
 
-                    public void setStatus(int status) {
-                        this.status = status;
+                    public void setOrgId(String orgId) {
+                        this.orgId = orgId;
+                    }
+
+                    public int getUnitType() {
+                        return unitType;
+                    }
+
+                    public void setUnitType(int unitType) {
+                        this.unitType = unitType;
+                    }
+                }
+            }
+
+            public static class OwnerDepartmentEntityBean {
+                /**
+                 * belongCompany : {"$ref":"$.data.list[0].ownerCompanyEntity"}
+                 * belongTopCompany : {"companyId":"958589807934590978","countStaff":0,"level":1,"orgCode":"c","orgId":"958589807934590978","orgName":"褡裢坡烟酒连锁","orgUnitEntity":{"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2},"topCompanyId":"958589807934590978"}
+                 * companyId : 958589807934590978
+                 * countStaff : 0
+                 * level : 1
+                 * orgCode : c
+                 * orgId : 958589807934590978
+                 * orgName : 褡裢坡烟酒连锁
+                 * topCompanyId : 958589807934590978
+                 */
+
+                private BelongCompanyBeanX belongCompany;
+                private BelongTopCompanyBeanX belongTopCompany;
+                private String companyId;
+                private int countStaff;
+                private int level;
+                private String orgCode;
+                private String orgId;
+                private String orgName;
+                private String topCompanyId;
+
+                public BelongCompanyBeanX getBelongCompany() {
+                    return belongCompany;
+                }
+
+                public void setBelongCompany(BelongCompanyBeanX belongCompany) {
+                    this.belongCompany = belongCompany;
+                }
+
+                public BelongTopCompanyBeanX getBelongTopCompany() {
+                    return belongTopCompany;
+                }
+
+                public void setBelongTopCompany(BelongTopCompanyBeanX belongTopCompany) {
+                    this.belongTopCompany = belongTopCompany;
+                }
+
+                public String getCompanyId() {
+                    return companyId;
+                }
+
+                public void setCompanyId(String companyId) {
+                    this.companyId = companyId;
+                }
+
+                public int getCountStaff() {
+                    return countStaff;
+                }
+
+                public void setCountStaff(int countStaff) {
+                    this.countStaff = countStaff;
+                }
+
+                public int getLevel() {
+                    return level;
+                }
+
+                public void setLevel(int level) {
+                    this.level = level;
+                }
+
+                public String getOrgCode() {
+                    return orgCode;
+                }
+
+                public void setOrgCode(String orgCode) {
+                    this.orgCode = orgCode;
+                }
+
+                public String getOrgId() {
+                    return orgId;
+                }
+
+                public void setOrgId(String orgId) {
+                    this.orgId = orgId;
+                }
+
+                public String getOrgName() {
+                    return orgName;
+                }
+
+                public void setOrgName(String orgName) {
+                    this.orgName = orgName;
+                }
+
+                public String getTopCompanyId() {
+                    return topCompanyId;
+                }
+
+                public void setTopCompanyId(String topCompanyId) {
+                    this.topCompanyId = topCompanyId;
+                }
+
+                public static class BelongCompanyBeanX {
+                    /**
+                     * $ref : $.data.list[0].ownerCompanyEntity
+                     */
+
+                    private String $ref;
+
+                    public String get$ref() {
+                        return $ref;
+                    }
+
+                    public void set$ref(String $ref) {
+                        this.$ref = $ref;
                     }
                 }
 
-                public static class CompanyEntityBean {
+                public static class BelongTopCompanyBeanX {
                     /**
-                     * companyId : 1005473308202094594
+                     * companyId : 958589807934590978
                      * countStaff : 0
                      * level : 1
                      * orgCode : c
-                     * orgId : 1005473308202094594
-                     * orgName : 四组
-                     * orgType : 0
-                     * topCompanyId : 1005473308202094594
-                     * updateTime : 2018-06-15 15:37:04
-                     * updateUser : 1005473308202094595
-                     * verifyStatus : 0
+                     * orgId : 958589807934590978
+                     * orgName : 褡裢坡烟酒连锁
+                     * orgUnitEntity : {"logoPic":"ecbd2972163f425bacfbfed943e71553.png","orgId":"958589807934590978","unitType":2}
+                     * topCompanyId : 958589807934590978
                      */
 
                     private String companyId;
@@ -505,11 +994,8 @@ public class WorkTransferListBean implements Serializable {
                     private String orgCode;
                     private String orgId;
                     private String orgName;
-                    private int orgType;
+                    private OrgUnitEntityBeanXXX orgUnitEntity;
                     private String topCompanyId;
-                    private String updateTime;
-                    private String updateUser;
-                    private int verifyStatus;
 
                     public String getCompanyId() {
                         return companyId;
@@ -559,126 +1045,12 @@ public class WorkTransferListBean implements Serializable {
                         this.orgName = orgName;
                     }
 
-                    public int getOrgType() {
-                        return orgType;
+                    public OrgUnitEntityBeanXXX getOrgUnitEntity() {
+                        return orgUnitEntity;
                     }
 
-                    public void setOrgType(int orgType) {
-                        this.orgType = orgType;
-                    }
-
-                    public String getTopCompanyId() {
-                        return topCompanyId;
-                    }
-
-                    public void setTopCompanyId(String topCompanyId) {
-                        this.topCompanyId = topCompanyId;
-                    }
-
-                    public String getUpdateTime() {
-                        return updateTime;
-                    }
-
-                    public void setUpdateTime(String updateTime) {
-                        this.updateTime = updateTime;
-                    }
-
-                    public String getUpdateUser() {
-                        return updateUser;
-                    }
-
-                    public void setUpdateUser(String updateUser) {
-                        this.updateUser = updateUser;
-                    }
-
-                    public int getVerifyStatus() {
-                        return verifyStatus;
-                    }
-
-                    public void setVerifyStatus(int verifyStatus) {
-                        this.verifyStatus = verifyStatus;
-                    }
-                }
-
-                public static class DepartmentEntityBean {
-                    /**
-                     * companyId : 1005473308202094594
-                     * countStaff : 0
-                     * level : 2
-                     * orgCode : c.2
-                     * orgId : 1005473367119482882
-                     * orgName : 一组
-                     * orgType : 2
-                     * topCompanyId : 1005473308202094594
-                     * updateTime : 2018-06-15 15:37:04
-                     * updateUser : 1005473308202094595
-                     */
-
-                    private String companyId;
-                    private int countStaff;
-                    private int level;
-                    private String orgCode;
-                    private String orgId;
-                    private String orgName;
-                    private int orgType;
-                    private String topCompanyId;
-                    private String updateTime;
-                    private String updateUser;
-
-                    public String getCompanyId() {
-                        return companyId;
-                    }
-
-                    public void setCompanyId(String companyId) {
-                        this.companyId = companyId;
-                    }
-
-                    public int getCountStaff() {
-                        return countStaff;
-                    }
-
-                    public void setCountStaff(int countStaff) {
-                        this.countStaff = countStaff;
-                    }
-
-                    public int getLevel() {
-                        return level;
-                    }
-
-                    public void setLevel(int level) {
-                        this.level = level;
-                    }
-
-                    public String getOrgCode() {
-                        return orgCode;
-                    }
-
-                    public void setOrgCode(String orgCode) {
-                        this.orgCode = orgCode;
-                    }
-
-                    public String getOrgId() {
-                        return orgId;
-                    }
-
-                    public void setOrgId(String orgId) {
-                        this.orgId = orgId;
-                    }
-
-                    public String getOrgName() {
-                        return orgName;
-                    }
-
-                    public void setOrgName(String orgName) {
-                        this.orgName = orgName;
-                    }
-
-                    public int getOrgType() {
-                        return orgType;
-                    }
-
-                    public void setOrgType(int orgType) {
-                        this.orgType = orgType;
+                    public void setOrgUnitEntity(OrgUnitEntityBeanXXX orgUnitEntity) {
+                        this.orgUnitEntity = orgUnitEntity;
                     }
 
                     public String getTopCompanyId() {
@@ -689,136 +1061,40 @@ public class WorkTransferListBean implements Serializable {
                         this.topCompanyId = topCompanyId;
                     }
 
-                    public String getUpdateTime() {
-                        return updateTime;
-                    }
+                    public static class OrgUnitEntityBeanXXX {
+                        /**
+                         * logoPic : ecbd2972163f425bacfbfed943e71553.png
+                         * orgId : 958589807934590978
+                         * unitType : 2
+                         */
 
-                    public void setUpdateTime(String updateTime) {
-                        this.updateTime = updateTime;
-                    }
+                        private String logoPic;
+                        private String orgId;
+                        private int unitType;
 
-                    public String getUpdateUser() {
-                        return updateUser;
-                    }
+                        public String getLogoPic() {
+                            return logoPic;
+                        }
 
-                    public void setUpdateUser(String updateUser) {
-                        this.updateUser = updateUser;
-                    }
-                }
+                        public void setLogoPic(String logoPic) {
+                            this.logoPic = logoPic;
+                        }
 
-                public static class TopCompanyEntityBean {
-                    /**
-                     * companyId : 1005473308202094594
-                     * countStaff : 0
-                     * level : 1
-                     * orgCode : c
-                     * orgId : 1005473308202094594
-                     * orgName : 四组
-                     * orgType : 0
-                     * topCompanyId : 1005473308202094594
-                     * updateTime : 2018-06-15 15:37:04
-                     * updateUser : 1005473308202094595
-                     * verifyStatus : 0
-                     */
+                        public String getOrgId() {
+                            return orgId;
+                        }
 
-                    private String companyId;
-                    private int countStaff;
-                    private int level;
-                    private String orgCode;
-                    private String orgId;
-                    private String orgName;
-                    private int orgType;
-                    private String topCompanyId;
-                    private String updateTime;
-                    private String updateUser;
-                    private int verifyStatus;
+                        public void setOrgId(String orgId) {
+                            this.orgId = orgId;
+                        }
 
-                    public String getCompanyId() {
-                        return companyId;
-                    }
+                        public int getUnitType() {
+                            return unitType;
+                        }
 
-                    public void setCompanyId(String companyId) {
-                        this.companyId = companyId;
-                    }
-
-                    public int getCountStaff() {
-                        return countStaff;
-                    }
-
-                    public void setCountStaff(int countStaff) {
-                        this.countStaff = countStaff;
-                    }
-
-                    public int getLevel() {
-                        return level;
-                    }
-
-                    public void setLevel(int level) {
-                        this.level = level;
-                    }
-
-                    public String getOrgCode() {
-                        return orgCode;
-                    }
-
-                    public void setOrgCode(String orgCode) {
-                        this.orgCode = orgCode;
-                    }
-
-                    public String getOrgId() {
-                        return orgId;
-                    }
-
-                    public void setOrgId(String orgId) {
-                        this.orgId = orgId;
-                    }
-
-                    public String getOrgName() {
-                        return orgName;
-                    }
-
-                    public void setOrgName(String orgName) {
-                        this.orgName = orgName;
-                    }
-
-                    public int getOrgType() {
-                        return orgType;
-                    }
-
-                    public void setOrgType(int orgType) {
-                        this.orgType = orgType;
-                    }
-
-                    public String getTopCompanyId() {
-                        return topCompanyId;
-                    }
-
-                    public void setTopCompanyId(String topCompanyId) {
-                        this.topCompanyId = topCompanyId;
-                    }
-
-                    public String getUpdateTime() {
-                        return updateTime;
-                    }
-
-                    public void setUpdateTime(String updateTime) {
-                        this.updateTime = updateTime;
-                    }
-
-                    public String getUpdateUser() {
-                        return updateUser;
-                    }
-
-                    public void setUpdateUser(String updateUser) {
-                        this.updateUser = updateUser;
-                    }
-
-                    public int getVerifyStatus() {
-                        return verifyStatus;
-                    }
-
-                    public void setVerifyStatus(int verifyStatus) {
-                        this.verifyStatus = verifyStatus;
+                        public void setUnitType(int unitType) {
+                            this.unitType = unitType;
+                        }
                     }
                 }
             }
@@ -826,39 +1102,21 @@ public class WorkTransferListBean implements Serializable {
             public static class OwnerUserEntityBean {
                 /**
                  * accId : 958589123373846529
-                 * accountEntity : {"accId":"958589123373846529","accType":3,"address":"幻眼国际(朝阳北路与高安屯路交叉口东150米)","areaCode":"","avatar":"2c00d1b320d74bdaa66d7773c056989b.png","birthday":"2014-06-03 00:00:00","email":"101@qq.com","gender":1,"idCard":"110101200001015778","mobile":"13800138010","nickName":"烟酒梁还不知","qrCode":"b4e6ecd7946c432085b63ccef5bb75d9.png","realName":"烟酒梁","regTime":"2018-01-31 14:33:51","status":0}
-                 * companyAdmin : true
-                 * companyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"verifyStatus":0}
-                 * companyId : 1005473308202094594
-                 * departmentEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0}
-                 * departmentId : 1005473308202094594
-                 * status : 0
+                 * accountEntity : {"accId":"958589123373846529","accType":3,"avatar":"2c00d1b320d74bdaa66d7773c056989b.png","mobile":"13800138010","realName":"烟酒梁"}
+                 * companyAdmin : false
                  * superAdmin : false
                  * sysAdmin : false
-                 * topCompanyEntity : {"companyId":"1005473308202094594","countStaff":0,"level":1,"orgCode":"c","orgId":"1005473308202094594","orgName":"四组","orgType":0,"topCompanyId":"1005473308202094594","updateTime":"2018-06-09 23:34:52","updateUser":0,"verifyStatus":0}
-                 * topCompanyId : 1005473308202094594
-                 * updateTime : 2018-06-09 23:34:52
-                 * updateUser : 0
-                 * userId : 1005473308202094595
-                 * userType : 3
+                 * topCompanyId : 958589807934590978
+                 * userId : 958589807934590979
                  */
 
                 private String accId;
                 private AccountEntityBeanX accountEntity;
                 private boolean companyAdmin;
-                private CompanyEntityBeanX companyEntity;
-                private String companyId;
-                private DepartmentEntityBeanX departmentEntity;
-                private String departmentId;
-                private int status;
                 private boolean superAdmin;
                 private boolean sysAdmin;
-                private TopCompanyEntityBeanX topCompanyEntity;
                 private String topCompanyId;
-                private String updateTime;
-                private String updateUser;
                 private String userId;
-                private int userType;
 
                 public String getAccId() {
                     return accId;
@@ -884,46 +1142,6 @@ public class WorkTransferListBean implements Serializable {
                     this.companyAdmin = companyAdmin;
                 }
 
-                public CompanyEntityBeanX getCompanyEntity() {
-                    return companyEntity;
-                }
-
-                public void setCompanyEntity(CompanyEntityBeanX companyEntity) {
-                    this.companyEntity = companyEntity;
-                }
-
-                public String getCompanyId() {
-                    return companyId;
-                }
-
-                public void setCompanyId(String companyId) {
-                    this.companyId = companyId;
-                }
-
-                public DepartmentEntityBeanX getDepartmentEntity() {
-                    return departmentEntity;
-                }
-
-                public void setDepartmentEntity(DepartmentEntityBeanX departmentEntity) {
-                    this.departmentEntity = departmentEntity;
-                }
-
-                public String getDepartmentId() {
-                    return departmentId;
-                }
-
-                public void setDepartmentId(String departmentId) {
-                    this.departmentId = departmentId;
-                }
-
-                public int getStatus() {
-                    return status;
-                }
-
-                public void setStatus(int status) {
-                    this.status = status;
-                }
-
                 public boolean isSuperAdmin() {
                     return superAdmin;
                 }
@@ -940,36 +1158,12 @@ public class WorkTransferListBean implements Serializable {
                     this.sysAdmin = sysAdmin;
                 }
 
-                public TopCompanyEntityBeanX getTopCompanyEntity() {
-                    return topCompanyEntity;
-                }
-
-                public void setTopCompanyEntity(TopCompanyEntityBeanX topCompanyEntity) {
-                    this.topCompanyEntity = topCompanyEntity;
-                }
-
                 public String getTopCompanyId() {
                     return topCompanyId;
                 }
 
                 public void setTopCompanyId(String topCompanyId) {
                     this.topCompanyId = topCompanyId;
-                }
-
-                public String getUpdateTime() {
-                    return updateTime;
-                }
-
-                public void setUpdateTime(String updateTime) {
-                    this.updateTime = updateTime;
-                }
-
-                public String getUpdateUser() {
-                    return updateUser;
-                }
-
-                public void setUpdateUser(String updateUser) {
-                    this.updateUser = updateUser;
                 }
 
                 public String getUserId() {
@@ -980,48 +1174,20 @@ public class WorkTransferListBean implements Serializable {
                     this.userId = userId;
                 }
 
-                public int getUserType() {
-                    return userType;
-                }
-
-                public void setUserType(int userType) {
-                    this.userType = userType;
-                }
-
                 public static class AccountEntityBeanX {
                     /**
                      * accId : 958589123373846529
                      * accType : 3
-                     * address : 幻眼国际(朝阳北路与高安屯路交叉口东150米)
-                     * areaCode :
                      * avatar : 2c00d1b320d74bdaa66d7773c056989b.png
-                     * birthday : 2014-06-03 00:00:00
-                     * email : 101@qq.com
-                     * gender : 1
-                     * idCard : 110101200001015778
                      * mobile : 13800138010
-                     * nickName : 烟酒梁还不知
-                     * qrCode : b4e6ecd7946c432085b63ccef5bb75d9.png
                      * realName : 烟酒梁
-                     * regTime : 2018-01-31 14:33:51
-                     * status : 0
                      */
 
                     private String accId;
                     private int accType;
-                    private String address;
-                    private String areaCode;
                     private String avatar;
-                    private String birthday;
-                    private String email;
-                    private int gender;
-                    private String idCard;
                     private String mobile;
-                    private String nickName;
-                    private String qrCode;
                     private String realName;
-                    private String regTime;
-                    private int status;
 
                     public String getAccId() {
                         return accId;
@@ -1039,60 +1205,12 @@ public class WorkTransferListBean implements Serializable {
                         this.accType = accType;
                     }
 
-                    public String getAddress() {
-                        return address;
-                    }
-
-                    public void setAddress(String address) {
-                        this.address = address;
-                    }
-
-                    public String getAreaCode() {
-                        return areaCode;
-                    }
-
-                    public void setAreaCode(String areaCode) {
-                        this.areaCode = areaCode;
-                    }
-
                     public String getAvatar() {
                         return avatar;
                     }
 
                     public void setAvatar(String avatar) {
                         this.avatar = avatar;
-                    }
-
-                    public String getBirthday() {
-                        return birthday;
-                    }
-
-                    public void setBirthday(String birthday) {
-                        this.birthday = birthday;
-                    }
-
-                    public String getEmail() {
-                        return email;
-                    }
-
-                    public void setEmail(String email) {
-                        this.email = email;
-                    }
-
-                    public int getGender() {
-                        return gender;
-                    }
-
-                    public void setGender(int gender) {
-                        this.gender = gender;
-                    }
-
-                    public String getIdCard() {
-                        return idCard;
-                    }
-
-                    public void setIdCard(String idCard) {
-                        this.idCard = idCard;
                     }
 
                     public String getMobile() {
@@ -1103,22 +1221,6 @@ public class WorkTransferListBean implements Serializable {
                         this.mobile = mobile;
                     }
 
-                    public String getNickName() {
-                        return nickName;
-                    }
-
-                    public void setNickName(String nickName) {
-                        this.nickName = nickName;
-                    }
-
-                    public String getQrCode() {
-                        return qrCode;
-                    }
-
-                    public void setQrCode(String qrCode) {
-                        this.qrCode = qrCode;
-                    }
-
                     public String getRealName() {
                         return realName;
                     }
@@ -1126,361 +1228,8 @@ public class WorkTransferListBean implements Serializable {
                     public void setRealName(String realName) {
                         this.realName = realName;
                     }
-
-                    public String getRegTime() {
-                        return regTime;
-                    }
-
-                    public void setRegTime(String regTime) {
-                        this.regTime = regTime;
-                    }
-
-                    public int getStatus() {
-                        return status;
-                    }
-
-                    public void setStatus(int status) {
-                        this.status = status;
-                    }
-                }
-
-                public static class CompanyEntityBeanX {
-                    /**
-                     * companyId : 1005473308202094594
-                     * countStaff : 0
-                     * level : 1
-                     * orgCode : c
-                     * orgId : 1005473308202094594
-                     * orgName : 四组
-                     * orgType : 0
-                     * topCompanyId : 1005473308202094594
-                     * updateTime : 2018-06-09 23:34:52
-                     * updateUser : 0
-                     * verifyStatus : 0
-                     */
-
-                    private String companyId;
-                    private int countStaff;
-                    private int level;
-                    private String orgCode;
-                    private String orgId;
-                    private String orgName;
-                    private int orgType;
-                    private String topCompanyId;
-                    private String updateTime;
-                    private String updateUser;
-                    private int verifyStatus;
-
-                    public String getCompanyId() {
-                        return companyId;
-                    }
-
-                    public void setCompanyId(String companyId) {
-                        this.companyId = companyId;
-                    }
-
-                    public int getCountStaff() {
-                        return countStaff;
-                    }
-
-                    public void setCountStaff(int countStaff) {
-                        this.countStaff = countStaff;
-                    }
-
-                    public int getLevel() {
-                        return level;
-                    }
-
-                    public void setLevel(int level) {
-                        this.level = level;
-                    }
-
-                    public String getOrgCode() {
-                        return orgCode;
-                    }
-
-                    public void setOrgCode(String orgCode) {
-                        this.orgCode = orgCode;
-                    }
-
-                    public String getOrgId() {
-                        return orgId;
-                    }
-
-                    public void setOrgId(String orgId) {
-                        this.orgId = orgId;
-                    }
-
-                    public String getOrgName() {
-                        return orgName;
-                    }
-
-                    public void setOrgName(String orgName) {
-                        this.orgName = orgName;
-                    }
-
-                    public int getOrgType() {
-                        return orgType;
-                    }
-
-                    public void setOrgType(int orgType) {
-                        this.orgType = orgType;
-                    }
-
-                    public String getTopCompanyId() {
-                        return topCompanyId;
-                    }
-
-                    public void setTopCompanyId(String topCompanyId) {
-                        this.topCompanyId = topCompanyId;
-                    }
-
-                    public String getUpdateTime() {
-                        return updateTime;
-                    }
-
-                    public void setUpdateTime(String updateTime) {
-                        this.updateTime = updateTime;
-                    }
-
-                    public String getUpdateUser() {
-                        return updateUser;
-                    }
-
-                    public void setUpdateUser(String updateUser) {
-                        this.updateUser = updateUser;
-                    }
-
-                    public int getVerifyStatus() {
-                        return verifyStatus;
-                    }
-
-                    public void setVerifyStatus(int verifyStatus) {
-                        this.verifyStatus = verifyStatus;
-                    }
-                }
-
-                public static class DepartmentEntityBeanX {
-                    /**
-                     * companyId : 1005473308202094594
-                     * countStaff : 0
-                     * level : 1
-                     * orgCode : c
-                     * orgId : 1005473308202094594
-                     * orgName : 四组
-                     * orgType : 0
-                     * topCompanyId : 1005473308202094594
-                     * updateTime : 2018-06-09 23:34:52
-                     * updateUser : 0
-                     */
-
-                    private String companyId;
-                    private int countStaff;
-                    private int level;
-                    private String orgCode;
-                    private String orgId;
-                    private String orgName;
-                    private int orgType;
-                    private String topCompanyId;
-                    private String updateTime;
-                    private String updateUser;
-
-                    public String getCompanyId() {
-                        return companyId;
-                    }
-
-                    public void setCompanyId(String companyId) {
-                        this.companyId = companyId;
-                    }
-
-                    public int getCountStaff() {
-                        return countStaff;
-                    }
-
-                    public void setCountStaff(int countStaff) {
-                        this.countStaff = countStaff;
-                    }
-
-                    public int getLevel() {
-                        return level;
-                    }
-
-                    public void setLevel(int level) {
-                        this.level = level;
-                    }
-
-                    public String getOrgCode() {
-                        return orgCode;
-                    }
-
-                    public void setOrgCode(String orgCode) {
-                        this.orgCode = orgCode;
-                    }
-
-                    public String getOrgId() {
-                        return orgId;
-                    }
-
-                    public void setOrgId(String orgId) {
-                        this.orgId = orgId;
-                    }
-
-                    public String getOrgName() {
-                        return orgName;
-                    }
-
-                    public void setOrgName(String orgName) {
-                        this.orgName = orgName;
-                    }
-
-                    public int getOrgType() {
-                        return orgType;
-                    }
-
-                    public void setOrgType(int orgType) {
-                        this.orgType = orgType;
-                    }
-
-                    public String getTopCompanyId() {
-                        return topCompanyId;
-                    }
-
-                    public void setTopCompanyId(String topCompanyId) {
-                        this.topCompanyId = topCompanyId;
-                    }
-
-                    public String getUpdateTime() {
-                        return updateTime;
-                    }
-
-                    public void setUpdateTime(String updateTime) {
-                        this.updateTime = updateTime;
-                    }
-
-                    public String getUpdateUser() {
-                        return updateUser;
-                    }
-
-                    public void setUpdateUser(String updateUser) {
-                        this.updateUser = updateUser;
-                    }
-                }
-
-                public static class TopCompanyEntityBeanX {
-                    /**
-                     * companyId : 1005473308202094594
-                     * countStaff : 0
-                     * level : 1
-                     * orgCode : c
-                     * orgId : 1005473308202094594
-                     * orgName : 四组
-                     * orgType : 0
-                     * topCompanyId : 1005473308202094594
-                     * updateTime : 2018-06-09 23:34:52
-                     * updateUser : 0
-                     * verifyStatus : 0
-                     */
-
-                    private String companyId;
-                    private int countStaff;
-                    private int level;
-                    private String orgCode;
-                    private String orgId;
-                    private String orgName;
-                    private int orgType;
-                    private String topCompanyId;
-                    private String updateTime;
-                    private String updateUser;
-                    private int verifyStatus;
-
-                    public String getCompanyId() {
-                        return companyId;
-                    }
-
-                    public void setCompanyId(String companyId) {
-                        this.companyId = companyId;
-                    }
-
-                    public int getCountStaff() {
-                        return countStaff;
-                    }
-
-                    public void setCountStaff(int countStaff) {
-                        this.countStaff = countStaff;
-                    }
-
-                    public int getLevel() {
-                        return level;
-                    }
-
-                    public void setLevel(int level) {
-                        this.level = level;
-                    }
-
-                    public String getOrgCode() {
-                        return orgCode;
-                    }
-
-                    public void setOrgCode(String orgCode) {
-                        this.orgCode = orgCode;
-                    }
-
-                    public String getOrgId() {
-                        return orgId;
-                    }
-
-                    public void setOrgId(String orgId) {
-                        this.orgId = orgId;
-                    }
-
-                    public String getOrgName() {
-                        return orgName;
-                    }
-
-                    public void setOrgName(String orgName) {
-                        this.orgName = orgName;
-                    }
-
-                    public int getOrgType() {
-                        return orgType;
-                    }
-
-                    public void setOrgType(int orgType) {
-                        this.orgType = orgType;
-                    }
-
-                    public String getTopCompanyId() {
-                        return topCompanyId;
-                    }
-
-                    public void setTopCompanyId(String topCompanyId) {
-                        this.topCompanyId = topCompanyId;
-                    }
-
-                    public String getUpdateTime() {
-                        return updateTime;
-                    }
-
-                    public void setUpdateTime(String updateTime) {
-                        this.updateTime = updateTime;
-                    }
-
-                    public String getUpdateUser() {
-                        return updateUser;
-                    }
-
-                    public void setUpdateUser(String updateUser) {
-                        this.updateUser = updateUser;
-                    }
-
-                    public int getVerifyStatus() {
-                        return verifyStatus;
-                    }
-
-                    public void setVerifyStatus(int verifyStatus) {
-                        this.verifyStatus = verifyStatus;
-                    }
                 }
             }
-    }
+        }
+
 }

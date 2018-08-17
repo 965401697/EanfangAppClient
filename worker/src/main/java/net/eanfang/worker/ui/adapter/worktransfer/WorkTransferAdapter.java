@@ -26,14 +26,14 @@ public class WorkTransferAdapter extends BaseQuickAdapter<WorkTransferListBean.L
     protected void convert(BaseViewHolder helper, WorkTransferListBean.ListBean item) {
         if (mIsCreate) {// 我创建的
             // 创建人
-            helper.setText(R.id.tv_worktalk_name, item.getOwnerUserEntity().getDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getNickName() + ")");
+            helper.setText(R.id.tv_worktalk_name, item.getOwnerDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
-            helper.setText(R.id.tv_receiver_name, "接收人：" + item.getAssigneeUserEntity().getAccountEntity().getNickName());
+            helper.setText(R.id.tv_receiver_name, "接收人：" + item.getAssigneeUserEntity().getAccountEntity().getRealName());
         } else {// 我接收的
             // 创建人
-            helper.setText(R.id.tv_worktalk_name, item.getAssigneeUserEntity().getDepartmentEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getNickName() + ")");
+            helper.setText(R.id.tv_worktalk_name, item.getAssigneeDepartmentEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
-            helper.setText(R.id.tv_receiver_name, "创建人：" + item.getOwnerUserEntity().getAccountEntity().getNickName());
+            helper.setText(R.id.tv_receiver_name, "创建人：" + item.getOwnerUserEntity().getAccountEntity().getRealName());
         }
         helper.setText(R.id.tv_state, GetConstDataUtils.getWorkTransferList().get(item.getStatus()));
         helper.setText(R.id.tv_order_id, "编号：" + item.getOrderNum());
