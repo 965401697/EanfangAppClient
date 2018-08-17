@@ -44,7 +44,7 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
-    private String type;
+    private int type;
     private WorkCheckListBean workChenkBean;
     private WorkCheckListFragment currentFragment;
 
@@ -66,13 +66,13 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
 
     private void initView() {
         titleBar = getIntent().getStringExtra("title");
-        type = getIntent().getStringExtra("type");
+        type = getIntent().getIntExtra("type", 0);
         setTitle(titleBar);
         setLeftBack();
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkCheckListFragment.getInstance(title, Integer.parseInt(type)));
+            mFragments.add(WorkCheckListFragment.getInstance(title, type));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

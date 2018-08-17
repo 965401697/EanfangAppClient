@@ -392,7 +392,10 @@ public class CheckActivity extends BaseWorkerActivity {
                                 startActivity(intent);
 
                                 //分享
-                                if (newPresonList.size() == 0 && newGroupList.size() == 0) return;
+                                if (newPresonList.size() == 0 && newGroupList.size() == 0) {
+                                    finishSelf();
+                                    return;
+                                }
 
                                 if (newGroupList.size() > 0) {
 

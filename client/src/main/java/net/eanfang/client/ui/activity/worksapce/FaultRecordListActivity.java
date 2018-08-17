@@ -15,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FaultListsBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairFailureEntity;
 
@@ -55,8 +56,10 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
             setRightImageOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(FaultRecordListActivity.this, FaultStatisticsListActivity.class);
-                    startActivity(intent);
+                    if (PermKit.get().getFailureDetailPerm()) {
+                        Intent intent = new Intent(FaultRecordListActivity.this, FaultStatisticsListActivity.class);
+                        startActivity(intent);
+                    }
                 }
             });
         }
@@ -87,7 +90,7 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
                     status = "待确认";
                 }
 
-                new TroubleDetalilListActivity(FaultRecordListActivity.this, true, bean.getBusRepairOrderId(), isPhoneSolve, status,false).show();
+                new TroubleDetalilListActivity(FaultRecordListActivity.this, true, bean.getBusRepairOrderId(), isPhoneSolve, status, false).show();
 
             }
         });

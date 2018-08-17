@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.SignActivity;
@@ -43,6 +44,11 @@ public class SignCtrlView extends BaseDialog {
     }
 
     private void jumpSign(String title, int status) {
+        if (status == 0) {
+            if (!PermKit.get().getSignInCreatePrem()) return;
+        } else {
+            if (!PermKit.get().getSignOutCreatePrem()) return;
+        }
         Intent intent = new Intent(mContext, SignActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("status", status);

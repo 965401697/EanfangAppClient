@@ -3,8 +3,11 @@ package net.eanfang.client.ui.activity.worksapce.defendlog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -35,12 +38,19 @@ public class DefendLogParentActivity extends BaseClientActivity {
     }
 
     private void initView() {
-        ivAdd.setOnClickListener(v -> startActivity(new Intent(this, DefendLogWriteActivity.class)));
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!PermKit.get().getProtectionCreatePrem()) return;
+                startActivity(new Intent(DefendLogParentActivity.this, DefendLogWriteActivity.class));
+            }
+        });
         ivMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         ivMineAccept.setOnClickListener(v -> jump("我接收的", 2));
     }
 
     private void jump(String title, int type) {
+        if (!PermKit.get().getProtectionListPrem()) return;
         Intent intent = new Intent(this, DefendLogActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

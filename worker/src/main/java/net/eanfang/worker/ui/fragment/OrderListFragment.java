@@ -20,6 +20,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -380,6 +381,7 @@ public class OrderListFragment extends BaseFragment implements
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            if (!PermKit.get().getRepairDetailPerm()) return;
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra("id", ((RepairOrderEntity) adapter.getData().get(position)).getId());
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

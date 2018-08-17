@@ -14,6 +14,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.PermKit;
 import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -66,9 +67,11 @@ public class CooperationRelationActivity extends BaseClientActivity implements S
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(CooperationRelationActivity.this, CooperationRelationDetailActivity.class);
-                intent.putExtra("bean", (CooperationEntity) adapter.getData().get(position));
-                startActivity(intent);
+                if (PermKit.get().getCooperationDetailPerm()) {
+                    Intent intent = new Intent(CooperationRelationActivity.this, CooperationRelationDetailActivity.class);
+                    intent.putExtra("bean", (CooperationEntity) adapter.getData().get(position));
+                    startActivity(intent);
+                }
             }
         });
 

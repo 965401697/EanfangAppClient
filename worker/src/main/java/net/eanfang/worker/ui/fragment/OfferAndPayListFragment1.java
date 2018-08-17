@@ -13,6 +13,7 @@ import com.eanfang.model.PayOrderListBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
@@ -52,6 +53,7 @@ public class OfferAndPayListFragment1 extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!PermKit.get().getQuoteDetailPrem()) return;
                 startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", ((PayOrderListBean.ListBean) adapter.getData().get(position)).getId()));
             }
         });
@@ -62,6 +64,7 @@ public class OfferAndPayListFragment1 extends TemplateItemListFragment {
                     CallUtils.call(getActivity(), ((PayOrderListBean.ListBean) adapter.getData().get(position)).getReporterPhone());
                     break;
                 case R.id.tv_do_second:
+                    if (!PermKit.get().getQuoteAgreePrem()) return;
                     agreeOffer(((PayOrderListBean.ListBean) adapter.getData().get(position)).getId());
                     break;
                 default:

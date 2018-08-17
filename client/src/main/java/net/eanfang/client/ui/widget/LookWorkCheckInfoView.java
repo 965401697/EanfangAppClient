@@ -101,17 +101,21 @@ public class LookWorkCheckInfoView extends BaseDialog {
         ivLeft.setOnClickListener(v -> dismiss());
 
         Long uid = EanfangApplication.getApplication().getUserId();
-        if (uid.equals(infoBean.getAssigneeUserId())) {
+
+//        if (uid.equals(infoBean.getCreateUserId())) {
+//            llAddDetail.setVisibility(View.GONE);
+//        } else {
+//            llAddDetail.setVisibility(View.VISIBLE);
+//        }
+
+
+        if (uid.equals(infoBean.getAssigneeUserId()) && (EanfangConst.WORK_INSPECT_STATUS_CREATE == infoBean.getStatus())) {
             llAddDetail.setVisibility(View.VISIBLE);
         } else {
             llAddDetail.setVisibility(View.GONE);
         }
 
-        if (uid.equals(infoBean.getCreateUserId())) {
-            llAddDetail.setVisibility(View.GONE);
-        } else {
-            llAddDetail.setVisibility(View.VISIBLE);
-        }
+
         if (EanfangConst.WORK_INSPECT_STATUS_FINISH == infoBean.getStatus()) {
             btnAddDetail.setVisibility(View.GONE);
         }
@@ -127,20 +131,20 @@ public class LookWorkCheckInfoView extends BaseDialog {
         if (!StringUtils.isEmpty(detailsBean.getPictures())) {
             String[] urls = detailsBean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {

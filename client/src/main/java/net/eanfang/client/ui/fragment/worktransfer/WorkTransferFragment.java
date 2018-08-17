@@ -17,6 +17,7 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
@@ -135,6 +136,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
             switch (view.getId()) {
                 // 查看详情
                 case R.id.tv_seedetail:
+                    if(!PermKit.get().getExchangeDetailPrem())return;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
                     bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());

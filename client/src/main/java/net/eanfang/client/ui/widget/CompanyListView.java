@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.PermKit;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
@@ -106,6 +107,7 @@ public class CompanyListView extends BaseDialog {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
+                    PermKit.permList.clear();
                     EanfangApplication.get().remove(LoginBean.class.getName());
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 

@@ -1,6 +1,7 @@
 package com.camera.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.camera.widget.CameraFocusView;
 import com.camera.widget.CameraSurfaceView;
 import com.eanfang.R;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.util.DialogUtil;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -49,6 +51,7 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
     private PermissionsModel mPermissionsModel;
     private byte[] photoData;
     private int mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +83,10 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         cancelBtn.setOnClickListener(v -> rephotograph());
         takePhotoBtn.setOnClickListener(new MultiClickListener(this, this::doTakePhoto, this::takePhoto));
         okBtn.setOnClickListener(v -> savePhoto());
+
+        loadingDialog = DialogUtil.createLoadingDialog(this);
     }
+
 
     @Override
     public void autoFocus(float x, float y) {
@@ -120,6 +126,7 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
 
 
     private void savePhoto() {
+        loadingDialog.show();
         mPermissionsModel.checkWriteSDCardPermission(isPermission -> {
             if (isPermission) {
                 Observable.just(photoData).map(bytes -> {
@@ -179,4 +186,10 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (loadingDialog != null && loadingDialog.isShowing())
+            loadingDialog.dismiss();
+    }
 }

@@ -85,20 +85,18 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog {
         btnReject.setOnClickListener(v -> dealWith(2));
 
         Long uid = EanfangApplication.getApplication().getUserId();
-        if (uid.equals(workCheckInfoBean.getAssigneeUserId())) {
-            if (EanfangConst.WORK_INSPECT_STATUS_FAIL == bean.getStatus() ||
-                    EanfangConst.WORK_INSPECT_STATUS_FINISH == bean.getStatus() ||
-                    EanfangConst.WORK_INSPECT_STATUS_REVIEW == bean.getStatus()) {
-                llDealWith.setVisibility(View.GONE);
-            }
-
+        if (uid.equals(workCheckInfoBean.getAssigneeUserId()) && (EanfangConst.WORK_INSPECT_STATUS_REVIEW == bean.getStatus())) {
+//            if (EanfangConst.WORK_INSPECT_STATUS_FAIL == bean.getStatus() ||EanfangConst.WORK_INSPECT_STATUS_FINISH == bean.getStatus() ||EanfangConst.WORK_INSPECT_STATUS_REVIEW == bean.getStatus()) {
+//                llDealWith.setVisibility(View.GONE);
+//            }
+            llDealWith.setVisibility(View.VISIBLE);
         } else {
-            if (EanfangConst.WORK_INSPECT_STATUS_FAIL == bean.getStatus() ||
-                    EanfangConst.WORK_INSPECT_STATUS_FINISH == bean.getStatus()) {
-                llDealWith.setVisibility(View.GONE);
-            } else {
-                llDealWith.setVisibility(View.VISIBLE);
-            }
+//            if (EanfangConst.WORK_INSPECT_STATUS_FAIL == bean.getStatus() || EanfangConst.WORK_INSPECT_STATUS_FINISH == bean.getStatus()) {
+//                llDealWith.setVisibility(View.GONE);
+//            } else {
+//                llDealWith.setVisibility(View.VISIBLE);
+//            }
+            llDealWith.setVisibility(View.GONE);
         }
 
 
@@ -109,20 +107,20 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog {
         if (!StringUtils.isEmpty(bean.getPictures())) {
             String[] urls = bean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
@@ -137,7 +135,7 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog {
                 .params("status", status)
                 .params("id", bean.getId())
                 .execute(new EanfangCallback(mContext, true, JSONObject.class, (bean) -> {
-                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId(),false).show();
+                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId(), false).show();
                 }));
     }
 }

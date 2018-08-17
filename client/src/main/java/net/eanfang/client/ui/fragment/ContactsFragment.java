@@ -28,6 +28,7 @@ import com.eanfang.ui.activity.SelectContactActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
@@ -259,6 +260,8 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 //组织结构
                 case R.id.ll_org:
 
+                    if (!PermKit.get().getCompanyDepartmentListPerm()) return;
+
                     OrganizationBean organizationBean = new OrganizationBean();
 
                     organizationBean.setOrgName(mDatas.get(position).getOrgName());
@@ -291,7 +294,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     startActivity(new Intent(getActivity(), ExternalCompanyActivity.class));
                     break;
                 case R.id.ll_part_company:
-                    startActivity(new Intent(getActivity(), PartnerActivity.class));
+                    if (PermKit.get().getCooperationListAllPerm()) {
+                        startActivity(new Intent(getActivity(), PartnerActivity.class));
+                    }
                     break;
                 case R.id.ll_out_contacts:
                     ToastUtil.get().showToast(getActivity(), "待开通");
@@ -307,6 +312,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     bundle.putLong("orgid", mDatas.get(position).getOrgId());
                     bundle.putString("orgName", mDatas.get(position).getOrgName());
                     bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
+                    bundle.putString("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
                     JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle);
                     break;
                 default:

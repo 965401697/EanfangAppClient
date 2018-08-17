@@ -12,6 +12,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.ui.adapter.WorkTaskListAdapter;
@@ -57,12 +58,14 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
+                if (!PermKit.get().getWorkTaskDetailPrem()) return;
+
                 WorkTaskListBean.ListBean bean = (WorkTaskListBean.ListBean) adapter.getData().get(position);
 
                 if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
                     getFirstLookData(bean.getId());
                 }
-                new WorkTaskInfoView(getActivity(), true, bean.getId(),false).show();
+                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
             }
         });
     }

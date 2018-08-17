@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.util.PermKit;
+
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -40,7 +42,9 @@ public class InstallOrderParentActivity extends BaseClientActivity {
     private void initView() {
 
         ivAdd.setOnClickListener((v) -> {
-            InstallActivity.jumpActivity(this);
+            if (PermKit.get().getInstallCreatePrem()) {
+                InstallActivity.jumpActivity(this);
+            }
         });
         llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         llMineAccept.setOnClickListener(v -> jump("我负责的", 2));
@@ -48,9 +52,11 @@ public class InstallOrderParentActivity extends BaseClientActivity {
     }
 
     private void jump(String title, int type) {
-        Intent intent = new Intent(this, InstallOrderActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        startActivity(intent);
+        if (PermKit.get().getInstallListPrem()) {
+            Intent intent = new Intent(this, InstallOrderActivity.class);
+            intent.putExtra("title", title);
+            intent.putExtra("type", type);
+            startActivity(intent);
+        }
     }
 }

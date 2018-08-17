@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 
@@ -51,12 +52,15 @@ public class WorkTalkControlActivity extends BaseActivity {
                 doJump("我创建的");
                 break;
             case R.id.iv_repairNew:
-                JumpItent.jump(WorkTalkControlActivity.this, WorkTalkCreateActivity.class);
+                if (PermKit.get().getFaceToWorkerCreatePrem()) {
+                    JumpItent.jump(WorkTalkControlActivity.this, WorkTalkCreateActivity.class);
+                }
                 break;
         }
     }
 
     public void doJump(String title) {
+        if (!PermKit.get().getFaceToWorkerListPrem()) return;
         Bundle bundle = new Bundle();
         bundle.putSerializable("title", title);
         JumpItent.jump(WorkTalkControlActivity.this, WorkTalkListActivity.class, bundle);

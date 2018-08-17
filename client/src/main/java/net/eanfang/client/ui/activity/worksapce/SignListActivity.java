@@ -17,6 +17,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
@@ -82,6 +83,11 @@ public class SignListActivity extends BaseActivity {
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (status == 0) {
+                    if (!PermKit.get().getSignInDetailPrem()) return;
+                } else {
+                    if (!PermKit.get().getSignOutDetailPrem()) return;
+                }
                 startActivity(new Intent(SignListActivity.this, SignListDetailActivity.class)
                         .putExtra("id", mDataList.get(position).getId())
                         .putExtra("bean", mDataList.get(position))

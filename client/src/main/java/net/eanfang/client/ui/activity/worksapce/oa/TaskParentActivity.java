@@ -3,9 +3,12 @@ package net.eanfang.client.ui.activity.worksapce.oa;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.WorkTaskListActivity;
@@ -39,16 +42,24 @@ public class TaskParentActivity extends BaseClientActivity {
     }
 
     private void initView() {
-        ivAdd.setOnClickListener(v -> startActivity(new Intent(this, TaskActivity.class)));
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!PermKit.get().getWorkTaskCreatePrem()) return;
+                startActivity(new Intent(TaskParentActivity.this, TaskActivity.class));
+            }
+        });
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));
     }
 
     private void jump(String title, String type) {
-        Intent intent = new Intent(this, WorkTaskListActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        startActivity(intent);
+        if (PermKit.get().getWorkTaskListPrem()) {
+            Intent intent = new Intent(this, WorkTaskListActivity.class);
+            intent.putExtra("title", title);
+            intent.putExtra("type", type);
+            startActivity(intent);
+        }
     }
 }

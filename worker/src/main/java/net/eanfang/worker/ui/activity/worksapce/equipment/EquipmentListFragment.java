@@ -11,6 +11,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EquipmentBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.CooperationEntity;
 
@@ -46,7 +47,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                if (!PermKit.get().getExchangeDetailPrem()) return;
                 Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
                 intent.putExtra("id", mAdapter.getData().get(position).getId());
                 intent.putExtra("ownerCompanyId", ((EquipmentListActivity) getActivity()).ownerCompanyId);
@@ -78,7 +79,11 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                         if (list.size() > 0) {
                             ((EquipmentListActivity) getActivity()).ownerCompanyId = String.valueOf(((CooperationEntity) list.get(0)).getAssigneeOrgId());
                             ((EquipmentListActivity) getActivity()).title = String.valueOf(((CooperationEntity) list.get(0)).getAssigneeOrg().getOrgName());
-                            ((EquipmentListActivity) getActivity()).setTitle(((EquipmentListActivity) getActivity()).title + "设备列表");
+                            if (((EquipmentListActivity) getActivity()).title.length() > 10) {
+                                ((EquipmentListActivity) getActivity()).setTitle(((EquipmentListActivity) getActivity()).title.substring(0, 11) + "...设备列表");
+                            } else {
+                                ((EquipmentListActivity) getActivity()).setTitle(((EquipmentListActivity) getActivity()).title + "设备列表");
+                            }
                             mTvNoData.setVisibility(View.GONE);
                             getList();
                         } else {

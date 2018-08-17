@@ -35,6 +35,7 @@ import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
+import net.eanfang.worker.ui.widget.WorkCheckCtrlView;
 import net.eanfang.worker.ui.widget.WorkSpaceSelectMapPopWindow;
 
 import java.io.File;
@@ -238,6 +239,7 @@ public class WorkspaceFragment extends BaseFragment {
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+            if(!PermKit.get().getExchangeListPrem())return;
             if (workerApprove()) {
                 Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
                 startActivity(intent);

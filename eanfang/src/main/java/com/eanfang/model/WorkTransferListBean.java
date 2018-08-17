@@ -198,7 +198,7 @@ public class WorkTransferListBean implements Serializable {
                 private boolean companyAdmin;
                 private CompanyEntityBean companyEntity;
                 private String companyId;
-                private DepartmentEntityBean departmentEntity;
+                private DepartmentEntityBean ownerDepartmentEntity;
                 private String departmentId;
                 private int status;
                 private boolean superAdmin;
@@ -251,11 +251,11 @@ public class WorkTransferListBean implements Serializable {
                 }
 
                 public DepartmentEntityBean getDepartmentEntity() {
-                    return departmentEntity;
+                    return ownerDepartmentEntity;
                 }
 
                 public void setDepartmentEntity(DepartmentEntityBean departmentEntity) {
-                    this.departmentEntity = departmentEntity;
+                    this.ownerDepartmentEntity = departmentEntity;
                 }
 
                 public String getDepartmentId() {

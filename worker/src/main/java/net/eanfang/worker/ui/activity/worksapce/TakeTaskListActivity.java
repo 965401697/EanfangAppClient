@@ -19,6 +19,7 @@ import com.eanfang.model.MineTaskListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
@@ -68,6 +69,7 @@ public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRef
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!PermKit.get().getBidListPrem()) return;
                 startActivity(new Intent(TakeTaskListActivity.this, MineTakePublishListReceiveParentActivity.class));
             }
         });

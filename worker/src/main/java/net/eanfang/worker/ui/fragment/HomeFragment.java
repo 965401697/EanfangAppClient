@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
@@ -22,10 +21,10 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.CheckSignPermission;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -35,21 +34,18 @@ import com.eanfang.witget.RollTextView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
-import net.eanfang.worker.ui.activity.worksapce.MineTakePublishListReceiveParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
+import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
-import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 import net.eanfang.worker.ui.widget.SignCtrlView;
-import net.eanfang.worker.ui.widget.TakePubCtrlView;
-import net.eanfang.worker.ui.widget.TaskPubCtrlView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +131,7 @@ public class HomeFragment extends BaseFragment {
     private void initIconClick() {
         //报修订单
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
+            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
                 startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
             }
@@ -170,6 +167,7 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
             if (workerApprove()) {
 //                new TakePubCtrlView(getActivity(), true).show();
+                if (!PermKit.get().getBidListPrem()) return;
                 startActivity(new Intent(getActivity(), TakeTaskListActivity.class));
 
             }

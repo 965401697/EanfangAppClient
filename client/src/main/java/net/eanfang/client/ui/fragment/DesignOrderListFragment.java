@@ -15,6 +15,7 @@ import com.eanfang.model.DesignOrderListBean;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
@@ -93,7 +94,9 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new LookDesignOrderInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+                if (PermKit.get().getDesignDetailPrem()) {
+                    new LookDesignOrderInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+                }
             }
         });
 
@@ -153,9 +156,9 @@ public class DesignOrderListFragment extends BaseFragment implements OnDataRecei
             status = ((DesignOrderListActivity) getActivity()).allmTitles.indexOf(this.getmTitle()) + "";
         }
         QueryEntry queryEntry = new QueryEntry();
-        if ("0" .equals(mType)) {
+        if ("0".equals(mType)) {
             queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
-        } else if ("1" .equals(mType)) {
+        } else if ("1".equals(mType)) {
             queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         }
         if (!mTitle.equals("全部")) {

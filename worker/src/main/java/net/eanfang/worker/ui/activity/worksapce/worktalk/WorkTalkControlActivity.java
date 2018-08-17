@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
+import com.huawei.hms.support.api.push.PushEventReceiver;
 
 
 import net.eanfang.worker.R;
@@ -51,12 +53,14 @@ public class WorkTalkControlActivity extends BaseActivity {
                 doJump("我创建的");
                 break;
             case R.id.iv_repairNew:
+                if(!PermKit.get().getFaceToWorkerCreatePrem())return;
                 JumpItent.jump(WorkTalkControlActivity.this, WorkTalkCreateActivity.class);
                 break;
         }
     }
 
     public void doJump(String title) {
+        if(!PermKit.get().getFaceToWorkerListPrem())return;
         Bundle bundle = new Bundle();
         bundle.putSerializable("title", title);
         JumpItent.jump(WorkTalkControlActivity.this, WorkTalkListActivity.class, bundle);

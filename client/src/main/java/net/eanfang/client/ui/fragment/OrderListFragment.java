@@ -21,6 +21,7 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -49,12 +50,14 @@ public class OrderListFragment extends BaseFragment implements
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-            intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
-            intent.putExtra("title", mTitle);
-            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
-            startActivity(intent);
+            if (PermKit.get().getRepairDetailPerm()) {
+                Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
+                intent.putExtra("title", mTitle);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
+                startActivity(intent);
+            }
         }
     };
     private String mTitle;
@@ -312,13 +315,9 @@ public class OrderListFragment extends BaseFragment implements
                     @Override
                     public void onNoData(String message) {
                         refreshLayout.setRefreshing(false);
-                        adapter.loadMoreEnd();//没有数据了
-                        if (adapter.getData().size() == 0) {
-                            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
-                        } else {
-                            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
-                        }
-                        adapter.notifyDataSetChanged();
+                        adapter.getData().clear();//没有数据了
+                        findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
+//                        adapter.notifyDataSetChanged();
 //                        page--;
 //                        getActivity().runOnUiThread(() -> {
 //                            //如果是第一页 没有数据了 则清空 bean

@@ -131,16 +131,20 @@ public class WorkspaceFragment extends BaseFragment {
     private void progressCtrl() {
         //报价管控
         findViewById(R.id.tv_work_price).setOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
-                startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
-            } else {
-                startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
+            if (PermKit.get().getQuoteListPrem()) {
+                if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
+                    startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
+                }
             }
         });
         //维保管控
         findViewById(R.id.tv_work_maintain).setOnClickListener((v) -> {
 //            new MaintainCtrlView(getActivity(), true).show();
-            startActivity(new Intent(getActivity(), MaintenanceActivity.class));
+            if (PermKit.get().getMaintenanceListPrem()) {
+                startActivity(new Intent(getActivity(), MaintenanceActivity.class));
+            }
         });
 
 
@@ -229,6 +233,7 @@ public class WorkspaceFragment extends BaseFragment {
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+            if (!PermKit.get().getDeviceArchiveListPerm()) return;
             Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
             startActivity(intent);
         });

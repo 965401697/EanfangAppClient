@@ -186,6 +186,7 @@
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
                     android:padding="15dp"
+                    android:text=" "
                     android:textSize="16sp" />
 
             </LinearLayout>

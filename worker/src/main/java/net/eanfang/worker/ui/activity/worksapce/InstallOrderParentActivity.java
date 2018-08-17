@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.util.PermKit;
+
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.InstallOrderListActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -28,12 +30,13 @@ public class InstallOrderParentActivity extends BaseWorkerActivity {
     RelativeLayout llMineCompany;
     @BindView(R.id.iv_add)
     ImageView ivAdd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_install_order_parent);
         ButterKnife.bind(this);
-        setTitle("报修管控");
+        setTitle("报装管控");
         setLeftBack();
         initView();
     }
@@ -47,6 +50,7 @@ public class InstallOrderParentActivity extends BaseWorkerActivity {
     }
 
     private void jump(String title, int type) {
+        if (!PermKit.get().getInstallListPrem()) return;
         Intent intent = new Intent(this, InstallOrderListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

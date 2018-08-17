@@ -33,6 +33,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -119,9 +120,20 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
     private void setClick() {
 
         llSignin.setOnClickListener(v -> fillData());
-        llFooter.setOnClickListener(v -> startActivity(new Intent(SignActivity.this, SignListActivity.class)
-                .putExtra("title", title)
-                .putExtra("status", status)));
+        llFooter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (status == 0) {
+                    if (!PermKit.get().getSignInListPrem()) return;
+                } else {
+                    if (!PermKit.get().getSignOutListPrem()) return;
+                }
+
+                startActivity(new Intent(SignActivity.this, SignListActivity.class)
+                        .putExtra("title", title)
+                        .putExtra("status", status));
+            }
+        });
     }
 
     private void signCount() {

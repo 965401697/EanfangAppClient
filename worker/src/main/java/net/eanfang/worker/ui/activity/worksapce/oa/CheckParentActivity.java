@@ -2,9 +2,12 @@ package net.eanfang.worker.ui.activity.worksapce.oa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.WorkCheckListActivity;
@@ -39,7 +42,13 @@ public class CheckParentActivity extends BaseWorkerActivity {
 
     private void initView() {
 
-        ivAdd.setOnClickListener(v -> startActivity(new Intent(this, CheckActivity.class)));
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!PermKit.get().getWorkInspectCreatePrem())return;
+                startActivity(new Intent(CheckParentActivity.this, CheckActivity.class));
+            }
+        });
         llMineAssignment.setOnClickListener((v) -> {
             jump("我创建的检查", 1);
         });
@@ -55,6 +64,9 @@ public class CheckParentActivity extends BaseWorkerActivity {
      * 跳转列表界面
      */
     private void jump(String title, int type) {
+
+        if(!PermKit.get().getWorkInspectListPrem())return;
+
         Intent intent = new Intent(this, WorkCheckListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

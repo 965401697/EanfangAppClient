@@ -29,6 +29,7 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -244,10 +245,12 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         });
 
         setRightTitleOnClickListener((v) -> {
-            showToast("可以进行编辑");
-            isEdit = true;
-            setRightGone();
-            doRevoke();
+            if (PermKit.get().getCompanyBackPerm()) {
+                showToast("可以进行编辑");
+                isEdit = true;
+                setRightGone();
+                doRevoke();
+            }
         });
     }
 

@@ -12,6 +12,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.OpenShopLogEntity;
 
@@ -52,6 +53,9 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                if (!PermKit.get().getOpenShopDetailPrem()) return;
+
                 //刷新数据
                 startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).
                         putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));

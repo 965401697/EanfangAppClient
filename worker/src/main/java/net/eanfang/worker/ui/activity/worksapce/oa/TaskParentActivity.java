@@ -2,9 +2,12 @@ package net.eanfang.worker.ui.activity.worksapce.oa;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.WorkTaskListActivity;
@@ -38,13 +41,20 @@ public class TaskParentActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        ivAdd.setOnClickListener(v -> startActivity(new Intent(this, TaskActivity.class)));
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!PermKit.get().getWorkTaskCreatePrem()) return;
+                startActivity(new Intent(TaskParentActivity.this, TaskActivity.class));
+            }
+        });
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));
     }
 
     private void jump(String title, String type) {
+        if (!PermKit.get().getWorkTaskListPrem()) return;
         Intent intent = new Intent(this, WorkTaskListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

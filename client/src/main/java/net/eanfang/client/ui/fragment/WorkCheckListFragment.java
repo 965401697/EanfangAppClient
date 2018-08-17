@@ -11,6 +11,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.ui.adapter.WorkCheckListAdapter;
@@ -52,6 +53,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(!PermKit.get().getWorkInspectDetailPrem())return;
                 new WorkCheckInfoView(getActivity(), true, ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getId(),false).show();
             }
         });

@@ -14,6 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.AddWorkInspectDetailBean;
+import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -55,6 +56,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
     private AddWorkInspectDetailBean addWorkInspectDetailBean = new AddWorkInspectDetailBean();
 
     private Long detailId, id;
+    private WorkCheckInfoBean.WorkInspectDetailsBean detailsBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         detailId = getIntent().getLongExtra("detailId", 0);
         id = getIntent().getLongExtra("id", 0);
+        detailsBean = (WorkCheckInfoBean.WorkInspectDetailsBean) getIntent().getSerializableExtra("data");
 
         initAdapter();
 
@@ -73,7 +76,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
 
 
     private void initAdapter() {
-
+        etTitle.setText(detailsBean.getTitle());
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
         mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
     }

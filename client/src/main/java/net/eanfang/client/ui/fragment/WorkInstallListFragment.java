@@ -17,6 +17,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
@@ -102,11 +103,16 @@ public class WorkInstallListFragment extends BaseFragment
             switch (view.getId()) {
                 case R.id.tv_look:
                     if (mDataList.get(position).getStatus() == 2) {
-                        finishWork(mDataList, position);
+                        if (PermKit.get().getInstallFinishPrem()) {
+                            finishWork(mDataList, position);
+                        }
                     } else {
-                        Bundle bundle = new Bundle();
-                        bundle.putLong("orderId", mDataList.get(position).getId());
-                        JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
+
+                        if (PermKit.get().getInstallDetailPrem()) {
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("orderId", mDataList.get(position).getId());
+                            JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
+                        }
                     }
                     break;
                 default:

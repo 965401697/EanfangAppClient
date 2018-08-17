@@ -14,6 +14,7 @@ import com.eanfang.model.PayOrderListBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
@@ -54,6 +55,7 @@ public class DesignOrderFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if(!PermKit.get().getDesignDetailPrem())return;
                 startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", String.valueOf(((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId())));
             }
         });
@@ -61,6 +63,7 @@ public class DesignOrderFragment extends TemplateItemListFragment {
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_detail:
+                    if(!PermKit.get().getDesignDetailPrem())return;
                     DesignOrderListBean.ListBean bean = (DesignOrderListBean.ListBean) adapter.getData().get(position);
                     startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", String.valueOf(((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId())));
                     break;

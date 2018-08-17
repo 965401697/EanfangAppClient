@@ -24,6 +24,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -179,6 +180,7 @@ public class OrderDetailFragment extends BaseFragment {
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!PermKit.get().getRepairBughandlePerm()) return;
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("faultDeatail", mDataList.get(position));
                 JumpItent.jump(getActivity(), FaultDetailActivity.class, bundle);
@@ -198,7 +200,7 @@ public class OrderDetailFragment extends BaseFragment {
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
 
                     hashMap.put("id", String.valueOf(bean.getId()));
-                    if (bean.getBugEntityList() != null && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
+                    if (bean.getBugEntityList() != null && bean.getBugEntityList().size() > 0 && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
                         hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
                     }
                     hashMap.put("orderNum", bean.getOrderNum());

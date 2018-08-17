@@ -344,7 +344,10 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
 
 
                         //分享
-                        if (newPresonList.size() == 0 && newGroupList.size() == 0) return;
+                        if (newPresonList.size() == 0 && newGroupList.size() == 0) {
+                            finishSelf();
+                            return;
+                        }
 
                         if (newGroupList.size() > 0) {
 
@@ -444,7 +447,6 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             }
         }
     }
-
 
 
     @Override

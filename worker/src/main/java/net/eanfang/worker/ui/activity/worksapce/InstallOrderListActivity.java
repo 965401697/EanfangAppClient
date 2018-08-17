@@ -17,6 +17,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkspaceInstallBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
@@ -168,6 +169,7 @@ public class InstallOrderListActivity extends BaseWorkerActivity implements Swip
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (!PermKit.get().getInstallDetailPrem()) return;
                 new InstallCtrlItemView(InstallOrderListActivity.this, true, ((WorkspaceInstallBean.ListBean) adapter.getData().get(position)).getId()).show();
             }
         });

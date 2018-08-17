@@ -16,6 +16,7 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
@@ -57,10 +58,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                Intent intent = new Intent(getActivity(), MaintenanceDetailActivity.class);
-                intent.putExtra("id", mAdapter.getData().get(position).getId());
-                startActivity(intent);
+                if (PermKit.get().getMaintenanceDetailPrem()) {
+                    Intent intent = new Intent(getActivity(), MaintenanceDetailActivity.class);
+                    intent.putExtra("id", mAdapter.getData().get(position).getId());
+                    startActivity(intent);
+                }
 
             }
         });
@@ -182,9 +184,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 switch (view.getId()) {
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
-                        intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
-                        intent.putExtra("orderId", item.getId());
-                        startActivity(intent);
+                        if (PermKit.get().getMaintenanceBughandlePrem()) {
+                            intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
+                            intent.putExtra("orderId", item.getId());
+                            startActivity(intent);
+                        }
 
                         break;
                 }

@@ -1,11 +1,15 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
+import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
 
 import net.eanfang.client.R;
@@ -33,6 +37,7 @@ public class CompanyManagerActivity extends BaseActivity {
 
     //认证中显示标示
     private String isAuth = "";
+    private String adminUserId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class CompanyManagerActivity extends BaseActivity {
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
+        adminUserId = getIntent().getStringExtra("adminUserId");
         if ("1".equals(isAuth)) {
             rlIsAuth.setVisibility(View.VISIBLE);
         } else {
@@ -60,11 +66,15 @@ public class CompanyManagerActivity extends BaseActivity {
         switch (view.getId()) {
             // 完善资料
             case R.id.rl_prefectInfo:
-                Bundle bundle_prefect = new Bundle();
-                bundle_prefect.putLong("orgid", mOrgId);
-                bundle_prefect.putString("orgName", mOrgName);
-                bundle_prefect.putString("assign", "prefect");
-                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+
+                if (PermKit.get().getCompanyVerifyPerm()) {
+
+                    Bundle bundle_prefect = new Bundle();
+                    bundle_prefect.putLong("orgid", mOrgId);
+                    bundle_prefect.putString("orgName", mOrgName);
+                    bundle_prefect.putString("assign", "prefect");
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+                }
                 break;
 //            case R.id.rl_auth:
 //                Bundle bundle_auth = new Bundle();
@@ -75,21 +85,33 @@ public class CompanyManagerActivity extends BaseActivity {
 //
 //                break;
             case R.id.rl_admin_set:
-                JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
+                if (EanfangApplication.get().getUserId().equals(adminUserId)) {
+                    JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
+                } else {
+                    ToastUtil.get().showToast(this, "您不是当前公司的管理员");
+                }
                 break;
             case R.id.rl_creat_section:
-                JumpItent.jump(CompanyManagerActivity.this, CreatSectionActivity.class);
+                if (PermKit.get().getCompanyDepartmentCreatPerm()) {
+                    JumpItent.jump(CompanyManagerActivity.this, CreatSectionActivity.class);
+                }
 
                 break;
             case R.id.rl_add_staff:
-                JumpItent.jump(CompanyManagerActivity.this, SearchStaffActivity.class);
+                if (PermKit.get().getCompanyStaffCreatPerm()) {
+                    JumpItent.jump(CompanyManagerActivity.this, SearchStaffActivity.class);
+                }
 
                 break;
             case R.id.rl_permission:
-                JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
+                if (PermKit.get().getCompanyStaffAssignrolePerm()) {
+                    JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
+                }
                 break;
             case R.id.ll_cooperation_relation:
-                JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
+                if (PermKit.get().getCooperationListAllPerm()) {
+                    JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
+                }
                 break;
         }
     }

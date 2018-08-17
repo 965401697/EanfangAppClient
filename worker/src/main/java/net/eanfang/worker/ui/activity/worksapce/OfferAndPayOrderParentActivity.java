@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.util.PermKit;
+import com.huawei.hms.support.api.push.PushEventReceiver;
+
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -50,11 +53,13 @@ public class OfferAndPayOrderParentActivity extends BaseWorkerActivity {
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         ivAdd.setOnClickListener((v) -> {
+            if(!PermKit.get().getQuoteCreatePrem())return;
             startActivity(new Intent(this, QuotationActivity.class));
         });
     }
 
     private void jump(String title, String type) {
+        if(!PermKit.get().getQuoteListPrem())return;
         Intent intent = new Intent(this, OfferAndPayOrderActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

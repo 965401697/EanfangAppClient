@@ -3,8 +3,11 @@ package net.eanfang.client.ui.activity.worksapce.openshop;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogActivity;
@@ -37,12 +40,19 @@ public class OpenShopLogParentActivity extends BaseClientActivity {
     }
 
     private void initView() {
-        ivAdd.setOnClickListener(v -> startActivity(new Intent(this, OpenShopLogWriteActivity.class)));
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!PermKit.get().getOpenShopCreatePrem()) return;
+                startActivity(new Intent(OpenShopLogParentActivity.this, OpenShopLogWriteActivity.class));
+            }
+        });
         ivMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         ivMineAccept.setOnClickListener(v -> jump("我接收的", 2));
     }
 
     private void jump(String title, int type) {
+        if (!PermKit.get().getOpenShopCreatePrem()) return;
         Intent intent = new Intent(this, OpenShopLogActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

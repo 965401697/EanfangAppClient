@@ -376,8 +376,10 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                 .execute(new EanfangCallback<ProtectionLogEntity>(DefendLogWriteActivity.this, true, ProtectionLogEntity.class, bean -> {
 
                     //分享
-                    if (newPresonList.size() == 0 && newGroupList.size() == 0) return;
-
+                    if (newPresonList.size() == 0 && newGroupList.size() == 0) {
+                        finishSelf();
+                        return;
+                    }
                     if (newGroupList.size() > 0) {
 
 

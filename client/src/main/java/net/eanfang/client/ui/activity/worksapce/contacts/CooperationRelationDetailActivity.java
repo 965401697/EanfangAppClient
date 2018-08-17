@@ -17,6 +17,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CooperationEntity;
@@ -156,6 +157,12 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
 
     @OnClick(R.id.tv_sure)
     public void onViewClicked() {
+
+
+        if (!PermKit.get().getCooperationConfirmPerm()) {
+            return;
+        }
+
 
         if (cooperationEntity.getStatus() == 0) {
 

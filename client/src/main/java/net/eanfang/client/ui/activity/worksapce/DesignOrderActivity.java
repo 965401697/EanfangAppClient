@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -41,7 +42,9 @@ public class DesignOrderActivity extends BaseClientActivity {
 
     private void initView() {
         ivAdd.setOnClickListener((v) -> {
-            startActivity(new Intent(this, DesignActivity.class));
+            if(PermKit.get().getDesignCreatePrem()) {
+                startActivity(new Intent(this, DesignActivity.class));
+            }
         });
         llMineAssignment.setOnClickListener((v) -> {
             jumpInDialog(this, DesignOrderListActivity.class, "我的设计单", "1");
@@ -56,9 +59,11 @@ public class DesignOrderActivity extends BaseClientActivity {
     }
 
     public void jumpInDialog(Activity activity, Class<?> cls, String title, String type) {
-        Intent intent = new Intent(activity, cls);
-        intent.putExtra("title", title);
-        intent.putExtra("type", type);
-        activity.startActivity(intent);
+        if (PermKit.get().getDesignListPrem()) {
+            Intent intent = new Intent(activity, cls);
+            intent.putExtra("title", title);
+            intent.putExtra("type", type);
+            activity.startActivity(intent);
+        }
     }
 }

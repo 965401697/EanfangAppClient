@@ -12,6 +12,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EquipmentBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
@@ -67,7 +68,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                if (!PermKit.get().getDeviceArchiveDetailPerm()) return;
                 Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
                 intent.putExtra("id", mAdapter.getData().get(position).getId());
                 startActivity(intent);

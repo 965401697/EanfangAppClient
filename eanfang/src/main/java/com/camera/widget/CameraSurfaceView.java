@@ -153,12 +153,13 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         parameters.setPictureSize(picSize.width, picSize.height);
 
         /*************************** 获取摄像头支持的PreviewSize列表********************/
-//        List<Camera.Size> previewSizeList = parameters.getSupportedPreviewSizes();
-        sort(pictureSizeList);
-        for (Camera.Size size : pictureSizeList) {
+        // TODO: 2018/8/15      List<Camera.Size> pictureSizeList = parameters.getSupportedPictureSizes(); 来设置setPreviewSize 可以解决三星的拉伸，但是全面屏就不能用了
+        List<Camera.Size> previewSizeList = parameters.getSupportedPreviewSizes();
+        sort(previewSizeList);
+        for (Camera.Size size : previewSizeList) {
             LogUtil.i(TAG, "摄像支持可预览的分辨率：" + " size.width=" + size.width + "  size.height=" + size.height);
         }
-        Camera.Size preSize = getBestSupportedSize(pictureSizeList, ((float) height) / width);
+        Camera.Size preSize = getBestSupportedSize(previewSizeList, ((float) height) / width);
         if (null != preSize) {
             LogUtil.e(TAG, "我们选择的预览分辨率：" + "preSize.width=" + preSize.width + "  preSize.height=" + preSize.height);
 //            parameters.setPreviewSize(3264, 1836);
@@ -290,6 +291,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             }
         }
         if (largestSize == null) {
+            // TODO: 2018/8/15 从最小值改为最大值
             largestSize = sizes.get(0);
         }
         return largestSize;

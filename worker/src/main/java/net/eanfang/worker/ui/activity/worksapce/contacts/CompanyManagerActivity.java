@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 
@@ -29,6 +32,7 @@ public class CompanyManagerActivity extends BaseActivity {
     private String mOrgName = "";
     //认证中显示标示
     private String isAuth = "";
+    private String adminUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class CompanyManagerActivity extends BaseActivity {
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
+        adminUserId = getIntent().getStringExtra("adminUserId");
         if ("1".equals(isAuth)) {
             rlIsAuth.setVisibility(View.VISIBLE);
         } else {
@@ -56,6 +61,7 @@ public class CompanyManagerActivity extends BaseActivity {
         switch (view.getId()) {
             // 完善资料
             case R.id.rl_prefectInfo:
+                if (!PermKit.get().getCompanyVerifyPerm()) return;
                 Bundle bundle_prefect = new Bundle();
                 bundle_prefect.putLong("orgid", mOrgId);
                 bundle_prefect.putString("orgName", mOrgName);
@@ -64,6 +70,7 @@ public class CompanyManagerActivity extends BaseActivity {
                 break;
             // 资质认证
             case R.id.rl_auth:
+                if (!PermKit.get().getCompanyVerifyPerm()) return;
                 Bundle bundle_auth = new Bundle();
                 bundle_auth.putLong("orgid", mOrgId);
                 JumpItent.jump(CompanyManagerActivity.this, AuthSystemTypeActivity.class, bundle_auth);
@@ -71,20 +78,28 @@ public class CompanyManagerActivity extends BaseActivity {
                 break;
 
             case R.id.rl_admin_set:
-                JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
+                if (EanfangApplication.get().getUserId().equals(adminUserId)) {
+                    JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
+                } else {
+                    ToastUtil.get().showToast(this, "您不是当前公司的管理员");
+                }
                 break;
             case R.id.rl_creat_section:
+                if (!PermKit.get().getCompanyDepartmentCreatPerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, CreatSectionActivity.class);
 
                 break;
             case R.id.rl_add_staff:
+                if (!PermKit.get().getCompanyStaffCreatPerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, SearchStaffActivity.class);
 
                 break;
             case R.id.rl_permission:
+                if (!PermKit.get().getCompanyStaffAssignrolePerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
                 break;
             case R.id.ll_cooperation_relation:
+                if (!PermKit.get().getCooperationListAllPerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
                 break;
         }

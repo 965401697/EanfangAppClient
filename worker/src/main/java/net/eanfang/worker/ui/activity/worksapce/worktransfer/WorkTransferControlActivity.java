@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 
 
 import net.eanfang.worker.R;
@@ -42,12 +43,14 @@ public class WorkTransferControlActivity extends BaseActivity {
                 doJump("我创建的");
                 break;
             case R.id.iv_repairNew:
+                if (!PermKit.get().getExchangeCreatePrem()) return;
                 JumpItent.jump(WorkTransferControlActivity.this, WorkTransferCreateActivity.class);
                 break;
         }
     }
 
     public void doJump(String title) {
+        if (!PermKit.get().getExchangeListPrem()) return;
         Bundle bundle = new Bundle();
         bundle.putSerializable("title", title);
         JumpItent.jump(WorkTransferControlActivity.this, WorkTransferListActivity.class, bundle);

@@ -14,6 +14,7 @@ import com.eanfang.model.DefendLogBean;
 import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.ProtectionLogEntity;
 
@@ -55,6 +56,9 @@ public class DefendLogFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                if (!PermKit.get().getProtectionDetailPrem()) return;
+
                 startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
                 //刷新数据
                 if (getmTitle().equals("未读日志")) {
