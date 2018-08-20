@@ -2,6 +2,8 @@ package net.eanfang.worker.ui.activity.worksapce.equipment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -15,6 +17,8 @@ import com.yaf.base.entity.CustDeviceParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,12 +51,9 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
     SimpleDraweeView ivLocaleTwo;
     @BindView(R.id.iv_loacle_three)
     SimpleDraweeView ivLoacleThree;
-    @BindView(R.id.tv_voltage)
-    TextView tvVoltage;
-    @BindView(R.id.tv_electricity)
-    TextView tvElectricity;
-    @BindView(R.id.tv_ip)
-    TextView tvIp;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+
 
     private CustDeviceChangeLogEntity bean;
 
@@ -69,7 +70,7 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
 
     private void initData() {
 
-        EanfangHttp.post(NewApiService.DEVICE_CHANGE_DETAIL + getIntent().getLongExtra("id",0))
+        EanfangHttp.post(NewApiService.DEVICE_CHANGE_DETAIL + getIntent().getLongExtra("id", 0))
 
                 .execute(new EanfangCallback<CustDeviceChangeLogEntity>(this, true, CustDeviceChangeLogEntity.class) {
 
@@ -87,7 +88,7 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
 
         tvPosition.setText(bean.getLocation());
         tvPositionNum.setText(bean.getLocationNumber());
-        tvCreatetime.setText( GetDateUtils.dateToFormatString(bean.getInstallDate(),"yyyy-MM-dd"));
+        tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
         if (bean.getStatus() == 0) {
             tvEquipmentStatus.setText("出厂");
         } else if (bean.getStatus() == 1) {
@@ -132,15 +133,11 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
         }
 
         if (bean.getParams() != null && bean.getParams().size() > 0) {
-            for (CustDeviceParamEntity bean : bean.getParams()) {
-                if (bean.getParamName().equals("电压")) {
-                    tvVoltage.setText(bean.getParamValue());
-                } else if (bean.getParamName().equals("电流")) {
-                    tvElectricity.setText(bean.getParamValue());
-                } else if (bean.getParamName().equals("IP地址")) {
-                    tvIp.setText(bean.getParamValue());
-                }
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            EquipmentParamAdapter adapter = new EquipmentParamAdapter();
+            adapter.bindToRecyclerView(recyclerView);
+            adapter.setNewData(bean.getParams());
+
         }
     }
 }

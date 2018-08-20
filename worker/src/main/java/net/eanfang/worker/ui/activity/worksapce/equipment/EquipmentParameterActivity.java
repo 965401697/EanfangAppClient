@@ -1,24 +1,25 @@
 package net.eanfang.worker.ui.activity.worksapce.equipment;
 
-import android.content.ContentValues;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.widget.TextView;
+
+import com.yaf.base.entity.CustDeviceParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EquipmentParameterActivity extends BaseWorkerActivity {
 
-    @BindView(R.id.tv_voltage)
-    TextView tvVoltage;
-    @BindView(R.id.tv_electricity)
-    TextView tvElectricity;
-    @BindView(R.id.tv_ip)
-    TextView tvIp;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +29,14 @@ public class EquipmentParameterActivity extends BaseWorkerActivity {
         setTitle("设备参数");
         setLeftBack();
 
-        ContentValues contentValues = getIntent().getParcelableExtra("params");
-        if (contentValues != null) {
-            if (!TextUtils.isEmpty(contentValues.getAsString("0"))) {
-                tvVoltage.setText(contentValues.getAsString("0"));
-            } else if (!TextUtils.isEmpty(contentValues.getAsString("1"))) {
-                tvVoltage.setText(contentValues.getAsString("1"));
-            } else if (!TextUtils.isEmpty(contentValues.getAsString("2"))) {
-                tvVoltage.setText(contentValues.getAsString("2"));
-            }
-        }
+        Bundle bundle = getIntent().getExtras();
+        List<CustDeviceParamEntity> list = (List<CustDeviceParamEntity>) bundle.getSerializable("params");
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        EquipmentParamAdapter adapter = new EquipmentParamAdapter();
+        adapter.bindToRecyclerView(recyclerView);
+        if (list != null)
+            adapter.setNewData(list);
+
     }
 }
