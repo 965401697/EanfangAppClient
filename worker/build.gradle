@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18081001
-        versionName "2.3.16"
+        versionCode 18081701
+        versionName "2.3.17"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
@@ -26,7 +26,7 @@ android {
                 XG_ACCESS_ID : "2100270002",
                 XG_ACCESS_KEY: "A72E1ECQX57G",
                 AMAP_KEY     : "db2be5c0ebed1c47388afd3c361bbfe3",
-                HW_APPID     : "100326855",
+                HW_APPID     : "100379649",
                 PACKAGE_NAME : "net.eanfang.worker"
 
         ]
@@ -72,7 +72,13 @@ android {
             minifyEnabled true
             //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('release')) {
+                    variant.outputs.all {
+                        outputFileName = "worker_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                    }
+                }
+            }
         }
 
     }
@@ -89,6 +95,46 @@ android {
     // aapt2 问题 png图片问题
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
+    //多渠道打包，命令行打包：gradlew assembleRelease
+//    productFlavors {
+//        xiaomi {
+//            dimension "release"
+//        }
+//        baidu {
+//            dimension "release"
+//        }
+//        huawei {
+//            dimension "release"
+//        }
+//        wandoujia {
+//            dimension "release"
+//        }
+//        meizu {
+//            dimension "release"
+//        }
+//        tencent {
+//            dimension "release"
+//        }
+//        qh360 {
+//            dimension "release"
+//        }
+//        oppo {
+//            dimension "release"
+//        }
+//        vivo {
+//            dimension "release"
+//        }
+//        lenovo {
+//            dimension "release"
+//        }
+//        samsung {
+//            dimension "release"
+//        }
+//    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {

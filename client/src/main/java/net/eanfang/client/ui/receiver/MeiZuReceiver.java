@@ -3,6 +3,11 @@ package net.eanfang.client.ui.receiver;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.ui.base.voice.SynthesizerPresenter;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.Var;
 import com.meizu.cloud.pushsdk.MzPushMessageReceiver;
 import com.meizu.cloud.pushsdk.platform.message.PushSwitchStatus;
 import com.meizu.cloud.pushsdk.platform.message.RegisterStatus;
@@ -25,6 +30,16 @@ public class MeiZuReceiver extends MzPushMessageReceiver {
     @Override
     public void onMessage(Context context, String s) {
         Log.e("meizu", "魅族注册onMessage" + s);
+        Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
+        Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
+
+        JSONObject jsonObject = JSON.parseObject(s);
+        if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
+            System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
+            if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
+                SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
+            }
+        }
     }
 
     @Override

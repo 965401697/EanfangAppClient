@@ -1,13 +1,7 @@
 package net.eanfang.worker.ui.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -15,11 +9,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -31,15 +22,12 @@ import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.localcache.CacheUtil;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
-import com.eanfang.model.TemplateBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CleanMessageUtil;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
@@ -48,10 +36,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
@@ -70,8 +55,6 @@ import net.eanfang.worker.ui.receiver.ReceiverInit;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -84,6 +67,11 @@ import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
+
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -273,6 +261,22 @@ public class MainActivity extends BaseActivity {
 
 
     private void registerXinGe() {
+        // 打开第三方推送
+        XGPushConfig.enableOtherPush(MainActivity.this, true);
+        //开启信鸽日志输出
+        XGPushConfig.enableDebug(MainActivity.this, true);
+        XGPushConfig.setHuaweiDebug(true);
+        /**
+         * 小米
+         * */
+        XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_WORKER);
+        XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_WORKER);
+        /**
+         * 魅族
+         * */
+        XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
+        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);
+
         ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
 

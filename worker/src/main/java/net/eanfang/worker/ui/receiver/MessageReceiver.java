@@ -16,8 +16,6 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
-import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
-
 /**
  * Created by MrHou
  *
@@ -49,7 +47,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
             System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
             if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
-                SynthesizerPresenter.getInstance().initTts(jsonObject.getString("audio"));
+                SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
             }
         }
         LogUtil.e(LogTag, "onNotifactionShowedResult");

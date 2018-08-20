@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.Var;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;
@@ -35,12 +36,13 @@ public class XiaoMiReceiver extends PushMessageReceiver {
     public void onNotificationMessageArrived(Context context, MiPushMessage miPushMessage) {
         super.onNotificationMessageArrived(context, miPushMessage);
         Log.e("xiaomi", "onNotificationMessageArrived" + miPushMessage.getContent());
-
+        Log.e("xiaomi", "---------------------extra:" + miPushMessage.getExtra().get("audio"));
+        Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
+        Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
         System.err.println("---------------------extra:" + miPushMessage.getExtra().get("audio"));
         if (!StringUtils.isEmpty(miPushMessage.getExtra().get("audio"))) {
-            SynthesizerPresenter.getInstance().initTts(miPushMessage.getExtra().get("audio"));
+            SynthesizerPresenter.getInstance().start(miPushMessage.getExtra().get("audio"));
         }
-
     }
 
     @Override

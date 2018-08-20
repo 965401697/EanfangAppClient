@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -28,21 +27,17 @@ import android.widget.Toast;
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.model.LoginBean;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.model.LoginBean;
 import com.jaeger.library.StatusBarUtil;
-import com.yaf.base.entity.WorkerEntity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by jornl on 2018/1/19.
@@ -215,6 +210,14 @@ public class BaseActivity extends AppCompatActivity implements
 
     public void setRightVisible() {
         ((TextView) findViewById(R.id.tv_right)).setVisibility(View.VISIBLE);
+    }
+
+    public void setLeftGone() {
+        ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.GONE);
+    }
+
+    public void setLeftVisible() {
+        ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.VISIBLE);
     }
 
     public void setRightImageOnClickListener(View.OnClickListener listener) {

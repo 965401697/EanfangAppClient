@@ -34,14 +34,12 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushManager;
+import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
-import net.eanfang.client.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -66,6 +64,11 @@ import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
+
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
 public class MainActivity extends BaseClientActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -277,6 +280,21 @@ public class MainActivity extends BaseClientActivity {
 
 
     private void registerXinGe() {
+        // 打开第三方推送
+        XGPushConfig.enableOtherPush(MainActivity.this, true);
+        //开启信鸽日志输出
+        XGPushConfig.enableDebug(MainActivity.this, true);
+        XGPushConfig.setHuaweiDebug(true);
+        /**
+         * 小米
+         * */
+        XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_CLIENT);
+        XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_CLIENT);
+        /**
+         * 魅族
+         * */
+        XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_CLIENT);
+        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_CLIENT);
         ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
 
