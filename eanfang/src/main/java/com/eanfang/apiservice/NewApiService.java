@@ -1,7 +1,6 @@
 package com.eanfang.apiservice;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.util.BarUtil.BaseUtil;
 
 import static com.eanfang.apiservice.BaseService.BASE_URL;
 
@@ -136,6 +135,7 @@ public interface NewApiService {
      * 推送
      */
     String GET_PUSH_MSG_LIST = BuildConfig.API_HOST + "/yaf_sys/notice/list";
+    String GET_UNREAD_MSG = BuildConfig.API_HOST + "/yaf_sys/notice/maintain";
 
     /**
      * 推送已读Or未读

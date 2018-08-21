@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -25,17 +28,21 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.eanfang.util.Var;
+import com.picker.common.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -136,11 +143,20 @@ public class MainActivity extends BaseActivity {
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
-        //判断是否晚上资料
+        //判断是否完善资料
         if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getIdCard())) {
 
             startAnimActivity(new Intent(this, LoginHintActivity.class));
         }
+
+        getEquipmentUnread();//首次
+
+        WorkerApplication.getApplication().setmForwardListener(new WorkerApplication.ForwardListener() {
+            @Override
+            public void onForwardListener() {
+                getEquipmentUnread();
+            }
+        });
     }
 
 
@@ -542,6 +558,84 @@ public class MainActivity extends BaseActivity {
         JumpItent.jump(MainActivity.this, WorkDetailActivity.class, bundle);
     }
 
+    private void getEquipmentUnread() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("reciveAccId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("noticeType", "62");
+        queryEntry.getEquals().put("status", "0");
 
+        EanfangHttp.post(NewApiService.GET_UNREAD_MSG)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<NoticeEntity>(this, true, NoticeEntity.class, (bean) -> {
+                            if (bean != null)
+                                customDialog(bean.getTitle(), bean.getContent(), bean.getExtInfo(), bean.getId());
+
+                        })
+                );
+    }
+
+    /**
+     * 自定义对话框
+     */
+    private void customDialog(String t, String c, Object extInfo, long id) {
+        final Dialog dialog = new Dialog(this, R.style.NormalDialogStyle);
+        View view = View.inflate(this, R.layout.dialog_normal, null);
+        TextView cancel = (TextView) view.findViewById(R.id.cancel);
+        TextView confirm = (TextView) view.findViewById(R.id.confirm);
+        TextView content = (TextView) view.findViewById(R.id.content);
+        TextView title = (TextView) view.findViewById(R.id.title);
+
+        title.setText(t);
+        if (extInfo != null) {
+            content.setText(c + "\r\n\t" + "\r\n\t" + extInfo);
+        } else {
+            content.setText(c);
+        }
+
+
+        dialog.setContentView(view);
+        //使得点击对话框外部不消失对话框
+        dialog.setCanceledOnTouchOutside(false);
+        //设置对话框的大小
+        view.setMinimumHeight((int) (ScreenUtils.heightPixels(this) * 0.23f));
+        Window dialogWindow = dialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.width = (int) (ScreenUtils.widthPixels(this) * 0.75f);
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.gravity = Gravity.CENTER;
+        dialogWindow.setAttributes(lp);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                read(id);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+
+    private void read(long id) {
+        EanfangHttp.post(NewApiService.GET_PUSH_MSG_INFO + id)
+                .execute(new EanfangCallback<NoticeEntity>(MainActivity.this, true, NoticeEntity.class, (bean -> {
+
+                })));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mTabHost.getCurrentTab() == 1) {
+            String frgTag = mTabHost.getCurrentTabTag();
+            ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
+            contactListFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
 

@@ -22,9 +22,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
@@ -32,7 +30,6 @@ import com.tencent.android.tpush.XGPushManager;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +83,13 @@ public class MessageListActivity extends BaseWorkerActivity implements
     private void initView() {
         setTitle("通知提醒");
         tvRight.setText("全读");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         mMessageCount = getIntent().getIntExtra("mMessageCount", 0);
         // 如果等于0 则全删  反之全读
         if (mMessageCount == 0) {
@@ -274,4 +277,5 @@ public class MessageListActivity extends BaseWorkerActivity implements
             }
         }
     }
+
 }
