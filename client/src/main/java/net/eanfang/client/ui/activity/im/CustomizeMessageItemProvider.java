@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -16,28 +15,23 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Constant;
-import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.client.ui.widget.WorkCheckInfoView;
 import net.eanfang.client.ui.widget.WorkReportInfoView;
 import net.eanfang.client.ui.widget.WorkTaskInfoView;
 
-import io.rong.imkit.emoticon.AndroidEmoji;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
-import io.rong.imkit.widget.SingleChoiceAdapter;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
-import io.rong.imlib.model.Message;
 
 /**
  * Created by O u r on 2018/7/2.
@@ -99,7 +93,27 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.status.setVisibility(View.INVISIBLE);
         } else if (customizeMessage.getShareType().equals("6")) {
 
+            holder.title.setText("交接班");
+            holder.orderNum.setText("编号：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setVisibility(View.GONE);
+            holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
+            holder.workerName.setText(customizeMessage.getWorkerName());
+            if (Integer.parseInt(customizeMessage.getStatus()) == 0) {
+                holder.status.setText("待确认");
+            } else if (Integer.parseInt(customizeMessage.getStatus()) == 1) {
+                holder.status.setText("完成交接");
+            } else {
+                holder.status.setVisibility(View.INVISIBLE);
+            }
+
         } else if (customizeMessage.getShareType().equals("7")) {
+
+            holder.title.setText("面谈员工");
+            holder.orderNum.setText("编号：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setVisibility(View.GONE);
+            holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
+            holder.workerName.setText(customizeMessage.getWorkerName());
+            holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
 
         } else if (customizeMessage.getShareType().equals("8")) {
             holder.title.setText("开店日志");
@@ -132,9 +146,9 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("5")) {
             return new SpannableString("设备点检(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("6")) {
-
+            return new SpannableString("交接班(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("7")) {
-
+            return new SpannableString("面谈员工(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("8")) {
             return new SpannableString("开店日志(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("9")) {
@@ -162,9 +176,9 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
 
         } else if (customizeMessage.getShareType().equals("6")) {
-
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("7")) {
-
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("8")) {
             view.getContext().startActivity(new Intent((Activity) view.getContext(), OpenShopLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
         } else if (customizeMessage.getShareType().equals("9")) {

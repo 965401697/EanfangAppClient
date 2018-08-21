@@ -21,6 +21,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.worker.ui.widget.WorkCheckInfoView;
 import net.eanfang.worker.ui.widget.WorkReportInfoView;
 import net.eanfang.worker.ui.widget.WorkTaskInfoView;
@@ -87,6 +89,30 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("整改期限：" + customizeMessage.getCreatTime());
             holder.workerName.setText("检查时间：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.INVISIBLE);
+        }else if (customizeMessage.getShareType().equals("6")) {
+
+            holder.title.setText("交接班");
+            holder.orderNum.setText("编号：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setVisibility(View.GONE);
+            holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
+            holder.workerName.setText(customizeMessage.getWorkerName());
+            if (Integer.parseInt(customizeMessage.getStatus()) == 0) {
+                holder.status.setText("待确认");
+            } else if (Integer.parseInt(customizeMessage.getStatus()) == 1) {
+                holder.status.setText("完成交接");
+            } else {
+                holder.status.setVisibility(View.INVISIBLE);
+            }
+
+        } else if (customizeMessage.getShareType().equals("7")) {
+
+            holder.title.setText("面谈员工");
+            holder.orderNum.setText("编号：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setVisibility(View.GONE);
+            holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
+            holder.workerName.setText(customizeMessage.getWorkerName());
+            holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+
         }
     }
 
@@ -102,6 +128,10 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("布置任务(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("5")) {
             return new SpannableString("设备点检(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("6")) {
+            return new SpannableString("交接班(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("7")) {
+            return new SpannableString("面谈员工(快去查看吧!)");
         }
         return null;
     }
@@ -124,6 +154,10 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("5")) {
             new WorkCheckInfoView((Activity) view.getContext(), true,  Long.parseLong(customizeMessage.getOrderId()),true).show();
 
+        }else if (customizeMessage.getShareType().equals("6")) {
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+        } else if (customizeMessage.getShareType().equals("7")) {
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         }
     }
 

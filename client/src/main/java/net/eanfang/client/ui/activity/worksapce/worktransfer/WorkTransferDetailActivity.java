@@ -72,7 +72,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
     /**
      * userid
      */
-    private String mUserId = "";
+//    private String mUserId = "";
 
     @BindView(R.id.rv_hand_item)
     RecyclerView rvHandItem;
@@ -128,7 +128,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         setLeftBack();
         setTitle("日志详情");
         mItemId = getIntent().getStringExtra("itemId");
-        mUserId = getIntent().getStringExtra("userId");
+//        mUserId = getIntent().getStringExtra("userId");
 
         workTransferDetailFinishWorkAdapter = new WorkTransferDetailFinishWorkAdapter(false);
         rvFinshWork.setLayoutManager(new LinearLayoutManager(this));
@@ -155,11 +155,6 @@ public class WorkTransferDetailActivity extends BaseActivity {
         rvHandItem.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         workTransferDetailHandItemAdapter.bindToRecyclerView(rvHandItem);
 
-        if (mUserId.equals(EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId())) {
-            rlConfirm.setVisibility(View.VISIBLE);
-        } else {
-            rlConfirm.setVisibility(View.GONE);
-        }
 
     }
 
@@ -173,7 +168,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
     private void initContent(WorkTransferDetailBean bean) {
         ivReportHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()));
         // 创建人
-        tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getNickName() + "(汇报人)");
+        tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getRealName() + "(汇报人)");
         // 部门
         tvDepartment.setText(bean.getOwnerDepartmentEntity().getOrgName());
         //时间
@@ -187,7 +182,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         // 单位电话
         tvCompanyPhone.setText(bean.getOwnerUserEntity().getAccountEntity().getMobile());
         // 接收人
-        tvAcceptPreson.setText(bean.getAssigneeUserEntity().getAccountEntity().getNickName());
+        tvAcceptPreson.setText(bean.getAssigneeUserEntity().getAccountEntity().getRealName());
         //接收人电话
         tvAcceptPhone.setText(bean.getAssigneeUserEntity().getAccountEntity().getMobile());
         mChangeGoodList = bean.getChangeGoodEntityList();
@@ -200,6 +195,13 @@ public class WorkTransferDetailActivity extends BaseActivity {
         workTransferDetailAttentionAdapter.setNewData(mAttentionList);
         workTransferDetailFollowThingAdapter.setNewData(mFollowThingList);
         workTransferDetailFinishWorkAdapter.setNewData(mFinishWorkList);
+
+
+        if (bean.getAssigneeUserEntity().getUserId().equals(String.valueOf(EanfangApplication.get().getUserId()))) {
+            rlConfirm.setVisibility(View.VISIBLE);
+        } else {
+            rlConfirm.setVisibility(View.GONE);
+        }
     }
 
     private void initListener() {
