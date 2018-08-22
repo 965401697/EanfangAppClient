@@ -15,6 +15,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckInfoBean;
+import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.LookCheckDetailAdapter;
@@ -101,6 +102,11 @@ public class WorkCheckInfoActivity extends BaseClientActivity {
 //                                    bean.getWorkInspectDetails().get(position).getId()
 //                            ).show();
 //                            if (status == ((WorkCheckInfoBean.WorkInspectDetailsBean) adapter.getData().get(position)).getStatus()) {
+                            if (status == 0) {
+                                if (!PermKit.get().getWorkInspectDisposePrem()) return;
+                            } else if (status == 1) {
+                                if (!PermKit.get().getWorkInspectVerifyPrem()) return;
+                            }
                             currrentPosition = position;
                             Intent intent = getIntent();
                             intent.setClass(WorkCheckInfoActivity.this, LookWorkCheckInfoActivity.class);
@@ -146,7 +152,8 @@ public class WorkCheckInfoActivity extends BaseClientActivity {
             }
             detailAdapter.notifyItemChanged(currrentPosition);
             for (WorkCheckInfoBean.WorkInspectDetailsBean bean : detailAdapter.getData()) {
-                if (bean.getStatus() == 2) {
+                // TODO: 2018/8/22 待优化
+                if (bean.getStatus() == status) {
                     isFinish = false;
                     break;
                 }
