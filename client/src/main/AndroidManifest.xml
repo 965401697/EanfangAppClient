@@ -538,7 +538,7 @@
         <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogParentActivity" />
         <activity android:name=".ui.activity.worksapce.defendlog.DefendLogParentActivity" />
         <activity android:name=".ui.activity.worksapce.install.InstallOrderParentActivity" />
-        <activity android:name=".ui.activity.worksapce.DesignOrderActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.DesignOrderActivity" />
 
         <!-- 小米自定义的广播名称 -->
         <receiver
@@ -555,6 +555,9 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.activity.worksapce.WorkCheckInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.LookWorkCheckInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.worktransfer.LookDealwithCheckInfoDetailActivity"></activity>
     </application>
 
 </manifest>

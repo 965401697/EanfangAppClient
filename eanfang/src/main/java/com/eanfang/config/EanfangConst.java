@@ -48,12 +48,12 @@ public class EanfangConst {
     /**
      * 工作检查 未通过 待处理
      */
-    public static final int WORK_INSPECT_STATUS_FAIL = 1;
+    public static final int WORK_INSPECT_STATUS_FAIL = 2;
     public static final String WORK_INSPECT_STATUS_FAIL_STR = "已拒绝";
     /**
      * 工作检查 处理完成
      */
-    public static final int WORK_INSPECT_STATUS_FINISH = 2;
+    public static final int WORK_INSPECT_STATUS_FINISH = 3;
     public static final String WORK_INSPECT_STATUS_FINISH_STR = "已完成";
 
     /**
