@@ -1,16 +1,11 @@
 package net.eanfang.client.ui.fragment.selectworker;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -22,7 +17,6 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.CollectionWorkerListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -32,7 +26,6 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
-import net.eanfang.client.ui.fragment.evaluate.EvaluateFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;

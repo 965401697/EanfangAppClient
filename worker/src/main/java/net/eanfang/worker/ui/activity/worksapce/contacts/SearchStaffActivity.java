@@ -17,7 +17,6 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
-import com.eanfang.model.TemplateBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;

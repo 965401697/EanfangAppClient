@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.text.TextUtils;
@@ -9,18 +8,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.OrganizationBean;
-import com.eanfang.model.RoleBean;
 import com.eanfang.model.SectionBean;
 
 import com.eanfang.ui.activity.SelectOrganizationActivity;

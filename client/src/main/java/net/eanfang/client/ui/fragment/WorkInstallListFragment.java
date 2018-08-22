@@ -25,7 +25,6 @@ import net.eanfang.client.ui.activity.worksapce.install.InstallOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderDetailActivity;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
-import net.eanfang.client.ui.widget.InstallCtrlItemView;
 
 import java.util.ArrayList;
 import java.util.List;

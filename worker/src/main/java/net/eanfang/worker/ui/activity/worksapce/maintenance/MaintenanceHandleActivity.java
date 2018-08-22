@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -33,7 +32,6 @@ import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.EventBus;

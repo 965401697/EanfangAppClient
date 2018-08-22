@@ -41,7 +41,6 @@ import com.yaf.sys.entity.BaseDataEntity;
 import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.widget.CommitVerfiyView;
 
 import java.util.List;
 

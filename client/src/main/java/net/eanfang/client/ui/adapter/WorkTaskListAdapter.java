@@ -13,8 +13,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * Created by Mr.hou

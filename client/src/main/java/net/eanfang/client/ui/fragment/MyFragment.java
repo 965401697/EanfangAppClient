@@ -1,25 +1,16 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.PersonalQRCodeDialog;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;

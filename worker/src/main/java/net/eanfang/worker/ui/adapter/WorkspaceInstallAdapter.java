@@ -9,8 +9,6 @@ import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 import static com.eanfang.util.V.v;
 
 /**

@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.annimon.stream.Stream;
-import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -21,7 +20,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

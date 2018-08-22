@@ -1,7 +1,6 @@
 package com.eanfang.http;
 
 
-import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.StringUtils;
 import com.okgo.OkGo;

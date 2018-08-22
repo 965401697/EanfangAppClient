@@ -10,8 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 /**
  * 合作公司的adapter

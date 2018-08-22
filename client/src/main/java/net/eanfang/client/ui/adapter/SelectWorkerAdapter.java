@@ -6,14 +6,12 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.CollectionWorkerListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.eanfang.util.V.v;

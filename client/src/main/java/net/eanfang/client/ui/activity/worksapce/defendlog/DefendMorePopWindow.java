@@ -13,15 +13,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.eanfang.util.GetDateUtils;
-import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.im.AddFriendActivity;
-import net.eanfang.client.ui.activity.im.MorePopWindow;
-import net.eanfang.client.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
-import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
 
 /**
  * Created by O u r on 2018/7/26.

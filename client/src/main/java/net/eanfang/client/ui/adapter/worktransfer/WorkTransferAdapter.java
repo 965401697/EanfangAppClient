@@ -2,7 +2,6 @@ package net.eanfang.client.ui.adapter.worktransfer;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.WorkTalkListBean;
 import com.eanfang.model.WorkTransferListBean;
 import com.eanfang.util.GetConstDataUtils;
 

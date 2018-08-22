@@ -5,8 +5,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 /**
  * 描述：交接班状态选择（班次 状态等）
  *

@@ -13,12 +13,9 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
-import com.yaf.base.entity.CustDeviceParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

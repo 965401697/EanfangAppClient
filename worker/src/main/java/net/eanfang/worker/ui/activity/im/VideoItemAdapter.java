@@ -11,8 +11,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import io.rong.imkit.model.FileInfo;
-
 /**
  * Created by O u r on 2018/5/16.
  */

@@ -2,9 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,13 +16,11 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.config.Config;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JumpItent;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.repair.RepairDeviceTypeLeftAdapter;
 import net.eanfang.client.ui.adapter.repair.RepairDeviceTypeRightAdapter;
-import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
 import java.util.ArrayList;
 import java.util.List;

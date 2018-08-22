@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;

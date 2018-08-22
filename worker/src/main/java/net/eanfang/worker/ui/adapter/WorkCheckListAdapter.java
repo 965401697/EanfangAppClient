@@ -11,8 +11,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 /**
  * Created by Mr.hou

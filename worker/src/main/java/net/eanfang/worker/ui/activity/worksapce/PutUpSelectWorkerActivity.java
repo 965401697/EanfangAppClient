@@ -19,7 +19,6 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.PutUpSelectWorkerAdapter;
 import net.eanfang.worker.ui.adapter.SelectWorkerAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 

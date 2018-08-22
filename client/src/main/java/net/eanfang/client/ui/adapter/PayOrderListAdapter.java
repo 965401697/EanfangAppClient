@@ -12,8 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * 工作台--报价与支付列表的adapter

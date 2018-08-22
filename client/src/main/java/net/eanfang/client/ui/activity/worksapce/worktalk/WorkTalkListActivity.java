@@ -11,9 +11,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.WorkTaskListActivity;
-import net.eanfang.client.ui.fragment.WorkReportListFragment;
-import net.eanfang.client.ui.fragment.WorkTaskListFragment;
 import net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment;
 
 import java.util.ArrayList;

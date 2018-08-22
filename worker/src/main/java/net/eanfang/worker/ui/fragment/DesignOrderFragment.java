@@ -10,19 +10,14 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DesignOrderListBean;
-import com.eanfang.model.PayOrderListBean;
-import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.PayOrderDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.contacts.CooperactionRelationSubActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignOrderDetailActivity;
 import net.eanfang.worker.ui.adapter.DesignOrderAdapter;
-import net.eanfang.worker.ui.adapter.PayOrderListAdapter;
 
 /**
  * Created by O u r on 2018/6/25.

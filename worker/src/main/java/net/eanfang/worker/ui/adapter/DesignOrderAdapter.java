@@ -1,7 +1,5 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.view.View;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
@@ -9,7 +7,6 @@ import com.eanfang.model.DesignOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 /**
  * Created by O u r on 2018/6/25.

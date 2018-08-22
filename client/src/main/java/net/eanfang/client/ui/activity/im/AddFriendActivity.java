@@ -26,7 +26,6 @@ import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.CaptureActivity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;

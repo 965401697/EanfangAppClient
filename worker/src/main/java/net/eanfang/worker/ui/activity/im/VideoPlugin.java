@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.eanfang.util.ToastUtil;
-
 import net.eanfang.worker.R;
 
 import io.rong.imkit.RongExtension;

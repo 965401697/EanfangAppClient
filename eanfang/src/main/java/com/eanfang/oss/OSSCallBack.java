@@ -15,10 +15,6 @@ import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import lombok.Getter;
-
 /**
  * Created by jornl on 2017/9/13.
  */

@@ -1,18 +1,13 @@
 package net.eanfang.client.ui.adapter.repair;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.util.V;
 import com.eanfang.util.ViewHolder;
 import com.yaf.sys.entity.BaseDataEntity;
 

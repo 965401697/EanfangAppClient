@@ -10,8 +10,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 /**
  * 描述：
  * 故障库Adapter

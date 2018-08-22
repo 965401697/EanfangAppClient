@@ -9,11 +9,8 @@ import android.view.View;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
-import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.baozi.treerecyclerview.item.TreeSelectItemGroup;
 import com.eanfang.R;
-import com.eanfang.model.OrganizationBean;
-import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
 
 import java.util.List;

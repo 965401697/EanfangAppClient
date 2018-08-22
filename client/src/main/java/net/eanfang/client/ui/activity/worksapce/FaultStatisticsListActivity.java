@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,14 +27,11 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.FaultStatisticsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.content.DialogInterface.BUTTON_NEGATIVE;
 
 public class FaultStatisticsListActivity extends BaseClientActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 

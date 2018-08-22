@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -10,7 +9,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.V;
 
 import net.eanfang.client.R;
 

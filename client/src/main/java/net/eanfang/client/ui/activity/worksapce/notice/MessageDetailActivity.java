@@ -8,7 +8,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;

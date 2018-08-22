@@ -1,24 +1,12 @@
 package com.eanfang.application;
 
-import android.os.Environment;
-import android.preference.Preference;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.NoticeEntity;
-import com.eanfang.util.BarUtil.BarUtils;
-import com.eanfang.util.BarUtil.BaseUtil;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.iflytek.cloud.ErrorCode;
-import com.iflytek.cloud.InitListener;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
@@ -32,7 +20,6 @@ import com.photopicker.com.imageloader.BGAGlideImageLoader;
 import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 

@@ -21,7 +21,6 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.AuthWorkerSysTypeActivity;
 
 import java.util.List;
 

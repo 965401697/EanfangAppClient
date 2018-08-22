@@ -6,8 +6,6 @@ import com.yaf.base.entity.CustDeviceParamEntity;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 /**
  * Created by O u r on 2018/8/20.
  */

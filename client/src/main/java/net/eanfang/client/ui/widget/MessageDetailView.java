@@ -2,13 +2,10 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.eanfang.config.Config;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;

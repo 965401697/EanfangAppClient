@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.im;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 import net.eanfang.client.R;

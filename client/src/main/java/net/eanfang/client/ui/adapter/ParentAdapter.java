@@ -2,23 +2,15 @@ package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-
-import java.util.List;
 
 
 /**

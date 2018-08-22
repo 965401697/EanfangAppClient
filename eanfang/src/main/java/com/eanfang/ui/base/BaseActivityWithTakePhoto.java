@@ -25,12 +25,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.camera.util.FileUtil;
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.ETimeUtils;
-import com.eanfang.util.FileUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
@@ -46,10 +43,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.Date;
-
-import rx.Observable;
-
-import static com.camera.util.FileUtil.getSavePicPath;
 
 /**
  * BaseAppCompatFragmentActivity

@@ -6,7 +6,6 @@ import java.util.List;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imkit.widget.provider.FilePlugin;
 import io.rong.imlib.model.Conversation;
 
 /**

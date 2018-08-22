@@ -23,7 +23,6 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
@@ -40,11 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
-import io.rong.message.TextMessage;
 
 public class SelectedFriendsActivity extends BaseClientActivity {
 

@@ -2,10 +2,8 @@ package net.eanfang.client.ui.activity.worksapce.openshop;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.OpenShopLogEntity;
-import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
 

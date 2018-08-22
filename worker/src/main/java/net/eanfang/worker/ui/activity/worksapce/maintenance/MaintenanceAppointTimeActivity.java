@@ -11,7 +11,6 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -19,10 +18,8 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 

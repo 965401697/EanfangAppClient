@@ -1,22 +1,15 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.PayOrderListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
@@ -26,14 +19,9 @@ import com.yaf.base.entity.PayLogEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.PayOrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
-import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
 import java.util.List;
-
-import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
-import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 
 /**

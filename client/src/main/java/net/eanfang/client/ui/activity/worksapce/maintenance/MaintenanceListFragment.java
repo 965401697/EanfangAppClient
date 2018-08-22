@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,7 +14,6 @@ import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
@@ -27,8 +25,6 @@ import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * Created by O u r on 2018/7/16.

@@ -27,7 +27,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AddStaffActivity extends BaseClientActivity {
 

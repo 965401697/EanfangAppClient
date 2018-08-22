@@ -1,6 +1,5 @@
 package com.eanfang.model.device;
 
-import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import java.util.List;

@@ -11,14 +11,9 @@ import android.widget.TextView;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
-import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,13 +17,10 @@ import com.eanfang.util.PermKit;
 import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.CooperationRelationAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

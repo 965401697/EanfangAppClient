@@ -2,18 +2,13 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.EquipmentBean;
 import com.eanfang.model.device.MaintenanceOrderListBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
@@ -22,22 +17,13 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
-import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.EvaluateClientActivity;
 import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
-import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
-import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
-import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by O u r on 2018/7/16.

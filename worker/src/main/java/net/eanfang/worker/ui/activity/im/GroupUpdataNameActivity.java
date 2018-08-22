@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import com.amap.api.maps.model.Text;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;

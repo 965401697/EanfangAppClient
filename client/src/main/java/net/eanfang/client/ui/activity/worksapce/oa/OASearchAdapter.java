@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce.oa;
 
-import android.view.View;
 import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;

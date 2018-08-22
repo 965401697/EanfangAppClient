@@ -39,11 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
-import io.rong.message.TextMessage;
 
 public class SelectedFriendsActivity extends BaseWorkerActivity {
 

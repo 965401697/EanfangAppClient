@@ -9,8 +9,6 @@ import com.eanfang.model.datastatistics.DataStatisticsBean;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 /**
  * 描述：报修统计 五家公司
  *

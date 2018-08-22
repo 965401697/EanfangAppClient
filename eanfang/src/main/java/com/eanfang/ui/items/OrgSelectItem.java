@@ -2,7 +2,6 @@ package com.eanfang.ui.items;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -12,7 +11,6 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
 
 /**
  * Created by O u r on 2018/5/31.

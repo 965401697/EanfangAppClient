@@ -1,10 +1,6 @@
 package net.eanfang.worker.ui.activity.my;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -28,7 +24,6 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.MultipleChoiceAdapter;
 
 import java.util.List;
 

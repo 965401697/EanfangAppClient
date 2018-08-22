@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.scancode;
 
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.TextView;

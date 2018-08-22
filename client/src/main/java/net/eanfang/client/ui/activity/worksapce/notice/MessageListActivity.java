@@ -18,7 +18,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -27,7 +26,6 @@ import com.tencent.android.tpush.XGPushManager;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.MessageListAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
 import org.json.JSONObject;
 

@@ -1,13 +1,10 @@
 package net.eanfang.client.ui.activity.worksapce.equipment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EquipmentBean;
@@ -17,8 +14,6 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by O u r on 2018/6/27.

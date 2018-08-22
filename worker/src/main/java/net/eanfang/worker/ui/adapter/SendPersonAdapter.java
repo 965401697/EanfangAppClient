@@ -1,7 +1,5 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.net.Uri;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;

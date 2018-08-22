@@ -9,7 +9,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.TransferLogEntity;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 

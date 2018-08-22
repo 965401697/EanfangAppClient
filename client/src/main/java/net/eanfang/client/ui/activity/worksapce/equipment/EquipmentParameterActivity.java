@@ -1,11 +1,8 @@
 package net.eanfang.client.ui.activity.worksapce.equipment;
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.yaf.base.entity.CustDeviceParamEntity;
 

@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,13 +30,9 @@ import com.yaf.base.entity.CooperationEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.repair.RepairAppointTimeActivity;
 import net.eanfang.worker.ui.adapter.CooperationAddAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
-import org.json.JSONArray;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

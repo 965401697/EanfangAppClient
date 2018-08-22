@@ -1,13 +1,10 @@
 package net.eanfang.client.ui.activity.worksapce.defendlog;
 
-import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.DefendLogDetailBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.V;
 import com.yaf.base.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;

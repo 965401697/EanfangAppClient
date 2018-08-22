@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce.worktransfer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
@@ -9,9 +8,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
-import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkCreateActivity;
-import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkListActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

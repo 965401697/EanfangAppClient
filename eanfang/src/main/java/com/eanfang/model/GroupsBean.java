@@ -1,7 +1,5 @@
 package com.eanfang.model;
 
-import android.support.annotation.NonNull;
-
 import java.util.Comparator;
 
 /**

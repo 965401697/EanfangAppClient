@@ -16,7 +16,6 @@ import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.model.WorkerInfoBean;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 

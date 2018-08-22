@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.eanfang.R;
 import com.eanfang.util.ViewHolder;
-import com.picker.common.util.ScreenUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.List;

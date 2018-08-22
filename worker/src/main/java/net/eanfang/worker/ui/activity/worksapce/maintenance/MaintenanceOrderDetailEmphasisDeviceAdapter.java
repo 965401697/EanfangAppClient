@@ -9,7 +9,6 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.base.entity.ShopMaintenanceDeviceEntity;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 
 import net.eanfang.worker.R;

@@ -22,12 +22,9 @@ import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
-import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.adapter.LookReportDetailAdapter;
-import net.eanfang.client.ui.fragment.OrderDetailFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;

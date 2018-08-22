@@ -1,9 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,7 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.OrderProgressBean;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
 import com.github.vipulasri.timelineview.TimelineView;
 
 

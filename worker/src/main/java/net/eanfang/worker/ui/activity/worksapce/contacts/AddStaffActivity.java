@@ -23,7 +23,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class AddStaffActivity extends BaseWorkerActivity {
 

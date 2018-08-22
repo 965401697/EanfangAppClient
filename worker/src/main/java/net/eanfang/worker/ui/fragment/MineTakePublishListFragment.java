@@ -1,38 +1,23 @@
 package net.eanfang.worker.ui.fragment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.MineTaskListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.V;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.MineTakePublishListActivity;
 import net.eanfang.worker.ui.adapter.PublishTakeListAdapter;
-import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.worker.ui.widget.TaskPublishDetailView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
-import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 
 /**

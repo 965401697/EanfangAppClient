@@ -1,33 +1,13 @@
 package net.eanfang.client.ui.activity.worksapce;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.LatLng;
-import com.annimon.stream.Stream;
-import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.LocationUtil;
-import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.V;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -35,20 +15,13 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.CollectionWorkerFragment;
-import net.eanfang.client.ui.fragment.customservice.CompanyServiceFragment;
-import net.eanfang.client.ui.fragment.customservice.PersonalServiceFragment;
 import net.eanfang.client.ui.fragment.selectworker.AllWorkerFragment;
 import net.eanfang.client.ui.fragment.selectworker.CollectWorkerFragment;
 import net.eanfang.client.ui.fragment.selectworker.ServicedWorkerFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**

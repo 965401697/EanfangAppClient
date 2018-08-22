@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.adapter;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.net.Uri;
 import android.widget.TextView;
 

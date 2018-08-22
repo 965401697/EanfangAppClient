@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.adapter.datastatistics;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.datastatistics.DataStatisticsCompany;
-import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 

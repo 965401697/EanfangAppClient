@@ -8,7 +8,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.eanfang.model.BaseDataBean;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;

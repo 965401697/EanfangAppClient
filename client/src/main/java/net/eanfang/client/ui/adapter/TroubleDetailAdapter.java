@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
-import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

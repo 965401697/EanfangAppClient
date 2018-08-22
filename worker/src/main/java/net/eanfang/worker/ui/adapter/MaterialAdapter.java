@@ -1,15 +1,11 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
 import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
 
 
 /**

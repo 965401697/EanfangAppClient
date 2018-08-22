@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
@@ -35,7 +34,6 @@ import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
-import net.eanfang.worker.ui.widget.WorkCheckCtrlView;
 import net.eanfang.worker.ui.widget.WorkSpaceSelectMapPopWindow;
 
 import java.io.File;

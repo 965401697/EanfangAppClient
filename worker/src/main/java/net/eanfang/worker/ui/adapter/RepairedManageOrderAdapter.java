@@ -1,13 +1,10 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
-import android.view.View;
 
-import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
@@ -16,8 +13,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
 
 
 /**

@@ -9,11 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.eanfang.config.Constant;
-import com.eanfang.config.EanfangConst;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
 
 /**
  * Created by mac on 17/1/4.

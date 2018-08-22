@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,7 +8,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.util.PermKit;
-import com.huawei.hms.support.api.push.PushEventReceiver;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

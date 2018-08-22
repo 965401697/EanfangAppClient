@@ -17,13 +17,9 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.LogDetailsEntity;
-import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.im.MorePopWindow;
-import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
-import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;

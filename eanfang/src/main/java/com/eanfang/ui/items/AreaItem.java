@@ -9,8 +9,6 @@ import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeSelectItemGroup;
 import com.eanfang.R;
-import com.eanfang.R2;
-import com.eanfang.model.TemplateBean;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.List;

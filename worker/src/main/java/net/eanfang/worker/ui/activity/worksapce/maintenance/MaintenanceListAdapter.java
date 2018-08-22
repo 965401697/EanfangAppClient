@@ -6,7 +6,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -14,7 +13,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 /**
  * Created by O u r on 2018/7/16.

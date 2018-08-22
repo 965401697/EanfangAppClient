@@ -12,8 +12,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 
-import com.eanfang.ui.activity.SelectContactActivity;
-
 import net.eanfang.client.R;
 
 

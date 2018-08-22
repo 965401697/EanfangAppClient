@@ -1,26 +1,15 @@
 package net.eanfang.client.ui.activity.im;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
-import android.text.TextUtils;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
-import io.rong.imlib.model.MentionedInfo;
 import io.rong.imlib.model.MessageContent;
-import io.rong.imlib.model.UserInfo;
-import io.rong.message.TextMessage;
-import io.rong.push.common.RLog;
 
 /**
  * Created by O u r on 2018/7/2.

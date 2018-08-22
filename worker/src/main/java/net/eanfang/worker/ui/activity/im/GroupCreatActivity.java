@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,7 +15,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupCreatBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
@@ -26,7 +24,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
-import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 
 import org.json.JSONArray;

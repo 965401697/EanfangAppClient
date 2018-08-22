@@ -15,10 +15,8 @@ import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
-import com.baozi.treerecyclerview.manager.ItemManager;
 import com.eanfang.R;
 import com.eanfang.R2;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
@@ -36,7 +34,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SelectPresonActivity extends BaseActivity {
 

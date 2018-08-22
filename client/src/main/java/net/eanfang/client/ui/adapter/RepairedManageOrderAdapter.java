@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
-import android.view.Gravity;
 
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;

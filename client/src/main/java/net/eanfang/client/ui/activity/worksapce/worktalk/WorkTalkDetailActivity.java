@@ -10,13 +10,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTalkDetailBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.BarUtil.BaseUtil;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

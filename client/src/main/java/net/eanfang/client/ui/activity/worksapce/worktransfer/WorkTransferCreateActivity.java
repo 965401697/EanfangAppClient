@@ -27,14 +27,11 @@ import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogWriteActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.adapter.worktransfer.WorkTransferDetailAttentionAdapter;

@@ -12,8 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 /**
  * Created by jornl on 2017/7/4.

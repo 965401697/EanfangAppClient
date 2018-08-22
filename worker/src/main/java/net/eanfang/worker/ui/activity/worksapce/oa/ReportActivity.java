@@ -36,7 +36,6 @@ import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.AddReportCompleteActivity;
 import net.eanfang.worker.ui.activity.worksapce.AddReportFindActivity;
 import net.eanfang.worker.ui.activity.worksapce.AddReportPlanActivity;

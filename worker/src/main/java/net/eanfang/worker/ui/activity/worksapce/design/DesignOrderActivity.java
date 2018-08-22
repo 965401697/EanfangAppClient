@@ -6,15 +6,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.model.PayOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.fragment.DesignOrderFragment;
-import net.eanfang.worker.ui.fragment.OfferAndPayListFragment1;
 
 import java.util.ArrayList;
 import java.util.List;

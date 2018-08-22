@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 
 import com.annimon.stream.Stream;
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
@@ -14,8 +13,6 @@ import com.eanfang.R2;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.items.AreaItem;
-import com.eanfang.ui.items.OrgSelectGroupMultipleItem;
-import com.eanfang.ui.items.OrgSelectGroupSingleItem;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.ArrayList;

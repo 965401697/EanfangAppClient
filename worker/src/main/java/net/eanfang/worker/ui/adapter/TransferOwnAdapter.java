@@ -1,13 +1,11 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 

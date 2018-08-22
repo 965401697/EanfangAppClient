@@ -2,7 +2,6 @@ package com.eanfang.oss;
 
 
 import android.app.Activity;
-import android.content.Context;
 
 import com.alibaba.sdk.android.oss.ClientConfiguration;
 import com.alibaba.sdk.android.oss.OSS;

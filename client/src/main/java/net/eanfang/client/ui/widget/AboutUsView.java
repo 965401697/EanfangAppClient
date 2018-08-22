@@ -6,14 +6,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.ApkUtils;
+import com.eanfang.util.UpdateAppManager;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
-
-import com.eanfang.util.UpdateAppManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

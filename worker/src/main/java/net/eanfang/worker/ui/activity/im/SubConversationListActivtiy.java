@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.im;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import net.eanfang.worker.R;

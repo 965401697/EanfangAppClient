@@ -8,8 +8,6 @@ import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 /**
  * 工作台--报价与支付列表的adapter

@@ -13,7 +13,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
-import com.yaf.base.entity.CustDeviceParamEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

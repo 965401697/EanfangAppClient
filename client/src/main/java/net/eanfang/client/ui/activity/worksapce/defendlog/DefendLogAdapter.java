@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.DefendLogDetailBean;
 import com.yaf.base.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;

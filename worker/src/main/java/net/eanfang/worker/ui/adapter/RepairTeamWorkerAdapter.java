@@ -1,8 +1,5 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.net.Uri;
-import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
@@ -10,10 +7,6 @@ import com.eanfang.model.TemplateBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * 描述：

@@ -1,8 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.design;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -13,12 +11,10 @@ import com.eanfang.model.DesignOrderInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.contacts.CooperactionRelationSubActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class DesignOrderDetailActivity extends BaseWorkerActivity {
 

@@ -22,8 +22,6 @@ import android.widget.LinearLayout;
 import java.lang.reflect.Method;
 import android.view.ViewGroup.MarginLayoutParams;
 
-import butterknife.internal.Utils;
-
 import static android.Manifest.permission.EXPAND_STATUS_BAR;
 
 /**

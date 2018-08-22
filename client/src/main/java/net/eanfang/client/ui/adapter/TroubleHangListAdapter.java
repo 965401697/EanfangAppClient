@@ -2,11 +2,9 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.client.R;

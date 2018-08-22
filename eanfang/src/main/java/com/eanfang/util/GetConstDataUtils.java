@@ -3,7 +3,6 @@ package com.eanfang.util;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

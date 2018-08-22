@@ -1,9 +1,5 @@
 package com.eanfang.model;
 
-import android.support.annotation.NonNull;
-
-import com.eanfang.util.Cn2Spell;
-
 import java.io.Serializable;
 import java.util.Comparator;
 

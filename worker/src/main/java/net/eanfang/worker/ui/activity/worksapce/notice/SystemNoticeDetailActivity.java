@@ -1,9 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -11,10 +8,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.ui.base.voice.SynthesizerPresenter;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 

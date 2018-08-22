@@ -1,23 +1,12 @@
 package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.ToastUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
 
@@ -25,12 +14,9 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MaintenanceAddCheckResultShowActivity extends BaseWorkerActivity {
 

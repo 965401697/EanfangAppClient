@@ -1,11 +1,8 @@
 package net.eanfang.client.ui.activity.worksapce.oa;
 
-import android.net.Uri;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.config.Constant;
 import com.eanfang.model.TemplateBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 

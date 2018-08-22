@@ -25,7 +25,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.facebook.common.internal.Sets;

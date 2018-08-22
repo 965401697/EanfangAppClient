@@ -12,7 +12,6 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 

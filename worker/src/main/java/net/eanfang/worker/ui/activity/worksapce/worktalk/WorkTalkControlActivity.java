@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.huawei.hms.support.api.push.PushEventReceiver;
 
 
 import net.eanfang.worker.R;

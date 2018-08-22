@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.eanfang.config.EanfangConst;
-
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 

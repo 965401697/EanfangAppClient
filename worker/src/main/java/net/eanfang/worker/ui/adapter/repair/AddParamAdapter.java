@@ -1,9 +1,5 @@
 package net.eanfang.worker.ui.adapter.repair;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.EditText;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.util.StringUtils;

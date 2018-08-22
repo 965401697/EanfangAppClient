@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.eanfang.ui.base.BaseActivity;
@@ -12,8 +11,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkListActivity;
-import net.eanfang.client.ui.fragment.worktalk.WorkTalkListFragment;
 import net.eanfang.client.ui.fragment.worktransfer.WorkTransferFragment;
 
 import java.util.ArrayList;

@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.BaseDataEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 
 import java.util.List;

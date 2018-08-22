@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;

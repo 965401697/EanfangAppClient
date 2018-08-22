@@ -6,33 +6,22 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.PartnerBean;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationSearchClientActivity;
 import net.eanfang.worker.ui.adapter.CooperationRelationAdapter;
-import net.eanfang.worker.ui.adapter.PartnerAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.widget.PartnerOrgTypeListView;
-import net.eanfang.worker.ui.widget.SearchCompanyListView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

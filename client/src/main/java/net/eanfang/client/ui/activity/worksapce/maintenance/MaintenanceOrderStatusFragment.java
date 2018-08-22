@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrderProgressBean;

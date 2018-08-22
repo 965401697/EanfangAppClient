@@ -14,7 +14,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.eanfang.util.ViewHolder;
-import com.eanfang.witget.DataSelectPopWindow;
 import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.client.R;

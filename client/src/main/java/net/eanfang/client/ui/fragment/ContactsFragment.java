@@ -2,7 +2,6 @@ package net.eanfang.client.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,22 +17,17 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
-import com.eanfang.ui.activity.SelectContactActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
-import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
@@ -46,8 +40,6 @@ import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.contacts.CompanyManagerActivity;
 import net.eanfang.client.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
-import net.eanfang.client.ui.base.ClientApplication;
-import net.eanfang.client.ui.widget.CreateTeamView;
 
 import java.util.Collections;
 import java.util.List;

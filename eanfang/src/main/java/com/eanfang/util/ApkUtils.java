@@ -15,7 +15,6 @@
  */
 package com.eanfang.util;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;

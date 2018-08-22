@@ -40,7 +40,6 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
 import java.util.List;
 

@@ -1,8 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.equipment;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +18,6 @@ import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
-import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationSearchClientActivity;
-import net.eanfang.worker.ui.adapter.CooperationRelationAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;

@@ -11,7 +11,6 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DefendLogBean;
-import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
@@ -19,7 +18,6 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogAdapter;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 /**

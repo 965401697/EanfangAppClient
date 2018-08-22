@@ -1,14 +1,11 @@
 package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.DefendLogDetailBean;
 
 import net.eanfang.client.R;
 
