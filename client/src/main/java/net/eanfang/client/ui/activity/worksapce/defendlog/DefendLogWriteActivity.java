@@ -423,7 +423,6 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
 
-        if (presonList.size() > 0) {
 
                 if (presonList.size() > 0) {
                     if (isSend == 1) {
@@ -465,7 +464,6 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                     }
 
             }
-        }
     }
 
     private boolean checkInfo() {

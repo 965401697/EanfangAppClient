@@ -6,7 +6,6 @@ import com.eanfang.model.WorkTalkListBean;
 
 import net.eanfang.worker.R;
 
-
 /**
  * 描述：面谈员工
  *
@@ -23,7 +22,7 @@ public class WorkTalkAdapter extends BaseQuickAdapter<WorkTalkListBean.ListBean,
 
     @Override
     protected void convert(BaseViewHolder helper, WorkTalkListBean.ListBean item) {
-        if (mIsCreate) {// 我创建的
+        if (!mIsCreate) {// 我创建的
             // 创建人
             helper.setText(R.id.tv_worktalk_name, item.getOwnerDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
@@ -32,7 +31,7 @@ public class WorkTalkAdapter extends BaseQuickAdapter<WorkTalkListBean.ListBean,
             // 创建人
             helper.setText(R.id.tv_worktalk_name, item.getAssigneeCompanyEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getRealName() + ")");
             //接收人
-            helper.setText(R.id.tv_receiver_name, "接收人：" + item.getOwnerUserEntity().getAccountEntity().getRealName());
+            helper.setText(R.id.tv_receiver_name, "创建人：" + item.getOwnerUserEntity().getAccountEntity().getRealName());
         }
 
         if (item.getStatus() == 1) {

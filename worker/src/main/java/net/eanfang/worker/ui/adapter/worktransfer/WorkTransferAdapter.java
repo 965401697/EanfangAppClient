@@ -24,14 +24,14 @@ public class WorkTransferAdapter extends BaseQuickAdapter<WorkTransferListBean.L
 
     @Override
     protected void convert(BaseViewHolder helper, WorkTransferListBean.ListBean item) {
-        if (mIsCreate) {// 我创建的
+        if (!mIsCreate) {// 我创建的
             // 创建人
             helper.setText(R.id.tv_worktalk_name, item.getOwnerDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
             helper.setText(R.id.tv_receiver_name, "接收人：" + item.getAssigneeUserEntity().getAccountEntity().getRealName());
         } else {// 我接收的
             // 创建人
-            helper.setText(R.id.tv_worktalk_name, item.getAssigneeDepartmentEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getRealName() + ")");
+            helper.setText(R.id.tv_worktalk_name, item.getAssigneeCompanyEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
             helper.setText(R.id.tv_receiver_name, "创建人：" + item.getOwnerUserEntity().getAccountEntity().getRealName());
         }

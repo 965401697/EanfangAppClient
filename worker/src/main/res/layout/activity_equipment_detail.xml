@@ -417,7 +417,7 @@
                 android:layout_marginBottom="@dimen/dimen_32"
                 android:layout_marginTop="@dimen/dimen_14"
                 android:background="@color/white"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <LinearLayout

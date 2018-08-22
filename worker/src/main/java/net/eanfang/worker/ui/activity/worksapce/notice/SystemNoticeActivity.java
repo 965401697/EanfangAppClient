@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -19,15 +17,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
-import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
 
 import org.json.JSONObject;
 
@@ -78,7 +73,13 @@ public class SystemNoticeActivity extends BaseActivity implements
      */
     private void initView() {
         setTitle("系统消息");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         mStystemCount = getIntent().getIntExtra("mStystemCount", 0);
         // 如果等于0 则全删  反之全读
         if (mStystemCount == 0) {

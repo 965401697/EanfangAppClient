@@ -1,10 +1,13 @@
 package net.eanfang.worker.ui.base;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 
 import net.eanfang.worker.BuildConfig;
+import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;
 import net.eanfang.worker.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.worker.ui.activity.im.MyConversationClickListener;
@@ -21,9 +24,25 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  */
 
 public class WorkerApplication extends EanfangApplication {
+
+
+    public int count = 0;
+    private ForwardListener mForwardListener;
+
+    public void setmForwardListener(ForwardListener mForwardListener) {
+        this.mForwardListener = mForwardListener;
+    }
+
+    private static WorkerApplication mWorkerApplication;
+
+    public static WorkerApplication getApplication() {
+        return mWorkerApplication;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        mWorkerApplication = this;
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
 
@@ -35,6 +54,49 @@ public class WorkerApplication extends EanfangApplication {
 
             EanfangApplication.AppType = BuildConfig.TYPE;
         }
+
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                count++;
+//                Log.e("zzw", "加=" + count);
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                if (count == 1 && activity instanceof MainActivity) {
+//                    Log.e("zzw", "MainActivity");
+                    mForwardListener.onForwardListener();
+                }
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+                count--;
+//                Log.e("zzw", "减=" + count);
+
+            }
+        });
+
 
     }
 
@@ -77,6 +139,10 @@ public class WorkerApplication extends EanfangApplication {
             }
         });
 
+    }
+
+    public interface ForwardListener {
+        void onForwardListener();
     }
 
 }

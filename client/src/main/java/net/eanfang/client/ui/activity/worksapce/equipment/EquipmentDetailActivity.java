@@ -21,6 +21,8 @@ import com.yaf.base.entity.CustDeviceParamEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.io.Serializable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -179,20 +181,21 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         switch (view.getId()) {
             case R.id.tv_equipment_paramter:
                 Intent intent = new Intent(this, EquipmentParameterActivity.class);
-                ContentValues contentValues = new ContentValues();
+//                ContentValues contentValues = new ContentValues();
+                Bundle bundle = new Bundle();
                 if (mBean.getParams() != null && mBean.getParams().size() > 0) {
-                    for (CustDeviceParamEntity bean : mBean.getParams()) {
-                        if (bean.getParamName().equals("电压")) {
-                            contentValues.put("0", bean.getParamValue());
-                        } else if (bean.getParamName().equals("电流")) {
-                            contentValues.put("1", bean.getParamValue());
-                        } else if (bean.getParamName().equals("IP地址")) {
-                            contentValues.put("2", bean.getParamValue());
-                        }
-                    }
+//                    for (CustDeviceParamEntity bean : mBean.getParams()) {
+//                        if (bean.getParamName().equals("电压")) {
+//                            contentValues.put("0", bean.getParamValue());
+//                        } else if (bean.getParamName().equals("电流")) {
+//                            contentValues.put("1", bean.getParamValue());
+//                        } else if (bean.getParamName().equals("IP地址")) {
+//                            contentValues.put("2", bean.getParamValue());
+//                        }
+//                    }
+                    bundle.putSerializable("params", (Serializable) mBean.getParams());
                 }
-
-                intent.putExtra("params", contentValues);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.tv_history:

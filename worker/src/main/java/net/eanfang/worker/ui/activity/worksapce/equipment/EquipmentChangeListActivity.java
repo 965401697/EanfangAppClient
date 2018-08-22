@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
@@ -105,6 +106,7 @@ public class EquipmentChangeListActivity extends BaseWorkerActivity implements S
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getEquals().put("deviceNo", deviceNo);
+        queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
         EanfangHttp.post(NewApiService.DEVICE_CHANGE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<CustDeviceChangeLogEntity>(this, true, CustDeviceChangeLogEntity.class, true, (list) -> {

@@ -94,7 +94,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
     private void initContent(WorkTalkDetailBean bean) {
         ivReportHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()));
         // 创建人
-        tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getNickName() + "(汇报人)");
+        tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getRealName() + "(汇报人)");
         // 部门
         tvDepartment.setText(bean.getOwnerDepartmentEntity().getOrgName());
         //时间
@@ -108,7 +108,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
         // 单位电话
         tvCompanyPhone.setText(bean.getOwnerUserEntity().getAccountEntity().getMobile());
         // 接收人
-        tvAcceptPreson.setText(bean.getAssigneeUserEntity().getAccountEntity().getNickName());
+        tvAcceptPreson.setText(bean.getAssigneeUserEntity().getAccountEntity().getRealName());
         //接收人电话
         tvAcceptPhone.setText(bean.getAssigneeUserEntity().getAccountEntity().getMobile());
         //面谈对象

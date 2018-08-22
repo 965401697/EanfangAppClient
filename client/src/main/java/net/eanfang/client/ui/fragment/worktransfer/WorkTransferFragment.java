@@ -139,7 +139,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
                     if(!PermKit.get().getExchangeDetailPrem())return;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
-                    bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());
+//                    bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());
                     JumpItent.jump(getActivity(), WorkTransferDetailActivity.class, bundle);
                     break;
                 //联系汇报人
