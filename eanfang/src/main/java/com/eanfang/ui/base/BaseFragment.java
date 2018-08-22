@@ -225,6 +225,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
         if (EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
 
             WorkerInfoBean workerInfoBean = new WorkerInfoBean();
+
             workerInfoBean.setAccId(EanfangApplication.get().getAccId());
             workerInfoBean.setUserId(EanfangApplication.get().getUserId());
 
