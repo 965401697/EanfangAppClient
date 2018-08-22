@@ -66,7 +66,6 @@ public class LookDealwithCheckInfoDetailActivity extends BaseClientActivity {
     }
 
     private void initView() {
-
         btnAdopt.setOnClickListener(v -> dealWith(1));
         btnReject.setOnClickListener(v -> dealWith(2));
 
@@ -86,7 +85,7 @@ public class LookDealwithCheckInfoDetailActivity extends BaseClientActivity {
         }
 
 
-//        etTitle.setText(bean.getInspectDetailTitle());
+        etTitle.setText(workCheckInfoBean.getTitle());
         etInputCheckContent.setText(bean.getDisposeInfo());
         etRemark.setText(bean.getRemarkInfo());
 //
