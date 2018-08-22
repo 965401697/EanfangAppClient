@@ -34,7 +34,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
@@ -143,15 +142,15 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     // 业务类型
     private String mBussiness = "";
 
-    public static final int[] LIBERTY_TWO_COLORS = {
-            Color.rgb(153, 150, 249), Color.rgb(130, 104, 234),
+    public static final int[] LIBERTY_COLORS_FiVE = {
+            Color.rgb(123, 119, 249), Color.rgb(255, 159, 0),
             Color.rgb(72, 205, 210), Color.rgb(117, 226, 228),
             Color.rgb(166, 98, 247)
     };
-    public static final int[] LIBERTY_COLORS = {
+    public static final int[] LIBERTY_TWO_COLORS_MORE = {
             Color.rgb(255, 202, 115), Color.rgb(0, 206, 161),
             Color.rgb(255, 98, 0), Color.rgb(255, 211, 0),
-            Color.rgb(255, 159, 0)
+            Color.rgb(130, 104, 234),
     };
 
     @Override
@@ -387,12 +386,12 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
         if (isFive) {
-            for (int c : LIBERTY_COLORS)
+            for (int c : LIBERTY_COLORS_FiVE)
                 colors.add(c);
         } else {
-            for (int c : LIBERTY_COLORS)
+            for (int c : LIBERTY_COLORS_FiVE)
                 colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS)
+            for (int c : LIBERTY_TWO_COLORS_MORE)
                 colors.add(c);
         }
         dataSet.setColors(colors);
@@ -431,14 +430,13 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        colors.add(ColorTemplate.getHoloBlue());
         if (isFive) {
-            for (int c : LIBERTY_COLORS)
+            for (int c : LIBERTY_COLORS_FiVE)
                 colors.add(c);
         } else {
-            for (int c : LIBERTY_COLORS)
+            for (int c : LIBERTY_COLORS_FiVE)
                 colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS)
+            for (int c : LIBERTY_TWO_COLORS_MORE)
                 colors.add(c);
         }
         dataSet.setColors(colors);

@@ -6,27 +6,18 @@ package com.eanfang.application;
 
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.ArrayMap;
-import android.view.WindowManager;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.camera.util.LogUtil;
-import com.eanfang.config.Constant;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.IBase;
-import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.util.message.J_MessageVerify;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,8 +49,6 @@ public abstract class CustomeApplication extends MultiDexApplication {
 
     public void initConfig() {
         J_MessageVerify.get().init(60);
-        Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
-        SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
     }
 
     public void push(IBase j_iBase) {

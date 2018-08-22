@@ -68,7 +68,10 @@
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme">
-
+        <!-- 多渠道打包 -->
+        <meta-data
+            android:name="com.tencent.tac.channel"
+            android:value="${tac_channel}" />
         <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"

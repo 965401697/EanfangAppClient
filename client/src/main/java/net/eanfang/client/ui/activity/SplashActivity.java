@@ -8,24 +8,19 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.BaseDataBean;
-import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.ApkUtils;
+import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UpdateAppManager;
-import com.eanfang.util.V;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.client.BuildConfig;
@@ -56,7 +51,13 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false);
+        //bugly初始化
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
+        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
+        //App的版本
+        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
+        strategy.setAppPackageName("net.eanfang.client");
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, true, strategy);
         init();
     }
 

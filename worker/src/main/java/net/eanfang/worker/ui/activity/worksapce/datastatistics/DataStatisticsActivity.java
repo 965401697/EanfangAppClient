@@ -26,7 +26,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
 import com.eanfang.witget.DataSelectPopWindow;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -35,7 +34,6 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -143,6 +141,17 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private String mOrgName = "";
     // 业务类型
     private String mBussiness = "";
+
+    public static final int[] LIBERTY_COLORS_FiVE = {
+            Color.rgb(123, 119, 249), Color.rgb(255, 159, 0),
+            Color.rgb(72, 205, 210), Color.rgb(117, 226, 228),
+            Color.rgb(166, 98, 247)
+    };
+    public static final int[] LIBERTY_TWO_COLORS_MORE = {
+            Color.rgb(255, 202, 115), Color.rgb(0, 206, 161),
+            Color.rgb(255, 98, 0), Color.rgb(255, 211, 0),
+            Color.rgb(130, 104, 234),
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -294,7 +303,11 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
                 }
             }
 
-            setFaultData(bussinessEntryList);
+            if (bussinessEntryList.size() <= 5) {
+                setFaultData(bussinessEntryList, true);
+            } else {
+                setFaultData(bussinessEntryList, false);
+            }
 
         }
         if (bean.getFailure().size() > 0) {
@@ -307,7 +320,11 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
                 }
             }
 
-            setIntactData(failureEntryList);
+            if (failureEntryList.size() <= 5) {
+                setIntactData(failureEntryList, true);
+            } else {
+                setIntactData(failureEntryList, false);
+            }
         }
         if (bussinessEntryList.size() <= 0 && failureEntryList.size() <= 0) {
             tvPieNoresult.setVisibility(View.VISIBLE);
@@ -362,29 +379,23 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     }
 
     //设置数据
-    private void setFaultData(ArrayList<PieEntry> entries) {
+    private void setFaultData(ArrayList<PieEntry> entries, boolean isFive) {
         pcFault.clear();
         PieDataSet dataSet = new PieDataSet(entries, "故障类型");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
 
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
+        if (isFive) {
+            for (int c : LIBERTY_COLORS_FiVE)
+                colors.add(c);
+        } else {
+            for (int c : LIBERTY_COLORS_FiVE)
+                colors.add(c);
+            for (int c : LIBERTY_TWO_COLORS_MORE)
+                colors.add(c);
+        }
 
         dataSet.setColors(colors);
 
@@ -415,34 +426,23 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     }
 
     //设置数据
-    private void setIntactData(ArrayList<PieEntry> entries) {
+    private void setIntactData(ArrayList<PieEntry> entries, boolean isFive) {
         pcIntact.clear();
         PieDataSet dataSet = new PieDataSet(entries, "故障修复率");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-//        ArrayList<Integer> colors = new ArrayList<Integer>();
-//        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.JOYFUL_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.COLORFUL_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.LIBERTY_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.PASTEL_COLORS)
-//            colors.add(c);
-//
-//        colors.add(ColorTemplate.getHoloBlue());
-        final int[] MY_COLORS = {Color.rgb(192, 0, 0), Color.rgb(255, 0, 0), Color.rgb(255, 192, 0),
-                Color.rgb(127, 127, 127), Color.rgb(146, 208, 80), Color.rgb(0, 176, 80), Color.rgb(79, 129, 189)};
-        ArrayList<Integer> colors = new ArrayList<Integer>();
 
-        for (int c : MY_COLORS) colors.add(c);
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        if (isFive) {
+            for (int c : LIBERTY_COLORS_FiVE)
+                colors.add(c);
+        } else {
+            for (int c : LIBERTY_COLORS_FiVE)
+                colors.add(c);
+            for (int c : LIBERTY_TWO_COLORS_MORE)
+                colors.add(c);
+        }
         dataSet.setColors(colors);
 
 //        dataSet.setValueLinePart1OffsetPercentage(80.f);

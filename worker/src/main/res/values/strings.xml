@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">监控服务管家</string>
+    <string name="app_name">易安防技师端</string>
     <!--登录页-->
     <string name="read"><u>阅读协议</u></string>
     <string name="forget_password"><u>忘记密码？</u></string>
