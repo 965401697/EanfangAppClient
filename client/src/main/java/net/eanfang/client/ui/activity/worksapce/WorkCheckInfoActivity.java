@@ -1,6 +1,5 @@
-package net.eanfang.client.ui.widget;
+package net.eanfang.client.ui.activity.worksapce;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,26 +15,18 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckInfoBean;
-import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.adapter.LookCheckDetailAdapter;
+import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.WorkCheckListFragment;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by MrHou
- *
- * @on 2017/11/24  16:43
- * @email houzhongzhou@yeah.net
- * @desc
- */
-@Deprecated
-public class WorkCheckInfoView extends BaseDialog {
+public class WorkCheckInfoActivity extends BaseClientActivity {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)
@@ -64,35 +55,21 @@ public class WorkCheckInfoView extends BaseDialog {
     LinearLayout llDependPerson;
     @BindView(R.id.ll_phone_num)
     LinearLayout llPhoneNum;
-    private Activity mContext;
     private Long id;
     private LookCheckDetailAdapter detailAdapter;
     private List<WorkCheckInfoBean.WorkInspectDetailsBean> mDataList;
-    private boolean isVisible;
-
-    public WorkCheckInfoView(Activity context, boolean isfull, Long id, boolean isVisible) {
-        super(context, isfull);
-        this.mContext = context;
-        this.id = id;
-        this.isVisible = isVisible;
-    }
+    private int status;
+    private int currrentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_work_check_info);
         ButterKnife.bind(this);
-        initView();
-    }
-
-
-    private void initView() {
-        ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("检查工作");
+        setTitle("检查工作");
+        setLeftBack();
+        id = getIntent().getLongExtra("id", 0);
+        status = getIntent().getIntExtra("status", 0);
         getData();
     }
 
@@ -101,7 +78,7 @@ public class WorkCheckInfoView extends BaseDialog {
      */
     private void initAdapter() {
         detailAdapter = new LookCheckDetailAdapter(R.layout.item_quotation_detail, mDataList);
-        taskDetialList.setLayoutManager(new LinearLayoutManager(mContext));
+        taskDetialList.setLayoutManager(new LinearLayoutManager(this));
         taskDetialList.setAdapter(detailAdapter);
     }
 
@@ -112,18 +89,28 @@ public class WorkCheckInfoView extends BaseDialog {
         EanfangHttp.get(NewApiService.GET_WORK_CHECK_INFO)
                 .tag(this)
                 .params("id", id)
-                .execute(new EanfangCallback<WorkCheckInfoBean>(mContext, true, WorkCheckInfoBean.class, (bean) -> {
-                    share(bean);
+                .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
                     fillDta(bean);
                     initAdapter();
                     taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
                         @Override
                         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            new LookWorkCheckInfoView(mContext, true,
-                                    bean,
-                                    bean.getWorkInspectDetails().get(position),
-                                    bean.getWorkInspectDetails().get(position).getId()
-                            ).show();
+//                            new LookWorkCheckInfoView(WorkCheckInfoActivity.this, true,
+//                                    bean,
+//                                    bean.getWorkInspectDetails().get(position),
+//                                    bean.getWorkInspectDetails().get(position).getId()
+//                            ).show();
+//                            if (status == ((WorkCheckInfoBean.WorkInspectDetailsBean) adapter.getData().get(position)).getStatus()) {
+                            currrentPosition = position;
+                            Intent intent = getIntent();
+                            intent.setClass(WorkCheckInfoActivity.this, LookWorkCheckInfoActivity.class);
+                            intent.putExtra("infoBean", bean);
+                            // TODO: 2018/8/22 待优化
+                            intent.putExtra("detailsBean", detailAdapter.getData().get(position));
+                            startActivityForResult(intent, WorkCheckListFragment.REQUST_REFRESH_CODE);
+//                            } else {
+//                                ToastUtil.get().showToast(WorkCheckInfoActivity.this, "已处理");
+//                            }
                         }
                     });
                 }));
@@ -144,32 +131,30 @@ public class WorkCheckInfoView extends BaseDialog {
 
     }
 
-    private void share(WorkCheckInfoBean bean) {
-        if (!isVisible) {
-            tvRight.setText("分享");
-            tvRight.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //分享聊天
-
-                    Intent intent = new Intent(mContext, SelectIMContactActivity.class);
-                    Bundle bundle = new Bundle();
-
-                    bundle.putString("id", String.valueOf(bean.getId()));
-                    bundle.putString("orderNum", bean.getCreateUser().getAccountEntity().getRealName());
-//                    if (bean.getWorkTaskDetails() != null && !TextUtils.isEmpty(bean.getWorkTaskDetails().get(0).getPictures())) {
-//                        bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
-//                    }
-                    bundle.putString("creatTime", bean.getAssigneeUser().getAccountEntity().getRealName());
-                    bundle.putString("workerName", bean.getCreateTime());
-                    bundle.putString("status", String.valueOf(bean.getStatus()));
-                    bundle.putString("shareType", "5");
-
-                    intent.putExtras(bundle);
-                    mContext.startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+            int s = status;
+            boolean isFinish = true;
+            if (data != null) {
+                int type = data.getIntExtra("type", 0);
+                detailAdapter.getData().get(currrentPosition).setStatus(++type);
+                detailAdapter.getData().get(currrentPosition).getWorkInspectDetailDisposes().get(0).setStatus(type);
+            } else {
+                detailAdapter.getData().get(currrentPosition).setStatus(++s);
+            }
+            detailAdapter.notifyItemChanged(currrentPosition);
+            for (WorkCheckInfoBean.WorkInspectDetailsBean bean : detailAdapter.getData()) {
+                if (bean.getStatus() == 2) {
+                    isFinish = false;
+                    break;
                 }
-            });
+            }
+            if (isFinish) {
+                setResult(RESULT_OK);
+                finish();
+            }
         }
     }
-
 }

@@ -1,13 +1,11 @@
-package net.eanfang.client.ui.widget;
+package net.eanfang.client.ui.activity.worksapce;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,13 +17,14 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.WorkCheckInfoBean;
-import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.AddDealwithInfoActivity;
+import net.eanfang.client.ui.activity.worksapce.worktransfer.LookDealwithCheckInfoDetailActivity;
 import net.eanfang.client.ui.adapter.AddCheckInfoDetailAdapter;
+import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.WorkCheckListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,19 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by MrHou
- *
- * @on 2017/11/24  17:10
- * @email houzhongzhou@yeah.net
- * @desc
- */
-@Deprecated
-public class LookWorkCheckInfoView extends BaseDialog {
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
+public class LookWorkCheckInfoActivity extends BaseClientActivity {
+
     @BindView(R.id.ll_add_detail)
     RelativeLayout llAddDetail;
     @BindView(R.id.et_title)
@@ -72,7 +60,6 @@ public class LookWorkCheckInfoView extends BaseDialog {
     SimpleDraweeView ivPic3;
     @BindView(R.id.ll_add_deal)
     LinearLayout llAddDeal;
-    private Activity mContext;
     private WorkCheckInfoBean infoBean;
     private WorkCheckInfoBean.WorkInspectDetailsBean detailsBean;
 
@@ -80,25 +67,21 @@ public class LookWorkCheckInfoView extends BaseDialog {
     private AddCheckInfoDetailAdapter maintenanceDetailAdapter;
     private Long detailId;
 
-    public LookWorkCheckInfoView(Activity context, boolean isfull, WorkCheckInfoBean data, WorkCheckInfoBean.WorkInspectDetailsBean detailsBean,
-                                 Long id) {
-        super(context, isfull);
-        this.mContext = context;
-        this.infoBean = data;
-        this.detailsBean = detailsBean;
-        this.detailId = id;
-    }
-
     @Override
-    protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_look_check_info_detail);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_look_work_check_info);
         ButterKnife.bind(this);
+        setTitle("检查明细");
+        setLeftBack();
+
+        infoBean = (WorkCheckInfoBean) getIntent().getSerializableExtra("infoBean");
+        detailsBean = (WorkCheckInfoBean.WorkInspectDetailsBean) getIntent().getSerializableExtra("detailsBean");
+        detailId = detailsBean.getId();
         initView();
     }
 
     private void initView() {
-        tvTitle.setText("检查明细");
-        ivLeft.setOnClickListener(v -> dismiss());
 
         Long uid = EanfangApplication.getApplication().getUserId();
 
@@ -109,7 +92,7 @@ public class LookWorkCheckInfoView extends BaseDialog {
 //        }
 
 
-        if (uid.equals(infoBean.getAssigneeUserId()) && (EanfangConst.WORK_INSPECT_STATUS_CREATE == infoBean.getStatus())) {
+        if (uid.equals(infoBean.getAssigneeUserId()) && EanfangConst.WORK_INSPECT_STATUS_CREATE == detailsBean.getStatus() && (EanfangConst.WORK_INSPECT_STATUS_CREATE == infoBean.getStatus())) {
             llAddDetail.setVisibility(View.VISIBLE);
         } else {
             llAddDetail.setVisibility(View.GONE);
@@ -153,28 +136,49 @@ public class LookWorkCheckInfoView extends BaseDialog {
         }
 
         btnAddDetail.setOnClickListener((v) -> {
-            Intent intent = new Intent(mContext, AddDealwithInfoActivity.class);
+            Intent intent = getIntent();
+            intent.setClass(this, AddDealwithInfoActivity.class);
             intent.putExtra("data", detailsBean);
             intent.putExtra("id", infoBean.getId());
             intent.putExtra("detailId", detailId);
-            mContext.startActivity(intent);
+            startActivityForResult(intent, WorkCheckListFragment.REQUST_REFRESH_CODE);
         });
 
         if (detailsBean.getWorkInspectDetailDisposes() != null) {
             beanList.addAll(detailsBean.getWorkInspectDetailDisposes());
             maintenanceDetailAdapter = new AddCheckInfoDetailAdapter(R.layout.item_quotation_detail, beanList);
 
-            dealListAdd.setLayoutManager(new LinearLayoutManager(mContext));
+            dealListAdd.setLayoutManager(new LinearLayoutManager(this));
             dealListAdd.setAdapter(maintenanceDetailAdapter);
             dealListAdd.addOnItemTouchListener(new OnItemClickListener() {
                 @Override
                 public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    new LookDealwithCheckInfoDetailView(mContext, true, beanList.get(position), infoBean).show();
+//                    new LookDealwithCheckInfoDetailView(LookWorkCheckInfoActivity.this, true, beanList.get(position), infoBean).show();
+
+//                    Intent intent = new Intent(LookWorkCheckInfoActivity.this, LookDealwithCheckInfoDetailActivity.class);
+                    Intent intent = getIntent();
+                    intent.setClass(LookWorkCheckInfoActivity.this, LookDealwithCheckInfoDetailActivity.class);
+                    intent.putExtra("bean", beanList.get(position));
+                    intent.putExtra("workCheckInfoBean", infoBean);
+                    startActivityForResult(intent, WorkCheckListFragment.REQUST_REFRESH_CODE);
                 }
             });
             maintenanceDetailAdapter.notifyDataSetChanged();
 
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+            if (data != null) {
+                setResult(RESULT_OK, data);
+            } else {
+                setResult(RESULT_OK);
+            }
+            finishSelf();
+        }
     }
 }

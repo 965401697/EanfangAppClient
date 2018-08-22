@@ -15,18 +15,15 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.AddWorkInspectDetailBean;
 import com.eanfang.model.WorkCheckInfoBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
-
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.widget.WorkCheckInfoView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,9 +117,11 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
         EanfangHttp.post(NewApiService.ADD_WORK_CHECK_DETAIL)
                 .upJson(jsonString)
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id, false).show();
-                    });
+//                    runOnUiThread(() -> {
+//                    new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id, false).show();
+//                    });
+                    setResult(RESULT_OK);
+                    finishSelf();
                 }));
 
     }
@@ -134,6 +133,9 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
             mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
             mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+        }else if    (requestCode == 101 && resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
+            finishSelf();
         }
     }
 }

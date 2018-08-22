@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -14,8 +15,10 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.client.ui.activity.worksapce.WorkCheckInfoActivity;
 import net.eanfang.client.ui.adapter.WorkCheckListAdapter;
-import net.eanfang.client.ui.widget.WorkCheckInfoView;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by MrHou
@@ -31,6 +34,8 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
     private String mTitle;
     private int mType;
     private WorkCheckListAdapter mAdapter;
+    private int currentPosition;
+    public static final int REQUST_REFRESH_CODE = 101;
 
     public static WorkCheckListFragment getInstance(String title, int type) {
         WorkCheckListFragment sf = new WorkCheckListFragment();
@@ -53,8 +58,12 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if(!PermKit.get().getWorkInspectDetailPrem())return;
-                new WorkCheckInfoView(getActivity(), true, ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getId(),false).show();
+                if (!PermKit.get().getWorkInspectDetailPrem()) return;
+                currentPosition = position;
+                Intent intent = new Intent(getActivity(), WorkCheckInfoActivity.class);
+                intent.putExtra("id", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getId());
+                intent.putExtra("status", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getStatus());
+                startActivityForResult(intent, REQUST_REFRESH_CODE);
             }
         });
     }
@@ -126,6 +135,13 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && resultCode == RESULT_OK) {
+            mAdapter.remove(currentPosition);
+        }
     }
 }

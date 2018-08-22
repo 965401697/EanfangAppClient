@@ -1,20 +1,14 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Constant;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
@@ -47,6 +41,7 @@ public class WorkCheckListActivity extends BaseClientActivity {
     private MyPagerAdapter mAdapter;
     private int dataType;
     private WorkCheckListBean workChenkBean;
+    private WorkCheckListFragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +66,24 @@ public class WorkCheckListActivity extends BaseClientActivity {
         vpWorkList.setAdapter(mAdapter);
         tlWorkList.setViewPager(vpWorkList, mTitles, this, mFragments);
         vpWorkList.setCurrentItem(0);
+
+        currentFragment = (WorkCheckListFragment) mFragments.get(0);
+        vpWorkList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentFragment = (WorkCheckListFragment) mFragments.get(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
@@ -95,5 +108,10 @@ public class WorkCheckListActivity extends BaseClientActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        currentFragment.onActivityResult(requestCode, resultCode, data);
+    }
 }
 
