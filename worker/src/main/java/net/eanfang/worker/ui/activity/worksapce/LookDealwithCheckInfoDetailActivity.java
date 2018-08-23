@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.worktransfer;
+package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -20,13 +20,13 @@ import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LookDealwithCheckInfoDetailActivity extends BaseClientActivity {
+public class LookDealwithCheckInfoDetailActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_left)
     ImageView ivLeft;

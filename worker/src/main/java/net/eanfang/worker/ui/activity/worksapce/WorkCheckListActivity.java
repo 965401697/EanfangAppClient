@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.fragment.WorkCheckListFragment;
@@ -38,17 +38,9 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
-    private int type;
+    private int dataType;
     private WorkCheckListBean workChenkBean;
     private WorkCheckListFragment currentFragment;
-
-    public WorkCheckListBean getWorkChenkBean() {
-        return workChenkBean;
-    }
-
-    public void setWorkChenkBean(WorkCheckListBean workChenkBean) {
-        this.workChenkBean = workChenkBean;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +52,13 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
 
     private void initView() {
         titleBar = getIntent().getStringExtra("title");
-        type = getIntent().getIntExtra("type", 0);
+        dataType = getIntent().getIntExtra("type", 0);
         setTitle(titleBar);
         setLeftBack();
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkCheckListFragment.getInstance(title, type));
+            mFragments.add(WorkCheckListFragment.getInstance(title, dataType));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -74,7 +66,25 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
         tlWorkList.setViewPager(vpWorkList, mTitles, this, mFragments);
         vpWorkList.setCurrentItem(0);
 
+        currentFragment = (WorkCheckListFragment) mFragments.get(0);
+        vpWorkList.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentFragment = (WorkCheckListFragment) mFragments.get(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
+
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
@@ -95,6 +105,12 @@ public class WorkCheckListActivity extends BaseWorkerActivity {
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        currentFragment.onActivityResult(requestCode, resultCode, data);
     }
 }
 

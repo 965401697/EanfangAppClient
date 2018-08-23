@@ -564,15 +564,31 @@
         <activity
             android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
             android:screenOrientation="portrait" />
+        <!--工作汇报-->
         <activity android:name=".ui.activity.worksapce.oa.ReportParentActivity" />
+        <!--布置任务-->
         <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
+        <!--设备检点-->
         <activity android:name=".ui.activity.worksapce.oa.CheckParentActivity" />
+        <!--报装-->
         <activity android:name=".ui.activity.worksapce.InstallOrderParentActivity" />
+        <!--报价管控-->
         <activity android:name=".ui.activity.worksapce.OfferAndPayOrderParentActivity" />
+        <!--我的发包-->
         <activity android:name=".ui.activity.worksapce.MineTakePublishListReceiveParentActivity" />
+        <!--我的接包-->
         <activity android:name=".ui.activity.worksapce.MineTaskPublishListSendParentActivity" />
+        <!--合作公司列表-->
         <activity android:name=".ui.activity.worksapce.equipment.EquipmentCooperationCompanyActivity" />
+        <!--项目详情-->
         <activity android:name=".ui.activity.worksapce.TaskPublishDetailActivitty"></activity>
+
+        <!--工作检查-->
+        <activity android:name=".ui.activity.worksapce.WorkCheckInfoActivity" />
+        <!--处理明细-->
+        <activity android:name=".ui.activity.worksapce.LookWorkCheckInfoActivity" />
+        <!--添加处理明细-->
+        <activity android:name=".ui.activity.worksapce.LookDealwithCheckInfoDetailActivity"></activity>
     </application>
 
 </manifest>
