@@ -57,7 +57,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         //App的版本
         strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
         strategy.setAppPackageName("net.eanfang.client");
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, true, strategy);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false, strategy);
         init();
     }
 
