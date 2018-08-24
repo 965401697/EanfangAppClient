@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.EditText;
@@ -7,14 +8,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.LoginActivity;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
 
 /**
  * @author guanluocang
@@ -39,6 +50,12 @@ public class ChangePhoneActivity extends BaseActivity {
     @BindView(R.id.rl_confirm)
     RelativeLayout rlConfirm;
 
+
+    //手机号
+    private String mMobile = "";
+    //验证码
+    private String mVerify = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +73,8 @@ public class ChangePhoneActivity extends BaseActivity {
     private void initListener() {
         rlConfirm.setOnClickListener(new MultiClickListener(this, this::isCheckInfo, this::doSubmit));
         llYanzheng.setOnClickListener(v -> {
-            if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
+            mMobile = etPhone.getText().toString().trim();
+            if (StringUtils.isEmpty(mMobile)) {
                 showToast("请输入手机号");
                 return;
             }
@@ -84,19 +102,39 @@ public class ChangePhoneActivity extends BaseActivity {
     /**
      * 获取验证码
      */
-
     private void doGetVerifyCode() {
-
+        EanfangHttp.post(UserApi.GET_VERIFY_CODE)
+                .params("mobile", mMobile)
+                .execute(new EanfangCallback<String>(ChangePhoneActivity.this, false, String.class, (bean) -> {
+                    showToast(R.string.hint_success_verify);
+                }));
     }
 
-
+    /**
+     * 提交
+     */
     public void doSubmit() {
+        EanfangHttp.post(UserApi.UPDATA_MOBILE + "/" + mMobile + "/" + mVerify)
+                .execute(new EanfangCallback<JSONObject>(ChangePhoneActivity.this, true, JSONObject.class, bean -> {
+                    showToast("修改成功，请重新登录");
+                    signout();
+                }));
+    }
 
+    private void signout() {
+        EanfangHttp.get(UserApi.APP_LOGOUT)
+                .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
+                    RongIM.getInstance().logout();//退出融云
+                    CleanMessageUtil.clearAllCache(EanfangApplication.get());
+                    SharePreferenceUtil.get().clear();
+                    startActivity(new Intent(ChangePhoneActivity.this, LoginActivity.class));
+                    finishSelf();
+                }));
     }
 
     public boolean isCheckInfo() {
-        String mMobile = etPhone.getText().toString().trim();
-        String mVerify = etYanzheng.getText().toString().trim();
+        mMobile = etPhone.getText().toString().trim();
+        mVerify = etYanzheng.getText().toString().trim();
 
         if (StringUtils.isEmpty(mMobile)) {
             showToast("请输入手机号");
@@ -104,6 +142,11 @@ public class ChangePhoneActivity extends BaseActivity {
         }
         if (StringUtils.isEmpty(mVerify)) {
             showToast("请输入验证码");
+            return false;
+        }
+        //电话号码是否符合格式
+        if (!StringUtils.isMobileString(mMobile)) {
+            showToast("请输入正确手机号");
             return false;
         }
         return true;

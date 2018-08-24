@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.EditText;
@@ -7,14 +8,24 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.LoginActivity;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
 
 /**
  * @author guanluocang
@@ -45,6 +56,15 @@ public class UpdatePasswordActivity extends BaseActivity {
     @BindView(R.id.tv_verify)
     TextView tvVerify;
 
+    //手机号
+    private String mMobile = "";
+    //验证码
+    private String mVerify = "";
+    //新密码
+    private String mPassword = "";
+    // 确认密码
+    private String mConfirmPassword = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +82,8 @@ public class UpdatePasswordActivity extends BaseActivity {
     private void initListener() {
         rlConfirm.setOnClickListener(new MultiClickListener(this, this::isCheckInfo, this::doSubmit));
         llYanzheng.setOnClickListener(v -> {
-            if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
+            mMobile = etPhone.getText().toString().trim();
+            if (StringUtils.isEmpty(mMobile)) {
                 showToast("请输入手机号");
                 return;
             }
@@ -90,24 +111,56 @@ public class UpdatePasswordActivity extends BaseActivity {
     /**
      * 获取验证码
      */
-
     private void doGetVerifyCode() {
-
+        EanfangHttp.post(UserApi.GET_VERIFY_CODE)
+                .params("mobile", mMobile)
+                .execute(new EanfangCallback<String>(UpdatePasswordActivity.this, true, String.class, (bean) -> {
+                    showToast(R.string.hint_success_verify);
+                }));
     }
 
-
+    /**
+     * 提交
+     */
     public void doSubmit() {
+        EanfangHttp.post(UserApi.UPDATA_PASSWORD)
+                .params("mobile", mMobile)
+                .params("verifycode", mVerify)
+                .params("newKey1", mPassword)//新密码
+                .params("newKey2", mConfirmPassword)//确认密码
+                .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
+                    showToast(R.string.hint_success_verify);
+                    signout();
+                }));
+    }
 
+    /**
+     * 退出登录
+     */
+    private void signout() {
+        EanfangHttp.get(UserApi.APP_LOGOUT)
+                .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
+                    RongIM.getInstance().logout();//退出融云
+                    CleanMessageUtil.clearAllCache(EanfangApplication.get());
+                    SharePreferenceUtil.get().clear();
+                    startActivity(new Intent(UpdatePasswordActivity.this, LoginActivity.class));
+                    finishSelf();
+                }));
     }
 
     public boolean isCheckInfo() {
-        String mMobile = etPhone.getText().toString().trim();
-        String mVerify = etYanzheng.getText().toString().trim();
-        String mPassword = etNewPassword.getText().toString().trim();
-        String mConfirmPassword = etConifrmPassword.getText().toString().trim();
+        mMobile = etPhone.getText().toString().trim();
+        mVerify = etYanzheng.getText().toString().trim();
+        mPassword = etNewPassword.getText().toString().trim();
+        mConfirmPassword = etConifrmPassword.getText().toString().trim();
 
         if (StringUtils.isEmpty(mMobile)) {
             showToast("请输入手机号");
+            return false;
+        }
+        //电话号码是否符合格式
+        if (!StringUtils.isMobileString(mMobile)) {
+            showToast("请输入正确手机号");
             return false;
         }
         if (StringUtils.isEmpty(mVerify)) {
@@ -118,8 +171,20 @@ public class UpdatePasswordActivity extends BaseActivity {
             showToast("请输入密码");
             return false;
         }
+        if (mPassword.length() < 6 || mPassword.length() > 18) {
+            showToast("密码长度须为6-18位");
+            return false;
+        }
+        if (!StringUtils.isPwdLegal(mPassword)) {
+            showToast("密码至少包含一个字母和数字");
+            return false;
+        }
         if (StringUtils.isEmpty(mConfirmPassword)) {
             showToast("确认密码不能为空");
+            return false;
+        }
+        if (!mPassword.equals(mConfirmPassword)) {
+            showToast("密码输入不一致");
             return false;
         }
         return true;

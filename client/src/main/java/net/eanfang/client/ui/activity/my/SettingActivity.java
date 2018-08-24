@@ -103,7 +103,6 @@ public class SettingActivity extends BaseClientActivity {
             signout();
             dialog.dismiss();
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
-            ToastUtil.get().showToast(SettingActivity.this, "退出登录成功");
             SharePreferenceUtil.get().clear();
             startActivity(new Intent(SettingActivity.this, LoginActivity.class));
             finishSelf();
