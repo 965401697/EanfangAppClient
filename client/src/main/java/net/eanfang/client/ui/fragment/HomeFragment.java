@@ -34,6 +34,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
@@ -142,9 +143,9 @@ public class HomeFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), DesignOrderActivity.class));
         });
         //开锁
-        findViewById(R.id.tv_unlock).setOnClickListener(v -> showToast("暂缓开通"));
+        findViewById(R.id.tv_unlock).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //实时监控
-        findViewById(R.id.tv_monitor).setOnClickListener(v -> showToast("暂缓开通"));
+        findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //客服
         findViewById(R.id.tv_service).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CustomerServiceActivity.class));

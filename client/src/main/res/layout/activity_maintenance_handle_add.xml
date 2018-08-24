@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen_14"
-    android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceHandleEditActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 

@@ -92,7 +92,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     dexOptions {//解决分包gradle 编译oom问题
-        incremental true
         javaMaxHeapSize "4g"
     }
 // aapt2 问题 png图片问题

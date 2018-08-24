@@ -10,6 +10,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -19,16 +20,17 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.FaultRecordListActivity;
+import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
-import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.CheckParentActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.ReportParentActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.TaskParentActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
@@ -173,6 +175,15 @@ public class WorkspaceFragment extends BaseFragment {
                     .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
                     .putExtra("title", "京东安防"));
         });
+        //专家解答
+        findViewById(R.id.tv_work_answer).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        //行业知识
+        findViewById(R.id.tv_work_knowledge).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        //变更记录
+        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        //在线文档
+        findViewById(R.id.tv_work_file).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+
     }
 
     /**

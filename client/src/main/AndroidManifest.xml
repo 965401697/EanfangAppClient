@@ -58,7 +58,6 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".ui.base.ClientApplication"
@@ -68,6 +67,7 @@
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme">
+
         <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
@@ -557,7 +557,16 @@
 
         <activity android:name=".ui.activity.worksapce.WorkCheckInfoActivity" />
         <activity android:name=".ui.activity.worksapce.LookWorkCheckInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.worktransfer.LookDealwithCheckInfoDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.worktransfer.LookDealwithCheckInfoDetailActivity" />
+        <!-- 修改密码 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改手机号 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.ChangePhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.NoContentActivity"></activity>
     </application>
 
 </manifest>
