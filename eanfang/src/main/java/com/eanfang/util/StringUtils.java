@@ -166,6 +166,21 @@ public class StringUtils {
     }
 
     /**
+     * 校验密码是否符合规格：6~12为字母或数字
+     *
+     * @param pwd
+     * @return
+     */
+    public static boolean isPwdLegal(String pwd) {
+        String REGEX_PWD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$";
+        if (TextUtils.isEmpty(pwd)) {
+            return false;
+        } else {
+            return Pattern.matches(REGEX_PWD, pwd);
+        }
+    }
+
+    /**
      * 通过高德导航路径规划给的高速的名字得到高速的代码
      *
      * @param str G22XXX高速

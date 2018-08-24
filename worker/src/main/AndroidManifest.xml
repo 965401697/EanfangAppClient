@@ -73,6 +73,7 @@
         android:roundIcon="@drawable/worker_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme">
+
         <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
@@ -589,6 +590,15 @@
         <activity android:name=".ui.activity.worksapce.LookWorkCheckInfoActivity" />
         <!--添加处理明细-->
         <activity android:name=".ui.activity.worksapce.LookDealwithCheckInfoDetailActivity"></activity>
+        <!-- 修改密码 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改密码 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.ChangePhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.NoContentActivity"></activity>
     </application>
 
 </manifest>

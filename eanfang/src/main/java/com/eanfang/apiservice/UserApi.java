@@ -323,6 +323,13 @@ public interface UserApi {
      * 技师认证，资料完善状态查询
      */
     String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";
-
+    /**
+     * 修改手机号
+     */
+    String UPDATA_MOBILE = BuildConfig.API_HOST + "/yaf_sys/account/changeAppMobile";
+    /**
+     * 修改密码
+     */
+    String UPDATA_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changeAppkey";
 
 }

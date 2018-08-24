@@ -127,6 +127,5 @@
         <!--背景变暗-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-
 </resources>
 
