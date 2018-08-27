@@ -21,7 +21,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
@@ -36,7 +36,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -244,7 +243,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
                 break;
             case R.id.tv_add_team:
-                startActivity(new Intent(MaintenanceHandleActivity.this, SelectOrganizationActivity.class));
+//                startActivity(new Intent(MaintenanceHandleActivity.this, SelectOrganizationActivity.class));
+                startActivity(new Intent(MaintenanceHandleActivity.this, SelectOAPresonActivity.class));
                 break;
             case R.id.tv_sub:
                 doSubData();

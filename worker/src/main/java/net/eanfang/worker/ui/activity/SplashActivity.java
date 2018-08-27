@@ -41,7 +41,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
     private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_worker = {R.mipmap.worker0, R.mipmap.worker1, R.mipmap.worker2};
+    int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_work_splash_two, R.mipmap.ic_work_splash_three};
 
     private boolean isFirst = true;
 

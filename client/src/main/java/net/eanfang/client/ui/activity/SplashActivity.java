@@ -42,7 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCallback {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_client = {R.mipmap.client0, R.mipmap.client1, R.mipmap.client2};
+    int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_client_splash_two, R.mipmap.ic_client_splash_three};
     // 是第一次
     private boolean isFirst = true;
 

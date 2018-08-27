@@ -21,7 +21,6 @@ import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.worktransfer.LookDealwithCheckInfoDetailActivity;
 import net.eanfang.client.ui.adapter.AddCheckInfoDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.fragment.WorkCheckListFragment;

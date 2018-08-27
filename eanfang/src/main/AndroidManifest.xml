@@ -43,7 +43,6 @@
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -53,17 +52,6 @@
         tools:ignore="ProtectedPermissions" />
 
     <application>
-
-        <!-- &lt;!&ndash;信鸽&ndash;&gt; -->
-        <!-- <meta-data -->
-        <!-- android:name="XG_V2_ACCESS_ID" -->
-        <!-- android:value="2100270001" -->
-        <!-- tools:replace="android:value" /> -->
-        <!-- <meta-data -->
-        <!-- android:name="XG_V2_ACCESS_KEY" -->
-        <!-- android:value="ADCL916N8D7M" -->
-        <!-- tools:replace="android:value" /> -->
-        <!-- &lt;!&ndash;信鸽 end&ndash;&gt; -->
 
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"

@@ -14,6 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.AddWorkInspectDetailBean;
+import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
@@ -23,7 +24,6 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.widget.WorkCheckInfoView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,9 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
 
     private Map<String, String> uploadMap = new HashMap<>();
     private AddWorkInspectDetailBean addWorkInspectDetailBean = new AddWorkInspectDetailBean();
+
     private Long detailId, id;
+    private WorkCheckInfoBean.WorkInspectDetailsBean detailsBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         detailId = getIntent().getLongExtra("detailId", 0);
         id = getIntent().getLongExtra("id", 0);
+        detailsBean = (WorkCheckInfoBean.WorkInspectDetailsBean) getIntent().getSerializableExtra("data");
 
         initAdapter();
 
@@ -70,7 +73,7 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
 
 
     private void initAdapter() {
-
+        etTitle.setText(detailsBean.getTitle());
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
         mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
     }
@@ -92,7 +95,6 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
         addWorkInspectDetailBean.setSysWorkInspectDetailId(detailId);
         addWorkInspectDetailBean.setDisposeInfo(etInputCheckContent.getText().toString().trim());
         addWorkInspectDetailBean.setRemarkInfo(etRemark.getText().toString().trim());
-
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
         addWorkInspectDetailBean.setPictures(ursStr);
 
@@ -114,9 +116,11 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
         EanfangHttp.post(NewApiService.ADD_WORK_CHECK_DETAIL)
                 .upJson(jsonString)
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id,false).show();
-                    });
+//                    runOnUiThread(() -> {
+//                    new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id, false).show();
+//                    });
+                    setResult(RESULT_OK);
+                    finishSelf();
                 }));
 
     }
@@ -128,6 +132,9 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
             mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
             mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+        }else if    (requestCode == 101 && resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
+            finishSelf();
         }
     }
 }

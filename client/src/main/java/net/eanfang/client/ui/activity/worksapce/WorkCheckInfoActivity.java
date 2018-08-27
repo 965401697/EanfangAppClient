@@ -141,27 +141,25 @@ public class WorkCheckInfoActivity extends BaseClientActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101 && resultCode == RESULT_OK) {
-            int s = status;
-            boolean isFinish = true;
-            if (data != null) {
-                int type = data.getIntExtra("type", 0);
-                detailAdapter.getData().get(currrentPosition).setStatus(++type);
-                detailAdapter.getData().get(currrentPosition).getWorkInspectDetailDisposes().get(0).setStatus(type);
-            } else {
-                detailAdapter.getData().get(currrentPosition).setStatus(++s);
-            }
-            detailAdapter.notifyItemChanged(currrentPosition);
-            for (WorkCheckInfoBean.WorkInspectDetailsBean bean : detailAdapter.getData()) {
-                // TODO: 2018/8/22 待优化
-                if (bean.getStatus() == status) {
-                    isFinish = false;
-                    break;
-                }
-            }
-            if (isFinish) {
-                setResult(RESULT_OK);
-                finish();
-            }
+            EanfangHttp.get(NewApiService.GET_WORK_CHECK_INFO)
+                    .tag(this)
+                    .params("id", id)
+                    .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
+                        fillDta(bean);
+                        initAdapter();
+
+                        boolean isFinish = true;
+                        for (WorkCheckInfoBean.WorkInspectDetailsBean b : detailAdapter.getData()) {
+                            if (b.getStatus() == status) {// TODO: 2018/8/23 待优化
+                                isFinish = false;
+                                break;
+                            }
+                        }
+                        if (isFinish) {
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                    }));
         }
     }
 }

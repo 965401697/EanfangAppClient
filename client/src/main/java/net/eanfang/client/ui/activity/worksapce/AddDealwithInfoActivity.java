@@ -95,7 +95,6 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
         addWorkInspectDetailBean.setSysWorkInspectDetailId(detailId);
         addWorkInspectDetailBean.setDisposeInfo(etInputCheckContent.getText().toString().trim());
         addWorkInspectDetailBean.setRemarkInfo(etRemark.getText().toString().trim());
-
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
         addWorkInspectDetailBean.setPictures(ursStr);
 

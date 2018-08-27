@@ -58,7 +58,6 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".ui.base.ClientApplication"
@@ -68,6 +67,7 @@
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme">
+
         <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
@@ -530,14 +530,23 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!--企业管理搜索员工-->
         <activity android:name=".ui.activity.worksapce.contacts.SearchStaffActivity" />
+        <!--添加员工-->
         <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity" />
+        <!--工作汇报-->
         <activity android:name=".ui.activity.worksapce.oa.ReportParentActivity" />
+        <!--布置任务-->
         <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
+        <!--设备检点-->
         <activity android:name=".ui.activity.worksapce.oa.CheckParentActivity" />
+        <!--开店日志-->
         <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogParentActivity" />
+        <!--布防日志-->
         <activity android:name=".ui.activity.worksapce.defendlog.DefendLogParentActivity" />
+        <!--报装-->
         <activity android:name=".ui.activity.worksapce.install.InstallOrderParentActivity" />
+        <!--免费设计-->
         <activity android:name=".ui.activity.worksapce.DesignOrderActivity" />
 
         <!-- 小米自定义的广播名称 -->
@@ -554,10 +563,21 @@
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
-
+        <!--工作检查-->
         <activity android:name=".ui.activity.worksapce.WorkCheckInfoActivity" />
+        <!--处理明细-->
         <activity android:name=".ui.activity.worksapce.LookWorkCheckInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.worktransfer.LookDealwithCheckInfoDetailActivity"></activity>
+        <!--添加处理明细-->
+        <activity android:name=".ui.activity.worksapce.LookDealwithCheckInfoDetailActivity"></activity>
+        <!-- 修改密码 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改手机号 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.ChangePhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.NoContentActivity"></activity>
     </application>
 
 </manifest>
