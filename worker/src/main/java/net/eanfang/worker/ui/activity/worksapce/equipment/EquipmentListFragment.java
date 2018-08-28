@@ -61,7 +61,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
     }
 
 
-    // TODO: 2018/8/28  多次请求 待优化 
+    // TODO: 2018/8/28  多次请求 待优化
     @Override
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();

@@ -19,7 +19,7 @@
             android:layout_height="@dimen/dimen_36"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dimen_38"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_color_search" />
 
         <EditText
             android:id="@+id/et_phone"
@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dimen_38"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_scan" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dimen_38"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_scan" />
 
         <TextView
             android:layout_width="wrap_content"
