@@ -28,7 +28,6 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.util.IDCardUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -38,8 +37,6 @@ import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
-
-import java.text.ParseException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -245,24 +242,24 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             showToast("请输入真实姓名");
             return false;
         }
-        if (realname.length() > 6) {
-            showToast("真实姓名长度为6");
-            return false;
-        }
-        String idcard = etIdcard.getText().toString().trim();
-        if (TextUtils.isEmpty(idcard)) {
-            showToast("请输入证件号码");
-            return false;
-        }
-        try {
-            if (IDCardUtil.IDCardValidate(idcard) == false) {
-                showToast("证件格式有误，请重新输入");
-                etIdcard.setText("");
-                etIdcard.setEnabled(true);
-                return false;
-            }
-        } catch (ParseException e) {
-        }
+//        if (realname.length() > 6) {
+//            showToast("真实姓名长度为6");
+//            return false;
+//        }
+//        String idcard = etIdcard.getText().toString().trim();
+//        if (TextUtils.isEmpty(idcard)) {
+//            showToast("请输入证件号码");
+//            return false;
+//        }
+//        try {
+//            if (IDCardUtil.IDCardValidate(idcard) == false) {
+//                showToast("证件格式有误，请重新输入");
+//                etIdcard.setText("");
+//                etIdcard.setEnabled(true);
+//                return false;
+//            }
+//        } catch (ParseException e) {
+//        }
         String address = etAddress.getText().toString().trim();
         if (TextUtils.isEmpty(address)) {
             showToast("请输入详细地址");

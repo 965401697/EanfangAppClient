@@ -32,7 +32,7 @@ public class MineTaskPublishListSendParentActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_task_publish_list_send);
         ButterKnife.bind(this);
-        setTitle("我的发包");
+        setTitle("我的找工人");
         setLeftBack();
 
         initView();

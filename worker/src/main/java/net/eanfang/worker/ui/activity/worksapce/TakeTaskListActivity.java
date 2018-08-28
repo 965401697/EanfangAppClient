@@ -52,7 +52,7 @@ public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRef
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply_list);
         ButterKnife.bind(this);
-        setTitle("我要接包");
+        setTitle("我的找活");
         setRightTitle("查看");
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override

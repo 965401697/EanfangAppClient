@@ -12,7 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
+
 
 /**
  * Created by O u r on 2018/5/2.
@@ -79,7 +79,9 @@ public class MorePopWindow extends PopupWindow {
         re_scanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, AddFriendActivity.class));
+                Intent intent = new Intent(new Intent(context, AddFriendActivity.class));
+                intent.putExtra("add_friend", "add_friend");
+                context.startActivity(intent);
                 MorePopWindow.this.dismiss();
             }
         });
@@ -87,9 +89,7 @@ public class MorePopWindow extends PopupWindow {
         re_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //跳转扫码页面
-                Intent intent = new Intent(context, ScanCodeActivity.class);
-                context.startActivity(intent);
+                context.startActivity(new Intent(context, AddFriendActivity.class));
                 MorePopWindow.this.dismiss();
             }
         });

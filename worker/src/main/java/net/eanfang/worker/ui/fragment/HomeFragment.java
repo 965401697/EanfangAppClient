@@ -156,14 +156,14 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), MaintenanceActivity.class));
             }
         });
-        //项目发包
+        //找工人
         findViewById(R.id.tv_project_send).setOnClickListener((v) -> {
             if (workerApprove()) {
 //                new TaskPubCtrlView(getActivity(), true).show();
                 startActivity(new Intent(getActivity(), MineTaskPublishListSendParentActivity.class));
             }
         });
-        //项目接包
+        //找活
         findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
             if (workerApprove()) {
 //                new TakePubCtrlView(getActivity(), true).show();

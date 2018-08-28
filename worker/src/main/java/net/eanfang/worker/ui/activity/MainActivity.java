@@ -72,8 +72,6 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
@@ -203,6 +201,7 @@ public class MainActivity extends BaseActivity {
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
+        redPoint = indicator.findViewById(R.id.redPoint);
 
         initMessageCount(indicator);
 
@@ -214,30 +213,37 @@ public class MainActivity extends BaseActivity {
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
 
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
-        redPoint = indicator.findViewById(R.id.redPoint);
 
 
     }
 
     private void initMessageCount(View indicator) {
-        Badge qBadgeView = new QBadgeView(this)
-                .bindTarget(indicator.findViewById(R.id.tabImg))
-                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0 ? -1 : 0)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(14, true)
-                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-                    //清除成功
-                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
-                        //  showToast("消息被清空了");
-                    }
-                });
+//        Badge qBadgeView = new QBadgeView(this)
+//                .bindTarget(indicator.findViewById(R.id.ll_news))
+//                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0 ? -1 : 0)
+//                .setBadgePadding(5, true)
+//                .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                .setGravityOffset(0, 0, true)
+//                .setBadgeTextSize(18, true)
+//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+//                    //清除成功
+//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
+//                        //  showToast("消息被清空了");
+//                    }
+//                });
+        if (Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0) {
+            redPoint.setVisibility(View.VISIBLE);
+        } else {
+            redPoint.setVisibility(View.GONE);
+        }
         //变量监听
         Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
             runOnUiThread(() -> {
-                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
+//                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
+                if (var == 0) {
+                    redPoint.setVisibility(View.GONE);
+                }
             });
         });
     }
