@@ -535,8 +535,7 @@
         <!-- 交接班创建 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="portrait" />
         <!-- 交接班确认 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferConfimActivity"
@@ -548,8 +547,7 @@
         <!-- 交接班创建详情 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="portrait" />
         <!-- 面谈员工控制中心 -->
         <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferControlActivity" />
         <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkControlActivity" />
