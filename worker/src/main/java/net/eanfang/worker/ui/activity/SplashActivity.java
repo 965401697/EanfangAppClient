@@ -55,7 +55,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         //App的版本
         strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
         strategy.setAppPackageName("net.eanfang.worker");
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, true, strategy);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);
         init();
     }
 

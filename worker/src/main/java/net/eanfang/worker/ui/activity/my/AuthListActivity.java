@@ -94,6 +94,7 @@ public class AuthListActivity extends BaseActivity {
                     verify = bean.getVerify();
                     doChange(bean.getBase(), bean.getBiz(), bean.getService(), bean.getArea(), bean.getVerify());
                 }));
+        // 获取技师信息
         EanfangHttp.get(UserApi.GET_WORKER_INFO)
                 .execute(new EanfangCallback<WorkerInfoBean>(AuthListActivity.this, true, WorkerInfoBean.class, (bean) -> {
                     workerInfoBean = bean;
@@ -118,6 +119,7 @@ public class AuthListActivity extends BaseActivity {
             case R.id.rl_business_type:
                 startActivity(new Intent(this, AuthWorkerBizActivity.class).putExtra("status", verify));
                 break;
+            //服务区域
             case R.id.rl_service_area:
                 startActivity(new Intent(this, AuthWorkerAreaActivity.class).putExtra("status", verify));
                 break;
@@ -130,11 +132,13 @@ public class AuthListActivity extends BaseActivity {
     }
 
     private void doChange(int baseStatus, int serviceStatus, int bizStatus, int areaStatus, int verify) {
+        // 正在认证中 给予提示
         if (verify == 1) {
             rlIsAuth.setVisibility(View.VISIBLE);
         } else {
             rlIsAuth.setVisibility(View.GONE);
         }
+        // 基本资料
         if (baseStatus > 0) {
             tvBaseInfo.setText("已完善");
             tvBaseInfo.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
@@ -158,6 +162,7 @@ public class AuthListActivity extends BaseActivity {
             tvBusinessType.setText("待完善");
             tvBusinessType.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
+        //服务区域
         if (areaStatus > 0) {
             tvServiceArea.setText("已完善");
             tvServiceArea.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
@@ -165,7 +170,7 @@ public class AuthListActivity extends BaseActivity {
             tvServiceArea.setText("待完善");
             tvServiceArea.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
-
+        // 当认证都大于0
         if (baseStatus > 0 && serviceStatus > 0 && bizStatus > 0 && areaStatus > 0 && (verify != 1 && verify != 2)) {
             tvConfim.setVisibility(View.VISIBLE);
         } else {
@@ -181,6 +186,7 @@ public class AuthListActivity extends BaseActivity {
         verfiyView.show();
     }
 
+    // 提交认证
     private void commitVerfiy(CommitVerfiyView verfiyView) {
         EanfangHttp.post(UserApi.POST_TECH_WORKER_SEND_VERIFY)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
@@ -189,6 +195,7 @@ public class AuthListActivity extends BaseActivity {
                 }));
     }
 
+    // 认证提交完毕 提示页面
     public void doJumpConfirm() {
         Intent intent = new Intent(AuthListActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();

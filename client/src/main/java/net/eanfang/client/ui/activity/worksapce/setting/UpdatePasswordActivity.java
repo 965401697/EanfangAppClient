@@ -129,7 +129,7 @@ public class UpdatePasswordActivity extends BaseActivity {
                 .params("newKey1", mPassword)//新密码
                 .params("newKey2", mConfirmPassword)//确认密码
                 .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
-                    showToast(R.string.hint_success_verify);
+                    showToast("修改成功");
                     signout();
                 }));
     }

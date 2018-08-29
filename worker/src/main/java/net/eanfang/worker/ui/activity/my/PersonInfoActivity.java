@@ -50,6 +50,8 @@ import io.rong.imlib.model.UserInfo;
  */
 
 public class PersonInfoActivity extends BaseActivityWithTakePhoto {
+
+    private final int SELECT_ADDRESS_REQUEST_CODE = 1;
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_left)
     ImageView ivLeft;
@@ -131,7 +133,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         });
         tvArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, SELECT_ADDRESS_REQUEST_CODE);
         });
 
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
@@ -331,7 +333,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             return;
         }
         switch (requestCode) {
-            case 1:
+            case SELECT_ADDRESS_REQUEST_CODE:
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
                 Log.e("address", item.toString());
                 city = item.getCity();

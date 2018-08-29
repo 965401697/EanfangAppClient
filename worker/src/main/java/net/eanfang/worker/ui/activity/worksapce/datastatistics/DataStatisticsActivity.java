@@ -292,6 +292,10 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             tvDeviceNoresult.setVisibility(View.VISIBLE);
         }
         // 饼状图
+        bussinessEntryList.add(new PieEntry(10, "aaaaa"));
+        bussinessEntryList.add(new PieEntry(20, "bbbbbb"));
+        bussinessEntryList.add(new PieEntry(50, "ccccc"));
+        bussinessEntryList.add(new PieEntry(10, "ccccc"));
         if (bean.getBussiness().size() > 0) {
             bussinessBeanList = bean.getBussiness();
             //设置数据
@@ -435,7 +439,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
         if (isFive) {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_TWO_COLORS_MORE)
                 colors.add(c);
         } else {
             for (int c : LIBERTY_COLORS_FiVE)
