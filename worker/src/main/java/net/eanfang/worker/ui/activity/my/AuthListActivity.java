@@ -61,10 +61,11 @@ public class AuthListActivity extends BaseActivity {
     @BindView(R.id.rl_is_auth)
     RelativeLayout rlIsAuth;
 
-
     private WorkerInfoBean workerInfoBean;
 
+    //提交认证 弹框
     private CommitVerfiyView verfiyView;
+
     private int verify = 100;
 
     @Override

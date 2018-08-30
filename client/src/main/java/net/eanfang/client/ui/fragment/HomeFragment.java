@@ -249,14 +249,19 @@ public class HomeFragment extends BaseFragment {
         }
 
 
-        for (int i = 0; i < data.size(); i++) {
-            View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-            TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
-            TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
-            title.setText(titleList.get(i).toString());
-            content.setText(data.get(i).toString());
-            views.add(view);
+        try {
+            for (int i = 0; i < data.size(); i++) {
+                View view = View.inflate(getContext(), R.layout.rolltext_item, null);
+                TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
+                TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
+                title.setText(titleList.get(i).toString());
+                content.setText(data.get(i).toString());
+                views.add(view);
+            }
+        } catch (NullPointerException e) {
         }
+
+
         rollTextView.setViews(views);
         rollTextView.setOnItemClickListener((position, view) -> {
 //            showToast("暂无可点");

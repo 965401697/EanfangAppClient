@@ -69,8 +69,13 @@ public class BaseActivity extends AppCompatActivity implements
                     });
                 } else {
 
-                    // 获取到权限，作相应处理
-                    permissionsCallBack.callBack();
+                    try {
+                        // 获取到权限，作相应处理
+                        permissionsCallBack.callBack();
+                    } catch (NullPointerException e) {
+
+                    }
+
                 }
                 break;
             default:
