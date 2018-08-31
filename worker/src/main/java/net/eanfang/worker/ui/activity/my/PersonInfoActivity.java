@@ -39,6 +39,8 @@ import com.yaf.sys.entity.AccountEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 
+import java.text.ParseException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -86,6 +88,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     LinearLayout llAddress;
     @BindView(R.id.tv_right)
     TextView tvRight;
+    @BindView(R.id.ll_header)
+    LinearLayout llHeader;
     private String path;
     private boolean isUploadHead = false;
     private LoginBean loginBean;
@@ -129,7 +133,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitle("保存");
         setLeftBack();
         rbMan.isChecked();
-        ivUpload.setOnClickListener(v -> {
+        llHeader.setOnClickListener(v -> {
             takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
         });
         tvArea.setOnClickListener(v -> {
@@ -164,9 +168,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
         }
         // 昵称
-        if ("待提供".equals(infoBackBean.getAccount().getNickName())) {
-            tvNickname.setText("");
-        } else if (infoBackBean.getAccount().getNickName() != null) {
+        if (!"待提供".equals(infoBackBean.getAccount().getNickName()) && infoBackBean.getAccount().getNickName() != null) {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
         }
         // 真实姓名
@@ -277,7 +279,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     etIdcard.setEnabled(true);
                     return false;
                 }
-            } catch (java.text.ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
@@ -328,9 +330,9 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {
                             //刷新个人融云的信息
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + path));
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
                         } else {
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
                         startActivity(new Intent(PersonInfoActivity.this, OwnDataHintActivity.class));

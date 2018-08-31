@@ -172,6 +172,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             bundle.putSerializable("workerInfoBean", workerInfoBean);
             if (workerInfoBean.getIdCardFront() != null) {
                 bundle.putBoolean("isAdd", true);
+                bundle.putInt("verifyStatus", status);
             }
             JumpItent.jump(AuthWorkerInfoActivity.this, AuthPhotoActivity.class, bundle, REQUETST_ADD_PHOTO);
         });

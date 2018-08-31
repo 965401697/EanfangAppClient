@@ -142,8 +142,7 @@ public class MainActivity extends BaseActivity {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         //判断是否完善资料
-        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getIdCard())) {
-
+        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
             startAnimActivity(new Intent(this, LoginHintActivity.class));
         }
 
@@ -186,7 +185,7 @@ public class MainActivity extends BaseActivity {
 
         if (!EanfangApplication.isUpdated) {
             //app更新
-            UpdateAppManager.update(this, BuildConfig.TYPE);
+            UpdateAppManager.update(this, BuildConfig.TYPE, false);
             EanfangApplication.isUpdated = true;
         }
     }
