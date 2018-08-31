@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -72,14 +73,23 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         helper.setVisible(R.id.tv_do_first, isShowFirstBtn[item.getStatus()]);
 
         //订单金额
-        if (item.getPayLogEntity() != null) {
-            if (item.getPayLogEntity().getPayPrice() != null) {
-                helper.setText(R.id.tv_count_money, item.getPayLogEntity().getPayPrice() + "");
+        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerOrg().getBelongCompany().getOrgName().equals("个人")) {
+
+            helper.setVisible(R.id.tv_count_money, true);
+            helper.setVisible(R.id.tv_total, true);
+
+            if (item.getPayLogEntity() != null) {
+                if (item.getPayLogEntity().getPayPrice() != null) {
+                    helper.setText(R.id.tv_count_money, "¥" + NumberUtil.getEndTwoNum(item.getPayLogEntity().getPayPrice() / 100.00));
+                } else {
+                    helper.setText(R.id.tv_count_money, "0.00");
+                }
             } else {
                 helper.setText(R.id.tv_count_money, "0.00");
             }
         } else {
-            helper.setText(R.id.tv_count_money, "0.00");
+            helper.setVisible(R.id.tv_count_money, false);
+            helper.setVisible(R.id.tv_total, false);
         }
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         if (item.getStatus() == 2) {

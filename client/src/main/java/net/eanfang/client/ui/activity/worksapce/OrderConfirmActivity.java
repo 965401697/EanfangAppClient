@@ -159,7 +159,9 @@ public class OrderConfirmActivity extends BaseClientActivity {
     private void getData() {
         Intent intent = getIntent();
         repairOrderEntity = V.v(() -> (RepairOrderEntity) intent.getSerializableExtra("bean"));
-        repairOrderEntity.getPayLogEntity().setPayPrice(1);//测试专用
+        PayLogEntity payLogEntity = new PayLogEntity();
+        payLogEntity.setPayPrice(1);
+        repairOrderEntity.setPayLogEntity(payLogEntity);//测试专用
     }
 
     private void registerListener() {

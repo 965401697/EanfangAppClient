@@ -69,24 +69,36 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 //        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
 //            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
 //        }
-        if(TextUtils.isEmpty(orgName)){
-            helper.setVisible(R.id.tv_person_name,false);
-        }else {
-            helper.setVisible(R.id.tv_person_name,true);
+        if (TextUtils.isEmpty(orgName)) {
+            helper.setVisible(R.id.tv_person_name, false);
+        } else {
+            helper.setVisible(R.id.tv_person_name, true);
             helper.setText(R.id.tv_person_name, "负责：" + orgName);
         }
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
-        if (item.getPayLogEntity() != null) {
-            if (item.getPayLogEntity().getPayPrice() != null) {
-                helper.setText(R.id.tv_count_money, "¥" + NumberUtil.getEndTwoNum(item.getPayLogEntity().getPayPrice() / 100.00));
+
+        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerOrg().getBelongCompany().getOrgName().equals("个人")) {
+
+            helper.setVisible(R.id.tv_count_money, true);
+            helper.setVisible(R.id.tv_total, true);
+
+            if (item.getPayLogEntity() != null) {
+                if (item.getPayLogEntity().getPayPrice() != null) {
+                    helper.setText(R.id.tv_count_money, "¥" + NumberUtil.getEndTwoNum(item.getPayLogEntity().getPayPrice() / 100.00));
+                } else {
+                    helper.setText(R.id.tv_count_money, "0.00");
+                }
             } else {
                 helper.setText(R.id.tv_count_money, "0.00");
             }
         } else {
-            helper.setText(R.id.tv_count_money, "0.00");
+            helper.setVisible(R.id.tv_count_money, false);
+            helper.setVisible(R.id.tv_total, false);
         }
+
+
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 
         helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);
