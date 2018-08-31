@@ -127,7 +127,7 @@ public class TaskPublishActivity extends BaseActivity {
 
     private void initView() {
         mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
-        setTitle("项目发包");
+        setTitle("找工人");
         setLeftBack();
     }
 
@@ -230,8 +230,8 @@ public class TaskPublishActivity extends BaseActivity {
 
         Intent intent = new Intent(this, StateChangeActivity.class);
         Message message = new Message();
-        message.setTitle("发包成功");
-        message.setMsgTitle("您的任务已经发包成功");
+        message.setTitle("找工人成功");
+        message.setMsgTitle("您的任务已经发布成功");
         message.setMsgContent("请耐心等待技师接单。");
         message.setShowLogo(true);
         message.setShowOkBtn(true);

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_90"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:textColor="@color/color_bottom"
+        android:layout_height="1dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_68"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="上门费"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_14" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_76"
+            android:gravity="center_vertical"
+            android:text="0.01"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_14" />
+
+    </LinearLayout>
+</LinearLayout>

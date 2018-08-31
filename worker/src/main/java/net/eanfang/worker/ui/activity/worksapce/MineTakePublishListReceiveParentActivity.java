@@ -33,13 +33,13 @@ public class MineTakePublishListReceiveParentActivity extends BaseWorkerActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_take_publish_list_parent);
         ButterKnife.bind(this);
-        setTitle("我的发包");
+        setTitle("我的找活");
         setLeftBack();
         initView();
     }
 
     private void initView() {
-        tvTitle.setText("我的接包");
+//        tvTitle.setText("我的接包");
         tvMine.setText("我负责的");
         llMineAssignment.setOnClickListener(v -> jump("我负责的", 1));
         llMineCompany.setOnClickListener(v -> jump("我公司的", 2));

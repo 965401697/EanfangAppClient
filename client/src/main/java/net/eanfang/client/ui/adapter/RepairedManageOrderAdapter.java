@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -68,8 +69,12 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 //        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
 //            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
 //        }
-
-        helper.setText(R.id.tv_person_name, "负责：" + orgName);
+        if(TextUtils.isEmpty(orgName)){
+            helper.setVisible(R.id.tv_person_name,false);
+        }else {
+            helper.setVisible(R.id.tv_person_name,true);
+            helper.setText(R.id.tv_person_name, "负责：" + orgName);
+        }
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));

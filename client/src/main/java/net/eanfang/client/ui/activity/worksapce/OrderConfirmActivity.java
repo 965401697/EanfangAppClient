@@ -33,7 +33,7 @@ import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.pay.PayActivity;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
@@ -159,6 +159,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     private void getData() {
         Intent intent = getIntent();
         repairOrderEntity = V.v(() -> (RepairOrderEntity) intent.getSerializableExtra("bean"));
+        repairOrderEntity.getPayLogEntity().setPayPrice(1);//测试专用
     }
 
     private void registerListener() {
@@ -166,6 +167,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void doHttpSubmit() {
+        // TODO: 2018/8/30 算要支付的费用 提交给后台
         EanfangHttp.post(RepairApi.ADD_CLIENT_REPAIR)
                 .upJson(JSON.toJSONString(repairOrderEntity))
                 .execute(new EanfangCallback<RepairOrderEntity>(this, true, RepairOrderEntity.class, (bean) -> {
@@ -217,13 +219,15 @@ public class OrderConfirmActivity extends BaseClientActivity {
         payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
 
         //查询上门费
-        payLogEntity.setOriginPrice(mDoorFee);
+//        payLogEntity.setOriginPrice(mDoorFee);
+        payLogEntity.setPayPrice(1);//测试用的
 
         EanfangHttp.post(RepairApi.GET_REPAIR_PAY_RECORD)
                 .upJson(JSON.toJSONString(payLogEntity))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     LogUtil.e(TAG, "支付记录执行成功");
-                    Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
+//                    Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
+                    Intent intent = new Intent(OrderConfirmActivity.this, NewPayActivity.class);
                     intent.putExtra("payLogEntity", payLogEntity);
                     startActivity(intent);
                     closeActivity();

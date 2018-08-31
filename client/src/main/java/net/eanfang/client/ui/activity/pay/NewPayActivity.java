@@ -7,12 +7,14 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -30,49 +32,50 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-import static com.eanfang.config.Constant.INVOICE_FEE;
+public class NewPayActivity extends BaseClientActivity {
 
-/**
- * Created by MrHou
- *
- * @on 2017/11/22  9:55
- * @email houzhongzhou@yeah.net
- * @desc 支付
- */
-@Deprecated
-public class PayActivity extends BaseClientActivity {
     public static final int INVOICE_SUCCESS = 47329;
     public static final int INVOICE_CALL_BACK = 3001;
     private static final int SDK_PAY_FLAG = 123456;
-    @BindView(R.id.tv_money)
-    TextView tvMoney;
-    @BindView(R.id.rb_fapiao)
-    CheckBox rbFapiao;
-    @BindView(R.id.edit_fapiao)
-    LinearLayout editFapiao;
-    @BindView(R.id.tv_fapiao)
-    TextView tvFapiao;
-    @BindView(R.id.tv_number)
-    TextView tvNumber;
-    @BindView(R.id.rb_alipay)
-    RadioButton rbAlipay;
-    @BindView(R.id.rb_weixin_pay)
-    RadioButton rbWeixinPay;
-    @BindView(R.id.btn_to_pay)
-    Button btnToPay;
-    @BindView(R.id.btn_to_pay_latter)
-    Button btnToPayLatter;
+
+    @BindView(R.id.tv_edit_invoice)
+    TextView tvEditInvoice;
+    @BindView(R.id.tv_invoice_name)
+    TextView tvInvoiceName;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.ll_price)
+    LinearLayout llPrice;
+    @BindView(R.id.tv_pay_type)
+    TextView tvPayType;
+    @BindView(R.id.tv_wx)
+    TextView tvWx;
+    @BindView(R.id.cb_weixin_pay)
+    CheckBox cbWeixinPay;
+    @BindView(R.id.tv_zfb)
+    TextView tvZfb;
+    @BindView(R.id.cb_alipay)
+    CheckBox cbAlipay;
+    @BindView(R.id.cb_invoice)
+    CheckBox cbInvoice;
+    @BindView(R.id.ll_edit_invoice)
+    LinearLayout ll;
+
+    private boolean mPayType = true;//支付宝 false
 
 
     private Boolean isFaPiao = false;
@@ -98,8 +101,8 @@ public class PayActivity extends BaseClientActivity {
                         if (TextUtils.equals(resultStatus, "9000")) {
                             // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付成功");
-                            EanfangApplication.get().closeActivity(PayActivity.class.getName());
-                            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
+                            EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                            Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("message", MessageUtil.paySuccess());
                             intent.putExtras(bundle);
@@ -117,18 +120,20 @@ public class PayActivity extends BaseClientActivity {
         };
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay);
+        setContentView(R.layout.activity_pay1);
         ButterKnife.bind(this);
-        initData();
-        setListener();
+        setTitle("支付");
         setLeftBack();
-        setTitle("支付中心");
+
+        initData();
 
         startTransaction(true);
     }
+
 
     private void initData() {
         Intent intent = getIntent();
@@ -140,13 +145,37 @@ public class PayActivity extends BaseClientActivity {
 
         calcPrice();
 
-        tvMoney.setText((payLogEntity.getPayPrice() / 100.0) + "元");
-        tvNumber.setText((payLogEntity.getPayPrice() / 100.0) + "");
-        rbAlipay.setChecked(true);
+        MoneyAdapter moneyAdapter = new MoneyAdapter(R.layout.item_money);
+        List<MoneyBean> list = new ArrayList<>();
+        MoneyBean bean = new MoneyBean();
+        bean.money = (float) (payLogEntity.getPayPrice() / 100.0);
+        bean.title = "上门费";
+        list.add(bean);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        moneyAdapter.bindToRecyclerView(recyclerView);
+        moneyAdapter.setNewData(list);
+
+        tvPrice.setText(String.valueOf(payLogEntity.getPayPrice() / 100.0));
+
+
+        cbWeixinPay.setChecked(mPayType);
+
+        cbInvoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ll.setVisibility(View.VISIBLE);
+                    tvInvoiceName.setVisibility(View.VISIBLE);
+                } else {
+                    ll.setVisibility(View.GONE);
+                    tvInvoiceName.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     /**
-     * 计算非用
+     * 计算非用  测试用的 后起会通过后台返回的数值进行计算
      */
     private void calcPrice() {
         payLogEntity.setOriginPrice(1);
@@ -154,76 +183,47 @@ public class PayActivity extends BaseClientActivity {
         payLogEntity.setPayPrice(1);
     }
 
-    private void setListener() {
-        btnToPay.setOnClickListener(v -> {
-            if (rbAlipay.isChecked()) {
-                //支付宝支付
-                payLogEntity.setPayType(0);
-                aliPay();
-            } else {
-                //微信支付
-                payLogEntity.setPayType(1);
-                isWeixinAvilible(PayActivity.this);
-            }
-        });
-
-        btnToPayLatter.setOnClickListener(v -> {
-            EanfangApplication.get().closeActivity(PayActivity.class.getName());
-            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("message", MessageUtil.payLatter());
-            intent.putExtras(bundle);
-            startActivity(intent);
-        });
-
-        editFapiao.setOnClickListener(v -> {
-            Intent intent = new Intent(PayActivity.this, FaPiaoActivity.class);
-            intent.putExtra("orderId", payLogEntity.getOrderId());
-            intent.putExtra("orderType", payLogEntity.getOrderType());
-            startActivityForResult(intent, INVOICE_CALL_BACK);
-
-        });
-        rbAlipay.setOnClickListener(v -> {
-            rbAlipay.setChecked(true);
-            rbWeixinPay.setChecked(false);
-        });
-        rbWeixinPay.setOnClickListener(v -> {
-            rbAlipay.setChecked(false);
-            rbWeixinPay.setChecked(true);
-        });
-
-        rbFapiao.setOnClickListener(v -> {
-//            if (!isFaPiao) {
-//                showToast("请先填写发票信息");
-//                rbFapiao.setChecked(false);
-//                return;
-//            }
-            if (rbFapiao.isChecked()) {
-//                    rb_fapiao.setChecked(false);
-                payLogEntity.setPayPrice(payLogEntity.getPayPrice() + INVOICE_FEE * 100);
-            } else {
-                payLogEntity.setPayPrice(payLogEntity.getPayPrice() - INVOICE_FEE * 100);
-            }
-//                    rb_fapiao.setChecked(true);
-            tvNumber.setText(payLogEntity.getPayPrice() / 100.0 + "");
-
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case INVOICE_SUCCESS:
-                isFaPiao = true;
+    @OnClick({R.id.ll_edit_invoice, R.id.ll_wx, R.id.ll_alipay, R.id.tv_outline_pay, R.id.tv_pay})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_edit_invoice:
+                Intent in = new Intent(NewPayActivity.this, InvoiceActivity.class);
+                startActivity(in);
                 break;
-            case INVOICE_CALL_BACK:
-                tvFapiao.setText(data.getStringExtra("title"));
+            case R.id.ll_wx:
+                mPayType = true;
+                cbAlipay.setChecked(!mPayType);
+                cbWeixinPay.setChecked(mPayType);
                 break;
-            default:
+            case R.id.ll_alipay:
+                mPayType = false;
+                cbAlipay.setChecked(!mPayType);
+                cbWeixinPay.setChecked(mPayType);
+                break;
+            case R.id.tv_outline_pay:
+
+                EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("message", MessageUtil.payLatter());
+                intent.putExtras(bundle);
+                startActivity(intent);
+
+                break;
+            case R.id.tv_pay:
+                if (!mPayType) {
+                    //支付宝支付
+                    payLogEntity.setPayType(0);
+                    aliPay();
+                } else {
+                    //微信支付
+                    payLogEntity.setPayType(1);
+                    isWeixinAvilible(NewPayActivity.this);
+                }
+
+
                 break;
         }
-
     }
 
     /**
@@ -232,7 +232,7 @@ public class PayActivity extends BaseClientActivity {
     private void aliPay() {
         EanfangHttp.post(getAliPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<JSONObject>(PayActivity.this, true, JSONObject.class) {
+                .execute(new EanfangCallback<JSONObject>(NewPayActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
@@ -243,7 +243,7 @@ public class PayActivity extends BaseClientActivity {
                         String finalSign = sign;
 
                         Runnable payRunnable = () -> {
-                            PayTask alipay = new PayTask(PayActivity.this);
+                            PayTask alipay = new PayTask(NewPayActivity.this);
                             Map<String, String> result = alipay.payV2(finalSign, true);
                             Message msg = new Message();
                             msg.what = SDK_PAY_FLAG;
@@ -263,7 +263,7 @@ public class PayActivity extends BaseClientActivity {
     private void wxPay() {
         EanfangHttp.post(getWxPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, true, WXPayBean.class) {
+                .execute(new EanfangCallback<WXPayBean>(NewPayActivity.this, true, WXPayBean.class) {
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);
@@ -326,5 +326,10 @@ public class PayActivity extends BaseClientActivity {
             return NewApiService.WEI_XIN_PUBLISH;
         }
         return "";
+    }
+
+    class MoneyBean {
+        public float money;
+        public String title;
     }
 }

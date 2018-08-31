@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
@@ -25,10 +26,12 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.V;
+import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
@@ -110,6 +113,12 @@ public class OrderDetailFragment extends BaseFragment {
 
     //分享用的必要参数
     private HashMap hashMap = new HashMap();
+    private TextView tv_name_desc;
+    private LinearLayout ll_worker_info;
+    private TextView tv_phone_desc;
+    private LinearLayout ll_wait;
+    private View line;
+    private PayLogEntity payLogEntity;
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -135,8 +144,15 @@ public class OrderDetailFragment extends BaseFragment {
 
         mRecyclerView.setNestedScrollingEnabled(false);
         tv_company_name = findViewById(R.id.tv_company_name);
+//--------------------------
+        ll_worker_info = findViewById(R.id.ll_worker_info);
+        ll_wait = findViewById(R.id.ll_wait);
+        line = findViewById(R.id.line);
+        tv_name_desc = findViewById(R.id.tv_name_desc);
+        tv_phone_desc = findViewById(R.id.tv_phone_desc);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
+//----------------------------
         tv_address = findViewById(R.id.tv_address);
         iv_pic = findViewById(R.id.iv_pic);
         tv_worker_name = findViewById(R.id.tv_worker_name);
@@ -164,7 +180,7 @@ public class OrderDetailFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        tvDoPay.setOnClickListener((v) -> showToast("立即付款"));
+        tvDoPay.setOnClickListener((v) -> startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity)));
         // 确认完工  立即评价
         tvBottomRight.setOnClickListener((v) -> {
             if (mOrderStatus == 4) {// 确认完工
@@ -256,6 +272,16 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
+                    //================================================================
+                    //初始化支付对象
+                    payLogEntity = new PayLogEntity();
+                    payLogEntity.setOrderId(bean.getId());
+                    payLogEntity.setOrderNum(bean.getOrderNum());
+                    payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+                    payLogEntity.setAssigneeUserId(bean.getOwnerUserId());
+                    payLogEntity.setAssigneeOrgCode(bean.getOwnerOrgCode());
+                    payLogEntity.setAssigneeTopCompanyId(bean.getOwnerTopCompanyId());
+                    //==================================================================
 
                     hashMap.put("id", String.valueOf(bean.getId()));
                     if (bean.getBugEntityList() != null && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
@@ -263,14 +289,28 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                     hashMap.put("orderNum", bean.getOrderNum());
                     hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
-                    hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    if (bean.getAssigneeUser() != null) {
+                        hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    }
+
                     hashMap.put("status", String.valueOf(bean.getStatus()));
                     hashMap.put("shareType", "1");
 
 
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
-                    tv_contract_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));//联系人
-                    tv_contract_phone.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));// 联系人手机号
+                    if (bean.getAssigneeUser() != null) {
+                        ll_worker_info.setVisibility(View.VISIBLE);
+                        tv_name_desc.setVisibility(View.VISIBLE);
+                        tv_phone_desc.setVisibility(View.VISIBLE);
+                        tv_contract_name.setVisibility(View.VISIBLE);
+                        tv_contract_phone.setVisibility(View.VISIBLE);
+                        line.setVisibility(View.VISIBLE);
+
+                        ll_wait.setVisibility(View.GONE);
+
+                        tv_contract_name.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getRealName()));//联系人
+                        tv_contract_phone.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getMobile()));// 联系人手机号
+                    }
                     // 回复时效
 //                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
                     tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));

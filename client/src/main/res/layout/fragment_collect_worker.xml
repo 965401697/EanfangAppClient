@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,8 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_collectWorker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_key"
         android:scrollbars="none" />
 
     <TextView
@@ -17,4 +18,19 @@
         android:gravity="center"
         android:text="暂无数据"
         android:visibility="gone" />
-</FrameLayout>
+
+    <Button
+        android:id="@+id/btn_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_ll_btn"
+        android:text="一键报修"
+        android:textColor="#fff"
+        android:textSize="14sp" />
+
+</RelativeLayout>
