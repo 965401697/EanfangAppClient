@@ -20,6 +20,7 @@ import com.eanfang.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.V;
 import com.eanfang.witget.SideBar;
 import com.yaf.sys.entity.AccountEntity;
 
@@ -42,7 +43,7 @@ public class SearchStaffActivity extends BaseWorkerActivity {
     SideBar sideBar;
     private AddStaffAdapter staffAdapter;
 
-    private List<FriendListBean> mList;
+    private List<FriendListBean> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,7 @@ public class SearchStaffActivity extends BaseWorkerActivity {
 
     private void initData() {
         List<String> phoneList = new ArrayList<>();
-        if (mList.size() > 0) {
+        if (V.v(() -> mList.size() > 0)) {
             for (FriendListBean bean : mList)
                 phoneList.add(bean.getMobile());
         }

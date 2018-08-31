@@ -181,9 +181,18 @@
         <activity android:name=".ui.activity.my.SettingActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairActivity" />
         <activity android:name=".ui.activity.worksapce.install.InstallActivity" />
-        <activity android:name=".ui.activity.worksapce.DesignActivity" />
-        <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
+        <!-- 免费设计 -->
+        <activity
+            android:name=".ui.activity.worksapce.DesignActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
+        <!-- 添加故障 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设备点检 新建检查 -->
         <activity android:name=".ui.activity.worksapce.oa.CheckActivity" />
+        <!-- 新建工作汇报 -->
         <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectWorkerActivity" />
@@ -205,6 +214,7 @@
         <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
         <activity android:name=".ui.activity.worksapce.OrderConfirmActivity" />
         <activity android:name=".ui.activity.worksapce.WorkerDetailActivity" />
+        <!-- 添加汇报之完成工作 -->
         <activity android:name=".ui.activity.worksapce.AddReportCompleteActivity" />
         <activity android:name=".ui.activity.worksapce.AddReportFindActivity" />
         <activity android:name=".ui.activity.worksapce.AddReportPlanActivity" />
@@ -398,7 +408,9 @@
         <!-- 布防日志的填写和展示详情 -->
         <activity android:name=".ui.activity.worksapce.defendlog.DefendLogWriteActivity" />
         <!-- 布防日志的二级填写和展示详情 -->
-        <activity android:name=".ui.activity.worksapce.defendlog.DefendLogItemWriteAndDetailActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.defendlog.DefendLogItemWriteAndDetailActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan" />
 
         <!-- 扫码界面 -->
         <activity
@@ -502,8 +514,7 @@
         <!-- 交接班创建详情 -->
         <activity
             android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateDetailActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="portrait" />
 
         <!-- 维保列表 -->
         <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
