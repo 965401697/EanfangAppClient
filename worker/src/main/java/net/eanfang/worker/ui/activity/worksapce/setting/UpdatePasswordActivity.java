@@ -35,8 +35,8 @@ import io.rong.imkit.RongIM;
 public class UpdatePasswordActivity extends BaseActivity {
 
     //手机号
-    @BindView(R.id.et_phone)
-    EditText etPhone;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
     //获取验证码
     @BindView(R.id.ll_yanzheng)
     LinearLayout llYanzheng;
@@ -76,12 +76,13 @@ public class UpdatePasswordActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("修改密码");
+        tvPhone.setText(EanfangApplication.getApplication().getUser().getAccount().getMobile());
     }
 
     private void initListener() {
         rlConfirm.setOnClickListener(new MultiClickListener(this, this::isCheckInfo, this::doSubmit));
         llYanzheng.setOnClickListener(v -> {
-            mMobile = etPhone.getText().toString().trim();
+            mMobile = tvPhone.getText().toString().trim();
             if (StringUtils.isEmpty(mMobile)) {
                 showToast("请输入手机号");
                 return;
@@ -143,7 +144,7 @@ public class UpdatePasswordActivity extends BaseActivity {
     }
 
     public boolean isCheckInfo() {
-        mMobile = etPhone.getText().toString().trim();
+        mMobile = tvPhone.getText().toString().trim();
         mVerify = etYanzheng.getText().toString().trim();
         mPassword = etNewPassword.getText().toString().trim();
         mConfirmPassword = etConifrmPassword.getText().toString().trim();

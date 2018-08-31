@@ -1,6 +1,7 @@
 package com.eanfang.util;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
@@ -23,7 +24,7 @@ public class UpdateAppManager {
      *
      * @param activity
      */
-    public static void update(Activity activity, String type) {
+    public static void update(Activity activity, String type, boolean isAbout) {
 //      String path = Environment.getExternalStorageDirectory().getAbsolutePath();
         Map<String, String> params = new HashMap<String, String>();
         //params.put("token", EanfangApplication.get().getUser().getToken());
@@ -126,7 +127,9 @@ public class UpdateAppManager {
                      */
                     @Override
                     public void noNewApp(String error) {
-                        //Toast.makeText(activity, "没有新版本", Toast.LENGTH_SHORT).show();
+                        if (isAbout) {
+                            Toast.makeText(activity, "没有新版本", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 

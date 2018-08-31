@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_ll_selctor"
@@ -42,8 +42,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_10"
             android:paddingLeft="@dimen/dimen_30"
             android:paddingRight="@dimen/dimen_20"
@@ -53,8 +53,7 @@
                 android:id="@+id/iv_pic"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@mipmap/ic_nodata"
-                app:placeholderImage="@mipmap/ic_nodata" />
+                fresco:placeholderImage="@mipmap/ic_nodata" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

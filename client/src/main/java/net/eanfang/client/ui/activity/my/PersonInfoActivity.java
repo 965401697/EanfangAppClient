@@ -87,6 +87,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     LinearLayout llAddress;
     @BindView(R.id.tv_right)
     TextView tvRight;
+    @BindView(R.id.ll_header)
+    LinearLayout llHeader;
     private String path;
     private boolean isUploadHead = false;
 
@@ -126,7 +128,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitle("保存");
         setLeftBack();
         rbMan.isChecked();
-        ivUpload.setOnClickListener(v -> {
+        llHeader.setOnClickListener(v -> {
             takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
         });
         tvArea.setOnClickListener(v -> {
@@ -162,9 +164,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
         }
         // 昵称
-        if ("待提供".equals(infoBackBean.getAccount().getNickName())) {
-            tvNickname.setText("");
-        } else if (infoBackBean.getAccount().getNickName() != null) {
+        if (infoBackBean.getAccount().getNickName() != null && !"待提供".equals(infoBackBean.getAccount().getNickName())) {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
         }
         //真实姓名

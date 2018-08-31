@@ -51,7 +51,6 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        //bugly初始化
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
         strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
         //App的版本

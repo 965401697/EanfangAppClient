@@ -39,6 +39,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
+import net.eanfang.client.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -108,14 +109,17 @@ public class MainActivity extends BaseClientActivity {
         privoderMy();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
-
+        //判断是否完善资料
+        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
+            startAnimActivity(new Intent(this, LoginHintActivity.class));
+        }
 
     }
 
     private void initUpdate() {
         if (!EanfangApplication.isUpdated) {
             //app更新
-            UpdateAppManager.update(this, BuildConfig.TYPE);
+            UpdateAppManager.update(this, BuildConfig.TYPE, false);
             EanfangApplication.isUpdated = true;
         }
     }
