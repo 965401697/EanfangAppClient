@@ -33,7 +33,7 @@
 
     <style name="launch_theme" parent="@style/BaseTheme">
         <!--<item name="android:windowBackground">@color/title_bar_color</item>-->
-        <item name="android:windowBackground">@drawable/app_launch</item>
+        <item name="android:windowBackground">@mipmap/ic_app_launch</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -128,5 +128,12 @@
         <item name="android:drawablePadding">@dimen/dimen_28</item>
         <item name="android:textColor">@color/color_client_neworder</item>
         <item name="android:textSize">@dimen/textSize_13</item>
+    </style>
+
+    <style name="wx_theme" parent="AppTheme">
+        <!--<style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">-->
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

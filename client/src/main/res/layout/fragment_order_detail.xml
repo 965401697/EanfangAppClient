@@ -23,12 +23,33 @@
                 android:visibility="visible">
 
                 <LinearLayout
+                    android:id="@+id/ll_wait"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_check"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_56"
+                        android:background="#FBEADA"
+                        android:gravity="center"
+                        android:text="等待分配技师"
+                        android:textColor="#CB7A30"
+                        android:textSize="@dimen/textSize_12" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_worker_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dimen_30">
+                    android:paddingLeft="@dimen/dimen_30"
+                    android:visibility="gone">
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/iv_pic"
@@ -87,8 +108,10 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/line"
                     style="@style/style_common_line_gray"
-                    android:layout_marginTop="@dimen/dimen_26" />
+                    android:layout_marginTop="@dimen/dimen_26"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -117,21 +140,25 @@
                                 android:textSize="@dimen/textSize_13" />
 
                             <TextView
+                                android:id="@+id/tv_name_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dimen_15"
                                 android:text="报修人    "
                                 android:textColor="@color/color_bottom"
-                                android:textSize="@dimen/textSize_13" />
+                                android:textSize="@dimen/textSize_13"
+                                android:visibility="gone" />
 
 
                             <TextView
+                                android:id="@+id/tv_phone_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dimen_15"
                                 android:text="手机号"
                                 android:textColor="@color/color_bottom"
-                                android:textSize="@dimen/textSize_13" />
+                                android:textSize="@dimen/textSize_13"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -171,7 +198,8 @@
                                 android:padding="@dimen/dimen_15"
                                 android:text=""
                                 android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_13" />
+                                android:textSize="@dimen/textSize_13"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tv_contract_phone"
@@ -183,7 +211,8 @@
                                 android:padding="@dimen/dimen_15"
                                 android:text=""
                                 android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_13" />
+                                android:textSize="@dimen/textSize_13"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tv_address"

@@ -156,14 +156,14 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), MaintenanceActivity.class));
             }
         });
-        //项目发包
+        //找工人
         findViewById(R.id.tv_project_send).setOnClickListener((v) -> {
             if (workerApprove()) {
 //                new TaskPubCtrlView(getActivity(), true).show();
                 startActivity(new Intent(getActivity(), MineTaskPublishListSendParentActivity.class));
             }
         });
-        //项目接包
+        //找活
         findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
             if (workerApprove()) {
 //                new TakePubCtrlView(getActivity(), true).show();
@@ -300,14 +300,17 @@ public class HomeFragment extends BaseFragment {
 
         }
 
+        try {
+            for (int i = 0; i < data.size(); i++) {
+                View view = View.inflate(getContext(), R.layout.rolltext_item, null);
+                TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
+                TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
+                title.setText(titleList.get(i).toString());
+                content.setText(data.get(i).toString());
+                views.add(view);
+            }
+        } catch (NullPointerException e) {
 
-        for (int i = 0; i < data.size(); i++) {
-            View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-            TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
-            TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
-            title.setText(titleList.get(i).toString());
-            content.setText(data.get(i).toString());
-            views.add(view);
         }
         rollTextView.setViews(views);
         rollTextView.setOnItemClickListener((position, view) -> {

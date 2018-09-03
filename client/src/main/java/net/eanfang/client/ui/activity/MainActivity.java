@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -40,6 +39,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
+import net.eanfang.client.ui.activity.worksapce.LoginHintActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -62,8 +62,6 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
@@ -93,7 +91,7 @@ public class MainActivity extends BaseClientActivity {
             getRongYToken();
         } else {
             //如果有融云token 就直接登录
-            ClientApplication.connect(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
+            ClientApplication.connect(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""), this);
         }
 
         initFragment();
@@ -111,14 +109,17 @@ public class MainActivity extends BaseClientActivity {
         privoderMy();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
-
+        //判断是否完善资料
+        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
+            startAnimActivity(new Intent(this, LoginHintActivity.class));
+        }
 
     }
 
     private void initUpdate() {
         if (!EanfangApplication.isUpdated) {
             //app更新
-            UpdateAppManager.update(this, BuildConfig.TYPE);
+            UpdateAppManager.update(this, BuildConfig.TYPE, false);
             EanfangApplication.isUpdated = true;
         }
     }
@@ -133,6 +134,7 @@ public class MainActivity extends BaseClientActivity {
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
+        redPoint = indicator.findViewById(R.id.redPoint);
         initMessageCount(indicator);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
@@ -145,35 +147,37 @@ public class MainActivity extends BaseClientActivity {
 
 
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
-        redPoint = indicator.findViewById(R.id.redPoint);
     }
 
     private void initMessageCount(View indicator) {
-
-        Badge qBadgeView = new QBadgeView(this)
-                .bindTarget(indicator.findViewById(R.id.tabImg))
-                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getVar() > 0 ? -1 : 0)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(14, true)
-                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-                    //清除成功
-                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
-//                        runOnUiThread(() -> {
-//                            showToast("消息被清空了");
-//                        });
-//                        Var.get().setVar(0);
-                    }
-                });
+//        Badge qBadgeView = new QBadgeView(this)
+//                .bindTarget(indicator.findViewById(R.id.ll_news))
+//                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0 ? -1 : 0)
+//                .setBadgePadding(5, true)
+//                .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                .setGravityOffset(0, 0, true)
+//                .setBadgeTextSize(18, true)
+//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
+//                    //清除成功
+//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
+//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
+//                        //  showToast("消息被清空了");
+//                    }
+//                });
+        if (Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0) {
+            redPoint.setVisibility(View.VISIBLE);
+        } else {
+            redPoint.setVisibility(View.GONE);
+        }
         //变量监听
         Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
             runOnUiThread(() -> {
-                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
+//                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
+                if (var == 0) {
+                    redPoint.setVisibility(View.GONE);
+                }
             });
         });
-
     }
 
 
@@ -316,7 +320,7 @@ public class MainActivity extends BaseClientActivity {
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
                         EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
-                        ClientApplication.connect(token);
+                        ClientApplication.connect(token, MainActivity.this);
                     }
                 }));
 

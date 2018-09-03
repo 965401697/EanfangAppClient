@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceHandleActivity">
+    android:orientation="vertical">
 
 
     <include layout="@layout/header" />

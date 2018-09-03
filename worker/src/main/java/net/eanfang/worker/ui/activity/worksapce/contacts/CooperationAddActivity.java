@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -142,7 +143,14 @@ public class CooperationAddActivity extends BaseWorkerActivity {
             ToastUtil.get().showToast(this, "请选择系统类别");
             return;
         }
-
+        if (TextUtils.isEmpty(tvStartTime.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "请选择合作开始时间");
+            return;
+        }
+        if (TextUtils.isEmpty(tvEndTime.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "请选择合作结束时间");
+            return;
+        }
 
         for (CheckBox osCheckBox : osCheckBoxes) {
 

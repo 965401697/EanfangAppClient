@@ -23,10 +23,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 //    private IWXAPI iwxapi;
 //
 //    @Override

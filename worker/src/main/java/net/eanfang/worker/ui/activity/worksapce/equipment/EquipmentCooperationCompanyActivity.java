@@ -48,11 +48,15 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
             @Override
             public void onClick(View v) {
                 if (moldPosition >= 0) {
-                    Intent intent = new Intent();
-                    intent.putExtra("ownerCompanyId", String.valueOf(mOldCooperationEntity.getAssigneeOrgId()));
-                    intent.putExtra("title", String.valueOf(mOldCooperationEntity.getAssigneeOrg().getOrgName()));
-                    setResult(RESULT_OK, intent);
-                    finishSelf();
+//                    Intent intent = new Intent();
+//                    intent.putExtra("bean", mAdapter.getData().get(moldPosition));
+//                    setResult(RESULT_OK, intent);
+
+                    Intent intent = new Intent(EquipmentCooperationCompanyActivity.this, EquipmentListActivity.class);
+                    intent.putExtra("bean", mAdapter.getData().get(moldPosition));
+                    startActivity(intent);
+                    endTransaction(true);
+//                    finishSelf();
                 } else {
                     ToastUtil.get().showToast(EquipmentCooperationCompanyActivity.this, "请选择一个合作公司");
                 }

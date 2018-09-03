@@ -25,11 +25,11 @@ import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.pay.PayActivity;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
@@ -233,8 +233,10 @@ public class OrderListFragment extends BaseFragment implements
 
         //查询上门费
         payLogEntity.setOriginPrice(100);
+        //实际支付的价格
+//        payLogEntity.setOriginPrice(orderEntity.getPayLogEntity().getPayPrice());
 
-        Intent intent = new Intent(getActivity(), PayActivity.class);
+        Intent intent = new Intent(getActivity(), NewPayActivity.class);
         intent.putExtra("payLogEntity", payLogEntity);
         startActivity(intent);
     }
@@ -313,21 +315,13 @@ public class OrderListFragment extends BaseFragment implements
                     @Override
                     public void onNoData(String message) {
                         refreshLayout.setRefreshing(false);
-                        adapter.getData().clear();//没有数据了
-                        findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
-//                        adapter.notifyDataSetChanged();
-//                        page--;
-//                        getActivity().runOnUiThread(() -> {
-//                            //如果是第一页 没有数据了 则清空 bean
-//                            if (page < 1) {
-//                                RepairedOrderBean bean = new RepairedOrderBean();
-//                                bean.setList(new ArrayList<>());
-//                                ((RepairCtrlActivity) getActivity()).setBean(bean);
-//                            } else {
-//                                showToast("已经到底了");
-//                            }
-//                            onDataReceived();
-//                        });
+                        adapter.loadMoreEnd();//没有数据了
+                        if (adapter.getData().size() == 0) {
+                            findViewById(R.id.tv_no_datas).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
+                        }
+
                     }
                 });
     }

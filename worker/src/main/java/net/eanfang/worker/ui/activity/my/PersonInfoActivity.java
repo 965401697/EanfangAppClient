@@ -53,6 +53,8 @@ import io.rong.imlib.model.UserInfo;
  */
 
 public class PersonInfoActivity extends BaseActivityWithTakePhoto {
+
+    private final int SELECT_ADDRESS_REQUEST_CODE = 1;
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_left)
     ImageView ivLeft;
@@ -86,6 +88,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     LinearLayout llAddress;
     @BindView(R.id.tv_right)
     TextView tvRight;
+    @BindView(R.id.ll_header)
+    LinearLayout llHeader;
     private String path;
     private boolean isUploadHead = false;
     private LoginBean loginBean;
@@ -129,12 +133,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setRightTitle("保存");
         setLeftBack();
         rbMan.isChecked();
-        ivUpload.setOnClickListener(v -> {
+        llHeader.setOnClickListener(v -> {
             takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
         });
         tvArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, SELECT_ADDRESS_REQUEST_CODE);
         });
 
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
@@ -163,10 +167,11 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (!StringUtils.isEmpty(infoBackBean.getAccount().getAvatar())) {
             ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
         }
-        if (infoBackBean.getAccount().getNickName() != null) {
+        // 昵称
+        if (!"待提供".equals(infoBackBean.getAccount().getNickName()) && infoBackBean.getAccount().getNickName() != null) {
             tvNickname.setText(infoBackBean.getAccount().getNickName());
         }
-
+        // 真实姓名
         if (infoBackBean.getAccount().getRealName() != null && !"待提供".equals(infoBackBean.getAccount().getRealName())) {
             etRealname.setText(infoBackBean.getAccount().getRealName());
             etRealname.setEnabled(false);
@@ -183,7 +188,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             rbWoman.setClickable(false);
             rbWoman.setChecked(true);// 女
         }
-        if (infoBackBean.getAccount().getIdCard() != null) {
+        if (!StringUtils.isEmpty(infoBackBean.getAccount().getIdCard())) {
             etIdcard.setText(infoBackBean.getAccount().getIdCard());
             etIdcard.setEnabled(false);
         }
@@ -244,24 +249,11 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             showToast("请输入真实姓名");
             return false;
         }
-        if (realname.length() > 6) {
-            showToast("真实姓名长度为6");
-            return false;
-        }
-        String idcard = etIdcard.getText().toString().trim();
-        if (TextUtils.isEmpty(idcard)) {
-            showToast("请输入证件号码");
-            return false;
-        }
-        try {
-            if (IDCardUtil.IDCardValidate(idcard) == false) {
-                showToast("证件格式有误，请重新输入");
-                etIdcard.setText("");
-                etIdcard.setEnabled(true);
-                return false;
-            }
-        } catch (ParseException e) {
-        }
+//        if (realname.length() > 6) {
+//            showToast("真实姓名长度为6");
+//            return false;
+//        }
+
         String address = etAddress.getText().toString().trim();
         if (TextUtils.isEmpty(address)) {
             showToast("请输入详细地址");
@@ -272,6 +264,27 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             showToast("正在上传头像，请稍等");
             return false;
         }
+
+        if (!rbMan.isChecked() && !rbWoman.isChecked()) {
+            showToast("请选择性别");
+            return false;
+        }
+
+        String idcard = etIdcard.getText().toString().trim();
+        if (!StringUtils.isEmpty(idcard)) {
+            try {
+                if (IDCardUtil.IDCardValidate(idcard) == false) {
+                    showToast("证件格式有误，请重新输入");
+                    etIdcard.setText("");
+                    etIdcard.setEnabled(true);
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         return true;
 
     }
@@ -282,6 +295,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
         accountEntity.setAvatar(path);
         accountEntity.setRealName(etRealname.getText().toString().trim());
+        // 昵称
         accountEntity.setNickName(tvNickname.getText().toString().trim());
         if (rbMan.isChecked()) {
             accountEntity.setGender(1);
@@ -316,9 +330,9 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {
                             //刷新个人融云的信息
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + path));
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
                         } else {
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
+                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
                         startActivity(new Intent(PersonInfoActivity.this, OwnDataHintActivity.class));
@@ -334,7 +348,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             return;
         }
         switch (requestCode) {
-            case 1:
+            case SELECT_ADDRESS_REQUEST_CODE:
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
                 Log.e("address", item.toString());
                 city = item.getCity();

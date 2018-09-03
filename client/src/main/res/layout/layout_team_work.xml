@@ -55,7 +55,7 @@
         <TextView
             android:id="@+id/tv_work_transfer"
             style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_work_talk"
+            android:drawableTop="@mipmap/ic_work_transfer"
             android:text="@string/text_work_transfer" />
 
         <TextView

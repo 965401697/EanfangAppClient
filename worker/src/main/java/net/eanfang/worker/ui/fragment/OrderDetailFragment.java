@@ -209,8 +209,8 @@ public class OrderDetailFragment extends BaseFragment {
                     hashMap.put("shareType", "1");
 
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
-                    tv_contract_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));//联系人
-                    tv_contract_phone.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));
+                    tv_contract_name.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getRealName()));//联系人
+                    tv_contract_phone.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getMobile()));// 联系人手机号
                     tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
                     // 现场联系人
                     repairContacts.setText(V.v(() -> bean.getRepairContacts()));

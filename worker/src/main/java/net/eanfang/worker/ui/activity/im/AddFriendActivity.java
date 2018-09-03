@@ -7,9 +7,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
@@ -20,7 +24,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
-
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
@@ -35,13 +40,21 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class AddFriendActivity extends BaseWorkerActivity {
 
+    public final int CUSTOMIZED_REQUEST_CODE = 0x0000ffff;
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.rl_scan_friend)
+    RelativeLayout rlScanFriend;
+    @BindView(R.id.rl_scan_Group)
+    RelativeLayout rlScanGroup;
+    @BindView(R.id.ll_input)
+    LinearLayout llInput;
     private FriendsAdapter mFriendsAdapter;
 
     @Override
@@ -51,18 +64,17 @@ public class AddFriendActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
 
         initViews();
-        setTitle("添加好友");
+        String addFriend = getIntent().getStringExtra("add_friend");
+        if (!TextUtils.isEmpty(addFriend)) {
+            setTitle("添加好友");
+            rlScanGroup.setVisibility(View.INVISIBLE);
+        } else {
+            setTitle("添加群组");
+            rlScanFriend.setVisibility(View.GONE);
+            llInput.setVisibility(View.GONE);
+        }
+
         setLeftBack();
-        setRightImageResId(R.mipmap.ic_main_top_qrcode);
-        setRightImageOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //跳转扫码页面
-                Intent intent = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
-                intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
-                startActivity(intent);
-            }
-        });
     }
 
     private void initViews() {
@@ -193,5 +205,39 @@ public class AddFriendActivity extends BaseWorkerActivity {
                     }
                 }).create();
         dialog.show();
+    }
+
+    @OnClick({R.id.rl_scan_friend, R.id.rl_scan_Group})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_scan_friend:
+                //跳转扫码页面
+                Intent intent = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
+                intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
+                startActivity(intent);
+                break;
+            case R.id.rl_scan_Group:
+                //跳转扫码页面
+                Intent in = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
+                in.putExtra("from", "client");
+                startActivity(in);
+                finish();
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != CUSTOMIZED_REQUEST_CODE && requestCode != IntentIntegrator.REQUEST_CODE) {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
+        if (result.getContents() == null) {
+            Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -50,7 +50,7 @@ import static com.eanfang.config.Constant.INVOICE_FEE;
  * @email houzhongzhou@yeah.net
  * @desc 支付
  */
-
+@Deprecated
 public class PayActivity extends BaseClientActivity {
     public static final int INVOICE_SUCCESS = 47329;
     public static final int INVOICE_CALL_BACK = 3001;

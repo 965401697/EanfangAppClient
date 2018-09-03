@@ -78,7 +78,7 @@
 
     <style name="launch_theme" parent="@style/BaseTheme">
         <!--<item name="android:windowBackground">@color/title_bar_color</item>-->
-        <item name="android:windowBackground">@drawable/app_launch</item>
+        <item name="android:windowBackground">@mipmap/ic_app_launch</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>

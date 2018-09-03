@@ -27,7 +27,7 @@ public class EquipmentListAdapter extends BaseQuickAdapter<CustDeviceEntity, Bas
 
         ((SimpleDraweeView) helper.getView(R.id.iv_equipment_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPicture().split(",")[0]));
 
-        helper.setText(R.id.tv_equipment_name, item.getDeviceName());
+        helper.setText(R.id.tv_equipment_name, String.valueOf(helper.getAdapterPosition() + 1) + "：" + item.getDeviceName());
 
 //        状态(0出厂,1仓储运输，2正常运行，3故障待修复，4备用，5禁用，6报废)
         if (item.getStatus() == 0) {

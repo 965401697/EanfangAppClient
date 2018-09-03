@@ -13,7 +13,8 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <LinearLayout
@@ -202,20 +203,21 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@drawable/bg_btn_trouble_detail_add_trouble"
-                android:gravity="center"
-                android:padding="@dimen/dimen_30"
-                android:text="保存"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/textSize_14" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+    <TextView
+        android:id="@+id/tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:gravity="center"
+        android:padding="@dimen/dimen_30"
+        android:text="保存"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_14" />
 
 
 </LinearLayout>

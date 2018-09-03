@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.base;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
@@ -59,7 +60,7 @@ public class ClientApplication extends EanfangApplication {
      *
      * @param token
      */
-    public static void connect(String token) {
+    public static void connect(String token, Activity activity) {
 
 
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
@@ -71,6 +72,17 @@ public class ClientApplication extends EanfangApplication {
             @Override
             public void onTokenIncorrect() {
                 Log.d("zzw", "融云登录onTokenIncorrect");
+
+//                EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
+//                        .params("userId", EanfangApplication.get().getAccId())
+//                        .execute(new EanfangCallback<String>(activity, false, String.class, (str) -> {
+//                            if (!TextUtils.isEmpty(str)) {
+//                                JSONObject json = JSONObject.parseObject(str);
+//                                String t = json.getString("token");
+//                                EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, t);
+//                                ClientApplication.connect(t, activity);
+//                            }
+//                        }));
             }
 
             /**

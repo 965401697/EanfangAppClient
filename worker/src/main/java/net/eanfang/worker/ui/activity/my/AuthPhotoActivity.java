@@ -64,6 +64,8 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.tv_save)
     TextView tvSave;
 
+    private int mVerifyStatus = 100;
+
     /**
      * 保险照片
      * （3张）
@@ -103,9 +105,11 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("workerInfoBean");
         isAdd = getIntent().getBooleanExtra("isAdd", false);
+        mVerifyStatus = getIntent().getIntExtra("verifyStatus", 100);
     }
 
     private void initData() {
+        initImgUrlList();
         // 保险照
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_ACCIDENT, REQUEST_CODE_PHOTO_ACCIDENT));
         snplMomentAccident.setData(picList_accident);
@@ -123,7 +127,6 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
             ivIdCardInHand.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()));
         }
-        initImgUrlList();
     }
 
     private void initListener() {
@@ -133,6 +136,15 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
         tvSave.setOnClickListener((v) -> {
             doSave();
         });
+
+        // 已经认证成功/ 已经提交认证，正在认证中 无法点击操作
+        if (mVerifyStatus == 2 || mVerifyStatus == 1) {
+            ivIdCardFront.setEnabled(false);
+            ivIdCardBack.setEnabled(false);
+            ivIdCardInHand.setEnabled(false);
+            snplMomentAccident.setEditable(false);
+            snplMomentCrim.setEditable(false);
+        }
     }
 
     /**
