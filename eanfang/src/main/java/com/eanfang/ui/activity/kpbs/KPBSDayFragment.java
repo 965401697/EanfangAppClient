@@ -208,7 +208,7 @@ public class KPBSDayFragment extends BaseFragment {
 
                 if (mType == 0) {
                     //算存储时间
-                    double temp = new BigDecimal((String.valueOf((sdNum * 1024 * 1024 * 1024)))).multiply(new BigDecimal("8")).doubleValue();
+                    double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
                     double time = Double.parseDouble(String.valueOf(temp / kpbs / 60 / 60 / 24 / vidiconNum));
                     double dTime = SplitAndRound(time, 2);
                     //计算储存时间
@@ -226,15 +226,16 @@ public class KPBSDayFragment extends BaseFragment {
                         tvResult.setText(String.valueOf(Math.rint(d)) + "TB");
                     }
                 } else {
-                    double temp = new BigDecimal((String.valueOf((sdNum * 1024 * 1024 * 1024)))).multiply(new BigDecimal("8")).doubleValue();
-                    double kp = Double.parseDouble(String.valueOf(temp / day / 60 / 60 / 24 / vidiconNum / 1024));
+                    double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
+                    double kp = Double.parseDouble(String.valueOf(temp / vidiconNum / day / 24 / 60 / 60 / 1024));
                     if (rbRuseltDis.isChecked()) {
                         int o = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[0]);
                         int t = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[1]);
 
                         tvResult.setText(findDis(o, t));
                     } else {
-                        tvResult.setText(String.valueOf(SplitAndRound(kp, 1)) + "    Mbps");
+                        float f = (float) (kp * 1024);
+                        tvResult.setText(String.valueOf(SplitAndRound(f, 1)) + "    Kb");
                     }
                 }
             }

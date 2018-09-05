@@ -319,7 +319,44 @@ public interface NewApiService {
      * 发票
      * post
      */
-    String FA_PIAO = BASE_URL + "/addinvoice";
+    String FA_PIAO = BASE_URL + "/yaf_sys/invoice/create";
+    /**
+     * /**
+     * 发票
+     * post
+     */
+    String INVOICE_UPDATE = BASE_URL + "/yaf_sys/invoice/update";
+    /**
+     * 根据orderId查发票
+     * post
+     */
+    String GET_INVOICE_INFO = BASE_URL + "/yaf_sys/invoice/info";
+
+    /**
+     * 地址列表
+     * post
+     */
+    String GET_ADDRESS_LIST = BASE_URL + "/yaf_sys/receive/list";
+    /**
+     * 创建地址
+     * post
+     */
+    String CREATE_ADDRESS = BASE_URL + "/yaf_sys/receive/create";
+    /**
+     * 删除地址
+     * post
+     */
+    String DELETE_ADDRESS = BASE_URL + "/yaf_sys/receive/delete";
+    /**
+     * 修改地址
+     * post
+     */
+    String UPDATE_ADDRESS = BASE_URL + "/yaf_sys/receive/update";
+    /**
+     * 设置默认地址
+     * post
+     */
+    String SET_DEFAULT_ADDRESS = BASE_URL + "/yaf_sys/receive/setDefault";
     /**
      * 设置管理员
      * post
@@ -361,10 +398,17 @@ public interface NewApiService {
      */
     String GET_COOPERATION_DETAIL = BASE_URL + "/yaf_shop/cooperation/detail";
     /**
+     * 客户解绑合作业务
+     * post
+     */
+    String COOPERATION_DELETE = BASE_URL + "/yaf_shop/cooperation/delete";
+
+    /**
      * 客户审核合作业务
      * post
      */
     String COOPERATION_AUDIT = BASE_URL + "/yaf_shop/cooperation/audit";
+
     /**
      * 搜索客户公司
      * post

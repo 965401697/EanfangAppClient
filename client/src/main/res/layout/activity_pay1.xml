@@ -31,7 +31,7 @@
                     android:background="@drawable/selector_invoice"
                     android:button="@null"
                     android:textSize="@dimen/textSize_15"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                     android:layout_toRightOf="@+id/cb_invoice"
                     android:text="开发票"
                     android:textColor="@color/white"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/ll_edit_invoice"
@@ -60,7 +60,7 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/dimen_32"
-                        android:text="修改开票信息"
+                        android:text="填写开票信息"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/textSize_13" />
 
@@ -184,6 +184,7 @@
                         android:layout_marginRight="@dimen/dimen_40"
                         android:background="@drawable/selector_pay_type"
                         android:button="@null"
+                        android:clickable="false"
                         android:focusable="false" />
                 </LinearLayout>
 
@@ -224,6 +225,7 @@
                         android:layout_marginRight="@dimen/dimen_40"
                         android:background="@drawable/selector_pay_type"
                         android:button="@null"
+                        android:clickable="false"
                         android:focusable="false" />
                 </LinearLayout>
 

@@ -31,7 +31,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
  * 填写发票
  * Created by yaosheng on 2017/4/16.
  */
-
+@Deprecated
 public class FaPiaoActivity extends BaseClientActivity {
 
     private RadioButton rb_normal;
