@@ -574,9 +574,10 @@ public class PermKit {
         /*
          企业管理
          */
-        String COMPANY_INFO_DETAIL_CODE = "company:info:detail";
-        String COMPANY_INFO_VERIFY_CODE = "company:info:verify";
-        String COMPANY_INFO_BACK_CODE = "company:info:back";
+        String COMPANY_INFO_DETAIL_CODE = "customer:ent:detail";
+        String COMPANY_INFO_VERIFY_CODE = "customer:ent:verify";
+        String COMPANY_INFO_BACK_CODE = "customer:ent:back";
+
         //员工管理
         String COMPANY_STAFF_CREATE_CODE = "company:staff:create";
         String COMPANY_STAFF_ASSIGNROLE_CODE = "company:staff:assignRole";
