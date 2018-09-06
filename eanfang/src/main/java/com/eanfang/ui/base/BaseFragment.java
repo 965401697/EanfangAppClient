@@ -222,23 +222,25 @@ public abstract class BaseFragment extends Fragment implements IBase {
      */
     public boolean workerApprove() {
 
-        if (EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
+//        if (EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
+//
+//            WorkerInfoBean workerInfoBean = new WorkerInfoBean();
+//
+//            workerInfoBean.setAccId(EanfangApplication.get().getAccId());
+//            workerInfoBean.setUserId(EanfangApplication.get().getUserId());
+//
+//            new TrueFalseDialog(getActivity(), "提示", "你还没有通过技师认证，认证通过后才能使用此功能？", () -> {
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("workerInfoBean", workerInfoBean);
+//                Intent intent = new Intent("net.eanfang.worker.action.AUTH");
+//                intent.putExtras(bundle);
+//                getActivity().startActivity(intent);
+//            }).showDialog();
+//            return false;
+//        } else {
+//            return true;
+//        }
 
-            WorkerInfoBean workerInfoBean = new WorkerInfoBean();
-
-            workerInfoBean.setAccId(EanfangApplication.get().getAccId());
-            workerInfoBean.setUserId(EanfangApplication.get().getUserId());
-
-            new TrueFalseDialog(getActivity(), "提示", "你还没有通过技师认证，认证通过后才能使用此功能？", () -> {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("workerInfoBean", workerInfoBean);
-                Intent intent = new Intent("net.eanfang.worker.action.AUTH");
-                intent.putExtras(bundle);
-                getActivity().startActivity(intent);
-            }).showDialog();
-            return false;
-        } else {
-            return true;
-        }
+        return true;
     }
 }
