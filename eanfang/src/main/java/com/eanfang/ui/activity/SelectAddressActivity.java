@@ -262,7 +262,9 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
 
     public void doSearchQuery(String keywords, LatLng latLng) {
         // 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query = new PoiSearch.Query(keywords, queryType, "");
+        query = new PoiSearch.Query(keywords, queryType, " ");
+        //设置城市限制
+        query.setCityLimit(true);
         // 设置每页最多返回多少条poiitem
         query.setPageSize(20);
         // 设置查第一页
@@ -270,6 +272,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
 
         poiSearch = new PoiSearch(this, query);
         poiSearch.setOnPoiSearchListener(this);
+
         if (latLng != null) {
             poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude, latLng.longitude), 200, true));
         }

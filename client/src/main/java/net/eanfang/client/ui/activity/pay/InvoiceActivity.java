@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity.pay;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -10,10 +9,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
-import com.eanfang.model.SelectAddressItem;
-import com.eanfang.ui.activity.SelectAddressActivity;
+import com.eanfang.util.StringUtils;
+import com.yaf.base.entity.InvoiceEntity;
+import com.yaf.base.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -24,14 +22,6 @@ import butterknife.OnClick;
 
 public class InvoiceActivity extends BaseClientActivity {
 
-    @BindView(R.id.et_name)
-    EditText etName;
-    @BindView(R.id.et_mobile_phone)
-    EditText etMobilePhone;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
-    @BindView(R.id.et_detail_address)
-    EditText etDetailAddress;
     @BindView(R.id.rb_normal)
     RadioButton rbNormal;
     @BindView(R.id.rb_pro)
@@ -54,22 +44,36 @@ public class InvoiceActivity extends BaseClientActivity {
     RadioGroup rgInvoiceType;
     @BindView(R.id.ll_pro)
     LinearLayout llPro;
-
+    @BindView(R.id.ll_person)
+    LinearLayout llPerson;
+    @BindView(R.id.tv_address_info)
+    TextView tvAddressInfo;
+    @BindView(R.id.tv_person)
+    TextView tvPerson;
+    @BindView(R.id.tv_select_address)
+    TextView tvSelectAddress;
     //地址回调 code
-    private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
+    private final int SELECT_ADDRESS_REQUEST_CODE = 1;
+
+    private boolean isChecked = false;
+    private Long orderId;
+    private int orderType;
+    private ReceiveAddressEntity mReceiveAddressEntity;
+    private InvoiceEntity mInvoiceEntity;
+    private Long mAddressId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fapiao);
         ButterKnife.bind(this);
-        setTitle("填写发票信息");
+
         setRightTitle("保存");
         setLeftBack();
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                subInvoice();
             }
         });
 
@@ -78,45 +82,165 @@ public class InvoiceActivity extends BaseClientActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId == R.id.rb_pro) {
                     llPro.setVisibility(View.VISIBLE);
+                    isChecked = true;
                 } else {
                     llPro.setVisibility(View.GONE);
+                    isChecked = false;
                 }
             }
         });
+
+        orderId = getIntent().getLongExtra("orderId", 0);
+        orderType = getIntent().getIntExtra("orderType", 0);
+        mInvoiceEntity = (InvoiceEntity) getIntent().getSerializableExtra("bean");
+        if (mInvoiceEntity == null) {
+            setTitle("填写发票信息");
+        } else {
+            setTitle("修改发票信息");
+            mReceiveAddressEntity = mInvoiceEntity.getReceiveAddressEntity();
+            mAddressId = mInvoiceEntity.getReceiveAddressEntity().getId();
+            if (mInvoiceEntity.getType() == 0) {
+                //普票
+                initInvoiceViews();
+            } else {
+                initInvoiceProViews();
+            }
+        }
+    }
+
+    private void initInvoiceViews() {
+        llPerson.setVisibility(View.VISIBLE);
+        tvSelectAddress.setVisibility(View.GONE);
+        tvAddressInfo.setText(mInvoiceEntity.getReceiveAddressEntity().getProvince() + mInvoiceEntity.getReceiveAddressEntity().getCity() + mInvoiceEntity.getReceiveAddressEntity().getCounty() + mInvoiceEntity.getReceiveAddressEntity().getAddress());
+        tvPerson.setText(mInvoiceEntity.getReceiveAddressEntity().getName() + "        " + mInvoiceEntity.getReceiveAddressEntity().getPhone());
+        etCompany.setText(mInvoiceEntity.getTitle());
+        etNumber.setText(mInvoiceEntity.getDutyNo());
+
+
+        rbNormal.setChecked(true);
+        isChecked = false;
+    }
+
+    private void initInvoiceProViews() {
+
+        llPerson.setVisibility(View.VISIBLE);
+        tvSelectAddress.setVisibility(View.GONE);
+        tvAddressInfo.setText(mInvoiceEntity.getReceiveAddressEntity().getProvince() + mInvoiceEntity.getReceiveAddressEntity().getCity() + mInvoiceEntity.getReceiveAddressEntity().getCounty() + mInvoiceEntity.getReceiveAddressEntity().getAddress());
+        tvPerson.setText(mInvoiceEntity.getReceiveAddressEntity().getName() + "        " + mInvoiceEntity.getReceiveAddressEntity().getPhone());
+        etCompany.setText(mInvoiceEntity.getTitle());
+        etNumber.setText(mInvoiceEntity.getDutyNo());
+        etAddress.setText(mInvoiceEntity.getAddress());
+        etPhone.setText(mInvoiceEntity.getTelPhone());
+        etBank.setText(mInvoiceEntity.getBank());
+        etBankNumber.setText(mInvoiceEntity.getAccount());
+
+        rbPro.setChecked(true);
+        isChecked = true;
+
+    }
+
+
+    private void subInvoice() {
+        InvoiceEntity invoice;
+        if (!isChecked) {
+            if (!checkInfo()) return;
+
+            invoice = new InvoiceEntity();
+            invoice.setOrderId(orderId);
+            invoice.setReceiveId(mAddressId);
+            invoice.setType(0);
+            invoice.setOrderType(orderType);
+            invoice.setTitle(etCompany.getText().toString().trim());
+            invoice.setDutyNo(etNumber.getText().toString().trim());
+            invoice.setReceiveAddressEntity(mReceiveAddressEntity);
+
+        } else {
+            if (!checkInfo()) return;
+            if (!checkProInfo()) return;
+
+            invoice = new InvoiceEntity();
+            invoice.setOrderId(orderId);
+            invoice.setReceiveId(mAddressId);
+            invoice.setType(1);
+            invoice.setOrderType(orderType);
+            invoice.setTitle(etCompany.getText().toString().trim());
+            invoice.setDutyNo(etNumber.getText().toString().trim());
+            invoice.setAddress(etAddress.getText().toString().trim());
+            invoice.setTelPhone(etPhone.getText().toString().trim());
+            invoice.setBank(etBank.getText().toString().trim());
+            invoice.setAccount(etBankNumber.getText().toString().trim());
+            invoice.setReceiveAddressEntity(mReceiveAddressEntity);
+        }
+
+
+        Intent intent = new Intent();
+        intent.putExtra("bean", invoice);
+        setResult(RESULT_OK, intent);
+        finish();
+
+    }
+
+
+    private boolean checkInfo() {
+
+        if (llPerson.getVisibility() == View.GONE) {
+            showToast("请选择邮寄地址");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+            showToast("请填写公司名称");
+            return false;
+        }
+        if (StringUtils.isEmpty(etNumber.getText().toString().trim())) {
+            showToast("请填写税号");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkProInfo() {
+        if (StringUtils.isEmpty(etAddress.getText().toString().trim())) {
+            showToast("请填写单位地址");
+            return false;
+        }
+        if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
+            showToast("请填写单位座机");
+            return false;
+        }
+        if (StringUtils.isEmpty(etBank.getText().toString().trim())) {
+            showToast("请填写开户行");
+            return false;
+        }
+        if (StringUtils.isEmpty(etBankNumber.getText().toString().trim())) {
+            showToast("请填写银行账号");
+            return false;
+        }
+
+        if (etBankNumber.length() > 18) {
+            showToast("请填写正确的银行账号");
+            return false;
+        }
+
+        return true;
     }
 
     @OnClick(R.id.ll_address)
     public void onViewClicked() {
-        Intent intent = new Intent(this, SelectAddressActivity.class);
-        startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
+        Intent intent = new Intent(this, AddressListActivity.class);
+        startActivityForResult(intent, SELECT_ADDRESS_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REPAIR_ADDRESS_CALLBACK_CODE:
-                SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
-                Log.e("address", item.toString());
-                String latitude = item.getLatitude().toString();
-                String longitude = item.getLongitude().toString();
-                String province = item.getProvince();
-                String city = item.getCity();
-                String county = item.getAddress();
-                String address = item.getName();
-                int mAreaId = Config.get().getBaseIdByCode(Config.get().getAreaCodeByName(item.getCity(), item.getAddress()), 3, Constant.AREA);
-                tvAddress.setText(province + "-" + city + "-" + county);
-
-                //将选择的地址 取 显示值
-                etDetailAddress.setText(address);
-                break;
-
-            default:
-                break;
-
+        if (resultCode == RESULT_OK && requestCode == SELECT_ADDRESS_REQUEST_CODE) {
+            mReceiveAddressEntity = (ReceiveAddressEntity) data.getSerializableExtra("bean");
+            mAddressId = mReceiveAddressEntity.getId();
+            llPerson.setVisibility(View.VISIBLE);
+            tvSelectAddress.setVisibility(View.GONE);
+            tvAddressInfo.setText(mReceiveAddressEntity.getProvince() + mReceiveAddressEntity.getCity() + mReceiveAddressEntity.getCounty() + mReceiveAddressEntity.getAddress());
+            tvPerson.setText(mReceiveAddressEntity.getName() + "        " + mReceiveAddressEntity.getPhone());
         }
     }
 }

@@ -78,7 +78,13 @@ public class MessageListActivity extends BaseClientActivity implements
     private void initView() {
         setTitle("通知提醒");
         tvRight.setText("全读");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         mMessageCount = getIntent().getIntExtra("mMessageCount", 0);
         // 如果等于0 则全删  反之全读
         if (mMessageCount == 0) {

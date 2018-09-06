@@ -518,5 +518,16 @@ public class MainActivity extends BaseClientActivity {
         JumpItent.jump(MainActivity.this, WorkerDetailActivity.class, bundle);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mTabHost.getCurrentTab() == 1) {
+            String frgTag = mTabHost.getCurrentTabTag();
+            ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
+            contactListFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+
 }
 

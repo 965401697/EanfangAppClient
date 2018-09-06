@@ -14,6 +14,8 @@ public class CooperactionRelationSubActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
+    @BindView(R.id.tv_status)
+    TextView tvStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,12 @@ public class CooperactionRelationSubActivity extends BaseClientActivity {
 
 
         String name = getIntent().getStringExtra("companyName");
+        String status = getIntent().getStringExtra("status");
         if (!TextUtils.isEmpty(name)) {
             tvCompanyName.setText(name);
+        }
+        if (!TextUtils.isEmpty(status)) {
+            tvStatus.setText("您已经解绑成功");
         }
     }
 }
