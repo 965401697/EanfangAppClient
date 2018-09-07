@@ -60,7 +60,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
                     Toast.makeText(WXPayEntryActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
                     for (Activity a : transactionActivities) {
                         if (a instanceof NewPayActivity) {
-                            ((NewPayActivity) a).finishSelf();
+                            ((NewPayActivity) a).subInvoice();
                         }
                     }
                     finish();

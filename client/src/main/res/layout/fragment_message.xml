@@ -75,7 +75,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="8dp"
-                android:onClick="noOpen"
                 android:orientation="horizontal"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp">

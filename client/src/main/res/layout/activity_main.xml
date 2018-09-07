@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:id="@+id/ll_mainLayout"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
@@ -14,6 +14,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_bottom_back_line" />
 
     <android.support.v4.app.FragmentTabHost
         android:id="@android:id/tabhost"

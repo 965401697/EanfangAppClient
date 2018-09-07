@@ -8,10 +8,6 @@
     android:background="@color/color_bottom_back"
     android:gravity="center">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_bottom_back_line" />
 
     <ImageView
         android:id="@+id/tabImg"

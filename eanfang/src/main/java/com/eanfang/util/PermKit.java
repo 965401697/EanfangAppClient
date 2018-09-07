@@ -50,7 +50,10 @@ public class PermKit {
             }
         }
         if (!isPerm) {
-            if (EanfangApplication.get().getCompanyId() != null && EanfangApplication.get().getCompanyId() != 0) {
+            //如果是技师端  并且
+            if (EanfangApplication.AppType.equals("worker") && EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
+                ToastUtil.get().showToast(EanfangApplication.get().getApplicationContext(), "请先进行技师认证。");
+            } else if (EanfangApplication.get().getCompanyId() != null && EanfangApplication.get().getCompanyId() != 0) {
                 ToastUtil.get().showToast(EanfangApplication.get().getApplicationContext(), "暂无权限访问，联系企业管理员添加权限");
             } else {
                 ToastUtil.get().showToast(EanfangApplication.get().getApplicationContext(), "暂无权限访问，请创建或加入企业后再试");
@@ -574,9 +577,10 @@ public class PermKit {
         /*
          企业管理
          */
-        String COMPANY_INFO_DETAIL_CODE = "company:info:detail";
-        String COMPANY_INFO_VERIFY_CODE = "company:info:verify";
-        String COMPANY_INFO_BACK_CODE = "company:info:back";
+        String COMPANY_INFO_DETAIL_CODE = "customer:ent:detail";
+        String COMPANY_INFO_VERIFY_CODE = "customer:ent:verify";
+        String COMPANY_INFO_BACK_CODE = "customer:ent:back";
+
         //员工管理
         String COMPANY_STAFF_CREATE_CODE = "company:staff:create";
         String COMPANY_STAFF_ASSIGNROLE_CODE = "company:staff:assignRole";

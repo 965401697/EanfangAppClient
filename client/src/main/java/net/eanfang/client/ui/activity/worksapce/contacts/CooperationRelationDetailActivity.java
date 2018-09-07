@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -89,7 +88,8 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
         if (cooperationEntity.getStatus() == 1) {
             tvSure.setBackgroundColor(getResources().getColor(R.color.white));
             tvSure.setTextColor(getResources().getColor(R.color.colorPrimary));
-            tvSure.setText("审核通过");
+            tvSure.setText("解除绑定");
+
         } else if (cooperationEntity.getStatus() == 2) {
             tvSure.setBackgroundColor(getResources().getColor(R.color.white));
             tvSure.setTextColor(getResources().getColor(R.color.color_bottom));
@@ -132,7 +132,6 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
 
                 //业务类型
                 String service = mOsList.get(cooperationEntity.getBusType());
-                Log.e("zzw", service + "");
                 //系统类型
                 String business = Config.get().getBusinessNameByCode(cooperationEntity.getBusinessOneCode(), 1);
 
@@ -173,6 +172,19 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
                         public void onSuccess(com.alibaba.fastjson.JSONObject bean) {
                             Intent intent = new Intent(CooperationRelationDetailActivity.this, CooperactionRelationSubActivity.class);
                             intent.putExtra("companyName", companyName);
+                            startAnimActivity(intent);
+                            endTransaction(true);
+                        }
+                    });
+        } else if (cooperationEntity.getStatus() == 1) {
+            EanfangHttp.post(NewApiService.COOPERATION_DELETE)
+                    .upJson(array.toJSONString())
+                    .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(CooperationRelationDetailActivity.this, true, com.alibaba.fastjson.JSONObject.class) {
+                        @Override
+                        public void onSuccess(com.alibaba.fastjson.JSONObject bean) {
+                            Intent intent = new Intent(CooperationRelationDetailActivity.this, CooperactionRelationSubActivity.class);
+                            intent.putExtra("companyName", companyName);
+                            intent.putExtra("status", "解绑");
                             startAnimActivity(intent);
                             endTransaction(true);
                         }

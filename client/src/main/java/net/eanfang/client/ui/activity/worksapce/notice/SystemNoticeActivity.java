@@ -72,7 +72,13 @@ public class SystemNoticeActivity extends BaseActivity implements
      */
     private void initView() {
         setTitle("系统消息");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         mStystemCount = getIntent().getIntExtra("mStystemCount", 0);
         // 如果等于0 则全删  反之全读
         if (mStystemCount == 0) {

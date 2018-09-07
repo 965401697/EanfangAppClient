@@ -29,6 +29,7 @@ import com.eanfang.model.WXPayBean;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.yaf.base.entity.InvoiceEntity;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
@@ -75,13 +76,16 @@ public class NewPayActivity extends BaseClientActivity {
     @BindView(R.id.ll_edit_invoice)
     LinearLayout ll;
 
-    private boolean mPayType = true;//支付宝 false
+    private boolean mPayType = true;//微信 false
 
 
     private Boolean isFaPiao = false;
     private WXPayBean wxPayBean;
+
     private PayLogEntity payLogEntity;
     private Handler mHandler;
+    private InvoiceEntity mInvoiceEntity;
+    private final int INVOCIE_REQUEST_CODE = 1;//发票的code
 
     {
         mHandler = new Handler() {
@@ -101,12 +105,10 @@ public class NewPayActivity extends BaseClientActivity {
                         if (TextUtils.equals(resultStatus, "9000")) {
                             // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付成功");
-                            EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
-                            Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("message", MessageUtil.paySuccess());
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+
+                            subInvoice();
+
+
                         } else {
                             // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付失败");
@@ -129,6 +131,7 @@ public class NewPayActivity extends BaseClientActivity {
         setTitle("支付");
         setLeftBack();
 
+
         initData();
 
         startTransaction(true);
@@ -138,6 +141,9 @@ public class NewPayActivity extends BaseClientActivity {
     private void initData() {
         Intent intent = getIntent();
         payLogEntity = (PayLogEntity) intent.getSerializableExtra("payLogEntity");
+
+//        getInvoiceInfo();
+
         if (payLogEntity == null) {
             showToast("参数错误,请重试");
             finishSelf();
@@ -164,8 +170,16 @@ public class NewPayActivity extends BaseClientActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    ll.setVisibility(View.VISIBLE);
-                    tvInvoiceName.setVisibility(View.VISIBLE);
+                    if (mInvoiceEntity == null) {
+                        ll.setVisibility(View.VISIBLE);
+                    } else {
+
+                        tvEditInvoice.setText("修改发票信息");
+                        tvInvoiceName.setText(mInvoiceEntity.getTitle());
+
+                        ll.setVisibility(View.VISIBLE);
+                        tvInvoiceName.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     ll.setVisibility(View.GONE);
                     tvInvoiceName.setVisibility(View.GONE);
@@ -188,7 +202,10 @@ public class NewPayActivity extends BaseClientActivity {
         switch (view.getId()) {
             case R.id.ll_edit_invoice:
                 Intent in = new Intent(NewPayActivity.this, InvoiceActivity.class);
-                startActivity(in);
+                in.putExtra("orderId", payLogEntity.getOrderId());
+                in.putExtra("orderType", payLogEntity.getOrderType());
+                in.putExtra("bean", mInvoiceEntity);
+                startActivityForResult(in, INVOCIE_REQUEST_CODE);
                 break;
             case R.id.ll_wx:
                 mPayType = true;
@@ -304,6 +321,78 @@ public class NewPayActivity extends BaseClientActivity {
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == INVOCIE_REQUEST_CODE) {
+
+            mInvoiceEntity = (InvoiceEntity) data.getSerializableExtra("bean");
+
+            tvEditInvoice.setText("修改发票信息");
+            tvInvoiceName.setText(mInvoiceEntity.getTitle());
+
+            ll.setVisibility(View.VISIBLE);
+            tvInvoiceName.setVisibility(View.VISIBLE);
+        }
+    }
+
+//    private void getInvoiceInfo() {
+//        EanfangHttp.post(NewApiService.GET_INVOICE_INFO)
+//                .params("orderId", String.valueOf(payLogEntity.getOrderId()))
+//                .execute(new EanfangCallback<InvoiceEntity>(NewPayActivity.this, true, InvoiceEntity.class) {
+//                    @Override
+//                    public void onSuccess(InvoiceEntity bean) {
+//                        mInvoiceEntity = bean;
+//                    }
+//                });
+//    }
+
+    public void subInvoice() {
+
+        if (!cbInvoice.isChecked()) {
+            if (!mPayType) {
+                //支付宝支付
+                EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("message", MessageUtil.paySuccess());
+                intent.putExtras(bundle);
+                startActivity(intent);
+            } else {
+                //微信支付
+                endTransaction(true);
+            }
+            return;
+        }
+
+        EanfangHttp.post(NewApiService.FA_PIAO)
+                .upJson(JSON.toJSONString(mInvoiceEntity))
+                .execute(new EanfangCallback(NewPayActivity.this, false, JSONObject.class) {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        if (!mPayType) {
+                            //支付宝支付
+                            EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                            Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("message", MessageUtil.paySuccess());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        } else {
+                            //微信支付
+                            endTransaction(true);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+
+                    }
+                });
+    }
+
+
     public String getAliPayUrl(int orderType) {
         //报修单
         if (Constant.OrderType.REPAIR.ordinal() == orderType) {
@@ -331,5 +420,11 @@ public class NewPayActivity extends BaseClientActivity {
     class MoneyBean {
         public float money;
         public String title;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        transactionActivities.remove(this);
     }
 }

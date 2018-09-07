@@ -51,6 +51,8 @@ import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by MrHou
  *
@@ -75,6 +77,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private View view;
     private MyConversationListFragment myConversationListFragment;
     private Uri uri;
+
+    private final int REQUST_REFRESH_CODE = 101;
 
     @Override
     protected int setLayoutResouceId() {
@@ -414,13 +418,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt("mMessageCount", mMessageCount);
-            JumpItent.jump(getActivity(), MessageListActivity.class, bundle);
+            JumpItent.jump(getActivity(), MessageListActivity.class, bundle, REQUST_REFRESH_CODE);
         });
         // 系统消息
         view.findViewById(R.id.ll_system_notice).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt("mStystemCount", mStystemCount);
-            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle);
+            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle, REQUST_REFRESH_CODE);
         });
         view.findViewById(R.id.iv_add).setOnClickListener(v -> {
             MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
@@ -431,5 +435,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onRefresh() {
         doHttpNoticeCount();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REQUST_REFRESH_CODE) {
+            doHttpNoticeCount();
+        }
     }
 }
