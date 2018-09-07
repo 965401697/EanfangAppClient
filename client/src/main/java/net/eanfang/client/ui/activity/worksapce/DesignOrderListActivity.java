@@ -5,15 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Constant;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.DesignOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
@@ -45,8 +37,6 @@ public class DesignOrderListActivity extends BaseClientActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private int dataType;
-    private DesignOrderListBean designOrderListBean;
-    private DesignOrderListFragment currentFragment;
 
 
     @Override
@@ -55,7 +45,6 @@ public class DesignOrderListActivity extends BaseClientActivity {
         setContentView(R.layout.activity_design_list);
         ButterKnife.bind(this);
         initView();
-        initData(1);
     }
 
     private void initView() {
@@ -86,64 +75,9 @@ public class DesignOrderListActivity extends BaseClientActivity {
             }
         });
         tlDesignList.setViewPager(vpDesignList, mTitles, this, mFragments);
-        vpDesignList.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentFragment = (DesignOrderListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-                initData(1);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
         vpDesignList.setCurrentItem(0);
-        currentFragment = (DesignOrderListFragment) mFragments.get(0);
-
-    }
-
-    private void initData(int page) {
-        /*我创建的   createUserId=(当前登录人userID)
-        已提交status=0     已处理
-        status=1  已完成status=2
-        本公司的 createCompanyId=(当前登录人公司ID)  */
-        QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(currentFragment.getmTitle())) {
-            String status = allmTitles.indexOf(currentFragment.getmTitle()) + "";
-            queryEntry.getEquals().put(Constant.STATUS, status);
-        }
-        if (Constant.COMPANY_DATA_CODE == dataType) {
-            queryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
-        } else if (Constant.CREATE_DATA_CODE == dataType) {
-            queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
-        }
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-        EanfangHttp.post(NewApiService.GET_WORK_DESIGN_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DesignOrderListBean>(this, true, DesignOrderListBean.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        setDesignOrderListBean(bean);
-                        currentFragment.onDataReceived();
-                    });
-                }));
-    }
 
 
-    public DesignOrderListBean getDesignOrderListBean() {
-        return designOrderListBean;
-    }
-
-    public void setDesignOrderListBean(DesignOrderListBean designOrderListBean) {
-        this.designOrderListBean = designOrderListBean;
     }
 }
 

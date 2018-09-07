@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -12,13 +11,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
-
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
-
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,7 +26,6 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
-
 
 import java.util.ArrayList;
 
@@ -51,12 +47,14 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
     TextView tvRole;
 
     private SectionBean mSectionBean;
-    private FriendListBean friendBean;
+    private SectionBean.ChildrenBean mChildrenBean;
 
+    private FriendListBean friendBean;
     private ArrayList<String> roleIdList = new ArrayList<>();
-    private ArrayList<String> roleNameList = new ArrayList<>();
 
     private final int ROLE_FLAG = 101;
+    private ArrayList<String> roleNameList = new ArrayList<>();
+    private OrganizationBean mOrganizationBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +86,7 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
             case R.id.ll_section:
                 Intent intent = new Intent(this, SelectOrganizationActivity.class);
                 intent.putExtra("isSection", "isSection");//是否是组织架构
+                intent.putExtra("isAdd", "isAdd");//是否是组织架构
                 startActivity(intent);
                 break;
             case R.id.ll_role:
@@ -113,13 +112,20 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
+        if (mSectionBean != null) {
+            userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
+        } else if (mChildrenBean != null) {
+            userEntity.setDepartmentId(Long.parseLong(mChildrenBean.getOrgId()));
+        } else {
+            userEntity.setDepartmentId(Long.parseLong(mOrganizationBean.getCompanyId()));
+        }
 
         AccountEntity accountEntity = new AccountEntity();
 
         accountEntity.setAccId(Long.parseLong(friendBean.getAccId()));
         accountEntity.setMobile(friendBean.getMobile());
         userEntity.setAccountEntity(accountEntity);
+
 
         com.alibaba.fastjson.JSONObject jsonObject = (com.alibaba.fastjson.JSONObject) JSON.toJSON(userEntity);
 
@@ -153,12 +159,16 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
     public void onEvent(Object o) {
 
         if (o instanceof OrganizationBean) {
-            OrganizationBean organizationBean = (OrganizationBean) o;
-            tvSectionName.setText(organizationBean.getOrgName());
+            mOrganizationBean = (OrganizationBean) o;
+            tvSectionName.setText(mOrganizationBean.getOrgName());
 
         } else if (o instanceof SectionBean) {
             mSectionBean = (SectionBean) o;
             tvSectionName.setText(mSectionBean.getOrgName());
+
+        } else if (o instanceof SectionBean.ChildrenBean) {
+            mChildrenBean = (SectionBean.ChildrenBean) o;
+            tvSectionName.setText(mChildrenBean.getOrgName());
 
         }
     }

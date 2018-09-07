@@ -61,7 +61,7 @@ public class CompanyManagerActivity extends BaseActivity {
         switch (view.getId()) {
             // 完善资料
             case R.id.rl_prefectInfo:
-                if (!PermKit.get().getCompanyVerifyPerm()) return;
+                if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
                 Bundle bundle_prefect = new Bundle();
                 bundle_prefect.putLong("orgid", mOrgId);
                 bundle_prefect.putString("orgName", mOrgName);
@@ -70,7 +70,7 @@ public class CompanyManagerActivity extends BaseActivity {
                 break;
             // 资质认证
             case R.id.rl_auth:
-                if (!PermKit.get().getCompanyVerifyPerm()) return;
+                if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
                 Bundle bundle_auth = new Bundle();
                 bundle_auth.putLong("orgid", mOrgId);
                 JumpItent.jump(CompanyManagerActivity.this, AuthSystemTypeActivity.class, bundle_auth);

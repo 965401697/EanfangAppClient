@@ -100,7 +100,7 @@ public class CooperationRelationActivity extends BaseClientActivity implements S
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getNotEquals().put("status", "2");
         queryEntry.getEquals().put("assigneeOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));

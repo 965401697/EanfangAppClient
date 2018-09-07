@@ -159,6 +159,33 @@ public class PermKit {
         return getPerm(PermCode.COMPANY_INFO_BACK_CODE);
     }
 
+    /**
+     * 公司详情权限
+     *
+     * @return
+     */
+    public boolean getWorkerCompanyDetailPerm() {
+        return getPerm(PermCode.WORKER_COMPANY_INFO_DETAIL_CODE);
+    }
+
+    /**
+     * 公司编辑认证权限
+     *
+     * @return
+     */
+    public boolean getWorkerCompanyVerifyPerm() {
+        return getPerm(PermCode.WORKER_COMPANY_INFO_VERIFY_CODE);
+    }
+
+    /**
+     * 公司撤回认证权限
+     *
+     * @return
+     */
+    public boolean getWorkerCompanyBackPerm() {
+        return getPerm(PermCode.WORKER_COMPANY_INFO_BACK_CODE);
+    }
+
 
     /**
      * 部门管理创建部门权限
@@ -572,11 +599,19 @@ public class PermKit {
 
 
         /*
-         企业管理
+         客户端企业管理
          */
         String COMPANY_INFO_DETAIL_CODE = "customer:ent:detail";
         String COMPANY_INFO_VERIFY_CODE = "customer:ent:verify";
         String COMPANY_INFO_BACK_CODE = "customer:ent:back";
+
+        /*
+         客户端企业管理
+        */
+        String WORKER_COMPANY_INFO_DETAIL_CODE = "supplier:shop:detail";
+        String WORKER_COMPANY_INFO_VERIFY_CODE = "supplier:shop:verify";
+        String WORKER_COMPANY_INFO_BACK_CODE = "supplier:shop:back";
+
 
         //员工管理
         String COMPANY_STAFF_CREATE_CODE = "company:staff:create";

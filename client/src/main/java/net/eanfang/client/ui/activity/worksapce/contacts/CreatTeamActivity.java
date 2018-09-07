@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
@@ -38,6 +39,10 @@ public class CreatTeamActivity extends BaseClientActivity {
     }
 
     private void createCompany() {
+        if (TextUtils.isEmpty(etInputCompany.getText().toString().trim())) {
+            showToast("请填写公司名字");
+            return;
+        }
         EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_ADD)
                 .params("name", etInputCompany.getText().toString().trim())
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {

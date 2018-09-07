@@ -58,6 +58,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
     private ArrayList<String> roleNameList = new ArrayList<>();
 
     private final int ROLE_FLAG = 101;
+    private OrganizationBean mOrganizationBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +119,10 @@ public class AddStaffNextActivity extends BaseClientActivity {
 
         if (mSectionBean != null) {
             userEntity.setDepartmentId(Long.parseLong(mSectionBean.getOrgId()));
-        } else {
+        } else if (mChildrenBean != null) {
             userEntity.setDepartmentId(Long.parseLong(mChildrenBean.getOrgId()));
+        } else {
+            userEntity.setDepartmentId(Long.parseLong(mOrganizationBean.getCompanyId()));
         }
 
         AccountEntity accountEntity = new AccountEntity();
@@ -163,8 +166,8 @@ public class AddStaffNextActivity extends BaseClientActivity {
         mChildrenBean = null;
 
         if (o instanceof OrganizationBean) {
-            OrganizationBean organizationBean = (OrganizationBean) o;
-            tvSectionName.setText(organizationBean.getOrgName());
+            mOrganizationBean = (OrganizationBean) o;
+            tvSectionName.setText(mOrganizationBean.getOrgName());
 
         } else if (o instanceof SectionBean) {
             mSectionBean = (SectionBean) o;

@@ -172,7 +172,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             }
         });
         setRightTitleOnClickListener((v) -> {
-            if (!PermKit.get().getCompanyBackPerm()) return;
+            if (!PermKit.get().getWorkerCompanyBackPerm()) return;
             showToast("可以进行编辑");
             isEdit = true;
             setRightGone();

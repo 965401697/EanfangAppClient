@@ -165,6 +165,7 @@ public class InstallOrderListActivity extends BaseWorkerActivity implements Swip
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
         mAdapter.bindToRecyclerView(rvList);
+        mAdapter.setOnLoadMoreListener(this);
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {

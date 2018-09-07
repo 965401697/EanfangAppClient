@@ -83,7 +83,7 @@ public class CompanyManagerActivity extends BaseActivity {
 //
 //                break;
             case R.id.rl_admin_set:
-                if (EanfangApplication.get().getUserId().equals(adminUserId)) {
+                if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
                     JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
                 } else {
                     ToastUtil.get().showToast(this, "您不是当前公司的管理员");

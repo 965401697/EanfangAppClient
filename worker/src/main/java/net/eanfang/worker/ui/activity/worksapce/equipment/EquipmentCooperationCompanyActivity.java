@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
     private String ownerCompanyId;
     private CooperationEntity mOldCooperationEntity;
     private int moldPosition = -1;
+    private CooperationEntity cooperationEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +49,12 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (moldPosition >= 0) {
-//                    Intent intent = new Intent();
+                if (!TextUtils.isEmpty(ownerCompanyId)) {
+                    Intent intent = new Intent();
+                    intent.putExtra("bean", cooperationEntity);
 //                    intent.putExtra("bean", mAdapter.getData().get(moldPosition));
-//                    setResult(RESULT_OK, intent);
-
-                    Intent intent = new Intent(EquipmentCooperationCompanyActivity.this, EquipmentListActivity.class);
-                    intent.putExtra("bean", mAdapter.getData().get(moldPosition));
-                    startActivity(intent);
-                    endTransaction(true);
-//                    finishSelf();
+                    setResult(RESULT_OK, intent);
+                    finishSelf();
                 } else {
                     ToastUtil.get().showToast(EquipmentCooperationCompanyActivity.this, "请选择一个合作公司");
                 }
@@ -70,36 +68,47 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
     private void initView() {
 
         rvList.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new EquipmentCooperationRelationAdapter(R.layout.item_equipment_cooperation_company);
+        mAdapter = new EquipmentCooperationRelationAdapter(R.layout.item_equipment_cooperation_company, ownerCompanyId);
         mAdapter.bindToRecyclerView(rvList);
-
+        mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
 
 
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                CooperationEntity cooperationEntity = (CooperationEntity) adapter.getData().get(position);
                 if (view.getId() == R.id.cb_check) {
-                    if (mOldCooperationEntity == null) {
-                        mOldCooperationEntity = cooperationEntity;
-                        moldPosition = position;
-                        cooperationEntity.setChecked(true);
-                        adapter.notifyItemChanged(position);
-                    } else if (moldPosition == position) {
-                        mOldCooperationEntity.setChecked(false);
-                        adapter.notifyItemChanged(moldPosition);
+                    cooperationEntity = (CooperationEntity) adapter.getData().get(position);
 
-                        mOldCooperationEntity = null;
-                        moldPosition = -1;
+                    if (!ownerCompanyId.equals(String.valueOf(cooperationEntity.getAssigneeOrgId()))) {
+                        ownerCompanyId = String.valueOf(cooperationEntity.getAssigneeOrgId());
+                        mAdapter.setmOwnerCompanyId(String.valueOf(cooperationEntity.getAssigneeOrgId()));
                     } else {
-                        mOldCooperationEntity.setChecked(false);
-                        cooperationEntity.setChecked(true);
-                        adapter.notifyItemChanged(moldPosition);
-                        adapter.notifyItemChanged(position);
-
-                        moldPosition = position;
-                        mOldCooperationEntity = cooperationEntity;
+                        ownerCompanyId = "";
+                        mAdapter.setmOwnerCompanyId("");
                     }
+
+                    adapter.notifyDataSetChanged();
+
+//                    if (mOldCooperationEntity == null) {
+//                        mOldCooperationEntity = cooperationEntity;
+//                        moldPosition = position;
+//                        cooperationEntity.setChecked(true);
+//                        adapter.notifyItemChanged(position);
+//                    } else if (moldPosition == position) {
+//                        mOldCooperationEntity.setChecked(false);
+//                        adapter.notifyItemChanged(moldPosition);
+//
+//                        mOldCooperationEntity = null;
+//                        moldPosition = -1;
+//                    } else {
+//                        mOldCooperationEntity.setChecked(false);
+//                        cooperationEntity.setChecked(true);
+//                        adapter.notifyItemChanged(moldPosition);
+//                        adapter.notifyItemChanged(position);
+//
+//                        moldPosition = position;
+//                        mOldCooperationEntity = cooperationEntity;
+//                    }
                 }
             }
         });
@@ -119,7 +128,7 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(20);
+        queryEntry.setSize(10);
         queryEntry.getEquals().put("status", "1");
         queryEntry.setPage(mPage);
 
@@ -128,15 +137,6 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
         EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, true, (list) -> {
-
-                    for (CooperationEntity b : list) {
-                        if (String.valueOf(b.getAssigneeOrgId()).equals(ownerCompanyId)) {
-                            b.setChecked(true);
-                            // TODO: 2018/8/10 列表太长可能有报错
-                            mOldCooperationEntity = b;
-                            moldPosition = list.indexOf(b);
-                        }
-                    }
 
                     if (mPage == 1) {
                         mAdapter.getData().clear();

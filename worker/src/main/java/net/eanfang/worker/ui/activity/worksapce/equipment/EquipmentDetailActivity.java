@@ -118,15 +118,16 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         tvEquipmentNum.setText(bean.getSerialNumber());
         tvEquipmentPrice.setText(String.valueOf(bean.getDevicePrice()));
 
-        String[] picture = bean.getPicture().split(",");
-        if (picture != null && picture.length >= 1) {
-            ivPicOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[0]));
-        } else if (picture != null && picture.length >= 2) {
-            ivPicTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[1]));
-        } else if (picture != null && picture.length >= 3) {
-            ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
+        if (bean.getPicture() != null) {
+            String[] picture = bean.getPicture().split(",");
+            if (picture != null && picture.length >= 1) {
+                ivPicOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[0]));
+            } else if (picture != null && picture.length >= 2) {
+                ivPicTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[1]));
+            } else if (picture != null && picture.length >= 3) {
+                ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
+            }
         }
-
         tvNotice.setText(bean.getDeviceInfo());
 
         tvPosition.setText(bean.getLocation());

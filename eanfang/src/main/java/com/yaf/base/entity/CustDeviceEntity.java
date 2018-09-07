@@ -8,12 +8,12 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -156,12 +156,33 @@ public class CustDeviceEntity implements Serializable {
     @TableField(exist = false)
     private List<CustDeviceParamEntity> params;
 
+    @TableField(exist = false)
+    public UserEntity ownerUserEntity;
+    @TableField(exist = false)
+    public OrgEntity ownerCompanyEnityt;
+
     public List<CustDeviceParamEntity> getParams() {
         return params;
     }
 
     public void setParams(List<CustDeviceParamEntity> params) {
         this.params = params;
+    }
+
+    public UserEntity getOwnerUserEntity() {
+        return ownerUserEntity;
+    }
+
+    public void setOwnerUserEntity(UserEntity ownerUserEntity) {
+        this.ownerUserEntity = ownerUserEntity;
+    }
+
+    public OrgEntity getOwnerCompanyEnityt() {
+        return ownerCompanyEnityt;
+    }
+
+    public void setOwnerCompanyEnityt(OrgEntity ownerCompanyEnityt) {
+        this.ownerCompanyEnityt = ownerCompanyEnityt;
     }
 
     /**

@@ -41,7 +41,7 @@ public class DesignOrderActivity extends BaseClientActivity {
 
     private void initView() {
         ivAdd.setOnClickListener((v) -> {
-            if(PermKit.get().getDesignCreatePrem()) {
+            if (PermKit.get().getDesignCreatePrem()) {
                 startActivity(new Intent(this, DesignActivity.class));
             }
         });
@@ -49,7 +49,7 @@ public class DesignOrderActivity extends BaseClientActivity {
             jumpInDialog(this, DesignOrderListActivity.class, "我的设计单", "1");
         });
         //如果是个人 隐藏公司
-        if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() != null) {
+        if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() == 0) {
             llMineCompany.setVisibility(View.GONE);
         }
         llMineCompany.setOnClickListener((v) -> {

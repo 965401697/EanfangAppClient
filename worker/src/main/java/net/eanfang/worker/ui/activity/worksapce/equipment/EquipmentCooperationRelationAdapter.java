@@ -18,24 +18,38 @@ import net.eanfang.worker.R;
 
 public class EquipmentCooperationRelationAdapter extends BaseQuickAdapter<CooperationEntity, BaseViewHolder> {
 
-    public EquipmentCooperationRelationAdapter(int layoutResId) {
+    private String mOwnerCompanyId;
+
+    public EquipmentCooperationRelationAdapter(int layoutResId, String ownerCompanyId) {
         super(layoutResId);
+        this.mOwnerCompanyId = ownerCompanyId;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, CooperationEntity item) {
 
-        if (item.isChecked()) {
+        if (String.valueOf(item.getAssigneeOrgId()).equals(mOwnerCompanyId)) {
             ((CheckBox) helper.getView(R.id.cb_check)).setChecked(true);
         } else {
             ((CheckBox) helper.getView(R.id.cb_check)).setChecked(false);
-
         }
+
+
+//        if (item.isChecked()) {
+//            ((CheckBox) helper.getView(R.id.cb_check)).setChecked(true);
+//        } else {
+//            ((CheckBox) helper.getView(R.id.cb_check)).setChecked(false);
+//
+//        }
 
         ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeOrg().getOrgUnitEntity().getLogoPic()));
         helper.setText(R.id.tv_company_name, item.getAssigneeOrg().getOrgName());
         helper.setText(R.id.tv_time, GetDateUtils.dateToFormatString(item.getBeginTime(), "yyyy.MM.dd") + " - " + GetDateUtils.dateToFormatString(item.getEndTime(), "yyyy.MM.dd"));
         //0 待审核 1:审核通过 2：失效/拒绝
         helper.addOnClickListener(R.id.cb_check);
+    }
+
+    public void setmOwnerCompanyId(String mOwnerCompanyId) {
+        this.mOwnerCompanyId = mOwnerCompanyId;
     }
 }

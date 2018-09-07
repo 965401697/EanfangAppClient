@@ -66,7 +66,7 @@ public class CooperationRelationActivity extends BaseWorkerActivity implements S
 
         mAdapter = new CooperationRelationAdapter(R.layout.item_cooperation_relation);
         mAdapter.bindToRecyclerView(rvList);
-
+        mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -105,7 +105,7 @@ public class CooperationRelationActivity extends BaseWorkerActivity implements S
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getNotEquals().put("status", "2");
         queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));

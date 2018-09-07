@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
@@ -52,6 +53,12 @@ public class CreatTeamActivity extends BaseWorkerActivity {
      * @param companyid Go to another company
      */
     private void SwitchCompany(Long companyid) {
+
+        if (TextUtils.isEmpty(etInputCompany.getText().toString().trim())) {
+            showToast("请填写公司名字");
+            return;
+        }
+
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
@@ -59,7 +66,7 @@ public class CreatTeamActivity extends BaseWorkerActivity {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
                     EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                    EanfangHttp.setClient();
+                    EanfangHttp.setWorker();
 
                     finish();
                 }));

@@ -1,8 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.equipment;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -27,14 +26,15 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
     private EquipmentListAdapter mAdapter;
     private String mType;
-    private String mOwnerCompanyId;
-    private Activity mActivity;
 
-    public static EquipmentListFragment getInstance(String type, String ownerCompanyId, Activity activity) {
+    //    private String mOwnerCompanyId;
+//    private Activity mActivity;
+//, String ownerCompanyId, Activity activity
+    public static EquipmentListFragment getInstance(String type) {
         EquipmentListFragment f = new EquipmentListFragment();
         f.mType = type;
-        f.mOwnerCompanyId = ownerCompanyId;
-        f.mActivity = activity;
+//        f.mOwnerCompanyId = ownerCompanyId;
+//        f.mActivity = activity;
         return f;
 
     }
@@ -51,7 +51,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                 if (!PermKit.get().getExchangeDetailPrem()) return;
                 Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
                 intent.putExtra("id", mAdapter.getData().get(position).getId());
-                intent.putExtra("ownerCompanyId", mOwnerCompanyId);
+//                intent.putExtra("ownerCompanyId", mOwnerCompanyId);
                 intent.putExtra("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
                 intent.putExtra("businessOneCode", mType);
                 startActivity(intent);
@@ -61,16 +61,15 @@ public class EquipmentListFragment extends TemplateItemListFragment {
     }
 
 
-    // TODO: 2018/8/28  多次请求 待优化
     @Override
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
-//        queryEntry.getEquals().put("ownerCompanyId", ((EquipmentListActivity) getActivity()).ownerCompanyId);
-        queryEntry.getEquals().put("ownerCompanyId", mOwnerCompanyId);
-        Log.e("zzw222222222222 === ", mOwnerCompanyId);
+        if (!TextUtils.isEmpty(((EquipmentListActivity) getActivity()).mOwnerCompanyId)) {
+            queryEntry.getEquals().put("ownerCompanyId", ((EquipmentListActivity) getActivity()).mOwnerCompanyId);
+        }
         queryEntry.getEquals().put("businessOneCode", mType);
         EanfangHttp.post(NewApiService.DEVICE_LIST_CLIENT)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -78,6 +77,8 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(EquipmentBean bean) {
                         if (mPage == 1) {
+
+
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
@@ -88,6 +89,8 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
                             if (bean.getList().size() > 0) {
                                 mTvNoData.setVisibility(View.GONE);
+                                ((EquipmentListActivity) getActivity()).setEquipmentTitle(bean.getList().get(0).getOwnerCompanyEnityt().getOrgName());
+                                ((EquipmentListActivity) getActivity()).setmOwnerCompanyId(String.valueOf(bean.getList().get(0).getOwnerCompanyEnityt().getCompanyId()));
                             } else {
                                 mTvNoData.setVisibility(View.VISIBLE);
                             }

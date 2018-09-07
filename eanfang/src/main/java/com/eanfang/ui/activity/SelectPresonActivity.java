@@ -134,9 +134,9 @@ public class SelectPresonActivity extends BaseActivity {
                 templateBean1.setPresons(presonArrayList1);
             }
 
-
-            mTemplateBeanList.add(0, templateBean1);
-
+            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                mTemplateBeanList.add(0, templateBean1);
+            }
 
         } else if (mFlag == 3) {
             SectionBean.ChildrenBean childrenBean = (SectionBean.ChildrenBean) getIntent().getSerializableExtra("bean");
