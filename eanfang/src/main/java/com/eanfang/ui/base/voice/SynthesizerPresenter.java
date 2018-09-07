@@ -13,7 +13,7 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechSynthesizer;
 
 /**
- * 描述：
+ * 描述：语音合成
  *
  * @author Guanluocang
  * @date on 2018/7/3$  10:43$

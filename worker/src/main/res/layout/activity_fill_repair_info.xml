@@ -196,31 +196,63 @@
                 android:paddingBottom="@dimen/dimen_20"
                 android:visibility="visible">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="@dimen/dimen_38"
-                    android:paddingTop="15dp"
-                    android:text="遗留问题"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_15" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="@dimen/dimen_38"
+                        android:paddingTop="15dp"
+                        android:text="遗留问题"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <ImageView
+                        android:id="@+id/iv_voice_input_remain_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:padding="@dimen/dimen_20"
+                        android:src="@mipmap/ic_worker_voice_input" />
+                </RelativeLayout>
+
 
                 <View style="@style/style_common_line_gray" />
 
-                <EditText
-                    android:id="@+id/et_remain_question"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_150"
-                    android:layout_marginLeft="@dimen/dimen_38"
-                    android:layout_marginRight="@dimen/dimen_38"
-                    android:layout_marginTop="@dimen/dimen_30"
-                    android:background="@null"
-                    android:gravity="start"
-                    android:hint="请输入遗留问题,200字以内"
-                    android:textColor="@color/color_client_neworder"
-                    android:textColorHint="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13" />
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_remain_question"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_150"
+                        android:layout_marginLeft="@dimen/dimen_38"
+                        android:layout_marginRight="@dimen/dimen_38"
+                        android:layout_marginTop="@dimen/dimen_30"
+                        android:background="@drawable/select_camera_back"
+                        android:gravity="start"
+                        android:padding="@dimen/dimen_10"
+                        android:hint="请输入遗留问题,200字以内"
+                        android:textColor="@color/color_client_neworder"
+                        android:textColorHint="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/et_remain_question"
+                        android:layout_alignRight="@id/et_remain_question"
+                        android:padding="10dp"
+                        android:text="0/200"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout

@@ -89,6 +89,7 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
 
     // 是否
     private boolean isAdd = false;
+    private boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +106,7 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("workerInfoBean");
         isAdd = getIntent().getBooleanExtra("isAdd", false);
+        isEdit = getIntent().getBooleanExtra("isEdit", false);
         mVerifyStatus = getIntent().getIntExtra("verifyStatus", 100);
     }
 
@@ -145,6 +147,15 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             snplMomentAccident.setEditable(false);
             snplMomentCrim.setEditable(false);
         }
+        // 编辑
+        if (isEdit) {
+            ivIdCardFront.setEnabled(true);
+            ivIdCardBack.setEnabled(true);
+            ivIdCardInHand.setEnabled(true);
+            snplMomentAccident.setEditable(true);
+            snplMomentCrim.setEditable(true);
+        }
+
     }
 
     /**

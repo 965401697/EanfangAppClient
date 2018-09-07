@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,11 +22,14 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -131,6 +135,8 @@ public class AddTroubleActivity extends BaseClientActivity {
     // 位置编号
     @BindView(R.id.et_deviceLocationNum)
     EditText etDeviceLocationNum;
+    @BindView(R.id.iv_input_voice)
+    ImageView ivInputVoice;
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -145,17 +151,62 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     private RepairBugEntity repairBugEntity = new RepairBugEntity();
 
+    // 扫码查看设备 报修
+    private CustDeviceEntity mDeviceBean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trouble);
         ButterKnife.bind(this);
         initView();
+        initData();
         setListener();
+    }
+
+    // 扫码获取数据
+    private void initData() {
+        if (mDeviceBean != null) {
+            //故障设备名称
+            tvFaultDeviceName.setText(mDeviceBean.getDeviceName());
+
+            dataCode = V.v(() -> mDeviceBean.getBusinessThreeCode());
+            etDeviceNum.setFocusable(false);
+            etDeviceLocationNum.setFocusable(false);
+            etDeviceLocation.setFocusable(false);
+            llDeviceBrand.setClickable(false);
+            // 设备编号
+            etDeviceNum.setText(V.v(() -> mDeviceBean.getDeviceNo()));
+            //位置编号
+            etDeviceLocationNum.setText(V.v(() -> mDeviceBean.getLocationNumber()));
+            // 故障位置
+            etDeviceLocation.setText(V.v(() -> mDeviceBean.getLocation()));
+            // 设备品牌
+            tvDeviceBrand.setText(Config.get().getModelNameByCode(V.v(() -> mDeviceBean.getModelCode()), 2));
+        }
     }
 
     private void setListener() {
         rlConfirmDevice.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::checkInfo, this::onSubmitClient));
+        ivInputVoice.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        evFaultDescripte.setText(msg + "");
+                        //获取焦点
+                        evFaultDescripte.requestFocus();
+                        //将光标定位到文字最后，以便修改
+                        evFaultDescripte.setSelection(msg.length());
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
     }
 
     private void initView() {
@@ -167,6 +218,8 @@ public class AddTroubleActivity extends BaseClientActivity {
             llDeviceHouse.setVisibility(View.GONE);
         }
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+
+        mDeviceBean = (CustDeviceEntity) getIntent().getSerializableExtra("scan_repair");
     }
 
     /**
@@ -205,7 +258,6 @@ public class AddTroubleActivity extends BaseClientActivity {
     }
 
     public boolean checkInfo() {
-
         if (TextUtils.isEmpty(tvFaultDeviceName.getText().toString().trim())) {
             showToast("请选择故障设备名称");
             return false;
@@ -223,8 +275,6 @@ public class AddTroubleActivity extends BaseClientActivity {
             showToast("请选择品牌型号");
             return false;
         }
-
-
         return true;
     }
 
@@ -238,11 +288,11 @@ public class AddTroubleActivity extends BaseClientActivity {
             snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
             snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
+        } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {// 选择故障设备
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
-        } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
+        } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {// 故障简述
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
             dataId = Long.valueOf(data.getStringExtra("datasId"));
@@ -250,7 +300,7 @@ public class AddTroubleActivity extends BaseClientActivity {
 //            ArrayList<String> arrayImgList = new ArrayList<String>();
 //            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
 //            snplMomentAddPhotos.setData(arrayImgList);
-        } else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {// 设备库
             CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("bean");
 
             etDeviceNum.setFocusable(false);
@@ -283,10 +333,8 @@ public class AddTroubleActivity extends BaseClientActivity {
                     showToast("请选择故障设备名称");
                     return;
                 }
-
                 Bundle b = new Bundle();
                 b.putString("businessOneCode", dataCode);
-
                 JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
                 break;
             // 故障设备编号

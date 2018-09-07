@@ -2,12 +2,12 @@ package com.eanfang.application;
 
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.iflytek.cloud.SpeechUtility;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -24,6 +24,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import okhttp3.OkHttpClient;
+
+import static com.eanfang.config.EanfangConst.XUNFEI_APPID;
 
 /**
  * @author Mr.hou
@@ -71,7 +73,7 @@ public class EanfangApplication extends CustomeApplication {
 
         // 初始化讯飞
         // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
-        SpeechUtility.createUtility(EanfangApplication.this, "appid=5a4445e3");
+        RecognitionManager.getSingleton().init(EanfangApplication.getApplication().getApplicationContext(), XUNFEI_APPID);
         // 初始化BGA 图片选择
         BGAImage.setImageLoader(new BGAGlideImageLoader());
     }

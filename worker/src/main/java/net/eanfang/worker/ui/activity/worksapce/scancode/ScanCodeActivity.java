@@ -13,6 +13,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
@@ -22,8 +23,8 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
 
-
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -31,6 +32,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import static com.eanfang.util.StringUtils.getValueByName;
 
 /**
  * @author Guanluocang
@@ -113,6 +116,16 @@ public class ScanCodeActivity extends BaseActivity {
                 }
                 intent.putExtra("groupId", resultString);
                 startActivity(intent);
+                finishSelf();
+            } else if (resultString.contains("qr?uid=")) {// 扫描设备
+                String deviceId = getValueByName(result.getText(), "uid");
+                String assigneeCompanyId = getValueByName(result.getText(), "assigneeCompanyId");
+                String businessOneCode = getValueByName(result.getText(), "businessOneCode");
+                Bundle bundle = new Bundle();
+                bundle.putString("id", deviceId);
+                bundle.putString("assigneeCompanyId", assigneeCompanyId);
+                bundle.putString("businessOneCode", businessOneCode);
+                JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
                 finishSelf();
             } else {
                 showToast("二维码无效");
@@ -210,4 +223,5 @@ public class ScanCodeActivity extends BaseActivity {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+
 }

@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -25,8 +28,10 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -38,9 +43,9 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail.PhoneSolveTroubleDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.QuotationDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.AddTroubleActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail.PhoneSolveTroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.ImagePerviewUtil;
@@ -70,7 +75,13 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private final Activity activity = this;
     @BindView(R.id.tv_add_fault)
     TextView tvAddFault;
+    // 遗留问题
+    @BindView(R.id.iv_voice_input_remain_question)
+    ImageView ivVoiceInputRemainQuestion;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
     private RecyclerView rv_trouble;
+
     /*
      * 单据照片 (3张)
      */
@@ -108,6 +119,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         }
     };
     private Long id;
+    private int maxWordsNum = 200; //输入限制的最大字数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +180,51 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(PhoneSolveRepairInfoActivity.this, picList);
+                }
+            }
+        });
+        // 遗留问题
+        ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveRepairInfoActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        et_remain_question.setText(msg + "");
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
+        et_remain_question.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = et_remain_question.getSelectionStart();
+                selectionEnd = et_remain_question.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+//                    toast("不能超过" + maxWordsNum + "个字");
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    et_remain_question.setText(s);
+                    et_remain_question.setSelection(tempSelection); //设置光标在最后
                 }
             }
         });

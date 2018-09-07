@@ -3,10 +3,13 @@ package net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -19,8 +22,10 @@ import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
@@ -55,9 +60,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     public static final String TAG = PhoneSolveTroubleDetailActivity.class.getSimpleName();
     public static final int ADD_DEVICE_PARAM_REQUEST = 100;
     public static final int ADD_DEVICE_PARAM_RESULT = 1000;
-    // 使用建议
-    @BindView(R.id.et_trouble_useAdvace)
-    EditText etTroubleUseAdvace;
+
     // 是否误报
     @BindView(R.id.rg_yes)
     RadioButton rgYes;
@@ -68,6 +71,34 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     // 维修结果
     @BindView(R.id.tag_repair_result)
     TagFlowLayout tagRepairResult;
+    //原因判断
+    @BindView(R.id.et_trouble_reason)
+    EditText etTroubleReason;
+    @BindView(R.id.iv_voice_input_trouble_reason)
+    ImageView ivVoiceInputTroubleReason;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
+    //过程和方法
+    @BindView(R.id.et_trouble_point)
+    EditText etTroublePoint;
+    @BindView(R.id.iv_voice_input_trouble_point)
+    ImageView ivVoiceInputTroublePoint;
+    @BindView(R.id.tv_trouble_point_num)
+    TextView tvTroublePointNum;
+    // 处理措施
+    @BindView(R.id.et_trouble_deal)
+    EditText etTroubleDeal;
+    @BindView(R.id.iv_voice_input_trouble_deal)
+    ImageView ivVoiceInputTroubleDeal;
+    @BindView(R.id.tv_trouble_deal_num)
+    TextView tvTroubleDealNum;
+    // 使用建议
+    @BindView(R.id.et_trouble_useAdvace)
+    EditText etTroubleUseAdvace;
+    @BindView(R.id.iv_voice_input_trouble_useAdvance)
+    ImageView ivVoiceInputTroubleUseAdvance;
+    @BindView(R.id.tv_use_advance_num)
+    TextView tvUseAdvanceNum;
     private TagAdapter<String> mResultAdapter;
     // 修复方式
     @BindView(R.id.tag_repair_result_two)
@@ -87,15 +118,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     //故障描述
     @BindView(R.id.et_trouble_desc)
     EditText etTroubleDesc;
-    //过程和方法
-    @BindView(R.id.et_trouble_point)
-    EditText etTroublePoint;
-    //原因判断
-    @BindView(R.id.et_trouble_reason)
-    EditText etTroubleReason;
-    // 处理措施
-    @BindView(R.id.et_trouble_deal)
-    EditText etTroubleDeal;
+
     // 确定
     @BindView(R.id.btn_add_trouble)
     Button btnAddTrouble;
@@ -105,6 +128,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     // 添加设备参数
     @BindView(R.id.rl_add_device_param)
     RelativeLayout rlAddDeviceParam;
+
     private BughandleDetailEntity bughandleDetailEntity;
     // 设备参数List
     private List<BughandleParamEntity> paramEntityList = new ArrayList<>();
@@ -127,6 +151,8 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
 
     // 维修结果
     List<String> mRepairResult = GetConstDataUtils.getBugDetailList();
+
+    private int maxWordsNum = 200; //输入限制的最大字数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +187,187 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
             Bundle bundle = new Bundle();
             bundle.putSerializable("paramEntityList", (Serializable) paramEntityList);
             JumpItent.jump(this, DeviceParameterActivity.class, bundle, ADD_DEVICE_PARAM_REQUEST);
+        });
+        // 原因判断
+        ivVoiceInputTroubleReason.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        etTroubleReason.setText(msg + "");
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
+        etTroubleReason.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = etTroubleReason.getSelectionStart();
+                selectionEnd = etTroubleReason.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+//                    toast("不能超过" + maxWordsNum + "个字");
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etTroubleReason.setText(s);
+                    etTroubleReason.setSelection(tempSelection); //设置光标在最后
+                }
+            }
+        });
+        //过程方法
+        ivVoiceInputTroublePoint.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        etTroublePoint.setText(msg + "");
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
+        etTroublePoint.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvTroublePointNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = etTroublePoint.getSelectionStart();
+                selectionEnd = etTroublePoint.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+//                    toast("不能超过" + maxWordsNum + "个字");
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etTroublePoint.setText(s);
+                    etTroublePoint.setSelection(tempSelection); //设置光标在最后
+                }
+            }
+        });
+
+        // 处理措施
+        ivVoiceInputTroubleDeal.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        etTroubleDeal.setText(msg + "");
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
+        etTroubleDeal.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvTroubleDealNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = etTroubleDeal.getSelectionStart();
+                selectionEnd = etTroubleDeal.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+//                    toast("不能超过" + maxWordsNum + "个字");
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etTroubleDeal.setText(s);
+                    etTroubleDeal.setSelection(tempSelection); //设置光标在最后
+                }
+            }
+        });
+        // 使用建议
+        ivVoiceInputTroubleUseAdvance.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        etTroubleUseAdvace.setText(msg + "");
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
+        etTroubleUseAdvace.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvUseAdvanceNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = etTroubleUseAdvace.getSelectionStart();
+                selectionEnd = etTroubleUseAdvace.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+//                    toast("不能超过" + maxWordsNum + "个字");
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etTroubleUseAdvace.setText(s);
+                    etTroubleUseAdvace.setSelection(tempSelection); //设置光标在最后
+                }
+            }
         });
     }
 

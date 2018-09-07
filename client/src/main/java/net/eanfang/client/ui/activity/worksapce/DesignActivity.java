@@ -88,7 +88,6 @@ public class DesignActivity extends BaseClientActivity {
 
     private static int REQUSERT_ADDRESS_CODE = 100;
 
-
     /**
      * 经度
      */

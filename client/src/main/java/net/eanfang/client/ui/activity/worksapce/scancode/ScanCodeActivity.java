@@ -13,6 +13,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
@@ -23,6 +24,7 @@ import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -110,6 +112,12 @@ public class ScanCodeActivity extends BaseActivity {
                 }
                 intent.putExtra("groupId", resultString);
                 startActivity(intent);
+                finishSelf();
+            } else if (resultString.contains("qr?uid=")) {// 扫描设备
+                Bundle bundle = new Bundle();
+                bundle.putString("id", result.getText().substring(result.getText().indexOf("=") + 1));
+                bundle.putBoolean("scan", true);
+                JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
                 finishSelf();
             } else {
                 showToast("二维码无效");
