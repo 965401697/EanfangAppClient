@@ -99,6 +99,7 @@ public class HomeFragment extends BaseFragment {
         tvReapirTotal = findViewById(R.id.tv_reapir_total);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
+        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         llRepairDatasticstics = (LinearLayout) findViewById(R.id.ll_repair_datasticstics);
         initIconClick();
         initLoopView();
@@ -115,7 +116,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         String orgName = v(() -> (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
         if (("个人").equals(orgName)) {
             tvHomeTitle.setText("易安防");

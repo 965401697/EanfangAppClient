@@ -105,6 +105,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     TextView tvConfim;
     @BindView(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
+    @BindView(R.id.ll_headers)
+    LinearLayout llHeaders;
 
     private String isAuthen = "";
     private int status;
@@ -158,7 +160,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, GetConstDataUtils.getWorkingYearList()));
         llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
 
-        ivHeader.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
 
         setRightTitleOnClickListener((v) -> {
             showToast("可以进行编辑");
@@ -167,11 +169,13 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             doRevoke();
         });
 
+        // 上传身份证件信息
         rlUploadInfo.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("workerInfoBean", workerInfoBean);
             if (workerInfoBean.getIdCardFront() != null) {
                 bundle.putBoolean("isAdd", true);
+                bundle.putBoolean("isEdit", isEdit);
                 bundle.putInt("verifyStatus", status);
             }
             JumpItent.jump(AuthWorkerInfoActivity.this, AuthPhotoActivity.class, bundle, REQUETST_ADD_PHOTO);
@@ -350,12 +354,14 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     // 提交成功 文本不可编辑 图片不可修改
     private void doSetGone() {
         etPayAccount.setEnabled(false);
+        llHeaders.setEnabled(false);
         llWorkingLevel.setEnabled(false);
         llWorkingYear.setEnabled(false);
         llPayType.setEnabled(false);
         etIntro.setEnabled(false);
         etUrgentPhone.setEnabled(false);
         etUrgentName.setEnabled(false);
+
     }
 
 

@@ -80,6 +80,20 @@ public class PermissionUtils {
     }
 
     /**
+     * 请求 录音权限
+     *
+     * @param callBack
+     */
+    public void getVoicePermission(PermissionsCallBack callBack) {
+        if (!hasPermission(Manifest.permission.RECORD_AUDIO)) {
+            getPermission(new String[]{Manifest.permission.RECORD_AUDIO}, callBack);
+        } else {
+            callBack.callBack();
+        }
+
+    }
+
+    /**
      * 请求数据读取  写入权限
      *
      * @param callBack

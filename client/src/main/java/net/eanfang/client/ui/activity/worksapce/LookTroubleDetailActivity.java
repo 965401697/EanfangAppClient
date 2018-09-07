@@ -56,6 +56,9 @@ public class LookTroubleDetailActivity extends BaseClientActivity /*implements V
     // 耗用材料
     @BindView(R.id.rcy_consumable)
     RecyclerView rcyConsumable;
+    // 使用建议
+    @BindView(R.id.tv_trouble_use_advice)
+    TextView tvTroubleUseAdvice;
 
     private TextView tv_device_no;
 
@@ -146,6 +149,10 @@ public class LookTroubleDetailActivity extends BaseClientActivity /*implements V
         // 维修结论
         if (bughandleDetailEntity.getStatus() != null) {
 //            tv_repair_conclusion.setText(Optional.ofNullable(GetConstDataUtils.getBugDetailList().get(bughandleDetailEntity.getStatus())).orElse(""));
+        }
+        // 使用建议
+        if (bughandleDetailEntity.getUseAdvice() != null) {
+            tvTroubleUseAdvice.setText(bughandleDetailEntity.getUseAdvice());
         }
     }
 

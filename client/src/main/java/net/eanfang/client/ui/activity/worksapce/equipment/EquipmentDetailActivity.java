@@ -12,10 +12,12 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
@@ -80,6 +82,9 @@ public class EquipmentDetailActivity extends BaseClientActivity {
     private long id;
     private CustDeviceEntity mBean;
 
+    // 扫码 扫描设备进行报修
+    private boolean mScanRepair = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +93,12 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         setTitle("设备详情");
         setLeftBack();
         id = getIntent().getLongExtra("id", 0);
+        mScanRepair = getIntent().getBooleanExtra("scan", false);
+        if (mScanRepair) {
+            setRightTitle("我要报修");
+        } else {
+            setRightGone();
+        }
         initData();
     }
 
@@ -173,7 +184,7 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         }
     }
 
-    @OnClick({R.id.tv_equipment_paramter, R.id.tv_history})
+    @OnClick({R.id.tv_equipment_paramter, R.id.tv_history, R.id.tv_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_equipment_paramter:
@@ -199,6 +210,13 @@ public class EquipmentDetailActivity extends BaseClientActivity {
                 Intent in = new Intent(this, EquipmentChangeListActivity.class);
                 in.putExtra("deviceNo", mBean.getDeviceNo());
                 startActivity(in);
+                break;
+            // 我要报修
+            case R.id.tv_right:
+                Bundle bundle_repair = new Bundle();
+                bundle_repair.putSerializable("scan_repair", mBean);
+                JumpItent.jump(EquipmentDetailActivity.this, RepairActivity.class, bundle_repair);
+                finishSelf();
                 break;
         }
     }

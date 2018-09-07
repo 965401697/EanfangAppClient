@@ -8,9 +8,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,10 +32,12 @@ import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -130,6 +135,11 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
      */
     @BindView(R.id.tv_add_group)
     TextView tvAddGroup;
+    // 遗留问题
+    @BindView(R.id.iv_voice_input_remain_question)
+    ImageView ivVoiceInputRemainQuestion;
+    @BindView(R.id.tv_num)
+    TextView tvNum;
 
 
     private boolean isVideoStroage = false;
@@ -178,6 +188,8 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     // 团队成员
     List<TemplateBean.Preson> mPresonList = new ArrayList<>();
     private RepairTeamWorkerAdapter repairTeamWorkerAdapter;
+
+    private int maxWordsNum = 200; //输入限制的最大字数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -305,6 +317,51 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         tvAddGroup.setOnClickListener((v) -> {
             Intent intent = new Intent(FillRepairInfoActivity.this, SelectOrganizationActivity.class);
             this.startActivity(intent);
+        });
+        // 遗留问题
+        ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
+            PermissionUtils.get(this).getVoicePermission(() -> {
+                RecognitionManager.getSingleton().startRecognitionWithDialog(FillRepairInfoActivity.this, new RecognitionManager.onRecognitionListen() {
+                    @Override
+                    public void result(String msg) {
+                        etRemainQuestion.setText(msg + "");
+                    }
+
+                    @Override
+                    public void error(String errorMsg) {
+                        showToast(errorMsg);
+                    }
+                });
+            });
+        });
+        etRemainQuestion.addTextChangedListener(new TextWatcher() {
+            CharSequence temp;
+            int selectionStart;
+            int selectionEnd;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                temp = s;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvNum.setText(s.length() + "/" + maxWordsNum);
+                selectionStart = etRemainQuestion.getSelectionStart();
+                selectionEnd = etRemainQuestion.getSelectionEnd();
+                if (temp.length() > maxWordsNum) {
+//                    toast("不能超过" + maxWordsNum + "个字");
+                    s.delete(selectionStart - 1, selectionEnd);
+                    int tempSelection = selectionEnd;
+                    etRemainQuestion.setText(s);
+                    etRemainQuestion.setSelection(tempSelection); //设置光标在最后
+                }
+            }
         });
 
     }

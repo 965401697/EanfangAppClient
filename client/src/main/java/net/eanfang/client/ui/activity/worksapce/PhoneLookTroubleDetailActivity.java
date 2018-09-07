@@ -44,6 +44,10 @@ public class PhoneLookTroubleDetailActivity extends BaseClientActivity /*impleme
     @BindView(R.id.tv_repair_conclusion)
     TextView tvRepairConclusion;
 
+    // 使用建议
+    @BindView(R.id.tv_trouble_use_advice)
+    TextView tvTroubleUseAdvice;
+
     private BughandleDetailEntity bughandleDetailEntity;
 
     /**
@@ -118,8 +122,10 @@ public class PhoneLookTroubleDetailActivity extends BaseClientActivity /*impleme
         if (bughandleDetailEntity.getFailureEntity().getIsMisinformation() != null) {
             tvRepairConclusion.setText(GetConstDataUtils.getRepairMisinformationList().get(bughandleDetailEntity.getFailureEntity().getIsMisinformation()));
         }
-
-
+        // 使用建议
+        if (bughandleDetailEntity.getUseAdvice() != null) {
+            tvTroubleUseAdvice.setText(bughandleDetailEntity.getUseAdvice());
+        }
     }
 
 

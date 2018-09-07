@@ -80,6 +80,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     private long id;
     private CustDeviceEntity mBean;
 
+    // 扫描二维码返回 数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
