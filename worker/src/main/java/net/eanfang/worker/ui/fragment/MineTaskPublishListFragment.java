@@ -247,7 +247,14 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
         } else if (Constant.ASSIGNEE_DATA_CODE == (mType)) {
             queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
         }
-        queryEntry.getEquals().put("status", status + "");
+        if (getmTitle().equals("全部")) {
+
+        } else {
+            queryEntry.getEquals().put("status", status + "");
+            if (status == 4) {
+                queryEntry.getNotEquals().put("publishStatus", "0");
+            }
+        }
 
         queryEntry.setPage(mPage);
         queryEntry.setSize(10);

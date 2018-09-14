@@ -8,18 +8,18 @@
     <CheckBox
         android:id="@+id/cb_check"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/dimen_36"
-        android:layout_height="wrap_content" />
+        android:layout_marginLeft="@dimen/dimen_36" />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_user_header"
-        android:layout_toRightOf="@+id/cb_check"
         android:layout_width="@dimen/dimen_80"
         android:layout_height="@dimen/dimen_80"
         android:layout_marginBottom="@dimen/dimen_24"
         android:layout_marginLeft="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_24"
+        android:layout_toRightOf="@+id/cb_check"
         fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 

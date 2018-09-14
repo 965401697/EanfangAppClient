@@ -58,6 +58,7 @@ import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 import net.eanfang.worker.ui.receiver.ReceiverInit;
+import net.eanfang.worker.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -154,6 +155,8 @@ public class MainActivity extends BaseActivity {
                 getEquipmentUnread();
             }
         });
+
+        PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
     }
 
 

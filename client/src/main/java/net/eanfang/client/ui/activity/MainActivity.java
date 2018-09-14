@@ -49,6 +49,7 @@ import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
 import net.eanfang.client.ui.receiver.ReceiverInit;
+import net.eanfang.client.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -113,7 +114,7 @@ public class MainActivity extends BaseClientActivity {
         if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
             startAnimActivity(new Intent(this, LoginHintActivity.class));
         }
-
+        PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
     }
 
     private void initUpdate() {

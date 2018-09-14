@@ -1,5 +1,6 @@
 package com.eanfang.ui.activity.kpbs;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -88,10 +90,11 @@ public class KPBSDayFragment extends BaseFragment {
     private KPBSAdapter mKPBSAdapter;
 
 
-    private String[] kpbs = {"0.9Mb/s", "1.8Mb/s", "2.1Mb/s", "3Mb/s", "4.2Mb/s", "4.8Mb/s", "6Mb/s", "7.2Mb/s", "9.6Mb/s", "自定义"};
+    private String[] kpbs = {"896Kb/s", "1024Kb/s", "1280Kb/s", "1536Kb/s", "1792Kb/s", "2048Kb/s", "3072Kb/s", "4096Kb/s", "8192Kb/s", "自定义"};
     private String[] distinguishability = {"D1(4CIF 704*576)", "720P(1280*720)", "960P(1280*960)", "1080P(1920*1080)",
             "3MP(2048*1536)", "4MP(2560*1440)", "5MP(2592*2048)", "8MP(3264*2448)", "4K(3840*2160)"};
     private List<String> currentLists = new ArrayList<>();
+    private InputMethodManager imm;
     private String currentKpbs;
 
     public static KPBSDayFragment getInstance(String title, int type) {
@@ -130,6 +133,8 @@ public class KPBSDayFragment extends BaseFragment {
             llKpbs.setVisibility(View.GONE);
             tvDesc.setText("分辨率：");
         }
+
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Override
@@ -149,6 +154,9 @@ public class KPBSDayFragment extends BaseFragment {
                 etSdNum.setText("");
                 tvResult.setText("");
                 tvKpbs.setText("");
+
+
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
             }
         });
 
@@ -165,7 +173,7 @@ public class KPBSDayFragment extends BaseFragment {
                 int day = 0;
                 float kpbs = 0.0f;
                 if (!TextUtils.isEmpty(currentKpbs)) {
-                    kpbs = Float.parseFloat(currentKpbs.split("M")[0]) * 1024;
+                    kpbs = Float.parseFloat(currentKpbs.split("K")[0]);
                 }
                 if (!TextUtils.isEmpty(etVidiconNum.getText().toString().trim())) {
                     vidiconNum = Integer.parseInt(etVidiconNum.getText().toString().trim());
@@ -238,6 +246,7 @@ public class KPBSDayFragment extends BaseFragment {
                         tvResult.setText(String.valueOf(SplitAndRound(f, 1)) + "    Kb");
                     }
                 }
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
             }
         });
         rgCondition.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -254,6 +263,7 @@ public class KPBSDayFragment extends BaseFragment {
                     tvKpbs.setText("");
                 }
                 tvResult.setText("");
+                showPopupWindow();
             }
         });
 
@@ -337,6 +347,7 @@ public class KPBSDayFragment extends BaseFragment {
         return dis;
     }
 
+    // TODO: 2018/9/10  位置的偏移待优化
     private void showPopupWindow() {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_layout, null);
 

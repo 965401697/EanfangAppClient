@@ -22,6 +22,8 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.MainActivity;
+import net.eanfang.worker.ui.activity.worksapce.GuideActivity;
+import net.eanfang.worker.util.PrefUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -185,8 +187,14 @@ public class VerifyFragment extends BaseFragment {
 
     //跳转首页
     synchronized void goMain() {
-        startActivity(new Intent(getActivity(), MainActivity.class));
-        finishSelf();
+        if(PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)){
+            startActivity(new Intent(getActivity(), GuideActivity.class));
+            finishSelf();
+        }else {
+
+            startActivity(new Intent(getActivity(), MainActivity.class));
+            finishSelf();
+        }
     }
 
     @Override

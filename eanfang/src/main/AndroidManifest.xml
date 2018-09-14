@@ -52,7 +52,6 @@
         tools:ignore="ProtectedPermissions" />
 
     <application>
-
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -100,7 +99,8 @@
         <!-- 二级折叠选择 -->
         <activity android:name=".ui.activity.SelectPresonActivity" />
         <activity android:name=".ui.activity.kpbs.KPBSActivity" />
-        <activity android:name=".ui.activity.AuthWorkerAreaNewActivity"></activity>
+        <activity android:name=".ui.activity.AuthWorkerAreaNewActivity" />
+        <activity android:name=".ui.activity.NoPermissionActivity"></activity>
     </application>
 
 </manifest>

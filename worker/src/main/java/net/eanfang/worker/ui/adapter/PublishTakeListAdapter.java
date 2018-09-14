@@ -30,7 +30,7 @@ public class PublishTakeListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
     protected void convert(BaseViewHolder helper, MineTaskListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getProjectCompanyName());
 
-        helper.setText(R.id.tv_type, GetConstDataUtils.getCooperationTypeList().get(item.getType()));
+//        helper.setText(R.id.tv_type, GetConstDataUtils.getCooperationTypeList().get(item.getType()));
 
         int status = item.getStatus();
         helper.setText(R.id.tv_state, mTitles[status]);
@@ -40,22 +40,27 @@ public class PublishTakeListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
             case 0://待确认，指的是提交了发包，等待确认接包申请
                 helper.setText(R.id.tv_do_first, "联系发包人");
                 helper.setText(R.id.tv_do_second, "查看详情");
+                helper.setText(R.id.tv_type, "待确认");
                 break;
             case 1://待支付，指的是确认了接包，等待支付费用
                 helper.setText(R.id.tv_do_first, "联系发包人");
                 helper.setText(R.id.tv_do_second, "查看详情");
+                helper.setText(R.id.tv_type, "待支付");
                 break;
             case 2://带完工，指的是等待接包方完工
                 helper.setText(R.id.tv_do_first, "联系发包人");
                 helper.setText(R.id.tv_do_second, "申请验收");
+                helper.setText(R.id.tv_type, "待完工");
                 break;
             case 3://待验收，指的是等到发包方验收工作
                 helper.setText(R.id.tv_do_first, "联系发包人");
                 helper.setText(R.id.tv_do_second, "查看详情");
+                helper.setText(R.id.tv_type, "待验收");
                 break;
             case 4://已完成 ，就是订单已完成
                 helper.setVisible(R.id.tv_do_first, false);
                 helper.setText(R.id.tv_do_second, "查看申请");
+                helper.setText(R.id.tv_type, "已完成");
                 break;
             default:
                 break;

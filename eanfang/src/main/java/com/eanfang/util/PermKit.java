@@ -1,6 +1,9 @@
 package com.eanfang.util;
 
+import android.content.Intent;
+
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.ui.activity.NoPermissionActivity;
 
 import java.util.List;
 
@@ -49,15 +52,18 @@ public class PermKit {
                 break;
             }
         }
+
         if (!isPerm) {
+            Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
             //如果是技师端  并且
             if (EanfangApplication.AppType.equals("worker") && EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
-                ToastUtil.get().showToast(EanfangApplication.get().getApplicationContext(), "请先进行技师认证。");
+                intent.putExtra("info", "请先进行技师认证。");
             } else if (EanfangApplication.get().getCompanyId() != null && EanfangApplication.get().getCompanyId() != 0) {
-                ToastUtil.get().showToast(EanfangApplication.get().getApplicationContext(), "暂无权限访问，联系企业管理员添加权限");
+                intent.putExtra("info", "暂无权限访问，联系企业管理员添加权限。");
             } else {
-                ToastUtil.get().showToast(EanfangApplication.get().getApplicationContext(), "暂无权限访问，请创建或加入企业后再试");
+                intent.putExtra("info", "暂无权限访问，请创建或加入企业后再试。");
             }
+            EanfangApplication.getApplication().startActivity(intent);
         }
         return isPerm;
     }

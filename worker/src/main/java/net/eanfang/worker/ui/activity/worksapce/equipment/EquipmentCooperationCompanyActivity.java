@@ -88,28 +88,24 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
                     }
 
                     adapter.notifyDataSetChanged();
-
-//                    if (mOldCooperationEntity == null) {
-//                        mOldCooperationEntity = cooperationEntity;
-//                        moldPosition = position;
-//                        cooperationEntity.setChecked(true);
-//                        adapter.notifyItemChanged(position);
-//                    } else if (moldPosition == position) {
-//                        mOldCooperationEntity.setChecked(false);
-//                        adapter.notifyItemChanged(moldPosition);
-//
-//                        mOldCooperationEntity = null;
-//                        moldPosition = -1;
-//                    } else {
-//                        mOldCooperationEntity.setChecked(false);
-//                        cooperationEntity.setChecked(true);
-//                        adapter.notifyItemChanged(moldPosition);
-//                        adapter.notifyItemChanged(position);
-//
-//                        moldPosition = position;
-//                        mOldCooperationEntity = cooperationEntity;
-//                    }
                 }
+            }
+        });
+
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                cooperationEntity = (CooperationEntity) adapter.getData().get(position);
+
+                if (!ownerCompanyId.equals(String.valueOf(cooperationEntity.getAssigneeOrgId()))) {
+                    ownerCompanyId = String.valueOf(cooperationEntity.getAssigneeOrgId());
+                    mAdapter.setmOwnerCompanyId(String.valueOf(cooperationEntity.getAssigneeOrgId()));
+                } else {
+                    ownerCompanyId = "";
+                    mAdapter.setmOwnerCompanyId("");
+                }
+
+                adapter.notifyDataSetChanged();
             }
         });
         getData();

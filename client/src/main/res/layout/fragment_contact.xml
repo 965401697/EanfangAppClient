@@ -235,6 +235,7 @@
                             android:layout_alignBottom="@+id/imageView"
                             android:layout_marginStart="14dp"
                             android:layout_toEndOf="@+id/iv_create_team"
+                            android:layout_centerVertical="true"
                             android:text="创建团队"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_15" />

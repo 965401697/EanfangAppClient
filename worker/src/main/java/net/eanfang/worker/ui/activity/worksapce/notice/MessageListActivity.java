@@ -8,6 +8,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -276,6 +277,14 @@ public class MessageListActivity extends BaseWorkerActivity implements
                 LogUtil.v("TPush", "content:" + content);
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) { // 监控/拦截/屏蔽返回键
+            setResult(RESULT_OK);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

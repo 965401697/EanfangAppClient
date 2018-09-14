@@ -216,7 +216,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
         parentAdapter = new ParentAdapter();
         parentAdapter.bindToRecyclerView(rev_list);
-
         parentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

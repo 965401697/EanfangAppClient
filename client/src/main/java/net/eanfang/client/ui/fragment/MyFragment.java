@@ -3,6 +3,7 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;

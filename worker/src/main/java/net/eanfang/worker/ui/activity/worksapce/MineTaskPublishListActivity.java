@@ -56,7 +56,9 @@ public class MineTaskPublishListActivity extends BaseActivity {
         dataType = getIntent().getIntExtra("type", 0);
         setTitle(titleBar);
         setLeftBack();
-
+        if (!allmTitles.contains("全部")) {
+            allmTitles.add("全部");
+        }
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {

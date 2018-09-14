@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -135,7 +136,7 @@ public class SystemNoticeActivity extends BaseActivity implements
                 messageListAdapter.getData().clear();
                 messageListAdapter.setNewData(mDataList);
                 setRightVisible();
-                if(mDataList.size()<10){
+                if (mDataList.size() < 10) {
                     messageListAdapter.loadMoreEnd();
                 }
             }
@@ -259,4 +260,11 @@ public class SystemNoticeActivity extends BaseActivity implements
                 });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) { // 监控/拦截/屏蔽返回键
+            setResult(RESULT_OK);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

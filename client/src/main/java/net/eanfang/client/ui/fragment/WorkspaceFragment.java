@@ -87,7 +87,6 @@ public class WorkspaceFragment extends BaseFragment {
                 }
             }).show();
         });
-
     }
 
     private void setLogpic() {
