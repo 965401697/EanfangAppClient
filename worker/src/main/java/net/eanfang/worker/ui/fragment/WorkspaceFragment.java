@@ -27,7 +27,7 @@ import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.CheckParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.ReportParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;

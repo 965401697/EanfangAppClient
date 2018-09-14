@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -20,10 +20,10 @@ import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.AddCheckInfoDetailAdapter;
-import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.fragment.WorkCheckListFragment;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.adapter.AddCheckInfoDetailAdapter;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.fragment.WorkCheckListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LookWorkCheckInfoActivity extends BaseClientActivity {
+/**
+ * @author guanluocang
+ * @data 2018/9/14
+ * @description 设备点检之 - 问题明细 详情
+ */
+public class LookWorkCheckInfoActivity extends BaseWorkerActivity {
 
     @BindView(R.id.ll_add_detail)
     RelativeLayout llAddDetail;

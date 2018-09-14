@@ -1,6 +1,5 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -20,13 +19,21 @@ import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.base.BaseClientActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LookDealwithCheckInfoDetailActivity extends BaseWorkerActivity {
+/**
+ * @author guanluocang
+ * @data 2018/9/14
+ * @description 设备点检 - 明细处理结果
+ */
+
+public class LookDealwithCheckInfoDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_left)
     ImageView ivLeft;
@@ -122,11 +129,14 @@ public class LookDealwithCheckInfoDetailActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
 //                    new WorkCheckInfoView(this, true, workCheckInfoBean.getId(), false).show();
 //                    EventBus.getDefault().post(new BaseEvent());
-
-                    Intent intent = new Intent();
-                    intent.putExtra("type", status);
-                    setResult(RESULT_OK, intent);
-                    finishSelf();
+                    closeBeforeActivity();
                 }));
+    }
+
+    public void closeBeforeActivity() {
+        EanfangApplication.get().closeActivity(LookWorkCheckInfoActivity.class.getName());
+        EanfangApplication.get().closeActivity(WorkCheckInfoActivity.class.getName());
+        EventBus.getDefault().post("addDealWithInfoSuccess");
+        finishSelf();
     }
 }

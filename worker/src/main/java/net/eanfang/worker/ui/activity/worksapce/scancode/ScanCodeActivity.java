@@ -48,6 +48,10 @@ public class ScanCodeActivity extends BaseActivity {
     //添加朋友
     private String mAddFriend = "";
 
+
+    // 扫描什么类型的二维码
+    private String mScanType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,10 @@ public class ScanCodeActivity extends BaseActivity {
 
         mFromWhere = getIntent().getStringExtra("from");
         mAddFriend = getIntent().getStringExtra(EanfangConst.QR_ADD_FRIEND);
+        mScanType = getIntent().getStringExtra("scanType");
+        if (mScanType.equals("scan_device")) {// 扫码设备
+            barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
+        }
 
     }
 

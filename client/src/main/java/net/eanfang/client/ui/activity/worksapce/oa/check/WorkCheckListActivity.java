@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,10 @@ import android.support.v4.view.ViewPager;
 import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.fragment.WorkCheckListFragment;
+
+import net.eanfang.client.R;
+import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.WorkCheckListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * @desc 检查列表
  */
 
-public class WorkCheckListActivity extends BaseWorkerActivity {
+public class WorkCheckListActivity extends BaseClientActivity {
     private static String titleBar;
     public final List<String> allmTitles = GetConstDataUtils.getWorkInspectStatus();
     @BindView(R.id.tl_work_list)

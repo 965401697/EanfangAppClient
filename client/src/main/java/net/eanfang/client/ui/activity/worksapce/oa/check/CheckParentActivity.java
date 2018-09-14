@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.oa;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +10,16 @@ import android.widget.TextView;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.WorkCheckListActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+/**
+ * @author guanluocang
+ * @data 2018/9/14
+ * @description 设备点检 （我创建的  我负责的  本公司的）
+ */
 
 public class CheckParentActivity extends BaseClientActivity {
     @BindView(R.id.iv_left)

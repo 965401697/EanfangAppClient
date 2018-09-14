@@ -35,7 +35,6 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -144,7 +143,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     private Long mOwnerOrgId;
 
     // 扫码报修
-    private CustDeviceEntity mDeviceBean;
+    private boolean isScanRepair = false;
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -160,7 +159,9 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         initData();
         initListener();
         initAdapter();
+        initScanRepair();
     }
+
 
     private void initData() {
         setTitle("我要报修");
@@ -189,7 +190,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         // 扫码 报修
         repairOrderEntity = (RepairOrderEntity) getIntent().getSerializableExtra("repairbean");
         isScan = getIntent().getStringExtra("qrcode");
-        mDeviceBean = (CustDeviceEntity) getIntent().getSerializableExtra("scan_repair");
+        isScanRepair = getIntent().getBooleanExtra("isScanRepair", false);
     }
 
     private void initListener() {
@@ -197,6 +198,15 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             address();
         }));
         rgSex.setOnCheckedChangeListener(this);
+    }
+
+    private void initScanRepair() {
+        if (isScanRepair) {
+            RepairBugEntity repairBugEntity = (RepairBugEntity) getIntent().getSerializableExtra("bean");
+            beanList.add(repairBugEntity);
+            evaluateAdapter.notifyDataSetChanged();
+            mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
+        }
     }
 
     private void initAdapter() {
@@ -263,7 +273,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     public void addTouble() {
         Bundle bundle = new Bundle();
         bundle.putSerializable("beanList", (Serializable) beanList);
-        bundle.putSerializable("scan_repair", mDeviceBean);
         JumpItent.jump(this, AddTroubleActivity.class, bundle, ADD_TROUBLE_CALLBACK_CODE);
     }
 

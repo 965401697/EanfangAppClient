@@ -266,7 +266,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_30"
                         android:text="@string/text_repair_arrivetime"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView

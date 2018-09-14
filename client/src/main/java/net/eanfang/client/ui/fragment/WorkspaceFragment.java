@@ -27,7 +27,7 @@ import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
-import net.eanfang.client.ui.activity.worksapce.oa.CheckParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.CheckParentActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.ReportParentActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;

@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -22,8 +23,10 @@ import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,15 +34,14 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
- * Created by MrHou
- *
- * @on 2017/11/24  14:25
- * @email houzhongzhou@yeah.net
- * @desc
+ * @author guanluocang
+ * @data 2018/9/14
+ * @description 设备点检之 - 添加处理明细
  */
 
-public class AddDealwithInfoActivity extends BaseClientActivity {
+public class AddDealwithInfoActivity extends BaseWorkerActivity {
     @BindView(R.id.et_title)
     TextView etTitle;
     @BindView(R.id.et_input_check_content)
@@ -92,11 +94,12 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
     }
 
     private void submit() {
-        addWorkInspectDetailBean.setSysWorkInspectDetailId(detailId);
+        addWorkInspectDetailBean.setOaWorkInspectDetailId(detailId);
         addWorkInspectDetailBean.setDisposeInfo(etInputCheckContent.getText().toString().trim());
         addWorkInspectDetailBean.setRemarkInfo(etRemark.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
         addWorkInspectDetailBean.setPictures(ursStr);
+        addWorkInspectDetailBean.setOaWorkInspectId(id);
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -119,8 +122,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
 //                    runOnUiThread(() -> {
 //                    new WorkCheckInfoView(AddDealwithInfoActivity.this, true, id, false).show();
 //                    });
-                    setResult(RESULT_OK);
-                    finishSelf();
+                    closeBeforeActivity();
                 }));
 
     }
@@ -132,9 +134,13 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
             mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
             mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        }else if    (requestCode == 101 && resultCode == RESULT_OK) {
-            setResult(RESULT_OK);
-            finishSelf();
         }
+    }
+
+    public void closeBeforeActivity() {
+        EanfangApplication.get().closeActivity(LookWorkCheckInfoActivity.class.getName());
+        EanfangApplication.get().closeActivity(WorkCheckInfoActivity.class.getName());
+        EventBus.getDefault().post("addDealWithInfoSuccess");
+        finishSelf();
     }
 }
