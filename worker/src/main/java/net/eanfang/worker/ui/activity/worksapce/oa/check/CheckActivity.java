@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa;
+package net.eanfang.worker.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +36,7 @@ import com.yaf.sys.entity.UserEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.AddWorkCheckDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.adapter.AddCheckDetailAdapter;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -58,7 +59,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/20  13:55
  * @email houzhongzhou@yeah.net
- * @desc 工作检查
+ * @desc 添加设备点检
  */
 
 public class CheckActivity extends BaseWorkerActivity {

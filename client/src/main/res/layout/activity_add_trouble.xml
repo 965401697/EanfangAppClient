@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="故障设备"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
@@ -157,8 +157,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="请输入位置编号"
-                        android:textColor="@color/color_bottom"
+                        android:text="位置编号:"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <!--<TextView-->
@@ -179,6 +179,7 @@
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:hint="请输入位置编号"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
@@ -196,8 +197,8 @@
                         android:id="@+id/tv_deviceLocationHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="请输入故障位置"
-                        android:textColor="@color/color_bottom"
+                        android:text="故障位置:"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
@@ -218,6 +219,7 @@
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:hint="请输入故障位置"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
@@ -236,7 +238,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="请选择设备品牌"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
@@ -371,8 +373,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="故障简述"
-                        android:textColor="@color/color_bottom"
+                        android:text="故障简述:"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
@@ -382,7 +384,7 @@
                         android:layout_marginLeft="@dimen/dimen_40"
                         android:layout_weight="1"
                         android:text="暂无简述"
-                        android:textColor="@color/color_client_neworder"
+                        android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13"
                         android:visibility="visible" />
                 </LinearLayout>
@@ -442,14 +444,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="故障现象图片"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="(最多上传3张)"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
@@ -492,7 +494,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dimen_30"
                         android:text="@string/text_fault_description"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <ImageView

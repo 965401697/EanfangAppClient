@@ -46,6 +46,9 @@ public class ScanCodeActivity extends BaseActivity {
     //添加朋友
     private String mAddFriend = "";
 
+    // 扫描什么类型的二维码
+    private String mScanType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +60,17 @@ public class ScanCodeActivity extends BaseActivity {
         setLeftBack();
         setTitle("二维码扫描");
         mFromWhere = getIntent().getStringExtra("from");
+        mScanType = getIntent().getStringExtra("scanType");
         mAddFriend = getIntent().getStringExtra(EanfangConst.QR_ADD_FRIEND);
         barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
+        if (mScanType.equals("scan_device")) {// 扫码设备
+            barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
+        } else if (mScanType.equals("scan_person")) {// 扫码技师/客户
+            barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_person));
+        }
+
         barcodeScannerView.decodeContinuous(callback);
 
     }
@@ -113,7 +123,7 @@ public class ScanCodeActivity extends BaseActivity {
                 intent.putExtra("groupId", resultString);
                 startActivity(intent);
                 finishSelf();
-            } else if (resultString.contains("qr?uid=")) {// 扫描设备
+            } else if (resultString.contains("qr?uid=")) {// 扫描设备 查看设备详情 并报修
                 Bundle bundle = new Bundle();
                 bundle.putString("id", result.getText().substring(result.getText().indexOf("=") + 1));
                 bundle.putBoolean("scan", true);

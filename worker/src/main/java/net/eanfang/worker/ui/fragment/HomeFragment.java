@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
+import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
 
 import net.eanfang.worker.R;
@@ -81,6 +83,10 @@ public class HomeFragment extends BaseFragment {
 
     private RelativeLayout rlAllData;
 
+
+    // 扫码Popwindow
+    private HomeScanPopWindow homeScanPopWindow;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_home;
@@ -101,6 +107,13 @@ public class HomeFragment extends BaseFragment {
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         llRepairDatasticstics = (LinearLayout) findViewById(R.id.ll_repair_datasticstics);
+        homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
+        homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                homeScanPopWindow.backgroundAlpha(1.0f);
+            }
+        });
         initIconClick();
         initLoopView();
         //设置布局样式
@@ -189,10 +202,26 @@ public class HomeFragment extends BaseFragment {
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+            homeScanPopWindow.showAsDropDown(findViewById(R.id.iv_scan));
+            homeScanPopWindow.backgroundAlpha(0.5f);
         });
 
     }
+
+    View.OnClickListener scanSelectItemsOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.rl_scan_device:   // 扫描设备
+                    Bundle bundle = new Bundle();
+                    bundle.putString("from", EanfangConst.QR_CLIENT);
+                    bundle.putString("scanType", "scan_device");
+                    JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle);
+                    homeScanPopWindow.dismiss();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void setListener() {

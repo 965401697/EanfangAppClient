@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,17 +16,24 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.util.PermKit;
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.LookCheckDetailAdapter;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.fragment.WorkCheckListFragment;
+
+import net.eanfang.client.R;
+import net.eanfang.client.ui.adapter.LookCheckDetailAdapter;
+import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.WorkCheckListFragment;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WorkCheckInfoActivity extends BaseWorkerActivity {
+/**
+ * @author guanluocang
+ * @data 2018/9/14
+ * @description 设备点检详情
+ */
+
+public class WorkCheckInfoActivity extends BaseClientActivity {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)
@@ -146,18 +153,11 @@ public class WorkCheckInfoActivity extends BaseWorkerActivity {
                     .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
                         fillDta(bean);
                         initAdapter();
-
-                        boolean isFinish = true;
-                        for (WorkCheckInfoBean.WorkInspectDetailsBean b : detailAdapter.getData()) {
-                            if (b.getStatus() == status) {// TODO: 2018/8/23 待优化 
-                                isFinish = false;
-                                break;
-                            }
-                        }
-                        if (isFinish) {
-                            setResult(RESULT_OK);
-                            finish();
-                        }
+//                        for (WorkCheckInfoBean.WorkInspectDetailsBean b : detailAdapter.getData()) {
+//                            if (b.getStatus() == status) {// TODO: 2018/8/23 待优化
+//                                break;
+//                            }
+//                        }
                     }));
         }
     }

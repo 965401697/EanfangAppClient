@@ -17,7 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
@@ -215,7 +215,8 @@ public class EquipmentDetailActivity extends BaseClientActivity {
             case R.id.tv_right:
                 Bundle bundle_repair = new Bundle();
                 bundle_repair.putSerializable("scan_repair", mBean);
-                JumpItent.jump(EquipmentDetailActivity.this, RepairActivity.class, bundle_repair);
+                bundle_repair.putBoolean("isScanRepair", true);
+                JumpItent.jump(EquipmentDetailActivity.this, AddTroubleActivity.class, bundle_repair);
                 finishSelf();
                 break;
         }

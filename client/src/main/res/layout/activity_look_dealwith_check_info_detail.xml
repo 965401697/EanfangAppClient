@@ -44,7 +44,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,8 +159,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_btn"
-                    android:text="通过"
                     android:padding="10dp"
+                    android:text="通过"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -171,8 +170,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:background="@drawable/bg_ll_btn"
-                    android:text="驳回"
                     android:padding="10dp"
+                    android:text="驳回"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>

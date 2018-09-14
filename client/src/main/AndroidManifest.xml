@@ -191,7 +191,7 @@
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
             android:screenOrientation="portrait" />
         <!-- 设备点检 新建检查 -->
-        <activity android:name=".ui.activity.worksapce.oa.CheckActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckActivity" />
         <!-- 新建工作汇报 -->
         <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
@@ -210,8 +210,8 @@
         <activity android:name=".ui.activity.worksapce.PsTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.LookTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.PhoneLookTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.WorkCheckListActivity" />
-        <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.WorkCheckListActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.AddDealwithInfoActivity" />
         <activity android:name=".ui.activity.worksapce.OrderConfirmActivity" />
         <activity android:name=".ui.activity.worksapce.WorkerDetailActivity" />
         <!-- 添加汇报之完成工作 -->
@@ -551,7 +551,7 @@
         <!-- 布置任务 -->
         <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
         <!-- 设备检点 -->
-        <activity android:name=".ui.activity.worksapce.oa.CheckParentActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckParentActivity" />
         <!-- 开店日志 -->
         <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogParentActivity" />
         <!-- 布防日志 -->
@@ -576,11 +576,11 @@
             </intent-filter>
         </receiver>
         <!-- 工作检查 -->
-        <activity android:name=".ui.activity.worksapce.WorkCheckInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.WorkCheckInfoActivity" />
         <!-- 处理明细 -->
-        <activity android:name=".ui.activity.worksapce.LookWorkCheckInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.LookWorkCheckInfoActivity" />
         <!-- 添加处理明细 -->
-        <activity android:name=".ui.activity.worksapce.LookDealwithCheckInfoDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.LookDealwithCheckInfoDetailActivity" />
         <!-- 修改密码 -->
         <activity
             android:name=".ui.activity.worksapce.setting.UpdatePasswordActivity"

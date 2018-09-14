@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa;
+package net.eanfang.worker.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +10,17 @@ import android.widget.TextView;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.WorkCheckListActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
+/**
+ * @author guanluocang
+ * @data 2018/9/14
+ * @description 设备点检 （我创建的  我负责的  本公司的）
+ */
 public class CheckParentActivity extends BaseWorkerActivity {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
@@ -45,7 +50,7 @@ public class CheckParentActivity extends BaseWorkerActivity {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!PermKit.get().getWorkInspectCreatePrem())return;
+                if (!PermKit.get().getWorkInspectCreatePrem()) return;
                 startActivity(new Intent(CheckParentActivity.this, CheckActivity.class));
             }
         });
@@ -65,7 +70,7 @@ public class CheckParentActivity extends BaseWorkerActivity {
      */
     private void jump(String title, int type) {
 
-        if(!PermKit.get().getWorkInspectListPrem())return;
+        if (!PermKit.get().getWorkInspectListPrem()) return;
 
         Intent intent = new Intent(this, WorkCheckListActivity.class);
         intent.putExtra("title", title);

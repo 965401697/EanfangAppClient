@@ -24,7 +24,7 @@ import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.AddDealwithInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.AddDealwithInfoActivity;
 import net.eanfang.worker.ui.adapter.AddCheckInfoDetailAdapter;
 
 import java.util.ArrayList;

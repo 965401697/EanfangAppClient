@@ -15,10 +15,11 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.worker.ui.activity.worksapce.WorkCheckInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.WorkCheckInfoActivity;
 import net.eanfang.worker.ui.adapter.WorkCheckListAdapter;
 
-import static android.app.Activity.RESULT_OK;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by MrHou
@@ -137,11 +138,15 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
                 });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101 && resultCode == RESULT_OK) {
+    @Subscribe(threadMode = ThreadMode.MAIN)//MAIN代表主线程
+    public void receiveMessage(String message) {//该方法名可更改，不影响任何东西。
+        if (message.equals("addDealWithInfoSuccess")) {
             mAdapter.remove(currentPosition);
+            if (mAdapter.getData().size() <= 0) {
+                mTvNoData.setVisibility(View.VISIBLE);
+            } else {
+                mTvNoData.setVisibility(View.GONE);
+            }
         }
     }
 }

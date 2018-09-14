@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.oa;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +36,7 @@ import com.yaf.sys.entity.UserEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.AddWorkCheckDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.AddCheckDetailAdapter;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -57,7 +58,7 @@ import butterknife.ButterKnife;
  *
  * @on 2017/11/20  13:55
  * @email houzhongzhou@yeah.net
- * @desc 工作检查
+ * @desc 添加设备点检
  */
 
 public class CheckActivity extends BaseClientActivity {
@@ -359,7 +360,7 @@ public class CheckActivity extends BaseClientActivity {
                                 startActivity(intent);
 
                                 //分享
-                                if (newPresonList.size() == 0 && newGroupList.size() == 0)  {
+                                if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                                     finishSelf();
                                     return;
                                 }

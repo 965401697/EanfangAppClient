@@ -16,6 +16,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -39,6 +40,7 @@ import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentAddActivity;
+import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
@@ -137,6 +139,8 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etDeviceLocationNum;
     @BindView(R.id.iv_input_voice)
     ImageView ivInputVoice;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -153,6 +157,7 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     // 扫码查看设备 报修
     private CustDeviceEntity mDeviceBean;
+    private boolean isScanRepair = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,11 +212,16 @@ public class AddTroubleActivity extends BaseClientActivity {
                 });
             });
         });
+        // 扫一扫设备
+        ivRight.setOnClickListener((v) -> {
+            startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+        });
     }
 
     private void initView() {
         setTitle("新增故障");
         setLeftBack();
+        ivRight.setImageResource(R.mipmap.ic_main_top_qrcode);
         beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
         //个人客户 不显示设备库选择
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
@@ -220,6 +230,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
 
         mDeviceBean = (CustDeviceEntity) getIntent().getSerializableExtra("scan_repair");
+        isScanRepair = getIntent().getBooleanExtra("isScanRepair", false);
     }
 
     /**
@@ -390,13 +401,27 @@ public class AddTroubleActivity extends BaseClientActivity {
         EanfangHttp.post(RepairApi.GET_REAPIR_DO_VERIRFY)
                 .upJson(JSON.toJSONString(cooperationEntities))
                 .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, (bean) -> {
-                    Intent intent = new Intent();
-                    if (bean != null) {
-                        intent.putExtra("mOwnerOrgId", bean.getOwnerOrgId());
+
+                    if (isScanRepair) {// 扫码添加故障
+                        Bundle bundle = new Bundle();
+                        if (bean != null) {
+                            bundle.putLong("mOwnerOrgId", bean.getOwnerOrgId());
+                        }
+                        bundle.putSerializable("bean", repairBugEntity);
+                        bundle.putBoolean("isScanRepair", isScanRepair);
+                        JumpItent.jump(AddTroubleActivity.this, RepairActivity.class, bundle);
+                        finishSelf();
+                    } else {// 正常报修流程
+                        Intent intent = new Intent();
+                        if (bean != null) {
+                            intent.putExtra("mOwnerOrgId", bean.getOwnerOrgId());
+                        }
+                        intent.putExtra("bean", repairBugEntity);
+                        intent.putExtra("isScanRepair", isScanRepair);
+                        setResult(CLIENT_ADD_TROUBLE, intent);
+                        finish();
                     }
-                    intent.putExtra("bean", repairBugEntity);
-                    setResult(CLIENT_ADD_TROUBLE, intent);
-                    finish();
+
                 }));
     }
 }

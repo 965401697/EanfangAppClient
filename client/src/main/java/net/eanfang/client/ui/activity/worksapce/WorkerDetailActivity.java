@@ -405,6 +405,18 @@ public class WorkerDetailActivity extends BaseClientActivity {
         jsonObject.put("assigneeId", companyUserId);
         jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
         jsonObject.put("type", 0);
+        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+            jsonObject.put("owner_company_id", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
+        }
+        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+            jsonObject.put("owner_top_company_id", EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        }
+        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+            jsonObject.put("assignee_top_company_id", detailsBean.getCompanyEntity().getTopCompanyId());
+        }
+        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+            jsonObject.put("assignee_company_id", detailsBean.getCompanyEntity().getCompanyId());
+        }
         EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
                 .upJson(jsonObject.toJSONString())
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
