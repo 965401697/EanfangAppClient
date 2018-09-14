@@ -27,9 +27,9 @@ import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.ReportParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.TaskParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
@@ -189,6 +189,11 @@ public class WorkspaceFragment extends BaseFragment {
             selectMapPopWindow.showAtLocation(findViewById(R.id.ll_workspace), Gravity.BOTTOM, 0, 0);
             selectMapPopWindow.backgroundAlpha(0.5f);
         });
+        //行业知识
+        findViewById(R.id.tv_work_knowledge).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("url", "https://news.eanfang.net/")
+                        .putExtra("title", "行业知识")));
     }
 
     /**
@@ -237,7 +242,7 @@ public class WorkspaceFragment extends BaseFragment {
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-            if(!PermKit.get().getExchangeListPrem())return;
+            if (!PermKit.get().getExchangeListPrem()) return;
             if (workerApprove()) {
                 Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
                 startActivity(intent);

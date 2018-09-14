@@ -88,7 +88,7 @@ public class DefendLogDetailActivity extends BaseClientActivity {
 
         boolean isVisible = getIntent().getBooleanExtra("isVisible", false);
 
-        if(isVisible){
+        if (isVisible) {
             setRightTitle("查看详情");
             setRightTitleOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,7 +96,7 @@ public class DefendLogDetailActivity extends BaseClientActivity {
                     startActivity(new Intent(DefendLogDetailActivity.this, DefendLogDetailDetailActivity.class).putExtra("id", mId));
                 }
             });
-        }else {
+        } else {
 
             setRightImageResId(R.mipmap.more);
             setRightImageOnClickListener(new View.OnClickListener() {
@@ -120,6 +120,7 @@ public class DefendLogDetailActivity extends BaseClientActivity {
         mTitleList.add("误报");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setNestedScrollingEnabled(false);
         DefendLogDetailAdapter defendLogDetailAdapter = new DefendLogDetailAdapter(R.layout.item_defend_log_detail, this);
         defendLogDetailAdapter.setNewData(mTitleList);
         mAdapterList = defendLogDetailAdapter.getmList();//如果是添加数据  这里为空

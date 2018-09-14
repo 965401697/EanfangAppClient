@@ -177,7 +177,10 @@ public class WorkspaceFragment extends BaseFragment {
         //专家解答
         findViewById(R.id.tv_work_answer).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //行业知识
-        findViewById(R.id.tv_work_knowledge).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        findViewById(R.id.tv_work_knowledge).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("url", "https://news.eanfang.net/")
+                        .putExtra("title", "行业知识")));
         //变更记录
         findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //在线文档
