@@ -1,11 +1,13 @@
 package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,6 +19,7 @@ import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.adapter.LookCheckDetailAdapter;
 
 import java.util.List;
@@ -31,7 +34,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-
+@Deprecated
 public class WorkCheckInfoView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;
@@ -53,15 +56,25 @@ public class WorkCheckInfoView extends BaseDialog {
     TextView tvDependPerson;
     @BindView(R.id.et_phone_num)
     TextView etPhoneNum;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.textView)
+    TextView textView;
+    @BindView(R.id.ll_depend_person)
+    LinearLayout llDependPerson;
+    @BindView(R.id.ll_phone_num)
+    LinearLayout llPhoneNum;
     private Activity mContext;
     private Long id;
     private LookCheckDetailAdapter detailAdapter;
     private List<WorkCheckInfoBean.WorkInspectDetailsBean> mDataList;
+    private boolean isVisible;
 
-    public WorkCheckInfoView(Activity context, boolean isfull, Long id) {
+    public WorkCheckInfoView(Activity context, boolean isfull, Long id, boolean isVisible) {
         super(context, isfull);
         this.mContext = context;
         this.id = id;
+        this.isVisible = isVisible;
     }
 
     @Override
@@ -100,6 +113,7 @@ public class WorkCheckInfoView extends BaseDialog {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<WorkCheckInfoBean>(mContext, true, WorkCheckInfoBean.class, (bean) -> {
+                    share(bean);
                     fillDta(bean);
                     initAdapter();
                     taskDetialList.addOnItemTouchListener(new OnItemClickListener() {
@@ -128,6 +142,34 @@ public class WorkCheckInfoView extends BaseDialog {
         etPhoneNum.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
         mDataList = bean.getWorkInspectDetails();
 
+    }
+
+    private void share(WorkCheckInfoBean bean) {
+        if (!isVisible) {
+            tvRight.setText("分享");
+            tvRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //分享聊天
+
+                    Intent intent = new Intent(mContext, SelectIMContactActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("id", String.valueOf(bean.getId()));
+                    bundle.putString("orderNum", bean.getCreateUser().getAccountEntity().getRealName());
+//                    if (bean.getWorkTaskDetails() != null && !TextUtils.isEmpty(bean.getWorkTaskDetails().get(0).getPictures())) {
+//                        bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
+//                    }
+                    bundle.putString("creatTime", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    bundle.putString("workerName", bean.getCreateTime());
+                    bundle.putString("status", String.valueOf(bean.getStatus()));
+                    bundle.putString("shareType", "5");
+
+                    intent.putExtras(bundle);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 
 }

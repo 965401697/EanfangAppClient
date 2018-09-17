@@ -92,6 +92,14 @@ public class BughandleConfirmEntity implements Serializable {
     //协助人员
     //@TableField(value = "team_worker")
     private String teamWorker;
+    //创建人
+    //@TableField(value = "create_user_id")
+    private Long createUserId;
+    //创建时间
+    //@TableField(value = "create_time")
+    private Date createTime;
+
+
     //签退时间
     //@TableField(value = "sign_out_time")
     private Date signOutTime;
@@ -101,12 +109,13 @@ public class BughandleConfirmEntity implements Serializable {
     //签退地点
     //@TableField(value = "sign_out_address")
     private String signOutAddress;
-    //创建人
-    //@TableField(value = "create_user_id")
-    private Long createUserId;
-    //创建时间
-    //@TableField(value = "create_time")
-    private Date createTime;
+    //签退经度
+    //@TableField(value="sign_out_longitude")
+    private String signOutLongitude;
+    //签退纬度
+    //@TableField(value="sign_out_latitude")
+    private String signOutLatitude;
+
     //修改人
     //@TableField(value = "edit_user_id")
     private Long editUserId;

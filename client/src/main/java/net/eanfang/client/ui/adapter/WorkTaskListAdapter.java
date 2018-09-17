@@ -13,8 +13,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * Created by Mr.hou
@@ -26,8 +24,8 @@ import java.util.List;
 
 public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListBean, BaseViewHolder> {
 
-    public WorkTaskListAdapter(List<WorkTaskListBean.ListBean> data) {
-        super(R.layout.item_work_list_layout, data);
+    public WorkTaskListAdapter() {
+        super(R.layout.item_work_list_layout);
 
     }
 
@@ -44,12 +42,12 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
         helper.setText(R.id.tv_title_name, "标题：" + item.getTitle());
         helper.setText(R.id.tv_pub_time, "发布时间：" + item.getCreateTime());
         helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreateUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
+//        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
 
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
             String[] urls = item.getWorkTaskDetail().getPictures().split(",");
-            head_pic.setImageURI(BuildConfig.OSS_SERVER+Uri.parse(urls[0]));
+            head_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
         }
 
     }

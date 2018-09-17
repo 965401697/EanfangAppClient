@@ -136,6 +136,16 @@ public class OrgEntity implements Serializable, Cloneable {
     //@TableField(value = "update_time")
     private Date updateTime;
 
+    private boolean flag;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
+
     /**
      * 设置：组织机构ID
      */

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">监控服务管家</string>
+    <string name="app_name">易安防</string>
     <!--登录页-->
     <string name="read"><u>阅读协议</u></string>
     <string name="forget_password"><u>忘记密码？</u></string>
@@ -17,8 +17,42 @@
     <string name="text_home_monitor">实时监控</string>
     <string name="text_work_repair">报修管控</string>
     <string name="text_work_install">报装管控</string>
-    <string name="text_work_price">报价管控</string>
+    <string name="text_work_price">维修报价</string>
     <string name="text_work_maintain">维保管控</string>
     <string name="text_work_design">免费设计</string>
     <string name="text_work_transfer">交接班</string>
+    <string name="text_device_info">设备信息</string>
+    <string name="text_fault_info">故障信息</string>
+    <string name="text_fault_description">故障详细描述</string>
+
+    <!--IM-->
+    <string name="all_group_member">全部群成员</string>
+    <string name="group_portrait">群头像</string>
+    <string name="group_name">群名字</string>
+    <string name="group_announcement">群公告</string>
+    <string name="quit_group">退出群</string>
+    <string name="dismiss_group">解散</string>
+    <string name="empty_group_notice">请编辑群公告</string>
+    <string name="clean_message">清除聊天记录</string>
+    <string name="message_notice">消息免打扰</string>
+    <string name="set_top">会话置顶</string>
+    <string name="group_notice_prefix">\@所有人\n</string>
+    <string name="group_transfer">转让群主</string>
+    <string name="group_shutup">全员禁言</string>
+    <string name="private_chat">发起聊天</string>
+    <string name="group_chat">创建群组</string>
+    <string name="add_contacts">添加好友</string>
+    <string name="group_qrt">群二维码</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="text_repair_personalinfo">用户信息</string>
+    <string name="text_repair_contactslinfo">联系人信息</string>
+    <string name="text_repair_selectlocation">选择定位</string>
+    <string name="text_repair_arrivetime">到达时限:</string>
+    <string name="text_next">下一步</string>
+    <string name="text_fault">故障</string>
+    <string name="text_worker_detail_see_more_type">查看所有标签</string>
+
+
 </resources>

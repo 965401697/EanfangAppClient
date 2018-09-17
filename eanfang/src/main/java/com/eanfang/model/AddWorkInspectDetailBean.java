@@ -19,17 +19,18 @@ public class AddWorkInspectDetailBean implements Serializable {
      * pictures : 多个图片地铁
      */
 
-    private long sysWorkInspectDetailId;
+    private long oaWorkInspectDetailId;
     private String disposeInfo;
     private String remarkInfo;
     private String pictures;
+    private Long oaWorkInspectId;
 
-    public long getSysWorkInspectDetailId() {
-        return sysWorkInspectDetailId;
+    public long getOaWorkInspectDetailId() {
+        return oaWorkInspectDetailId;
     }
 
-    public void setSysWorkInspectDetailId(long sysWorkInspectDetailId) {
-        this.sysWorkInspectDetailId = sysWorkInspectDetailId;
+    public void setOaWorkInspectDetailId(long oaWorkInspectDetailId) {
+        this.oaWorkInspectDetailId = oaWorkInspectDetailId;
     }
 
     public String getDisposeInfo() {
@@ -54,5 +55,13 @@ public class AddWorkInspectDetailBean implements Serializable {
 
     public void setPictures(String pictures) {
         this.pictures = pictures;
+    }
+
+    public Long getOaWorkInspectId() {
+        return oaWorkInspectId;
+    }
+
+    public void setOaWorkInspectId(Long oaWorkInspectId) {
+        this.oaWorkInspectId = oaWorkInspectId;
     }
 }

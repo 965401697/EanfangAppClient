@@ -10,14 +10,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 public class TakeTaskAdapter extends BaseQuickAdapter<MineTaskListBean.ListBean, BaseViewHolder> {
 
 
-    public TakeTaskAdapter(List<MineTaskListBean.ListBean> data) {
-        super(R.layout.item_take_task, data);
+    public TakeTaskAdapter() {
+        super(R.layout.item_take_task);
 
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * @author wen
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc app配置信息
  */
 public class Config {
@@ -55,6 +55,10 @@ public class Config {
         return constBean;
     }
 
+    public void cleanConstBean() {
+        this.constBean = null;
+    }
+
     public BaseDataBean getBaseDataBean() {
         if (baseDataBean == null) {
             synchronized (Config.class) {
@@ -66,6 +70,9 @@ public class Config {
         return baseDataBean;
     }
 
+    public void cleanBaseDataBean() {
+        this.baseDataBean = null;
+    }
 
     public List<BaseDataEntity> getBusinessList() {
         if (businessList == null) {
@@ -456,6 +463,32 @@ public class Config {
             return null;
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId().equals(id)).map(bean -> bean.getDataCode() + "").findFirst().orElseGet(() -> null);
+    }
+
+    /**
+     * 根据下级 code  获得指定 上级 code
+     *
+     * @param code
+     * @param level
+     * @return
+     */
+    public String getBaseCodeByLevel(String code, Integer level) {
+//        if (id == null || id <= 0) {
+//            return null;
+//        }
+//        String code = Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId().equals(id)).map(bean -> bean.getDataCode() + "").findFirst().orElseGet(() -> null);
+        String[] codeArr = code.split(BASE_CODE_SPLIT_STR);
+        if (codeArr.length <= level) {
+            return null;
+        }
+        StringBuilder levelCode = new StringBuilder();
+        for (int i = 0; i < level + 1; i++) {
+            levelCode.append(codeArr[i]);
+            if (i != level) {
+                levelCode.append(BASE_CODE_JOINING_STR);
+            }
+        }
+        return levelCode.toString();
     }
 
     /**

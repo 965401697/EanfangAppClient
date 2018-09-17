@@ -21,6 +21,11 @@ import com.eanfang.R;
 /**
  * jorn
  */
+
+/**
+ * 2018年8月10日 14:27:46
+ */
+@Deprecated
 public class UploadDialogUtil {
     public static UploadDialogUtil uploadDialogUtil = new UploadDialogUtil();
     UploadDialog uploadDialog;

@@ -1,21 +1,14 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Constant;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.MineTaskListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
@@ -46,8 +39,8 @@ public class MineTaskPublishListActivity extends BaseActivity {
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
     private MineTaskPublishListFragment currentFragment;
+    //    private MineTaskListBean workReportListBean;
     private static String titleBar;
-    private MineTaskListBean workReportListBean;
     private int dataType;
 
     @Override
@@ -63,7 +56,9 @@ public class MineTaskPublishListActivity extends BaseActivity {
         dataType = getIntent().getIntExtra("type", 0);
         setTitle(titleBar);
         setLeftBack();
-
+        if (!allmTitles.contains("全部")) {
+            allmTitles.add("全部");
+        }
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
@@ -84,8 +79,7 @@ public class MineTaskPublishListActivity extends BaseActivity {
             @Override
             public void onPageSelected(int position) {
                 currentFragment = (MineTaskPublishListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-                initData(1);
+
             }
 
             @Override
@@ -94,48 +88,48 @@ public class MineTaskPublishListActivity extends BaseActivity {
             }
         });
         currentFragment = (MineTaskPublishListFragment) mFragments.get(0);
-        initData(1);
+//        initData(1);
 
     }
 
-    private void initData(int page) {
-        int status = GetConstDataUtils.getTaskPublishStatus().indexOf(currentFragment.getmTitle());
+//    private void initData(int page) {
+//        int status = GetConstDataUtils.getTaskPublishStatus().indexOf(currentFragment.getmTitle());
+//
+//        QueryEntry queryEntry = new QueryEntry();
+//        if (Constant.CREATE_DATA_CODE == (dataType)) {
+//            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+//        } else if (Constant.ASSIGNEE_DATA_CODE == (dataType)) {
+//            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+//        }
+//        queryEntry.getEquals().put("status", status + "");
+//
+//        queryEntry.setPage(page);
+//        queryEntry.setSize(5);
+//
+//        EanfangHttp.post(NewApiService.TASK_PUBLISH_LIST)
+//                .upJson(JsonUtils.obj2String(queryEntry))
+//                .execute(new EanfangCallback<MineTaskListBean>(this, true, MineTaskListBean.class, (bean) -> {
+//                    runOnUiThread(() -> {
+//                        workReportListBean = bean;
+//                        currentFragment.onDataReceived();
+//                    });
+//                }));
+//
+//    }
 
-        QueryEntry queryEntry = new QueryEntry();
-        if (Constant.CREATE_DATA_CODE == (dataType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
-        } else if (Constant.ASSIGNEE_DATA_CODE == (dataType)) {
-            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
-        }
-        queryEntry.getEquals().put("status", status + "");
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        initData(1);
+//    }
 
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-
-        EanfangHttp.post(NewApiService.TASK_PUBLISH_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<MineTaskListBean>(this, true, MineTaskListBean.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        workReportListBean = bean;
-                        currentFragment.onDataReceived();
-                    });
-                }));
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData(1);
-    }
-
-    public MineTaskListBean getWorkReportListBean() {
-        return workReportListBean;
-    }
-
-    public void setWorkReportListBean(MineTaskListBean workReportListBean) {
-        this.workReportListBean = workReportListBean;
-    }
+//    public MineTaskListBean getWorkReportListBean() {
+//        return workReportListBean;
+//    }
+//
+//    public void setWorkReportListBean(MineTaskListBean workReportListBean) {
+//        this.workReportListBean = workReportListBean;
+//    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
@@ -156,5 +150,11 @@ public class MineTaskPublishListActivity extends BaseActivity {
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        currentFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

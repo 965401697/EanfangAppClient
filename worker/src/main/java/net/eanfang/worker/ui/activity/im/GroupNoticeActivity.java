@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.im;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -59,6 +60,9 @@ public class GroupNoticeActivity extends BaseWorkerActivity {
 
             @Override
             public void onSuccess(Message message) {
+                Intent intent = new Intent();
+                intent.putExtra("notice", mEdit.getText().toString().trim());
+                setResult(RESULT_OK, intent);
                 GroupNoticeActivity.this.finish();
             }
 

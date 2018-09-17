@@ -36,15 +36,8 @@
             android:id="@+id/tv_unlock"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_client_home_unlock"
-            android:text="@string/text_home_unlock" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_level4"
-        android:orientation="horizontal">
+            android:text="@string/text_home_unlock"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_service"
@@ -52,11 +45,22 @@
             android:drawableTop="@mipmap/ic_client_home_service"
             android:text="@string/text_home_service" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_level4"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+
         <TextView
             android:id="@+id/tv_monitor"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_client_home_monitor"
-            android:text="@string/text_home_monitor" />
+            android:text="@string/text_home_monitor"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="0dp"

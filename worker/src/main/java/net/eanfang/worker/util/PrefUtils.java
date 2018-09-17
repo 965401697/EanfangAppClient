@@ -12,6 +12,7 @@ import com.eanfang.application.EanfangApplication;
 public class PrefUtils {
     //是否显示引导界面，true为显示，false为不显示
     public static final String SHOWGUIDE = "showguid";
+    public static final String GUIDE = "guid";
     public static final String SHOW_REFISTER = "showguid";
     public static final String ISCOLLECTED = "is_collected";
     public static final String RECEIVE_MSG_SWITCH_CHECK = "receive_msg_switch_check";

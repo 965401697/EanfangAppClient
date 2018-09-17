@@ -25,11 +25,23 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_ll_selctor"
                     android:padding="10dp"
                     android:text="服务费用"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="（内测阶段立享0.01元上门费优惠）  "
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/title_bar_color"
+                    android:textSize="14dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -63,7 +75,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_fapiao"
@@ -88,7 +101,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -169,7 +183,8 @@
                         android:id="@+id/rb_alipay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:checked="true" />
                 </LinearLayout>
 
 
@@ -232,10 +247,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/bga_adapter_divider_shape"
+                    android:background="@drawable/bg_pay_cancel"
                     android:padding="10dp"
                     android:paddingTop="20dp"
-                    android:text="上门支付"
+                    android:text="稍后付款"
                     android:textColor="#fff"
                     android:textSize="20sp" />
 

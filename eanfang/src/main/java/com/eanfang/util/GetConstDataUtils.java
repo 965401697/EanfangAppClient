@@ -3,9 +3,10 @@ package com.eanfang.util;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class GetConstDataUtils {
@@ -35,7 +36,26 @@ public class GetConstDataUtils {
 
     private static List<String> taskPublishStatus;
 
-
+    /**
+     * 面谈员工
+     */
+    private static List<String> workTalkStatus;
+    /**
+     * 交接班详情 当前状态
+     */
+    private static List<String> workTransferDetailStatus;
+    /**
+     * 交接班
+     */
+    private static List<String> workTransfer;
+    /**
+     * 交接班 创建 班次 状态
+     */
+    private static List<String> workTransferCreateClass;
+    /**
+     * 交接班 列表(待确认 完成交接) 状态
+     */
+    private static List<String> workTransferListStatus;
     /**
      * 优先级
      */
@@ -69,6 +89,19 @@ public class GetConstDataUtils {
      */
     private static List<String> bugDetailList;
     /**
+     * 首页数据同居
+     */
+    private static List<String> homeRepairList;
+    /**
+     * 故障明细状态二级 的 key
+     */
+    private static List<String> bugDetailKeyList;
+
+    /**
+     * 故障明细 二级
+     */
+    private static Map<String, List<String>> bugDetailTwoList;
+    /**
      * 到达时限
      */
     private static List<String> arriveList;
@@ -99,6 +132,18 @@ public class GetConstDataUtils {
      */
     private static List<String> maintainLevelList;
     /**
+     * 维保订单的状态
+     */
+    private static List<String> maintainStatusList;
+    /**
+     * 维保增加处理结果的条件
+     */
+    private static List<String> maintainConditionList;
+    /**
+     * 维保处理的处理结论
+     */
+    private static List<String> maintainOsRuntimeList;
+    /**
      * 维保 检查结果
      */
     private static List<String> checkResultList;
@@ -118,9 +163,22 @@ public class GetConstDataUtils {
 
     private static List<String> repairMisinformationList;
 
-    private static List<String> noticeTypeList;
+//    private static List<String> noticeTypeList;
 
     private static List<String> dataList;//数据库查询数据集合
+    /**
+     * 误报的报警原因
+     */
+    private static List<String> flaseCauseList;
+    /**
+     * 旁路的报警原因
+     */
+    private static List<String> bypassCauseList;
+    /**
+     * 闯防的报警原因
+     */
+    private static List<String> throughCauseList;
+
 
     /**
      * 报修订单状态
@@ -248,6 +306,91 @@ public class GetConstDataUtils {
             }
         }
         return workReportStatus;
+    }
+
+    /**
+     * 面谈员工状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTalkStatus() {
+        if (workTalkStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTalkStatus == null) {
+                    workTalkStatus = Config.get().getConstBean().getData().getOAConst().get(Constant.WORKTALK_STATUS);
+                    workTalkStatus.add("全部");
+                    workTalkStatus.remove("已删除");
+                }
+            }
+        }
+        return workTalkStatus;
+    }
+
+    /**
+     * 交接班 详情(完好 破损) 状态
+     *
+     * @return
+     */
+    public static List<String> getWokrTransferDetailStatus() {
+        if (workTransferDetailStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransferDetailStatus == null) {
+                    workTransferDetailStatus = Config.get().getConstBean().getData().getExchangeLogConstant().get(Constant.WORK_TRANSFER_DETAIL);
+                }
+            }
+        }
+        return workTransferDetailStatus;
+    }
+
+
+    /**
+     * 交接班状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTransfer() {
+        if (workTransfer == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransfer == null) {
+                    workTransfer = Config.get().getConstBean().getData().getOAConst().get(Constant.WORKTRANSFER_STATUS);
+                    workTransfer.add("全部");
+                    workTransfer.remove("已删除");
+                }
+            }
+        }
+        return workTransfer;
+    }
+
+    /**
+     * 交接班 创建 班次 状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTransferCreateClass() {
+        if (workTransferCreateClass == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransferCreateClass == null) {
+                    workTransferCreateClass = Config.get().getConstBean().getData().getExchangeLogConstant().get(Constant.WORK_TRANSFER_CREATE);
+                }
+            }
+        }
+        return workTransferCreateClass;
+    }
+
+    /**
+     * 交接班 列表(待确认 完成交接) 状态
+     *
+     * @return
+     */
+    public static List<String> getWorkTransferList() {
+        if (workTransferListStatus == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (workTransferListStatus == null) {
+                    workTransferListStatus = Config.get().getConstBean().getData().getExchangeLogConstant().get(Constant.WORK_TRANSFER_LIST);
+                }
+            }
+        }
+        return workTransferListStatus;
     }
 
     /**
@@ -397,6 +540,24 @@ public class GetConstDataUtils {
     }
 
     /**
+     * 首页报修统计
+     * getRepairConstant
+     *
+     * @return
+     */
+    public static List<String> getHomeRepairStatuslList() {
+        if (homeRepairList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (homeRepairList == null) {
+                    homeRepairList = Config.get().getConstBean().getData().getRepairConstant().get(Constant.HOME_DATASTATISTICS);
+                }
+            }
+        }
+        return homeRepairList;
+    }
+
+
+    /**
      * 故障处理明细
      * getRepairConstant
      *
@@ -407,11 +568,28 @@ public class GetConstDataUtils {
             synchronized (GetConstDataUtils.class) {
                 if (bugDetailList == null) {
                     bugDetailList = Config.get().getConstBean().getData().getRepairConstant().get(Constant.BUGHANDLE_DETAIL_STATUS);
+                    bugDetailKeyList = Config.get().getConstBean().getData().getRepairConstant().get(Constant.BUGHANDLE_DETAIL_STATUS_KEY);
+                    bugDetailTwoList = new HashMap<>();
+                    for (int i = 0; i < bugDetailKeyList.size(); i++) {
+                        bugDetailTwoList.put(bugDetailKeyList.get(i), Config.get().getConstBean().getData().getRepairConstant().get(bugDetailKeyList.get(i)));
+                    }
                 }
             }
         }
         return bugDetailList;
     }
+
+
+    /**
+     * 故障处理明细 二级
+     *
+     * @param oneIndex 故障明细 1级 下标
+     * @return
+     */
+    public static List<String> getBugDetailTwoList(int oneIndex) {
+        return bugDetailTwoList.get(bugDetailKeyList.get(oneIndex));
+    }
+
 
     /**
      * 到达时限
@@ -517,6 +695,40 @@ public class GetConstDataUtils {
             }
         }
         return maintainLevelList;
+    }
+
+    public static List<String> getMaintainStatusList() {
+        if (maintainStatusList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (maintainStatusList == null) {
+                    maintainStatusList = Config.get().getConstBean().getData().getMainTainConstant().get(Constant.MAINTAIN_CONSTANT_STATUS);
+                }
+            }
+        }
+        return maintainStatusList;
+    }
+
+
+    public static List<String> getMaintainConditionList() {
+        if (maintainConditionList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (maintainConditionList == null) {
+                    maintainConditionList = Config.get().getConstBean().getData().getMainTainConstant().get(Constant.MAINTAIN_ADD_CHECK_CONDITION);
+                }
+            }
+        }
+        return maintainConditionList;
+    }
+
+    public static List<String> getMaintainOsRuntimeList() {
+        if (maintainOsRuntimeList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (maintainOsRuntimeList == null) {
+                    maintainOsRuntimeList = Config.get().getConstBean().getData().getMainTainConstant().get(Constant.MAINTAIN_OS_RUNTIME);
+                }
+            }
+        }
+        return maintainOsRuntimeList;
     }
 
     public static List<String> getCheckResultList() {
@@ -628,17 +840,67 @@ public class GetConstDataUtils {
         return repairMisinformationList;
     }
 
-    public static List<String> getNoticeTypeList() {
+//    public static List<String> getNoticeTypeList() {
+//
+//        if (noticeTypeList == null) {
+//            synchronized (GetConstDataUtils.class) {
+//                if (noticeTypeList == null) {
+//                    noticeTypeList = Config.get().getConstBean().getData().getNoticeConst().get(Constant.NOTICE_TYPE);
+//                }
+//            }
+//        }
+//        return noticeTypeList;
+//    }
 
-        if (noticeTypeList == null) {
+    /**
+     * 旁路报警
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getBypassCause() {
+        if (bypassCauseList == null) {
             synchronized (GetConstDataUtils.class) {
-                if (noticeTypeList == null) {
-                    noticeTypeList = Config.get().getConstBean().getData().getNoticeConst().get(Constant.NOTICE_TYPE);
+                if (bypassCauseList == null) {
+                    bypassCauseList = Config.get().getConstBean().getData().getConst().get(Constant.BYPASS_CAUSE);
                 }
             }
         }
-        return noticeTypeList;
+        return bypassCauseList;
     }
 
+    /**
+     * 闯防的报警原因
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getThroughCause() {
+        if (throughCauseList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (throughCauseList == null) {
+                    throughCauseList = Config.get().getConstBean().getData().getConst().get(Constant.THROUGH_CAUSE);
+                }
+            }
+        }
+        return throughCauseList;
+    }
+
+    /**
+     * .误报的报警原因
+     * getConst
+     *
+     * @return
+     */
+    public static List<String> getFlaseCause() {
+        if (flaseCauseList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (flaseCauseList == null) {
+                    flaseCauseList = Config.get().getConstBean().getData().getConst().get(Constant.FALSE_CAUSE);
+                }
+            }
+        }
+        return flaseCauseList;
+    }
 
 }

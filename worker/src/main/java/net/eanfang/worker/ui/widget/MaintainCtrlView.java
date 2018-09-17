@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,7 +12,7 @@ import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.MaintenanceActivity;
-import net.eanfang.worker.ui.activity.worksapce.QuotationActivity;
+import net.eanfang.worker.ui.activity.worksapce.PersonMaintainHistoryActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,10 +54,21 @@ public class MaintainCtrlView extends BaseDialog {
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("维保管控");
         llMineAssignment.setOnClickListener((v) -> {
-            new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUserId(), 0).show();
+            Intent intent = new Intent(mContext, PersonMaintainHistoryActivity.class);
+            intent.putExtra("id", EanfangApplication.getApplication().getUserId());
+            intent.putExtra("type", 0);
+            mContext.startActivity(intent);
+
+//            new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUserId(), 0).show();
         });
         llMineCompany.setOnClickListener((v) -> {
-            new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId(), 1).show();
+
+            Intent intent = new Intent(mContext, PersonMaintainHistoryActivity.class);
+            intent.putExtra("id", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId());
+            intent.putExtra("type", 1);
+            mContext.startActivity(intent);
+
+//            new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId(), 1).show();
         });
 
         ivAdd.setOnClickListener((v) -> {

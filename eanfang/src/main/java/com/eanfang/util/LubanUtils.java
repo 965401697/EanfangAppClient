@@ -4,7 +4,6 @@ package com.eanfang.util;
 import android.content.Context;
 
 import com.annimon.stream.function.Consumer;
-import com.annimon.stream.function.Supplier;
 
 import java.io.File;
 import java.util.Arrays;

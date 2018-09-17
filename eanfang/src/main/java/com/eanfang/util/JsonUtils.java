@@ -8,6 +8,12 @@ import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 
 import java.util.List;
 
+/**
+ * 2018年8月10日 14:48:38
+ * <p>
+ * 请使用JSON原生转换
+ */
+@Deprecated
 public class JsonUtils {
 
     /**

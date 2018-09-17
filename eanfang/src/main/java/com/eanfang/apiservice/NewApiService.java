@@ -2,6 +2,8 @@ package com.eanfang.apiservice;
 
 import com.eanfang.BuildConfig;
 
+import static com.eanfang.apiservice.BaseService.BASE_URL;
+
 /**
  * Created by MrHou
  *
@@ -133,6 +135,7 @@ public interface NewApiService {
      * 推送
      */
     String GET_PUSH_MSG_LIST = BuildConfig.API_HOST + "/yaf_sys/notice/list";
+    String GET_UNREAD_MSG = BuildConfig.API_HOST + "/yaf_sys/notice/maintain";
 
     /**
      * 推送已读Or未读
@@ -140,6 +143,22 @@ public interface NewApiService {
     String GET_PUSH_MSG_INFO = BuildConfig.API_HOST + "/yaf_sys/notice/info/";
     //推送消息  全部阅读
     String GET_PUSH_READ_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/readall/";
+    //推送消息  全部删除
+    String GET_PUSH_DELETE_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/delete/";
+    /**
+     * 获取推送消息数量
+     */
+    String GET_PUSH_COUNT = BuildConfig.API_HOST + "/yaf_sys/notice/count/sysBiz";
+
+    /**
+     * app首页 获取最新通知
+     */
+//    String GET_PUSH_NEWS = BuildConfig.API_HOST + "/yaf_sys/notice/news";
+
+    String GET_PUSH_NEWS_CLIENT = BuildConfig.API_HOST + "/yaf_sys/notice/newsClient";
+
+    String GET_PUSH_NEWS_WORKER = BuildConfig.API_HOST + "/yaf_sys/notice/newsWorker";
+
 
     /**
      * 新增报装
@@ -223,5 +242,310 @@ public interface NewApiService {
      * 报装完工
      */
     String INSTALL_FINISH_WORK = BuildConfig.API_HOST + "/yaf_install_order/install/updateFinish";
+
+    /**
+     * 扫描二维码 获取权限
+     */
+    String QR_CODE = BuildConfig.API_HOST + "/yaf_sys/scan";
+
+    /**
+     * 确认登录
+     */
+    String QR_LOGIN = BuildConfig.API_HOST + "/yaf_sys/toAccredit";
+
+    /**
+     * 取消登录
+     */
+    String QR_LOGIN_CANCEL = BuildConfig.API_HOST + "/yaf_sys/toCancel";
+
+    // 是否是技师 是 则返回个人信息
+    String QR_GETACCOUNT = BuildConfig.API_HOST + "/yaf_sys/code/getAccount";
+    /**
+     * 开店日志提交数据
+     */
+    String OA_SUB_OPEN_SHOP = BuildConfig.API_HOST + "/yaf_oa/oaopenshoplog/insert";
+    /**
+     * 开店日志列表
+     */
+    String OA_OPEN_SHOP_LIST = BuildConfig.API_HOST + "/yaf_oa/oaopenshoplog/list";
+    /**
+     * 开店日志详情
+     */
+    String OA_OPEN_SHOP_DETAIL = BuildConfig.API_HOST + "/yaf_oa/oaopenshoplog/info";
+    /**
+     * 布防日志列表
+     */
+    String OA_DEFEND_LOG_LIST = BuildConfig.API_HOST + "/yaf_oa/protectionlog/list";
+    /**
+     * 提交布防日志
+     */
+    String OA_SUB_DEFEND_LOG = BuildConfig.API_HOST + "/yaf_oa/protectionlog/insert";
+    /**
+     * 布防日志详情
+     */
+    String OA_DEFEND_LOG_DETAIL = BuildConfig.API_HOST + "/yaf_oa/protectionlog/detail";
+    /**
+     * 布防日志状态更新
+     */
+    String OA__DEFEND_LOG_UPDATE = BuildConfig.API_HOST + "/yaf_oa/protectionlog/update";
+
+
+    /**
+     * 报装单确认
+     * post
+     */
+    String INSTALL_ORDER_CONFIRM = BASE_URL + "/installorderconfirm";
+    /**
+     * 收藏公司
+     * post
+     */
+
+    String COLLECTION_COMPANY_WORK = BASE_URL + "/collectinstallcompany";
+    /**
+     * 公司详情
+     * get
+     */
+
+    String COMPANY_DETAIL = BASE_URL + "/getworkcompanydetail";
+
+
+    /**
+     * 查看发票
+     * get
+     */
+    String LOOK_FA_PIAO = BASE_URL + "/getinvoicebyordernum";
+
+    /**
+     * 发票
+     * post
+     */
+    String FA_PIAO = BASE_URL + "/yaf_sys/invoice/create";
+    /**
+     * /**
+     * 发票
+     * post
+     */
+    String INVOICE_UPDATE = BASE_URL + "/yaf_sys/invoice/update";
+    /**
+     * 根据orderId查发票
+     * post
+     */
+    String GET_INVOICE_INFO = BASE_URL + "/yaf_sys/invoice/info";
+
+    /**
+     * 地址列表
+     * post
+     */
+    String GET_ADDRESS_LIST = BASE_URL + "/yaf_sys/receive/list";
+    /**
+     * 创建地址
+     * post
+     */
+    String CREATE_ADDRESS = BASE_URL + "/yaf_sys/receive/create";
+    /**
+     * 删除地址
+     * post
+     */
+    String DELETE_ADDRESS = BASE_URL + "/yaf_sys/receive/delete";
+    /**
+     * 修改地址
+     * post
+     */
+    String UPDATE_ADDRESS = BASE_URL + "/yaf_sys/receive/update";
+    /**
+     * 设置默认地址
+     * post
+     */
+    String SET_DEFAULT_ADDRESS = BASE_URL + "/yaf_sys/receive/setDefault";
+    /**
+     * 设置管理员
+     * post
+     */
+    String SET_TRANS_ADMIN = BASE_URL + "/yaf_sys/account/transadmin";
+    /**
+     * 创建部门
+     * post
+     */
+    String CREAT_SECTION = BASE_URL + "/yaf_sys/org/insertdepartment";
+    /**
+     * 当前登录人可以访问的角色
+     * post
+     */
+    String MY_LIST_ROLE = BASE_URL + "/yaf_sys/role/listmyrole";
+    /**
+     * 当前搜索人角色
+     * post
+     */
+    String MY_CURREMT_LIST_ROLE = BASE_URL + "/yaf_sys/role/listbyuser/";
+    /**
+     * 添加员工
+     * post
+     */
+    String ADD_STAFF = BASE_URL + "/yaf_sys/staff/insert";
+    /**
+     * 添加角色
+     * post
+     */
+    String ADD_STAFF_ROLE = BASE_URL + "/yaf_sys/staff/grant";
+    /**
+     * 获的合作业务的list
+     * post
+     */
+    String GET_COOPERATION_LIST = BASE_URL + "/yaf_shop/cooperation/list";
+    /**
+     * 查看合作业务的详情
+     * post
+     */
+    String GET_COOPERATION_DETAIL = BASE_URL + "/yaf_shop/cooperation/detail";
+    /**
+     * 客户解绑合作业务
+     * post
+     */
+    String COOPERATION_DELETE = BASE_URL + "/yaf_shop/cooperation/delete";
+
+    /**
+     * 客户审核合作业务
+     * post
+     */
+    String COOPERATION_AUDIT = BASE_URL + "/yaf_shop/cooperation/audit";
+
+    /**
+     * 搜索客户公司
+     * post
+     */
+    String COOPERATION_WORKCOMPANY_SEARCH = BASE_URL + "/yaf_shop/workCompany/search";
+    /**
+     * 搜索客户公司
+     * post
+     */
+    String COOPERATION_WORKCOMPANY_SUB = BASE_URL + "/yaf_shop/cooperation/create";
+    /**
+     * 故障记录列表
+     * post
+     */
+    String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list";
+    /**
+     * 故障记录统计
+     * post
+     */
+    String FAULT_RECORD_TOTAL = BASE_URL + "/yaf_repair/failure/record/total";
+    /**
+     * 客户端设备列表  技师端设备列表 用一个
+     * post
+     */
+    String DEVICE_LIST_CLIENT = BASE_URL + "/yaf_device/custDevice/list";
+    /**
+     * 添加设备库列表
+     * post
+     */
+    String DEVICE_LIST_ADD = BASE_URL + "/yaf_device/custDevice/choose";
+    /**
+     * 设备詳情  客户端 和技师端 共用
+     * post
+     */
+    String DEVICE_DETAIL = BASE_URL + "/yaf_device/custDevice/detail";
+
+    /**
+     * 变更记录列表
+     * post
+     */
+    String DEVICE_CHANGE_LIST = BASE_URL + "/yaf_device/custdevicechangelog/list";
+    /**
+     * 变更记录详情
+     * post
+     */
+    String DEVICE_CHANGE_DETAIL = BASE_URL + "/yaf_device/custdevicechangelog/info/";
+    /**
+     * 技师认证编辑
+     */
+    String WORKER_AUTH_REVOKE = BASE_URL + "/yaf_sys/techworkerverify/rollBack/";
+    /**
+     * 安防公司编辑
+     */
+    String COMPANY_SECURITY_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/shop/rollback/";
+
+    /**
+     * 企业认证编辑
+     */
+    String COMPANY_ENTERPRISE_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/ent/rollback/";
+
+    /**
+     * 报修统计接口
+     */
+    String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
+    /**
+     * 维保管控列表接口
+     */
+    String MAINTENANCE_GET_LIST = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/list";
+    /**
+     * 维保管控详情接口
+     */
+    String MAINTENANCE_GET_DETAIL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detail";
+    /**
+     * 维保管控预约接口接口
+     */
+    String MAINTENANCE_APPOINT_TIME = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/update";
+    /**
+     * 维保管控改约接口
+     */
+    String MAINTENANCE_UPDATE_APPOINT_TIME = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/Appointment";
+    /**
+     * 维保管控预约签到
+     */
+    String MAINTENANCE_SINGIN = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/signIn";
+    /**
+     * 客户端确认维保完工
+     */
+    String MAINTENANCE_CLIENT_CONFIRM = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/confirm";
+    /**
+     * 维保处理提交
+     */
+    String MAINTENANCE_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/dispose";
+    /**
+     * 维保详情的状态
+     */
+    String MAINTENANCE_DETAIL_STATUS = BASE_URL + "/yaf_maintain/shopmaintenanceorder/flow";
+    /**
+     * 待验收的查看处理信息 传ID
+     */
+    String MAINTENANCE_DETAIL_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detailDispose";
+
+    /*
+    * 报修统计获取公司
+    */
+    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
+
+    /**
+     * 面谈员工列表
+     */
+    String WORK_TALK = BASE_URL + "/yaf_oa/facetoworker/list";
+    /**
+     * 面谈员工添加
+     */
+    String WORK_TALK_ADD = BASE_URL + "/yaf_oa/facetoworker/insert";
+    /**
+     * 面谈员工详情
+     */
+    String WORK_TALK_DETAIL = BASE_URL + "/yaf_oa/facetoworker/info/";
+    /**
+     * 交接班创建
+     */
+    String WORK_TRANSFER_ADD = BASE_URL + "/yaf_oa/exchangelog/insert";
+    /**
+     * 交接班列表
+     */
+    String WORK_TRANSFER_LIST = BASE_URL + "/yaf_oa/exchangelog/list";
+    /**
+     * 交接班详情
+     */
+    String WORK_TRANSFER_DETAIL = BASE_URL + "/yaf_oa/exchangelog/info/";
+    /**
+     * 交接班确认交接
+     */
+    String WORK_TRANSFER_CONFIM = BASE_URL + "/yaf_oa/exchangelog/update/";
+    /**
+     * 首页统计数据
+     */
+    String HOME_DATASTASTISTICS = BASE_URL + "/yaf_statistics/repairOrderStatistics/app/Count";
 
 }

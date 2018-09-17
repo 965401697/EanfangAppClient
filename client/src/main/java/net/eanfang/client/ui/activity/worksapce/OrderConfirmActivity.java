@@ -1,17 +1,21 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.camera.util.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -21,13 +25,18 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.V;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.pay.PayActivity;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -43,6 +52,7 @@ import butterknife.ButterKnife;
  */
 public class OrderConfirmActivity extends BaseClientActivity {
 
+    private static final String TAG = "OrderConfirmActivity";
     @BindView(R.id.tv_contact)
     TextView tvContact;
     @BindView(R.id.tv_phone)
@@ -58,12 +68,25 @@ public class OrderConfirmActivity extends BaseClientActivity {
     @BindView(R.id.btn_complete)
     Button btnComplete;
     @BindView(R.id.sv)
-    ScrollView scrollView;
+    NestedScrollView scrollView;
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_realname)
+    TextView tvRealname;
+    @BindView(R.id.tv_company_name)
+    TextView tvCompanyName;
     private ArrayList<RepairBugEntity> mDataList = new ArrayList<>();
     private LinearLayoutManager llm;
 
     private RepairOrderEntity repairOrderEntity;
     private PayLogEntity payLogEntity;
+
+    //  头像 名称 公司名
+    private String headUrl = "";
+    private String workerName = "";
+    private String comapnyName = "";
+
+    private int mDoorFee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +98,70 @@ public class OrderConfirmActivity extends BaseClientActivity {
         initData();
         initAdapter();
         registerListener();
-        setLeftBack();
 
+    }
+
+    private void initView() {
+        llm = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(llm);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        scrollView.smoothScrollTo(0, 20);
+        setLeftBack();
         setTitle("订单确认");
+        headUrl = getIntent().getStringExtra("headUrl");
+        workerName = getIntent().getStringExtra("workName");
+        comapnyName = getIntent().getStringExtra("companyName");
+        mDoorFee = getIntent().getIntExtra("doorFee", 0);
+    }
+
+    private void initData() {
+        tvContact.setText(repairOrderEntity.getRepairContacts());
+        tvPhone.setText(repairOrderEntity.getRepairContactPhone());
+        tvCompany.setText(repairOrderEntity.getRepairCompany());
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + headUrl));
+        tvRealname.setText(workerName);
+        tvCompanyName.setText(comapnyName);
+        if (repairOrderEntity.getArriveTimeLimit() >= 0) {
+            tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
+        }
+        tvAddress.setText(Config.get().getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
+
+        mDataList = (ArrayList<RepairBugEntity>) repairOrderEntity.getBugEntityList();
+    }
+
+    private void initAdapter() {
+        BaseQuickAdapter evaluateAdapter = new RepairOrderConfirmAdapter(R.layout.item_order_confirm, mDataList);
+        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
+            @Override
+            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.ll_item) {
+                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+                    if (secondItem.getVisibility() == View.VISIBLE) {
+                        secondItem.setVisibility(View.GONE);
+                    } else {
+                        secondItem.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("faultDeatail", mDataList.get(position));
+                JumpItent.jump(OrderConfirmActivity.this, FaultDetailActivity.class, bundle);
+            }
+        });
+        mRecyclerView.setAdapter(evaluateAdapter);
     }
 
     private void getData() {
         Intent intent = getIntent();
-        repairOrderEntity = V.v(()->(RepairOrderEntity) intent.getSerializableExtra("bean"));
+        repairOrderEntity = V.v(() -> (RepairOrderEntity) intent.getSerializableExtra("bean"));
+        PayLogEntity payLogEntity = new PayLogEntity();
+        payLogEntity.setPayPrice(1);
+        repairOrderEntity.setPayLogEntity(payLogEntity);//测试专用
     }
 
     private void registerListener() {
@@ -90,6 +169,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void doHttpSubmit() {
+        // TODO: 2018/8/30 算要支付的费用 提交给后台
         EanfangHttp.post(RepairApi.ADD_CLIENT_REPAIR)
                 .upJson(JSON.toJSONString(repairOrderEntity))
                 .execute(new EanfangCallback<RepairOrderEntity>(this, true, RepairOrderEntity.class, (bean) -> {
@@ -120,7 +200,6 @@ public class OrderConfirmActivity extends BaseClientActivity {
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-
         closeActivity();
 
 
@@ -142,59 +221,27 @@ public class OrderConfirmActivity extends BaseClientActivity {
         payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
 
         //查询上门费
-        payLogEntity.setOriginPrice(100);
+//        payLogEntity.setOriginPrice(mDoorFee);
+        payLogEntity.setPayPrice(1);//测试用的
 
-        Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
-        intent.putExtra("payLogEntity", payLogEntity);
-        startActivity(intent);
-
-        closeActivity();
+        EanfangHttp.post(RepairApi.GET_REPAIR_PAY_RECORD)
+                .upJson(JSON.toJSONString(payLogEntity))
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    LogUtil.e(TAG, "支付记录执行成功");
+//                    Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
+                    Intent intent = new Intent(OrderConfirmActivity.this, NewPayActivity.class);
+                    intent.putExtra("payLogEntity", payLogEntity);
+                    startActivity(intent);
+                    closeActivity();
+                }));
     }
 
     private void closeActivity() {
+        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
-        finish();
-    }
-
-
-    private void initView() {
-        llm = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(llm);
-        scrollView.smoothScrollTo(0, 20);
-
-    }
-
-    private void initData() {
-        tvContact.setText(repairOrderEntity.getRepairContacts());
-        tvPhone.setText(repairOrderEntity.getRepairContactPhone());
-        tvCompany.setText(repairOrderEntity.getRepairCompany());
-        if (repairOrderEntity.getArriveTimeLimit() >= 0) {
-            tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
-        }
-        tvAddress.setText(Config.get().getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
-
-        mDataList = (ArrayList<RepairBugEntity>) repairOrderEntity.getBugEntityList();
-    }
-
-    private void initAdapter() {
-        BaseQuickAdapter evaluateAdapter = new RepairOrderConfirmAdapter(R.layout.item_order_confirm, mDataList);
-        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        });
-        mRecyclerView.setAdapter(evaluateAdapter);
+        finishSelf();
     }
 
 }

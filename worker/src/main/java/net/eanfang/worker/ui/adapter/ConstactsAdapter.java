@@ -27,7 +27,7 @@ public class ConstactsAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
         if (item instanceof OrgEntity) {
             if (((OrgEntity) item).getOrgName()!=null){
                 helper.setText(R.id.tv_company_name, ((OrgEntity) item).getOrgName());
-                helper.setVisible(R.id.iv_img, false);
+                helper.setVisible(R.id.iv_setting, false);
             }else {
                 helper.setVisible(R.id.rel_company, false);
             }

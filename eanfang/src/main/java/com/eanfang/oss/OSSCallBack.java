@@ -15,10 +15,6 @@ import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import lombok.Getter;
-
 /**
  * Created by jornl on 2017/9/13.
  */
@@ -28,10 +24,9 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     private Activity activity;
     private boolean showDialog;
     private UploadDialogUtil.UploadDialog uploadDialog;
-    @Getter
-    private AtomicInteger total = new AtomicInteger(0);
-    @Getter
-    private AtomicInteger curr = new AtomicInteger(0);
+
+    private static Integer total;
+    private static Integer current;
 
     private Handler handler;
 
@@ -45,7 +40,25 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
         init();
     }
 
+    public static synchronized Integer getTotal() {
+        return total;
+    }
+
+    public static synchronized void setTotal(Integer total) {
+        OSSCallBack.total = total;
+    }
+
+    public static synchronized Integer getCurrent() {
+        return current;
+    }
+
+    public static synchronized void setCurrent(Integer current) {
+        OSSCallBack.current = current;
+    }
+
     private void init() {
+        setTotal(0);
+        setCurrent(0);
         handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
             if (showDialog) {
@@ -106,7 +119,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     public void onOssProgress(PutObjectRequest request, long currentSize, long totalSize) {
         handler.post(() -> {
             if (uploadDialog != null) {
-                uploadDialog.setTextContent("正在上传（" + curr.get() + "/" + total.get() + "）");
+                uploadDialog.setTextContent("正在上传（" + currentSize + "/" + totalSize + "）");
             }
         });
 

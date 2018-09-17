@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="@dimen/dimen_160">
+
+    <CheckBox
+        android:id="@+id/cb_checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_32" />
+
+    <LinearLayout
+        android:id="@+id/ll_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_toLeftOf="@+id/tv_status"
+        android:layout_toRightOf="@+id/cb_checked"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="河北省大厂县祁各庄潮河北省大厂县祁各庄潮新佳苑河北省大厂县祁各庄潮新佳苑新佳苑"
+            android:textColor="@color/color_client_neworder" />
+
+
+        <TextView
+            android:id="@+id/tv_preson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="赵子武 13381451899"
+            android:textSize="@dimen/textSize_12" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_toLeftOf="@+id/iv_edit"
+        android:text="默认"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize_12" />
+
+
+    <ImageView
+        android:id="@+id/iv_edit"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_32"
+        android:src="@mipmap/address_edit" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_alignParentBottom="true"
+        android:background="@color/content_bg" />
+
+</RelativeLayout>

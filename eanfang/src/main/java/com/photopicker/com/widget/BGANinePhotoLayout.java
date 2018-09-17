@@ -30,8 +30,9 @@ import com.photopicker.com.util.BGAPhotoPickerUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAAdapterViewAdapter;
-import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
+import cn.bingoogolapple.baseadapter.BGAAdapterViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
+
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com
@@ -75,7 +76,7 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
         mShowAsLargeWhenOnlyOne = true;
         mItemCornerRadius = 0;
         mItemWhiteSpacing = BGAPhotoPickerUtil.dp2px(4);
-        mPlaceholderDrawableResId = R.mipmap.bga_pp_ic_holder_light;
+        mPlaceholderDrawableResId = R.drawable.bga_pp_ic_holder_dark;
         mOtherWhiteSpacing = BGAPhotoPickerUtil.dp2px(100);
         mItemSpanCount = 3;
     }

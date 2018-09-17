@@ -193,7 +193,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="微信支付"
+                        android:text="微信支付  （暂缓开通）"
                         android:textColor="@color/font_color"
                         android:textSize="16sp" />
 
@@ -201,7 +201,8 @@
                         android:id="@+id/rb_weixin_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone" />
                 </LinearLayout>
 
             </LinearLayout>

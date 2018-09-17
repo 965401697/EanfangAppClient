@@ -27,6 +27,11 @@ import java.util.HashMap;
 /**
  * Created by jornl on 2017/6/23.
  */
+
+/**
+ * 2018年8月10日 14:27:46
+ */
+@Deprecated
 public class UpdateManager {
     private final static int DOWNLOAD_FAIL = -1;
     /* 下载中 */

@@ -23,11 +23,11 @@ public class AddCheckInfoDetailAdapter extends BaseQuickAdapter<WorkCheckInfoBea
     protected void convert(BaseViewHolder helper, WorkCheckInfoBean.WorkInspectDetailsBean.WorkInspectDetailDisposesBean item) {
         helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getDisposeInfo());
         helper.setVisible(R.id.tv_detai_status, true);
-        if (EanfangConst.WORK_INSPECT_STATUS_REVIEW == item.getStatus()) {
+        if ( 0 == item.getStatus()) {
             helper.setText(R.id.tv_detai_status, EanfangConst.WORK_INSPECT_STATUS_REVIEW_STR);
-        } else if (EanfangConst.WORK_INSPECT_STATUS_FAIL == item.getStatus()) {
+        } else if (1 == item.getStatus()) {
             helper.setText(R.id.tv_detai_status, EanfangConst.WORK_INSPECT_STATUS_FAIL_STR);
-        } else if (EanfangConst.WORK_INSPECT_STATUS_FINISH == item.getStatus()) {
+        } else if (2 == item.getStatus()) {
             helper.setText(R.id.tv_detai_status, EanfangConst.WORK_INSPECT_STATUS_FINISH_STR);
         }
         helper.addOnClickListener(R.id.tv_delete);

@@ -11,8 +11,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 /**
  * Created by Mr.hou
@@ -24,8 +22,8 @@ import java.util.List;
 
 public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.ListBean, BaseViewHolder> {
 
-    public WorkCheckListAdapter(List<WorkCheckListBean.ListBean> data) {
-        super(R.layout.item_check_list_layout, data);
+    public WorkCheckListAdapter() {
+        super(R.layout.item_check_list_layout);
 
     }
 
@@ -33,14 +31,16 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
     protected void convert(BaseViewHolder helper, WorkCheckListBean.ListBean item) {
         helper.setText(R.id.tv_company_name, item.getCompanyName());
         helper.setText(R.id.tv_check_person, "检查人：" + item.getCreateUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_duty_person, "负责人：" + item.getAssigneeUser().getAccountEntity().getRealName());
+//        helper.setText(R.id.tv_duty_person, "负责人：" + item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_check_time, "检查时间：" + item.getCreateTime());
         helper.setText(R.id.tv_change_tiem, "整改期限：" + item.getChangeDeadlineTime());
 
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
-        if (!StringUtils.isEmpty(item.getWorkInspectDetail().getPictures())) {
-            String[] urls = item.getWorkInspectDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+        if (item.getWorkInspectDetail() != null) {
+            if (!StringUtils.isEmpty(item.getWorkInspectDetail().getPictures())) {
+                String[] urls = item.getWorkInspectDetail().getPictures().split(",");
+                head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            }
         }
 
     }

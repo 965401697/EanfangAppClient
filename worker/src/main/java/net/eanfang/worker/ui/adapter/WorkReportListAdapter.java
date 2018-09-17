@@ -14,8 +14,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 /**
  * Created by Mr.hou
  *
@@ -25,8 +23,8 @@ import java.util.List;
  */
 
 public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.ListBean, BaseViewHolder> {
-    public WorkReportListAdapter(List<WorkReportListBean.ListBean> data) {
-        super(R.layout.item_work_report_layout, data);
+    public WorkReportListAdapter() {
+        super(R.layout.item_work_report_layout);
 
     }
 
@@ -36,7 +34,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
         helper.setText(R.id.tv_depart_name, "部门：" + item.getCreateOrg().getOrgName());
         helper.setText(R.id.tv_type, "类型：" + GetConstDataUtils.getWorkReportTypeList().get(item.getType()));
         helper.setText(R.id.tv_pub_person, "发布人：" + item.getCreateUser().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
+//        helper.setText(R.id.tv_rev_person, "接收人：" + item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_pub_time, "提交时间：" + item.getCreateTime());
         if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
             helper.setText(R.id.tv_read_ns, "已读");
@@ -47,7 +45,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
             String[] urls = item.getWorkReportDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
+            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
         }
 
     }

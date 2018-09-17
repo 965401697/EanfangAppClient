@@ -166,6 +166,21 @@ public class StringUtils {
     }
 
     /**
+     * 校验密码是否符合规格：6~12为字母或数字
+     *
+     * @param pwd
+     * @return
+     */
+    public static boolean isPwdLegal(String pwd) {
+        String REGEX_PWD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$";
+        if (TextUtils.isEmpty(pwd)) {
+            return false;
+        } else {
+            return Pattern.matches(REGEX_PWD, pwd);
+        }
+    }
+
+    /**
      * 通过高德导航路径规划给的高速的名字得到高速的代码
      *
      * @param str G22XXX高速
@@ -199,6 +214,20 @@ public class StringUtils {
 
     public static void main(String[] args) {
         System.out.println("isvalid:" + isValid("bac83aad1e1e3315b814160de69467d0PGFn05GfO4Bj2gcKyH4jcCfOS + CIkfDv0ZNNjBJ7TqM ="));
+    }
+
+    public static String getValueByName(String url, String name) {
+        String result = "";
+        int index = url.indexOf("?");
+        String temp = url.substring(index + 1);
+        String[] keyValue = temp.split("&");
+        for (String str : keyValue) {
+            if (str.contains(name)) {
+                result = str.replace(name + "=", "");
+                break;
+            }
+        }
+        return result;
     }
 
 }

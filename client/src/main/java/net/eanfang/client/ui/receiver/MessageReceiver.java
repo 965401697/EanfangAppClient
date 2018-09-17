@@ -2,10 +2,13 @@ package net.eanfang.client.ui.receiver;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.LogTime;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.camera.util.LogUtil;
+import com.eanfang.ui.base.voice.SynthesizerPresenter;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -13,7 +16,7 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
-import net.eanfang.client.ui.activity.my.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 
 /**
  * Created by MrHou
@@ -40,18 +43,30 @@ public class MessageReceiver extends XGPushBaseReceiver {
         }
         Var.get("MainActivity.initMessageCount").setVar(Var.get("MainActivity.initMessageCount").getVar() + 1);
         Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
+
+        JSONObject jsonObject = JSON.parseObject(notifiShowedRlt.getCustomContent());
+        if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
+            System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
+            if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
+                SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
+            }
+        }
+
     }
 
     @Override
     public void onUnregisterResult(Context context, int errorCode) {
+        LogUtil.e(LogTag, "onUnregisterResult");
     }
 
     @Override
     public void onSetTagResult(Context context, int errorCode, String tagName) {
+        LogUtil.e(LogTag, "onSetTagResult");
     }
 
     @Override
     public void onDeleteTagResult(Context context, int errorCode, String tagName) {
+        LogUtil.e(LogTag, "onDeleteTagResult");
     }
 
     // 通知点击回调 actionType=1为该消息被清除，actionType=0为该消息被点击
@@ -75,10 +90,12 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onRegisterResult(Context context, int errorCode,
                                  XGPushRegisterResult message) {
+        LogUtil.e(LogTag, "onRegisterResult");
     }
 
     // 消息透传
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
+        LogUtil.e(LogTag, "onTextMessage");
     }
 }

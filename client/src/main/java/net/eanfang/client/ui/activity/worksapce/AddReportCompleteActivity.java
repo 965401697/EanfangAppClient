@@ -59,7 +59,7 @@ public class AddReportCompleteActivity extends BaseClientActivity {
         initData();
         setLeftBack();
         setTitle("完成工作");
-        setRightTitle("完成");
+        setRightTitle("提交");
     }
 
     private void initData() {

@@ -34,4 +34,14 @@
     <color name="work_logo_color">#F8602F</color>
     <color name="color_text_selected">#00ff00</color>
     <color name="color_text_normal">#e6e6e6</color>
+
+    <color name="color_service_title">#33B0FF</color>
+    <!-- 首页统计数据四个点的背景色 -->
+    <color name="color_home_data_one">#F6D914</color>
+    <color name="color_home_data_two">#F59A49</color>
+    <color name="color_home_data_three">#F55549</color>
+    <color name="color_auth_list_unfinish">#F56549</color>
+    <color name="color_home_data_four">#CDCDCD</color>
+    <color name="color_auth_top_back">#FFD6E6F2</color>
+    <color name="color_auth_top_text">#FF1C91EA</color>
 </resources>

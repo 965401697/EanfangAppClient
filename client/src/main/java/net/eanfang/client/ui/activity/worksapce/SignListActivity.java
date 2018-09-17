@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -16,6 +17,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
@@ -41,6 +43,8 @@ public class SignListActivity extends BaseActivity {
     LinearLayout llSignLayout;
     @BindView(R.id.ll_footer)
     LinearLayout llFooter;
+    @BindView(R.id.tv_sign)
+    TextView tvSign;
     private String title;
     private int status;
 
@@ -55,11 +59,10 @@ public class SignListActivity extends BaseActivity {
     private void initView() {
         title = getIntent().getStringExtra("title");
         status = getIntent().getIntExtra("status", 0);
+        if (status == 1) tvSign.setText("签退");
         setTitle("足迹");
         setLeftBack();
-        llSignLayout.setOnClickListener(v -> startActivity(new Intent(SignListActivity.this, SignActivity.class)
-                .putExtra("title", title)
-                .putExtra("status", status)));
+        llSignLayout.setOnClickListener(v -> finishSelf());
         initData();
     }
 
@@ -80,6 +83,11 @@ public class SignListActivity extends BaseActivity {
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (status == 0) {
+                    if (!PermKit.get().getSignInDetailPrem()) return;
+                } else {
+                    if (!PermKit.get().getSignOutDetailPrem()) return;
+                }
                 startActivity(new Intent(SignListActivity.this, SignListDetailActivity.class)
                         .putExtra("id", mDataList.get(position).getId())
                         .putExtra("bean", mDataList.get(position))

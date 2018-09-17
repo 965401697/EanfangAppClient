@@ -10,16 +10,14 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 /**
  * 工作台-我要报装adapter
  * Created by Administrator on 2017/3/15.
  */
 
 public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBean.ListBean, BaseViewHolder> {
-    public WorkspaceInstallAdapter(List<WorkspaceInstallBean.ListBean> data) {
-        super(R.layout.item_workspace_install_list, data);
+    public WorkspaceInstallAdapter() {
+        super(R.layout.item_workspace_install_list);
     }
 
     @Override

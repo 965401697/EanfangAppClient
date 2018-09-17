@@ -1,19 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.eanfang">
+
+    <uses-sdk tools:overrideLibrary="org.xutils" />
 
     <!-- SD卡读取权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
-    <!--获取Camera权限-->
+    <!-- 获取Camera权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hradware.camera" />
     <uses-permission android:name="android.hradware.camera.autofocus" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <uses-sdk tools:overrideLibrary="org.xutils" />
 
     <!-- 添加必要的权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -24,7 +25,7 @@
     <!-- 短信验证登陆功能需要添加次权限来自动填充验证码，用不到可以去掉 -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
-    <!-- 【必须】 信鸽SDK所需权限   -->
+    <!-- 【必须】 信鸽SDK所需权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -42,7 +43,6 @@
     <uses-permission android:name="android.permission.RESTART_PACKAGES" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -52,18 +52,6 @@
         tools:ignore="ProtectedPermissions" />
 
     <application>
-
-        <!--&lt;!&ndash;信鸽&ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="XG_V2_ACCESS_ID"-->
-        <!--android:value="2100270001"-->
-        <!--tools:replace="android:value" />-->
-        <!--<meta-data-->
-        <!--android:name="XG_V2_ACCESS_KEY"-->
-        <!--android:value="ADCL916N8D7M"-->
-        <!--tools:replace="android:value" />-->
-        <!--&lt;!&ndash;信鸽 end&ndash;&gt;-->
-
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -71,7 +59,7 @@
             android:theme="@style/BGAPPTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <!--图片选择界面-->
+        <!-- 图片选择界面 -->
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPickerActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -79,7 +67,7 @@
             android:theme="@style/BGAPPTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
-        <!--图片选择预览界面-->
+        <!-- 图片选择预览界面 -->
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPickerPreviewActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -100,8 +88,19 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+        <!-- 选择组织联系人 -->
+        <activity android:name=".ui.activity.SelectContactActivity" />
 
+        <!-- 选择创建发送联系人 -->
+        <activity android:name=".ui.activity.SelectOAPresonActivity" />
 
+        <!-- 组织结构 -->
+        <activity android:name=".ui.activity.SelectOrganizationActivity" />
+        <!-- 二级折叠选择 -->
+        <activity android:name=".ui.activity.SelectPresonActivity" />
+        <activity android:name=".ui.activity.kpbs.KPBSActivity" />
+        <activity android:name=".ui.activity.AuthWorkerAreaNewActivity" />
+        <activity android:name=".ui.activity.NoPermissionActivity"></activity>
     </application>
 
 </manifest>

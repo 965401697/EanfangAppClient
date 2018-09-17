@@ -6,14 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
@@ -45,17 +38,8 @@ public class WorkTaskListActivity extends BaseWorkerActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
-    private WorkTaskListFragment currentFragment;
-    private WorkTaskListBean workTaskListBean;
+
     private String type;
-
-    public WorkTaskListBean getWorkTaskListBean() {
-        return workTaskListBean;
-    }
-
-    public void setWorkTaskListBean(WorkTaskListBean workTaskListBean) {
-        this.workTaskListBean = workTaskListBean;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +74,7 @@ public class WorkTaskListActivity extends BaseWorkerActivity {
 
             @Override
             public void onPageSelected(int position) {
-                currentFragment = (WorkTaskListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
-//                initData(1);
+
             }
 
             @Override
@@ -100,81 +82,6 @@ public class WorkTaskListActivity extends BaseWorkerActivity {
 
             }
         });
-        currentFragment = (WorkTaskListFragment) mFragments.get(0);
-//        initData(1);
-    }
-
-    private void initData(int page) {
-        String status = null;
-        if (!currentFragment.getmTitle().equals("全部")) {
-            status = GetConstDataUtils.getWorkTaskStatus().indexOf(currentFragment.getmTitle()) + "";
-        }
-        QueryEntry queryEntry = new QueryEntry();
-        if ("0".equals(type)) {
-            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
-        } else if ("1".equals(type)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
-        } else if ("2".equals(type)) {
-            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
-        }
-        if (!currentFragment.getmTitle().equals("全部")) {
-            queryEntry.getEquals().put("status", status);
-        }
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-//        HttpParams params = new HttpParams();
-//        params.put("page", page);
-//        params.put("rows", 10);
-//        params.put("type", type);
-//        params.put("status", status);
-        EanfangHttp.post(NewApiService.GET_WORK_TASK_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkTaskListBean>(this, true, WorkTaskListBean.class, (bean) -> {
-                            runOnUiThread(() -> {
-                                workTaskListBean = bean;
-                                currentFragment.onDataReceived();
-                            });
-                        })
-//                {
-//
-//                    @Override
-//                    public void onSuccess(final WorkTaskListBean bean) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                workTaskListBean = bean;
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(String message) {
-//                        currentFragment.onDataReceived();
-//                    }
-//
-//                    @Override
-//                    public void onNoData(String message) {
-//                        super.onNoData(message);
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                WorkTaskListBean bean = new WorkTaskListBean();
-//                                bean.setAll(new ArrayList<WorkTaskListBean.AllBean>());
-//                                setWorkTaskListBean(bean);
-//                                currentFragment.onDataReceived();
-//                            }
-//                        });
-//                    }
-//                }
-                );
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        initData(1);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

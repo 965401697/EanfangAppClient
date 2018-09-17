@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.ReportActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.ReportActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkReportListActivity;
 
 import butterknife.BindView;
@@ -36,8 +35,8 @@ public class ReportCtrlView extends BaseDialog {
     RelativeLayout llMineAccept;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public ReportCtrlView(Activity context, boolean isfull) {
@@ -54,10 +53,8 @@ public class ReportCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("汇报管控");
-        ivRight.setVisibility(View.VISIBLE);
-        ivRight.setImageResource(R.drawable.nav_ic_add_pressed);
-        ivRight.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, ReportActivity.class)));
+        tvTitle.setText("工作汇报");
+        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, ReportActivity.class)));
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         llMineCompany.setOnClickListener(v -> jump("本公司的", "0"));

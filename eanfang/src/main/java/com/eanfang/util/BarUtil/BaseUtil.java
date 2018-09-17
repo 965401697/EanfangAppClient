@@ -19,7 +19,7 @@ import android.support.annotation.NonNull;
 /**
  * Created by admin on 2018/4/11.
  */
-
+@Deprecated
 public final class BaseUtil {
     @SuppressLint("StaticFieldLeak")
     private static Application sApplication;

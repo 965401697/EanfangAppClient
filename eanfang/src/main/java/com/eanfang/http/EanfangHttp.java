@@ -1,6 +1,8 @@
 package com.eanfang.http;
 
 
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.util.StringUtils;
 import com.okgo.OkGo;
 import com.okgo.request.GetRequest;
 import com.okgo.request.PostRequest;
@@ -22,11 +24,7 @@ public class EanfangHttp {
      * @return
      */
     public static GetRequest get(String url) {
-        if (getHttp() == null) {
-            new EanfangHttp();
-        }
-
-        return OkGo.<String>get(url);
+        return getHttp().get(url);
     }
 
     /**
@@ -36,13 +34,18 @@ public class EanfangHttp {
      * @return
      */
     public static PostRequest post(String url) {
-        if (getHttp() == null) {
-            new EanfangHttp();
-        }
-        return OkGo.<String>post(url);
+        return getHttp().post(url);
     }
 
     public static OkGo getHttp() {
+        if (http == null) {
+            synchronized (http) {
+                if (http == null) {
+                    EanfangApplication.get().initOkGo();
+                }
+            }
+        }
+
         return http;
     }
 
@@ -61,7 +64,11 @@ public class EanfangHttp {
     }
 
     public static OkGo setToken(String token) {
-        getHttp().getCommonHeaders().put("YAF-Token", token);
+        if (StringUtils.isEmpty(token)) {
+            getHttp().getCommonHeaders().remove("YAF-Token");
+        } else {
+            getHttp().getCommonHeaders().put("YAF-Token", token);
+        }
         return getHttp();
 
     }

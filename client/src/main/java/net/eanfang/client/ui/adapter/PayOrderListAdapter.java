@@ -12,8 +12,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * 工作台--报价与支付列表的adapter
@@ -21,8 +19,8 @@ import java.util.List;
  */
 
 public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListBean, BaseViewHolder> {
-    public PayOrderListAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
+    public PayOrderListAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override
@@ -31,7 +29,7 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
         helper.setText(R.id.tv_order_id, "单号:" + item.getRepairOrderNum())
                 .setText(R.id.tv_appointment_time, "下单:" + item.getCreateTime())
                 .setText(R.id.tv_trouble_count, "项目:" + item.getProjectName())
-                .setText(R.id.tv_count_money, "¥" + item.getTotalCost()/100)
+                .setText(R.id.tv_count_money, "¥" + item.getTotalCost() / 100)
                 .setText(R.id.tv_worker_name, "技师：" + item.getReportUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
         SimpleDraweeView draweeView = helper.getView(R.id.iv_upload);

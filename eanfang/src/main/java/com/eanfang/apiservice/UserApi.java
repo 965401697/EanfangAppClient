@@ -75,6 +75,16 @@ public interface UserApi {
      */
     String GET_BRANCH_OFFICE_LIST = BuildConfig.API_HOST + "/yaf_sys/org/company/listtopall";
     /**
+     * 获取 我管理和归属的的所有公司
+     */
+    String GET_BRANCH_OFFICE_LIST_ALL = BuildConfig.API_HOST + "/yaf_sys/org/company/listtopallmananger";
+
+
+    /**
+     * 获得某个公司下  所有的 部门树  包括员工
+     */
+    String GET_BRANCH_OFFICE_LIST_TREE_ALL = BuildConfig.API_HOST + "/yaf_sys/org/departmentByCompany/listtreeall";
+    /**
      * 外协单位
      */
     String GET_STAFFTEMP_OUTER_LIST = BuildConfig.API_HOST + "/yaf_sys/stafftemp/load_outer_assist";
@@ -154,8 +164,20 @@ public interface UserApi {
      * 技师绑定系统类别
      */
     String POST_TECH_WORKER_SYS = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workersys";
+
+    /**
+     * 技师绑定业务类型
+     */
     String POST_TECH_WORKER_BIZ = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerbiz";
+
+    /**
+     * 技师绑定服务区域
+     */
     String POST_TECH_WORKER_AREA = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerarea";
+
+    /**
+     * 提交认证
+     */
     String POST_TECH_WORKER_SEND_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/sendverify";
 
     /**
@@ -194,6 +216,14 @@ public interface UserApi {
      * 获取好有列表
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
+    /**
+     * 根據accid 獲得用戶信息
+     */
+    String GET_ACC_INFO = BuildConfig.API_HOST + "/yaf_sys/account/getAccInfo";
+    /**
+     * 根据手机号查用户信息
+     */
+    String GET_MOBILE_INFO = BuildConfig.API_HOST + "/yaf_sys/account/getAccInfo/mobile";
 
     /**
      * 获取好有列表
@@ -226,6 +256,10 @@ public interface UserApi {
      */
     String POST_DELETE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/delete";
     /**
+     * 删除好友
+     */
+    String POST_DELETE_FRIEND_PUSH = BuildConfig.API_HOST + "/yaf_im/im/deleteFriendPush";
+    /**
      * 创建群组
      */
     String POST_CREAT_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/create";
@@ -238,6 +272,15 @@ public interface UserApi {
      */
     String POST_GROUP_NUM = BuildConfig.API_HOST + "/yaf_im/sysgroupuser/list";
     /**
+     * 更新群组信息
+     */
+    String POST_UPDATA_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/update";
+    /**
+     * /**
+     * 群组详情
+     */
+    String POST_GROUP_DETAIL_RY = BuildConfig.API_HOST + "/yaf_im/sysgroup/detail/ry";
+    /**
      * /**
      * 群组详情
      */
@@ -246,6 +289,11 @@ public interface UserApi {
      * 退出群组
      */
     String POST_GROUP_QUIT = BuildConfig.API_HOST + "/yaf_im/sysgroup/quit";
+    /**
+     * /**
+     * 退出群组
+     */
+    String POST_GROUP_KICKOUT = BuildConfig.API_HOST + "/yaf_im/sysgroup/kickOut";
     /**
      * 销毁群组
      */
@@ -259,5 +307,29 @@ public interface UserApi {
      * 查询没有在群组的成员
      */
     String POST_GROUP_NOJOIN = BuildConfig.API_HOST + "/yaf_sys/outer2user/findJoin";
+    /**
+     * 全员禁言
+     */
+    String POST_GROUP_GAG = BuildConfig.API_HOST + "/yaf_im/sysgroup/gag";
+    /**
+     * 全员解禁
+     */
+    String POST_GROUP_NOGAG = BuildConfig.API_HOST + "/yaf_im/sysgroup/unGag";
+    /**
+     * 根据账户id 查找用户
+     */
+    String POST_USER_INFO = BuildConfig.API_HOST + "/yaf_sys/account/info/";
+    /**
+     * 技师认证，资料完善状态查询
+     */
+    String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";
+    /**
+     * 修改手机号
+     */
+    String UPDATA_MOBILE = BuildConfig.API_HOST + "/yaf_sys/account/changeAppMobile";
+    /**
+     * 修改密码
+     */
+    String UPDATA_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changeAppkey";
 
 }

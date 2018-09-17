@@ -27,8 +27,8 @@ import android.widget.Toast;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.util.PermissionsCallBack;
+import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoActivity;
@@ -42,12 +42,13 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * BaseAppCompatFragmentActivity
  *
  * @author hr
- *         Created at 2016/1/1 11:33
+ * Created at 2016/1/1 11:33
  * @desc activity基类
  */
 
@@ -56,7 +57,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
 
     private int resultCode;
     private int limit = 0;
-    private PermissionsCallBack permissionsCallBack;
+    private PermissionUtils.PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
 
     private AlertDialog.Builder builder;
@@ -67,7 +68,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             // requestCode即所声明的权限获取码，在checkSelfPermission时传入
-            case PermissionsCallBack.callBackCode:
+            case PermissionUtils.PermissionsCallBack.callBackCode:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // 获取到权限，作相应处理
                     permissionsCallBack.callBack();
@@ -83,7 +84,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         }
     }
 
-    public void setPermissionsCallBack(PermissionsCallBack permissionsCallBack) {
+    public void setPermissionsCallBack(PermissionUtils.PermissionsCallBack permissionsCallBack) {
         this.permissionsCallBack = permissionsCallBack;
     }
 
@@ -92,7 +93,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
     protected void onCreate(Bundle savedInstanceState) {
         // Config.get().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
-        initState();
+//        initState();
         CustomeApplication.get().push(this);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -152,6 +153,10 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
         ((TextView) findViewById(R.id.tv_right)).setText(id);
     }
 
+    public void setRightGone() {
+        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.GONE);
+    }
+
     public void setRightTitleOnClickListener(View.OnClickListener listener) {
         findViewById(R.id.tv_right).setOnClickListener(listener);
     }
@@ -163,7 +168,6 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
     @Override
     protected void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -314,7 +318,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
                                     configTakePhotoOption(takePhoto);
 //        takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
 
-                                    File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+                                    File file = new File(Environment.getExternalStorageDirectory(), "/DCIM" + ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis())) + ".jpg");
                                     if (!file.getParentFile().exists()) {
                                         file.getParentFile().mkdirs();
                                     }

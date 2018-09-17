@@ -79,4 +79,24 @@
     <color name="color_contact_create_cancel_back">#c6c6c6</color>
     <color name="color_contact_create_line">#CCC</color>
     <color name="color_messagedeatil_back">#F5F3F3</color>
+    <color name="color_service_tel">#4A83F5</color>
+
+    <color name="color_service_deiveder">#CDCDCD</color>
+    <color name="color_data_line">#CBCBCB</color>
+    <color name="color_data_number">#FF9037</color>
+    <color name="color_data_bottom">#000033</color>
+    <color name="color_data_repair">#FF9037</color>
+    <color name="color_data_statics_repairs">#18A5F3</color>
+    <color name="color_data_statics_repair_two">#F5584D</color>
+
+    <color name="color_contact_authentication">#D3D3D3</color>
+    <color name="color_order_status_line">#EFF0F0</color>
+    <color name="color_pop_line">#DADADA</color>
+    <color name="color_pop_title_back">#FAE9CE</color>
+    <color name="color_pop_title">#D1A060</color>
+    <color name="color_order_list_price">#F35D3F</color>
+    <color name="color_repair_fault_num">#F35D3F</color>
+    <color name="color_put_up_order">#C0C0C0</color>
+
+
 </resources>

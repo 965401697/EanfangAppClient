@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/titles_bar"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="50dp"
     android:background="@drawable/ic_main_top_back"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/dimen_40">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/iv_left"
@@ -13,7 +12,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:src="@mipmap/ic_back"
         android:visibility="visible" />
 
@@ -22,31 +20,42 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_weight="1"
+        android:ellipsize="end"
         android:gravity="center"
-        android:text="标题"
+        android:singleLine="true"
+        android:text=""
         android:textColor="#fff"
         android:textSize="@dimen/textSize_15" />
 
-    <ImageView
-        android:id="@+id/iv_right"
+    <LinearLayout
+        android:id="@+id/ll_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_toLeftOf="@+id/tv_right"
-        android:gravity="center" />
+        android:layout_alignParentRight="true">
 
-    <TextView
-        android:id="@+id/tv_right"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginRight="15dp"
-        android:gravity="center"
-        android:text=" "
-        android:textColor="#fff"
-        android:textSize="@dimen/textSize_15" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_toLeftOf="@+id/tv_right"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:paddingRight="15dp"
+            android:text=""
+            android:textColor="#fff"
+            android:textSize="@dimen/textSize_15" />
+
+    </LinearLayout>
 
 </RelativeLayout>

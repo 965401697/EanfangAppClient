@@ -57,7 +57,7 @@ public class AddReportFindActivity extends BaseClientActivity {
     private void initView() {
         setLeftBack();
         setTitle("发现问题");
-        setRightTitle("完成");
+        setRightTitle("提交");
         bean = new WorkAddReportBean.WorkReportDetailsBean();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));

@@ -8,13 +8,16 @@
 
     <include layout="@layout/header" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical">
@@ -22,33 +25,40 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:background="@color/color_white"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/ll_business"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
                     android:padding="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="请选择设备类别"
-                        android:textColor="@color/worker_form_title_color"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_business"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/font_color"
-                        android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备类别"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_business"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_36"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+                    </LinearLayout>
+
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -57,31 +67,40 @@
                         android:layout_marginLeft="5dp"
                         android:src="@mipmap/arrow_right" />
                 </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll_equipment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
                     android:padding="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="请选择设备名称"
-                        android:textColor="@color/worker_form_title_color"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_equipment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/font_color"
-                        android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="设备名称"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_equipment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_36"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+                    </LinearLayout>
+
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -91,31 +110,39 @@
                         android:src="@mipmap/arrow_right" />
                 </LinearLayout>
 
+                <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll_model"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
                     android:padding="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="请选择品牌型号"
-                        android:textColor="@color/worker_form_title_color"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_model"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/font_color"
-                        android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="品牌型号"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_model"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dimen_36"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+                    </LinearLayout>
+
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -125,11 +152,11 @@
                         android:src="@mipmap/arrow_right" />
                 </LinearLayout>
 
+                <View style="@style/style_common_line_gray" />
+
                 <LinearLayout
-                    android:id="@+id/ll_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:orientation="horizontal"
                     android:padding="15dp">
@@ -137,82 +164,92 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="数量"
-                        android:textColor="@color/worker_form_title_color"
-                        android:textSize="16sp" />
+                        android:text="数  量    "
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
 
                     <EditText
-                        android:id="@+id/et_location"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/et_num"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="0.44"
                         android:background="@null"
-                        android:gravity="right"
                         android:hint="最大可输入999"
                         android:inputType="number"
                         android:singleLine="true"
-                        android:textColor="@color/font_color"
-                        android:textSize="16sp" />
+                        android:textColor="@color/color_client_neworder"
+                        android:textColorHint="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:id="@+id/ll_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/bg_ll_selctor"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="备注"
-                        android:textColor="@color/worker_form_title_color"
-                        android:textSize="16sp" />
-
-                    <EditText
-                        android:id="@+id/et_code"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="50字以内"
-                        android:textColor="@color/font_color"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/background" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_40">
 
-                <Button
-                    android:id="@+id/btn_add"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/worker"
-                    android:padding="10dp"
-                    android:text="添加"
-                    android:textColor="#fff"
-                    android:textSize="20sp" />
+                    android:padding="15dp"
+                    android:text="备注"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/et_remarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_100"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:layout_marginTop="@dimen/dimen_36"
+                        android:background="@null"
+                        android:gravity="start"
+                        android:hint="请输入"
+                        android:textColor="@color/color_client_neworder"
+                        android:textColorHint="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/et_remarks"
+                        android:layout_alignRight="@id/et_remarks"
+                        android:padding="10dp"
+                        android:text="0/50"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_12" />
+                </RelativeLayout>
+
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg_orange"
+            android:text="添 加"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/textSize_13" />
+    </LinearLayout>
 </LinearLayout>

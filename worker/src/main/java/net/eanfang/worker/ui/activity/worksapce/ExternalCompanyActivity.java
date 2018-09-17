@@ -31,13 +31,13 @@ import butterknife.ButterKnife;
  */
 
 public class ExternalCompanyActivity extends BaseActivity {
-    @BindView(R.id.rev_list)
-    RecyclerView revList;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment_list);
+        setContentView(R.layout.activity_external_company);
         ButterKnife.bind(this);
         initView();
     }
@@ -56,14 +56,14 @@ public class ExternalCompanyActivity extends BaseActivity {
     }
 
     private void initAdapter(List<ExternalListBean> mDataList) {
-        revList.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         ExternalAdapter parentAdapter = new ExternalAdapter(R.layout.item_quotation_detail, mDataList);
-        revList.addOnItemTouchListener(new OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 new ExternalStaffView(ExternalCompanyActivity.this, true, mDataList.get(position).getOrgId()).show();
             }
         });
-        revList.setAdapter(parentAdapter);
+        recyclerView.setAdapter(parentAdapter);
     }
 }

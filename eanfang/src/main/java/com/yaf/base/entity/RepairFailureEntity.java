@@ -6,13 +6,12 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 /**
@@ -87,16 +86,74 @@ public class RepairFailureEntity implements Serializable {
     //状态（0：待修复，1：修复完成，2：遗留）
     //@TableField(value = "status")
     private Integer status;
-    /**
-     * 当前真实故障对应的多个 故障处理
-     */
-    @TableField(exist = false)
-    private List<BughandleDetailEntity> bughandleDetailEntityList;
-    /**
-     * 当前真实故障 对应的 报修单
-     */
-    @TableField(exist = false)
-    private RepairOrderEntity repairOrderEntity;
+
+    //归属人
+    //@TableField(value = "owner_user_id")
+    private Long ownerUserId;
+    //归属总公司
+    //@TableField(value = "owner_top_company_id")
+    private Long ownerTopCompanyId;
+    //归属部门编码
+    //@TableField(value = "owner_org_code")
+    private String ownerOrgCode;
+    //当前报修 最新的受理人
+    //@TableField(value = "assignee_user_id")
+    private Long assigneeUserId;
+    //当前报修 最新的受理人总公司
+    //@TableField(value = "assignee_top_company_id")
+    private Long assigneeTopCompanyId;
+    //当前报修 最新的受理部门编码
+    //@TableField(value = "assignee_org_code")
+    private String assigneeOrgCode;
+
+    //区/县 id
+    //@TableField(value = "place_id")
+    private String placeId;
+
+    //故障简述
+    //@TableField(value = "sketch")
+    private String sketch;
+    //位置编号
+    //@TableField(value = "location_number")
+    private String locationNumber;
+    //维保状态
+    //@TableField(value = "maintenance_status")
+    private Integer maintenanceStatus;
+    //维修次数
+    //@TableField(value = "repair_count")
+    private Integer repairCount;
+
+    public String getSketch() {
+        return sketch;
+    }
+
+    public void setSketch(String sketch) {
+        this.sketch = sketch;
+    }
+
+    public String getLocationNumber() {
+        return locationNumber;
+    }
+
+    public void setLocationNumber(String locationNumber) {
+        this.locationNumber = locationNumber;
+    }
+
+    public Integer getMaintenanceStatus() {
+        return maintenanceStatus;
+    }
+
+    public void setMaintenanceStatus(Integer maintenanceStatus) {
+        this.maintenanceStatus = maintenanceStatus;
+    }
+
+    public Integer getRepairCount() {
+        return repairCount;
+    }
+
+    public void setRepairCount(Integer repairCount) {
+        this.repairCount = repairCount;
+    }
 
     /**
      * 获取：主键
@@ -322,12 +379,6 @@ public class RepairFailureEntity implements Serializable {
         this.editTime = editTime;
     }
 
-    /*
-     *===================================================================================================================================================
-     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
-     *===================================================================================================================================================
-     */
-
     /**
      * 获取：状态（0：待修复，1：修复完成，2：遗留）
      */
@@ -335,12 +386,32 @@ public class RepairFailureEntity implements Serializable {
         return status;
     }
 
+
     /**
      * 设置：状态（0：待修复，1：修复完成，2：遗留）
      */
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    /*
+     *===================================================================================================================================================
+     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
+     *===================================================================================================================================================
+     */
+
+
+    /**
+     * 当前真实故障对应的多个 故障处理
+     */
+    @TableField(exist = false)
+    private List<BughandleDetailEntity> bughandleDetailEntityList;
+
+    /**
+     * 当前真实故障 对应的 报修单
+     */
+    @TableField(exist = false)
+    private RepairOrderEntity repairOrderEntity;
 
     @TableField(exist = false)
     private UserEntity ownerUserEntity;
@@ -351,4 +422,6 @@ public class RepairFailureEntity implements Serializable {
     private UserEntity assigneeUserEntity;
     @TableField(exist = false)
     private OrgEntity assigneeOrgEntity;
+
+
 }

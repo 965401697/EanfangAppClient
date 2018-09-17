@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_14"
+    android:orientation="vertical"
+    tools:context="net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceHandleEditActivity">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_320">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_48"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:textColor="@color/color_client_neworder"
+            android:layout_marginTop="@dimen/dimen_44"
+            android:text="2018-05-1" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_upload"
+            android:layout_width="@dimen/dimen_180"
+            android:layout_height="@dimen/dimen_170"
+            android:layout_below="@+id/tv_date"
+            android:layout_marginLeft="@dimen/dimen_36"
+            fresco:placeholderImage="@mipmap/ic_nodata" />
+
+
+        <ImageView
+            android:id="@+id/iv_chapter"
+            android:layout_width="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_32"
+            android:layout_marginTop="@dimen/textSize_20"
+            android:src="@mipmap/chapter_complete" />
+
+        <TextView
+            android:id="@+id/tv_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_chapter"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:textColor="@color/color_client_neworder"
+            android:layout_toRightOf="@+id/iv_upload"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="asdfasdf" />
+
+        <TextView
+            android:id="@+id/tv_handle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_client_neworder"
+            android:layout_below="@+id/tv_question"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_toRightOf="@+id/iv_upload"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="asdfasdf" />
+
+        <TextView
+            android:id="@+id/tv_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_handle"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_toRightOf="@+id/iv_upload"
+            android:ellipsize="end"
+            android:textColor="@color/color_client_neworder"
+            android:singleLine="true"
+            android:text="asdfasdf" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_delete"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:layout_alignParentTop="true"
+            android:background="@color/content_bg" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_28"
+            android:textColor="@color/color_client_neworder"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/textSize_12"
+            android:gravity="center"
+            android:background="@drawable/shape_maintenance_delect"
+            android:text="删除" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

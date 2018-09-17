@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <include layout="@layout/layout_search" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/lv_deviceTypeLeft"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:divider="@color/color_white"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
+
+        <View style="@style/style_common_line_vertical_gray" />
+        <!--<com.eanfang.swipefresh.SwipyRefreshLayout-->
+        <!--android:id="@+id/sp_deviceRight"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="11"-->
+        <!--android:background="@color/color_white"-->
+        <!--android:visibility="visible">-->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="11"
+            android:background="@color/color_white">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_deviceTypeRight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:scrollbars="none" />
+        </RelativeLayout>
+
+
+        <!--</com.eanfang.swipefresh.SwipyRefreshLayout>-->
+
+        <TextView
+            android:id="@+id/tv_noInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:visibility="gone" />
+    </LinearLayout>
+</LinearLayout>

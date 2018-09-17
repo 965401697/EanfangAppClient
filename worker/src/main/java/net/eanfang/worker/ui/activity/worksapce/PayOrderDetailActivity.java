@@ -101,7 +101,7 @@ public class PayOrderDetailActivity extends BaseActivity {
 
         EanfangHttp.post(NewApiService.QUOTE_ORDER_DETAIL)
                 .params("id", id)
-                .execute(new EanfangCallback<QuotationBean>(this, false, QuotationBean.class, (bean) -> {
+                .execute(new EanfangCallback<QuotationBean>(this, true, QuotationBean.class, (bean) -> {
 
                     fillData(bean);
                 }));
@@ -115,7 +115,7 @@ public class PayOrderDetailActivity extends BaseActivity {
         tvOrder.setText(payOrderDetailBean.getRepairOrderNum());
         tvReporter.setText(payOrderDetailBean.getReporter());
         tvPhone.setText(payOrderDetailBean.getReporterPhone());
-        tvCountMoney.setText("¥" + payOrderDetailBean.getTotalCost()/100);
+        tvCountMoney.setText("¥" + payOrderDetailBean.getTotalCost() / 100);
         //2017年7月5日
         tvClientCompanyNameWr.setText(payOrderDetailBean.getClientName());
         //2017年7月6日 lin

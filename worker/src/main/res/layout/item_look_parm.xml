@@ -3,22 +3,27 @@
     android:id="@+id/item_look_parm"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/color_white"
     android:orientation="horizontal"
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/tv_param"
+        android:id="@+id/tv_param_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawableRight="@mipmap/arrow_right"
-        android:text="" />
+        android:gravity="center"
+        android:text="啊岁的法"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_13" />
 
     <TextView
-        android:id="@+id/et_param"
+        android:id="@+id/tv_param_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:background="@null" />
+        android:text="啊独守空房"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_13" />
 
 </LinearLayout>

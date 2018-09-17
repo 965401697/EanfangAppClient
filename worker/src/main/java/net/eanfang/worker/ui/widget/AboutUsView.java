@@ -60,17 +60,24 @@ public class AboutUsView extends BaseDialog {
 
         tvVersion.setText("V " + ApkUtils.getAppVersionName(mContext));
         findViewById(R.id.iv_left).setOnClickListener(v -> dismiss());
-
+        //版本号
+        tvVersion.setOnClickListener((v) -> {
+            showToast("versionCode：" + ApkUtils.getAppVersionCode(getContext()));
+        });
+        //客服热线
         llServicePhone.setOnClickListener((v) -> {
             HelpLineView helpLineView = new HelpLineView(mContext, true);
             helpLineView.show();
         });
+        // 免责声明
         llDisclaimer.setOnClickListener((v) -> {
             DisclaimerView disclaimerView = new DisclaimerView(mContext, true);
             disclaimerView.show();
         });
+        // 版本更新
         llUpdate.setOnClickListener((v) -> {
-            UpdateAppManager.update(mContext, BuildConfig.TYPE);
+            UpdateAppManager.update(mContext, BuildConfig.TYPE, true);
+
 //            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
 //            manager.checkUpdate();
 //            if (manager.isUpdate()) {

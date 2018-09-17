@@ -9,14 +9,17 @@ package com.eanfang.util;
  * String value   =  v(()->entityA.entityB.getValue()+entityC.entityD.getValue())
  * 表达式可以是任意内容，确保无异常抛出
  */
-import java.util.function.Supplier;
 
 public final class V {
     public static <T> T v(IV<T> express) {
         try {
             return express.eval();
-        }catch(Exception e) {
+        } catch (Exception e) {
         }
         return null;
+    }
+
+    public interface IV<T> {
+        T eval();
     }
 }

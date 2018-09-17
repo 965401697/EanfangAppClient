@@ -20,8 +20,10 @@ import java.util.List;
  */
 
 public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWorkerListBean.ListBean, BaseViewHolder> {
+
     public CollectionWorkerListAdapter(int layoutResId, List data) {
         super(layoutResId, data);
+        this.mData = data;
     }
 
     @Override
@@ -30,8 +32,13 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
         if (!StringUtils.isEmpty(item.getAssigneeUserEntity().getAccountEntity().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeUserEntity().getAccountEntity().getAvatar()));
         }
-        helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
-        helper.setText(R.id.tv_time, item.getCreateTime());
+        // 公司名称
+        if (item.getWorkerEntity() != null) {
+            helper.setText(R.id.tv_companyName, item.getWorkerEntity().getCompanyEntity().getOrgName());
+            helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
+        }
+
+//        helper.setText(R.id.tv_time, item.getCreateTime());
         if (item.getWorkerEntity() != null) {
             if (item.getWorkerEntity().getPublicPraise() != 0) {
                 helper.setText(R.id.tv_koubei, item.getWorkerEntity().getPublicPraise() / 100 + "分");

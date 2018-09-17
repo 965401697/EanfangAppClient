@@ -33,7 +33,7 @@
 
     <style name="launch_theme" parent="@style/BaseTheme">
         <!--<item name="android:windowBackground">@color/title_bar_color</item>-->
-        <item name="android:windowBackground">@drawable/app_launch</item>
+        <item name="android:windowBackground">@mipmap/ic_app_launch</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -92,8 +92,42 @@
     <!-- base color -->
     <style name="NewBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="android:windowNoTitle">true</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="style_work_detail_type">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/dimen_20</item>
+        <item name="android:textColor">@color/roll_content</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
+        <item name="android:background">@drawable/bg_client_worker_detail_type</item>
+    </style>
+
+    <style name="style_worker_detail_order">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="style_worker_detail_order_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dimen_28</item>
+        <item name="android:textColor">@color/color_client_neworder</item>
+        <item name="android:textSize">@dimen/textSize_13</item>
+    </style>
+
+    <style name="wx_theme" parent="AppTheme">
+        <!--<style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">-->
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

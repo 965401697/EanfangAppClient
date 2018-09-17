@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,12 +9,10 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ApplyTaskListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -21,9 +20,6 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.ApplyListAdapter;
 import net.eanfang.worker.ui.widget.TaskPubApplyListDetailView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,17 +32,19 @@ import butterknife.ButterKnife;
  * @desc 发包申请列表
  */
 
-public class TaskPublishApplyListActivity extends BaseActivity {
-    @BindView(R.id.tv_no_datas)
-    TextView tvNoDatas;
+public class TaskPublishApplyListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rv_list)
     RecyclerView rvList;
-    @BindView(R.id.swiprefresh)
-    SwipyRefreshLayout swiprefresh;
+    @BindView(R.id.tv_no_datas)
+    TextView mTvNoData;
+    @BindView(R.id.swipre_fresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<ApplyTaskListBean.ListBean> mDataList = new ArrayList<>();
-    private ApplyListAdapter adapter;
+    private int mPage = 1;
+
+    private ApplyListAdapter mAdapter;
     private Long shopTaskPublishId;
+    private int mCurrentPositon = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,62 +52,114 @@ public class TaskPublishApplyListActivity extends BaseActivity {
         setContentView(R.layout.activity_apply_list);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
     private void initView() {
         setTitle("申请列表");
         setLeftBack();
         shopTaskPublishId = getIntent().getLongExtra("shopTaskPublishId", 0);
-    }
 
-    private void initData() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("shopTaskPublishId", shopTaskPublishId + "");
-        EanfangHttp.post(NewApiService.TASK_APPLY_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<ApplyTaskListBean>(this, true, ApplyTaskListBean.class, (bean) -> {
-                    mDataList = bean.getList();
-                    initAdapter();
-                }));
-    }
 
-    private void initAdapter() {
-        adapter = new ApplyListAdapter(mDataList);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
-        rvList.setAdapter(adapter);
-        rvList.addOnItemTouchListener(new OnItemClickListener() {
+
+        mAdapter = new ApplyListAdapter();
+        mAdapter.bindToRecyclerView(rvList);
+        mAdapter.setOnLoadMoreListener(this);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new TaskPubApplyListDetailView(TaskPublishApplyListActivity.this, true, mDataList.get(position).getId()).show();
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                new TaskPubApplyListDetailView(TaskPublishApplyListActivity.this, true, ((ApplyTaskListBean.ListBean) adapter.getData().get(position)).getId()).show();
+
             }
         });
 
-        adapter.setOnItemChildClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mCurrentPositon = position;
+            ApplyTaskListBean.ListBean bean = (ApplyTaskListBean.ListBean) adapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_select:
-                    ignoreOrSelect(mDataList.get(position).getShopTaskPublishId(),
-                            mDataList.get(position).getId(), 1,
-                            mDataList.get(position).getCreateCompanyId(),
-                            mDataList.get(position).getCreateOrgCode(),
-                            mDataList.get(position).getCreateTopCompanyId(),
-                            mDataList.get(position).getCreateUserId(),
-                            mDataList.get(position).getProjectQuote());
+                    ignoreOrSelect(bean.getShopTaskPublishId(),
+                            bean.getId(), 1,
+                            bean.getCreateCompanyId(),
+                            bean.getCreateOrgCode(),
+                            bean.getCreateTopCompanyId(),
+                            bean.getCreateUserId(),
+                            bean.getProjectQuote());
                     break;
                 case R.id.tv_ignore:
-                    ignoreOrSelect(mDataList.get(position).getShopTaskPublishId(),
-                            mDataList.get(position).getId(), 2,
-                            mDataList.get(position).getCreateCompanyId(),
-                            mDataList.get(position).getCreateOrgCode(),
-                            mDataList.get(position).getCreateTopCompanyId(),
-                            mDataList.get(position).getCreateUserId(),
-                            mDataList.get(position).getProjectQuote());
+                    ignoreOrSelect(bean.getShopTaskPublishId(),
+                            bean.getId(), 2,
+                            bean.getCreateCompanyId(),
+                            bean.getCreateOrgCode(),
+                            bean.getCreateTopCompanyId(),
+                            bean.getCreateUserId(),
+                            bean.getProjectQuote());
                     break;
                 default:
                     break;
             }
         });
+
+        getData();
     }
+
+    private void getData() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setPage(mPage);
+        queryEntry.setSize(10);
+        queryEntry.getEquals().put("shopTaskPublishId", shopTaskPublishId + "");
+        EanfangHttp.post(NewApiService.TASK_APPLY_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<ApplyTaskListBean>(this, true, ApplyTaskListBean.class) {
+                    @Override
+                    public void onSuccess(ApplyTaskListBean bean) {
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+    }
+
 
     private void ignoreOrSelect(Long shopTaskPublishId, Long id, int status, Long createCompanyId,
                                 String createOrgCode, Long createTopCompanyId, Long createUserId, int projectQuote) {
@@ -129,10 +179,34 @@ public class TaskPublishApplyListActivity extends BaseActivity {
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     if (status == 1) {
                         showToast("中标");
+                        setResult(RESULT_OK);
+                        finishSelf();
                     } else {
                         showToast("忽略");
+                        mAdapter.remove(mCurrentPositon);
                     }
                 }));
     }
 
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    public void refresh() {
+        mPage = 1;//下拉永远第一页
+        getData();
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        getData();
+    }
 }

@@ -1,6 +1,9 @@
 package net.eanfang.client.ui.activity.pay;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,15 +27,15 @@ import com.eanfang.model.WXPayBean;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.base.ClientApplication;
 
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -47,7 +50,7 @@ import static com.eanfang.config.Constant.INVOICE_FEE;
  * @email houzhongzhou@yeah.net
  * @desc 支付
  */
-
+@Deprecated
 public class PayActivity extends BaseClientActivity {
     public static final int INVOICE_SUCCESS = 47329;
     public static final int INVOICE_CALL_BACK = 3001;
@@ -121,6 +124,10 @@ public class PayActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         initData();
         setListener();
+        setLeftBack();
+        setTitle("支付中心");
+
+        startTransaction(true);
     }
 
     private void initData() {
@@ -156,7 +163,7 @@ public class PayActivity extends BaseClientActivity {
             } else {
                 //微信支付
                 payLogEntity.setPayType(1);
-                wxPay();
+                isWeixinAvilible(PayActivity.this);
             }
         });
 
@@ -225,7 +232,7 @@ public class PayActivity extends BaseClientActivity {
     private void aliPay() {
         EanfangHttp.post(getAliPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<JSONObject>(PayActivity.this, false) {
+                .execute(new EanfangCallback<JSONObject>(PayActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
@@ -256,28 +263,46 @@ public class PayActivity extends BaseClientActivity {
     private void wxPay() {
         EanfangHttp.post(getWxPayUrl(payLogEntity.getOrderType()))
                 .upJson(JSON.toJSONString(payLogEntity))
-                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, false) {
+                .execute(new EanfangCallback<WXPayBean>(PayActivity.this, true, WXPayBean.class) {
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);
-                        wxPayBean = bean;
-                        // Config.get().setAppId(wxPayBean.getAppid());
 
-                        final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
-                        // 将该app注册到微信
-                        msgApi.registerApp(wxPayBean.getAppid());
                         PayReq request = new PayReq();
-                        request.appId = wxPayBean.getAppid();
-                        request.partnerId = wxPayBean.getPartnerid();
-                        request.prepayId = wxPayBean.getPrepayid();
-                        request.packageValue = wxPayBean.getPackageX();
-                        request.nonceStr = wxPayBean.getNoncestr();
-                        request.timeStamp = wxPayBean.getTimestamp();
-                        request.sign = wxPayBean.getSign();
-                        msgApi.sendReq(request);
+                        request.appId = bean.getAppid();
+                        request.partnerId = bean.getPartnerid();
+                        request.prepayId = bean.getPrepayid();
+                        request.packageValue = "Sign=WXPay";
+                        request.nonceStr = bean.getNoncestr();
+                        request.timeStamp = bean.getTimestamp();
+                        request.signType = "MD5";
+                        request.sign = bean.getSign();
+                        ClientApplication.getWxApi().sendReq(request);
+
                     }
                 });
     }
+
+
+    private boolean isWeixinAvilible(Context mContext) {
+        final PackageManager packageManager = mContext.getPackageManager();// 获取packagemanager
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if (pn.equals("com.tencent.mm")) {
+                    wxPay();
+//                    WxPaymentUtils wxPaymentUtils = new WxPaymentUtils(this);
+//                    wxPaymentUtils.wxPay(PayActivity.this,payLogEntity);
+                    return true;
+                }
+            }
+        }
+        //  没有安装微信的
+        showToast("您的手机没有安装微信");
+        return false;
+    }
+
 
     public String getAliPayUrl(int orderType) {
         //报修单

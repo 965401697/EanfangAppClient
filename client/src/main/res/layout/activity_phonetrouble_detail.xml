@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="@null">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_trouble_phone_info"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:padding="@dimen/dimen_30"
+                    android:text="故障信息"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="故障简述"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/et_trouble_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备名称"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_trouble_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备编号"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_device_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备位置"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_device_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="故障核实"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_repair_misinformation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_trouble_phone_result"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:padding="@dimen/dimen_30"
+                    android:text="修复结果"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <TextView
+                    android:id="@+id/tv_repair_conclusion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_30"
+                    android:text="已修复"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_30"
+                        android:text="修复方式："
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <View style="@style/style_common_line_gray" />
+
+                    <TextView
+                        android:id="@+id/tv_repairMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dimen_30"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_trouble_phone_repair"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:padding="@dimen/dimen_30"
+                    android:text="检修过程"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="原因判断"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/et_trouble_reason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="检查过程与方法"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/et_trouble_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="处理措施"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/et_trouble_deal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="使用建议"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_trouble_use_advice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

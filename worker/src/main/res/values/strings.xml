@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">监控服务管家</string>
+    <string name="app_name">易安防技师端</string>
     <!--登录页-->
     <string name="read"><u>阅读协议</u></string>
     <string name="forget_password"><u>忘记密码？</u></string>
@@ -34,8 +34,8 @@
     <string name="text_worker_design_order">设计订单</string>
     <string name="text_worker_maintain_order">维保订单</string>
     <string name="text_worker_inside_price">内部报价</string>
-    <string name="text_worker_project_send">项目发包</string>
-    <string name="text_worker_project_receive">项目接包</string>
+    <string name="text_worker_project_send">找工人</string>
+    <string name="text_worker_project_receive">找活</string>
     <string name="text_worker_sign">签到</string>
 
     <string name="text_new_order">最新订单</string>
@@ -49,16 +49,18 @@
     <string name="text_worker_apply_check">验收申请</string>
     <string name="text_worker_check_safety">安全检查</string>
 
-    <string name="text_worker_point_check">点检</string>
+    <string name="text_worker_point_check">工作检查</string>
     <string name="text_worker_apply_goods">申请物资</string>
     <string name="text_worker_five_shop">五金店</string>
     <string name="text_worker_test">培训考试</string>
     <string name="text_worker_project_finish">竣工项目</string>
     <string name="text_worker_manual_repair">维修手册</string>
     <string name="text_worker_parts_library">配件库</string>
+
+    <!--IM-->
     <string name="all_group_member">全部群成员</string>
-    <string name="group_portrait">群头像</string>
-    <string name="group_name">群名字</string>
+    <string name="group_qrt">群二维码</string>
+    <string name="group_name">群名称</string>
     <string name="group_announcement">群公告</string>
     <string name="quit_group">退出群</string>
     <string name="dismiss_group">解散</string>
@@ -67,4 +69,15 @@
     <string name="message_notice">消息免打扰</string>
     <string name="set_top">会话置顶</string>
     <string name="group_notice_prefix">\@所有人\n</string>
+    <string name="group_transfer">转让群主</string>
+    <string name="group_shutup">全员禁言</string>
+    <string name="private_chat">发起聊天</string>
+    <string name="group_chat">创建群组</string>
+    <string name="add_contacts">添加好友</string>
+    <string name="string_repair_fault_detail">故障明细</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="group_portrait">群头像</string>
+
 </resources>

@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -109,20 +108,20 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog {
         if (!StringUtils.isEmpty(bean.getPictures())) {
             String[] urls = bean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
@@ -137,7 +136,7 @@ public class LookDealwithCheckInfoDetailView extends BaseDialog {
                 .params("status", status)
                 .params("id", bean.getId())
                 .execute(new EanfangCallback(mContext, true, JSONObject.class, (bean) -> {
-                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId()).show();
+                    new WorkCheckInfoView(mContext, true, workCheckInfoBean.getId(), false).show();
                 }));
     }
 }

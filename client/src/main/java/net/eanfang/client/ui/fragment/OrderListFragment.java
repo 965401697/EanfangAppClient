@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -19,16 +17,19 @@ import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.pay.PayActivity;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.RepairCtrlActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
@@ -47,9 +48,14 @@ public class OrderListFragment extends BaseFragment implements
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-            intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
-            startActivity(intent);
+            if (PermKit.get().getRepairDetailPerm()) {
+                Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+                intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
+                intent.putExtra("title", mTitle);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
+                startActivity(intent);
+            }
         }
     };
     private String mTitle;
@@ -108,13 +114,14 @@ public class OrderListFragment extends BaseFragment implements
                 //待付款
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-                            showToast("当前订单负责人可以操作");
-                            return;
-                        }
-                        startActivity(new Intent(getActivity(), PayActivity.class)
-                                .putExtra("ordernum", item.getOrderNum())
-                                .putExtra("orderType", "报修"));
+//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+//                            showToast("当前订单负责人可以操作");
+//                            return;
+//                        }
+                        payment(item);
+//                        startActivity(new Intent(getActivity(), PayActivity.class)
+//                                .putExtra("ordernum", item.getOrderNum())
+//                                .putExtra("orderType", "报修"));
                         break;
                     default:
                         break;
@@ -157,11 +164,18 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         break;
                     case R.id.tv_do_second:
-                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-                            showToast("当前订单负责人可以操作");
-                            return;
-                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认").show();
+//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+//                            showToast("当前订单负责人可以操作");
+//                            return;
+//                        }
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
+                        break;
+                    case R.id.tv_finish:
+//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+//                            showToast("当前订单负责人可以操作");
+//                            return;
+//                        }
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
                         break;
                     default:
                         break;
@@ -171,25 +185,25 @@ public class OrderListFragment extends BaseFragment implements
             case 5:
                 switch (view.getId()) {
 
-                    case R.id.tv_do_first:
-                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-                            showToast("当前订单负责人可以操作");
-                            return;
-                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成").show();
+                    case R.id.tv_do_first://  完工报告
+//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+//                            showToast("当前订单负责人可以操作");
+//                            return;
+//                        }
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
 
                         break;
-                    case R.id.tv_do_second:
-                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-                            showToast("当前订单负责人可以操作");
-                            return;
-                        }
+                    case R.id.tv_do_second:// 评价技师
+//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+//                            showToast("当前订单负责人可以操作");
+//                            return;
+//                        }
                         startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                                 .putExtra("flag", 0)
                                 .putExtra("ordernum", item.getOrderNum())
                                 .putExtra("workerUid", item.getAssigneeUserId())
                                 .putExtra("orderId", item.getId())
-                        );
+                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
                         break;
                     default:
                         break;
@@ -200,6 +214,31 @@ public class OrderListFragment extends BaseFragment implements
                 break;
 
         }
+    }
+
+    /**
+     * 支付
+     *
+     * @param orderEntity
+     */
+    private void payment(RepairOrderEntity orderEntity) {
+
+        PayLogEntity payLogEntity = new PayLogEntity();
+        payLogEntity.setOrderId(orderEntity.getId());
+        payLogEntity.setOrderNum(orderEntity.getOrderNum());
+        payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+        payLogEntity.setAssigneeUserId(orderEntity.getOwnerUserId());
+        payLogEntity.setAssigneeOrgCode(orderEntity.getOwnerOrgCode());
+        payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
+
+        //查询上门费
+        payLogEntity.setOriginPrice(100);
+        //实际支付的价格
+//        payLogEntity.setOriginPrice(orderEntity.getPayLogEntity().getPayPrice());
+
+        Intent intent = new Intent(getActivity(), NewPayActivity.class);
+        intent.putExtra("payLogEntity", payLogEntity);
+        startActivity(intent);
     }
 
     @Override
@@ -264,6 +303,11 @@ public class OrderListFragment extends BaseFragment implements
                     }
 
                     @Override
+                    public void onCommitAgain() {
+                        refreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
                     public void onError(String message) {
                         //重新加载 页面
                     }
@@ -277,23 +321,9 @@ public class OrderListFragment extends BaseFragment implements
                         } else {
                             findViewById(R.id.tv_no_datas).setVisibility(View.GONE);
                         }
-//                        page--;
-//                        getActivity().runOnUiThread(() -> {
-//                            //如果是第一页 没有数据了 则清空 bean
-//                            if (page < 1) {
-//                                RepairedOrderBean bean = new RepairedOrderBean();
-//                                bean.setList(new ArrayList<>());
-//                                ((RepairCtrlActivity) getActivity()).setBean(bean);
-//                            } else {
-//                                showToast("已经到底了");
-//                            }
-//                            onDataReceived();
-//                        });
+
                     }
                 });
-
-        initAdapter();
-
     }
 
     public String getTitle() {
@@ -306,7 +336,6 @@ public class OrderListFragment extends BaseFragment implements
         if (status != null) {
             int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab();
             if (status.equals(String.valueOf(index))) {
-                Log.e("zzw", "onResume == " + status);
                 page = 1;
                 getData();
             }

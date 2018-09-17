@@ -1,10 +1,7 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
@@ -12,23 +9,15 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkspaceInstallBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.InstallOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.install.InstallOrderDetailActivity;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
-import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
-import net.eanfang.client.ui.widget.InstallCtrlItemView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
-import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 
 /**
@@ -39,22 +28,15 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc
  */
 
-public class WorkInstallListFragment extends BaseFragment
-        implements SwipyRefreshLayout.OnRefreshListener, OnDataReceivedListener {
+public class WorkInstallListFragment extends TemplateItemListFragment {
 
-    TextView tvNoDatas;
-    RecyclerView rvList;
-    SwipyRefreshLayout swiprefresh;
     private String mTitle;
     private int mType;
-    private List<WorkspaceInstallBean.ListBean> mDataList;
-    private static int page = 1;
     private WorkspaceInstallAdapter mAdapter;
 
     public static WorkInstallListFragment getInstance(String title, int type) {
         WorkInstallListFragment sf = new WorkInstallListFragment();
         sf.mTitle = title;
-        page = 1;
         sf.mType = type;
         return sf;
 
@@ -65,61 +47,39 @@ public class WorkInstallListFragment extends BaseFragment
     }
 
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_work_task_list;
-    }
+    protected void initAdapter() {
 
-    @Override
-    protected void initData(Bundle arguments) {
-        getData();
-    }
+        mAdapter = new WorkspaceInstallAdapter();
+        mAdapter.bindToRecyclerView(mRecyclerView);
+        mAdapter.setOnLoadMoreListener(this);
 
-    @Override
-    protected void initView() {
-        tvNoDatas = (TextView) findViewById(R.id.tv_no_datas);
-        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
-        swiprefresh.setOnRefreshListener(this);
-        rvList = (RecyclerView) findViewById(R.id.rv_list);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    @Override
-    protected void setListener() {
-    }
-
-    private void initAdapter() {
-        if (getActivity() == null) {
-            return;
-        }
-        if (!(getActivity() instanceof InstallOrderActivity)) {
-            return;
-        }
-        mDataList = ((InstallOrderActivity) getActivity()).getWorkspaceInstallBean().getList();
-        mAdapter = new WorkspaceInstallAdapter(mDataList);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+
+
+            WorkspaceInstallBean.ListBean bean = (WorkspaceInstallBean.ListBean) adapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_look:
-                    if (mDataList.get(position).getStatus() == 2) {
-                        finishWork(mDataList, position);
+                    if (bean.getStatus() == 2) {
+                        if (PermKit.get().getInstallFinishPrem()) {
+                            finishWork(String.valueOf(bean.getId()), position);
+                        }
                     } else {
-                        new InstallCtrlItemView(getActivity(), mDataList.get(position).getId()).show();
+
+                        if (PermKit.get().getInstallDetailPrem()) {
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("orderId", bean.getId());
+                            JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
+                        }
                     }
                     break;
                 default:
                     break;
             }
         });
-        if (mDataList.size() > 0) {
-            rvList.setAdapter(mAdapter);
-            tvNoDatas.setVisibility(View.GONE);
-            mAdapter.notifyDataSetChanged();
-        } else {
-            tvNoDatas.setVisibility(View.VISIBLE);
-        }
-        mAdapter.notifyDataSetChanged();
     }
 
-    private void getData() {
+    @Override
+    protected void getData() {
         String status = null;
         if (!"全部".equals(mTitle)) {
             status = GetConstDataUtils.getInstallStatus().indexOf(getmTitle()) + "";
@@ -135,89 +95,69 @@ public class WorkInstallListFragment extends BaseFragment
             queryEntry.getEquals().put("status", status);
         }
 
-        queryEntry.setPage(page);
+        queryEntry.setPage(mPage);
         queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_WORK_INSTALL_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<WorkspaceInstallBean>(getActivity(), true, WorkspaceInstallBean.class) {
+
                     @Override
                     public void onSuccess(WorkspaceInstallBean bean) {
-                        super.onSuccess(bean);
-                        ((InstallOrderActivity) getActivity()).setWorkspaceInstallBean(bean);
-                        getActivity().runOnUiThread(() ->
-                                onDataReceived()
-                        );
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
                     }
 
                     @Override
                     public void onNoData(String message) {
-                        super.onNoData(message);
-                        page--;
-                        getActivity().runOnUiThread(() -> {
-                            //如果是第一页 没有数据了 则清空 bean
-                            if (page < 1) {
-                                WorkspaceInstallBean bean = new WorkspaceInstallBean();
-                                bean.setList(new ArrayList<>());
-                                ((InstallOrderActivity) getActivity()).setWorkspaceInstallBean(bean);
-                            } else {
-                                showToast("已经到底了");
-                            }
-                            onDataReceived();
-                        });
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                 });
     }
 
-    private void finishWork(List<WorkspaceInstallBean.ListBean> mDataList, int position) {
+    private void finishWork(String id, int position) {
         EanfangHttp.get(NewApiService.INSTALL_FINISH_WORK)
-                .params("id", mDataList.get(position).getId())
-                .execute(new EanfangCallback<JSONObject>(getActivity(), false, JSONObject.class, (bean) -> {
+                .params("id", id)
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
                     showToast("成功");
-                    getData();
+                    mAdapter.remove(position);
                 }));
     }
 
-    /**
-     * 刷新
-     */
-    @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
-
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                getData();
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                getData();
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    @Override
-    public void onDataReceived() {
-        initView();
-        initAdapter();
-        swiprefresh.setRefreshing(false);
-    }
 }

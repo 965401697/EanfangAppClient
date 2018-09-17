@@ -1,12 +1,8 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
+import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
@@ -35,7 +32,9 @@ import net.eanfang.client.ui.widget.InviteView;
 public class MyFragment extends BaseFragment {
     private TextView tv_user_name;
     private SimpleDraweeView iv_header;
-
+    private SimpleDraweeView mIvPersonalQRCode;
+    // Dialog
+    private PersonalQRCodeDialog personalQRCodeDialog;
 
     @Override
     protected int setLayoutResouceId() {
@@ -44,12 +43,14 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
+
     }
 
     @Override
     protected void initView() {
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
+        mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
@@ -71,7 +72,10 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
+        mIvPersonalQRCode.setOnClickListener((v) -> {
+            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode());
+            personalQRCodeDialog.show();
+        });
     }
 
 
@@ -82,6 +86,7 @@ public class MyFragment extends BaseFragment {
     }
 
     public void initDatas() {
+
         LoginBean user = EanfangApplication.getApplication().getUser();
         if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
             tv_user_name.setText(user.getAccount().getNickName());
@@ -92,11 +97,13 @@ public class MyFragment extends BaseFragment {
         }
 
     }
+
     /**
      * 获取状态栏高度
+     *
      * @return
      */
-    public int getStatusBar(){
+    public int getStatusBar() {
         /**
          * 获取状态栏高度
          * */
@@ -108,5 +115,9 @@ public class MyFragment extends BaseFragment {
             statusBarHeight1 = getResources().getDimensionPixelSize(resourceId);
         }
         return statusBarHeight1;
+    }
+
+    public void setQrCode() {
+
     }
 }

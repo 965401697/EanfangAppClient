@@ -6,19 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.PayOrderListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.fragment.OfferAndPayListFragment;
+import net.eanfang.worker.ui.fragment.OfferAndPayListFragment1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +38,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
-    private OfferAndPayListFragment currentFragment;
+    private OfferAndPayListFragment1 currentFragment;
     private static String titleBar;
     private PayOrderListBean workReportListBean;
     private String type;
@@ -66,7 +60,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(OfferAndPayListFragment.getInstance(title, type));
+            mFragments.add(OfferAndPayListFragment1.getInstance(title, type));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -82,8 +76,8 @@ public class OfferAndPayOrderActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                currentFragment = (OfferAndPayListFragment) mFragments.get(position);
-                currentFragment.onDataReceived();
+                currentFragment = (OfferAndPayListFragment1) mFragments.get(position);
+//                currentFragment.onDataReceived();
 //                initData(1);
             }
 
@@ -92,50 +86,50 @@ public class OfferAndPayOrderActivity extends BaseActivity {
 
             }
         });
-        currentFragment = (OfferAndPayListFragment) mFragments.get(0);
+//        currentFragment = (OfferAndPayListFragment) mFragments.get(0);
 //        initData(1);
 
     }
 
-    private void initData(int page) {
-        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+//    private void initData(int page) {
+//        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
+//
+//        QueryEntry queryEntry = new QueryEntry();
+//        if ("1".equals(type)) {
+//            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+//        } else if ("2".equals(type)) {
+//            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+//        }
+//        queryEntry.getEquals().put("status", status + "");
+//
+//        queryEntry.setPage(page);
+//        queryEntry.setSize(5);
+//
+//        EanfangHttp.post(NewApiService.QUOTE_ORDER_LIST)
+//                .upJson(JsonUtils.obj2String(queryEntry))
+//                .execute(new EanfangCallback<PayOrderListBean>(this, true, PayOrderListBean.class, (bean) -> {
+//                    runOnUiThread(() -> {
+//                        workReportListBean = bean;
+//                        setWorkReportListBean(bean);
+////                        currentFragment.onDataReceived();
+//                    });
+//                }));
+//
+//    }
 
-        QueryEntry queryEntry = new QueryEntry();
-        if ("1".equals(type)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
-        } else if ("2".equals(type)) {
-            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
-        }
-        queryEntry.getEquals().put("status", status + "");
-
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
-
-        EanfangHttp.post(NewApiService.QUOTE_ORDER_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<PayOrderListBean>(this, true, PayOrderListBean.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        workReportListBean = bean;
-                        setWorkReportListBean(bean);
-                        currentFragment.onDataReceived();
-                    });
-                }));
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        initData(1);
-    }
-
-    public PayOrderListBean getWorkReportListBean() {
-        return workReportListBean;
-    }
-
-    public void setWorkReportListBean(PayOrderListBean workReportListBean) {
-        this.workReportListBean = workReportListBean;
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+////        initData(1);
+//    }
+//
+//    public PayOrderListBean getWorkReportListBean() {
+//        return workReportListBean;
+//    }
+//
+//    public void setWorkReportListBean(PayOrderListBean workReportListBean) {
+//        this.workReportListBean = workReportListBean;
+//    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

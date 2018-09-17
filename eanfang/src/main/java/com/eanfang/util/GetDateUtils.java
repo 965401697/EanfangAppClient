@@ -155,6 +155,54 @@ public class GetDateUtils {
         return gc.getTime();
     }
 
+
+    public static Date getLastWeek(String currentDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(currentDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.add(Calendar.DATE, -7); // 向前一周；如果需要向后一周，用正数即可
+        return calendar.getTime();
+
+    }
+
+
+    public static Date getLastMonth(String currentDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(currentDate));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.add(Calendar.DATE, -30); // 向前一月；如果需要向后一月，用正数即可
+        return calendar.getTime();
+
+    }
+
+    /**
+     * 时间转换为时间戳
+     *
+     * @param timeStr 时间 例如: 2016-03-09
+     * @param format  时间对应格式  例如: yyyy-MM-dd
+     * @return
+     */
+    public static long getTimeStamp(String timeStr, String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(timeStr);
+            long timeStamp = date.getTime();
+            return timeStamp;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     /**
      * 将指定日期 增加 指定个月
      *
@@ -243,6 +291,17 @@ public class GetDateUtils {
     }
 
     /**
+     * 将日期转换成 （yyyy-MM-dd hh:mm:ss）
+     *
+     * @param date
+     * @return
+     */
+    public static String dateToDateTimeStringForChinse(Date date) {
+        return dateToFormatString(date, "yyyy年MM月dd日 HH:mm:ss");
+    }
+
+
+    /**
      * 获取当前时间
      *
      * @return
@@ -270,9 +329,29 @@ public class GetDateUtils {
         return null;
     }
 
+    public static Date getYeanDate(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+        }
+        return null;
+    }
+
     public static Date getDate(String year, String month, String day, String hour, String minute, String second) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date getDateHour(String hour, String minute, String second) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String date = hour + ":" + minute + ":" + second;
         try {
             return format.parse(date);
         } catch (ParseException e) {
@@ -377,7 +456,7 @@ public class GetDateUtils {
      */
     public static String dateToWeek(String datetime) {
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+        String[] weekDays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
         Calendar cal = Calendar.getInstance(); // 获得一个日历
         Date datet = null;
         try {

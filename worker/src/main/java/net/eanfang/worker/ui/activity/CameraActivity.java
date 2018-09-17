@@ -26,7 +26,6 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.camera.model.PermissionsModel;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
@@ -36,6 +35,7 @@ import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -283,17 +283,13 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
      * 开始拍照
      */
     public void startTakePhoto(View v) {
-        PermissionsModel permissionsModel = new PermissionsModel(this);
-        permissionsModel.checkCameraPermission(isPermission -> {
-            if (isPermission) {
-                //如果没有添加属性
-                if (!checkCameraData(true)) {
-                    return;
-                }
-                setData();
-                Intent intent = new Intent(CameraActivity.this, TakePhotoActivity.class);
-                startActivityForResult(intent, TakePhotoActivity.REQUEST_CAPTRUE_CODE);
+        PermissionUtils.get(this).getCameraPermission(() -> {
+            if (!checkCameraData(true)) {
+                return;
             }
+            setData();
+            Intent intent = new Intent(CameraActivity.this, TakePhotoActivity.class);
+            startActivityForResult(intent, TakePhotoActivity.REQUEST_CAPTRUE_CODE);
         });
     }
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_96">
+
+        <ImageView
+            android:id="@+id/iv_select"
+            android:layout_width="@dimen/dimen_26"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_26"
+            android:src="@drawable/ic_two_close" />
+
+        <TextView
+            android:id="@+id/tv_company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_toRightOf="@+id/iv_select"
+            android:text="asdfasfd"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
+
+
+        <CheckBox
+            android:id="@+id/cb_all_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_marginRight="@dimen/dimen_26"
+            />
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_all_checked"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="@dimen/dimen_26"-->
+            <!--android:text="全选"-->
+            <!--android:textSize="@dimen/textSize_13" />-->
+    </RelativeLayout>
+
+</LinearLayout>

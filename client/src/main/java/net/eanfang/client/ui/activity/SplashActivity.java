@@ -1,31 +1,34 @@
 package net.eanfang.client.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.BaseDataBean;
-import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.ApkUtils;
+import com.eanfang.util.ChannelUtil;
+import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UpdateAppManager;
-import com.eanfang.util.V;
+import com.eanfang.util.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
+
+import org.greenrobot.eventbus.Subscribe;
 
 
 /**
@@ -39,7 +42,7 @@ import net.eanfang.client.util.PrefUtils;
 public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCallback {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_client = {R.mipmap.client0, R.mipmap.client1, R.mipmap.client2, R.mipmap.client3};
+    int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_client_splash_two, R.mipmap.ic_client_splash_three};
     // 是第一次
     private boolean isFirst = true;
 
@@ -48,10 +51,13 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.initCrashReport(getApplicationContext(), com.eanfang.BuildConfig.BUGLY_CLIENT, false);
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
+        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
+        //App的版本
+        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
+        strategy.setAppPackageName("net.eanfang.client");
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false, strategy);
         init();
-
-
     }
 
     private void init() {
@@ -68,7 +74,11 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                 goLogin();
             } else {
                 EanfangHttp.setToken(user.getToken());
-                loginByToken();
+                if (isConnected()) {
+                    loginByToken();
+                } else {
+                    goMain();
+                }
             }
         }
     }
@@ -125,5 +135,26 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         finishSelf();
     }
 
+    @Subscribe
+    public void onEvent(Integer integer) {
+        isFirst = true;
+        ToastUtil.get().showToast(this, "登录失效，请重新登录！");
+        CleanMessageUtil.clearAllCache(EanfangApplication.get());
+        SharePreferenceUtil.get().clear();
+        startActivity(new Intent(this, LoginActivity.class));
+        finishSelf();
+    }
+
+    /**
+     * 判断网络是否连接
+     *
+     * @return
+     */
+    public boolean isConnected() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+    }
 
 }

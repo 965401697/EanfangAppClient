@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.TimePickerView;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -32,6 +35,7 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -124,7 +128,7 @@ public class TaskPublishActivity extends BaseActivity {
 
     private void initView() {
         mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
-        setTitle("项目发包");
+        setTitle("找工人");
         setLeftBack();
     }
 
@@ -169,6 +173,7 @@ public class TaskPublishActivity extends BaseActivity {
         });
         llProjectType.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", tvProjectType, GetConstDataUtils.getTaskPublishTypeList());
+            Log.e("zzw", tvProjectType.getText().toString());
 
         });
         btnConfirm.setOnClickListener((v) -> {
@@ -189,7 +194,7 @@ public class TaskPublishActivity extends BaseActivity {
         bean.setLongitude(longitude);
         bean.setType(GetConstDataUtils.getTaskPublishTypeList().indexOf(tvProjectType.getText().toString().trim()));
         bean.setBusinessOneCode(Config.get().getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
-        bean.setBusiness_one_id(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
+        bean.setBusiness_one_id(V.v(() -> Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(), 1))));
         bean.setPredicttime(GetConstDataUtils.getPredictList().indexOf(tvProjectTime.getText().toString().trim()));
         bean.setBudget(GetConstDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
         bean.setToDoorTime(tvLoginTime.getText().toString().trim());
@@ -226,8 +231,8 @@ public class TaskPublishActivity extends BaseActivity {
 
         Intent intent = new Intent(this, StateChangeActivity.class);
         Message message = new Message();
-        message.setTitle("发包成功");
-        message.setMsgTitle("您的任务已经发包成功");
+        message.setTitle("找工人成功");
+        message.setMsgTitle("您的任务已经发布成功");
         message.setMsgContent("请耐心等待技师接单。");
         message.setShowLogo(true);
         message.setShowOkBtn(true);
@@ -277,7 +282,7 @@ public class TaskPublishActivity extends BaseActivity {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 11, 31);
         //时间选择器
-        pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
@@ -285,10 +290,10 @@ public class TaskPublishActivity extends BaseActivity {
             }
         })
                 .setTitleText("踏勘时间")
-                .setType(TimePickerView.Type.YEAR_MONTH_DAY_HOUR_MIN)
+                .setType(new boolean[]{true, true, true, true, true, true})
                 .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
                 .setDividerColor(Color.DKGRAY)
-                .setContentSize(20)
+                .setContentTextSize(20)
                 .setDate(selectedDate)
                 .setRangDate(startDate, endDate)
                 .build();

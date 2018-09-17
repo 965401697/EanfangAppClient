@@ -1,6 +1,6 @@
 package com.camera.view;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -13,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.camera.model.CameraModel;
-import com.camera.model.PermissionsModel;
 import com.camera.widget.CameraFocusView;
 import com.camera.widget.CameraSurfaceView;
 import com.eanfang.R;
+import com.eanfang.listener.MultiClickListener;
+import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.DialogUtil;
+import com.eanfang.util.PermissionUtils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -31,7 +34,7 @@ import rx.schedulers.Schedulers;
  * @desc 拍照界面
  */
 
-public class TakePhotoActivity extends Activity implements CameraFocusView.IAutoFocus {
+public class TakePhotoActivity extends BaseActivity implements CameraFocusView.IAutoFocus {
     public final static String RESULT_PHOTO_PATH = "photoPath";
     public static final int REQUEST_CAPTRUE_CODE = 100;
     private CameraSurfaceView cameraSurfaceView;
@@ -44,9 +47,9 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
     private ImageView takePhotoBtn;
     private ImageView okBtn;
     private CameraModel mCameraModel;
-    private PermissionsModel mPermissionsModel;
     private byte[] photoData;
     private int mCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private Dialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,6 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
     }
 
     private void init() {
-        mPermissionsModel = new PermissionsModel(this);
         mCameraModel = new CameraModel(this, cameraSurfaceView);
         //控件获取
         cameraSurfaceView = (CameraSurfaceView) findViewById(R.id.cameraSurfaceView);
@@ -76,9 +78,12 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         cameraSwitchBtn.setOnClickListener(v -> changeCamera());
         closeBtn.setOnClickListener(v -> finish());
         cancelBtn.setOnClickListener(v -> rephotograph());
-        takePhotoBtn.setOnClickListener(v -> takePhoto());
+        takePhotoBtn.setOnClickListener(new MultiClickListener(this, this::doTakePhoto, this::takePhoto));
         okBtn.setOnClickListener(v -> savePhoto());
+
+        loadingDialog = DialogUtil.createLoadingDialog(this);
     }
+
 
     @Override
     public void autoFocus(float x, float y) {
@@ -118,17 +123,15 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
 
 
     private void savePhoto() {
-        mPermissionsModel.checkWriteSDCardPermission(isPermission -> {
-            if (isPermission) {
-                Observable.just(photoData)
-                        .map(bytes -> {
-                            String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
-                            return path;
-                        })
-                        .subscribeOn(Schedulers.io())
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(path -> onResult(path));
-            }
+        loadingDialog.show();
+        PermissionUtils.get(TakePhotoActivity.this).getStoragePermission(() -> {
+            Observable.just(photoData).map(bytes -> {
+                String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
+                return path;
+            })
+                    .subscribeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(path -> onResult(path));
         });
     }
 
@@ -169,9 +172,19 @@ public class TakePhotoActivity extends Activity implements CameraFocusView.IAuto
         cameraSurfaceView.changeCamera(mCameraId);
     }
 
+    public boolean doTakePhoto() {
+        return true;
+    }
+
     public void onResult(String path) {
         setResult(RESULT_OK, new Intent().putExtra(RESULT_PHOTO_PATH, path));
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (loadingDialog != null && loadingDialog.isShowing())
+            loadingDialog.dismiss();
+    }
 }

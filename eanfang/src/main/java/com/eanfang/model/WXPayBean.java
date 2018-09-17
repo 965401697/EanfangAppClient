@@ -1,7 +1,5 @@
 package com.eanfang.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.io.Serializable;
 
 /**
@@ -15,34 +13,43 @@ import java.io.Serializable;
 public class WXPayBean implements Serializable {
 
     /**
-     * appid : 11111
-     * partnerid : 1111
-     * prepayid : 111
      * package : Sign=WXPay
-     * noncestr : 111
-     * timestamp : 111
-     * sign : asda
+     * appid : wx11d1a11a2f79200a
+     * sign : 35A918335B246D83F4F31D29A0BF1E03D59298242AD66DA7B1F4290AD071C5AD
+     * partnerid : 1416487802
+     * prepayid : wx06183500920638bb9d198cdb0012624597
+     * noncestr : cU2QyKu0xKITye5I
+     * timestamp : 1530873302
      */
 
+
     private String appid;
+    private String sign;
     private String partnerid;
     private String prepayid;
-    @JSONField(name = "package")
-    private String packageX;
     private String noncestr;
     private String timestamp;
-    private String sign;
+
+
 
     public String getAppid() {
-        return appid == null ? "" : appid;
+        return appid;
     }
 
     public void setAppid(String appid) {
         this.appid = appid;
     }
 
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
     public String getPartnerid() {
-        return partnerid == null ? "" : partnerid;
+        return partnerid;
     }
 
     public void setPartnerid(String partnerid) {
@@ -50,23 +57,15 @@ public class WXPayBean implements Serializable {
     }
 
     public String getPrepayid() {
-        return prepayid == null ? "" : prepayid;
+        return prepayid;
     }
 
     public void setPrepayid(String prepayid) {
         this.prepayid = prepayid;
     }
 
-    public String getPackageX() {
-        return packageX == null ? "" : packageX;
-    }
-
-    public void setPackageX(String packageX) {
-        this.packageX = packageX;
-    }
-
     public String getNoncestr() {
-        return noncestr == null ? "" : noncestr;
+        return noncestr;
     }
 
     public void setNoncestr(String noncestr) {
@@ -74,19 +73,11 @@ public class WXPayBean implements Serializable {
     }
 
     public String getTimestamp() {
-        return timestamp == null ? "" : timestamp;
+        return timestamp;
     }
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getSign() {
-        return sign == null ? "" : sign;
-    }
-
-    public void setSign(String sign) {
-        this.sign = sign;
     }
 }
 

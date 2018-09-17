@@ -66,6 +66,11 @@ public class InstallCtrlItemView extends BaseDialog {
     @BindView(R.id.ll_company_info)
     LinearLayout llCompanyInfo;
     private Long id;
+
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private Activity mContext;
 
     public InstallCtrlItemView(Activity context, Long id) {
@@ -79,6 +84,8 @@ public class InstallCtrlItemView extends BaseDialog {
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.view_install_ctrl_item);
         ButterKnife.bind(this);
+        ivLeft.setOnClickListener(v -> dismiss());
+        tvTitle.setText("报装详情");
         initData();
     }
 
@@ -114,8 +121,6 @@ public class InstallCtrlItemView extends BaseDialog {
             tvWorkerCompany.setText(bean.getCompanyEntity().getName());
             ivPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()));
         }
-
-
 
     }
 

@@ -63,6 +63,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".ui.base.WorkerApplication"
@@ -73,6 +74,10 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme">
 
+        <!-- 多渠道打包 -->
+        <meta-data
+            android:name="com.tencent.tac.channel"
+            android:value="${tac_channel}" />
         <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -89,6 +94,34 @@
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
                 <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+        <!-- 华为自定义的广播名称 -->
+        <receiver android:name=".ui.receiver.HuaWeiReceiver">
+            <intent-filter>
+
+                <!-- 必须,用于接收TOKEN -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看PUSH通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+        <!-- 小米自定义的广播名称 -->
+        <receiver
+            android:name=".ui.receiver.XiaoMiReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
 
@@ -117,20 +150,37 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- app -->
-        <activity android:name=".ui.activity.MainActivity" />
+        <!-- 设置主界面的启动模式为singleTop，当应用在前他的时候不重新开启应用 -->
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.CameraActivity" />
-        <activity android:name=".ui.activity.my.MessageListActivity" />
+        <!-- 消息列表 -->
+        <activity android:name=".ui.activity.worksapce.notice.MessageListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.xg.push"
+                    android:path="/notify_detail"
+                    android:scheme="xgscheme" />
+            </intent-filter>
+        </activity>
+        <!-- 业务通知详情 -->
+        <activity android:name=".ui.activity.worksapce.notice.MessageDetailActivity" />
         <activity android:name=".ui.activity.my.PersonInfoActivity" />
         <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
-        <activity android:name=".ui.activity.worksapce.AddTroubleActivity" />
-        <activity android:name=".ui.activity.worksapce.CheckActivity" />
-        <activity android:name=".ui.activity.worksapce.ReportActivity" />
-        <activity android:name=".ui.activity.worksapce.TaskActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.RepairCtrlActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairCtrlActivity" />
         <activity android:name=".ui.activity.pay.PayActivity" />
         <activity android:name=".ui.activity.worksapce.StateChangeActivity" />
         <activity android:name=".ui.activity.worksapce.FaPiaoActivity" />
@@ -138,24 +188,36 @@
         <activity android:name=".ui.activity.MyBGAPhotoPickerPreviewActivity" />
         <activity android:name=".ui.activity.worksapce.WorkTaskListActivity" />
         <activity android:name=".ui.activity.worksapce.OrderDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.TroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.PsTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.LookTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneLookTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.WorkCheckListActivity" />
-        <activity android:name=".ui.activity.worksapce.AddDealwithInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.faultdetail.LookTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.seefaultdetail.faultdetail.PhoneLookTroubleDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.WorkCheckListActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.AddDealwithInfoActivity" />
         <activity android:name=".ui.activity.worksapce.SignInActivity" />
-        <activity android:name=".ui.activity.worksapce.FillRepairInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity" />
         <activity
             android:name=".ui.activity.worksapce.QuotationDetailActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-        <activity android:name=".ui.activity.worksapce.PutUpOrderActivity" />
+        <!-- 转单 -->
+        <activity
+            android:name=".ui.activity.worksapce.PutUpOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.PutUpSelectWorkerActivity" />
-        <activity android:name=".ui.activity.worksapce.AddTroubleDetailActivity" />
+        <!-- 电话未解决完善故障处理 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.finishwork.faultdetail.AddTroubleDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.AddMaterialActivity" />
         <activity android:name=".ui.activity.worksapce.MaterialInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneSolveRepairInfoActivity" />
-        <activity android:name=".ui.activity.worksapce.PhoneSolveTroubleDetailActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 电话解决完善故障处理 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.finishwork.faultdetail.PhoneSolveTroubleDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.EvaluateClientActivity" />
         <activity
             android:name=".ui.activity.worksapce.QuotationActivity"
@@ -188,13 +250,19 @@
         <activity android:name=".ui.activity.worksapce.SignListActivity" />
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
         <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthSystemTypeActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthBizActivity" />
-        <activity android:name=".ui.activity.worksapce.AuthAreaActivity" />
-        <activity android:name=".ui.activity.my.AuthWorkerInfoActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthSystemTypeActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthBizActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthAreaActivity" />
+        <!-- 技师认证 填写个人资料 照片 等 -->
+        <activity
+            android:name=".ui.activity.my.AuthWorkerInfoActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 技师绑定系统类别 -->
         <activity android:name=".ui.activity.my.AuthWorkerSysTypeActivity" />
+        <!-- 技师绑定业务类型 -->
         <activity android:name=".ui.activity.my.AuthWorkerBizActivity" />
+        <!-- 技师绑定服务地区 -->
         <activity android:name=".ui.activity.my.AuthWorkerAreaActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity" />
         <activity android:name=".ui.activity.AddMaintenanceDetailActivity" />
@@ -249,12 +317,15 @@
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".ui.activity.worksapce.AddFriendActivity" />
+        <!-- 添加好友 -->
+        <activity android:name=".ui.activity.im.AddFriendActivity" />
+        <!-- 群组创建 -->
         <activity android:name=".ui.activity.im.GroupCreatActivity" />
+        <!-- 群组列表 -->
         <activity android:name=".ui.activity.im.MyGroupsListActivity" />
+        <!-- 群组详情界面 -->
         <activity android:name=".ui.activity.im.GroupDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.SystemMessageActivity" />
+        <activity android:name=".ui.activity.im.SystemMessageActivity" />
 
         <!-- 聚合会话列表 -->
         <activity
@@ -272,8 +343,262 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.worksapce.MessageDetailActivity" />
-        <activity android:name=".ui.activity.im.GroupNoticeActivity"></activity>
+        <activity android:name=".ui.activity.im.GroupNoticeActivity" />
+        <activity android:name=".ui.activity.im.GroupUpdataNameActivity" />
+        <!-- 客服 -->
+        <activity android:name=".ui.activity.worksapce.CustomerServiceActivity" />
+        <!-- 系统通知 -->
+        <activity android:name=".ui.activity.worksapce.notice.SystemNoticeActivity" />
+        <!-- 系统通知详情 -->
+        <activity android:name=".ui.activity.worksapce.notice.SystemNoticeDetailActivity" />
+        <!-- 数据统计 -->
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataStatisticsActivity" />
+        <!-- 转让群主 -->
+        <activity android:name=".ui.activity.im.TransferOwnActivity" />
+        <!-- 选择朋友   checkedbox界面 -->
+        <activity android:name=".ui.activity.im.SelectedFriendsActivity" />
+        <!-- 群组减少成员 -->
+        <activity android:name=".ui.activity.im.SubtractFriendsActivity" />
+        <!-- IM个人设置页面 -->
+        <activity android:name=".ui.activity.im.IMPresonInfoActivity" />
+        <!-- 群内成员禁言 -->
+        <activity android:name=".ui.activity.im.GroupShutupMberActivity" />
+        <activity android:name=".ui.activity.worksapce.WorkDetailActivity" />
+        <!-- 企业管理 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity" />
+        <!-- 视频文件选择 -->
+        <activity android:name=".ui.activity.im.VideoSelectedActivity" />
+        <!-- 申请进群 -->
+        <activity android:name=".ui.activity.im.AddGroupActivity">
+            <intent-filter>
+                <action android:name="worker_group" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 个人群名片 -->
+        <activity android:name=".ui.activity.im.IMCardActivity" />
+
+        <!-- 打开文件 -->
+        <activity android:name=".ui.activity.im.FilePreviewExActivity">
+            <intent-filter>
+                <action android:name="io.rong.imkit.intent.action.openfile" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 扫码界面 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.ScanCodeActivity"
+            android:screenOrientation="portrait" />
+        <!-- 登录确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.scancode.LoginConfirmActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 管理员设置 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AdministratorSetActivity" />
+        <!-- 创建部门 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatSectionActivity" />
+        <!-- 添加员工 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffActivity" />
+        <!-- 添加员工下一步 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffNextActivity" />
+        <!-- 权限设置 -->
+        <activity android:name=".ui.activity.worksapce.contacts.PermissionManagerActivity" />
+        <!-- 角色分配 -->
+        <activity android:name=".ui.activity.worksapce.contacts.AolltRoleActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.SolveModeActivity" />
+        <!-- 维保订单详情list· -->
+        <activity android:name=".ui.activity.worksapce.PersonMaintainHistoryActivity" />
+        <!-- 预约上门时间 -->
+        <activity android:name=".ui.activity.worksapce.repair.RepairAppointTimeActivity" />
+        <!-- 设备参数 -->
+        <activity android:name=".ui.activity.worksapce.repair.DeviceParameterActivity" />
+        <!-- 电话未解决 完善故障 增加照片 -->
+        <activity android:name=".ui.activity.worksapce.repair.AddTroubleAddPictureActivity" />
+        <!-- 故障库 -->
+        <activity android:name=".ui.activity.worksapce.repair.FaultLibraryActivity" />
+        <!-- 设备类别 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationAddActivity" />
+        <!-- 合作业务的列表 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationActivity" />
+        <!-- 合作业务详情 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationRelationDetailActivity" />
+        <!-- 合作业务绑定成功 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CooperactionRelationSubActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.CooperationSearchClientActivity" />
+
+        <!-- 查看设备参数 -->
+        <activity
+            android:name=".ui.activity.worksapce.repair.SeeFaultParamActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 查看耗材详情 -->
+        <activity android:name=".ui.activity.worksapce.repair.material.SeeMaterialActivity" />
+        <!-- 故障处理查看照片 -->
+        <activity android:name=".ui.activity.worksapce.repair.SeeTroubleDetailPhotoActivity" />
+        <!-- 故障列表 -->
+        <activity android:name=".ui.activity.worksapce.FaultRecordListActivity" />
+        <!-- 故障统计列表 -->
+        <activity android:name=".ui.activity.worksapce.FaultStatisticsListActivity" />
+        <!-- 设备详情 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentDetailActivity" />
+        <!-- 设备列表 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentListActivity" />
+        <!-- 设备变更列表 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeListActivity" />
+        <!-- 设备变更详情 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentChangeDetailActivity" />
+        <!-- 设备参数 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentParameterActivity" />
+        <!-- 技师认证 列表页 -->
+        <activity
+            android:name=".ui.activity.my.AuthListActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="net.eanfang.worker.action.AUTH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 免费设计 -->
+        <activity android:name=".ui.activity.worksapce.design.DesignActivity" />
+        <!-- 设计订单List -->
+        <activity android:name=".ui.activity.worksapce.design.DesignOrderActivity" />
+        <!-- 设计订单详情 -->
+        <activity android:name=".ui.activity.worksapce.design.DesignOrderDetailActivity" />
+        <!-- 设备搜索界面 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentSearchActivity" />
+        <!-- 添加设备选择设备库 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentAddActivity" />
+        <!-- 技师认证上传照片 -->
+        <activity
+            android:name=".ui.activity.my.AuthPhotoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 选择IM联系人 -->
+        <activity android:name=".ui.activity.im.SelectIMContactActivity" />
+
+        <!-- 第一次登陆的提示 -->
+        <activity android:name=".ui.activity.worksapce.LoginHintActivity" />
+
+        <!-- 提交资料成功提示 -->
+        <activity android:name=".ui.activity.worksapce.OwnDataHintActivity" />
+        <!-- 创建团队 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.FaultDetailActivity" />
+        <!-- 维保列表 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceListActivity" />
+        <!-- 维保详情 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceDetailActivity" />
+        <!-- 维保处理 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivity" />
+        <!-- 维保添加故障检查 -->
+        <activity
+            android:name=".ui.activity.worksapce.maintenance.MaintenanceAddCheckResultActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!-- 维保重点设备完善 -->
+        <activity
+            android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleEditActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!-- 维保界面照片 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MeintenancePhotoActivity" />
+        <!-- 维保列表fragment的宿主activity -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceActivity" />
+        <!-- 维保预约 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceAppointTimeActivity" />
+        <!-- 维保处理activity的照片 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MeintenanceEditPhotoActivity" />
+        <!-- 维保处理展示activity的照片 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleShowActivity" />
+        <!-- 维保添加故障出路activity的照片 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceAddCheckResultShowActivity" />
+        <!-- 维保添加故障出路展示activity的照片 -->
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleEditShowActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.SelectOAGroupActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.OASearchActivity">
+            <intent-filter>
+                <action android:name="com.eanfang.net.intent.action.OA_SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.worksapce.contacts.SearchStaffActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AddStaffFriendActivity" />
+        <!-- 交接班列表 -->
+        <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferListActivity" />
+        <!-- 交接班创建 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateActivity"
+            android:screenOrientation="portrait" />
+        <!-- 交接班确认 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferConfimActivity"
+            android:screenOrientation="portrait" />
+        <!-- 交接班详情 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 交接班创建详情 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktransfer.WorkTransferCreateDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 面谈员工控制中心 -->
+        <activity android:name=".ui.activity.worksapce.worktransfer.WorkTransferControlActivity" />
+        <activity android:name=".ui.activity.worksapce.worktalk.WorkTalkControlActivity" />
+        <!-- 面谈员工列表 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktalk.WorkTalkListActivity"
+            android:screenOrientation="portrait" />
+        <!-- 面谈员工详情 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktalk.WorkTalkDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 面谈员工创建 -->
+        <activity
+            android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
+            android:screenOrientation="portrait" />
+        <!-- 工作汇报 -->
+        <activity android:name=".ui.activity.worksapce.oa.ReportParentActivity" />
+        <!-- 布置任务 -->
+        <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
+        <!-- 设备检点 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckParentActivity" />
+        <!-- 报装 -->
+        <activity android:name=".ui.activity.worksapce.InstallOrderParentActivity" />
+        <!-- 报价管控 -->
+        <activity android:name=".ui.activity.worksapce.OfferAndPayOrderParentActivity" />
+        <!-- 我的发包 -->
+        <activity android:name=".ui.activity.worksapce.MineTakePublishListReceiveParentActivity" />
+        <!-- 我的接包 -->
+        <activity android:name=".ui.activity.worksapce.MineTaskPublishListSendParentActivity" />
+        <!-- 合作公司列表 -->
+        <activity android:name=".ui.activity.worksapce.equipment.EquipmentCooperationCompanyActivity" />
+        <!-- 项目详情 -->
+        <activity android:name=".ui.activity.worksapce.TaskPublishDetailActivitty" />
+
+        <!-- 工作检查 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.WorkCheckInfoActivity" />
+        <!-- 处理明细 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.LookWorkCheckInfoActivity" />
+        <!-- 添加处理明细 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.LookDealwithCheckInfoDetailActivity" />
+        <!-- 修改密码 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <!-- 修改密码 -->
+        <activity
+            android:name=".ui.activity.worksapce.setting.ChangePhoneActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.NoContentActivity" />
+        <activity android:name=".ui.activity.worksapce.GuideActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.AuthManagerActivity"></activity>
     </application>
 
 </manifest>

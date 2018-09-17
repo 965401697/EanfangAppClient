@@ -10,29 +10,29 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1804191
-        versionName "2.1.8"
+        versionCode 18090701
+        versionName "2.3.21"
         multiDexEnabled true
-
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
         buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
         buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
 
-//        buildConfigField("String", "HOST", "\"http://47.96.25.56:8280\"")
-//        buildConfigField("String", "API_HOST", "\"http://47.96.25.56:8280\"")
+//        buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+//        buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
 
 //        buildConfigField("String", "HOST", "\"http://7.117.218.66:8080\"")
 //        buildConfigField("String", "API_HOST", "\"http://7.117.218.66:8080\"")
-
+//
 //        buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //        buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 
         buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
         buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
-        buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
-        buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
+//        buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
+//        buildConfigField("String", "API_HOST", "\"http://192.168.0.30:8080\"")
+
     }
 
     compileOptions {
@@ -43,40 +43,62 @@ android {
     sourceSets {
         main {
             jni.srcDirs = []
-            jniLibs.srcDirs = ['src/main/libs']
+            jniLibs.srcDirs = ['src/main/jnilibs']
         }
     }
+
 
     buildTypes {
 
         debug {
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+
         }
         release {
+
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+//            shrinkResources false
+            //混淆
             minifyEnabled true
+            //加载默认混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     dataBinding {
         enabled = true
     }
+
+    // aapt2 问题 png图片问题
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
 }
 
 dependencies {
-
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    //noinspection GradleCompatible
     compile 'com.android.support:support-v4:26.1.0'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    provided 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
-    provided 'com.github.bumptech.glide:glide:3.7.0'
-    provided 'com.squareup.picasso:picasso:2.5.2'
-    provided 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    provided 'org.xutils:xutils:3.3.36'
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'io.reactivex:rxjava:1.2.2'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2'
+
+    // -------------------- 以下库是必须依赖的 ----------------------------
+    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
+    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
+
+    // -------------------- 以上库是必须依赖的 ----------------------------
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
     //keyValue缓存
     compile 'com.jakewharton:disklrucache:2.0.2'
@@ -86,18 +108,15 @@ dependencies {
 
     //Stram API
     compile 'com.annimon:stream:1.1.8'
-
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
-
-    compile "com.android.support:multidex:1.0.2"
+    compile 'com.android.support:multidex:1.0.2'
 
     // add library
-    compile 'com.alibaba:fastjson:1.2.41'
+    compile 'com.alibaba:fastjson:1.2.47'
 
     //takephoto
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
-
-    provided 'org.projectlombok:lombok:1.16.18'
+    compile 'org.projectlombok:lombok:1.16.18'
     annotationProcessor "org.projectlombok:lombok:1.16.18"
 
     //OSS
@@ -106,18 +125,15 @@ dependencies {
     //fresco
     implementation 'com.facebook.fresco:fresco:1.5.0'
 
-    //takephoto
-    compile 'com.jph.takephoto:takephoto_library:4.0.3'
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
+
     //recyclerview adapter
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.9'
 
     //fresco
-//    implementation 'com.facebook.fresco:fresco:1.5.0'
 
-    //takephoto
-    compile 'com.jph.takephoto:takephoto_library:4.0.3'
+    //    implementation 'com.facebook.fresco:fresco:1.5.0'
 
     //bugly
     compile 'com.tencent.bugly:crashreport:2.6.6.1'
@@ -129,20 +145,31 @@ dependencies {
 
     //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
 
-    //信鸽3.2.0 稳定版本
     //信鸽jar
-    compile 'com.tencent.xinge:xinge:3.2.0-release'
+    compile 'com.tencent.xinge:xinge:3.2.3-release'
+
     //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-release'
+
     //mid包
-    compile 'com.tencent.mid:mid:4.0.0-release'
+    compile 'com.tencent.mid:mid:4.0.6-release'
+
+    //在集成信鸽的基础上新增华为push的jar包
+    compile 'com.tencent.xinge:xghw:2.5.2.300-release'
+
+    //在集成信鸽的基础上新增小米push的jar包
+    compile 'com.tencent.xinge:mipush:3.2.2-release'
+
+    //集成信鸽的基础上新增魅族push的jar包
+    compile 'com.tencent.xinge:xgmz:3.2.2-release'
 
     //微信
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
     //butterknife
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
     //badgeview
     compile 'q.rorbin:badgeview:1.1.3'
 
@@ -156,9 +183,25 @@ dependencies {
     implementation files('libs/Volley.jar')
     implementation files('libs/AMap_Search_V5.3.1_20170817.jar')
     implementation files('libs/alipaySdk-20170922.jar')
-
     implementation files('libs/validation-api-1.0.0.GA.jar')
     implementation files('libs/hibernate-validator-4.2.0.Final.jar')
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
+
+    //中文转英语
+    implementation 'com.belerweb:pinyin4j:2.5.0'
+
+    //三级折叠
+    compile 'com.github.Jlanglang:TreeRecyclerView:1.1.2'
+
+    // 时间选择器
+    compile 'com.contrarywind:Android-PickerView:4.1.3'
+    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
+
+    // 统计饼状图
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation files('libs/Msc.jar')
+    implementation files('libs/Sunflower.jar')
 }
 
 

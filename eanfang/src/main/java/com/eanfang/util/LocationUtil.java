@@ -53,7 +53,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
      */
     private AMapLocation location;
 
-    private OnLocationed onLocationed;
+    public OnLocationed onLocationed;
 
     public OnSearched onSearched;
     private LatLng latLng;
@@ -136,7 +136,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
         //设置小蓝点的锚点
         // myLocationStyle.anchor(int,int)
 //         设置圆形的边框粗细
-        myLocationStyle.strokeWidth(0f);
+        myLocationStyle.strokeWidth(10f);
         myLocationStyle.anchor(0.5f, 0.7f);
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_SHOW);
         myLocationStyle.showMyLocation(true);

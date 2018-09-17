@@ -9,26 +9,28 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 1804191
-        versionName "2.1.8"
+        versionCode 18090701
+        versionName "2.3.21"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        // gradle 3.0.0 以上需要有这个
+        flavorDimensions "app"
         buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
         buildConfigField("String", "TYPE", "\"client\"")
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")
 
-
         ndk {
             // 设置支持的SO库架构
-
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
         }
         //信鸽配置
         manifestPlaceholders = [
                 XG_ACCESS_ID : "2100270001",
                 XG_ACCESS_KEY: "ADCL916N8D7M",
                 AMAP_KEY     : "5c53bd9d6c8d249f637bf025d8f44977",
+                HW_APPID     : "100379427",
+                PACKAGE_NAME : "net.eanfang.client"
         ]
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
@@ -45,21 +47,41 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
+
         }
         release {
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //混淆
-            minifyEnabled false
-            //Zipalign优化
-            zipAlignEnabled false
-            // 移除无用的resource文件
-            shrinkResources false
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名配置
             signingConfig signingConfigs.release
+
+            // 不显示Log
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            //正式的bugly
+            buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
+
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //混淆
+            minifyEnabled true
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 批量打包(gradle 3.0.0 以下)
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('release')) {
+                    variant.outputs.all {
+                        outputFileName = "client_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                    }
+                }
+            }
+            // 批量打包(gradle 3.0.0 以上)
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "client_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                }
+            }
         }
 
     }
@@ -70,35 +92,99 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     dexOptions {//解决分包gradle 编译oom问题
-        incremental true
         javaMaxHeapSize "4g"
     }
+// aapt2 问题 png图片问题
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
 
+    //多渠道打包，命令行打包：gradlew assembleRelease
+    productFlavors {
+        // gradle 3.0.0 以上需要有这个
+        // dimension "app"
+        "xiaomi" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "xiaomi"]
+        }
+        "baidu" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "baidu"]
+        }
+        "huawei" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "baidu"]
+        }
+        "wandoujia" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "wandoujia"]
+        }
+        "meizu" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "meizu"]
+        }
+        "tencent" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "tencent"]
+        }
+        "qh360" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "qh360"]
+        }
+        "oppo" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "oppo"]
+        }
+        "vivo" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "vivo"]
+        }
+        "lenovo" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "lenovo"]
+        }
+        "samsung" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "samsung"]
+        }
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation project(':eanfang')
     //fresco
     implementation 'com.facebook.fresco:fresco:1.5.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:26.1.0'
     //butterknife
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile 'com.android.support:multidex:1.0.2'
-   // implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
-    compile 'cn.bingoogolapple:bga-adapter:1.1.8@aar'
+    // implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
+    // -------------------- 以下4个库是必须依赖的 ----------------------------
+    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
+    // -------------------- 以上4个库是必须依赖的 ----------------------------
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
     implementation 'com.android.support:design:26.1.0'
-    compile 'com.contrarywind:Android-PickerView:3.1.1'
-    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
     implementation 'com.android.support:cardview-v7:26.1.0'
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
-//    implementation 'org.greenrobot:greendao:3.2.2' // add library
 
+    compile 'org.projectlombok:lombok:1.16.18'
 
-
+    //    implementation 'org.greenrobot:greendao:3.2.2' // add library
+    implementation project(':zxing')
+    implementation project(':IMKit')
+    implementation project(':IMLib')
 }
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_letter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_46"
+        android:background="@color/content_bg"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_36"
+        android:text="a"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_contact_line_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_128">
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_friend_header"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="18dp"
+            android:visibility="invisible"
+            fresco:placeholderImage="@mipmap/ic_header"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/iv_friend_title"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="18dp"
+            android:background="@drawable/shape_add_staff_name"
+            android:gravity="center"
+            android:text="子午"
+            android:textColor="@color/white" />
+
+
+        <TextView
+            android:id="@+id/tv_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_friend_header"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_toRightOf="@+id/iv_friend_header"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="子武 "
+            android:textColor="@color/roll_title"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/tv_friend_nike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_friend_name"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_toRightOf="@+id/tv_friend_name"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="子武 "
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_friend_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_friend_header"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_toRightOf="@+id/iv_friend_header"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="13001011991 "
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_56"
+            android:background="@drawable/shape_add_staff_bg"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen_10"
+            android:paddingLeft="@dimen/dimen_30"
+            android:paddingRight="@dimen/dimen_30"
+            android:paddingTop="@dimen/dimen_10"
+            android:text="添加"
+            android:textColor="@color/colorPrimary" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

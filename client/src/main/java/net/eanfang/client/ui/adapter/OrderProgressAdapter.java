@@ -1,12 +1,16 @@
 package net.eanfang.client.ui.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.OrderProgressBean;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.github.vipulasri.timelineview.TimelineView;
+
 
 import net.eanfang.client.R;
 
@@ -22,18 +26,20 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
     private TimelineView timelineView;
     private OrderProgressBean orderProgressBean;
     private String tempText;
+    private LinearLayout mOrderFinish;
 
     public OrderProgressAdapter(int layoutResId, List<OrderProgressBean> data) {
         super(layoutResId, data);
-        orderProgressBean = data.get(data.size() - 1);
-     }
+        orderProgressBean = data.get(0);
+    }
 
     @Override
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
         helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
-                .setText(R.id.tv_date, item.getCreateTime().substring(0, 10))
+                .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
                 .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
         timelineView = helper.getView(R.id.time_marker);
+        mOrderFinish = helper.getView(R.id.ll_orderFinish);
         Drawable marker = mContext.getResources().getDrawable(R.drawable.ic_check);
         Drawable unmarker = mContext.getResources().getDrawable(R.drawable.ic_up_backs);
 
@@ -43,32 +49,41 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
         } else {
             timelineView.setMarker(unmarker);
         }
-        if (item.getNodeInfo() != null) {
+        if (!StringUtils.isEmpty(item.getNodeInfo())) {
             tempText = "(" + item.getNodeInfo() + ")";
         } else {
             tempText = "";
         }
         switch (status) {
             case 0:
-                helper.setText(R.id.tv_progress, "下单成功，等待客户支付" + tempText);
+                helper.setText(R.id.tv_progress, "待支付");
+                helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 1:
-                helper.setText(R.id.tv_progress, "支付成功，待回电" + tempText);
+                helper.setText(R.id.tv_progress, "待回电");
+                helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 2:
-                helper.setText(R.id.tv_progress, "电话回访成功，待上门签到" + tempText);
+                helper.setText(R.id.tv_progress, "待签到");
+                helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 3:
-                helper.setText(R.id.tv_progress, "上门签到成功，待完工" + tempText);
+                helper.setText(R.id.tv_progress, "待完工");
+                helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 4:
-                helper.setText(R.id.tv_progress, "完工提交，待客户确认" + tempText);
+                helper.setText(R.id.tv_progress, "待确认");
+                helper.setText(R.id.tv_progressTime, tempText);
                 break;
             case 5:
-                helper.setText(R.id.tv_progress, " 客户确认，订单完成" + tempText);
+                helper.setText(R.id.tv_progress, " 订单完成");
+                helper.setText(R.id.tv_progressTime, tempText);
+                mOrderFinish.setVisibility(View.VISIBLE);
+                timelineView.setVisibility(View.GONE);
                 break;
             case 6:
-                helper.setText(R.id.tv_progress, "订单已取消" + tempText);
+                helper.setText(R.id.tv_progress, "订单已取消");
+                helper.setText(R.id.tv_progressTime, tempText);
                 break;
 
             default:

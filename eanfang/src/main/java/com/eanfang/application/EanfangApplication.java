@@ -2,8 +2,7 @@ package com.eanfang.application;
 
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.BarUtil.BarUtils;
-import com.eanfang.util.BarUtil.BaseUtil;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -17,11 +16,16 @@ import com.okgo.cookie.store.DBCookieStore;
 import com.okgo.https.HttpsUtils;
 import com.okgo.interceptor.HttpLoggingInterceptor;
 import com.okgo.model.HttpHeaders;
+import com.photopicker.com.imageloader.BGAGlideImageLoader;
+import com.photopicker.com.imageloader.BGAImage;
+import com.tencent.smtt.sdk.QbSdk;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import okhttp3.OkHttpClient;
+
+import static com.eanfang.config.EanfangConst.XUNFEI_APPID;
 
 /**
  * @author Mr.hou
@@ -32,7 +36,17 @@ public class EanfangApplication extends CustomeApplication {
 
     public static final String TAG = EanfangApplication.class.getSimpleName();
     private static EanfangApplication mEanfangApplication;
+    /**
+     * 是否自动更新过
+     */
+    public static boolean isUpdated = false;
+    /**
+     * app类型
+     */
+    public static String AppType;
+
     private OkGo http;
+
 
     public static EanfangApplication getApplication() {
         return mEanfangApplication;
@@ -42,21 +56,26 @@ public class EanfangApplication extends CustomeApplication {
         return mEanfangApplication;
     }
 
-
-
     @Override
     public void onCreate() {
         super.onCreate();
         mEanfangApplication = this;
         initConfig();
         initOkGo();
+
 //        BaseUtil.init(this);
-//        initXinGe();
         //数据库初始化 ziwu
 //        mManager = DaoManager.getInstance();
 //        mManager.init(this);
         CameraApplication.init(this, true);
+        //初始换tbs 不需要 callback 的可以传入 null
+        QbSdk.initX5Environment(getApplicationContext(), null);
 
+        // 初始化讯飞
+        // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
+        RecognitionManager.getSingleton().init(EanfangApplication.getApplication().getApplicationContext(), XUNFEI_APPID);
+        // 初始化BGA 图片选择
+        BGAImage.setImageLoader(new BGAGlideImageLoader());
     }
 
 
@@ -96,11 +115,6 @@ public class EanfangApplication extends CustomeApplication {
 
         HttpHeaders headers = new HttpHeaders();
 
-        if (EanfangApplication.get().getUser() != null) {
-            headers.put("YAF-Token", EanfangApplication.get().getUser().getToken());
-        }
-//        headers.put("Request-From", "CLIENT");
-
         //必须调用初始化
         http = OkGo.getInstance().init(this)
                 //建议设置OkHttpClient，不设置将使用默认的
@@ -115,5 +129,16 @@ public class EanfangApplication extends CustomeApplication {
                 .addCommonHeaders(headers);
         //全局公共参数
         EanfangHttp.setHttp(http);
+
+        if (EanfangApplication.get().getUser() != null) {
+            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+        }
+        if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("client")) {
+            EanfangHttp.setClient();
+        } else if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("worker")) {
+            EanfangHttp.setWorker();
+        }
     }
+
+
 }

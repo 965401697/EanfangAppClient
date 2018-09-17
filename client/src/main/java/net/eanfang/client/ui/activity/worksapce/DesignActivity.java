@@ -35,6 +35,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by MrHou
@@ -87,7 +88,6 @@ public class DesignActivity extends BaseClientActivity {
 
     private static int REQUSERT_ADDRESS_CODE = 100;
 
-
     /**
      * 经度
      */
@@ -123,11 +123,7 @@ public class DesignActivity extends BaseClientActivity {
     private void initView() {
         setTitle("免费设计");
         setLeftBack();
-        setRightTitle("下一步");
-        //下一步事件
-        setRightTitleOnClickListener((v) -> {
-            submit();
-        });
+
         //选择地址
         ll_address.setOnClickListener((v) -> {
             Intent intent = new Intent(DesignActivity.this, SelectAddressActivity.class);
@@ -229,9 +225,9 @@ public class DesignActivity extends BaseClientActivity {
         bean.setDetailPlace(address);
         bean.setBudgetLimit(GetConstDataUtils.getBudgetList().indexOf(budgetLimit));
         bean.setBusinessOneCode(Config.get().getBusinessCodeByName(businessOne, 1));
-        bean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(),1)));
+        bean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(bean.getBusinessOneCode(), 1)));
         bean.setZoneCode(Config.get().getAreaCodeByName(city, contry));
-        bean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(),3, Constant.AREA)));
+        bean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(bean.getZoneCode(), 3, Constant.AREA)));
         bean.setLatitude(lat);
         bean.setLongitude(lon);
         bean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(planLimit));
@@ -328,4 +324,8 @@ public class DesignActivity extends BaseClientActivity {
     }
 
 
+    @OnClick(R.id.tv_sub)
+    public void onViewClicked() {
+        submit();
+    }
 }

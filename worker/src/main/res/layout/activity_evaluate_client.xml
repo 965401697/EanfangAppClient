@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,9 +9,114 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_38">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_workerHead"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                app:placeholderImage="@mipmap/ic_nodata" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_46"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="整体印象："
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <RadioGroup
+                    android:id="@+id/rg_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dimen_28"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_wonderful"
+                        android:layout_width="@dimen/dimen_130"
+                        android:layout_height="@dimen/dimen_60"
+                        android:background="@drawable/select_put_up_back"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="超赞"
+                        android:textColor="@drawable/select_put_up_order_text_back"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_good"
+                        android:layout_width="@dimen/dimen_130"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_put_up_back"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="一般"
+                        android:textColor="@drawable/select_put_up_order_text_back"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_bad"
+                        android:layout_width="@dimen/dimen_130"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_put_up_back"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="差评"
+                        android:textColor="@drawable/select_put_up_order_text_back"
+                        android:textSize="12sp" />
+
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_16"
+            android:background="@color/color_contact_line_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专业服务评价"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="满意请给五星哦"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_12" />
+        </RelativeLayout>
+
+        <View style="@style/style_common_line_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,14 +126,13 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="设备熟悉程度"
-                android:textColor="@color/font_color"
-                android:textSize="16sp" />
+                android:text="工作配合程度"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rb_star1"
@@ -38,7 +143,7 @@
                 android:maxHeight="20dp"
                 android:minHeight="20dp"
                 android:progressBackgroundTint="@color/font_color"
-                android:progressTint="#FFA53A"
+                android:progressTint="@color/color_worker_data_item_title"
                 android:rating="5"
                 android:secondaryProgressTint="@color/font_color"
                 android:stepSize="1" />
@@ -52,14 +157,13 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/tv_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="工作协助支持"
-                android:textColor="@color/font_color"
-                android:textSize="16sp" />
+                android:text="结算及时程度"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rb_star2"
@@ -70,7 +174,7 @@
                 android:maxHeight="20dp"
                 android:minHeight="20dp"
                 android:progressBackgroundTint="@color/font_color"
-                android:progressTint="#FFA53A"
+                android:progressTint="@color/color_worker_data_item_title"
                 android:rating="5"
                 android:secondaryProgressTint="@color/font_color"
                 android:stepSize="1" />
@@ -84,78 +188,13 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/tv_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="结算及时"
-                android:textColor="@color/font_color"
-                android:textSize="16sp" />
-
-            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/rb_star3"
-                style="@style/Widget.MaterialRatingBar.RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"
-                android:maxHeight="20dp"
-                android:minHeight="20dp"
-                android:progressBackgroundTint="@color/font_color"
-                android:progressTint="#FFA53A"
-                android:rating="5"
-                android:secondaryProgressTint="@color/font_color"
-                android:stepSize="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="horizontal"
-            android:padding="15dp">
-
-            <TextView
-                android:id="@+id/tv_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="态度热情"
-                android:textColor="@color/font_color"
-                android:textSize="16sp" />
-
-            <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/rb_star4"
-                style="@style/Widget.MaterialRatingBar.RatingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"
-                android:maxHeight="20dp"
-                android:minHeight="20dp"
-                android:progressBackgroundTint="@color/font_color"
-                android:progressTint="#FFA53A"
-                android:rating="5"
-                android:secondaryProgressTint="@color/font_color"
-                android:stepSize="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="horizontal"
-            android:padding="15dp">
-
-            <TextView
-                android:id="@+id/tv_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="现场环境"
-                android:textColor="@color/font_color"
-                android:textSize="16sp" />
+                android:text="额外要求合理度"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/rb_star5"
@@ -166,19 +205,114 @@
                 android:maxHeight="20dp"
                 android:minHeight="20dp"
                 android:progressBackgroundTint="@color/font_color"
-                android:progressTint="#FFA53A"
+                android:progressTint="@color/color_worker_data_item_title"
                 android:rating="5"
                 android:secondaryProgressTint="@color/font_color"
                 android:stepSize="1" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="技术能力水平"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/rb_star3"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="false"
+                android:maxHeight="20dp"
+                android:minHeight="20dp"
+                android:progressBackgroundTint="@color/font_color"
+                android:progressTint="@color/color_worker_data_item_title"
+                android:rating="5"
+                android:secondaryProgressTint="@color/font_color"
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fff"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="响应时间"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/rb_star4"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="false"
+                android:maxHeight="20dp"
+                android:minHeight="20dp"
+                android:progressBackgroundTint="@color/font_color"
+                android:progressTint="@color/color_worker_data_item_title"
+                android:rating="5"
+                android:secondaryProgressTint="@color/font_color"
+                android:stepSize="1" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/dimen_40">
+
+            <LinearLayout
+                android:id="@+id/ll_workerAnonymous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_10">
+
+                <ImageView
+                    android:id="@+id/iv_anonyMous"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_evalute_worker" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_18"
+                    android:text="匿名评价"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+        </RelativeLayout>
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#fff"
-        android:padding="20dp">
+        android:background="@color/color_white"
+        android:padding="@dimen/dimen_20">
 
         <TextView
             android:id="@+id/tv_select"
@@ -188,8 +322,9 @@
             android:gravity="center_horizontal"
             android:padding="10dp"
             android:text="提交"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/textSize_13" />
     </LinearLayout>
+
 
 </LinearLayout>

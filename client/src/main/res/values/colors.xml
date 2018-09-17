@@ -39,8 +39,20 @@
     <color name="color_client_notice_solid">#f0f0f0</color>
     <color name="color_client_data_item_title">#FB973B</color>
     <color name="color_bottom_pressed">#FB973B</color>
-    <color name="color_contact_authentication">#D3D3D3</color>
     <color name="color_contact_create_confim_back">#FE933D</color>
     <color name="color_personal_text">#E16531</color>
+    <color name="color_service_title">#FF9037</color>
+    <!-- 首页统计数据四个点的背景色 -->
+    <color name="color_home_data_one">#0A98E7</color>
+    <color name="color_home_data_two">#E6CA0A</color>
+    <color name="color_home_data_three">#D91203</color>
+    <color name="color_home_data_four">#CDCDCD</color>
+    <color name="color_worker_detail_type">#F2F2F2</color>
+    <color name="color_service_deiveder">#CDCDCD</color>
+    <color name="color_worker_detail_top_back">#FF4988F5</color>
+    <color name="color_worker_detail_top_grade">#2466D8</color>
+
+    <color name="color_auth_top_back">#FFFBEADA</color>
+    <color name="color_auth_top_text">#FFCB7A30</color>
 
 </resources>

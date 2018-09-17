@@ -49,11 +49,65 @@
     <string name="text_work_knowledge">行业知识</string>
     <string name="text_work_report">工作汇报</string>
     <string name="text_work_task">布置任务</string>
-    <string name="text_work_inspect">工作检查</string>
+    <string name="text_work_inspect">设备点检</string>
     <string name="text_work_sign">签到</string>
     <string name="text_work_library">设备库</string>
     <string name="text_work_fault">故障记录</string>
     <string name="text_work_change">变更记录</string>
     <string name="text_work_file">在线文档</string>
     <string name="text_work_talk">面谈员工</string>
+    <string name="text_work_transfer">交接班</string>
+    <string name="text_opne_shop">开店日志</string>
+    <string name="text_defend_log">布防日志</string>
+
+    <string name="text_service_title">1.完善个人资料</string>
+    <string name="text_service_join">2.加入/创建企业</string>
+
+    <string name="text_service_join_content">创建部门，添加人员，以及权限角色匹配</string>
+    <string name="text_service_join_content_nav">通讯录 >> 创建团队 >> 添加员工 >> 登陆后台 >> 员工授权</string>
+    <string name="text_service_finish_info">3.完善公司资料</string>
+    <string name="text_service_finish_info_nav">通讯录 >> 公司设置 >> 完善资料 >> 提交认证</string>
+    <string name="text_service_more">4.使用更多功能</string>
+    <string name="text_service_more_content">支持业务合约模式，支持平台广选模式</string>
+    <string name="text_service_worker_auth">2.技师资格认证</string>
+    <string name="text_service_worker_auth_nav">我的 >> 技师认证  >> 提交认证</string>
+    <string name="text_service_worker_auth_content">认证技师，即可享受平台接单</string>
+    <string name="text_service_join_company">3.加入安防公司或平台</string>
+    <string name="text_service_join_company_nav">安防公司管理员添加你为员工或者联系平台客服加入</string>
+    <string name="text_service_open_receive">4.开启接单模式</string>
+    <string name="text_service_receive">5.接单</string>
+    <string name="text_service_authentication">5.资质认证</string>
+    <string name="text_service_open_business">6.开通业务功能</string>
+
+    <string name="text_service_content">完善个人资料，如姓名，地址等相关信息，即可享受享受易安防完整平台服务。</string>
+    <string name="text_service_nav">我的 >> 点击头像 >> 完善资料</string>
+    <string name="text_service_tel">咨询电话:</string>
+    <string name="text_service_telphone">010-5877-8731</string>
+    <string name="text_data_change">切换</string>
+
+    <!-- 帮助页面 -->
+    <string name="text_data_repair_dealy">昨日报修</string>
+    <string name="text_data_repair_five">报修前五家单位</string>
+    <string name="text_data_devices">设备情况</string>
+    <string name="text_data_monitor">监控系统</string>
+    <string name="text_data_self">防盗系统</string>
+    <string name="text_data_analysis">数据分析</string>
+    <string name="text_data_yesterday">昨日</string>
+    <string name="text_data_month">本月</string>
+
+    <string name="text_edit_personal_info">编辑个人资料</string>
+    <string name="text_change_personal_head">点击更换头像</string>
+    <string name="text_personal_head">头像</string>
+    <string name="text_work_talk_one">1.如果还有进步空间，应从哪方面入手？</string>
+    <string name="text_work_talk_two">2.所在部门存在的最大问题及原因</string>
+    <string name="text_work_talk_three">3.你会如何解决这些问题？</string>
+    <string name="text_work_talk_four">4.工作中，不愉快的事情？</string>
+    <string name="text_work_talk_five">5.公司中，最优秀的人？最敬佩的人？进步最大的人？</string>
+    <string name="text_work_talk_six">6.针对当前工作，哪些方面不尽人意</string>
+    <string name="text_work_talk_seven">7.哪些事情，应该做而没有去做？</string>
+    <string name="text_work_talk_eight">8.如何才能帮助到你？</string>
+    <string name="text_work_talk_nine">9.如何知道你需要帮助？</string>
+    <string name="text_work_talk_ten">10.如何能更容易理解我想要表达的意思</string>
+    <string name="text_work_talk_eleven">11.你觉得我们错失的最大机遇是什么</string>
+    <string name="text_work_talk_input">请输入文字内容</string>
 </resources>

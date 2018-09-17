@@ -24,7 +24,8 @@ import net.eanfang.client.R;
 
 import java.util.ArrayList;
 
-import cn.bingoogolapple.androidcommon.adapter.BGAOnNoDoubleClickListener;
+import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
+
 
 /**
  * Created by yaosheng on 2017/6/18.

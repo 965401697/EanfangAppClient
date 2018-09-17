@@ -32,7 +32,6 @@ public class SigninBean implements Serializable {
     private String visitorName;
     private int status;
     private String pictures;
-    private String time;
 
     public String getLongitude() {
         return longitude == null ? "" : longitude;
@@ -106,11 +105,4 @@ public class SigninBean implements Serializable {
         this.pictures = pictures;
     }
 
-    public String getTime() {
-        return time == null ? "" : time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
 }

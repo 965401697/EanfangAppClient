@@ -36,8 +36,8 @@
     </style>
 
     <style name="BaseDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowFullscreen">false</item>
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -78,7 +78,7 @@
 
     <style name="launch_theme" parent="@style/BaseTheme">
         <!--<item name="android:windowBackground">@color/title_bar_color</item>-->
-        <item name="android:windowBackground">@drawable/app_launch</item>
+        <item name="android:windowBackground">@mipmap/ic_app_launch</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
@@ -114,6 +114,18 @@
         <item name="android:background">@color/color_new_line</item>
     </style>
 
+    <style name="style_common_line_vertical_gray">
+        <item name="android:layout_width">@dimen/dimen_1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/color_data_line</item>
+    </style>
+
+    <style name="style_order_line_vertical_gray">
+        <item name="android:layout_width">@dimen/dimen_1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/color_order_status_line</item>
+    </style>
+
     <style name="style_client_work_meun">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -124,4 +136,23 @@
         <item name="android:textColor">@color/color_client_menu</item>
         <item name="android:textSize">@dimen/textSize_12</item>
     </style>
+    <!--  自定义dialog style -->
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <declare-styleable name="SideBar">
+        <attr name="scaleSize" format="integer" />
+        <attr name="scaleItemCount" format="integer" />
+        <attr name="scaleWidth" format="dimension" />
+    </declare-styleable>
+
+    <!-- 右上角popupwindow -->
+    <style name="AnimationPreview">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
 </resources>

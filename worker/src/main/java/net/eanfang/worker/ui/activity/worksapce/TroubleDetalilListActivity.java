@@ -23,6 +23,8 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.ToubleDetailListAdapter;
 
 import java.util.List;
@@ -35,7 +37,7 @@ import butterknife.ButterKnife;
  *
  * @on 2018/1/11  22:33
  * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 查看故障处理
  */
 
 public class TroubleDetalilListActivity extends BaseDialog {
@@ -51,12 +53,13 @@ public class TroubleDetalilListActivity extends BaseDialog {
     private int isPhoneSolve;
     private Intent intent;
     private List<BughandleConfirmEntity> mDataList;
-
-    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve) {
+    private boolean isVisible;
+    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve,boolean isVisible) {
         super(context, isfull);
         this.mContext = context;
         this.busRepairOrderId = id;
         this.isPhoneSolve = isPhoneSolve;
+        this.isVisible = isVisible;
     }
 
     @Override
@@ -93,6 +96,9 @@ public class TroubleDetalilListActivity extends BaseDialog {
     }
 
     private void jump(int position) {
+        /**
+         * 获取：是否电话解决（0：未解决，1：已解决）
+         */
         if (isPhoneSolve == 0) {
             intent = new Intent(mContext, TroubleDetailActivity.class);
         } else {
@@ -101,6 +107,7 @@ public class TroubleDetalilListActivity extends BaseDialog {
         intent.putExtra("orderId", mDataList.get(position).getId());
         intent.putExtra("phoneSolve", isPhoneSolve);
         intent.putExtra("bean", mDataList.get(position));
+        intent.putExtra("isVisible", isVisible);
         mContext.startActivity(intent);
     }
 

@@ -68,7 +68,7 @@ public class LookDesignOrderInfoView extends BaseDialog {
     }
 
     private void initView() {
-        tvTitle.setText("设计明细");
+        tvTitle.setText("免费设计详情");
         ivLeft.setOnClickListener(v -> dismiss());
         getData();
     }

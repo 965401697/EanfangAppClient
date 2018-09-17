@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -28,10 +27,11 @@ import android.widget.Toast;
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.util.DialogUtil;
-import com.eanfang.util.PermissionsCallBack;
-import com.eanfang.util.ToastUtil;
 import com.eanfang.model.LoginBean;
+import com.eanfang.util.DialogUtil;
+import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.ToastUtil;
+import com.jaeger.library.StatusBarUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,7 +47,7 @@ public class BaseActivity extends AppCompatActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public Dialog loadingDialog;
-    private PermissionsCallBack permissionsCallBack;
+    private PermissionUtils.PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
     private ExitListenerReceiver exitre;
 
@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             // requestCode即所声明的权限获取码，在checkSelfPermission时传入
-            case PermissionsCallBack.callBackCode:
+            case PermissionUtils.PermissionsCallBack.callBackCode:
                 if (grantResults == null || grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     // 没有获取到权限，做特殊处理
                     runOnUiThread(() -> {
@@ -69,8 +69,13 @@ public class BaseActivity extends AppCompatActivity implements
                     });
                 } else {
 
-                    // 获取到权限，作相应处理
-                    permissionsCallBack.callBack();
+                    try {
+                        // 获取到权限，作相应处理
+                        permissionsCallBack.callBack();
+                    } catch (NullPointerException e) {
+
+                    }
+
                 }
                 break;
             default:
@@ -78,7 +83,7 @@ public class BaseActivity extends AppCompatActivity implements
         }
     }
 
-    public void setPermissionsCallBack(PermissionsCallBack permissionsCallBack) {
+    public void setPermissionsCallBack(PermissionUtils.PermissionsCallBack permissionsCallBack) {
         this.permissionsCallBack = permissionsCallBack;
     }
 
@@ -87,13 +92,21 @@ public class BaseActivity extends AppCompatActivity implements
         //Config.get().onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
-        initState();
+
+//        initState();
+
+//        setStatusBar();
+
         CustomeApplication.get().push(this);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        EventBus.getDefault().register(this);
+
+        //确保之前未订阅过，再调用订阅语句，以免报错
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         loadingDialog = DialogUtil.createLoadingDialog(this);
         RegListener();
 
@@ -103,31 +116,47 @@ public class BaseActivity extends AppCompatActivity implements
         }
     }
 
+
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+    }
+
     /**
      * 沉浸式状态栏
      */
     private void initState() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+//        if (Build.VERSION.SDK_INT >= 21) {
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            decorView.setSystemUiVisibility(option);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
         }
     }
+
     @Override
     protected void onStart() {
         super.onStart();
-//        EventBus.getDefault().register(this);
     }
 
     public void setLeftBack() {
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_left.setVisibility(View.VISIBLE);
         iv_left.setOnClickListener(v -> finish());
+    }
+
+    /**
+     * 返回监听
+     *
+     * @param listener
+     */
+    public void setLeftBack(View.OnClickListener listener) {
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left.setVisibility(View.VISIBLE);
+        iv_left.setOnClickListener(listener);
     }
 
     /**
@@ -180,6 +209,22 @@ public class BaseActivity extends AppCompatActivity implements
         findViewById(R.id.tv_right).setOnClickListener(listener);
     }
 
+    public void setRightGone() {
+        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.GONE);
+    }
+
+    public void setRightVisible() {
+        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.VISIBLE);
+    }
+
+    public void setLeftGone() {
+        ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.GONE);
+    }
+
+    public void setLeftVisible() {
+        ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.VISIBLE);
+    }
+
     public void setRightImageOnClickListener(View.OnClickListener listener) {
         findViewById(R.id.iv_right).setOnClickListener(listener);
     }
@@ -187,7 +232,6 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
-//        EventBus.getDefault().unregister(this);
     }
 
 /*    @Override
@@ -229,7 +273,10 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        //取消订阅
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         CustomeApplication.get().pull(this);
         this.unregisterReceiver(exitre);
     }
@@ -305,6 +352,5 @@ public class BaseActivity extends AppCompatActivity implements
             ((Activity) context).finish();
         }
     }
-
 
 }

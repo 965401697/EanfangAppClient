@@ -29,6 +29,7 @@ import java.util.List;
  */
 
 public class CollectionWorkerFragment extends BaseFragment {
+
     private RecyclerView mRecyclerView;
     private List<CollectionWorkerListBean.ListBean> mDataList = new ArrayList<>();
     private int id;

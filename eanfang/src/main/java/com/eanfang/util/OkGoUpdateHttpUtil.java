@@ -7,7 +7,6 @@ package com.eanfang.util;
 import android.support.annotation.NonNull;
 
 import com.okgo.OkGo;
-import com.okgo.callback.FileCallback;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Progress;
 import com.okgo.model.Response;

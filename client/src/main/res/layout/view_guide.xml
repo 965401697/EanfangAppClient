@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/guide_one">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_remind"
+        android:layout_marginBottom="@dimen/dimen_60">
+
+
+        <TextView
+            android:id="@+id/tv_know"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_marginLeft="@dimen/dimen_39"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_white"
+            android:gravity="center"
+            android:text="我知道了" />
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_marginLeft="@dimen/dimen_35"
+            android:layout_marginRight="@dimen/dimen_39"
+            android:layout_weight="1"
+            android:background="@drawable/shape_add_staff_name"
+            android:gravity="center"
+            android:text="下一步"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_remind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="不再提醒"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:background="@color/content_bg" />
+
+
+    </LinearLayout>
+</RelativeLayout>

@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;
@@ -53,7 +52,7 @@ public class MessageDetailView extends BaseDialog {
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.message_detail_view);
         ButterKnife.bind(this);
-        tvType.setText(GetConstDataUtils.getNoticeTypeList().get(listBean.getNoticeType()));
+        tvType.setText(listBean.getTitle());
         String extInfo = null;
         if (listBean.getExtInfo() != null && !listBean.getExtInfo().toString().contains("{")) {
             extInfo = listBean.getExtInfo().toString();

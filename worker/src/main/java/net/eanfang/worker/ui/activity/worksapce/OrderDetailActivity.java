@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,11 +13,13 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.fragment.OrderDetailFragment;
 import net.eanfang.worker.ui.fragment.OrderProgressFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by MrHou
@@ -38,6 +41,8 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
     private Long id;
+    private String mOrderTime = "";
+    private boolean isVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +52,13 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
         loadingDialog.show();
 
         id = getIntent().getLongExtra("id", 0);
+        mOrderTime = getIntent().getStringExtra("orderTime");
+
+        //分享按钮是是否隐藏
+        isVisible = getIntent().getBooleanExtra("isVisible", false);
+
         mFragments.add(OrderDetailFragment.getInstance(id));
-        mFragments.add(OrderProgressFragment.getInstance(id));
+        mFragments.add(OrderProgressFragment.getInstance(id, mOrderTime));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -62,6 +72,32 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
         setLeftBack();
         //去掉loading
         loadingDialog.dismiss();
+
+        if (!isVisible) {
+            setRightTitle("分享");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //分享聊天
+
+                    HashMap hashMap = ((OrderDetailFragment) mFragments.get(0)).getHashMap();
+
+                    Intent intent = new Intent(OrderDetailActivity.this, SelectIMContactActivity.class);
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("id", (String) hashMap.get("id"));
+                    bundle.putString("orderNum", (String) hashMap.get("orderNum"));
+                    bundle.putString("picUrl", (String) hashMap.get("picUrl"));
+                    bundle.putString("creatTime", (String) hashMap.get("creatTime"));
+                    bundle.putString("workerName", (String) hashMap.get("workerName"));
+                    bundle.putString("status", (String) hashMap.get("status"));
+                    bundle.putString("shareType", (String) hashMap.get("shareType"));
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 

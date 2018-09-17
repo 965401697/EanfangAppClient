@@ -51,16 +51,15 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, RepairBugEntity item) {
-//        helper.setText(R.id.tv_name, item.getName());
-
         String bugOne = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
         String bugTwo = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
         String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
-        helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + "." +bugOne + "-" + bugTwo + "-" + bugThree)
-                .setText(R.id.tv_model, "品牌型号:" + Config.get().getModelNameByCode(item.getModelCode(), 1))
-                .setText(R.id.tv_location, "故障位置:" + item.getBugPosition())
-                .setText(R.id.tv_number, "设备编号:" + item.getDeviceNo())
-                .setText(R.id.tv_desc, "故障描述:" + item.getBugDescription());
+        if (item.getSketch() != null) {
+            helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + "." + item.getSketch());
+        }
+        helper.setText(R.id.tv_model, bugThree);
+        helper.setText(R.id.tv_location, item.getBugPosition());
+        helper.setText(R.id.tv_desc, item.getBugDescription());
         SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");

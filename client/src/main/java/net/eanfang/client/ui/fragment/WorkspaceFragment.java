@@ -8,21 +8,33 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
+import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
+import net.eanfang.client.ui.activity.worksapce.FaultRecordListActivity;
+import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
+import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
+import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
+import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.CheckParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.ReportParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.TaskParentActivity;
+import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;
+import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
+import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.client.ui.widget.CompanyListView;
-import net.eanfang.client.ui.widget.ReportCtrlView;
 import net.eanfang.client.ui.widget.SignCtrlView;
-import net.eanfang.client.ui.widget.TaskCtrlView;
-import net.eanfang.client.ui.widget.WorkCheckCtrlView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,20 +65,28 @@ public class WorkspaceFragment extends BaseFragment {
     @Override
     protected void initView() {
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
-        tvCompanyName.setText(EanfangApplication.getApplication().getUser()
-                .getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        String companyName = EanfangApplication.getApplication().getUser()
+                .getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        if ("个人".equals(companyName)) {
+            tvCompanyName.setText(companyName + "(点击切换公司)");
+        } else {
+            tvCompanyName.setText(companyName);
+        }
         iv_company_logo = findViewById(R.id.iv_company_logo);
         setLogpic();
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
             new CompanyListView(getActivity(), (name, url) -> {
-                tvCompanyName.setText(name);
+                if ("个人".equals(name)) {
+                    tvCompanyName.setText(name + "(点击切换公司)");
+                } else {
+                    tvCompanyName.setText(name);
+                }
                 if (url != null) {
                     iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
                 }
             }).show();
         });
-
     }
 
     private void setLogpic() {
@@ -87,7 +107,10 @@ public class WorkspaceFragment extends BaseFragment {
         progressCtrl();
         helpTools();
         teamWork();
-
+        //客服
+        findViewById(R.id.iv_service).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
+        });
 
 //        //遗留故障
 //        findViewById(R.id.ll_leave_bug).setOnClickListener((v) -> {
@@ -108,16 +131,20 @@ public class WorkspaceFragment extends BaseFragment {
     private void progressCtrl() {
         //报价管控
         findViewById(R.id.tv_work_price).setOnClickListener((v) -> {
-            if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
-                startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
-            } else {
-                startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
+            if (PermKit.get().getQuoteListPrem()) {
+                if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
+                    startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));
+                }
             }
         });
         //维保管控
         findViewById(R.id.tv_work_maintain).setOnClickListener((v) -> {
 //            new MaintainCtrlView(getActivity(), true).show();
-            showToast(".....");
+            if (PermKit.get().getMaintenanceListPrem()) {
+                startActivity(new Intent(getActivity(), MaintenanceActivity.class));
+            }
         });
 
 
@@ -131,6 +158,10 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_camera).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CameraActivity.class));
         });
+        //码率
+        findViewById(R.id.tv_work_calculate).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), KPBSActivity.class));
+        });
         //天猫安防
         findViewById(R.id.tv_work_tm).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), WebActivity.class)
@@ -143,6 +174,18 @@ public class WorkspaceFragment extends BaseFragment {
                     .putExtra("url", "https://list.jd.com/list.html?cat=670,716,7374")
                     .putExtra("title", "京东安防"));
         });
+        //专家解答
+        findViewById(R.id.tv_work_answer).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        //行业知识
+        findViewById(R.id.tv_work_knowledge).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("url", "https://news.eanfang.net/")
+                        .putExtra("title", "行业知识")));
+        //变更记录
+        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        //在线文档
+        findViewById(R.id.tv_work_file).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+
     }
 
     /**
@@ -151,24 +194,71 @@ public class WorkspaceFragment extends BaseFragment {
     private void teamWork() {
         //签到
         findViewById(R.id.tv_work_sign).setOnClickListener((v) -> {
+            // 检查有无权限
+            List<String> ss = new ArrayList<>();
             new SignCtrlView(getActivity()).show();
         });
 
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
-            new ReportCtrlView(getActivity(), true).show();
+//            new ReportCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+            startActivity(intent);
         });
 
-        //工作任务
+        //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
-            new TaskCtrlView(getActivity(), true).show();
+//            new TaskCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+            startActivity(intent);
         });
 
-        //检查
+        //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
-            new WorkCheckCtrlView(getActivity(), true).show();
+//            new WorkCheckCtrlView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
+            startActivity(intent);
         });
 
+        //开店日志
+        findViewById(R.id.tv_shop_log).setOnClickListener((v) -> {
+//            new OpenShopLogView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), OpenShopLogParentActivity.class);
+            startActivity(intent);
+        });
+
+        //布防日志
+        findViewById(R.id.tv_defend_log).setOnClickListener((v) -> {
+//            new DefendLogView(getActivity(), true).show();
+            Intent intent = new Intent(getActivity(), DefendLogParentActivity.class);
+            startActivity(intent);
+        });
+
+
+        //故障记录
+        findViewById(R.id.tv_work_fault).setOnClickListener((v) -> {
+            if (PermKit.get().getFailureListPerm()) {
+                Intent intent = new Intent(getActivity(), FaultRecordListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //设备库
+        findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
+            if (!PermKit.get().getDeviceArchiveListPerm()) return;
+            Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
+            startActivity(intent);
+        });
+        //交接班
+        findViewById(R.id.tv_work_transfer).setOnClickListener((v) -> {
+            Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
+            startActivity(intent);
+        });
+        //面谈员工
+        findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
+            Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
+            startActivity(intent);
+        });
 
     }
 

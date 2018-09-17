@@ -1,34 +1,45 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
+import com.eanfang.util.NumberUtil;
 import com.eanfang.util.V;
+import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
+import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
+import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.client.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,9 +58,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_company_name;
     private TextView tv_contract_name;
     private TextView tv_contract_phone;
-    private TextView tv_time_limit;
     private TextView tv_address;
-    private TextView tv_time;
     private android.support.v7.widget.RecyclerView rv_list;
     private com.facebook.drawee.view.SimpleDraweeView iv_pic;
     private TextView tv_worker_name;
@@ -57,14 +66,59 @@ public class OrderDetailFragment extends BaseFragment {
     private ImageView iv_phone;
     private TextView tv_number;
     private TextView tv_feature_time;
-    private TextView tv_money;
-    private TextView tv_alipay;
+
+    // 支付布局
+    private LinearLayout llPay;
+    // 去支付
+    private TextView tvDoPay;
+    // 支付金额
+    private TextView tvOrderMoney;
+    // 确认布局
+    private LinearLayout llFinish;
+    // 底部右边 按钮
+    private TextView tvBottomRight;
+    private TextView tv_bottomLeft;
+
+    // userid
+    private Long mUserId;
+    private Long mItemId;
+    private int mIsPhoneSolve;
+    // 订单状态
+    private int mOrderStatus;
+    //
+    private String mOrderNum = "";
+    private Long mAssigneeUserId;
+
     private Long id;
-    //2017年7月26日
-    /**
-     * 是否电话解决
-     */
-    private TextView tv_phone_solve;
+    // 保修人
+    private TextView repairContacts;
+    // 保修人电话
+    private TextView repairContactsPhone;
+    // 故障数量
+    private TextView mFaultNum;
+    // 个人订单
+    private LinearLayout mLlOrderPay;
+    private LinearLayout mLlOrderMoney;
+    // 支付方式
+    private TextView mTvPayType;
+    // 支付时间
+    private TextView mTvPayTime;
+    private String mPayType = "";
+    // 上门费
+    private TextView mTvDoorFee;
+    // 订单金额
+    private TextView mTvOrderAllPrice;
+    // 头像地址
+    private String mHeadUrl = "";
+
+    //分享用的必要参数
+    private HashMap hashMap = new HashMap();
+    private TextView tv_name_desc;
+    private LinearLayout ll_worker_info;
+    private TextView tv_phone_desc;
+    private LinearLayout ll_wait;
+    private View line;
+    private PayLogEntity payLogEntity;
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -88,36 +142,83 @@ public class OrderDetailFragment extends BaseFragment {
         llm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(llm);
 
+        mRecyclerView.setNestedScrollingEnabled(false);
         tv_company_name = findViewById(R.id.tv_company_name);
+//--------------------------
+        ll_worker_info = findViewById(R.id.ll_worker_info);
+        ll_wait = findViewById(R.id.ll_wait);
+        line = findViewById(R.id.line);
+        tv_name_desc = findViewById(R.id.tv_name_desc);
+        tv_phone_desc = findViewById(R.id.tv_phone_desc);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
-        tv_time_limit = findViewById(R.id.tv_time_limit);
+//----------------------------
         tv_address = findViewById(R.id.tv_address);
-        tv_time = findViewById(R.id.tv_time);
-        rv_list = findViewById(R.id.rv_list);
         iv_pic = findViewById(R.id.iv_pic);
         tv_worker_name = findViewById(R.id.tv_worker_name);
         tv_worker_company = findViewById(R.id.tv_worker_company);
         iv_phone = findViewById(R.id.iv_phone);
         tv_number = findViewById(R.id.tv_number);
         tv_feature_time = findViewById(R.id.tv_feature_time);
-        tv_money = findViewById(R.id.tv_money);
-        tv_alipay = findViewById(R.id.tv_alipay);
-        tv_phone_solve = findViewById(R.id.tv_phone_solve);
-
+        llPay = findViewById(R.id.ll_pay);
+        llFinish = findViewById(R.id.ll_finish);
+        tvBottomRight = findViewById(R.id.tv_bottomRight);
+        tv_bottomLeft = findViewById(R.id.tv_bottomLeft);
+        tvDoPay = findViewById(R.id.tv_doPay);
+        tvOrderMoney = findViewById(R.id.tv_orderMoney);
+        repairContacts = findViewById(R.id.tv_repairContacts);
+        repairContactsPhone = findViewById(R.id.tv_repairContactPhone);
+        mFaultNum = findViewById(R.id.tv_faultNum);
+        mLlOrderPay = findViewById(R.id.ll_orderPay);
+        mLlOrderMoney = findViewById(R.id.ll_orderMoney);
+        mTvPayType = findViewById(R.id.tv_payType);
+        mTvPayTime = findViewById(R.id.tv_payTime);
+        mTvDoorFee = findViewById(R.id.tv_doorFee);
+        mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
     }
 
 
     @Override
     protected void setListener() {
+        tvDoPay.setOnClickListener((v) -> startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity)));
+        // 确认完工  立即评价
+        tvBottomRight.setOnClickListener((v) -> {
+            if (mOrderStatus == 4) {// 确认完工
+//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
+//                    showToast("当前订单负责人可以操作");
+//                    return;
+//                }
+                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
+            } else if (mOrderStatus == 5) {//立即评价
+//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
+//                    showToast("当前订单负责人可以操作");
+//                    return;
+//                }
+                startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
+                        .putExtra("flag", 0)
+                        .putExtra("ordernum", mOrderNum)
+                        .putExtra("workerUid", mAssigneeUserId)
+                        .putExtra("orderId", mItemId)
+                        .putExtra("avatar", mHeadUrl));
+            }
+        });
+        // 查看完工报告
+        tv_bottomLeft.setOnClickListener((v) -> {
+//            if (!mUserId.equals(EanfangApplication.get().getUserId())) {
+//                showToast("当前订单负责人可以操作");
+//                return;
+//            }
+            new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
+        });
 
     }
 
     private void initAdapter() {
         if (mDataList.size() == 0) {
+            mFaultNum.setVisibility(View.GONE);
             return;
         }
-
+        mFaultNum.setText(mDataList.size() + "");
         BaseQuickAdapter evaluateAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
@@ -140,8 +241,7 @@ public class OrderDetailFragment extends BaseFragment {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
-                }
-                if (view.getId() == R.id.ll_item) {
+                } else if (view.getId() == R.id.ll_item) {
                     View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
                     if (secondItem.getVisibility() == View.VISIBLE) {
                         secondItem.setVisibility(View.GONE);
@@ -151,6 +251,15 @@ public class OrderDetailFragment extends BaseFragment {
                 }
             }
         });
+        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("faultDeatail", mDataList.get(position));
+                JumpItent.jump(getActivity(), FaultDetailActivity.class, bundle);
+            }
+        });
+
         mRecyclerView.setAdapter(evaluateAdapter);
 
         iv_phone.setOnClickListener(v ->
@@ -163,39 +272,135 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-                    tv_company_name.setText(V.v(() ->bean.getRepairCompany()));//单位名称
-                    tv_contract_name.setText(V.v(() ->bean.getRepairContacts()));//联系人
-                    tv_contract_phone.setText(V.v(() ->bean.getRepairContactPhone()));
-                    tv_time_limit.setText(V.v(() ->GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
-                    tv_address.setText(V.v(() ->Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress()));
-                    if (bean.getBookTime() != null) {
-                        tv_time.setText(V.v(() ->Optional.ofNullable(GetDateUtils.dateToDateString(bean.getBookTime())).orElse("--")));
-                    } else {
-                        tv_time.setText("--");
+                    //================================================================
+                    //初始化支付对象
+                    payLogEntity = new PayLogEntity();
+                    payLogEntity.setOrderId(bean.getId());
+                    payLogEntity.setOrderNum(bean.getOrderNum());
+                    payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+                    payLogEntity.setAssigneeUserId(bean.getOwnerUserId());
+                    payLogEntity.setAssigneeOrgCode(bean.getOwnerOrgCode());
+                    payLogEntity.setAssigneeTopCompanyId(bean.getOwnerTopCompanyId());
+                    //==================================================================
+
+                    hashMap.put("id", String.valueOf(bean.getId()));
+                    if (bean.getBugEntityList() != null && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
+                        hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
+                    }
+                    hashMap.put("orderNum", bean.getOrderNum());
+                    hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                    if (bean.getAssigneeUser() != null) {
+                        hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
                     }
 
-                    tv_number.setText(V.v(() ->bean.getOrderNum()));
-                    tv_feature_time.setText(V.v(() ->GetDateUtils.dateToDateString(bean.getCreateTime())));
+                    hashMap.put("status", String.valueOf(bean.getStatus()));
+                    hashMap.put("shareType", "1");
+
+
+                    tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
+                    if (bean.getAssigneeUser() != null) {
+                        ll_worker_info.setVisibility(View.VISIBLE);
+                        tv_name_desc.setVisibility(View.VISIBLE);
+                        tv_phone_desc.setVisibility(View.VISIBLE);
+                        tv_contract_name.setVisibility(View.VISIBLE);
+                        tv_contract_phone.setVisibility(View.VISIBLE);
+                        line.setVisibility(View.VISIBLE);
+
+                        ll_wait.setVisibility(View.GONE);
+
+                        tv_contract_name.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getRealName()));//联系人
+                        tv_contract_phone.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getMobile()));// 联系人手机号
+                    }
+                    // 回复时效
+//                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
+                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
+//                    if (bean.getBookTime() != null) {
+//                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
+//                    } else {
+//                        tv_time.setText("--");
+//                    }
+
+                    // 大于0 是公司  小于0 是个人
+                    if (bean.getOwnerCompanyId() <= 0) {
+                        mLlOrderMoney.setVisibility(View.VISIBLE);
+                        mLlOrderPay.setVisibility(View.VISIBLE);
+                    } else {
+                        mLlOrderMoney.setVisibility(View.GONE);
+                        mLlOrderPay.setVisibility(View.GONE);
+                    }
+
+                    // 支付金额  GetConstDataUtils.getPayTypeList().get(0);
+                    if (bean.getPayLogEntity() != null) {
+                        // 支付金额
+                        if (bean.getPayLogEntity().getPayPrice() != null) {
+                            tvOrderMoney.setText("¥" + NumberUtil.getEndTwoNum(bean.getPayLogEntity().getPayPrice() / 100.00));
+                            mTvDoorFee.setText(NumberUtil.getEndTwoNum(bean.getPayLogEntity().getPayPrice() / 100.00));
+                            mTvOrderAllPrice.setText(NumberUtil.getEndTwoNum(bean.getPayLogEntity().getPayPrice() / 100.00));
+                        }
+                        // 支付方式
+                        if (bean.getPayLogEntity().getPayType() != null) {
+                            mPayType = GetConstDataUtils.getPayTypeList().get(bean.getPayLogEntity().getPayType());
+                            mTvPayType.setText(mPayType);
+                        }
+                        // 支付时间
+                        if (bean.getPayLogEntity().getPayTime() != null) {
+                            mTvPayTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                        }
+                    } else {
+                        llPay.setVisibility(View.GONE);
+                    }
+                    repairContacts.setText(V.v(() -> bean.getRepairContacts()));
+                    repairContactsPhone.setText(V.v(() -> bean.getRepairContactPhone()));
+                    tv_number.setText(V.v(() -> bean.getOrderNum()));
+                    tv_feature_time.setText(V.v(() -> GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
+
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
-                    //      获取：是否电话解决（0：未解决，1：已解决）
-                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
-                        tv_phone_solve.setText("否");
-                    } else {
-                        tv_phone_solve.setText("是");
-                    }
 
+                    //      获取：是否电话解决（0：未解决，1：已解决）
+//                    if (bean.getIsPhoneSolve() == null || bean.getIsPhoneSolve() == 0) {
+//                        tv_phone_solve.setText("否");
+//                    } else {
+//                        tv_phone_solve.setText("是");
+//                    }
+                    mUserId = bean.getOwnerUserId();
+                    mItemId = bean.getId();
+                    mIsPhoneSolve = bean.getIsPhoneSolve();
+                    mOrderStatus = bean.getStatus();
+                    mOrderNum = bean.getOrderNum();
+                    mAssigneeUserId = bean.getAssigneeUserId();
                     //客户端
                     if (bean.getAssigneeUser() != null) {
-                        iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getAssigneeUser().getAccountEntity().getAvatar()));
-                        tv_worker_name.setText(V.v(() ->bean.getAssigneeUser().getAccountEntity().getRealName()));
-                        tv_worker_company.setText(V.v(() ->bean.getAssigneeOrg().getBelongCompany().getOrgName()));
-                        iv_phone.setTag(V.v(() ->bean.getAssigneeUser().getAccountEntity().getMobile()));
+                        mHeadUrl = bean.getAssigneeUser().getAccountEntity().getAvatar();
+                        iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(mHeadUrl));
+                        tv_worker_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
+                        tv_worker_company.setText(V.v(() -> bean.getAssigneeOrg().getBelongCompany().getOrgName()));
+                        iv_phone.setTag(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));
                     }
-
+                    if (mOrderStatus == 0) {// 待付款
+                        llPay.setVisibility(View.VISIBLE);
+                        llFinish.setVisibility(View.GONE);
+                        // 支付方式布局
+                        mLlOrderPay.setVisibility(View.GONE);
+                        mLlOrderMoney.setVisibility(View.GONE);
+                    } else if (mOrderStatus == 4) {// 待确认
+                        llFinish.setVisibility(View.VISIBLE);
+                        llPay.setVisibility(View.GONE);
+                    } else if (mOrderStatus == 5) {// 订单完成
+                        llFinish.setVisibility(View.VISIBLE);
+                        llPay.setVisibility(View.GONE);
+                        tvBottomRight.setText("立即评价");
+                    } else {
+                        llFinish.setVisibility(View.GONE);
+                        llPay.setVisibility(View.GONE);
+                    }
                     mDataList = bean.getBugEntityList();
                     initAdapter();
+
                 }));
     }
 
+    public HashMap getHashMap() {
+        return hashMap;
+    }
 }

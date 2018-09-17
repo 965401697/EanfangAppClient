@@ -6,13 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,12 +28,17 @@ import butterknife.ButterKnife;
 
 public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAdapter.InternalViewHolder> {
     private final LayoutInflater layoutInflater;
-    private List<BaseDataEntity> data;
+    private List<BaseDataEntity> data = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
+    public boolean isAuth = false;
 
-    public MultipleChoiceAdapter(Context context, List<BaseDataEntity> data) {
+    public MultipleChoiceAdapter(Context context) {
         layoutInflater = LayoutInflater.from(context);
+    }
+
+    public void refreshData(List<BaseDataEntity> data) {
         this.data = data;
+        notifyDataSetChanged();
     }
 
     public String getItem(int position) {
@@ -47,21 +52,14 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
 
     @Override
     public void onBindViewHolder(InternalViewHolder holder, final int position) {
-        holder.itemView.setOnClickListener(v -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(v, position, getItemId(position));
-            }
-            if (data.get(position).isCheck()) {
-                holder.checkBox.setImageResource(R.mipmap.ic_checked);
-            } else {
-                holder.checkBox.setImageResource(R.mipmap.ic_uncheck);
-            }
-
-        });
-        if (data.get(position).isCheck()) {
-            holder.checkBox.setImageResource(R.mipmap.ic_checked);
+        if (isAuth) {
+            holder.itemView.setEnabled(false);
         } else {
-            holder.checkBox.setImageResource(R.mipmap.ic_uncheck);
+            holder.itemView.setOnClickListener(v -> {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(v, position, getItemId(position));
+                }
+            });
         }
 
         holder.tvTitle.setText(getItem(position));
@@ -87,8 +85,6 @@ public class MultipleChoiceAdapter extends RecyclerView.Adapter<MultipleChoiceAd
     }
 
     class InternalViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.checkBox)
-        ImageView checkBox;
         @BindView(R.id.tv_title)
         TextView tvTitle;
 

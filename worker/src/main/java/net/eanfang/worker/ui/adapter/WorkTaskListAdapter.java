@@ -13,8 +13,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 import static com.eanfang.util.V.v;
 
 
@@ -28,30 +26,30 @@ import static com.eanfang.util.V.v;
 
 public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListBean, BaseViewHolder> {
 
-    public WorkTaskListAdapter(List<WorkTaskListBean.ListBean> data) {
-        super(R.layout.item_work_list_layout, data);
+    public WorkTaskListAdapter() {
+        super(R.layout.item_work_list_layout);
 
     }
 
     @Override
     protected void convert(BaseViewHolder helper, WorkTaskListBean.ListBean item) {
-        helper.setText(R.id.tv_company_name, v(()->item.getCreateCompany().getOrgName()));
-        helper.setText(R.id.tv_depart_name, "部门：" + v(()->item.getCreateOrg().getOrgName()));
+        helper.setText(R.id.tv_company_name, v(() -> item.getCreateCompany().getOrgName()));
+        helper.setText(R.id.tv_depart_name, "部门：" + v(() -> item.getCreateOrg().getOrgName()));
         if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
             helper.setText(R.id.tv_read_ns, "已读");
         } else {
             helper.setText(R.id.tv_read_ns, "未读");
             helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#0000ff"));
         }
-        helper.setText(R.id.tv_title_name, "标题：" + v(()->item.getTitle()));
-        helper.setText(R.id.tv_pub_time, "发布时间：" + v(()->item.getCreateTime()));
-        helper.setText(R.id.tv_pub_person, "发布人：" + v(()->item.getCreateUser().getAccountEntity().getRealName()));
-        helper.setText(R.id.tv_rev_person, "接收人：" + v(()->item.getAssigneeUser().getAccountEntity().getRealName()));
+        helper.setText(R.id.tv_title_name, "标题：" + v(() -> item.getTitle()));
+        helper.setText(R.id.tv_pub_time, "发布时间：" + v(() -> item.getCreateTime()));
+        helper.setText(R.id.tv_pub_person, "发布人：" + v(() -> item.getCreateUser().getAccountEntity().getRealName()));
+//        helper.setText(R.id.tv_rev_person, "接收人：" + v(() -> item.getAssigneeUser().getAccountEntity().getRealName()));
 
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
             String[] urls = item.getWorkTaskDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+urls[0]));
+            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
         }
 
     }

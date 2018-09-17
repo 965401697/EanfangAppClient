@@ -2,6 +2,9 @@ package net.eanfang.worker.ui.activity.im;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,16 +15,15 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupCreatBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
+import com.eanfang.util.compound.CompoundHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
-import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 
 import org.json.JSONArray;
@@ -46,6 +48,24 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
     SimpleDraweeView ivIcon;
     private final int HEADER_PIC = 107;
     private String imgKey;
+    private String path;
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            path = (String) msg.obj;
+
+            if (!TextUtils.isEmpty(path)) {
+                ivIcon.setImageURI("file://" + path);
+
+                imgKey = UuidUtil.getUUID() + ".png";
+
+            }
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +74,29 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         setTitle("创建群组");
         setLeftBack();
+
+        ArrayList<String> userIconList = getIntent().getStringArrayListExtra("userIconList");
+        userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+        //合成头像
+
+        CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片
     }
 
     /**
      * 提交群组的名字
      */
     private void submit() {
+
+        if (TextUtils.isEmpty(etGroupName.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "群组名称不能为空");
+            return;
+        }
+
+        if (TextUtils.isEmpty(imgKey)) {
+            ToastUtil.get().showToast(this, "请上传群头像");
+            return;
+        }
+
         ArrayList<String> list = getIntent().getStringArrayListExtra("userIdList");
         list.add(String.valueOf(EanfangApplication.get().getAccId()));
         JSONObject jsonObject = new JSONObject();
@@ -81,19 +118,30 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //创建群组
-        EanfangHttp.post(UserApi.POST_CREAT_GROUP)
-                .upJson(jsonObject)
-                .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
-                    ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
+        //头像上传成功后提交数据
+        OSSUtils.initOSS(GroupCreatActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(GroupCreatActivity.this, false) {
 
-                    Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
-                    RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+            @Override
+            public void onOssSuccess() {
+                super.onOssSuccess();
 
-                    EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
-                    RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
-                    GroupCreatActivity.this.finish();
-                }));
+                //创建群组
+                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                        .upJson(jsonObject)
+                        .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
+                            ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
+                            Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+                            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+
+                            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                            RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                            GroupCreatActivity.this.finish();
+                        }));
+
+            }
+        });
+
+
     }
 
     @OnClick(R.id.btn_created)

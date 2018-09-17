@@ -1,0 +1,164 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/color_white"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen_60">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:text="@string/text_service_title"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:text="@string/text_service_nav"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_service_personal_info" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:text="@string/text_service_join"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:text="@string/text_service_join_content_nav"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:text="@string/text_service_join_content"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_70"
+                android:text="@string/text_service_finish_info"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:text="@string/text_service_finish_info_nav"
+                android:textSize="@dimen/textSize_13"
+                android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_service_company_info" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:text="@string/text_service_more"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:text="@string/text_service_authentication"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:text="@string/text_service_open_business"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_16" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_28"
+                android:text="@string/text_service_more_content"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_service_tel"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_server_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:text="@string/text_service_telphone"
+                    android:textColor="@color/color_service_tel"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

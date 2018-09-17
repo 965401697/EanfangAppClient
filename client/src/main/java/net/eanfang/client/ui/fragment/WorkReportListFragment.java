@@ -1,13 +1,10 @@
 package net.eanfang.client.ui.fragment;
 
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.app.Activity;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
@@ -15,21 +12,13 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkReportListBean;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.WorkReportListAdapter;
-import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 import net.eanfang.client.ui.widget.WorkReportInfoView;
-
-import java.util.List;
-
-import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
-import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
 
 /**
@@ -40,11 +29,8 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc
  */
 
-public class WorkReportListFragment extends BaseFragment implements
-        OnDataReceivedListener, SwipyRefreshLayout.OnRefreshListener {
-    private static int page = 1;
-    RecyclerView rvList;
-    SwipyRefreshLayout swiprefresh;
+
+public class WorkReportListFragment extends TemplateItemListFragment {
 
 
     private String mTitle;
@@ -54,7 +40,6 @@ public class WorkReportListFragment extends BaseFragment implements
     public static WorkReportListFragment getInstance(String title, int type) {
         WorkReportListFragment sf = new WorkReportListFragment();
         sf.mTitle = title;
-        page = 1;
         sf.mType = type;
         return sf;
 
@@ -64,95 +49,43 @@ public class WorkReportListFragment extends BaseFragment implements
         return mTitle;
     }
 
-    @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_work_report_list;
-    }
 
     @Override
-    protected void initData(Bundle arguments) {
-        getData(1);
-    }
-
-    @Override
-    protected void initView() {
-        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
-        swiprefresh.setOnRefreshListener(this);
-        rvList = (RecyclerView) findViewById(R.id.rv_list);
-        rvList.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    @Override
-    protected void setListener() {
-    }
-
-    private void initAdapter(List<WorkReportListBean.ListBean> mDataList) {
-
-        mAdapter = new WorkReportListAdapter(mDataList);
-        rvList.addOnItemTouchListener(new OnItemClickListener() {
+    protected void initAdapter() {
+        mAdapter = new WorkReportListAdapter();
+        mAdapter.bindToRecyclerView(mRecyclerView);
+        mAdapter.setOnLoadMoreListener(this);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mDataList.get(position).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
-                    getFirstLookData(mDataList, position);
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                if (!PermKit.get().getWorkReportDetailPrem()) return;
+
+                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                    getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                 }
-                new WorkReportInfoView(getActivity(), true, mDataList.get(position).getId()).show();
+
+                new WorkReportInfoView((Activity) view.getContext(), true, ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId(), false).show();
+
             }
         });
-        rvList.setAdapter(mAdapter);
-
     }
 
 
     /**
      * 首次阅读，更新状态
      */
-    private void getFirstLookData(List<WorkReportListBean.ListBean> mDataList, int position) {
+    private void getFirstLookData(long id) {
         EanfangHttp.get(NewApiService.WORK_REPORT_FIRST_READ)
-                .params("id", mDataList.get(position).getId())
+                .params("id", id)
                 .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
 
                 }));
     }
 
-
-    /**
-     * 刷新
-     */
     @Override
-    public void onRefresh(int index) {
-        dataOption(TOP_REFRESH);
+    protected void getData() {
 
-    }
-
-    @Override
-    public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                getData(page);
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                getData(page);
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * 获取工作任务列表
-     */
-    private void getData(int page) {
         QueryEntry queryEntry = new QueryEntry();
         if (!Constant.ALL.equals(mTitle)) {
             String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
@@ -165,25 +98,59 @@ public class WorkReportListFragment extends BaseFragment implements
         } else if (Constant.ASSIGNEE_DATA_CODE == mType) {
             queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         }
-        queryEntry.setPage(page);
-        queryEntry.setSize(5);
+        queryEntry.setPage(mPage);
+        queryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_WORK_REPORT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true, WorkReportListBean.class, (bean) -> {
-                            getActivity().runOnUiThread(() -> {
-                                onDataReceived();
-                                initAdapter(bean.getList());
-                            });
-                        })
-                );
+                .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true, WorkReportListBean.class) {
+
+                    @Override
+                    public void onSuccess(WorkReportListBean bean) {
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
-
-    @Override
-    public void onDataReceived() {
-//        initView();
-
-        swiprefresh.setRefreshing(false);
-    }
 }

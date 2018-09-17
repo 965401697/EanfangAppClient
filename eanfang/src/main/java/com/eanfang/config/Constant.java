@@ -130,6 +130,11 @@ public interface Constant {
      */
 
     String BUGHANDLE_DETAIL_STATUS = "BughandleDetailStatus";
+
+    /**
+     * 故障明细状态 二级的key
+     */
+    String BUGHANDLE_DETAIL_STATUS_KEY = "BughandleDetailStatusKey";
     /**
      * 14.正常/不正常
      */
@@ -211,14 +216,82 @@ public interface Constant {
      */
     String WORK_STATUS = "WorkStatus";
     /**
-     * 31.推送类型
+     * 31.误报的报警原因
+     */
+    String FALSE_CAUSE = "FalseCause";
+    /**
+     * 32.旁路的报警原因
+     */
+    String BYPASS_CAUSE = "BypassCause";
+    /**
+     * 33.闯防的报警原因
+     */
+    String THROUGH_CAUSE = "ThroughCause";
+    /**
+     * 34.推送类型
      */
     String PUSH_TYPE = "PushType";
 
+    /**
+     * 35.报修统计设备状况图片后缀
+     */
+    String DEVICE_PIC_FONT = "biz/statistics/icon_";
 
     String PAY_TYPE = "PayType";
 
     String NOTICE_TYPE = "NoticeType";
+
+    /**
+     * 35.维保状态
+     */
+
+    String MAINTAIN_CONSTANT_STATUS = "status";
+    /**
+     * 36，处理的结果
+     */
+
+    String MAINTAIN_ADD_CHECK_CONDITION = "existResult";
+
+    /**
+     * 37，系统运行结论
+     */
+
+    String MAINTAIN_OS_RUNTIME = "confirmStatus";
+
+    /**
+     * 38.面谈员工
+     */
+    String WORKTALK_STATUS = "FaceToWorkerStatus";
+    /**
+     * 39.交接班
+     */
+    String WORKTRANSFER_STATUS = "ExchangeStatus";
+
+    /**
+     * 40.首页报修统计数据
+     */
+    String HOME_DATASTATISTICS = "BughandleDetailAppStatus";
+
+    /**
+     * 41.交接班详情(完好 破损)状态
+     */
+    String WORK_TRANSFER_DETAIL = "thisTimeStatus";
+
+    /**
+     * 42.交接班列表(待确认 完成交接)状态
+     */
+    String WORK_TRANSFER_LIST = "changeStatus";
+    /**
+     * 43.交接班创建班次状态
+     */
+    String WORK_TRANSFER_CREATE = "workClasses";
+
+
+    //业务通知
+    int NOTICE_BUSINESS = 1;
+
+    // 系统通知
+    int NOTICE_SYSTEM = 0;
     /**
      * 发包类型
      */
@@ -376,6 +449,5 @@ public interface Constant {
             return title;
         }
     }
-
 
 }

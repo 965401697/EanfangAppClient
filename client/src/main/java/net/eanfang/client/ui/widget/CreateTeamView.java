@@ -92,7 +92,7 @@ public class CreateTeamView extends BaseDialog {
     private void SwitchCompany(Long companyid) {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
-                .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
+                .execute(new EanfangCallback<LoginBean>(mContext, true, LoginBean.class, (bean) -> {
                     EanfangApplication.get().remove(LoginBean.class.getName());
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
@@ -104,7 +104,7 @@ public class CreateTeamView extends BaseDialog {
 
     private void updateData() {
         EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback(mContext, false, LoginBean.class) {
+                .execute(new EanfangCallback(mContext, true, LoginBean.class) {
                     @Override
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);

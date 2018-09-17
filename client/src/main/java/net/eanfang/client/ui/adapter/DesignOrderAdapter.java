@@ -9,8 +9,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 
 /**
  * jorn
@@ -19,8 +17,8 @@ import java.util.List;
 
 public class DesignOrderAdapter extends BaseQuickAdapter<DesignOrderListBean.ListBean, BaseViewHolder> {
 
-    public DesignOrderAdapter(List<DesignOrderListBean.ListBean> data) {
-        super(R.layout.item_design_list_layout, data);
+    public DesignOrderAdapter() {
+        super(R.layout.item_design_list_layout);
 
     }
 

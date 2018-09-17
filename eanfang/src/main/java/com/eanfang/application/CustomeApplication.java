@@ -6,23 +6,21 @@ package com.eanfang.application;
 
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.util.ArrayMap;
-import android.view.WindowManager;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.camera.util.LogUtil;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.IBase;
-import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.eanfang.util.message.J_MessageVerify;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -42,6 +40,7 @@ public abstract class CustomeApplication extends MultiDexApplication {
         return mJCustomeApplication;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -50,8 +49,6 @@ public abstract class CustomeApplication extends MultiDexApplication {
 
     public void initConfig() {
         J_MessageVerify.get().init(60);
-        Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
-        SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
     }
 
     public void push(IBase j_iBase) {
@@ -64,7 +61,6 @@ public abstract class CustomeApplication extends MultiDexApplication {
             j.finishSelf();
         }
     }
-
 
     /**
      * sharepreference
@@ -134,8 +130,18 @@ public abstract class CustomeApplication extends MultiDexApplication {
         } catch (Exception e) {
             return JSONObject.parseObject(json, clazz, Feature.DisableCircularReferenceDetect);
         }
+    }
 
-
+    public <T> List<T> getArr(String key, Class<T> clazz) {
+        String json = get(key, "");
+        if (StringUtils.isEmpty(json)) {
+            return null;
+        }
+        try {
+            return JSONArray.parseArray(json, clazz);
+        } catch (Exception e) {
+            return JSONArray.parseArray(json, clazz);
+        }
     }
 
 
@@ -163,6 +169,14 @@ public abstract class CustomeApplication extends MultiDexApplication {
         return getUser().getAccount().getDefaultUser().getCompanyId();
     }
 
+    public Long getTopCompanyId() {
+        return getUser().getAccount().getDefaultUser().getTopCompanyId();
+    }
+
+    public String getOrgCode() {
+        return V.v(() -> getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgCode());
+    }
+
     public void closeActivity(String... cls) {
         for (String str : cls) {
             if (mJIBaseArrayMap.containsKey(str)) {
@@ -175,6 +189,22 @@ public abstract class CustomeApplication extends MultiDexApplication {
                         } catch (Exception e) {
                             LogUtil.e("close cathc", e.getMessage());
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public void closeAll() {
+        for (String str : mJIBaseArrayMap.keySet()) {
+            Object object = mJIBaseArrayMap.get(str);
+            if (object instanceof IBase) {
+                IBase base = (IBase) object;
+                if (!base.isFinishing()) {
+                    try {
+                        base.finishSelf();
+                    } catch (Exception e) {
+                        LogUtil.e("close cathc", e.getMessage());
                     }
                 }
             }

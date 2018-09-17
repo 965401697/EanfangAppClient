@@ -4,26 +4,23 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Created by MrHou
- *
- * @on 2017/12/11  17:36
- * @email houzhongzhou@yeah.net
- * @desc
- */
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ConstAllBean implements Serializable {
-
-    private ConstBean data;
-
-    private String MD5;
+    public ConstBean data;
+    public String MD5;
 
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public class ConstBean {
         private Map<String, List<String>> Const;
         private Map<String, List<String>> WorkReportConstant;
@@ -37,6 +34,32 @@ public class ConstAllBean implements Serializable {
         private Map<String, List<String>> InstallOrderConstant;
         private Map<String, List<String>> TaskPublishConstant;
         private Map<String, List<String>> NoticeConst;
+        private Map<String, List<String>> OAConst;
+        private Map<String, List<String>> ExchangeLogConstant;
+    }
+
+    public ConstBean getData() {
+        return data;
+    }
+
+    public void setData(ConstBean data) {
+        this.data = data;
+    }
+
+    public String getMD5() {
+        return MD5;
+    }
+
+    public void setMD5(String MD5) {
+        this.MD5 = MD5;
+    }
+
+    @Override
+    public String toString() {
+        return "ConstAllBean{" +
+                "data=" + data +
+                ", MD5='" + MD5 + '\'' +
+                '}';
     }
 }
 

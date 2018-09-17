@@ -172,7 +172,23 @@ public interface RepairApi {
      */
     String GET_SHOP_DEVICE_LIST = BuildConfig.API_HOST + "/yaf_device/shopDevice/deviceList";
     /**
-     * 遗留故障列表
+     * 32.遗留故障列表
      */
     String GET_LEAVE_BUG_LIST = BuildConfig.API_HOST + "/yaf_repair/failure/record/list";
+    /**
+     * 33.故障库列表
+     */
+    String GET_FAULT_LIST = BuildConfig.API_HOST + "/yaf_device/headdevicefailure/deviceFailurelist";
+    /**
+     * 34.保修单支付记录
+     */
+    String GET_REPAIR_PAY_RECORD = BuildConfig.API_HOST + "/yaf_sys/payLog/create";
+    /**
+     * 35.查找上门费 并查询所在城市是否开通
+     */
+    String GET_REAPIR_PAY_PRICE = BuildConfig.API_HOST + "/yaf_sys/openArea/getInfo";
+    /**
+     * 36.根据客户绑定的关系，查询是否存在记录并返回对象
+     */
+    String GET_REAPIR_DO_VERIRFY = BuildConfig.API_HOST + "/yaf_shop/cooperation/exists";
 }

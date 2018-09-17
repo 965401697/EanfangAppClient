@@ -102,7 +102,7 @@ public class PayOrderDetailActivity extends BaseClientActivity {
 
         EanfangHttp.post(NewApiService.QUOTE_ORDER_DETAIL)
                 .params("id", id)
-                .execute(new EanfangCallback<QuotationBean>(this, false, QuotationBean.class, (bean) -> {
+                .execute(new EanfangCallback<QuotationBean>(this, true, QuotationBean.class, (bean) -> {
 
                     fillData(bean);
                 }));

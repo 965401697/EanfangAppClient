@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cb_check"
+    android:layout_width="@dimen/dimen_180"
+    android:layout_height="@dimen/dimen_60"
+    android:layout_margin="@dimen/dimen_20"
+    android:background="@drawable/selector_cooperation_add"
+    android:button="@null"
+    android:checked="false"
+    android:gravity="center"
+    android:text=" "
+    android:textColor="@drawable/selector_cooperation_add_text">
+
+</CheckBox>

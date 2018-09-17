@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/view_title_bar" />
+    <include layout="@layout/header" />
 
-    <TextView
-        android:id="@+id/tv_call_service_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#fff0d4"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:text="请确认设备编号是否正确，如不正确，请重新创建故障"
-        android:textColor="@color/font_color"
-        android:textSize="12sp" />
-
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarStyle="@null">
@@ -32,599 +22,575 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:padding="15dp">
+                android:background="@color/color_white"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
-                    android:id="@+id/tv_trouble_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1.电视监控-摄像采集-模拟机枪"
-                    android:textSize="16sp" />
+                    android:drawableLeft="@mipmap/ic_trouble_phone_info"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="故障信息"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备名称"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_trouble_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@drawable/select_worker"-->
+                    <!--android:paddingBottom="@dimen/dimen_10"-->
+                    <!--android:paddingLeft="@dimen/dimen_30"-->
+                    <!--android:paddingRight="@dimen/dimen_30"-->
+                    <!--android:paddingTop="@dimen/dimen_10"-->
+                    <!--android:text="设备详情"-->
+                    <!--android:textColor="@color/color_worker_data_item_title"-->
+                    <!--android:textSize="@dimen/textSize_12" />-->
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备编号"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_device_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="故障位置"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_device_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="位置编号"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_location_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="故障简述"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <EditText
+                        android:id="@+id/et_trouble_sketch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:background="@null"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_30">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="故障描述"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <EditText
+                        android:id="@+id/et_trouble_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:background="@null"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
             </LinearLayout>
 
-
             <RelativeLayout
-                android:id="@+id/rl_trouble_device"
+                android:id="@+id/rl_add_device_param"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="故障设备"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_trouble_device"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_brand_model"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="品牌型号"
-                    android:textSize="16sp" />
-
-                <TextView
-
-                    android:id="@+id/tv_brand_model"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:singleLine="false" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_device_no"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="设备编号"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_device_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_device_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="故障位置"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_device_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:singleLine="false" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:paddingLeft="15dp"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
                 android:paddingRight="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="参数"
-                    android:textSize="18sp" />
+                    android:drawableLeft="@mipmap/ic_trouble_device_parameter"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="请输入设备参数"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
 
-                <TextView
-                    android:id="@+id/tv_add"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/button_bg_gray"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="8dp"
-                    android:text="添加"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
-            </RelativeLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rcy_parameter"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="处理结果"
-                    android:textSize="16sp" />
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_icon_right" />
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/ll_deviceFailure"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="right"
-                android:padding="5px"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:gravity="right"
-                    android:paddingRight="15dp"
-                    android:text="参考一下"
-                    android:textColor="@color/client_form_title_color" />
-
-                <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@color/white"-->
-                <!--android:gravity="right"-->
-                <!--android:paddingRight="15dp"-->
-                <!--android:text="清除参考"-->
-                <!--android:textColor="@color/client_form_title_color" />-->
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_trouble_desc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:paddingBottom="@dimen/dimen_32"
+                android:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="故障描述"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
+                    android:drawableLeft="@mipmap/ic_trouble_repair"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="检修过程"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
 
-                <EditText
-                    android:id="@+id/et_trouble_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@null" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_device_failure_solution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="参考解决方案"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_device_failure_solution"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_trouble_point"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="检查过程与方法"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_trouble_point"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_30">
 
-            <LinearLayout
-                android:id="@+id/ll_trouble_reason"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="15dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="原因"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/et_trouble_reason"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="原因判断"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <ImageView
+                            android:id="@+id/iv_voice_input_trouble_reason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="@dimen/dimen_20"
+                            android:src="@mipmap/ic_worker_voice_input" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_trouble_reason"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_200"
+                            android:background="@drawable/select_camera_back"
+                            android:gravity="start"
+                            android:hint="请输入原因判断,200字以内"
+                            android:padding="@dimen/dimen_10"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/et_trouble_reason"
+                            android:layout_alignRight="@id/et_trouble_reason"
+                            android:padding="10dp"
+                            android:text="0/200"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_30">
 
-            <LinearLayout
-                android:id="@+id/ll_trouble_deal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:padding="15dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="处理"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="过程方法"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
 
-                <EditText
-                    android:id="@+id/et_trouble_deal"
+                        <ImageView
+                            android:id="@+id/iv_voice_input_trouble_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="@dimen/dimen_20"
+                            android:src="@mipmap/ic_worker_voice_input" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_trouble_point"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_200"
+                            android:background="@drawable/select_camera_back"
+                            android:gravity="start"
+                            android:hint="请输入过程方法,200字以内"
+                            android:padding="@dimen/dimen_10"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_trouble_point_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/et_trouble_point"
+                            android:layout_alignRight="@id/et_trouble_point"
+                            android:padding="10dp"
+                            android:text="0/200"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null" />
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_30">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="处理措施"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <ImageView
+                            android:id="@+id/iv_voice_input_trouble_deal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="@dimen/dimen_20"
+                            android:src="@mipmap/ic_worker_voice_input" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_trouble_deal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_200"
+                            android:background="@drawable/select_camera_back"
+                            android:gravity="start"
+                            android:hint="请输入处理措施,200字以内"
+                            android:padding="@dimen/dimen_10"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_trouble_deal_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/et_trouble_deal"
+                            android:layout_alignRight="@id/et_trouble_deal"
+                            android:padding="10dp"
+                            android:text="0/200"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_30">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="使用建议"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <ImageView
+                            android:id="@+id/iv_voice_input_trouble_useAdvance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:padding="@dimen/dimen_20"
+                            android:src="@mipmap/ic_worker_voice_input" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/et_trouble_useAdvace"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dimen_200"
+                            android:background="@drawable/select_camera_back"
+                            android:gravity="start"
+                            android:hint="请输入使用建议,200字以内"
+                            android:padding="@dimen/dimen_10"
+                            android:text=""
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+
+                        <TextView
+                            android:id="@+id/tv_use_advance_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/et_trouble_useAdvace"
+                            android:layout_alignRight="@id/et_trouble_useAdvace"
+                            android:padding="10dp"
+                            android:text="0/200"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <RadioGroup
+                    android:id="@+id/rg_misreport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/dimen_28"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:text="是否误报"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <RadioButton
+                        android:id="@+id/rg_yes"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:background="@drawable/select_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="是"
+                        android:textColor="@drawable/select_camera_text_back"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rg_no"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_camera_back"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="否"
+                        android:textColor="@drawable/select_camera_text_back"
+                        android:textSize="12sp" />
+
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_repair_conclusion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="维修结果"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
+                    android:drawableLeft="@mipmap/ic_trouble_repair_result"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="请选择维修结果"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
 
-                <TextView
-                    android:id="@+id/tv_repair_conclusion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                <View style="@style/style_common_line_gray" />
 
-            <LinearLayout
-                android:id="@+id/ll_repair_misinformation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="15dp">
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_repair_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    zhy:max_select="1" />
+
+
+                <View style="@style/style_common_line_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="是否误报"
-                    android:textColor="@color/worker_form_title_color"
-                    android:textSize="16sp" />
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="请选择修复方式"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
 
-                <TextView
-                    android:id="@+id/tv_repair_misinformation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_repair_result_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    zhy:max_select="1" />
+
+
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_ph_vg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="故障表象"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_moment_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="工具及蓝布"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="照片需包含现场背景"
-                        android:textSize="12sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_monitor_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="故障点照片"
-                        android:textSize="16sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_tools_package_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="处理后现场"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="涵盖屋顶、墙壁、地面"
-                        android:textSize="12sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_after_processing_locale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="设备回装"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="涵盖设备本身、支架、护罩、尾线等"
-                        android:textSize="12sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_machine_fit_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="恢复后表象"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="设备名称、编号"
-                        android:textSize="12sp" />
-
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_failure_recover_phenomena"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp">
 
@@ -632,8 +598,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/ic_addtrouble_use"
+                        android:drawablePadding="@dimen/dimen_16"
                         android:text="耗用材料"
-                        android:textSize="18sp" />
+                        android:textColor="@color/color_worker_data_item_title"
+                        android:textSize="@dimen/textSize_15" />
 
                     <TextView
                         android:id="@+id/tv_add_consumable"
@@ -641,14 +610,16 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_margin="4dp"
-                        android:background="@drawable/button_bg_gray"
+                        android:background="@drawable/bg_worker_camera_text_back_pressed"
                         android:paddingBottom="8dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:paddingTop="8dp"
-                        android:text="添加"
-                        android:textColor="@color/colorPrimary" />
+                        android:text="添加耗材"
+                        android:textColor="@color/color_white" />
                 </RelativeLayout>
+
+                <View style="@style/style_common_line_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rcy_consumable"
@@ -659,10 +630,35 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_add_device_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:background="@color/color_white"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_addtrouble_picture"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_30"
+                    android:text="请输添加现场照片"
+                    android:textColor="@color/color_worker_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_icon_right" />
+            </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:paddingBottom="35dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
@@ -678,7 +674,7 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

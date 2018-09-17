@@ -1,31 +1,24 @@
 package net.eanfang.client.ui.activity;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.view.View;
 
-import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
-import com.eanfang.util.StringUtils;
+import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.ViewFindUtils;
+import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.fragment.login.PasswordFragment;
+import net.eanfang.client.ui.fragment.login.VerifyFragment;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created by MrHou
@@ -35,195 +28,87 @@ import java.io.InputStream;
  * @desc 登录
  */
 
-public class LoginActivity extends BaseClientActivity {
-    public static final String TAG = LoginActivity.class.getSimpleName();
+public class LoginActivity extends BaseActivity implements OnTabSelectListener {
 
-    private Context context = this;
-    private String legalText;
-
-    private EditText et_phone;
-    private EditText et_yanzheng;
-    private TextView tv_yanzheng;
-    private AppCompatCheckBox cb;
-    private TextView read;
-    private Button btn_login;
-
-
-    //验证码倒计时
-    CountDownTimer timer = new CountDownTimer(60000, 1000) {
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            tv_yanzheng.setText(millisUntilFinished / 1000 + "秒");
-        }
-
-        @Override
-        public void onFinish() {
-            tv_yanzheng.setEnabled(true);
-            tv_yanzheng.setText("获取验证码");
-        }
+    private final String[] mTitles = {
+            "短信快捷登录", "账号密码登录"
     };
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private MyPagerAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
-//        supprotToolbar();
-        registerListener();
         setTitle("登录");
-        initData();
-        EanfangHttp.setClient();
-    }
-
-
-    private void registerListener() {
-        btn_login.setOnClickListener(v -> {
-
-            String userPhone = et_phone.getText().toString().trim();
-            String userAulth = et_yanzheng.getText().toString().trim();
-            if (StringUtils.isEmpty(userPhone)) {
-                showToast("手机号不能为空");
-                return;
-            }
-
-            if (StringUtils.isEmpty(userAulth)) {
-                showToast("验证码不能为空");
-                return;
-            }
-            if (!cb.isChecked()) {
-                showToast("同意易安防会员章程和协议后才可以登陆使用");
-                return;
-            }
-            setVerfiyLogin(userPhone, userAulth);
-        });
-
-        tv_yanzheng.setOnClickListener(v -> {
-            if (StringUtils.isEmpty(et_phone.getText().toString().trim())) {
-                showToast("手机号不能为空");
-                return;
-            }
-            //电话号码是否符合格式
-            if (!StringUtils.isMobileString(et_phone.getText().toString().trim())) {
-                showToast("请输入正确手机号");
-                return;
-            }
-            getVerificationCode(et_phone.getText().toString().trim());
-            v.setEnabled(false);
-            timer.start();
-        });
-        read.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("法律声明");
-            builder.setMessage(legalText);
-            // 同意
-            builder.setPositiveButton("我同意", (dialog1, which) -> {
-                dialog1.dismiss();
-                cb.setChecked(true);
-            });
-            // 稍后更新
-            builder.setNegativeButton("我不同意", (dialog1, which) -> {
-                dialog1.dismiss();
-                cb.setChecked(false);
-            });
-            Dialog noticeDialog = builder.create();
-            noticeDialog.show();
-        });
-    }
-
-    /**
-     * 登录
-     *
-     * @param phone 电话号
-     * @param pwd   验证码
-     */
-    private void setVerfiyLogin(String phone, String pwd) {
-
-        EanfangHttp.post(UserApi.APP_LOGIN_VERIFY)
-                .params("mobile", phone)
-                .params("verifycode", pwd)
-                .execute(new EanfangCallback<LoginBean>(LoginActivity.this, true, LoginBean.class, (bean) -> {
-                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-
-                    EanfangHttp.setToken(bean.getToken());
-                    runOnUiThread(() -> {
-                        goMain();
-                    });
-                }));
-
-    }
-
-
-
-    /**
-     * 获取验证码
-     *
-     * @param phone 电话号
-     */
-    private void getVerificationCode(String phone) {
-        EanfangHttp.post(UserApi.GET_VERIFY_CODE)
-                .params("mobile", phone)
-                .execute(new EanfangCallback<String>(LoginActivity.this, false, String.class, (bean) -> {
-                    showToast(R.string.hint_success_verify);
-                }));
+        setLeftGone();
     }
 
     private void initView() {
-        et_phone = (EditText) findViewById(R.id.et_phone);
-        et_yanzheng = (EditText) findViewById(R.id.et_yanzheng);
-        tv_yanzheng = (TextView) findViewById(R.id.tv_yanzheng);
-
-        cb = (AppCompatCheckBox) findViewById(R.id.cb);
-//        cb.setBackgroundColor(#774473);
-        read = (TextView) findViewById(R.id.tv_read_agreement);
-
-        btn_login = (Button) findViewById(R.id.btn_login);
-
-        //validator = new Validator(this);
-        //  validator.setValidationListener(this);
+        mFragments.add(VerifyFragment.getInstance());
+        mFragments.add(PasswordFragment.getInstance());
+        View decorView = getWindow().getDecorView();
+        ViewPager vp = ViewFindUtils.find(decorView, R.id.vp_service);
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
+        vp.setAdapter(mAdapter);
+        /**自定义部分属性*/
+        SlidingTabLayout tabLayout_2 = ViewFindUtils.find(decorView, R.id.slidingtablayout);
+        tabLayout_2.setViewPager(vp, mTitles, this, mFragments);
+        tabLayout_2.setOnTabSelectListener(this);
+        vp.setCurrentItem(0);
     }
 
-    private void initData() {
-        try {
-            InputStream is = null;
-            is = getResources().openRawResource(R.raw.legal);
-            int size = 0;
-            size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            legalText = new String(buffer, "UTF-8");
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-    }
-
-
-
-
-    //跳转首页
-    synchronized void goMain() {
-//        showToast("欢迎使用易安防");
-        startActivity(new Intent(this, MainActivity.class));
-        finishSelf();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        timer.cancel();
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //处理返回按钮被按下
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //退出登录
-            Intent intent = new Intent(context.getPackageName() + ".ExitListenerReceiver");
-            context.sendBroadcast(intent);
+            Intent intent = new Intent(LoginActivity.this.getPackageName() + ".ExitListenerReceiver");
+            LoginActivity.this.sendBroadcast(intent);
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 滑动复写方法
+     */
+    @Override
+    public void onTabSelect(int position) {
+
+    }
+
+    @Override
+    public void onTabReselect(int position) {
+
+    }
+
+
+    /**
+     * viewpager Adapter
+     */
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
     }
 
 }

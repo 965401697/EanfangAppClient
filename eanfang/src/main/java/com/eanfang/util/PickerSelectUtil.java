@@ -49,7 +49,7 @@ public class PickerSelectUtil {
         picker.setTextSize(textsize);
         picker.setTextColor(textcolor);
         picker.setTitleText(title);
-        picker.setHeight(ScreenUtils.heightPixels(context)/3);//整体高度
+        picker.setHeight(ScreenUtils.heightPixels(context) / 3);//整体高度
         picker.setLineSpaceMultiplier(3.0F);//每个item的高度
         picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
             @Override
@@ -151,6 +151,7 @@ public class PickerSelectUtil {
         linkagePicker(activity, true, Gravity.BOTTOM, WheelView.DividerConfig.FILL, 14, Color.BLACK, title, fir, sed, null, ((first, second, three) -> listener.picker(first, second)));
     }
 
+
     /**
      * 年月日时分
      */
@@ -177,12 +178,10 @@ public class PickerSelectUtil {
         picker.setDividerColor(0xFFFF0000);
         picker.setOnDateTimePickListener((DateTimePicker.OnYearMonthDayTimePickListener) (year1, month1, day1, hour1, minute1) -> {
             listener.picker(year1, month1, day1, hour1, minute1, startSecond + "");
-//            String sec = startSecond + "";
-//            String time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDate(year1, month1, day1, hour1, minute1, sec));
-//            textView.setText(time);
         });
         picker.show();
     }
+
 
     public static void onYearMonthDayTimePicker(Activity context, String title, final TextView textView, Calendar start) {
         Calendar end = Calendar.getInstance();
@@ -226,6 +225,7 @@ public class PickerSelectUtil {
         picker.show();
     }
 
+
     public static void onYearMonthDayPicker(Activity context, String title, final TextView textView, Calendar start) {
         Calendar end = Calendar.getInstance();
         end.set(2099, 11, 31);
@@ -245,6 +245,7 @@ public class PickerSelectUtil {
             textView.setText(time);
         });
     }
+
 
     /**
      * 年月日，开始时间为今天

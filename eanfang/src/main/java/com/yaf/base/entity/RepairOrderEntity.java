@@ -1,9 +1,10 @@
 package com.yaf.base.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
@@ -11,20 +12,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 报修单表
  *
  * @author jornlin
  * @email jornlin@foxmail.com
- * @date 2017-11-22 17:01:18
+ * @date 2018-05-28 09:15:32
  */
 @TableName(value = "bus_repair_order")
-@Setter
-@Getter
 public class RepairOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -36,8 +32,8 @@ public class RepairOrderEntity implements Serializable {
     //报修单编号
     //@TableField(value = "order_num")
     private String orderNum;
-    //订单类型
-    //@TableField(value = "order_type_id")
+    //订单类型，（0普通订单，1在保维修，2一般执行，3总部执行）
+    //@TableField(value = "order_type")
     private Long orderType;
     //订单级别（0：一般，1：紧急，2：暂缓）
     //@TableField(value = "order_level")
@@ -45,7 +41,6 @@ public class RepairOrderEntity implements Serializable {
     //报修单位
     //@TableField(value = "repair_company")
     private String repairCompany;
-
     //报修方式（0：APP报修，1：系统报修，2：电话报修）
     //@TableField(value = "repair_way")
     private Integer repairWay;
@@ -55,8 +50,8 @@ public class RepairOrderEntity implements Serializable {
     //报修联系电话
     //@TableField(value = "repair_contact_phone")
     private String repairContactPhone;
-    //到达时限
-    //@TableField(value = "arrive_time_limit_id")
+    //到达时限，常量表
+    //@TableField(value = "arrive_time_limit")
     private Integer arriveTimeLimit;
     //经度
     //@TableField(value = "longitude")
@@ -64,18 +59,27 @@ public class RepairOrderEntity implements Serializable {
     //纬度
     //@TableField(value = "latitude")
     private String latitude;
-
     //区/县 编码
     //@TableField(value = "place_code")
     private String placeCode;
-
-    //区/县 id
+    //区域code对应的id
     //@TableField(value = "place_id")
     private String placeId;
-
     //报修详细地址
-    //@TableField(value = "detail_place")
+    //@TableField(value = "address")
     private String address;
+    //性别（0：女，1：男）
+    //@TableField(value = "sex")
+    private Integer sex;
+    //签到经度
+    //@TableField(value = "sign_longitude")
+    private String signLongitude;
+    //签到纬度
+    //@TableField(value = "sign_latitude")
+    private String signLatitude;
+    //是否正常范围签到（0：是，1：否）
+    //@TableField(value = "sign_scope")
+    private Integer signScope;
     //当前报修 最新回电时间
     //@TableField(value = "reply_time")
     private Date replyTime;
@@ -109,6 +113,9 @@ public class RepairOrderEntity implements Serializable {
     //归属人
     //@TableField(value = "owner_user_id")
     private Long ownerUserId;
+    //被维修公司
+    //@TableField(value = "owner_company_id")
+    private Long ownerCompanyId;
     //归属总公司
     //@TableField(value = "owner_top_company_id")
     private Long ownerTopCompanyId;
@@ -118,6 +125,9 @@ public class RepairOrderEntity implements Serializable {
     //当前报修 最新的受理人
     //@TableField(value = "assignee_user_id")
     private Long assigneeUserId;
+    //维修公司
+    //@TableField(value = "assignee_company_id")
+    private Long assigneeCompanyId;
     //当前报修 最新的受理人总公司
     //@TableField(value = "assignee_top_company_id")
     private Long assigneeTopCompanyId;
@@ -127,28 +137,82 @@ public class RepairOrderEntity implements Serializable {
     //订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
     //@TableField(value = "status")
     private Integer status;
+    //是否合格（0合格，1不合格）
+    //@TableField(value = "pass")
+    private Integer pass;
 
-    private Long ownerCompanyId;
-    private Long assigneeCompanyId;
 
-    public Long getOwnerCompanyId() {
-        return ownerCompanyId;
+    public UserEntity getOwnerUser() {
+        return ownerUser;
     }
 
-    public void setOwnerCompanyId(Long ownerCompanyId) {
-        this.ownerCompanyId = ownerCompanyId;
+    public void setOwnerUser(UserEntity ownerUser) {
+        this.ownerUser = ownerUser;
     }
 
-    public Long getAssigneeCompanyId() {
-        return assigneeCompanyId;
+    public OrgEntity getOwnerOrg() {
+        return ownerOrg;
     }
 
-    public void setAssigneeCompanyId(Long assigneeCompanyId) {
-        this.assigneeCompanyId = assigneeCompanyId;
+    public void setOwnerOrg(OrgEntity ownerOrg) {
+        this.ownerOrg = ownerOrg;
     }
 
-    @TableField(exist = false)
-    private RepairFailureEntity failureEntity;
+    public UserEntity getAssigneeUser() {
+        return assigneeUser;
+    }
+
+    public void setAssigneeUser(UserEntity assigneeUser) {
+        this.assigneeUser = assigneeUser;
+    }
+
+    public OrgEntity getAssigneeOrg() {
+        return assigneeOrg;
+    }
+
+    public void setAssigneeOrg(OrgEntity assigneeOrg) {
+        this.assigneeOrg = assigneeOrg;
+    }
+
+    public List<RepairBugEntity> getBugEntityList() {
+        return bugEntityList;
+    }
+
+    public void setBugEntityList(List<RepairBugEntity> bugEntityList) {
+        this.bugEntityList = bugEntityList;
+    }
+
+    public List<RepairFailureEntity> getFailureEntityList() {
+        return failureEntityList;
+    }
+
+    public void setFailureEntityList(List<RepairFailureEntity> failureEntityList) {
+        this.failureEntityList = failureEntityList;
+    }
+
+    public Long getWorkerEvaluateId() {
+        return workerEvaluateId;
+    }
+
+    public void setWorkerEvaluateId(Long workerEvaluateId) {
+        this.workerEvaluateId = workerEvaluateId;
+    }
+
+    public Long getClientEvaluateId() {
+        return clientEvaluateId;
+    }
+
+    public void setClientEvaluateId(Long clientEvaluateId) {
+        this.clientEvaluateId = clientEvaluateId;
+    }
+
+    public List<TransferLogEntity> getTransferLogEntityList() {
+        return transferLogEntityList;
+    }
+
+    public void setTransferLogEntityList(List<TransferLogEntity> transferLogEntityList) {
+        this.transferLogEntityList = transferLogEntityList;
+    }
 
     public RepairFailureEntity getFailureEntity() {
         return failureEntity;
@@ -156,6 +220,14 @@ public class RepairOrderEntity implements Serializable {
 
     public void setFailureEntity(RepairFailureEntity failureEntity) {
         this.failureEntity = failureEntity;
+    }
+
+    public Integer getBugCount() {
+        return bugCount;
+    }
+
+    public void setBugCount(Integer bugCount) {
+        this.bugCount = bugCount;
     }
 
     /**
@@ -199,17 +271,34 @@ public class RepairOrderEntity implements Serializable {
     @TableField(exist = false)
     private Long clientEvaluateId;
     /**
-     * 订单的审核信息
+     * 上门费
      */
     @TableField(exist = false)
-    private RepairAuditEntity auditEntity;
+    private PayLogEntity payLogEntity;
+
+    public PayLogEntity getPayLogEntity() {
+        return payLogEntity;
+    }
+
+    public void setPayLogEntity(PayLogEntity payLogEntity) {
+        this.payLogEntity = payLogEntity;
+    }
 
     /**
-     * 获取：主键
+     * 转单记录
      */
-    public Long getId() {
-        return id;
-    }
+    @TableField(exist = false)
+    private List<TransferLogEntity> transferLogEntityList;
+    /**
+     * 真实故障(用于APP列表图片显示)
+     */
+    @TableField(exist = false)
+    private RepairFailureEntity failureEntity;
+    /**
+     * 故障数量
+     */
+    @TableField(exist = false)
+    private Integer bugCount;
 
     /**
      * 设置：主键
@@ -219,10 +308,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：报修单编号
+     * 获取：主键
      */
-    public String getOrderNum() {
-        return orderNum;
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -233,24 +322,24 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：订单类型（基础数据表）
+     * 获取：报修单编号
      */
-    public Long getOrderType() {
-        return orderType;
+    public String getOrderNum() {
+        return orderNum;
     }
 
     /**
-     * 设置：订单类型（基础数据表）
+     * 设置：订单类型，（0普通订单，1在保维修，2一般执行，3总部执行）
      */
     public void setOrderType(Long orderType) {
         this.orderType = orderType;
     }
 
     /**
-     * 获取：订单级别（0：一般，1：紧急，2：暂缓）
+     * 获取：订单类型，（0普通订单，1在保维修，2一般执行，3总部执行）
      */
-    public Integer getOrderLevel() {
-        return orderLevel;
+    public Long getOrderType() {
+        return orderType;
     }
 
     /**
@@ -261,10 +350,24 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：报修方式（0：APP报修，1：系统报修，2：电话报修）
+     * 获取：订单级别（0：一般，1：紧急，2：暂缓）
      */
-    public Integer getRepairWay() {
-        return repairWay;
+    public Integer getOrderLevel() {
+        return orderLevel;
+    }
+
+    /**
+     * 设置：报修单位
+     */
+    public void setRepairCompany(String repairCompany) {
+        this.repairCompany = repairCompany;
+    }
+
+    /**
+     * 获取：报修单位
+     */
+    public String getRepairCompany() {
+        return repairCompany;
     }
 
     /**
@@ -275,10 +378,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：报修联系人
+     * 获取：报修方式（0：APP报修，1：系统报修，2：电话报修）
      */
-    public String getRepairContacts() {
-        return repairContacts;
+    public Integer getRepairWay() {
+        return repairWay;
     }
 
     /**
@@ -289,10 +392,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：报修联系电话
+     * 获取：报修联系人
      */
-    public String getRepairContactPhone() {
-        return repairContactPhone;
+    public String getRepairContacts() {
+        return repairContacts;
     }
 
     /**
@@ -303,24 +406,24 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：到达时限（基础数据表）
+     * 获取：报修联系电话
      */
-    public Integer getArriveTimeLimit() {
-        return arriveTimeLimit;
+    public String getRepairContactPhone() {
+        return repairContactPhone;
     }
 
     /**
-     * 设置：到达时限（基础数据表）
+     * 设置：到达时限，常量表
      */
     public void setArriveTimeLimit(Integer arriveTimeLimit) {
         this.arriveTimeLimit = arriveTimeLimit;
     }
 
     /**
-     * 获取：经度
+     * 获取：到达时限，常量表
      */
-    public String getLongitude() {
-        return longitude;
+    public Integer getArriveTimeLimit() {
+        return arriveTimeLimit;
     }
 
     /**
@@ -331,10 +434,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：纬度
+     * 获取：经度
      */
-    public String getLatitude() {
-        return latitude;
+    public String getLongitude() {
+        return longitude;
     }
 
     /**
@@ -345,10 +448,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：区/县 编码
+     * 获取：纬度
      */
-    public String getPlaceCode() {
-        return placeCode;
+    public String getLatitude() {
+        return latitude;
     }
 
     /**
@@ -359,10 +462,24 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：报修详细地址
+     * 获取：区/县 编码
      */
-    public String getAddress() {
-        return address;
+    public String getPlaceCode() {
+        return placeCode;
+    }
+
+    /**
+     * 设置：区域code对应的id
+     */
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
+    /**
+     * 获取：区域code对应的id
+     */
+    public String getPlaceId() {
+        return placeId;
     }
 
     /**
@@ -373,10 +490,66 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新回电时间
+     * 获取：报修详细地址
      */
-    public Date getReplyTime() {
-        return replyTime;
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * 设置：性别（0：女，1：男）
+     */
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    /**
+     * 获取：性别（0：女，1：男）
+     */
+    public Integer getSex() {
+        return sex;
+    }
+
+    /**
+     * 设置：签到经度
+     */
+    public void setSignLongitude(String signLongitude) {
+        this.signLongitude = signLongitude;
+    }
+
+    /**
+     * 获取：签到经度
+     */
+    public String getSignLongitude() {
+        return signLongitude;
+    }
+
+    /**
+     * 设置：签到纬度
+     */
+    public void setSignLatitude(String signLatitude) {
+        this.signLatitude = signLatitude;
+    }
+
+    /**
+     * 获取：签到纬度
+     */
+    public String getSignLatitude() {
+        return signLatitude;
+    }
+
+    /**
+     * 设置：是否正常范围签到（0：是，1：否）
+     */
+    public void setSignScope(Integer signScope) {
+        this.signScope = signScope;
+    }
+
+    /**
+     * 获取：是否正常范围签到（0：是，1：否）
+     */
+    public Integer getSignScope() {
+        return signScope;
     }
 
     /**
@@ -387,10 +560,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新预约时间
+     * 获取：当前报修 最新回电时间
      */
-    public Date getBookTime() {
-        return bookTime;
+    public Date getReplyTime() {
+        return replyTime;
     }
 
     /**
@@ -401,10 +574,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新签到时间
+     * 获取：当前报修 最新预约时间
      */
-    public Date getSingInTime() {
-        return singInTime;
+    public Date getBookTime() {
+        return bookTime;
     }
 
     /**
@@ -415,10 +588,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新完工时间
+     * 获取：当前报修 最新签到时间
      */
-    public Date getFinishWorkTime() {
-        return finishWorkTime;
+    public Date getSingInTime() {
+        return singInTime;
     }
 
     /**
@@ -429,10 +602,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新确认完工时间
+     * 获取：当前报修 最新完工时间
      */
-    public Date getConfirmTime() {
-        return confirmTime;
+    public Date getFinishWorkTime() {
+        return finishWorkTime;
     }
 
     /**
@@ -443,10 +616,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：是否电话解决（0：未解决，1：已解决）
+     * 获取：当前报修 最新确认完工时间
      */
-    public Integer getIsPhoneSolve() {
-        return isPhoneSolve;
+    public Date getConfirmTime() {
+        return confirmTime;
     }
 
     /**
@@ -457,10 +630,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：创建人
+     * 获取：是否电话解决（0：未解决，1：已解决）
      */
-    public Long getCreateUserId() {
-        return createUserId;
+    public Integer getIsPhoneSolve() {
+        return isPhoneSolve;
     }
 
     /**
@@ -471,10 +644,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：创建时间
+     * 获取：创建人
      */
-    public Date getCreateTime() {
-        return createTime;
+    public Long getCreateUserId() {
+        return createUserId;
     }
 
     /**
@@ -485,10 +658,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：修改人
+     * 获取：创建时间
      */
-    public Long getEditUserId() {
-        return editUserId;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     /**
@@ -499,10 +672,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：修改时间
+     * 获取：修改人
      */
-    public Date getEditTime() {
-        return editTime;
+    public Long getEditUserId() {
+        return editUserId;
     }
 
     /**
@@ -513,10 +686,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：归属人
+     * 获取：修改时间
      */
-    public Long getOwnerUserId() {
-        return ownerUserId;
+    public Date getEditTime() {
+        return editTime;
     }
 
     /**
@@ -527,10 +700,24 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：归属总公司
+     * 获取：归属人
      */
-    public Long getOwnerTopCompanyId() {
-        return ownerTopCompanyId;
+    public Long getOwnerUserId() {
+        return ownerUserId;
+    }
+
+    /**
+     * 设置：被维修公司
+     */
+    public void setOwnerCompanyId(Long ownerCompanyId) {
+        this.ownerCompanyId = ownerCompanyId;
+    }
+
+    /**
+     * 获取：被维修公司
+     */
+    public Long getOwnerCompanyId() {
+        return ownerCompanyId;
     }
 
     /**
@@ -541,18 +728,11 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：归属部门编码
+     * 获取：归属总公司
      */
-    public String getOwnerOrgCode() {
-        return ownerOrgCode;
+    public Long getOwnerTopCompanyId() {
+        return ownerTopCompanyId;
     }
-
-
-    /*
-     *===================================================================================================================================================
-     *-----------------------------------------------------------------华丽的分割线------------------------------------------------------------------------
-     *===================================================================================================================================================
-     */
 
     /**
      * 设置：归属部门编码
@@ -562,10 +742,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新的受理人
+     * 获取：归属部门编码
      */
-    public Long getAssigneeUserId() {
-        return assigneeUserId;
+    public String getOwnerOrgCode() {
+        return ownerOrgCode;
     }
 
     /**
@@ -576,10 +756,24 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新的受理人总公司
+     * 获取：当前报修 最新的受理人
      */
-    public Long getAssigneeTopCompanyId() {
-        return assigneeTopCompanyId;
+    public Long getAssigneeUserId() {
+        return assigneeUserId;
+    }
+
+    /**
+     * 设置：维修公司
+     */
+    public void setAssigneeCompanyId(Long assigneeCompanyId) {
+        this.assigneeCompanyId = assigneeCompanyId;
+    }
+
+    /**
+     * 获取：维修公司
+     */
+    public Long getAssigneeCompanyId() {
+        return assigneeCompanyId;
     }
 
     /**
@@ -590,10 +784,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：当前报修 最新的受理部门编码
+     * 获取：当前报修 最新的受理人总公司
      */
-    public String getAssigneeOrgCode() {
-        return assigneeOrgCode;
+    public Long getAssigneeTopCompanyId() {
+        return assigneeTopCompanyId;
     }
 
     /**
@@ -604,10 +798,10 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 获取：订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
+     * 获取：当前报修 最新的受理部门编码
      */
-    public Integer getStatus() {
-        return status;
+    public String getAssigneeOrgCode() {
+        return assigneeOrgCode;
     }
 
     /**
@@ -615,5 +809,50 @@ public class RepairOrderEntity implements Serializable {
      */
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    /**
+     * 获取：订单状态( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * 设置：是否合格（0合格，1不合格）
+     */
+    public void setPass(Integer pass) {
+        this.pass = pass;
+    }
+
+    /**
+     * 获取：是否合格（0合格，1不合格）
+     */
+    public Integer getPass() {
+        return pass;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof RepairOrderEntity) {
+            if (this.id == null || other == null)
+                return false;
+
+            return this.id.equals(((RepairOrderEntity) other).id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 }

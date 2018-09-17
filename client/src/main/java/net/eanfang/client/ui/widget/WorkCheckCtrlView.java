@@ -3,7 +3,6 @@ package net.eanfang.client.ui.widget;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,8 +10,8 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.CheckActivity;
-import net.eanfang.client.ui.activity.worksapce.WorkCheckListActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.CheckActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.WorkCheckListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +35,8 @@ public class WorkCheckCtrlView extends BaseDialog {
     RelativeLayout llMineAccept;
     @BindView(R.id.ll_mine_company)
     RelativeLayout llMineCompany;
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     private Activity mContext;
 
     public WorkCheckCtrlView(Activity context, boolean isfull) {
@@ -54,10 +53,8 @@ public class WorkCheckCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        tvTitle.setText("检查管控");
-        ivRight.setVisibility(View.VISIBLE);
-        ivRight.setImageResource(R.drawable.nav_ic_add_pressed);
-        ivRight.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, CheckActivity.class)));
+        tvTitle.setText("设备点检");
+        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, CheckActivity.class)));
         llMineAssignment.setOnClickListener((v) -> {
             jump("我创建的检查", 1);
         });

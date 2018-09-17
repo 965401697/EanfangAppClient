@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +24,7 @@ import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.AddDealwithInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.AddDealwithInfoActivity;
 import net.eanfang.worker.ui.adapter.AddCheckInfoDetailAdapter;
 
 import java.util.ArrayList;
