@@ -205,18 +205,6 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    private void jumpWebview() {
-        boolean isHave = EanfangApplication.getApplication().getUser().getPerms().contains("top:statistics:count");
-        if (isHave == true) {
-            String token = EanfangApplication.getApplication().getUser().getToken();
-            startActivity(new Intent(getActivity(), WebActivity.class)
-                    .putExtra("url", "http://client.eanfang.net:8099/#/totalPhone?token=" + token)
-                    .putExtra("title", "数据统计"));
-        } else {
-            showToast("您还没有权限");
-        }
-    }
-
     /**
      * 初始化轮播控件
      */

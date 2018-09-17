@@ -46,18 +46,15 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
         setTitle("合作公司列表");
         setLeftBack();
         setRightTitle("确定");
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(ownerCompanyId)) {
-                    Intent intent = new Intent();
-                    intent.putExtra("bean", cooperationEntity);
+        setRightTitleOnClickListener(v -> {
+            if (!TextUtils.isEmpty(ownerCompanyId) && cooperationEntity != null) {
+                Intent intent = new Intent();
+                intent.putExtra("bean", cooperationEntity);
 //                    intent.putExtra("bean", mAdapter.getData().get(moldPosition));
-                    setResult(RESULT_OK, intent);
-                    finishSelf();
-                } else {
-                    ToastUtil.get().showToast(EquipmentCooperationCompanyActivity.this, "请选择一个合作公司");
-                }
+                setResult(RESULT_OK, intent);
+                finishSelf();
+            } else {
+                ToastUtil.get().showToast(EquipmentCooperationCompanyActivity.this, "请重新选择一个合作公司");
             }
         });
         ownerCompanyId = getIntent().getStringExtra("ownerCompanyId");
@@ -71,33 +68,11 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
         mAdapter = new EquipmentCooperationRelationAdapter(R.layout.item_equipment_cooperation_company, ownerCompanyId);
         mAdapter.bindToRecyclerView(rvList);
         mAdapter.setOnLoadMoreListener(this);
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-
-
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (view.getId() == R.id.cb_check) {
-                    cooperationEntity = (CooperationEntity) adapter.getData().get(position);
-
-                    if (!ownerCompanyId.equals(String.valueOf(cooperationEntity.getAssigneeOrgId()))) {
-                        ownerCompanyId = String.valueOf(cooperationEntity.getAssigneeOrgId());
-                        mAdapter.setmOwnerCompanyId(String.valueOf(cooperationEntity.getAssigneeOrgId()));
-                    } else {
-                        ownerCompanyId = "";
-                        mAdapter.setmOwnerCompanyId("");
-                    }
-
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (view.getId() == R.id.cb_check) {
                 cooperationEntity = (CooperationEntity) adapter.getData().get(position);
 
-                if (!ownerCompanyId.equals(String.valueOf(cooperationEntity.getAssigneeOrgId()))) {
+                if (!String.valueOf(cooperationEntity.getAssigneeOrgId()).equals(ownerCompanyId)) {
                     ownerCompanyId = String.valueOf(cooperationEntity.getAssigneeOrgId());
                     mAdapter.setmOwnerCompanyId(String.valueOf(cooperationEntity.getAssigneeOrgId()));
                 } else {
@@ -107,6 +82,20 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
 
                 adapter.notifyDataSetChanged();
             }
+        });
+
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            cooperationEntity = (CooperationEntity) adapter.getData().get(position);
+
+            if (!String.valueOf(cooperationEntity.getAssigneeOrgId()).equals(ownerCompanyId)) {
+                ownerCompanyId = String.valueOf(cooperationEntity.getAssigneeOrgId());
+                mAdapter.setmOwnerCompanyId(String.valueOf(cooperationEntity.getAssigneeOrgId()));
+            } else {
+                ownerCompanyId = "";
+                mAdapter.setmOwnerCompanyId("");
+            }
+
+            adapter.notifyDataSetChanged();
         });
         getData();
     }
