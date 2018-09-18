@@ -17,6 +17,12 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 
+/**
+ * @author guanluocang
+ * @data 2018/9/17
+ * @description 语音听写
+ */
+
 public class RecognitionManager {
 
     private Context mContext;

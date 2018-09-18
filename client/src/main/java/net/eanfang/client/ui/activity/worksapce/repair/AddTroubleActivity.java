@@ -303,6 +303,11 @@ public class AddTroubleActivity extends BaseClientActivity {
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
+            //将光标定位
+            etDeviceLocationNum.requestFocus();
+            etDeviceLocationNum.setFocusable(true);
+            etDeviceLocationNum.setFocusableInTouchMode(true);
+            StringUtils.showKeyboard(AddTroubleActivity.this, etDeviceLocationNum);
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {// 故障简述
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
@@ -328,7 +333,6 @@ public class AddTroubleActivity extends BaseClientActivity {
             repairBugEntity.setRepairCount(custDeviceEntity.getDeviceVersion());
         }
     }
-
 
     @OnClick({R.id.ll_deviceHouse, R.id.ll_faultDeviceName, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo})
     public void onViewClicked(View view) {
@@ -424,4 +428,5 @@ public class AddTroubleActivity extends BaseClientActivity {
 
                 }));
     }
+
 }

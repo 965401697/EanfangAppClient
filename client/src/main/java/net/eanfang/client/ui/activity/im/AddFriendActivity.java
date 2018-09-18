@@ -23,6 +23,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.device.User;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -58,6 +59,9 @@ public class AddFriendActivity extends BaseClientActivity {
     LinearLayout llInput;
     private FriendsAdapter mFriendsAdapter;
 
+    // 首页扫码添加好友
+    private String mAccountId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +69,9 @@ public class AddFriendActivity extends BaseClientActivity {
         ButterKnife.bind(this);
 
         initViews();
+        setLeftBack();
+
+        mAccountId = getIntent().getStringExtra("accountId");
         String addFriend = getIntent().getStringExtra("add_friend");
         if (!TextUtils.isEmpty(addFriend)) {
             setTitle("添加好友");
@@ -75,7 +82,10 @@ public class AddFriendActivity extends BaseClientActivity {
             llInput.setVisibility(View.GONE);
         }
 
-        setLeftBack();
+        if (!StringUtils.isEmpty(mAccountId)) {
+            llInput.setVisibility(View.GONE);
+            initIdData(mAccountId);
+        }
     }
 
     private void initViews() {
@@ -169,7 +179,7 @@ public class AddFriendActivity extends BaseClientActivity {
 
     @Subscribe
     public void onEventId(String id) {
-        etPhone.setVisibility(View.GONE);
+        llInput.setVisibility(View.GONE);
         initIdData(id);
     }
 
@@ -215,6 +225,7 @@ public class AddFriendActivity extends BaseClientActivity {
                 //跳转扫码页面
                 Intent intent = new Intent(AddFriendActivity.this, ScanCodeActivity.class);
                 intent.putExtra(EanfangConst.QR_ADD_FRIEND, "add_friend");
+                intent.putExtra("from", "client");
                 startActivity(intent);
                 break;
             case R.id.rl_scan_Group:

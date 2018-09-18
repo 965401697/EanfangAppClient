@@ -24,6 +24,7 @@ import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.AddFriendActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,12 +68,17 @@ public class ScanCodeActivity extends BaseActivity {
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeScannerView.decodeContinuous(callback);
-
         mFromWhere = getIntent().getStringExtra("from");
         mAddFriend = getIntent().getStringExtra(EanfangConst.QR_ADD_FRIEND);
         mScanType = getIntent().getStringExtra("scanType");
-        if (mScanType.equals("scan_device")) {// 扫码设备
-            barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
+        if (!StringUtils.isEmpty(mScanType)) {
+            if (mScanType.equals("scan_device")) {// 扫码设备
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
+            } else if (mScanType.equals("scan_login")) {//扫码登录
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_login));
+            } else if (mScanType.equals("scan_addfriend")) {// 扫码添加好友
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_addfriend));
+            }
         }
 
     }
@@ -92,7 +98,14 @@ public class ScanCodeActivity extends BaseActivity {
                 //如果是true 则 解析扫到的二维码里的字符串 得到account的 ID
                 String accountId = resultString.substring(resultString.indexOf("=") + 1);
                 if (!TextUtils.isEmpty(mAddFriend)) {
-                    EventBus.getDefault().post(accountId);
+                    if (mFromWhere.equals("home_addfriend")) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("add_friend", "add_friend");
+                        bundle.putString("accountId", accountId);
+                        JumpItent.jump(ScanCodeActivity.this, AddFriendActivity.class, bundle);
+                    } else {
+                        EventBus.getDefault().post(accountId);
+                    }
                     finishSelf();
                 } else {
                     doGetAccount(accountId);
@@ -213,6 +226,7 @@ public class ScanCodeActivity extends BaseActivity {
                             startActivity(new Intent(ScanCodeActivity.this, LoginConfirmActivity.class)
                                     .putExtra("which", requestFrom)
                                     .putExtra("uuid", uuid));
+                            finishSelf();
                         } else {
                             showToast("暂无权限");
                             finish();
