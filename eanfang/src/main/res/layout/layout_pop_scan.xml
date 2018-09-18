@@ -13,11 +13,71 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/rl_scan_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingLeft="@dimen/dimen_20"
+            android:paddingRight="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
+
+            <ImageView
+                android:id="@+id/iv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_client_scan_login" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_toRightOf="@id/iv_login"
+                android:gravity="center_vertical"
+                android:text="扫一扫登录"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_scan_addfriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingLeft="@dimen/dimen_20"
+            android:paddingRight="@dimen/dimen_20"
+            android:paddingTop="@dimen/dimen_20">
+
+            <ImageView
+                android:id="@+id/iv_addfriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_client_scan_addfriend" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_toRightOf="@id/iv_addfriend"
+                android:gravity="center_vertical"
+                android:text="扫一扫加好友"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rl_scan_device"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/white"
             android:paddingBottom="@dimen/dimen_20"
             android:paddingLeft="@dimen/dimen_20"
             android:paddingRight="@dimen/dimen_20"

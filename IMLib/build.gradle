@@ -11,6 +11,19 @@ android {
         versionName "2.8.30 Dev"
     }
 
+    buildTypes {
+        debug {
+        }
+        //  测试
+        staging {
+        }
+        release {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'

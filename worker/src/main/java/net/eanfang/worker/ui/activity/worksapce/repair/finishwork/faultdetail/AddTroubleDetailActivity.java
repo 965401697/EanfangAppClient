@@ -304,6 +304,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                     @Override
                     public void result(String msg) {
                         etTroublePoint.setText(msg + "");
+                        etTroublePoint.requestFocus();
+                        //将光标定位到文字最后，以便修改
+                        etTroublePoint.setSelection(msg.length());
                     }
 
                     @Override
@@ -350,6 +353,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                     @Override
                     public void result(String msg) {
                         etTroubleDeal.setText(msg + "");
+                        etTroubleDeal.requestFocus();
+                        //将光标定位到文字最后，以便修改
+                        etTroubleDeal.setSelection(msg.length());
                     }
 
                     @Override
@@ -395,6 +401,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                     @Override
                     public void result(String msg) {
                         etTroubleUseAdvace.setText(msg + "");
+                        etTroubleUseAdvace.requestFocus();
+                        //将光标定位到文字最后，以便修改
+                        etTroubleUseAdvace.setSelection(msg.length());
                     }
 
                     @Override

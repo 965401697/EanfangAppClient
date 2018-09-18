@@ -48,16 +48,30 @@ public class HomeScanPopWindow extends PopupWindow {
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationPreview);
 
-
+        //登录
+        RelativeLayout rl_scan_login = (RelativeLayout) content.findViewById(R.id.rl_scan_login);
+        ImageView iv_login = content.findViewById(R.id.iv_login);
+        //加好友
+        RelativeLayout rl_scan_addfriend = (RelativeLayout) content.findViewById(R.id.rl_scan_addfriend);
+        ImageView iv_addfriend = content.findViewById(R.id.iv_addfriend);
+        //扫设备
         RelativeLayout rl_scan_device = (RelativeLayout) content.findViewById(R.id.rl_scan_device);
-        RelativeLayout rl_scan_repair = (RelativeLayout) content.findViewById(R.id.rl_scan_reapir);
         ImageView iv_device = content.findViewById(R.id.iv_device);
+        //扫报修
+        RelativeLayout rl_scan_repair = (RelativeLayout) content.findViewById(R.id.rl_scan_reapir);
+
+        // 技师端
         if (isVisable) {
             rl_scan_repair.setVisibility(View.GONE);
             iv_device.setImageResource(R.mipmap.ic_worker_scan_device);
+            iv_login.setImageResource(R.mipmap.ic_worker_scan_login);
+            iv_addfriend.setImageResource(R.mipmap.ic_worker_scan_addfriend);
+
         }
         rl_scan_device.setOnClickListener(itemsOnClick);
         rl_scan_repair.setOnClickListener(itemsOnClick);
+        rl_scan_login.setOnClickListener(itemsOnClick);
+        rl_scan_addfriend.setOnClickListener(itemsOnClick);
 
     }
 
