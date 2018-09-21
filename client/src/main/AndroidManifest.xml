@@ -594,7 +594,7 @@
         <activity android:name=".ui.activity.pay.InvoiceActivity" />
         <activity android:name=".ui.activity.pay.AddressListActivity" />
         <activity android:name=".ui.activity.pay.AddAddressActivity" />
-        <activity android:name=".ui.activity.worksapce.GuideActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.GuideActivity" />
     </application>
 
 </manifest>

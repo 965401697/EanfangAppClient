@@ -39,6 +39,7 @@ public class EquipmentListActivity extends BaseWorkerActivity {
     public String mOwnerCompanyId;
     private String mTitle;
     private EquipmentListFragment mCurrentFragment;
+    private CooperationEntity c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class EquipmentListActivity extends BaseWorkerActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(EquipmentListActivity.this, EquipmentCooperationCompanyActivity.class);
                 intent.putExtra("ownerCompanyId", mOwnerCompanyId);
+                if(c!=null){
+                    intent.putExtra("bean", c);
+                }
                 startActivityForResult(intent, REQUEST_COMPANY_ID);
             }
         });
@@ -118,7 +122,7 @@ public class EquipmentListActivity extends BaseWorkerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REQUEST_COMPANY_ID) {
-            CooperationEntity c = (CooperationEntity) data.getSerializableExtra("bean");
+            c = (CooperationEntity) data.getSerializableExtra("bean");
 
             mOwnerCompanyId = String.valueOf(c.getAssigneeOrgId());
             mTitle = String.valueOf(c.getAssigneeOrg().getOrgName());

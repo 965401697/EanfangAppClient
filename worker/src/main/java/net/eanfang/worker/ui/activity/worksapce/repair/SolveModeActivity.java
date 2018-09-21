@@ -80,7 +80,7 @@ public class SolveModeActivity extends BaseActivity {
     }
 
     private void doPhoneSolve() {
-        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+        new TrueFalseDialog(this, "系统提示", "是否确认电话解决？", () -> {
             doHttp(1, null);
         }).showDialog();
     }

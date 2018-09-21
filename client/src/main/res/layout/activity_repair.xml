@@ -271,13 +271,13 @@
 
                     <TextView
                         android:id="@+id/tv_time"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/dimen_10"
                         android:drawableRight="@mipmap/ic_arrow_up"
                         android:onClick="onArriveTimeOptionPicker"
                         android:padding="@dimen/dimen_30"
-                        android:text="72小时内"
+                        android:text=" "
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 

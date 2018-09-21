@@ -213,11 +213,7 @@ public class MineTakePublishListFragment extends TemplateItemListFragment {
         } else if (Constant.ASSIGNEE_DATA_CODE == (mType)) {
             queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
         }
-        if (getmTitle().equals("全部")) {
-
-        } else {
-            queryEntry.getEquals().put("status", status + "");
-        }
+        queryEntry.getEquals().put("status", status + "");
 
         queryEntry.setPage(mPage);
         queryEntry.setSize(10);

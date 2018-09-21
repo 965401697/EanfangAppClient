@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class SelectOAPresonActivity extends BaseActivity {
 
 
     private TemplateBean.Preson oldPreson;
+    private String isRadio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,8 @@ public class SelectOAPresonActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+
+        isRadio = getIntent().getStringExtra("isRadio");//单选 多选
 
     }
 
@@ -211,15 +215,46 @@ public class SelectOAPresonActivity extends BaseActivity {
         mTreeRecyclerAdapter = new TreeRecyclerAdapter(TreeRecyclerType.SHOW_EXPAND);
 
 
-        List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null);
-        for (TreeItem t : treeItemList) {
+//        List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null);
+//        for (TreeItem t : treeItemList) {
+//
+//            if (t instanceof OrgSelectGroupMultipleItem) {
+//                ((OrgSelectGroupMultipleItem) t).setExpand(true);
+//            }
+//
+//        }
+//        mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
 
-            if (t instanceof OrgSelectGroupMultipleItem) {
-                ((OrgSelectGroupMultipleItem) t).setExpand(true);
+
+
+        if (!TextUtils.isEmpty(isRadio)) {// 单选
+
+            List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupSingleItem.class, null);
+            for (TreeItem t : treeItemList) {
+
+                if (t instanceof OrgSelectGroupSingleItem) {
+                    ((OrgSelectGroupSingleItem) t).setExpand(true);
+                }
+
             }
+            mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
 
+        } else {//多选
+
+            List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupMultipleItem.class, null);
+            for (TreeItem t : treeItemList) {
+
+                if (t instanceof OrgSelectGroupMultipleItem) {
+                    ((OrgSelectGroupMultipleItem) t).setExpand(true);
+                }
+
+            }
+            mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
         }
-        mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
+        
+        
+        
+        
         recyclerView.setAdapter(mTreeRecyclerAdapter);
 
 

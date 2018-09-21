@@ -476,7 +476,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         // 口碑
         tvMouthGrade.setText(v(() -> bean.getPublicPraise() + "分"));
         // 好评率
-        tvGoodGrade.setText(v(() -> bean.getGoodRate() + "%"));
+        tvGoodGrade.setText(v(() -> (SplitAndRound((Double) (bean.getGoodRate() * 0.01), 2) + "%")));
         arcprogressview.setProgress(bean.getGoodRate() + 20);
         // 资质  0否，1是
         if (v(() -> bean.getQualification()) != null && bean.getQualification() == 0) {
@@ -497,7 +497,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             tvWorkerTrain.setVisibility(View.VISIBLE);
         }
         if (bean.getGoodRate() != 0) {
-            tvHaopinglv.setText(bean.getGoodRate() + "%");
+            tvHaopinglv.setText((SplitAndRound((Double) (bean.getGoodRate() * 0.01), 2) + "%"));
             ivHaopinglv.setProgress(bean.getGoodRate());
         }
         // 设计订单
@@ -516,11 +516,18 @@ public class WorkerDetailActivity extends BaseClientActivity {
         if (v(() -> bean.getEvaluateNum()) != null) {
             tvEvaluteOrder.setText(v(() -> bean.getEvaluateNum()) + "");
         }
-        rbStar1.setRating(bean.getItem1());
-        rbStar2.setRating(bean.getItem2());
-        rbStar3.setRating(bean.getItem3());
-        rbStar4.setRating(bean.getItem4());
-        rbStar5.setRating(bean.getItem5());
+        rbStar1.setRating(Math.round(bean.getItem1() / 100));
+        rbStar2.setRating(Math.round(bean.getItem2() / 100));
+        rbStar3.setRating(Math.round(bean.getItem3() / 100));
+        rbStar4.setRating(Math.round(bean.getItem4() / 100));
+        rbStar5.setRating(Math.round(bean.getItem5() / 100));
+
+//        rbStar1.setRating(1);
+//        rbStar2.setRating(2);
+//        rbStar3.setRating(3);
+//        rbStar4.setRating(4);
+//        rbStar5.setRating(5);
+
 
         // 服务区域
         mDataList1 = new ArrayList<>();
@@ -683,4 +690,17 @@ public class WorkerDetailActivity extends BaseClientActivity {
             parent.addView(radioButton);
         }
     }
+
+    /**
+     * 保留几位小数
+     *
+     * @param a
+     * @param n
+     * @return
+     */
+    public double SplitAndRound(double a, int n) {
+        a = a * Math.pow(10, n);
+        return (Math.round(a)) / (Math.pow(10, n));
+    }
+
 }

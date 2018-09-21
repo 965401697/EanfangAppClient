@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+@Deprecated
 public class AolltRoleActivity extends BaseClientActivity {
 
     @BindView(R.id.recycler_view)

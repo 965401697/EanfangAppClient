@@ -337,7 +337,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             return false;
         }
 
-        if (StringUtils.isEmpty(tvTime.getText())) {
+        if (StringUtils.isEmpty(tvTime.getText().toString().trim())) {
             showToast("请选择到达时限");
             return false;
         }
