@@ -23,6 +23,7 @@ import net.eanfang.client.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
 import net.eanfang.client.ui.activity.worksapce.OfferAndPayOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.PersonOfferAndPayOrderActivity;
+import net.eanfang.client.ui.activity.worksapce.takevideo.TakeVideoActivity;
 import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
@@ -182,7 +183,7 @@ public class WorkspaceFragment extends BaseFragment {
                         .putExtra("url", "https://news.eanfang.net/")
                         .putExtra("title", "行业知识")));
         //变更记录
-        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), TakeVideoActivity.class));
         //在线文档
         findViewById(R.id.tv_work_file).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
 

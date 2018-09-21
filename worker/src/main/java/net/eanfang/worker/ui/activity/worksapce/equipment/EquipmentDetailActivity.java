@@ -77,7 +77,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_notice)
     TextView tvNotice;
 
-    private long id;
+    private String id = "";
     private CustDeviceEntity mBean;
 
     // 扫描二维码返回 数据
@@ -88,7 +88,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("设备详情");
         setLeftBack();
-        id = getIntent().getLongExtra("id", 0);
+        id = getIntent().getStringExtra("id");
         initData();
     }
 

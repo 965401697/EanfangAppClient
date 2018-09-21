@@ -57,7 +57,9 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTAWRITE_EXTERNAL_STORAGECTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
         android:name=".ui.base.ClientApplication"
@@ -595,6 +597,12 @@
         <activity android:name=".ui.activity.pay.AddressListActivity" />
         <activity android:name=".ui.activity.pay.AddAddressActivity" />
         <activity android:name=".ui.activity.worksapce.GuideActivity" />
+        <!-- 统计数据报装 -->
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataInstallActivity" />
+        <!-- 统计数据设计 -->
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
+        <activity android:name=".ui.activity.worksapce.takevideo.TakeVideoActivity" />
+        <activity android:name=".ui.activity.worksapce.takevideo.PlayVideoActivity"></activity>
     </application>
 
 </manifest>

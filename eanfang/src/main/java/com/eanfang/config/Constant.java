@@ -287,6 +287,7 @@ public interface Constant {
     String WORK_TRANSFER_CREATE = "workClasses";
 
 
+
     //业务通知
     int NOTICE_BUSINESS = 1;
 

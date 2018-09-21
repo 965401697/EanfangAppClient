@@ -91,7 +91,7 @@
 
                     <LinearLayout
                         android:id="@+id/ll_repair_datasticstics"
-                        android:layout_width="@dimen/dimen_282"
+                        android:layout_width="@dimen/dimen_310"
                         android:layout_height="wrap_content"
                         android:background="@mipmap/ic_client_home_data_back"
                         android:orientation="vertical">
@@ -101,7 +101,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_44"
+                            android:layout_marginTop="@dimen/dimen_24"
                             android:text="当日维修"
                             android:textColor="@color/color_client_data_item_title"
                             android:textSize="@dimen/textSize_15" />
@@ -110,7 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_30"
+                            android:layout_marginTop="@dimen/dimen_10"
                             android:gravity="center"
                             android:orientation="horizontal">
 
@@ -134,7 +134,7 @@
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/rv_reapir_data"
-                            android:layout_width="@dimen/dimen_282"
+                            android:layout_width="@dimen/dimen_290"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_10"
                             android:layout_marginTop="@dimen/dimen_10"
@@ -142,7 +142,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="@dimen/dimen_282"
+                        android:id="@+id/ll_repair_install"
+                        android:layout_width="@dimen/dimen_300"
                         android:layout_height="wrap_content"
                         android:background="@mipmap/ic_client_home_data_back"
                         android:orientation="vertical">
@@ -152,7 +153,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_44"
+                            android:layout_marginTop="@dimen/dimen_24"
                             android:text="当日报装"
                             android:textColor="@color/color_client_data_item_title"
                             android:textSize="@dimen/textSize_15" />
@@ -161,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_30"
+                            android:layout_marginTop="@dimen/dimen_10"
                             android:gravity="center"
                             android:orientation="horizontal">
 
@@ -187,7 +188,8 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="@dimen/dimen_282"
+                        android:id="@+id/ll_design"
+                        android:layout_width="@dimen/dimen_300"
                         android:layout_height="wrap_content"
                         android:background="@mipmap/ic_client_home_data_back"
                         android:orientation="vertical">
@@ -197,7 +199,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_44"
+                            android:layout_marginTop="@dimen/dimen_24"
                             android:text="当日设计"
                             android:textColor="@color/color_client_data_item_title"
                             android:textSize="@dimen/textSize_15" />
@@ -206,7 +208,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_30"
+                            android:layout_marginTop="@dimen/dimen_10"
                             android:gravity="center"
                             android:orientation="horizontal">
 

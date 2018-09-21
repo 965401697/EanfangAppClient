@@ -22,6 +22,7 @@ import lombok.Setter;
 public class DataStatisticsBean implements Serializable {
 
 
+
     /**
      * cacheKey : 5e952f57a9f0d2d08614ff3d70407c70
      * code : 20000

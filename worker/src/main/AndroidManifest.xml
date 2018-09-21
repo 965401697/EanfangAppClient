@@ -64,6 +64,8 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
 
     <application
         android:name=".ui.base.WorkerApplication"
@@ -597,8 +599,12 @@
             android:name=".ui.activity.worksapce.setting.ChangePhoneActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.worksapce.NoContentActivity" />
-        <activity android:name=".ui.activity.worksapce.GuideActivity"></activity>
-        <activity android:name=".ui.activity.worksapce.contacts.AuthManagerActivity"></activity>
-    </application>
+        <activity android:name=".ui.activity.worksapce.GuideActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthManagerActivity" />
+        <!-- 统计数据报装 -->
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataInstallActivity" />
+        <!-- 统计数据设计 -->
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity"/>
+</application>
 
-</manifest>
+    </manifest>

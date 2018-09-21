@@ -474,6 +474,14 @@ public interface NewApiService {
      */
     String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
     /**
+     * 报装统计接口
+     */
+    String INSTALL_DATA_STATISTICE = BASE_URL + "/yaf_statistics/repairStatistics/app/installAllCount";
+    /**
+     * 免费设计统计接口
+     */
+    String DESIGN_DATA_STATISTICE = BASE_URL + "/yaf_statistics/repairStatistics/app/designAllCount";
+    /**
      * 维保管控列表接口
      */
     String MAINTENANCE_GET_LIST = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/list";

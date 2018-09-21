@@ -34,6 +34,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static com.eanfang.util.StringUtils.getValueByName;
+
 /**
  * @author Guanluocang
  * @date on 2018/5/23  11:10
@@ -140,7 +142,7 @@ public class ScanCodeActivity extends BaseActivity {
                 finishSelf();
             } else if (resultString.contains("qr?uid=")) {// 扫描设备 查看设备详情 并报修
                 Bundle bundle = new Bundle();
-                bundle.putString("id", result.getText().substring(result.getText().indexOf("=") + 1));
+                bundle.putString("id", getValueByName(result.getText(), "uid"));
                 bundle.putBoolean("scan", true);
                 JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
                 finishSelf();
