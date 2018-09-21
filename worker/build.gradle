@@ -39,11 +39,17 @@ android {
 
     //签名设置
     signingConfigs {
-        release {
-            keyAlias 'workers'
-            keyPassword 'eanfang'
+        stagingConfig {
+            keyAlias KEY_ALIAS_WORKER
+            keyPassword KEY_PASSWORD_WORKER
             storeFile file('../worker/keystore/worker.jks')
-            storePassword 'eanfang'
+            storePassword KEYSTORE_PASSWORD_WORKER
+        }
+        release {
+            keyAlias KEY_ALIAS_WORKER
+            keyPassword KEY_PASSWORD_WORKER
+            storeFile file('../worker/keystore/worker.jks')
+            storePassword KEYSTORE_PASSWORD_WORKER
         }
     }
     sourceSets {
@@ -59,6 +65,19 @@ android {
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+        }
+        //  测试
+        staging {
+            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+
+            minifyEnabled true //开启代码混淆
+            zipAlignEnabled true
+            shrinkResources true // 移除无用资源
+            signingConfig signingConfigs.stagingConfig
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
             //签名配置
@@ -70,7 +89,7 @@ android {
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件 表示去掉没有引用的资源，可以减少应用的体积，但这个只有在混淆开启后才有效。
-//            shrinkResources false
+            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件

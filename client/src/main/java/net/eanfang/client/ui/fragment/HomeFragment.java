@@ -37,7 +37,6 @@ import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
-import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
@@ -59,7 +58,6 @@ import static com.eanfang.util.V.v;
  */
 
 public class HomeFragment extends BaseFragment {
-
 
     //报修数量
     TextView tvReapirTotal;
@@ -178,6 +176,21 @@ public class HomeFragment extends BaseFragment {
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
+                case R.id.rl_scan_login:
+                    Bundle bundle_login = new Bundle();
+                    bundle_login.putString("from", EanfangConst.QR_CLIENT);
+                    bundle_login.putString("scanType", "scan_login");
+                    JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle_login);
+                    homeScanPopWindow.dismiss();
+                    break;
+                case R.id.rl_scan_addfriend:
+                    Bundle bundle_addfriend = new Bundle();
+                    bundle_addfriend.putString("from", "home_addfriend");
+                    bundle_addfriend.putString("scanType", "scan_addfriend");
+                    bundle_addfriend.putString(EanfangConst.QR_ADD_FRIEND, "add_friend");
+                    JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle_addfriend);
+                    homeScanPopWindow.dismiss();
+                    break;
                 case R.id.rl_scan_device:   // 扫设备
                     Bundle bundle = new Bundle();
                     bundle.putString("from", EanfangConst.QR_CLIENT);

@@ -27,6 +27,19 @@ android {
         }
         test.setRoot('test');
     }
+    buildTypes {
+        debug {
+        }
+        //  测试
+        staging {
+        }
+        release {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
