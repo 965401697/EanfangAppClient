@@ -39,6 +39,10 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
             buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+//            buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.30:8080\"")
         }
         //  测试
         staging {
@@ -203,6 +207,7 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation files('libs/Msc.jar')
     implementation files('libs/Sunflower.jar')
+    implementation files('libs/pldroid-shortvideo-1.14.0.jar')
 }
 
 

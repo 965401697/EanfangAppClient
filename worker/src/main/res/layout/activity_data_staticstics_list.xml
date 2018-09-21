@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white"
-    android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 
@@ -74,6 +73,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_repair_install"
                 android:layout_width="@dimen/dimen_282"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_client_home_data_back"
@@ -119,6 +119,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_design"
                 android:layout_width="@dimen/dimen_282"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_client_home_data_back"

@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -33,6 +37,12 @@ public class DataStaticsticsListActivity extends BaseActivity {
 
     @BindView(R.id.rv_reapir_data)
     RecyclerView rvData;
+    @BindView(R.id.tv_reapir_total)
+    TextView tvReapirTotal;
+    @BindView(R.id.tv_install_total)
+    TextView tvInstallTotal;
+    @BindView(R.id.tv_desitn_total)
+    TextView tvDesitnTotal;
     private HomeDataAdapter homeDataAdapter;
     private List<HomeDatastisticeBean.GroupBean> clientDataList = new ArrayList<>();
 
@@ -54,6 +64,14 @@ public class DataStaticsticsListActivity extends BaseActivity {
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         rvData.setLayoutManager(gridLayoutManager);
         findViewById(R.id.ll_repair_datasticstics).setOnClickListener(v -> startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class)));
+        findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(DataStaticsticsListActivity.this, DataInstallActivity.class)));
+        findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(DataStaticsticsListActivity.this, DataDesignActivity.class)));
+        rvData.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class));
+            }
+        });
 
     }
 
@@ -71,6 +89,9 @@ public class DataStaticsticsListActivity extends BaseActivity {
     }
 
     private void initDatastatisticsData(HomeDatastisticeBean bean) {
+        tvReapirTotal.setText(bean.getAll() + "");
+        tvInstallTotal.setText(bean.getInstall().getCount() + "");
+        tvDesitnTotal.setText(bean.getDesign().getCount() + "");
         clientDataList = bean.getGroup();
         homeDataAdapter = new HomeDataAdapter(R.layout.layout_data_item_list);
         rvData.setAdapter(homeDataAdapter);

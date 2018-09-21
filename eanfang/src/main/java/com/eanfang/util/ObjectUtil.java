@@ -1,6 +1,9 @@
 package com.eanfang.util;
 
 
+import android.content.Context;
+import android.content.pm.ActivityInfo;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,5 +52,20 @@ public class ObjectUtil {
         ObjectInputStream ois = new ObjectInputStream(bais);
         Object object = ois.readObject();
         return object;
+    }
+
+    public static int getScreenRotation(Context context, int orientation) {
+        int screenRotation = 0;
+        boolean isPortraitScreen = context.getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        if (orientation >= 315 || orientation < 45) {
+            screenRotation = isPortraitScreen ? 0 : 90;
+        } else if (orientation >= 45 && orientation < 135) {
+            screenRotation = isPortraitScreen ? 90 : 180;
+        } else if (orientation >= 135 && orientation < 225) {
+            screenRotation = isPortraitScreen ? 180 : 270;
+        } else if (orientation >= 225 && orientation < 315) {
+            screenRotation = isPortraitScreen ? 270 : 0;
+        }
+        return screenRotation;
     }
 }

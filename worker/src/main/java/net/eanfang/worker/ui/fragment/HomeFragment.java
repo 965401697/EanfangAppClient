@@ -40,6 +40,8 @@ import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentAct
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
+import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataDesignActivity;
+import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataInstallActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
@@ -248,6 +250,8 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
             }
         });
+        findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
+        findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
     }
 
     /**

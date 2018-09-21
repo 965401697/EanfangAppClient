@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,6 +36,8 @@ import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
+import net.eanfang.client.ui.activity.worksapce.datastatistics.DataDesignActivity;
+import net.eanfang.client.ui.activity.worksapce.datastatistics.DataInstallActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
@@ -60,8 +61,7 @@ import static com.eanfang.util.V.v;
 public class HomeFragment extends BaseFragment {
 
     //报修数量
-    TextView tvReapirTotal;
-    LinearLayout llRepairDatasticstics;
+    private TextView tvReapirTotal;
     //报装数量
     TextView tvInstallTotal;
     // 设计总数
@@ -112,7 +112,6 @@ public class HomeFragment extends BaseFragment {
         tvReapirTotal = findViewById(R.id.tv_reapir_total);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
-        llRepairDatasticstics = (LinearLayout) findViewById(R.id.ll_repair_datasticstics);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), false, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -326,10 +325,10 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 填充
+     * 統計填充数据
      */
     private void initDatastatisticsData(HomeDatastisticeBean bean) {
-        clientDataList = bean.getGroup();
+        clientDataList = bean.getGroup();// 报修
         homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data);
         rvData.setAdapter(homeDataAdapter);
         homeDataAdapter.bindToRecyclerView(rvData);
@@ -349,5 +348,7 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
             }
         });
+        findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
+        findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
     }
 }

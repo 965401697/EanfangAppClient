@@ -88,6 +88,10 @@
     <!-- 帮助页面 -->
     <string name="text_data_repair_dealy">昨日报修</string>
     <string name="text_data_repair_five">报修前五家单位</string>
+    <string name="text_data_install_dealy">昨日报装</string>
+    <string name="text_data_install_five">报装前五家单位</string>
+    <string name="text_data_design_dealy">昨日设计</string>
+    <string name="text_data_design_five">设计前五家单位</string>
     <string name="text_data_devices">设备情况</string>
     <string name="text_data_monitor">监控系统</string>
     <string name="text_data_self">防盗系统</string>

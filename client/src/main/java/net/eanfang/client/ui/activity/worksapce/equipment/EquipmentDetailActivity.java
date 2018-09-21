@@ -79,7 +79,7 @@ public class EquipmentDetailActivity extends BaseClientActivity {
     @BindView(R.id.tv_notice)
     TextView tvNotice;
 
-    private long id;
+    private String id = "";
     private CustDeviceEntity mBean;
 
     // 扫码 扫描设备进行报修
@@ -92,7 +92,7 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("设备详情");
         setLeftBack();
-        id = getIntent().getLongExtra("id", 0);
+        id = getIntent().getStringExtra("id");
         mScanRepair = getIntent().getBooleanExtra("scan", false);
         if (mScanRepair) {
             setRightTitle("我要报修");

@@ -146,10 +146,11 @@ public class PermissionUtils {
                 || !hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 || !hasPermission(Manifest.permission.READ_PHONE_STATE)
                 || !hasPermission(Manifest.permission.READ_CONTACTS)
-                || !hasPermission(Manifest.permission.CAMERA)) {
+                || !hasPermission(Manifest.permission.CAMERA)
+                || !hasPermission(Manifest.permission.RECORD_AUDIO)) {
             getPermission(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.READ_CONTACTS}, callBack == null ? (() -> {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA, Manifest.permission.READ_CONTACTS, Manifest.permission.RECORD_AUDIO}, callBack == null ? (() -> {
             }) : callBack);
         } else {
             callBack.callBack();

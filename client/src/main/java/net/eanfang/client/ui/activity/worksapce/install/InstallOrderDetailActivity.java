@@ -16,6 +16,7 @@ import com.eanfang.model.WorkspaceInstallDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
@@ -89,7 +90,8 @@ public class InstallOrderDetailActivity extends BaseActivity {
         tvCompanyName.setText(bean.getClientCompanyName());
         tvContract.setText(bean.getConnector());
         tvContractPhone.setText(bean.getConnectorPhone());
-        tvTime.setText(GetConstDataUtils.getArriveList().get(bean.getRevertTimeLimit()));
+
+        tvTime.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getRevertTimeLimit())));
         String area = Config.get().getAddressByCode(bean.getZone());
         tvAddress.setText(area + bean.getDetailPlace());
         tvBusiness.setText(Config.get().getBusinessNameByCode(bean.getBusinessOneCode(), 1));

@@ -247,6 +247,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             if (PermKit.get().getCompanyBackPerm()) {
                 showToast("可以进行编辑");
                 isEdit = true;
+                etCompany.setEnabled(false);
                 setRightGone();
                 doRevoke();
             }
@@ -272,7 +273,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private void doRevoke() {
         ivUpload.setEnabled(true);
         ivUpload2.setEnabled(true);
-        etCompany.setEnabled(true);
         edCompanyNumber.setEnabled(true);
         etMoney.setEnabled(true);
         llType.setEnabled(true);
