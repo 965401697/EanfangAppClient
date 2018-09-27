@@ -77,7 +77,7 @@ public class MessageListActivity extends BaseClientActivity implements
 
 
     private void initView() {
-        setTitle("通知提醒");
+        setTitle("业务通知");
         tvRight.setText("全读");
         setLeftBack(new View.OnClickListener() {
             @Override

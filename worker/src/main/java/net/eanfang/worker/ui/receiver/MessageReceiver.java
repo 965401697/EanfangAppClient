@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -86,6 +87,19 @@ public class MessageReceiver extends XGPushBaseReceiver {
 //            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //            context.startActivity(intent);
 //        }
+        if (!TextUtils.isEmpty(message.getActivityName())) {
+            // 通知在通知栏被点击啦。。。。。
+            // APP自己处理点击的相关动作
+            // 这个动作可以在activity的onResume也能监听，请看第3点相关内容
+            Intent intent = null;
+            try {
+                intent = new Intent(context, Class.forName("net.eanfang.worker." + message.getActivityName()));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
 
     }
 
