@@ -78,8 +78,8 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!PermKit.get().getFailureDetailPerm()) return;
                 RepairFailureEntity bean = (RepairFailureEntity) adapter.getData().get(position);
-
-                if (bean.getRepairOrderEntity() == null || bean.getRepairOrderEntity().getStatus() == 1) {
+//                if (bean.getRepairOrderEntity() == null || bean.getRepairOrderEntity().getStatus() == 0) {//为什么那order的状态
+                if (bean.getRepairOrderEntity() == null || bean.getStatus() == 0) {
                     ToastUtil.get().showToast(FaultRecordListActivity.this, "该故障未处理，不能查看详情");
                     return;
                 }

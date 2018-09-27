@@ -555,5 +555,9 @@ public interface NewApiService {
      * 首页统计数据
      */
     String HOME_DATASTASTISTICS = BASE_URL + "/yaf_statistics/repairOrderStatistics/app/Count";
+    /**
+     * 报修的选择的项目列表
+     */
+    String REPAIR_PROJECT_LIST = BASE_URL + "/yaf_project/project/projectList";
 
 }
