@@ -66,7 +66,8 @@ public class OrderDetailFragment extends BaseFragment {
     private ImageView iv_phone;
     private TextView tv_number;
     private TextView tv_feature_time;
-
+    private TextView tv_project_name;
+    private TextView tv_repair_remarkinfo;
     // 支付布局
     private LinearLayout llPay;
     // 去支付
@@ -120,6 +121,7 @@ public class OrderDetailFragment extends BaseFragment {
     private View line;
     private PayLogEntity payLogEntity;
 
+
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
         sf.id = id;
@@ -152,6 +154,8 @@ public class OrderDetailFragment extends BaseFragment {
         tv_phone_desc = findViewById(R.id.tv_phone_desc);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
+        tv_project_name = findViewById(R.id.tv_project_name);
+        tv_repair_remarkinfo = findViewById(R.id.tv_repair_remarkinfo);
 //----------------------------
         tv_address = findViewById(R.id.tv_address);
         iv_pic = findViewById(R.id.iv_pic);
@@ -313,7 +317,8 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                     // 回复时效
 //                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
-                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
+//                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
+                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + bean.getAddress()));
 //                    if (bean.getBookTime() != null) {
 //                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
 //                    } else {
@@ -354,6 +359,12 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_number.setText(V.v(() -> bean.getOrderNum()));
                     tv_feature_time.setText(V.v(() -> GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
 
+                    if (!TextUtils.isEmpty(bean.getProjectName())) {
+                        tv_project_name.setText(bean.getProjectName());
+                    }
+                    if (!TextUtils.isEmpty(bean.getRemarkInfo())) {
+                        tv_repair_remarkinfo.setText(bean.getRemarkInfo());
+                    }
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
 

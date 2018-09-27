@@ -2,6 +2,7 @@ package net.eanfang.client.ui.receiver;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -15,8 +16,6 @@ import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
-
-import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 
 /**
  * Created by MrHou
@@ -76,11 +75,17 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (context == null || message == null) {
             return;
         }
-        if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
+//        if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
+        if (!TextUtils.isEmpty(message.getActivityName())) {
             // 通知在通知栏被点击啦。。。。。
             // APP自己处理点击的相关动作
             // 这个动作可以在activity的onResume也能监听，请看第3点相关内容
-            Intent intent = new Intent(context, MessageListActivity.class);
+            Intent intent = null;
+            try {
+                intent = new Intent(context, Class.forName("net.eanfang.client."+message.getActivityName()));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }

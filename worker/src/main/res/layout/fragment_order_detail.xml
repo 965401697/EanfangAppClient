@@ -128,6 +128,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dimen_15"
+                                android:text="项目名称"
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dimen_15"
                                 android:text="报修地址"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -177,6 +185,19 @@
                                 android:textSize="@dimen/textSize_13" />
 
                             <TextView
+                                android:id="@+id/tv_project_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:padding="@dimen/dimen_15"
+                                android:text=""
+                                android:textColor="@color/color_client_neworder"
+                                android:textSize="@dimen/textSize_13" />
+
+
+                            <TextView
                                 android:id="@+id/tv_address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -216,10 +237,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dimen_15"
-                                android:text="手机号    "
+                                android:text="手机号"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dimen_15"
+                                android:text="备注信息"
+                                android:textColor="@color/color_bottom"
+                                android:textSize="@dimen/textSize_13" />
 
                         </LinearLayout>
 
@@ -250,7 +278,18 @@
                                 android:padding="@dimen/dimen_15"
                                 android:text=""
                                 android:textColor="@color/color_client_neworder"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/textSize_13" />
+
+                            <TextView
+                                android:id="@+id/tv_repair_remarkinfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:padding="@dimen/dimen_15"
+                                android:text=""
+                                android:textColor="@color/color_client_neworder"
+                                android:textSize="@dimen/textSize_13" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -259,6 +298,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
                 android:orientation="vertical">
 

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -29,12 +31,17 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.LoginBean;
+import com.eanfang.model.ProjectListBean;
 import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
+import com.yaf.base.entity.ProjectEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -118,6 +125,20 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     @BindView(R.id.iv_left)
     ImageView ivLeft;
 
+
+    @BindView(R.id.ll_user_info)
+    LinearLayout ll_user_info;
+    @BindView(R.id.ll_project_name)
+    LinearLayout ll_project_name;
+    @BindView(R.id.et_project_name)
+    EditText et_project_name;
+    @BindView(R.id.et_notice)
+    EditText et_notice;
+    @BindView(R.id.iv_arrow)
+    ImageView iv_arrow;
+    @BindView(R.id.iv_project_arrow)
+    ImageView iv_project_arrow;
+
     //选择时限 Popwindow
     private RepairSelectTimePop repairSelectTimePop;
     private List<RepairBugEntity> beanList = new ArrayList<>();
@@ -145,6 +166,12 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     // 扫码报修
     private boolean isScanRepair = false;
 
+    //项目名称的集合
+    private List<String> projectName;
+    //项目的projectid 默认值
+    private int currentIndex = -1;
+    private List<ProjectEntity> mProjectList;
+
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, RepairActivity.class);
@@ -160,6 +187,8 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         initListener();
         initAdapter();
         initScanRepair();
+
+        getProjectList();
     }
 
 
@@ -173,6 +202,9 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             mIsCompany = true;// 个人用户为true
             tvRepairCompanyName.setVisibility(View.GONE);
             etCompanyName.setVisibility(View.VISIBLE);
+
+            ll_user_info.setVisibility(View.VISIBLE);
+            iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_down));
         } else {
             mIsCompany = false;// 公司用户为false
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
@@ -318,6 +350,17 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             showToast("请输入正确手机号");
             return false;
         }
+
+        if (StringUtils.isEmpty(et_project_name.getText())) {
+            if (projectName != null) {
+                showToast("请输入项目名称");
+            } else {
+
+                showToast("请输入项目名称");
+            }
+            return false;
+        }
+
         if ("请选择地址".equals(tvAddress.getText().toString().trim())) {
             showToast("请选择地址");
             return false;
@@ -334,6 +377,11 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
 
         if (StringUtils.isEmpty(etDetailAddress.getText().toString().trim())) {
             showToast("请输入详细地址");
+            return false;
+        }
+
+        if (StringUtils.isEmpty(et_notice.getText().toString().trim())) {
+            showToast("请输入备注信息");
             return false;
         }
 
@@ -364,6 +412,13 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         } else {
             bean.setRepairCompany(tvRepairCompanyName.getText().toString().trim());
         }
+        if (currentIndex != -1) {
+            bean.setProjectId(String.valueOf(mProjectList.get(currentIndex).getId()));
+        }
+        bean.setProjectName(et_project_name.getText().toString().trim());
+        bean.setRemarkInfo(et_notice.getText().toString().trim());
+
+
         bean.setRepairContactPhone(etPhone.getText().toString().trim());
         bean.setRepairContacts(etContact.getText().toString().trim());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
@@ -447,6 +502,48 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     }
 
     /**
+     * 项目列表名称
+     */
+
+    private void getProjectList() {
+
+        QueryEntry queryEntry = new QueryEntry();
+
+        EanfangHttp.post(NewApiService.REPAIR_PROJECT_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<ProjectListBean>(RepairActivity.this, false, ProjectListBean.class, (bean) -> {
+
+                    mProjectList = bean.getList();
+
+                    if (mProjectList != null && mProjectList.size() > 0) {
+                        projectName = new ArrayList<>();
+
+                        for (ProjectEntity p : mProjectList) {
+                            projectName.add(p.getProjectName());
+                        }
+                        ll_project_name.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                PickerSelectUtil.singleTextPicker(RepairActivity.this, "", projectName, new PickerSelectUtil.OnOptionPickListener() {
+                                    @Override
+                                    public void picker(int index, String item) {
+                                        et_project_name.setText(item);
+                                        currentIndex = index;
+                                    }
+                                });//选择项目
+
+                            }
+                        });
+                        et_project_name.setFocusable(false);
+                        et_project_name.setFocusableInTouchMode(false);
+                    } else {
+                        iv_project_arrow.setVisibility(View.GONE);
+                    }
+
+                }));
+    }
+
+    /**
      * 到达时限
      */
 
@@ -473,7 +570,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     }
 
 
-    @OnClick({R.id.iv_left, R.id.tv_selectAdress, R.id.btn_add_trouble, R.id.tv_next})
+    @OnClick({R.id.iv_left, R.id.tv_selectAdress, R.id.btn_add_trouble, R.id.ll_user_desc, R.id.tv_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_left:
@@ -484,6 +581,15 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
                 break;
             case R.id.tv_next:
                 goSelectWorker();
+                break;
+            case R.id.ll_user_desc://
+                if (ll_user_info.getVisibility() == View.VISIBLE) {
+                    ll_user_info.setVisibility(View.GONE);
+                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_right));
+                } else {
+                    ll_user_info.setVisibility(View.VISIBLE);
+                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_down));
+                }
                 break;
         }
     }
