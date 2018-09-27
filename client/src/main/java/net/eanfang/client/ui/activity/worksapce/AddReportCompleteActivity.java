@@ -8,14 +8,14 @@ import android.widget.EditText;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.HashMap;
@@ -114,7 +114,7 @@ public class AddReportCompleteActivity extends BaseClientActivity {
 
         //处理
         bean.setField5(etInputHandle.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/report/",snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

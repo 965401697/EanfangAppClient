@@ -470,19 +470,19 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 //        bughandleConfirmEntity.setTeamWorker(etTeamWorker.getText().toString().trim());
 //        uploadMap.clear();
         //电视墙/操作台正面全貌 （3张）
-        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMomentAddPhotos, uploadMap, true);
         bughandleConfirmEntity.setFrontPictures(presentationPic);
 
         //电视墙/操作台背面面全貌 （3张）
-        String toolPic = PhotoUtils.getPhotoUrl(snplMonitorAddPhotos, uploadMap, false);
+        String toolPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMonitorAddPhotos, uploadMap, false);
         bughandleConfirmEntity.setReverseSidePictures(toolPic);
 
         //机柜正面/背面 （3张）
-        String pointPic = PhotoUtils.getPhotoUrl(snplToolsPackageAddPhotos, uploadMap, false);
+        String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplToolsPackageAddPhotos, uploadMap, false);
         bughandleConfirmEntity.setEquipmentCabinetPictures(pointPic);
 
         //单据照片 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl(snplFormPhotos, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplFormPhotos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
         // 签退时间

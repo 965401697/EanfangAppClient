@@ -159,35 +159,35 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
 
     private void doSubmitData() {
         //故障表象 （3张）
-        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, false);
+        String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMomentAddPhotos, uploadMap, false);
         if (StringUtils.isEmpty(presentationPic)) {
             showToast("请选择故障表象照片");
             return;
         }
         detailEntity.setPresentationPictures(presentationPic);
         //故障点照片 （3张）
-        String pointPic = PhotoUtils.getPhotoUrl(snplToolsPackageAddPhotos, uploadMap, false);
+        String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplToolsPackageAddPhotos, uploadMap, false);
         if (StringUtils.isEmpty(pointPic)) {
             showToast("请选择故障点照片");
             return;
         }
         detailEntity.setPointPictures(pointPic);
         //恢复后表象 （3张）
-        String restorePic = PhotoUtils.getPhotoUrl(snplFailureRecoverPhenomena, uploadMap, false);
+        String restorePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplFailureRecoverPhenomena, uploadMap, false);
         if (StringUtils.isEmpty(restorePic)) {
             showToast("请选择恢复后表象照片");
             return;
         }
         detailEntity.setRestorePictures(restorePic);
         //工具及蓝布 （3张）
-        String toolPic = PhotoUtils.getPhotoUrl(snplMonitorAddPhotos, uploadMap, false);
+        String toolPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMonitorAddPhotos, uploadMap, false);
         detailEntity.setToolPictures(toolPic);
 
         //处理后现场 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl(snplAfterProcessingLocale, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplAfterProcessingLocale, uploadMap, false);
         detailEntity.setAfterHandlePictures(afterHandlePic);
         //设备回装 （3张）
-        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl(snplMachineFitBack, uploadMap, false);
+        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMachineFitBack, uploadMap, false);
         detailEntity.setDeviceReturnInstallPictures(deviceReturnInstallPic);
 
         /**

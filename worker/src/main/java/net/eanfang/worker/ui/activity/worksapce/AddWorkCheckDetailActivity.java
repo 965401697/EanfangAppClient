@@ -131,7 +131,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
         detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
         detailsBean.setInfo(etInputCheckContent.getText().toString().trim());
 
-        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck/",mPhotosSnpl, uploadMap, true);
         detailsBean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

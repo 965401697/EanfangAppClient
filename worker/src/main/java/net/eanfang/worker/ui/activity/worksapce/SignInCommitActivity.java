@@ -87,9 +87,9 @@ public class SignInCommitActivity extends BaseActivity {
 
 
         if (snplMomentAddPhotos.getData().size() > 1) {
-            ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true).split(",")[0];
+            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true).split(",")[0];
         } else {
-            ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true);
         }
 
         if (snplMomentAddPhotos.getData().size() >= 1) {

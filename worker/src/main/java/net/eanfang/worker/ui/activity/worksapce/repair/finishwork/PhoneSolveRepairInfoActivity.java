@@ -317,7 +317,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         bughandleConfirmEntity.setLeftoverProblem(et_remain_question.getText().toString().trim());
 //        uploadMap.clear();
         //单据照片 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl(snpl_form_photos, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snpl_form_photos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
         // 签退时间

@@ -166,7 +166,7 @@ public class TakeApplyAddActivity extends BaseActivity {
 //        }
         applyTaskBean.setToDoorTime(doorTime);
 
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/",snplMomentAddPhotos, uploadMap, true);
         applyTaskBean.setPictures(ursStr);
 
         applyTaskBean.setShopTaskPublishId(entTaskPublishId);

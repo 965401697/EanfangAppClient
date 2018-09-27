@@ -83,7 +83,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             } else {
                 path = (String) message;
                 if (!TextUtils.isEmpty(path)) {
-                    imgKey = UuidUtil.getUUID() + ".png";
+                    imgKey = "im/select/"+UuidUtil.getUUID() + ".png";
                     creatGroup();
                 }
             }

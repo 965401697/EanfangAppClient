@@ -104,19 +104,19 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
 
     private void doSubmitData() {
 
-        String tvPhoto = PhotoUtils.getPhotoUrl(snplTvPhoto, uploadMap, false);
+        String tvPhoto = PhotoUtils.getPhotoUrl("biz/maintain/",snplTvPhoto, uploadMap, false);
         if (StringUtils.isEmpty(tvPhoto)) {
             showToast("请选择电视墙正面照片");
             return;
         }
 
-        String operatingPhoto = PhotoUtils.getPhotoUrl(snplOperatingPhoto, uploadMap, false);
+        String operatingPhoto = PhotoUtils.getPhotoUrl("biz/maintain/",snplOperatingPhoto, uploadMap, false);
         if (StringUtils.isEmpty(operatingPhoto)) {
             showToast("请选操作台背面照片");
             return;
         }
 
-        String boxPhoto = PhotoUtils.getPhotoUrl(snplBoxPhoto, uploadMap, false);
+        String boxPhoto = PhotoUtils.getPhotoUrl("biz/maintain/",snplBoxPhoto, uploadMap, false);
         if (StringUtils.isEmpty(boxPhoto)) {
             showToast("请选择机柜照片");
             return;

@@ -8,14 +8,14 @@ import android.widget.EditText;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.HashMap;
@@ -89,7 +89,7 @@ public class AddReportFindActivity extends BaseWorkerActivity {
         bean.setField2(etInputJion.getText().toString().trim());
         //处理
         bean.setField3(etInputHandle.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/findquestion/", snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {

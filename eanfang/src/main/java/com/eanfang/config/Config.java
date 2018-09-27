@@ -17,14 +17,13 @@ import java.util.List;
 
 /**
  * @author wen
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc app配置信息
  */
 public class Config {
     private static Config config = new Config();
 
     public static final String VIDEO_STORAGE_DIR = Environment.getExternalStorageDirectory() + "/eanfang/";
-    public static final String RECORD_FILE_PATH = VIDEO_STORAGE_DIR + "video.mp4";
     /**
      * 基础数据 分隔字符
      */

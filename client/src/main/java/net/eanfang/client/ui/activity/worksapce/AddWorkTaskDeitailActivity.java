@@ -168,7 +168,7 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
         bean.setCriterion(standard);
         bean.setJoinPerson(worker);
 
-        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/task/",mPhotosSnpl, uploadMap, true);
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

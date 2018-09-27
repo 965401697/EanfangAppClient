@@ -567,6 +567,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
          * 设置pieChart图表的描述
          * */
         pieChart.getDescription().setEnabled(false);
+        pieChart.setNoDataText("暂无数据");
     }
 
 }

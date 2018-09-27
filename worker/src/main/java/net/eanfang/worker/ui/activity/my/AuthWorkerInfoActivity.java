@@ -378,7 +378,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             return;
         }
         TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
+        String imgKey = "account/"+UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEADER_PIC:
                 workerInfoBean.setAvatarPhoto(imgKey);

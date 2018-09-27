@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.takevideo;
+package com.eanfang.takevideo;
 
 import android.content.DialogInterface;
 import android.hardware.SensorManager;
@@ -14,9 +14,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.R;
+import com.eanfang.R2;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ObjectUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.witget.takavideo.CustomProgressDialog;
 import com.eanfang.witget.takavideo.FocusIndicator;
 import com.eanfang.witget.takavideo.SectionProgressBar;
@@ -32,8 +36,6 @@ import com.qiniu.pili.droid.shortvideo.PLRecordStateListener;
 import com.qiniu.pili.droid.shortvideo.PLShortVideoRecorder;
 import com.qiniu.pili.droid.shortvideo.PLVideoEncodeSetting;
 import com.qiniu.pili.droid.shortvideo.PLVideoSaveListener;
-
-import net.eanfang.client.R;
 
 import java.util.Stack;
 
@@ -54,35 +56,35 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
     /**
      * 画布
      */
-    @BindView(R.id.surfaceview)
+    @BindView(R2.id.surfaceview)
     SquareGLSurfaceView surfaceview;
     /**
      * 删除片段
      */
-    @BindView(R.id.iv_delete)
+    @BindView(R2.id.iv_delete)
     ImageView ivDelete;
     /**
      * 保存拍摄
      */
-    @BindView(R.id.iv_confim)
+    @BindView(R2.id.iv_confim)
     ImageView ivConfim;
     /**
      * 开始拍摄
      */
-    @BindView(R.id.iv_begin)
+    @BindView(R2.id.iv_begin)
     View ivBegin;
-    @BindView(R.id.focus_indicator)
+    @BindView(R2.id.focus_indicator)
     FocusIndicator mFocusIndicator;
     /**
      * // close / open 闪光灯
      */
-    @BindView(R.id.iv_switch_flash)
+    @BindView(R2.id.iv_switch_flash)
     ImageView ivSwitchFlash;
     private boolean mFlashEnabled;
     /**
      * 录制百分之多少
      */
-    @BindView(R.id.tv_recording_percentage)
+    @BindView(R2.id.tv_recording_percentage)
     TextView tvRecordingPercentage;
 
     private long mLastRecordingPercentageViewUpdateTime = 0;
@@ -99,7 +101,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
     /**
      * 拍摄进度条
      */
-    @BindView(R.id.record_progressbar)
+    @BindView(R2.id.record_progressbar)
     SectionProgressBar recordProgressbar;
 
     private PLShortVideoRecorder mShortVideoRecorder;
@@ -134,6 +136,9 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
 
     private OrientationEventListener mOrientationListener;
 
+    // 拍摄后的命名
+    private String mVideoPahth = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,10 +148,20 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         initListener();
     }
 
+
     private void initView() {
+        setLeftBack();
+        setTitle("视频录制");
         mShortVideoRecorder = new PLShortVideoRecorder();
         mShortVideoRecorder.setRecordStateListener(this);
         mShortVideoRecorder.setFocusListener(this);
+
+        mVideoPahth = getIntent().getStringExtra("videoPath");
+        if (StringUtils.isEmpty(mVideoPahth)) {
+            showToast("视频拍摄路径为空");
+            finishSelf();
+            return;
+        }
 
         /**
          * 摄像头采集选项
@@ -187,8 +202,14 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         recordSetting = new PLRecordSetting();
         recordSetting.setMaxRecordDuration(10 * 1000); // 10s
         recordSetting.setRecordSpeedVariable(true);
+        /**
+         * 拍摄视频存储目录
+         * */
         recordSetting.setVideoCacheDir(Config.VIDEO_STORAGE_DIR);
-        recordSetting.setVideoFilepath(Config.RECORD_FILE_PATH);
+        /**
+         * 拍摄视频存储根目录
+         * */
+        recordSetting.setVideoFilepath(Config.VIDEO_STORAGE_DIR + mVideoPahth + ".mp4");
 
         mFaceBeautySetting = new PLFaceBeautySetting(1.0f, 0.5f, 0.5f);
 
@@ -346,6 +367,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                mProcessingDialog.dismiss();
                 dialog.dismiss();
             }
         });
@@ -523,7 +545,9 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
             @Override
             public void run() {
                 mProcessingDialog.dismiss();
-//                PlaybackActivity.start(VideoRecordActivity.this, filePath);
+                Bundle bundle = new Bundle();
+                bundle.putString("videoPath", filePath);
+                JumpItent.jump(TakeVideoActivity.this, PlayVideoActivity.class, bundle);
             }
         });
     }

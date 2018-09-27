@@ -148,7 +148,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
         bean.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
         bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/repair/",snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         bean.setBusRepairOrderId(orderId);
 

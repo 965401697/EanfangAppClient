@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -17,8 +19,6 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.HashMap;
@@ -122,7 +122,7 @@ public class AddReportPlanActivity extends BaseWorkerActivity implements View.On
             return;
         }
         bean.setField5(handle);
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/report/",snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {

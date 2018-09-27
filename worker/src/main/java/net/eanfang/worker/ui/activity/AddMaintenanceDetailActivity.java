@@ -157,7 +157,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         bean.setBusinessFourCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
 
         bean.setQuestion(et_question.getText().toString().trim());
-        String urls = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+        String urls = PhotoUtils.getPhotoUrl("biz/maintain/",mPhotosSnpl, uploadMap, true);
         bean.setPictures(urls);
 
         if (mPhotosSnpl.getData().size() != 0) {
