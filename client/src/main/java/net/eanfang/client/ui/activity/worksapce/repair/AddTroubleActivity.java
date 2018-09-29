@@ -152,14 +152,20 @@ public class AddTroubleActivity extends BaseClientActivity {
     @BindView(R.id.iv_right)
     ImageView ivRight;
     // 拍摄视频
-    @BindView(R.id.iv_takevideo)
-    ImageView ivTakevideo;
     @BindView(R.id.tv_addViedeo)
     TextView tvAddViedeo;
     @BindView(R.id.iv_thumbnail)
     ImageView ivThumbnail;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
+    @BindView(R.id.et_device)
+    EditText etDevice;
+    @BindView(R.id.ll_input_device)
+    LinearLayout llInputDevice;
+    @BindView(R.id.et_brand)
+    EditText etBrand;
+    @BindView(R.id.ll_input_brand)
+    LinearLayout llInputBrand;
 
 
     private Map<String, String> uploadMap = new HashMap<>();
@@ -263,6 +269,7 @@ public class AddTroubleActivity extends BaseClientActivity {
 
         mDeviceBean = (CustDeviceEntity) getIntent().getSerializableExtra("scan_repair");
         isScanRepair = getIntent().getBooleanExtra("isScanRepair", false);
+
     }
 
     /**
@@ -286,7 +293,12 @@ public class AddTroubleActivity extends BaseClientActivity {
         repairBugEntity.setMp4_path(mUploadKey);
         String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
         repairBugEntity.setPictures(ursStr);
-
+        if (llInputDevice.getVisibility() == View.VISIBLE) {
+            repairBugEntity.setBusinessThreeName(etDevice.getText().toString().trim());
+        }
+        if (llInputBrand.getVisibility() == View.VISIBLE) {
+            repairBugEntity.setModelName(etBrand.getText().toString().trim());
+        }
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
@@ -306,6 +318,11 @@ public class AddTroubleActivity extends BaseClientActivity {
             showToast("请选择故障设备名称");
             return false;
         }
+
+        if (llInputDevice.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etDevice.getText().toString().trim())) {
+            showToast("请输入故障设备名称");
+            return false;
+        }
 //        if (TextUtils.isEmpty(etDeviceNum.getText().toString().trim())) {
 //            showToast("请填写设备编号");
 //            return false;
@@ -317,6 +334,10 @@ public class AddTroubleActivity extends BaseClientActivity {
 
         if (TextUtils.isEmpty(tvDeviceBrand.getText().toString().trim())) {
             showToast("请选择品牌型号");
+            return false;
+        }
+        if (llInputBrand.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etBrand.getText().toString().trim())) {
+            showToast("请输入品牌型号");
             return false;
         }
         return true;
@@ -335,12 +356,28 @@ public class AddTroubleActivity extends BaseClientActivity {
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {// 选择故障设备
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
-            tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 3));
-            //将光标定位
-            etDeviceLocationNum.requestFocus();
-            etDeviceLocationNum.setFocusable(true);
-            etDeviceLocationNum.setFocusableInTouchMode(true);
-            StringUtils.showKeyboard(AddTroubleActivity.this, etDeviceLocationNum);
+
+            String text = Config.get().getBusinessNameByCode(dataCode, 3);
+            tvFaultDeviceName.setText(text);
+            if (text.equals("其他")) {
+                llInputDevice.setVisibility(View.VISIBLE);
+
+                //将光标定位
+                etDevice.requestFocus();
+                etDevice.setFocusable(true);
+                etDevice.setFocusableInTouchMode(true);
+                StringUtils.showKeyboard(AddTroubleActivity.this, etDevice);
+
+            } else {
+                llInputDevice.setVisibility(View.GONE);
+
+                //将光标定位
+                etDeviceLocationNum.requestFocus();
+                etDeviceLocationNum.setFocusable(true);
+                etDeviceLocationNum.setFocusableInTouchMode(true);
+                StringUtils.showKeyboard(AddTroubleActivity.this, etDeviceLocationNum);
+            }
+
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {// 故障简述
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
@@ -361,6 +398,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             etDeviceLocationNum.setText(custDeviceEntity.getLocationNumber());
             etDeviceLocation.setText(custDeviceEntity.getLocation());
             tvDeviceBrand.setText(Config.get().getModelNameByCode(custDeviceEntity.getModelCode(), 2));
+
 
             repairBugEntity.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
             repairBugEntity.setRepairCount(custDeviceEntity.getDeviceVersion());
@@ -400,6 +438,12 @@ public class AddTroubleActivity extends BaseClientActivity {
                 }
                 PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                     tvDeviceBrand.setText(item);
+                    if (item.equals("其他")) {
+                        llInputBrand.setVisibility(View.VISIBLE);
+
+                    } else {
+                        llInputBrand.setVisibility(View.GONE);
+                    }
                 }));
                 break;
             // 故障设备型号
