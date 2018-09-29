@@ -505,12 +505,13 @@
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
+
                 <ImageView
                     android:id="@+id/iv_takevideo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
                     android:layout_marginTop="@dimen/dimen_30"
-                    android:src="@mipmap/ic_add" />
+                    android:src="@mipmap/bga_pp_ic_plus" />
 
             </LinearLayout>
 

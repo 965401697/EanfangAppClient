@@ -2,10 +2,10 @@ package com.eanfang.takevideo;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.application.CustomeApplication;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
@@ -24,6 +24,11 @@ import com.pili.pldroid.player.PLOnInfoListener;
 import com.pili.pldroid.player.PLOnVideoFrameListener;
 import com.pili.pldroid.player.PLOnVideoSizeChangedListener;
 import com.pili.pldroid.player.widget.PLVideoTextureView;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,14 +51,21 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
     @BindView(R2.id.plVideoTextureView)
     PLVideoTextureView plVideoTextureView;
     /**
-     * 上传
-     */
-    @BindView(R2.id.btn_upload)
-    Button btnUpload;
-    /**
      * 视频路径
      */
-    private String mVideoPath;
+    private String mVideoPath = "";
+
+    /**
+     * 缩略图路径
+     */
+    private String mThumbnailName = "";
+
+    private String mThumbnailPath = "";
+
+    /**
+     * 图片和视频公用一个UUID
+     */
+    private String uploadKey = "biz/repair/video/" + UuidUtil.getUUID();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +78,14 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
     private void initView() {
         setLeftBack();
         setTitle("视频详情");
+        setRightTitle("上传");
         mVideoPath = getIntent().getStringExtra("videoPath");
         // 获取第一帧
-//        if (!StringUtils.isEmpty(mVideoPath)) {
-//            ivThumbnail.setImageBitmap(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND));
-        FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND), "wangong001");
-//        }
+        if (!StringUtils.isEmpty(mVideoPath)) {
+//            PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND);
+            mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND), mThumbnailName);
+        }
 
         plVideoTextureView.setLooping(true);
         plVideoTextureView.setAVOptions(new AVOptions());
@@ -94,19 +108,42 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
          */
         plVideoTextureView.setOnAudioFrameListener(this);
 
-        btnUpload.setOnClickListener((v) -> doUpload());
+        setRightTitleOnClickListener((v) -> doCommitThumbnail());
+    }
+
+    /**
+     * 上传拍摄视频缩略图
+     */
+    private void doCommitThumbnail() {
+        if (!StringUtils.isEmpty(mThumbnailPath)) {
+            OSSUtils.initOSS(PlayVideoActivity.this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, new OSSCallBack(PlayVideoActivity.this, false) {
+                @Override
+                public void onOssSuccess() {
+                    showToast("上传缩略图成功");
+                    doCommitVideo();
+                    super.onOssSuccess();
+                }
+            });
+        }
     }
 
     /**
      * 进行上传视频
      */
-    private void doUpload() {
+    private void doCommitVideo() {
         if (!StringUtils.isEmpty(mVideoPath)) {
-            String videoKey = "biz/repair/video/" + UuidUtil.getUUID() + ".mp4";
-            OSSUtils.initOSS(PlayVideoActivity.this).asyncPutVideo(videoKey, mVideoPath, new OSSCallBack(PlayVideoActivity.this, false) {
+            OSSUtils.initOSS(PlayVideoActivity.this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, new OSSCallBack(PlayVideoActivity.this, true) {
                 @Override
                 public void onOssSuccess() {
                     showToast("上传视频成功");
+                    CustomeApplication.get().closeActivity(TakeVideoActivity.class.getName());
+                    TakeVdideoMode takeVdideoMode = new TakeVdideoMode();
+                    runOnUiThread(() -> {
+                        takeVdideoMode.setMImagePath(mVideoPath);
+                        takeVdideoMode.setMKey(uploadKey);
+                        EventBus.getDefault().post(takeVdideoMode);
+                        finishSelf();
+                    });
                     super.onOssSuccess();
                 }
             });
@@ -156,7 +193,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      */
     @Override
     public void onAudioFrameAvailable(byte[] data, int size, int samplerate, int channels, int datawidth, long ts) {
-        Log.i(TAG, "onAudioFrameAvailable: " + size + ", " + samplerate + ", " + channels + ", " + datawidth + ", " + ts);
+//        Log.i(TAG, "onAudioFrameAvailable: " + size + ", " + samplerate + ", " + channels + ", " + datawidth + ", " + ts);
     }
 
     /**
@@ -164,7 +201,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      */
     @Override
     public void onBufferingUpdate(int precent) {
-        Log.i(TAG, "onBufferingUpdate: " + precent);
+//        Log.i(TAG, "onBufferingUpdate: " + precent);
     }
 
     /**
@@ -172,7 +209,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      */
     @Override
     public void onCompletion() {
-        Log.i(TAG, "Play Completed !");
+//        Log.i(TAG, "Play Completed !");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -187,7 +224,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      * */
     @Override
     public boolean onError(int errorCode) {
-        Log.e(TAG, "Error happened, errorCode = " + errorCode);
+//        Log.e(TAG, "Error happened, errorCode = " + errorCode);
         final String errorTip;
         switch (errorCode) {
             case ERROR_CODE_IO_ERROR:
@@ -221,7 +258,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
 
     @Override
     public void onInfo(int what, int extra) {
-        Log.i(TAG, "OnInfo, what = " + what + ", extra = " + extra);
+//        Log.i(TAG, "OnInfo, what = " + what + ", extra = " + extra);
         switch (what) {
             case MEDIA_INFO_BUFFERING_START:
                 break;
@@ -238,29 +275,29 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
             case MEDIA_INFO_AUDIO_RENDERING_START:
                 break;
             case MEDIA_INFO_VIDEO_FRAME_RENDERING:
-                Log.i(TAG, "video frame rendering, ts = " + extra);
+//                Log.i(TAG, "video frame rendering, ts = " + extra);
                 break;
             case MEDIA_INFO_AUDIO_FRAME_RENDERING:
-                Log.i(TAG, "audio frame rendering, ts = " + extra);
+//                Log.i(TAG, "audio frame rendering, ts = " + extra);
                 break;
             case MEDIA_INFO_VIDEO_GOP_TIME:
-                Log.i(TAG, "Gop Time: " + extra);
+//                Log.i(TAG, "Gop Time: " + extra);
                 break;
             case MEDIA_INFO_SWITCHING_SW_DECODE:
-                Log.i(TAG, "Hardware decoding failure, switching software decoding!");
+//                Log.i(TAG, "Hardware decoding failure, switching software decoding!");
                 break;
             case MEDIA_INFO_METADATA:
                 Log.i(TAG, plVideoTextureView.getMetadata().toString());
                 break;
             case MEDIA_INFO_VIDEO_BITRATE:
             case MEDIA_INFO_VIDEO_FPS:
-                Log.i(TAG, "FPS: " + extra);
+//                Log.i(TAG, "FPS: " + extra);
                 break;
             case MEDIA_INFO_CONNECTED:
-                Log.i(TAG, "Connected !");
+//                Log.i(TAG, "Connected !");
                 break;
             case MEDIA_INFO_VIDEO_ROTATION_CHANGED:
-                Log.i(TAG, "Rotation Changed: " + extra);
+//                Log.i(TAG, "Rotation Changed: " + extra);
                 plVideoTextureView.setDisplayOrientation(360 - extra);
                 break;
             default:
@@ -273,12 +310,12 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      */
     @Override
     public void onVideoSizeChanged(int width, int height) {
-        Log.i(TAG, "onVideoSizeChanged: width = " + width + ", height = " + height);
+//        Log.i(TAG, "onVideoSizeChanged: width = " + width + ", height = " + height);
     }
 
     @Override
     public void onVideoFrameAvailable(byte[] data, int size, int width, int height, int format, long ts) {
-        Log.i(TAG, "onVideoFrameAvailable: " + size + ", " + width + " x " + height + ", " + format + ", " + ts);
+//        Log.i(TAG, "onVideoFrameAvailable: " + size + ", " + width + " x " + height + ", " + format + ", " + ts);
     }
 
 }

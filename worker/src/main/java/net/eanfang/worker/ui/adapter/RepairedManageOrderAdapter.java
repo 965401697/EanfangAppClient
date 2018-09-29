@@ -43,7 +43,6 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
     @Override
     protected void convert(BaseViewHolder helper, RepairOrderEntity item) {
-        helper.setIsRecyclable(false);
         String str = "";
 
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {

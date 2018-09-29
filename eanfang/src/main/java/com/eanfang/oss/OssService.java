@@ -105,7 +105,6 @@ public class OssService {
      * 上传视频
      */
     public synchronized void putVideo(String objectKey, String urlPath) {
-        //图片压缩
         PutObjectRequest put = getPutObjectRequest(objectKey, urlPath);
         JSONObject resultJson = new JSONObject();
         //如果为空  则跳过

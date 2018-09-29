@@ -477,7 +477,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvMouthGrade.setText(v(() -> bean.getPublicPraise() + "分"));
         // 好评率
         tvGoodGrade.setText(v(() -> (SplitAndRound((Double) (bean.getGoodRate() * 0.01), 2) + "%")));
-        arcprogressview.setProgress(bean.getGoodRate() + 20);
+        arcprogressview.setProgress(bean.getGoodRate());
         // 资质  0否，1是
         if (v(() -> bean.getQualification()) != null && bean.getQualification() == 0) {
             tvWorkerQualification.setVisibility(View.GONE);
