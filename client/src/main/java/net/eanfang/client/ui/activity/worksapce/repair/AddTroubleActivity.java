@@ -23,6 +23,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeReceiver;
@@ -44,8 +45,11 @@ import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentAddActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +57,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * Created by MrHou
@@ -142,6 +148,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     @BindView(R.id.iv_input_voice)
     ImageView ivInputVoice;
 
+
     @BindView(R.id.ll_scan)
     LinearLayout ll_scan;
 
@@ -150,7 +157,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     // 拍摄视频
     @BindView(R.id.iv_takevideo)
     ImageView ivTakevideo;
-
+ 
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -168,6 +175,11 @@ public class AddTroubleActivity extends BaseClientActivity {
     // 扫码查看设备 报修
     private CustDeviceEntity mDeviceBean;
     private boolean isScanRepair = false;
+
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +241,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         // 拍摄视频
         ivTakevideo.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
-            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat().format("yyyy-MM-dd"));
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
         });
     }
@@ -267,6 +279,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         repairBugEntity.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
         repairBugEntity.setHeadDeviceFailureId(dataId);// 故障id
         repairBugEntity.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
+        repairBugEntity.setMp4_path(mUploadKey);
         String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
         repairBugEntity.setPictures(ursStr);
 
@@ -443,6 +456,17 @@ public class AddTroubleActivity extends BaseClientActivity {
                     }
 
                 }));
+    }
+
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            String image = takeVdideoMode.getMImagePath();
+            mUploadKey = takeVdideoMode.getMKey();
+            if (!StringUtils.isEmpty(image)) {
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+            }
+        }
     }
 
 }

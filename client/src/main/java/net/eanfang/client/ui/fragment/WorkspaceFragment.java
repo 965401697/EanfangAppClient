@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
@@ -183,7 +182,7 @@ public class WorkspaceFragment extends BaseFragment {
                         .putExtra("url", "https://news.eanfang.net/")
                         .putExtra("title", "行业知识")));
         //变更记录
-        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), TakeVideoActivity.class));
+        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //在线文档
         findViewById(R.id.tv_work_file).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
 

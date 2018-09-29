@@ -451,7 +451,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
      */
     @Override
     public void onRecordStarted() {
-        Log.i(TAG, "record start time: " + System.currentTimeMillis());
+//        Log.i(TAG, "record start time: " + System.currentTimeMillis());
     }
 
     /**
@@ -459,7 +459,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
      */
     @Override
     public void onSectionRecording(long sectionDurationMs, long videoDurationMs, int sectionCount) {
-        Log.d(TAG, "sectionDurationMs: " + sectionDurationMs + "; videoDurationMs: " + videoDurationMs + "; sectionCount: " + sectionCount);
+//        Log.d(TAG, "sectionDurationMs: " + sectionDurationMs + "; videoDurationMs: " + videoDurationMs + "; sectionCount: " + sectionCount);
         // 底部提示 录制百分之多少
         updateRecordingPercentageView(videoDurationMs);
     }
@@ -469,7 +469,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
      */
     @Override
     public void onRecordStopped() {
-        Log.i(TAG, "record stop time: " + System.currentTimeMillis());
+//        Log.i(TAG, "record stop time: " + System.currentTimeMillis());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -491,7 +491,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         if ((videoSectionDuration + incDuration / mRecordSpeed) >= recordSetting.getMaxRecordDuration()) {
             videoSectionDuration = recordSetting.getMaxRecordDuration();
         }
-        Log.d(TAG, "videoSectionDuration: " + videoSectionDuration + "; incDuration: " + incDuration);
+//        Log.d(TAG, "videoSectionDuration: " + videoSectionDuration + "; incDuration: " + incDuration);
         onSectionCountChanged(sectionCount, (long) videoSectionDuration);
     }
 
@@ -540,7 +540,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
      */
     @Override
     public void onSaveVideoSuccess(String filePath) {
-        Log.i(TAG, "concat sections success filePath: " + filePath);
+//        Log.i(TAG, "concat sections success filePath: " + filePath);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -601,7 +601,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
     @Override
     public void onManualFocusStart(boolean result) {
         if (result) {
-            Log.i(TAG, "manual focus begin success");
+//            Log.i(TAG, "manual focus begin success");
             FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFocusIndicator.getLayoutParams();
             lp.leftMargin = mFocusIndicatorX;
             lp.topMargin = mFocusIndicatorY;
@@ -609,7 +609,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
             mFocusIndicator.focus();
         } else {
             mFocusIndicator.focusCancel();
-            Log.i(TAG, "manual focus not supported");
+//            Log.i(TAG, "manual focus not supported");
         }
     }
 
@@ -619,7 +619,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
      */
     @Override
     public void onManualFocusStop(boolean result) {
-        Log.i(TAG, "manual focus end result: " + result);
+//        Log.i(TAG, "manual focus end result: " + result);
         if (result) {
             mFocusIndicator.focusSuccess();
         } else {
@@ -632,7 +632,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
      */
     @Override
     public void onManualFocusCancel() {
-        Log.i(TAG, "manual focus canceled");
+//        Log.i(TAG, "manual focus canceled");
         mFocusIndicator.focusCancel();
     }
 
