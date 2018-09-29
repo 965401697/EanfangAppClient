@@ -14,7 +14,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_128"
-        android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
         <RadioButton
@@ -31,6 +30,7 @@
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
             android:layout_gravity="center"
+            fresco:roundAsCircle="true"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/rb_checked"
             android:layout_marginLeft="@dimen/dimen_36"

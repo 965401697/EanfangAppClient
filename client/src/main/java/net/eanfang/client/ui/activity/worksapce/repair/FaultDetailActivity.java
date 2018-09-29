@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -94,7 +95,11 @@ public class FaultDetailActivity extends BaseActivity {
 
     private void initData() {
         //故障设备
-        tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(repairBugEntity.getBusinessThreeCode(), 3));
+        if (TextUtils.isEmpty(repairBugEntity.getBusinessThreeName())) {
+            tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(repairBugEntity.getBusinessThreeCode(), 3));
+        } else {
+            tvFaultDeviceName.setText("其他 - " + repairBugEntity.getBusinessThreeName());
+        }
         //设备编号
         tvDeviceNum.setText(repairBugEntity.getDeviceNo());
         //位置编号
@@ -102,7 +107,11 @@ public class FaultDetailActivity extends BaseActivity {
         //故障位置
         tvDeviceLocation.setText(repairBugEntity.getBugPosition());
         // 设备品牌
-        tvDeviceBrand.setText(Config.get().getModelNameByCode(repairBugEntity.getModelCode(), 2));
+        if (TextUtils.isEmpty(repairBugEntity.getModelName())) {
+            tvDeviceBrand.setText(Config.get().getModelNameByCode(repairBugEntity.getModelCode(), 2));
+        } else {
+            tvDeviceBrand.setText("其他 - " + repairBugEntity.getModelName());
+        }
         // 故障简述
         tvFaultSketch.setText(repairBugEntity.getSketch());
         // 故障描述
