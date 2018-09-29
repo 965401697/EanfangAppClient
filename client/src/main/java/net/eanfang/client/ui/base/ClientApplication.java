@@ -62,7 +62,7 @@ public class ClientApplication extends EanfangApplication {
      */
     public static void connect(String token, Activity activity) {
 
-
+        Log.e("zzw2", "connect = " + token);
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
             /**

@@ -157,7 +157,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     // 拍摄视频
     @BindView(R.id.iv_takevideo)
     ImageView ivTakevideo;
- 
+
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
