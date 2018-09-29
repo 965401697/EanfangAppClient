@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 
@@ -19,6 +21,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity implements View.OnClickListener {
 
@@ -165,4 +168,24 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
         return true;
     }
 
+    @OnClick(R.id.iv_project_voice)
+    public void onViewClicked() {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(DefendLogItemWriteAndDetailActivity.this, new RecognitionManager.onRecognitionListen() {
+                @Override
+                public void result(String msg) {
+                    evDefendDesc.setText(msg + "");
+                    //获取焦点
+                    evDefendDesc.requestFocus();
+                    //将光标定位到文字最后，以便修改
+                    evDefendDesc.setSelection(msg.length());
+                }
+
+                @Override
+                public void error(String errorMsg) {
+                    showToast(errorMsg);
+                }
+            });
+        });
+    }
 }

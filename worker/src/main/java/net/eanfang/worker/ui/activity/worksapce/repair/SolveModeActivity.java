@@ -96,7 +96,7 @@ public class SolveModeActivity extends BaseActivity {
         EanfangHttp.post(RepairApi.POST_FLOW_SCREENING)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(SolveModeActivity.this, true, JSONObject.class, (bean) -> {
-                    showToast("预约成功");
+                    showToast("电话解决成功");
                     setResult(RESULT_OK);
                     finishSelf();
                 }));

@@ -139,8 +139,8 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etDeviceLocationNum;
     @BindView(R.id.iv_input_voice)
     ImageView ivInputVoice;
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
+    @BindView(R.id.ll_scan)
+    LinearLayout ll_scan;
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -213,7 +213,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             });
         });
         // 扫一扫设备
-        ivRight.setOnClickListener((v) -> {
+        ll_scan.setOnClickListener((v) -> {
             startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
     }
@@ -221,7 +221,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     private void initView() {
         setTitle("新增故障");
         setLeftBack();
-        ivRight.setImageResource(R.mipmap.ic_main_top_qrcode);
+//        ivRight.setImageResource(R.mipmap.ic_main_top_qrcode);
         beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
         //个人客户 不显示设备库选择
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {

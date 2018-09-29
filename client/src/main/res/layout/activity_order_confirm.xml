@@ -296,9 +296,9 @@
 
             <View style="@style/style_common_line_gray" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_300"
                 android:background="@color/color_white">
 
                 <Button
@@ -306,11 +306,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/ic_repair_bottom_confim"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_centerHorizontal="true"
                     android:padding="10dp"
                     android:text="确定"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/textSize_13" />
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </LinearLayout>

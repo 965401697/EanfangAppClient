@@ -35,7 +35,7 @@
                     android:padding="15dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="351dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/text_repair_personalinfo"
@@ -44,10 +44,10 @@
 
                     <ImageView
                         android:id="@+id/iv_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_32"
+                        android:layout_height="@dimen/dimen_32"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/arrow_right" />
+                        android:src="@mipmap/arrow_black_right" />
 
                 </LinearLayout>
 
@@ -55,8 +55,8 @@
                     android:id="@+id/ll_user_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <View style="@style/style_common_line_gray" />
 
@@ -150,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -340,7 +340,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/dimen_10"
-                        android:drawableRight="@mipmap/ic_arrow_up"
+                        android:drawableRight="@mipmap/ic_worker_detail_area_down"
                         android:onClick="onArriveTimeOptionPicker"
                         android:padding="@dimen/dimen_30"
                         android:text=" "
@@ -423,22 +423,23 @@
                     android:id="@+id/rv_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:scrollbars="none" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_height="@dimen/dimen_300"
                 android:background="@color/color_white">
 
                 <TextView
                     android:id="@+id/tv_next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="@dimen/dimen_40"
                     android:background="@mipmap/ic_next_background"
                     android:gravity="center"
                     android:text="@string/text_next"
