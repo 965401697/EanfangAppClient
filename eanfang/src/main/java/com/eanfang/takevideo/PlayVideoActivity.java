@@ -67,6 +67,11 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      */
     private String uploadKey = "biz/repair/video/" + UuidUtil.getUUID();
 
+    /**
+     * 拍摄 还是 播放
+     */
+    private boolean isTake = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,11 +85,18 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
         setTitle("视频详情");
         setRightTitle("上传");
         mVideoPath = getIntent().getStringExtra("videoPath");
-        // 获取第一帧
-        if (!StringUtils.isEmpty(mVideoPath)) {
+        isTake = getIntent().getBooleanExtra("isTake", false);
+        // 录制视频
+        if (isTake) {
+            setRightVisible();
+            // 获取第一帧
+            if (!StringUtils.isEmpty(mVideoPath)) {
 //            PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND);
-            mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND), mThumbnailName);
+                mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND), mThumbnailName);
+            }
+        } else {
+            setRightGone();
         }
 
         plVideoTextureView.setLooping(true);
