@@ -22,13 +22,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="内容"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="内容"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_content_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_input_content"
@@ -41,44 +58,37 @@
                     android:textColor="@color/black" />
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="同事协同"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_input_jion"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/bg_ll_selctor"
-                    android:gravity="left"
-                    android:hint="请输入协同人员"
-                    android:textColor="@color/black" />
-            </LinearLayout>
+                    android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="遗留问题"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="遗留问题"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_question_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_input_legacy"
@@ -97,13 +107,30 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="未完成原因"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="未完成原因"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_reason_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_input_reason"
@@ -122,13 +149,30 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="处理"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="处理"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_handle_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_input_handle"
@@ -141,12 +185,68 @@
                     android:textColor="@color/black" />
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_92"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dimen_39"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="同事协同"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_add_team"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_39"
+                        android:background="@drawable/bg_client_camera_text_back_pressed"
+                        android:paddingBottom="@dimen/dimen_6"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingRight="@dimen/dimen_15"
+                        android:paddingTop="@dimen/dimen_6"
+                        android:text="添加成员"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_12" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/background" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_team"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" />
+
+
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <TextView

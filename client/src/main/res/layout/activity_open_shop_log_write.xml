@@ -131,11 +131,11 @@
 
 
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
                 <View
@@ -170,12 +170,13 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
+
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
 
@@ -231,12 +232,13 @@
                         android:textSize="@dimen/textSize_13" />
                     android:gravity="left"
 
+
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
                 <View
@@ -271,12 +273,13 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
+
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
 
@@ -330,14 +333,14 @@
                         android:text="  "
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
-                    android:gravity="left"
+
 
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
                 <View
@@ -372,12 +375,13 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
+
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
 
@@ -434,12 +438,13 @@
                         android:textSize="@dimen/textSize_13" />
                     android:gravity="left"
 
+
                     <ImageView
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
-                        android:src="@mipmap/arrow_right" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
                 <View
@@ -535,7 +540,7 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发送给谁"
-                        android:textColor="@color/color_client_neworder"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/textSize_15" />
 
                     <TextView
@@ -588,7 +593,7 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发到群聊"
-                        android:textColor="@color/color_client_neworder"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/textSize_15" />
 
                     <TextView

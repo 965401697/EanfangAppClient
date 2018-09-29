@@ -15,7 +15,9 @@ import com.eanfang.model.WorkTransferDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -378,5 +380,37 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         }
 
+    }
+
+    @OnClick({R.id.iv_desc_voice, R.id.iv_remark_voice})
+    public void onViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_desc_voice:
+                inputVoice(etInputDescribe);
+                break;
+            case R.id.iv_remark_voice:
+                inputVoice(etInputNote);
+                break;
+        }
+    }
+
+    private void inputVoice(EditText editText) {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(WorkTransferCreateDetailActivity.this, new RecognitionManager.onRecognitionListen() {
+                @Override
+                public void result(String msg) {
+                    editText.setText(msg + "");
+                    //获取焦点
+                    editText.requestFocus();
+                    //将光标定位到文字最后，以便修改
+                    editText.setSelection(msg.length());
+                }
+
+                @Override
+                public void error(String errorMsg) {
+                    showToast(errorMsg);
+                }
+            });
+        });
     }
 }

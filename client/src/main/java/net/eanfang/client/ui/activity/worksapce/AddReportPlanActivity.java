@@ -2,30 +2,46 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.activity.SelectOAPresonActivity;
+import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.ToastUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -43,18 +59,23 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
     EditText etInputJion;
     @BindView(R.id.et_input_legacy)
     EditText etInputLegacy;
-    @BindView(R.id.et_input_reason)
-    EditText etInputReason;
+    //    @BindView(R.id.et_input_reason)
+//    EditText etInputReason;
     @BindView(R.id.tv_depend_person)
     TextView tvDependPerson;
     @BindView(R.id.ll_depend_person)
     LinearLayout llDependPerson;
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
-
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
 
     private WorkAddReportBean.WorkReportDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
+
+    private MaintenanceTeamAdapter teamAdapter;
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +96,20 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
             @Override
             public void onClick(View v) {
                 submit();
+            }
+        });
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvTeam.setLayoutManager(manager);
+
+        teamAdapter = new MaintenanceTeamAdapter();
+        teamAdapter.bindToRecyclerView(rvTeam);
+        teamAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                teamAdapter.remove(position);
             }
         });
     }
@@ -107,13 +142,23 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
         }
         bean.setField3(leave);
 
-        //未完成原因
-        String reason = etInputReason.getText().toString().trim();
-        if (TextUtils.isEmpty(reason)) {
-            showToast("请填写协同人员");
+        if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
+            ToastUtil.get().showToast(this, "请填加协同人员");
             return;
         }
-        bean.setField4(reason);
+
+        StringBuffer stringBuffer = new StringBuffer();
+
+        for (int j = 0; j < teamAdapter.getData().size(); j++) {
+            TemplateBean.Preson preson = teamAdapter.getData().get(j);
+            if (j == teamAdapter.getData().size() - 1) {
+                stringBuffer.append(preson.getName() + "(" + preson.getMobile() + ")");
+            } else {
+                stringBuffer.append(preson.getName() + "(" + preson.getMobile() + "),");
+            }
+        }
+
+        bean.setField4(stringBuffer.toString());
 
         //处理
         String handle = tvDependPerson.getText().toString().trim();
@@ -167,5 +212,62 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
             default:
                 break;
         }
+    }
+
+    private void inputVoice(EditText editText) {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(AddReportPlanActivity.this, new RecognitionManager.onRecognitionListen() {
+                @Override
+                public void result(String msg) {
+                    editText.setText(msg + "");
+                    //获取焦点
+                    editText.requestFocus();
+                    //将光标定位到文字最后，以便修改
+                    editText.setSelection(msg.length());
+                }
+
+                @Override
+                public void error(String errorMsg) {
+                    showToast(errorMsg);
+                }
+            });
+        });
+    }
+
+    @OnClick({R.id.iv_content_voice, R.id.iv_target_voice, R.id.iv_standard_voice, R.id.tv_add_team})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_content_voice:
+                inputVoice(etInputContent);
+                break;
+            case R.id.iv_target_voice:
+                inputVoice(etInputJion);
+                break;
+            case R.id.iv_standard_voice:
+                inputVoice(etInputLegacy);
+                break;
+            case R.id.tv_add_team:
+                startActivity(new Intent(AddReportPlanActivity.this, SelectOAPresonActivity.class));
+                break;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(List<TemplateBean.Preson> presonList) {
+
+        if (presonList.size() > 0) {
+
+
+            Set hashSet = new HashSet();
+            hashSet.addAll(teamAdapter.getData());
+            hashSet.addAll(presonList);
+
+            if (newPresonList.size() > 0) {
+                newPresonList.clear();
+            }
+            newPresonList.addAll(hashSet);
+            teamAdapter.setNewData(newPresonList);
+        }
+
     }
 }

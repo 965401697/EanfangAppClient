@@ -2,27 +2,44 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.activity.SelectOAPresonActivity;
+import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
+import com.eanfang.util.ToastUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -36,15 +53,20 @@ import butterknife.ButterKnife;
 public class AddReportFindActivity extends BaseWorkerActivity {
     @BindView(R.id.et_input_content)
     EditText etInputContent;
-    @BindView(R.id.et_input_jion)
-    EditText etInputJion;
+    //    @BindView(R.id.et_input_jion)
+//    EditText etInputJion;
     @BindView(R.id.et_input_handle)
     EditText etInputHandle;
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
 
     private WorkAddReportBean.WorkReportDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
+
+    private MaintenanceTeamAdapter teamAdapter;
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +79,25 @@ public class AddReportFindActivity extends BaseWorkerActivity {
     private void initView() {
         setLeftBack();
         setTitle("发现问题");
-        setRightTitle("完成");
+        setRightTitle("提交");
         bean = new WorkAddReportBean.WorkReportDetailsBean();
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
 
+
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        rvTeam.setLayoutManager(manager);
+
+        teamAdapter = new MaintenanceTeamAdapter();
+        teamAdapter.bindToRecyclerView(rvTeam);
+        teamAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                teamAdapter.remove(position);
+            }
+        });
     }
 
     private boolean checkInfo() {
@@ -70,8 +106,8 @@ public class AddReportFindActivity extends BaseWorkerActivity {
             showToast("请填写工作内容");
             return false;
         }
-        if (TextUtils.isEmpty(etInputJion.getText().toString().trim())) {
-            showToast("请填写协同人员");
+        if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
+            ToastUtil.get().showToast(this, "请添加责任人");
             return false;
         }
         if (TextUtils.isEmpty(etInputHandle.getText().toString().trim())) {
@@ -82,11 +118,23 @@ public class AddReportFindActivity extends BaseWorkerActivity {
     }
 
     private void submit() {
+
+        StringBuffer stringBuffer = new StringBuffer();
+
+        for (int j = 0; j < teamAdapter.getData().size(); j++) {
+            TemplateBean.Preson preson = teamAdapter.getData().get(j);
+            if (j == teamAdapter.getData().size() - 1) {
+                stringBuffer.append(preson.getName() + "(" + preson.getMobile() + ")");
+            } else {
+                stringBuffer.append(preson.getName() + "(" + preson.getMobile() + "),");
+            }
+        }
+
         bean.setType(1);
         //工作内容
         bean.setField1(etInputContent.getText().toString().trim());
         //同事协同
-        bean.setField2(etInputJion.getText().toString().trim());
+        bean.setField2(stringBuffer.toString());
         //处理
         bean.setField3(etInputHandle.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl("oa/findquestion/", snplMomentAddPhotos, uploadMap, true);
@@ -123,5 +171,59 @@ public class AddReportFindActivity extends BaseWorkerActivity {
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
             snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
         }
+    }
+
+    private void inputVoice(EditText editText) {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(AddReportFindActivity.this, new RecognitionManager.onRecognitionListen() {
+                @Override
+                public void result(String msg) {
+                    editText.setText(msg + "");
+                    //获取焦点
+                    editText.requestFocus();
+                    //将光标定位到文字最后，以便修改
+                    editText.setSelection(msg.length());
+                }
+
+                @Override
+                public void error(String errorMsg) {
+                    showToast(errorMsg);
+                }
+            });
+        });
+    }
+
+    @OnClick({R.id.iv_content_voice, R.id.iv_handle_voice, R.id.tv_add_team})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_content_voice:
+                inputVoice(etInputContent);
+                break;
+            case R.id.iv_handle_voice:
+                inputVoice(etInputHandle);
+                break;
+            case R.id.tv_add_team:
+                startActivity(new Intent(AddReportFindActivity.this, SelectOAPresonActivity.class));
+                break;
+        }
+    }
+
+    @Subscribe
+    public void onEvent(List<TemplateBean.Preson> presonList) {
+
+        if (presonList.size() > 0) {
+
+
+            Set hashSet = new HashSet();
+            hashSet.addAll(teamAdapter.getData());
+            hashSet.addAll(presonList);
+
+            if (newPresonList.size() > 0) {
+                newPresonList.clear();
+            }
+            newPresonList.addAll(hashSet);
+            teamAdapter.setNewData(newPresonList);
+        }
+
     }
 }

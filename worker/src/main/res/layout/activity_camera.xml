@@ -62,19 +62,24 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="用户/项目名称"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="用户/项目名称(*)"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/textSize_15" />
 
-                    <TextView
+                    <ImageView
+                        android:id="@+id/iv_project_voice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="(*)"
-                        android:textColor="@color/colorPrimary" />
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/ic_worker_voice_input" />
+
                 </LinearLayout>
 
 
@@ -109,19 +114,23 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="工程部位/区域"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="工程部位/区域(*)"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/textSize_15" />
 
-                    <TextView
+                    <ImageView
+                        android:id="@+id/iv_area_voice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="(*)"
-                        android:textColor="@color/colorPrimary" />
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/ic_worker_voice_input" />
                 </LinearLayout>
+
 
                 <EditText
                     android:id="@+id/et_region_name"
@@ -135,6 +144,121 @@
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
             </LinearLayout>
+
+
+            <TextView
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_30" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:background="@drawable/bg_ll_selctor"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="工程内容(*)"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
+
+                <ImageView
+                    android:id="@+id/iv_content_voice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_worker_voice_input" />
+
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_project_conment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:layout_weight="1"
+                android:background="@drawable/bg_camera_input_back"
+                android:hint="请输入项目内容(30字以内)"
+                android:maxLength="30"
+                android:padding="@dimen/dimen_15"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:background="@drawable/bg_ll_selctor"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="施工地址"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(*)"
+                    android:textColor="@color/colorPrimary" />
+
+                <TextView
+                    android:id="@+id/tv_select_other_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/dimen_14"
+                    android:drawableRight="@mipmap/ic_camera_select_otheraddress"
+                    android:gravity="right|center_vertical"
+                    android:onClick="selectOtherAddress"
+                    android:text="选择其他地址"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_location_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:background="@drawable/bg_camera_input_back"
+                android:drawableLeft="@mipmap/ic_camera_location"
+                android:drawablePadding="@dimen/dimen_20"
+                android:padding="@dimen/dimen_15"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_32"
+                android:background="@drawable/bg_camera_input_back"
+                android:hint="请手动输入地址"
+                android:maxLength="30"
+                android:padding="@dimen/dimen_15"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
 
 
             <TextView
@@ -315,116 +439,6 @@
                 </com.eanfang.witget.CustomRadioGroup>
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:layout_marginTop="@dimen/dimen_32"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="施工地址"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="(*)"
-                    android:textColor="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/tv_select_other_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_14"
-                    android:drawableRight="@mipmap/ic_camera_select_otheraddress"
-                    android:gravity="right|center_vertical"
-                    android:onClick="selectOtherAddress"
-                    android:text="选择其他地址"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_12" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/tv_location_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:layout_marginTop="@dimen/dimen_32"
-                android:background="@drawable/bg_camera_input_back"
-                android:drawableLeft="@mipmap/ic_camera_location"
-                android:drawablePadding="@dimen/dimen_20"
-                android:padding="@dimen/dimen_15"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_13" />
-
-            <EditText
-                android:id="@+id/et_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:layout_marginTop="@dimen/dimen_32"
-                android:background="@drawable/bg_camera_input_back"
-                android:hint="请手动输入地址"
-                android:maxLength="30"
-                android:padding="@dimen/dimen_15"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-
-            <TextView
-                style="@style/style_common_line_gray"
-                android:layout_marginTop="@dimen/dimen_30" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:layout_marginTop="@dimen/dimen_32"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="工程内容"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="(*)"
-                    android:textColor="@color/colorPrimary" />
-
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/et_project_conment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:layout_marginTop="@dimen/dimen_32"
-                android:layout_weight="1"
-                android:background="@drawable/bg_camera_input_back"
-                android:hint="请输入项目内容(30字以内)"
-                android:maxLength="30"
-                android:padding="@dimen/dimen_15"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
 
             <ImageView
                 android:id="@+id/start_take_photo"

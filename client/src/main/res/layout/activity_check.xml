@@ -146,11 +146,11 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/ic_worker_detail_area_down" />
             </LinearLayout>
 
 
@@ -294,8 +294,8 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发送给谁"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="@dimen/textSize_16" />
 
                     <TextView
                         android:id="@+id/tv_send"
@@ -347,8 +347,8 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发到群聊"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="@dimen/textSize_16" />
 
                     <TextView
                         android:id="@+id/tv_send_group"
@@ -394,6 +394,7 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:background="@drawable/bg_ll_btn"
+        android:textColor="@color/white"
         android:text="提交" />
 
 
