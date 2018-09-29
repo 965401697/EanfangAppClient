@@ -152,13 +152,8 @@ public class AddTroubleActivity extends BaseClientActivity {
     @BindView(R.id.iv_right)
     ImageView ivRight;
     // 拍摄视频
-    @BindView(R.id.tv_addViedeo)
-    TextView tvAddViedeo;
-    @BindView(R.id.iv_thumbnail)
-    ImageView ivThumbnail;
-    @BindView(R.id.rl_thumbnail)
-    RelativeLayout rlThumbnail;
-
+    @BindView(R.id.iv_takevideo)
+    ImageView ivTakevideo;
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -240,7 +235,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
         // 拍摄视频
-        tvAddViedeo.setOnClickListener((v) -> {
+        ivTakevideo.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
@@ -462,11 +457,10 @@ public class AddTroubleActivity extends BaseClientActivity {
     @Subscribe()//MAIN代表主线程
     public void receivePath(TakeVdideoMode takeVdideoMode) {
         if (takeVdideoMode != null) {
-            rlThumbnail.setVisibility(View.VISIBLE);
             String image = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
             if (!StringUtils.isEmpty(image)) {
-                ivThumbnail.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
             }
         }
     }

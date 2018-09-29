@@ -158,7 +158,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
             mLatlng = latLng;
             locationUtil.setMarket(latLng);
             // 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
-            RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latLng.latitude, latLng.longitude), 200, AMAP);
+            RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(latLng.latitude, latLng.longitude), 2000, AMAP);
             locationUtil.geocoderSearch.getFromLocationAsyn(query);
             doSearchQuery("", latLng);
         };
@@ -274,7 +274,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
         poiSearch.setOnPoiSearchListener(this);
 
         if (latLng != null) {
-            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude, latLng.longitude), 200, true));
+            poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latLng.latitude, latLng.longitude), 2000, true));
         }
         // 设置搜索区域为以lp点为圆心，其周围5000米范围
         // 异步搜索
