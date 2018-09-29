@@ -547,6 +547,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
                 mProcessingDialog.dismiss();
                 Bundle bundle = new Bundle();
                 bundle.putString("videoPath", filePath);
+                bundle.putBoolean("isTake", true);
                 JumpItent.jump(TakeVideoActivity.this, PlayVideoActivity.class, bundle);
             }
         });
