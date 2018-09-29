@@ -141,16 +141,16 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etDeviceLocationNum;
     @BindView(R.id.iv_input_voice)
     ImageView ivInputVoice;
-<<<<<<< HEAD
+
     @BindView(R.id.ll_scan)
     LinearLayout ll_scan;
-=======
+
     @BindView(R.id.iv_right)
     ImageView ivRight;
     // 拍摄视频
     @BindView(R.id.iv_takevideo)
     ImageView ivTakevideo;
->>>>>>> d1c6d54da001067b86a2f399315aca98cf8cf5b7
+
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
