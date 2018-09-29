@@ -64,7 +64,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
             String path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                String inageKey = UuidUtil.getUUID() + ".png";
+                String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
                 OSSUtils.initOSS(SelectedFriendsActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SelectedFriendsActivity.this, false) {
 
                     @Override

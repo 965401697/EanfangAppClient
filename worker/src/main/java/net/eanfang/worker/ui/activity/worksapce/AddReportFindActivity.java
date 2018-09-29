@@ -137,7 +137,7 @@ public class AddReportFindActivity extends BaseWorkerActivity {
         bean.setField2(stringBuffer.toString());
         //处理
         bean.setField3(etInputHandle.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/findquestion/", snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {

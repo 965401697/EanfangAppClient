@@ -43,6 +43,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
     @Override
     protected void convert(BaseViewHolder helper, RepairOrderEntity item) {
+        helper.setIsRecyclable(false);
         String str = "";
 
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
@@ -98,14 +99,17 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         if (item.getStatus() == 2) {
             helper.setText(R.id.tv_do_first, "改约");
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 3) {
             helper.setText(R.id.tv_do_first, "联系客户");
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 4) {
             helper.setText(R.id.tv_do_first, "联系客户");
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "查看故障处理");
-            helper.setVisible(R.id.tv_state, false);
             helper.setVisible(R.id.iv_finish, true);
+            helper.setVisible(R.id.tv_state, false);
             if (item.getClientEvaluateId() == null || item.getClientEvaluateId().longValue() <= 0) {
                 helper.setVisible(R.id.tv_do_second, true);
             } else {

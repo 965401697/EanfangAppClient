@@ -162,7 +162,7 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
 
         //处理
         bean.setField5(etInputHandle.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/report/", snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

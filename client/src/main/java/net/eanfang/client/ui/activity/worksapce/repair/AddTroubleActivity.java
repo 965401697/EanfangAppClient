@@ -23,6 +23,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.JumpItent;
@@ -43,6 +44,7 @@ import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentAddActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -139,8 +141,16 @@ public class AddTroubleActivity extends BaseClientActivity {
     EditText etDeviceLocationNum;
     @BindView(R.id.iv_input_voice)
     ImageView ivInputVoice;
+<<<<<<< HEAD
     @BindView(R.id.ll_scan)
     LinearLayout ll_scan;
+=======
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    // 拍摄视频
+    @BindView(R.id.iv_takevideo)
+    ImageView ivTakevideo;
+>>>>>>> d1c6d54da001067b86a2f399315aca98cf8cf5b7
     private Map<String, String> uploadMap = new HashMap<>();
 
     // 设备code 设备id
@@ -216,6 +226,12 @@ public class AddTroubleActivity extends BaseClientActivity {
         ll_scan.setOnClickListener((v) -> {
             startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
         });
+        // 拍摄视频
+        ivTakevideo.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat().format("yyyy-MM-dd"));
+            JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
+        });
     }
 
     private void initView() {
@@ -251,7 +267,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         repairBugEntity.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
         repairBugEntity.setHeadDeviceFailureId(dataId);// 故障id
         repairBugEntity.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
         repairBugEntity.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

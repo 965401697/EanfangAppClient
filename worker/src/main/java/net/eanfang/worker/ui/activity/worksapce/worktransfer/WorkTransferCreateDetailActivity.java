@@ -182,7 +182,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             return;
         }
         // 添加照片
-        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String presentationPic = PhotoUtils.getPhotoUrl("oa/transfer/",snplMomentAddPhotos, uploadMap, true);
         if ("ADD_HAND".equals(mSwitch)) {
             changeGoodDetail.setPicture(presentationPic);
             //备注

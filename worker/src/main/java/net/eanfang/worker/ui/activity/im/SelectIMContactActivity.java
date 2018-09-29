@@ -83,7 +83,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             } else {
                 path = (String) message;
                 if (!TextUtils.isEmpty(path)) {
-                    imgKey = UuidUtil.getUUID() + ".png";
+                    imgKey = "im/select/" + UuidUtil.getUUID() + ".png";
                     creatGroup();
                 }
             }
@@ -110,7 +110,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             //创建群组
             setRightTitle("创建");
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
-        }  else if (mFlag == 2) {//创建是分享
+        } else if (mFlag == 2) {//创建是分享
             setRightTitle("确定");
         } else {
             setRightTitle("发送");

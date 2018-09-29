@@ -56,7 +56,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
             String path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                String inageKey = UuidUtil.getUUID() + ".png";
+                String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
                 OSSUtils.initOSS(SubtractFriendsActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SubtractFriendsActivity.this, false) {
 
                     @Override

@@ -390,7 +390,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             return;
         }
         TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
+        String imgKey = "org/" + UuidUtil.getUUID() + ".png";
 
         if (resultCode == LICENSE_CALLBACK_CODE) {
             infoBean.setLicensePic(imgKey);

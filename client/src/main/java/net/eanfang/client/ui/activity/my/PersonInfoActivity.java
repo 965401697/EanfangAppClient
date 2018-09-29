@@ -207,7 +207,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
         OSSCallBack callback = null;
-        String imgKey = UuidUtil.getUUID() + ".png";
+        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEAD_PHOTO:
                 ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());

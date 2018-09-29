@@ -167,7 +167,7 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
             return;
         }
         bean.setField5(handle);
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/report/",snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {

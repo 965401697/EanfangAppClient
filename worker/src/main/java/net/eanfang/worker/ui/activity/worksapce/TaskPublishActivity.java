@@ -199,7 +199,7 @@ public class TaskPublishActivity extends BaseActivity {
         bean.setBudget(GetConstDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
         bean.setToDoorTime(tvLoginTime.getText().toString().trim());
         bean.setDescription(etDesc.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/",mPhotosSnpl, uploadMap, true);
         bean.setPictures(ursStr);
         String json = JSONObject.toJSONString(bean);
         if (uploadMap.size() != 0) {

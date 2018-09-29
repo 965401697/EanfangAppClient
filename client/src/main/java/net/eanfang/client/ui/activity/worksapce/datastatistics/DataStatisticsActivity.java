@@ -225,7 +225,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
 
     /**
      * 获取公司
-     * */
+     */
     private void doGetComapnyData(String orgId) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("topCompanyId", orgId + "");
@@ -572,6 +572,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
          * */
         pieChart.setDrawEntryLabels(true);
         pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setNoDataText("暂无数据");
     }
 
 }

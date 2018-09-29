@@ -554,7 +554,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         }
         TImage image = result.getImage();
 
-        headPortrait = UuidUtil.getUUID() + ".png";
+        headPortrait = "im/group/" + UuidUtil.getUUID() + ".png";
 
         groupHeader.setImageURI("file://" + image.getOriginalPath());
 

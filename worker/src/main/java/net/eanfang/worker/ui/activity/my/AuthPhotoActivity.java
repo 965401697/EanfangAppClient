@@ -174,14 +174,14 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             showToast("请添加身份证反面照");
             return;
         }
-        String accidentPic = PhotoUtils.getPhotoUrl(snplMomentAccident, uploadMap, false);
+        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
 //        if (StringUtils.isEmpty(accidentPic)) {
 //            showToast("请添加保险照");
 //            return;
 //        }
         workerInfoBean.setAccidentPics(accidentPic);
 
-        String crimePic = PhotoUtils.getPhotoUrl(snplMomentCrim, uploadMap, false);
+        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentCrim, uploadMap, false);
 //        if (StringUtils.isEmpty(crimePic)) {
 //            showToast("请添加犯罪照");
 //            return;

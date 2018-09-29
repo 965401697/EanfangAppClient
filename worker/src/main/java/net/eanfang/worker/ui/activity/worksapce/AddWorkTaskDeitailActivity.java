@@ -251,7 +251,7 @@ public class AddWorkTaskDeitailActivity extends BaseWorkerActivity implements Vi
         bean.setCriterion(standard);
         bean.setJoinPerson(stringBuffer.toString());
 
-        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/task/", mPhotosSnpl, uploadMap, true);
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {

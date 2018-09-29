@@ -4,13 +4,17 @@
 
 package com.eanfang.util;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static com.eanfang.config.Config.VIDEO_STORAGE_DIR;
 
 /**
  * @author hou
@@ -304,5 +308,42 @@ public class FileUtils {
         }
         return path_dir;
     }
+
+    /**
+     * Bitmap保存成File
+     *
+     * @param bitmap input bitmap
+     * @param name   output file's name
+     * @return String output file's path
+     */
+
+    public static String bitmapToFile(Bitmap bitmap, String name) {
+
+        File f = new File(VIDEO_STORAGE_DIR + name + ".jpg");
+
+        if (f.exists()) f.delete();
+
+        FileOutputStream fOut = null;
+
+        try {
+
+            fOut = new FileOutputStream(f);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+
+            fOut.flush();
+
+            fOut.close();
+
+        } catch (IOException e) {
+
+            return null;
+
+        }
+
+        return f.getAbsolutePath();
+
+    }
+
 
 }

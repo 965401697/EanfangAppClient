@@ -132,7 +132,7 @@ public class AddGroupActivity extends BaseClientActivity {
     private void join() {
         //把生成的图片 传到服务器 更新本地群组头像
         if (!TextUtils.isEmpty(mPath)) {
-            String inageKey = UuidUtil.getUUID() + ".png";
+            String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
             OSSUtils.initOSS(AddGroupActivity.this).asyncPutImage(inageKey, mPath, new OSSCallBack(AddGroupActivity.this, false) {
 
                 @Override
