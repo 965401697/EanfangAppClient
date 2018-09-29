@@ -140,6 +140,12 @@ public class BughandleConfirmEntity implements Serializable {
     //当前维修确认单 确认时间
     //@TableField(value = "confirm_time")
     private Date confirmTime;
+    //电视墙/操作台正面全貌 视频地址
+    private String front_mp4_path;
+    //电视墙/操作台背面全貌 视频地址
+    private String reverse_side_mp4_path;
+    //电视墙/操作台背面全貌 视频地址
+    private String equipment_cabinet_mp4_path;
 
     /**
      * 获取：主键

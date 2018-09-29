@@ -558,6 +558,12 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         bughandleConfirmEntity.setSignOutCode(mAddressCode);
         bughandleConfirmEntity.setSignOutLongitude(mSignOutLongitude + "");
         bughandleConfirmEntity.setSignOutLatitude(mSignOutLatitude + "");
+        //电视机正面照 短视频
+        bughandleConfirmEntity.setFront_mp4_path(mUploadKey_moment);
+        //电视机背面照 短视频
+        bughandleConfirmEntity.setReverse_side_mp4_path(mUploadKey_monitor);
+        // 机柜 短视频
+        bughandleConfirmEntity.setEquipment_cabinet_mp4_path(mUploadKey_package);
 
 
         //添加合作成员

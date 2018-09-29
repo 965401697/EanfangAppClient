@@ -487,7 +487,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_tools_package_add_photos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -514,7 +514,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_tools_package"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"
