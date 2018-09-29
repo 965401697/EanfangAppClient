@@ -3,7 +3,6 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -73,7 +72,7 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void setListener() {
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode());
+            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(),  EanfangApplication.get().getUser().getAccount().getQrCode());
             personalQRCodeDialog.show();
         });
     }

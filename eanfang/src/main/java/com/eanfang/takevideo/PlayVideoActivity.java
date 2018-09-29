@@ -72,6 +72,11 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
      */
     private boolean isTake = false;
 
+    /**
+     * 技师端一个页面，多处拍摄视频 进行区分
+     */
+    private String mWorkType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +91,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
         setRightTitle("上传");
         mVideoPath = getIntent().getStringExtra("videoPath");
         isTake = getIntent().getBooleanExtra("isTake", false);
+        mWorkType = getIntent().getStringExtra("worker_add");
         // 录制视频
         if (isTake) {
             setRightVisible();
@@ -153,6 +159,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
                     runOnUiThread(() -> {
                         takeVdideoMode.setMImagePath(mVideoPath);
                         takeVdideoMode.setMKey(uploadKey);
+                        takeVdideoMode.setMType(mWorkType);
                         EventBus.getDefault().post(takeVdideoMode);
                         finishSelf();
                     });

@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -13,6 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -24,12 +26,14 @@ import net.eanfang.client.ui.adapter.LookMaterialAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * @date on 2018/5/23  18:23
- * @author Guanluocang
- * @decision 电话未解决 照片墙
- */import butterknife.BindView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+
+/**
+ * @author Guanluocang
+ * @date on 2018/5/23  18:23
+ * @decision 电话未解决 照片墙
+ */
 
 public class TroubleDetailLookPhotoActivity extends BaseActivity {
 
@@ -51,31 +55,55 @@ public class TroubleDetailLookPhotoActivity extends BaseActivity {
      */
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snpl_moment_add_photos;
+    @BindView(R.id.iv_thumbnail_moment)
+    SimpleDraweeView ivThumbnailMoment;
+    @BindView(R.id.rl_thumbnail_moment)
+    RelativeLayout rlThumbnailMoment;
     /**
      * 工具及蓝布 （3张）
      */
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snpl_monitor_add_photos;
+    @BindView(R.id.iv_thumbnail_monitor)
+    SimpleDraweeView ivThumbnailMonitor;
+    @BindView(R.id.rl_thumbnail_monitor)
+    RelativeLayout rlThumbnailMonitor;
     /**
      * 故障点照片 （3张）
      */
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snpl_tools_package_add_photos;
+    @BindView(R.id.iv_thumbnail_tools_package)
+    SimpleDraweeView ivThumbnailToolsPackage;
+    @BindView(R.id.rl_thumbnail_tools_package)
+    RelativeLayout rlThumbnailToolsPackage;
     /**
      * 处理后现场 （3张）
      */
     @BindView(R.id.snpl_after_processing_locale)
     BGASortableNinePhotoLayout snpl_after_processing_locale;
+    @BindView(R.id.iv_thumbnail_after)
+    SimpleDraweeView ivThumbnailAfter;
+    @BindView(R.id.rl_thumbnail_after)
+    RelativeLayout rlThumbnailAfter;
     /**
      * 设备回装 （3张）
      */
     @BindView(R.id.snpl_machine_fit_back)
     BGASortableNinePhotoLayout snpl_machine_fit_back;
+    @BindView(R.id.iv_thumbnail_machine)
+    SimpleDraweeView ivThumbnailMachine;
+    @BindView(R.id.rl_thumbnail_machine)
+    RelativeLayout rlThumbnailMachine;
     /**
      * 故障恢复后表象 （3张）
      */
     @BindView(R.id.snpl_failure_recover_phenomena)
     BGASortableNinePhotoLayout snpl_failure_recover_phenomena;
+    @BindView(R.id.iv_thumbnail_failure)
+    SimpleDraweeView ivThumbnailFailure;
+    @BindView(R.id.rl_thumbnail_failure)
+    RelativeLayout rlThumbnailFailure;
 
     /**
      * 维修结果

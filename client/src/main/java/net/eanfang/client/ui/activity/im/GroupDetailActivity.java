@@ -319,7 +319,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 break;
             case R.id.ll_group_qr:
 
-                PersonalQRCodeDialog personalQRCodeDialog = new PersonalQRCodeDialog(this, "qr/" + qrCode);
+                PersonalQRCodeDialog personalQRCodeDialog = new PersonalQRCodeDialog(this, qrCode);
                 personalQRCodeDialog.show();
 
                 break;

@@ -139,6 +139,11 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
     // 拍摄后的命名
     private String mVideoPahth = "";
 
+    /**
+     * 技师端一个页面，多处拍摄视频 进行区分
+     */
+    private String mWorkType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +162,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         mShortVideoRecorder.setFocusListener(this);
 
         mVideoPahth = getIntent().getStringExtra("videoPath");
+        mWorkType = getIntent().getStringExtra("worker_add");
         if (StringUtils.isEmpty(mVideoPahth)) {
             showToast("视频拍摄路径为空");
             finishSelf();
@@ -547,6 +553,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
                 mProcessingDialog.dismiss();
                 Bundle bundle = new Bundle();
                 bundle.putString("videoPath", filePath);
+                bundle.putString("worker_add", mWorkType);
                 bundle.putBoolean("isTake", true);
                 JumpItent.jump(TakeVideoActivity.this, PlayVideoActivity.class, bundle);
             }

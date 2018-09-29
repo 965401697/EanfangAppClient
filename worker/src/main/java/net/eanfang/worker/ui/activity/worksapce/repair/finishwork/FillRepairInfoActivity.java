@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -31,11 +32,14 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.TakeVdideoMode;
+import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
@@ -58,6 +62,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,6 +71,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * Created by MrHou
@@ -104,16 +111,47 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
      */
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
+    @BindView(R.id.tv_addvideo_moment)
+    TextView tvAddvideoMoment;
+    @BindView(R.id.iv_thumbnail_moment)
+    ImageView ivThumbnailMoment;
+    @BindView(R.id.rl_thumbnail_moment)
+    RelativeLayout rlThumbnailMoment;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_moment = "";
+
     /**
      * 电视墙/操作台背面全照(3张)
      */
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snplMonitorAddPhotos;
+    @BindView(R.id.tv_addvideo_monitor)
+    TextView tvAddvideoMonitor;
+    @BindView(R.id.iv_thumbnail_monitor)
+    ImageView ivThumbnailMonitor;
+    @BindView(R.id.rl_thumbnail_monitor)
+    RelativeLayout rlThumbnailMonitor;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_monitor = "";
     /**
      * 机柜正面/背面 (3张)
      */
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
+    @BindView(R.id.tv_addvideo_package)
+    TextView tvAddvideoPackage;
+    @BindView(R.id.iv_thumbnail_tools_package)
+    ImageView ivThumbnailToolsPackage;
+    @BindView(R.id.rl_thumbnail_tools_package)
+    RelativeLayout rlThumbnailToolsPackage;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_package = "";
     /**
      * 单据照片 (3张)
      */
@@ -364,6 +402,34 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             }
         });
 
+        /**
+         *电视机墙正面照 拍摄视频
+         * */
+        tvAddvideoMoment.setOnClickListener((v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "moment");
+            JumpItent.jump(FillRepairInfoActivity.this, TakeVideoActivity.class, bundle);
+        }));
+        /**
+         *电视机墙背面照 拍摄视频
+         * */
+        tvAddvideoMonitor.setOnClickListener((v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "monitor");
+            JumpItent.jump(FillRepairInfoActivity.this, TakeVideoActivity.class, bundle);
+        }));
+        /**
+         *机柜照 拍摄视频
+         * */
+        tvAddvideoPackage.setOnClickListener((v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "package");
+            JumpItent.jump(FillRepairInfoActivity.this, TakeVideoActivity.class, bundle);
+        }));
+
     }
 
 
@@ -470,19 +536,19 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 //        bughandleConfirmEntity.setTeamWorker(etTeamWorker.getText().toString().trim());
 //        uploadMap.clear();
         //电视墙/操作台正面全貌 （3张）
-        String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMomentAddPhotos, uploadMap, true);
+        String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplMomentAddPhotos, uploadMap, true);
         bughandleConfirmEntity.setFrontPictures(presentationPic);
 
         //电视墙/操作台背面面全貌 （3张）
-        String toolPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMonitorAddPhotos, uploadMap, false);
+        String toolPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplMonitorAddPhotos, uploadMap, false);
         bughandleConfirmEntity.setReverseSidePictures(toolPic);
 
         //机柜正面/背面 （3张）
-        String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplToolsPackageAddPhotos, uploadMap, false);
+        String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplToolsPackageAddPhotos, uploadMap, false);
         bughandleConfirmEntity.setEquipmentCabinetPictures(pointPic);
 
         //单据照片 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplFormPhotos, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplFormPhotos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
         // 签退时间
@@ -660,6 +726,27 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             }
         }
         repairTeamWorkerAdapter.notifyDataSetChanged();
+    }
+
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            String image = takeVdideoMode.getMImagePath();
+            if (takeVdideoMode.getMType().equals("moment")) {// 电视正面照
+                rlThumbnailMoment.setVisibility(View.VISIBLE);
+                mUploadKey_moment = takeVdideoMode.getMKey();
+                ivThumbnailMoment.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+            } else if (takeVdideoMode.getMType().equals("monitor")) {
+                rlThumbnailMonitor.setVisibility(View.VISIBLE);
+                mUploadKey_monitor = takeVdideoMode.getMKey();
+                ivThumbnailMonitor.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+            } else if (takeVdideoMode.getMType().equals("package")) {
+                rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
+                mUploadKey_package = takeVdideoMode.getMKey();
+                ivThumbnailToolsPackage.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+            }
+
+        }
     }
 }
 

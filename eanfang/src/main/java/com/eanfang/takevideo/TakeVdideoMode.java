@@ -14,4 +14,5 @@ import lombok.Setter;
 public class TakeVdideoMode implements Serializable {
     private String mImagePath;
     private String mKey;
+    private String mType;// 技师端一个页面多处上传视频 进行区分
 }
