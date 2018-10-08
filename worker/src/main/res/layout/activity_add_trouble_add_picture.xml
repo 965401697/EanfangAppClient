@@ -101,7 +101,6 @@
                         android:id="@+id/rl_thumbnail_moment"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
                         android:visibility="gone">
 
 
@@ -202,7 +201,6 @@
                         android:id="@+id/rl_thumbnail_tools_package"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
                         android:visibility="gone">
 
 
@@ -302,7 +300,6 @@
                         android:id="@+id/rl_thumbnail_failure"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
                         android:visibility="gone">
 
 
@@ -392,7 +389,6 @@
                         android:id="@+id/rl_thumbnail_monitor"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
                         android:visibility="gone">
 
 
@@ -480,7 +476,6 @@
                         android:id="@+id/rl_thumbnail_after"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
                         android:visibility="gone">
 
 
@@ -567,7 +562,6 @@
                         android:id="@+id/rl_thumbnail_machine"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
                         android:visibility="gone">
 
 
