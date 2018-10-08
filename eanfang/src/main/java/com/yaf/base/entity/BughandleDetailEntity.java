@@ -83,6 +83,19 @@ public class BughandleDetailEntity implements Serializable {
     private String toolPictures;
     //使用建议
     private String useAdvice;
+    //故障点  视频地址
+    private String point_mp4_path;
+    // 故障恢复后表象   视频地址
+    private String restore_mp4_path;
+    // 处理后现场照片  视频地址
+    private String after_handle_mp4_path;
+    //设备回装   视频地址
+    private String device_return_install_mp4_path;
+    //  故障表象  视频地址
+    private String presentation_mp4_path;
+    //工具及蓝布  视频地址
+    private String tool_mp4_path;
+
     /**
      * 当前故障处理明细对应的 真实故障
      */

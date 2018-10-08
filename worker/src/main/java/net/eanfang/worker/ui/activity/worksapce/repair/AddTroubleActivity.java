@@ -22,6 +22,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.util.JumpItent;
@@ -107,8 +108,13 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     @BindView(R.id.rl_confirmDevice)
     RelativeLayout rlConfirmDevice;
     // 拍摄视频
+    @BindView(R.id.tv_addViedeo)
+    TextView tvAddViedeo;
     @BindView(R.id.iv_takevideo)
     ImageView ivTakevideo;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
+
     private Map<String, String> uploadMap = new HashMap<>();
     private Long orderId;
 
@@ -120,9 +126,13 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     private long clientCompanyUid;
 
     /**
-     * 视频上传路径
+     * 视频上传key
      */
     private String mUploadKey = "";
+    /**
+     * 视频路径
+     */
+    private String mVieoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,10 +162,15 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     private void setListener() {
         rlConfirmDevice.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::checkInfo, this::onSubmitWorker));
         // 拍摄视频
-        ivTakevideo.setOnClickListener((v) -> {
+        tvAddViedeo.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
+        });
+        ivTakevideo.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", mVieoPath);
+            JumpItent.jump(AddTroubleActivity.this, PlayVideoActivity.class, bundle);
         });
     }
 
@@ -320,11 +335,13 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     @Subscribe()//MAIN代表主线程
     public void receivePath(TakeVdideoMode takeVdideoMode) {
         if (takeVdideoMode != null) {
-            String image = takeVdideoMode.getMImagePath();
+            rlThumbnail.setVisibility(View.VISIBLE);
+            mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(image)) {
-                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+            if (!StringUtils.isEmpty(mVieoPath)) {
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
             }
+            tvAddViedeo.setText("重新拍摄");
         }
     }
 }

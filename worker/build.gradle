@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18091401
-        versionName "2.3.21"
+        versionCode 18093001
+        versionName "2.3.23"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -65,8 +65,12 @@ android {
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+
+            // 上线url
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
         }
         //  测试
         staging {

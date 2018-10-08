@@ -1,8 +1,11 @@
 package net.eanfang.worker.ui.activity.worksapce.repair;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -10,8 +13,11 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.RepairBugEntity;
 
@@ -60,6 +66,11 @@ public class FaultDetailActivity extends BaseActivity {
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.tv_faultDescripte)
     TextView tvFaultDescripte;
+    // 短视频
+    @BindView(R.id.iv_thumbnail)
+    SimpleDraweeView ivThumbnail;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
 
     private ArrayList<String> picList1 = new ArrayList<>();
     private RepairBugEntity repairBugEntity;
@@ -103,6 +114,20 @@ public class FaultDetailActivity extends BaseActivity {
         tvFaultSketch.setText(repairBugEntity.getSketch());
         // 故障描述
         tvFaultDescripte.setText(repairBugEntity.getBugDescription());
+
+
+        if (!StringUtils.isEmpty(repairBugEntity.getMp4_path())) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            ivThumbnail.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".jpg"));
+        } else {
+            rlThumbnail.setVisibility(View.GONE);
+        }
+
+        ivThumbnail.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".mp4");
+            JumpItent.jump(FaultDetailActivity.this, PlayVideoActivity.class, bundle);
+        });
     }
 
     private void initNinePhoto() {

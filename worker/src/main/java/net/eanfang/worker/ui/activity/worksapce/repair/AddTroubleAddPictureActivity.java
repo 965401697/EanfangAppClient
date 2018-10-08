@@ -1,14 +1,22 @@
 package net.eanfang.worker.ui.activity.worksapce.repair;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.TakeVdideoMode;
+import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -19,12 +27,17 @@ import com.yaf.base.entity.BughandleDetailEntity;
 import net.eanfang.worker.R;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * @author Guanluocang
@@ -51,26 +64,76 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
      */
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
+    @BindView(R.id.tv_addVideo_moment)
+    TextView tvAddVideoMoment;
+    @BindView(R.id.iv_thumbnail_moment)
+    ImageView ivThumbnailMoment;
+    @BindView(R.id.rl_thumbnail_moment)
+    RelativeLayout rlThumbnailMoment;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_moment = "";
     /**
      * 工具及蓝布 （3张）
      */
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snplMonitorAddPhotos;
+    @BindView(R.id.tv_addVideo_monitor)
+    TextView tvAddVideoMonitor;
+    @BindView(R.id.iv_thumbnail_monitor)
+    ImageView ivThumbnailMonitor;
+    @BindView(R.id.rl_thumbnail_monitor)
+    RelativeLayout rlThumbnailMonitor;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_monitor = "";
     /**
      * 故障点照片 （3张）
      */
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
+    @BindView(R.id.tv_addVideo_tools_package)
+    TextView tvAddVideoToolsPackage;
+    @BindView(R.id.iv_thumbnail_tools_package)
+    ImageView ivThumbnailToolsPackage;
+    @BindView(R.id.rl_thumbnail_tools_package)
+    RelativeLayout rlThumbnailToolsPackage;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_tools_package = "";
     /**
      * 处理后现场 （3张）
      */
     @BindView(R.id.snpl_after_processing_locale)
     BGASortableNinePhotoLayout snplAfterProcessingLocale;
+    @BindView(R.id.tv_addViedo_after)
+    TextView tvAddViedoAfter;
+    @BindView(R.id.iv_thumbnail_after)
+    ImageView ivThumbnailAfter;
+    @BindView(R.id.rl_thumbnail_after)
+    RelativeLayout rlThumbnailAfter;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_after = "";
     /**
      * 设备回装 （3张）
      */
     @BindView(R.id.snpl_machine_fit_back)
     BGASortableNinePhotoLayout snplMachineFitBack;
+    @BindView(R.id.tv_addVideo_machine)
+    TextView tvAddVideoMachine;
+    @BindView(R.id.iv_thumbnail_machine)
+    ImageView ivThumbnailMachine;
+    @BindView(R.id.rl_thumbnail_machine)
+    RelativeLayout rlThumbnailMachine;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_machine = "";
     /**
      * 故障恢复后表象 （3张）
      */
@@ -78,6 +141,17 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
     BGASortableNinePhotoLayout snplFailureRecoverPhenomena;
     @BindView(R.id.btn_add_pic)
     Button btnAddPic;
+    @BindView(R.id.tv_addVideo_failure)
+    TextView tvAddVideoFailure;
+    @BindView(R.id.iv_thumbnail_failure)
+    ImageView ivThumbnailFailure;
+    @BindView(R.id.rl_thumbnail_failure)
+    RelativeLayout rlThumbnailFailure;
+    /**
+     * 视频上传路径
+     */
+    private String mUploadKey_failure = "";
+
 
     private BughandleDetailEntity detailEntity;
     /**
@@ -131,6 +205,8 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         //是否加载记录
         if (isLoad) {
             detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+            //回显视频
+            doShowVideo(detailEntity);
         } else {
             if (uploadMap.size() > 0) {
                 detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
@@ -140,6 +216,11 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         }
         initImgUrlList();
         initNinePhoto();
+    }
+
+    //回显视频
+    private void doShowVideo(BughandleDetailEntity detailEntity) {
+        //故障表象
     }
 
 
@@ -155,41 +236,87 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         btnAddPic.setOnClickListener((v) -> {
             doSubmitData();
         });
+        //故障表象
+        tvAddVideoMoment.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "moment_addpicture");
+            JumpItent.jump(AddTroubleAddPictureActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //故障点照片
+        tvAddVideoToolsPackage.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "toolspackage");
+            JumpItent.jump(AddTroubleAddPictureActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //恢复后表象
+        tvAddVideoFailure.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "failure");
+            JumpItent.jump(AddTroubleAddPictureActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //工具及蓝布
+        tvAddVideoMonitor.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "monitor_addpicture");
+            JumpItent.jump(AddTroubleAddPictureActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //处理后现场
+        tvAddViedoAfter.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "after");
+            JumpItent.jump(AddTroubleAddPictureActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //设备回装
+        tvAddVideoMachine.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            bundle.putString("worker_add", "machine");
+            JumpItent.jump(AddTroubleAddPictureActivity.this, TakeVideoActivity.class, bundle);
+        });
     }
 
     private void doSubmitData() {
         //故障表象 （3张）
-        String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMomentAddPhotos, uploadMap, false);
+        String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplMomentAddPhotos, uploadMap, false);
         if (StringUtils.isEmpty(presentationPic)) {
             showToast("请选择故障表象照片");
             return;
         }
         detailEntity.setPresentationPictures(presentationPic);
+        detailEntity.setPresentation_mp4_path(mUploadKey_moment);
         //故障点照片 （3张）
-        String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplToolsPackageAddPhotos, uploadMap, false);
+        String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplToolsPackageAddPhotos, uploadMap, false);
         if (StringUtils.isEmpty(pointPic)) {
             showToast("请选择故障点照片");
             return;
         }
         detailEntity.setPointPictures(pointPic);
+        detailEntity.setPoint_mp4_path(mUploadKey_tools_package);
         //恢复后表象 （3张）
-        String restorePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplFailureRecoverPhenomena, uploadMap, false);
+        String restorePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplFailureRecoverPhenomena, uploadMap, false);
         if (StringUtils.isEmpty(restorePic)) {
             showToast("请选择恢复后表象照片");
             return;
         }
         detailEntity.setRestorePictures(restorePic);
+        detailEntity.setRestore_mp4_path(mUploadKey_failure);
         //工具及蓝布 （3张）
-        String toolPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMonitorAddPhotos, uploadMap, false);
+        String toolPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplMonitorAddPhotos, uploadMap, false);
         detailEntity.setToolPictures(toolPic);
-
+        detailEntity.setTool_mp4_path(mUploadKey_monitor);
         //处理后现场 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplAfterProcessingLocale, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplAfterProcessingLocale, uploadMap, false);
         detailEntity.setAfterHandlePictures(afterHandlePic);
+        detailEntity.setAfter_handle_mp4_path(mUploadKey_after);
         //设备回装 （3张）
-        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/",snplMachineFitBack, uploadMap, false);
+        String deviceReturnInstallPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplMachineFitBack, uploadMap, false);
         detailEntity.setDeviceReturnInstallPictures(deviceReturnInstallPic);
-
+        detailEntity.setDevice_return_install_mp4_path(mUploadKey_machine);
         /**
          * 提交照片
          * */
@@ -357,5 +484,38 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
 
     }
 
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            String image = takeVdideoMode.getMImagePath();
+            Bitmap mBitMap = PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND);
+            if (takeVdideoMode.getMType().equals("moment_addpicture")) {// //故障表象
+                rlThumbnailMoment.setVisibility(View.VISIBLE);
+                mUploadKey_moment = takeVdideoMode.getMKey();
+                ivThumbnailMoment.setImageBitmap(mBitMap);
+            } else if (takeVdideoMode.getMType().equals("toolspackage")) {// 故障点照片
+                rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
+                mUploadKey_tools_package = takeVdideoMode.getMKey();
+                ivThumbnailToolsPackage.setImageBitmap(mBitMap);
+            } else if (takeVdideoMode.getMType().equals("failure")) {//恢复后表象
+                rlThumbnailFailure.setVisibility(View.VISIBLE);
+                mUploadKey_failure = takeVdideoMode.getMKey();
+                ivThumbnailFailure.setImageBitmap(mBitMap);
+            } else if (takeVdideoMode.getMType().equals("monitor_addpicture")) {  //工具及蓝布
+                rlThumbnailMonitor.setVisibility(View.VISIBLE);
+                mUploadKey_monitor = takeVdideoMode.getMKey();
+                ivThumbnailMonitor.setImageBitmap(mBitMap);
+            } else if (takeVdideoMode.getMType().equals("after")) {     //处理后现场
+                rlThumbnailAfter.setVisibility(View.VISIBLE);
+                mUploadKey_after = takeVdideoMode.getMKey();
+                ivThumbnailAfter.setImageBitmap(mBitMap);
+            } else if (takeVdideoMode.getMType().equals("machine")) { //设备回装
+                rlThumbnailMachine.setVisibility(View.VISIBLE);
+                mUploadKey_machine = takeVdideoMode.getMKey();
+                ivThumbnailMachine.setImageBitmap(mBitMap);
+            }
+
+        }
+    }
 
 }

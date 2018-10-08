@@ -137,9 +137,8 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
             OSSUtils.initOSS(PlayVideoActivity.this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, new OSSCallBack(PlayVideoActivity.this, false) {
                 @Override
                 public void onOssSuccess() {
-                    showToast("上传缩略图成功");
+//                    showToast("上传缩略图成功");
                     doCommitVideo();
-                    super.onOssSuccess();
                 }
             });
         }
@@ -153,7 +152,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
             OSSUtils.initOSS(PlayVideoActivity.this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, new OSSCallBack(PlayVideoActivity.this, true) {
                 @Override
                 public void onOssSuccess() {
-                    showToast("上传视频成功");
+//                    showToast("上传视频成功");
                     CustomeApplication.get().closeActivity(TakeVideoActivity.class.getName());
                     TakeVdideoMode takeVdideoMode = new TakeVdideoMode();
                     runOnUiThread(() -> {
@@ -163,7 +162,6 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
                         EventBus.getDefault().post(takeVdideoMode);
                         finishSelf();
                     });
-                    super.onOssSuccess();
                 }
             });
         }
@@ -287,7 +285,7 @@ public class PlayVideoActivity extends BaseActivity implements PLOnInfoListener,
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ToastUtils.s(PlayVideoActivity.this, "first video render time: " + extra + "ms");
+//                        ToastUtils.s(PlayVideoActivity.this, "first video render time: " + extra + "ms");
                     }
                 });
                 break;

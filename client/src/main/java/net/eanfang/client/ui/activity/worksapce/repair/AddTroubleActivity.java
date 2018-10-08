@@ -23,6 +23,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
@@ -187,9 +188,13 @@ public class AddTroubleActivity extends BaseClientActivity {
     private boolean isScanRepair = false;
 
     /**
-     * 视频上传路径
+     * 视频上传key
      */
     private String mUploadKey = "";
+    /**
+     * 视频路径
+     */
+    private String mVieoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,6 +258,12 @@ public class AddTroubleActivity extends BaseClientActivity {
             Bundle bundle = new Bundle();
             bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //视频展示
+        ivThumbnail.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", mVieoPath);
+            JumpItent.jump(AddTroubleActivity.this, PlayVideoActivity.class, bundle);
         });
     }
 
@@ -510,11 +521,12 @@ public class AddTroubleActivity extends BaseClientActivity {
     public void receivePath(TakeVdideoMode takeVdideoMode) {
         if (takeVdideoMode != null) {
             rlThumbnail.setVisibility(View.VISIBLE);
-            String image = takeVdideoMode.getMImagePath();
+            mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(image)) {
-                ivThumbnail.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+            if (!StringUtils.isEmpty(mVieoPath)) {
+                ivThumbnail.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
             }
+            tvAddViedeo.setText("重新拍摄");
         }
     }
 
