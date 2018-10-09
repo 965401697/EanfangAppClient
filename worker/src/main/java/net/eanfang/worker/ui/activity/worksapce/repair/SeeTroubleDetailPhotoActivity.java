@@ -9,7 +9,9 @@ import android.widget.RelativeLayout;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -150,7 +152,9 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
         doDate();
         initImgUrlList();
         initNinePhoto();
+        initListener();
     }
+
 
     private void doDate() {
         /**
@@ -197,35 +201,95 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
         }
     }
 
+    private void initListener() {
+        /**
+         * 故障表象 （3张）
+         */
+        rlThumbnailMoment.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleDetailEntity.getPresentation_mp4_path() + ".mp4");
+            JumpItent.jump(SeeTroubleDetailPhotoActivity.this, PlayVideoActivity.class, bundle);
+        });
+        /**
+         * 工具及蓝布 （3张）
+         */
+        ivThumbnailMonitor.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleDetailEntity.getTool_mp4_path() + ".mp4");
+            JumpItent.jump(SeeTroubleDetailPhotoActivity.this, PlayVideoActivity.class, bundle);
+        });
+        /**
+         * 故障点照片 （3张）
+         */
+        ivThumbnailToolsPackage.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleDetailEntity.getPoint_mp4_path() + ".mp4");
+            JumpItent.jump(SeeTroubleDetailPhotoActivity.this, PlayVideoActivity.class, bundle);
+        });
+        /**
+         * 处理后现场 （3张）
+         */
+        ivThumbnailAfter.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleDetailEntity.getAfter_handle_mp4_path() + ".mp4");
+            JumpItent.jump(SeeTroubleDetailPhotoActivity.this, PlayVideoActivity.class, bundle);
+        });
+        /**
+         * 设备回装 （3张）
+         */
+        ivThumbnailMachine.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleDetailEntity.getDevice_return_install_mp4_path() + ".mp4");
+            JumpItent.jump(SeeTroubleDetailPhotoActivity.this, PlayVideoActivity.class, bundle);
+        });
+        /**
+         * 故障恢复后表象 （3张）
+         */
+        ivThumbnailFailure.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleDetailEntity.getRestore_mp4_path() + ".mp4");
+            JumpItent.jump(SeeTroubleDetailPhotoActivity.this, PlayVideoActivity.class, bundle);
+        });
+    }
 
     /**
      * 初始化存储图片用的List集合
      */
     private void initImgUrlList() {
 
-        //修改小bug 图片读取问题
+        //故障表象照片
         if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
+            snplMomentAddPhotos.setVisibility(View.VISIBLE);
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(",");
             picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-
         }
+        //工具及蓝布照片
         if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
+            snplMonitorAddPhotos.setVisibility(View.VISIBLE);
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(",");
             picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
+        //故障点照片
         if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
+            snplToolsPackageAddPhotos.setVisibility(View.VISIBLE);
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(",");
             picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
+        //处理后现场照片
         if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
+            snplAfterProcessingLocale.setVisibility(View.VISIBLE);
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(",");
             picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
+        //设备回装照片
         if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
+            snplMachineFitBack.setVisibility(View.VISIBLE);
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(",");
             picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
+        //故障恢复后表象照片
         if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
+            snplFailureRecoverPhenomena.setVisibility(View.VISIBLE);
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(",");
             picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
@@ -243,7 +307,6 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
         snplMomentAddPhotos.setData(picList1);
         snplMonitorAddPhotos.setData(picList2);
         snplToolsPackageAddPhotos.setData(picList3);
-        //2017年7月21日
         snplAfterProcessingLocale.setData(picList4);
         snplMachineFitBack.setData(picList5);
         snplFailureRecoverPhenomena.setData(picList6);
@@ -251,7 +314,6 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
         snplMomentAddPhotos.setEditable(false);
         snplMonitorAddPhotos.setEditable(false);
         snplToolsPackageAddPhotos.setEditable(false);
-        //2017年7月21日
         snplAfterProcessingLocale.setEditable(false);
         snplMachineFitBack.setEditable(false);
         snplFailureRecoverPhenomena.setEditable(false);

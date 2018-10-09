@@ -71,7 +71,7 @@ public class CompanyManagerActivity extends BaseActivity {
                     bundle_prefect.putLong("orgid", mOrgId);
                     bundle_prefect.putString("orgName", mOrgName);
                     bundle_prefect.putString("assign", "prefect");
-                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_prefect);
                 }
                 break;
 //            case R.id.rl_auth:
@@ -79,7 +79,7 @@ public class CompanyManagerActivity extends BaseActivity {
 //                bundle_auth.putLong("orgid", mOrgId);
 //                bundle_auth.putString("orgName", mOrgName);
 //                bundle_auth.putString("assign", "auth");
-//                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_auth);
+//                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_auth);
 //
 //                break;
             case R.id.rl_admin_set:

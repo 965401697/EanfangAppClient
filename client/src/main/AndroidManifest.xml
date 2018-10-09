@@ -231,7 +231,7 @@
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ConstansActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyDataActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity" />
         <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
         <activity android:name=".ui.activity.worksapce.SignListActivity" />
@@ -603,7 +603,8 @@
         <!-- 统计数据设计 -->
         <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
         <activity android:name=".ui.activity.worksapce.takevideo.TakeVideoActivity" />
-        <activity android:name=".ui.activity.worksapce.takevideo.PlayVideoActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.takevideo.PlayVideoActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyBasicActivity"></activity>
     </application>
 
 </manifest>

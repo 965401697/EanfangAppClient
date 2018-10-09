@@ -273,7 +273,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/dimen_200"
                             android:layout_marginLeft="@dimen/dimen_20"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
 
                             <com.facebook.drawee.view.SimpleDraweeView

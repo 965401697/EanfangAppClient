@@ -2,12 +2,14 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -19,7 +21,11 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.JumpItent;
+import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -71,19 +77,33 @@ public class TroubleDetailActivity extends BaseClientActivity {
     // 挂单记录
     @BindView(R.id.rv_hangList)
     RecyclerView rvHangList;
+
+
     private RecyclerView rv_trouble;
     /**
      * 电视墙/操作台正面全貌 (3张)
      */
     private BGASortableNinePhotoLayout snpl_moment_add_photos;
+    @BindView(R.id.iv_thumbnail_moment)
+    SimpleDraweeView ivThumbnailMoment;
+    @BindView(R.id.rl_thumbnail_moment)
+    RelativeLayout rlThumbnailMoment;
     /**
      * 电视墙/操作台背面全照(3张)
      */
     private BGASortableNinePhotoLayout snpl_monitor_add_photos;
+    @BindView(R.id.iv_thumbnail_monitor)
+    SimpleDraweeView ivThumbnailMonitor;
+    @BindView(R.id.rl_thumbnail_monitor)
+    RelativeLayout rlThumbnailMonitor;
     /**
      * 机柜正面/背面 (3张)
      */
     private BGASortableNinePhotoLayout snpl_tools_package_add_photos;
+    @BindView(R.id.iv_thumbnail_tools_package)
+    SimpleDraweeView ivThumbnailToolsPackage;
+    @BindView(R.id.rl_thumbnail_tools_package)
+    RelativeLayout rlThumbnailToolsPackage;
     /**
      * 单据照片 (3张)
      */
@@ -251,6 +271,62 @@ public class TroubleDetailActivity extends BaseClientActivity {
 //        if (bughandleConfirmEntity.getTeamWorker() != null) {
 //            tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
 //        }
+
+        /**
+         *电视机墙正面照 拍摄视频
+         * */
+        if (!StringUtils.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
+            rlThumbnailMoment.setVisibility(View.VISIBLE);
+            ivThumbnailMoment.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"));
+            if (!StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
+                snpl_moment_add_photos.setVisibility(View.GONE);
+            }
+        } else {
+            rlThumbnailMoment.setVisibility(View.GONE);
+        }
+        ivThumbnailMoment.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".mp4");
+            JumpItent.jump(TroubleDetailActivity.this, PlayVideoActivity.class, bundle);
+        });
+
+        /**
+         *电视机墙背面照 拍摄视频
+         * */
+        if (!StringUtils.isEmpty(bughandleConfirmEntity.getReverse_side_mp4_path())) {
+            rlThumbnailMonitor.setVisibility(View.VISIBLE);
+            if (!StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
+                snpl_monitor_add_photos.setVisibility(View.GONE);
+            }
+            ivThumbnailMonitor.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"));
+        } else {
+            rlThumbnailMonitor.setVisibility(View.GONE);
+        }
+        ivThumbnailMonitor.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".mp4");
+            JumpItent.jump(TroubleDetailActivity.this, PlayVideoActivity.class, bundle);
+        });
+
+        /**
+         *机柜照 拍摄视频
+         * */
+        if (!StringUtils.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
+            rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
+            ivThumbnailToolsPackage.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"));
+            if (!StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
+                snpl_tools_package_add_photos.setVisibility(View.GONE);
+            }
+        } else {
+            rlThumbnailToolsPackage.setVisibility(View.GONE);
+        }
+        ivThumbnailToolsPackage.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".mp4");
+            JumpItent.jump(TroubleDetailActivity.this, PlayVideoActivity.class, bundle);
+        });
+
+
         initAdapter();
 
         if (bughandleConfirmEntity.getFrontPictures() != null) {
