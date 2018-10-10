@@ -293,7 +293,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     ToastUtil.get().showToast(getActivity(), "待开通");
                     break;
                 case R.id.tv_auth_status:
-//                        startActivity(new Intent(getActivity(), AuthCompanyActivity.class)
+//                        startActivity(new Intent(getActivity(), AuthCompanyDataActivity.class)
 //                                .putExtra("orgid", mDatas.get(position).getOrgId())
 //                                .putExtra("orgName", mDatas.get(position).getOrgName())
 //                        );

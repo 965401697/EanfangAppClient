@@ -47,7 +47,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="text_repair_personalinfo">用户信息</string>
-    <string name="text_repair_contactslinfo">联系人信息</string>
+    <string name="text_repair_contactslinfo">现场联系人信息</string>
     <string name="text_repair_selectlocation">选择定位</string>
     <string name="text_repair_arrivetime">到达时限:</string>
     <string name="text_next">下一步</string>

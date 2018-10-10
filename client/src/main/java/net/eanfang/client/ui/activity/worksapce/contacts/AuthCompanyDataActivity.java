@@ -55,7 +55,7 @@ import butterknife.ButterKnife;
  * @desc 公司认证
  */
 
-public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
+public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.iv_upload)
     SimpleDraweeView ivUpload;
     @BindView(R.id.iv_upload2)
@@ -192,7 +192,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     }
 
     private void initView() {
-        setTitle("填写企业信息");
+        setTitle("完善信息");
         setLeftBack();
         setRightTitle("编辑");
         orgid = getIntent().getLongExtra("orgid", 0);
@@ -209,14 +209,14 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 
     private void initListener() {
         ivUpload.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyDataActivity.this, LICENSE_CALLBACK_CODE));
         });
         ivUpload2.setOnClickListener((v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, ADPIC_CALLBACK_CODE));
+            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyDataActivity.this, ADPIC_CALLBACK_CODE));
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {
-            Intent intent = new Intent(AuthCompanyActivity.this, SelectAddressActivity.class);
+            Intent intent = new Intent(AuthCompanyDataActivity.this, SelectAddressActivity.class);
             startActivityForResult(intent, ADDRESS_CALLBACK_CODE);
         });
         llType.setOnClickListener(v -> showTradType());

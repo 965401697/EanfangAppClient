@@ -43,7 +43,9 @@
                         android:id="@+id/snpl_moment_add_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:visibility="gone"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
@@ -62,7 +64,7 @@
                         android:id="@+id/rl_thumbnail_moment"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:visibility="gone">
 
 
@@ -112,7 +114,9 @@
                         android:id="@+id/snpl_monitor_add_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:visibility="gone"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
@@ -131,7 +135,7 @@
                         android:id="@+id/rl_thumbnail_monitor"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:visibility="gone">
 
 
@@ -181,7 +185,9 @@
                         android:id="@+id/snpl_tools_package_add_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:visibility="gone"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
@@ -200,7 +206,7 @@
                         android:id="@+id/rl_thumbnail_tools_package"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:visibility="gone">
 
 
@@ -250,7 +256,9 @@
                         android:id="@+id/snpl_after_processing_locale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:visibility="gone"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
@@ -269,7 +277,7 @@
                         android:id="@+id/rl_thumbnail_after"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:visibility="gone">
 
 
@@ -319,7 +327,9 @@
                         android:id="@+id/snpl_machine_fit_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:visibility="gone"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
@@ -338,7 +348,7 @@
                         android:id="@+id/rl_thumbnail_machine"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:visibility="gone">
 
 
@@ -388,7 +398,9 @@
                         android:id="@+id/snpl_failure_recover_phenomena"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:visibility="gone"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
@@ -407,7 +419,7 @@
                         android:id="@+id/rl_thumbnail_failure"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"
-                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginLeft="@dimen/dimen_10"
                         android:visibility="gone">
 
 
