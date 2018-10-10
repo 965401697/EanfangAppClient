@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,9 @@ import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,11 +70,17 @@ public class LookReportCompleteInfoView extends BaseDialog {
     }
 
     private void initView() {
+        ArrayList<String> picList = new ArrayList<String>();
+
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("完成工作");
 
         tvLookCompleteContent.setText(detailsBean.getField1());
-        tvLookCompletePerson.setText(detailsBean.getField2());
+        if (!TextUtils.isEmpty(detailsBean.getField2())) {
+            tvLookCompletePerson.setText(detailsBean.getField2());
+        } else {
+            tvLookCompletePerson.setText("无");
+        }
         tvLookCompleteLeave.setText(detailsBean.getField3());
         tvLookCompleteReason.setText(detailsBean.getField4());
         tvLookCompleteHandle.setText(detailsBean.getField5());
@@ -78,27 +88,53 @@ public class LookReportCompleteInfoView extends BaseDialog {
         if (!StringUtils.isEmpty(detailsBean.getPictures())) {
             String[] urls = detailsBean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
+
+
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
+
+                ivPic1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        picList.clear();
+                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                        ImagePerviewUtil.perviewImage(mContext, picList);
+                    }
+                });
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
+                ivPic2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        picList.clear();
+                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                        ImagePerviewUtil.perviewImage(mContext, picList);
+                    }
+                });
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
+                ivPic3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        picList.clear();
+                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                        ImagePerviewUtil.perviewImage(mContext, picList);
+                    }
+                });
             } else {
                 ivPic3.setVisibility(View.GONE);
             }
         }
-        ivPic3.setVisibility(View.GONE);
     }
 }
 

@@ -55,6 +55,7 @@ public class PermKit {
 
         if (!isPerm) {
             Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //如果是技师端  并且
             if (EanfangApplication.AppType.equals("worker") && EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
                 intent.putExtra("info", "请先进行技师认证。");
@@ -66,6 +67,17 @@ public class PermKit {
             EanfangApplication.getApplication().startActivity(intent);
         }
         return isPerm;
+    }
+
+    /**
+     * 判断是公司还是个人
+     */
+
+    public boolean getIsOwn() {
+        if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() <= 0) {
+            return true;//是个人
+        }
+        return false;//是公司
     }
 
     /**

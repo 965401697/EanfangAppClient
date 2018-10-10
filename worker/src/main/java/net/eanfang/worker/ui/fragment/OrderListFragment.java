@@ -132,7 +132,7 @@ public class OrderListFragment extends BaseFragment implements
                         bundle.putLong("orderId", item.getId());
                         JumpItent.jump(getActivity(), SolveModeActivity.class, bundle, ((RepairCtrlActivity) getActivity()).REFREST_ITEM);
                         //给客户联系人打电话
-                        CallUtils.call(getActivity(), V.v(() -> item.getOwnerUser().getAccountEntity().getMobile()));
+                        CallUtils.call(getActivity(), V.v(() -> item.getRepairContactPhone()));
                         break;
                     default:
                         break;

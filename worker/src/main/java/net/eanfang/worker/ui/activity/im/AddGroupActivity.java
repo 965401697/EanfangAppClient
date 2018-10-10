@@ -110,6 +110,12 @@ public class AddGroupActivity extends BaseWorkerActivity {
 
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
 
+                    if (bean.getGroup() == null) {
+                        ToastUtil.get().showToast(AddGroupActivity.this, "群二维码有误");
+                        finishSelf();
+                        return;
+                    }
+
                     for (GroupDetailBean.ListBean b : bean.getList()) {
                         mUserIconList.add(b.getAccountEntity().getAvatar());
                     }
