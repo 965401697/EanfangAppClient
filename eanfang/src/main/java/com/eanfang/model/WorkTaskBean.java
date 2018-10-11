@@ -96,6 +96,7 @@ public class WorkTaskBean implements Serializable {
         private String criterion;
         private String joinPerson;
         private String pictures;
+        private String mp4_path;
 
         public String getTitle() {
             return title == null ? "" : title;
@@ -183,6 +184,14 @@ public class WorkTaskBean implements Serializable {
 
         public void setPictures(String pictures) {
             this.pictures = pictures;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
         }
     }
 }

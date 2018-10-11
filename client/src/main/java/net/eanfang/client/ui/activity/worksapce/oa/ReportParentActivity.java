@@ -16,6 +16,12 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Guanluocang
+ * @date on 2018/10/210 15:49
+ * @decision 工作汇报
+ */
+
 public class ReportParentActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_left)

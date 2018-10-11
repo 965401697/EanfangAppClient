@@ -493,6 +493,7 @@ public class WorkTaskInfoBean implements Serializable {
         private int thenCallback;
         private String title;
         private String pictures;
+        private String mp4Path;
 
         public String getCriterion() {
             return criterion == null ? "" : criterion;
@@ -596,6 +597,14 @@ public class WorkTaskInfoBean implements Serializable {
 
         public void setPictures(String pictures) {
             this.pictures = pictures;
+        }
+
+        public String getMp4_path() {
+            return mp4Path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4Path = mp4_path;
         }
     }
 }

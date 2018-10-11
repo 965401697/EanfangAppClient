@@ -5,11 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.model.WorkReportInfoBean;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -19,11 +22,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by MrHou
+ * Created by guanluocang
+ * 2018年10月11日 11:07:14
  *
- * @on 2017/11/22  16:40
- * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 查看工作汇报 发现问题
  */
 
 public class LookReportFindInfoView extends BaseDialog {
@@ -45,11 +47,19 @@ public class LookReportFindInfoView extends BaseDialog {
     SimpleDraweeView ivPic3;
     private Activity mContext;
     private WorkReportInfoBean.WorkReportDetailsBean detailBean;
+    // 照片和短视频
+    @BindView(R.id.iv_takevideo)
+    SimpleDraweeView ivTakevideo;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
+
+    private Activity mActivity;
 
     public LookReportFindInfoView(Activity context, boolean isfull, WorkReportInfoBean.WorkReportDetailsBean detailBean) {
         super(context, isfull);
         this.mContext = context;
         this.detailBean = detailBean;
+        this.mActivity = context;
     }
 
     @Override
@@ -57,6 +67,7 @@ public class LookReportFindInfoView extends BaseDialog {
         setContentView(R.layout.view_work_report_find_info);
         ButterKnife.bind(this);
         initView();
+        initListener();
     }
 
     private void initView() {
@@ -70,27 +81,38 @@ public class LookReportFindInfoView extends BaseDialog {
         if (!StringUtils.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);
             }
         }
+        if (!StringUtils.isEmpty(detailBean.getMp4_path())) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".jpg"));
+        }
 
+    }
 
+    private void initListener() {
+        ivTakevideo.setOnClickListener((v) -> {
+            Bundle bundle_takevideo = new Bundle();
+            bundle_takevideo.putString("videoPath", BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".mp4");
+            JumpItent.jump(mActivity, PlayVideoActivity.class, bundle_takevideo);
+        });
     }
 }
