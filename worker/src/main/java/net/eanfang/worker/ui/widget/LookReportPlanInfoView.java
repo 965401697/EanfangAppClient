@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.widget;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -17,6 +18,9 @@ import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,34 +79,65 @@ public class LookReportPlanInfoView extends BaseDialog {
     }
 
     private void initView() {
+
+        ArrayList<String> picList = new ArrayList<String>();
+
         ivLeft.setOnClickListener(v -> dismiss());
         tvTitle.setText("工作计划");
 
         tvLookCompleteContent.setText(detailBean.getField1());
         tvLookCompleteGoal.setText(detailBean.getField2());
         tvLookCompletePur.setText(detailBean.getField3());
-        tvLookCompletePerson.setText(detailBean.getField4());
+        if (!TextUtils.isEmpty(detailBean.getField4())) {
+            tvLookCompletePerson.setText(detailBean.getField4());
+        } else {
+            tvLookCompletePerson.setText("无");
+        }
         tvLookCompleteEndtime.setText(detailBean.getField5());
 
         if (!StringUtils.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
+                ivPic1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        picList.clear();
+                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                        ImagePerviewUtil.perviewImage(mContext, picList);
+                    }
+                });
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
+                ivPic2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        picList.clear();
+                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                        ImagePerviewUtil.perviewImage(mContext, picList);
+                    }
+                });
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
+                ivPic3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        picList.clear();
+                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                        ImagePerviewUtil.perviewImage(mContext, picList);
+                    }
+                });
             } else {
                 ivPic3.setVisibility(View.GONE);
             }

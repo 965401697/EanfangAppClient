@@ -249,8 +249,17 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("title", title);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
                 } else if (position == temp.size() - 2 && isOwner || position == temp.size() - 1 && !isOwner) {
-                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
-                    intent.putExtra("flag", 2);
+//                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
+//                    intent.putExtra("flag", 2);
+//                    intent.putExtra("groupId", id);
+//                    intent.putExtra("title", title);
+//                    intent.putExtra("ryGroupId", groupId);
+//                    intent.putExtra("list", friendListBeanArrayList);
+//                    startActivityForResult(intent, UPDATA_GROUP_OWN);
+
+                    Intent intent = new Intent(new Intent(GroupDetailActivity.this, SelectIMContactActivity.class));
+//                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
+                    intent.putExtra("flag", 3);
                     intent.putExtra("groupId", id);
                     intent.putExtra("title", title);
                     intent.putExtra("ryGroupId", groupId);

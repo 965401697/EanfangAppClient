@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,6 +22,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
@@ -156,7 +158,13 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
 
     private void initView() {
         setTitle("新建汇报");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //是否要保存
+                giveUp();
+            }
+        });
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName() != null) {
             etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         } else {
@@ -309,6 +317,26 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             showToast("请选择类型");
             return;
         }
+
+        if (beanList.size() == 0) {
+            showToast("请填写完成工作的内容");
+            return;
+        }
+        if (planList.size() == 0) {
+            showToast("请填写后续计划的内容");
+            return;
+        }
+
+        if (beanList.size() < 3) {
+            showToast("完成工作的内容少于3条");
+            return;
+        }
+
+        if (planList.size() < 3) {
+            showToast("后续计划的内容少于3条");
+            return;
+        }
+
         bean.setType(GetConstDataUtils.getWorkReportTypeList().indexOf(task_title));
         if (newPresonList.size() == 0) {
             //工作协同默认值
@@ -510,5 +538,26 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             planAdapter.notifyDataSetChanged();
         }
     }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            giveUp();
+        }
+        return false;
+    }
+
+    /**
+     * 放弃新建汇报
+     */
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃工作汇报？", () -> {
+            finish();
+        }).showDialog();
+    }
+
 }
 

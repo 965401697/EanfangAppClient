@@ -69,8 +69,8 @@ public class CompleteWorkView extends BaseDialog {
         tvTitle.setText("完成工作");
 
         tvLookCompleteContent.setText(detailBean.getField1());
-        tvLookCompleteLeave.setText(detailBean.getField2());
-        tvLookCompletePerson.setText(detailBean.getField3());
+        tvLookCompleteLeave.setText(detailBean.getField3());
+        tvLookCompletePerson.setText(detailBean.getField2());
         tvLookCompleteReason.setText(detailBean.getField4());
         tvLookCompleteHandle.setText(detailBean.getField5());
 

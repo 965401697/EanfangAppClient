@@ -29,7 +29,7 @@ public class MyConversationClickListener implements RongIM.ConversationClickList
     @Override
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo user, String targetId) {
 
-        if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
+        if (conversationType.equals(Conversation.ConversationType.PRIVATE) || conversationType.equals(Conversation.ConversationType.GROUP)) {
             Intent intent = new Intent(context, IMPresonInfoActivity.class);
             intent.putExtra(EanfangConst.RONG_YUN_ID, user.getUserId());
             context.startActivity(intent);

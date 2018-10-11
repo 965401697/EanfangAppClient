@@ -46,6 +46,8 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
         if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
             String[] urls = item.getWorkReportDetail().getPictures().split(",");
             head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+        } else {
+            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER));//默认值
         }
 
     }

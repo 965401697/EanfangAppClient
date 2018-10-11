@@ -69,28 +69,28 @@ public class CompleteWorkView extends BaseDialog {
         tvTitle.setText("完成工作");
 
         tvLookCompleteContent.setText(detailBean.getField1());
-        tvLookCompleteLeave.setText(detailBean.getField2());
-        tvLookCompletePerson.setText(detailBean.getField3());
+        tvLookCompleteLeave.setText(detailBean.getField3());
+        tvLookCompletePerson.setText(detailBean.getField2());
         tvLookCompleteReason.setText(detailBean.getField4());
         tvLookCompleteHandle.setText(detailBean.getField5());
 
         if (!StringUtils.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
-            if (urls.length>=1) {
+            if (urls.length >= 1) {
                 ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
-            if (urls.length>=2) {
+            if (urls.length >= 2) {
                 ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
-            if (urls.length>=3) {
+            if (urls.length >= 3) {
                 ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
