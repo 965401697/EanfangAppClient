@@ -1,9 +1,13 @@
 package com.eanfang.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by jornl on 2017/9/7.
  */
-
+@Setter
+@Getter
 public class AddDesignOrderBean {
 
     /**
@@ -36,115 +40,4 @@ public class AddDesignOrderBean {
     private Long businessOneId;
     private Long zoneId;
 
-    public String getUserName() {
-        return userName == null ? "" : userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getZoneCode() {
-        return zoneCode == null ? "" : zoneCode;
-    }
-
-    public void setZoneCode(String zoneCode) {
-        this.zoneCode = zoneCode;
-    }
-
-    public String getDetailPlace() {
-        return detailPlace == null ? "" : detailPlace;
-    }
-
-    public void setDetailPlace(String detailPlace) {
-        this.detailPlace = detailPlace;
-    }
-
-    public String getLongitude() {
-        return longitude == null ? "" : longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude == null ? "" : latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getContactUser() {
-        return contactUser == null ? "" : contactUser;
-    }
-
-    public void setContactUser(String contactUser) {
-        this.contactUser = contactUser;
-    }
-
-    public String getContact_phone() {
-        return contact_phone == null ? "" : contact_phone;
-    }
-
-    public void setContact_phone(String contact_phone) {
-        this.contact_phone = contact_phone;
-    }
-
-    public int getRevertTimeLimit() {
-        return revertTimeLimit;
-    }
-
-    public void setRevertTimeLimit(int revertTimeLimit) {
-        this.revertTimeLimit = revertTimeLimit;
-    }
-
-    public String getBusinessOneCode() {
-        return businessOneCode == null ? "" : businessOneCode;
-    }
-
-    public void setBusinessOneCode(String businessOneCode) {
-        this.businessOneCode = businessOneCode;
-    }
-
-    public int getPredictTime() {
-        return predictTime;
-    }
-
-    public void setPredictTime(int predictTime) {
-        this.predictTime = predictTime;
-    }
-
-    public int getBudgetLimit() {
-        return budgetLimit;
-    }
-
-    public void setBudgetLimit(int budgetLimit) {
-        this.budgetLimit = budgetLimit;
-    }
-
-    public String getRemarkInfo() {
-        return remarkInfo == null ? "" : remarkInfo;
-    }
-
-    public void setRemarkInfo(String remarkInfo) {
-        this.remarkInfo = remarkInfo;
-    }
-
-    public Long getBusinessOneId() {
-        return businessOneId;
-    }
-
-    public void setBusinessOneId(Long businessOneId) {
-        this.businessOneId = businessOneId;
-    }
-
-    public Long getZoneId() {
-        return zoneId;
-    }
-
-    public void setZoneId(Long zoneId) {
-        this.zoneId = zoneId;
-    }
 }

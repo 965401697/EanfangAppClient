@@ -604,7 +604,9 @@
         <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
         <activity android:name=".ui.activity.worksapce.takevideo.TakeVideoActivity" />
         <activity android:name=".ui.activity.worksapce.takevideo.PlayVideoActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyBasicActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyBasicActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanySecondActivity"></activity>
     </application>
 
 </manifest>

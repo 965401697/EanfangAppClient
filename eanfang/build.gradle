@@ -39,11 +39,11 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
 
             // 上线url
-            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+//            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+//            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
 
-//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
