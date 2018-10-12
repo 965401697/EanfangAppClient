@@ -220,6 +220,14 @@ public interface UserApi {
      * 获取好有列表
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
+
+
+    /**
+     * 查看是否是好友
+     */
+    String POST_CHECK_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/checkFriend";
+
+
     /**
      * 根據accid 獲得用戶信息
      */

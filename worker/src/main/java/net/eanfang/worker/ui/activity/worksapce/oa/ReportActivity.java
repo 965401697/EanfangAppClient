@@ -171,6 +171,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getRealName());
         }
         etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+
         btnAddComplete.setOnClickListener(this);
         btnAddFind.setOnClickListener(this);
         btnAddPlan.setOnClickListener(this);
