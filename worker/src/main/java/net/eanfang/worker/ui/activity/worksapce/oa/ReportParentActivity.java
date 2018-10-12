@@ -16,6 +16,11 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * @author Guanluocang
+ * @date on 2018/10/210 15:49
+ * @decision 工作汇报
+ */
 public class ReportParentActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_left)
@@ -45,7 +50,7 @@ public class ReportParentActivity extends BaseWorkerActivity {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!PermKit.get().getWorkReportCreatePrem())return;
+                if (!PermKit.get().getWorkReportCreatePrem()) return;
                 startActivity(new Intent(ReportParentActivity.this, ReportActivity.class));
             }
         });

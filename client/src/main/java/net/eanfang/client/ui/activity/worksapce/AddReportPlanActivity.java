@@ -21,6 +21,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.ToastUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -141,10 +142,10 @@ public class AddReportPlanActivity extends BaseClientActivity implements View.On
         }
         bean.setField3(leave);
 
-//        if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
-//            ToastUtil.get().showToast(this, "请填加协同人员");
-//            return;
-//        }
+        if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
+            ToastUtil.get().showToast(this, "请填加协同人员");
+            return;
+        }
 
         StringBuffer stringBuffer = new StringBuffer();
 

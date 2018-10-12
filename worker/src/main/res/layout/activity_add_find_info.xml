@@ -156,28 +156,44 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal"
-                android:padding="5dp">
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="附件"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="（最多上传3张）"
+                        android:textColor="@color/font_color"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_addViedeo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="附件"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="（最多上传3张）"
-                    android:textColor="@color/font_color"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/dimen_30"
+                    android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                    android:padding="@dimen/dimen_10"
+                    android:text="添加视频"
+                    android:textColor="@color/color_white" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -186,24 +202,58 @@
                 android:background="#fff"
                 android:orientation="vertical">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                    android:id="@+id/snpl_moment_add_photos"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                    app:bga_snpl_editable="true"
-                    app:bga_snpl_itemCornerRadius="0dp"
-                    app:bga_snpl_itemSpanCount="3"
-                    app:bga_snpl_itemWhiteSpacing="4dp"
-                    app:bga_snpl_itemWidth="0dp"
-                    app:bga_snpl_maxItemCount="3"
-                    app:bga_snpl_otherWhiteSpacing="100dp"
-                    app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                    app:bga_snpl_plusEnable="true"
-                    app:bga_snpl_sortable="true" />
+                    android:orientation="horizontal">
+
+                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:id="@+id/snpl_moment_add_photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_20"
+                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                        app:bga_snpl_editable="true"
+                        app:bga_snpl_itemCornerRadius="0dp"
+                        app:bga_snpl_itemSpanCount="3"
+                        app:bga_snpl_itemWhiteSpacing="4dp"
+                        app:bga_snpl_itemWidth="0dp"
+                        app:bga_snpl_maxItemCount="3"
+                        app:bga_snpl_otherWhiteSpacing="100dp"
+                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                        app:bga_snpl_plusEnable="true"
+                        app:bga_snpl_sortable="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_thumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_200"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:visibility="gone">
+
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_takevideo"
+                            android:layout_width="@dimen/dimen_150"
+                            android:layout_height="@dimen/dimen_150"
+                            android:layout_centerInParent="true" />
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dimen_150"
+                            android:layout_height="@dimen/dimen_150"
+                            android:layout_centerInParent="true"
+                            android:background="#1A000000"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/ic_play_video" />
+                    </RelativeLayout>
+                </LinearLayout>
 
             </LinearLayout>
 

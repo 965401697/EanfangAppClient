@@ -94,7 +94,7 @@ public interface UserApi {
     String GET_STAFFTEMP_LIST = BuildConfig.API_HOST + "/yaf_sys/stafftemp/list";
 
     /**
-     * 搜索客户
+     * 搜索公司
      */
     String GET_WORKCOMPANY_LIST = BuildConfig.API_HOST + "/yaf_shop/workCompany/search";
     /**

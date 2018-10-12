@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.model.WorkReportInfoBean;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -23,11 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by MrHou
+ * Created by guanluocang
+ * 2018年10月11日 11:07:14
  *
- * @on 2017/11/22  16:52
- * @email houzhongzhou@yeah.net
- * @desc
+ * @desc 查看工作汇报 后续计划
  */
 
 public class LookReportPlanInfoView extends BaseDialog {
@@ -54,10 +56,19 @@ public class LookReportPlanInfoView extends BaseDialog {
     private Activity mContext;
     private WorkReportInfoBean.WorkReportDetailsBean detailBean;
 
+    // 照片和短视频
+    @BindView(R.id.iv_takevideo)
+    SimpleDraweeView ivTakevideo;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
+
+    private Activity mActivity;
+
     public LookReportPlanInfoView(Activity context, boolean isfull, WorkReportInfoBean.WorkReportDetailsBean detailBean) {
         super(context, isfull);
         this.mContext = context;
         this.detailBean = detailBean;
+        this.mActivity = context;
     }
 
     @Override
@@ -65,6 +76,7 @@ public class LookReportPlanInfoView extends BaseDialog {
         setContentView(R.layout.view_work_report_paln_info);
         ButterKnife.bind(this);
         initView();
+        initListener();
     }
 
     private void initView() {
@@ -131,7 +143,18 @@ public class LookReportPlanInfoView extends BaseDialog {
                 ivPic3.setVisibility(View.GONE);
             }
         }
+        if (!StringUtils.isEmpty(detailBean.getMp4_path())) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".jpg"));
+        }
     }
 
+    private void initListener() {
+        ivTakevideo.setOnClickListener((v) -> {
+            Bundle bundle_takevideo = new Bundle();
+            bundle_takevideo.putString("videoPath", BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".mp4");
+            JumpItent.jump(mActivity, PlayVideoActivity.class, bundle_takevideo);
+        });
+    }
 
 }

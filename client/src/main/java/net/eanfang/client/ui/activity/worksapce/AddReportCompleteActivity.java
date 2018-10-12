@@ -19,6 +19,7 @@ import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
+import com.eanfang.util.ToastUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -112,10 +113,10 @@ public class AddReportCompleteActivity extends BaseClientActivity {
             return false;
         }
 
-//        if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
-//            ToastUtil.get().showToast(this, "请添加协同人员");
-//            return false;
-//        }
+        if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
+            ToastUtil.get().showToast(this, "请添加协同人员");
+            return false;
+        }
         if (TextUtils.isEmpty(etInputLegacy.getText().toString().trim())) {
             showToast("请填写遗留问题");
             return false;
