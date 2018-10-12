@@ -72,7 +72,7 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void setListener() {
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(),  EanfangApplication.get().getUser().getAccount().getQrCode());
+            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
             personalQRCodeDialog.show();
         });
     }

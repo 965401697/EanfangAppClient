@@ -170,25 +170,25 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         //真实姓名
         if (infoBackBean.getAccount().getRealName() != null && !"待提供".equals(infoBackBean.getAccount().getRealName())) {
             etRealname.setText(infoBackBean.getAccount().getRealName());
-            etRealname.setEnabled(false);
+//            etRealname.setEnabled(false);
         }
         // 头像
         if (infoBackBean.getAccount().getGender() == null) {
             rbMan.setClickable(true);
             rbWoman.setClickable(true);
         } else if (infoBackBean.getAccount().getGender() == 1) {// 男
-            rbMan.setClickable(false);
-            rbWoman.setClickable(false);
+//            rbMan.setClickable(false);
+//            rbWoman.setClickable(false);
             rbMan.setChecked(true);
         } else {
-            rbMan.setClickable(false);
-            rbWoman.setClickable(false);
+//            rbMan.setClickable(false);
+//            rbWoman.setClickable(false);
             rbWoman.setChecked(true);// 女
         }
         // 证件号码
         if (!StringUtils.isEmpty(infoBackBean.getAccount().getIdCard())) {
             etIdcard.setText(infoBackBean.getAccount().getIdCard());
-            etIdcard.setEnabled(false);
+//            etIdcard.setEnabled(false);
         }
 
         String address = infoBackBean.getAccount().getAddress();

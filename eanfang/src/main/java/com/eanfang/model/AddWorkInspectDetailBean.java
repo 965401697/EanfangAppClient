@@ -2,6 +2,9 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by MrHou
  *
@@ -9,7 +12,8 @@ import java.io.Serializable;
  * @email houzhongzhou@yeah.net
  * @desc 检查明细新增
  */
-
+@Getter
+@Setter
 public class AddWorkInspectDetailBean implements Serializable {
 
     /**
@@ -25,43 +29,4 @@ public class AddWorkInspectDetailBean implements Serializable {
     private String pictures;
     private Long oaWorkInspectId;
 
-    public long getOaWorkInspectDetailId() {
-        return oaWorkInspectDetailId;
-    }
-
-    public void setOaWorkInspectDetailId(long oaWorkInspectDetailId) {
-        this.oaWorkInspectDetailId = oaWorkInspectDetailId;
-    }
-
-    public String getDisposeInfo() {
-        return disposeInfo == null ? "" : disposeInfo;
-    }
-
-    public void setDisposeInfo(String disposeInfo) {
-        this.disposeInfo = disposeInfo;
-    }
-
-    public String getRemarkInfo() {
-        return remarkInfo == null ? "" : remarkInfo;
-    }
-
-    public void setRemarkInfo(String remarkInfo) {
-        this.remarkInfo = remarkInfo;
-    }
-
-    public String getPictures() {
-        return pictures == null ? "" : pictures;
-    }
-
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
-    }
-
-    public Long getOaWorkInspectId() {
-        return oaWorkInspectId;
-    }
-
-    public void setOaWorkInspectId(Long oaWorkInspectId) {
-        this.oaWorkInspectId = oaWorkInspectId;
-    }
 }

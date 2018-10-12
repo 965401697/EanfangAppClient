@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -17,10 +19,16 @@ import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.takevideo.TakeVdideoMode;
+import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
+import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -31,7 +39,9 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -41,6 +51,8 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * Created by Mr.hou
@@ -66,12 +78,27 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.rv_team)
     RecyclerView rvTeam;
-
+    // 照片和短视频
+    @BindView(R.id.tv_addViedeo)
+    TextView tvAddViedeo;
+    @BindView(R.id.iv_takevideo)
+    SimpleDraweeView ivTakevideo;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
     private WorkAddReportBean.WorkReportDetailsBean bean;
     private Map<String, String> uploadMap = new HashMap<>();
 
     private MaintenanceTeamAdapter teamAdapter;
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
+    /**
+     * 视频上传key
+     */
+    private String mUploadKey = "";
+    /**
+     * 视频路径
+     */
+    private String mVieoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +198,8 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
         bean.setField5(etInputHandle.getText().toString().trim());
         String ursStr = PhotoUtils.getPhotoUrl("oa/report/", snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
+        // 短视频
+        bean.setMp4_path(mUploadKey);
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -221,7 +250,7 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
         });
     }
 
-    @OnClick({R.id.iv_content_voice, R.id.iv_question_voice, R.id.iv_reason_voice, R.id.iv_handle_voice, R.id.tv_add_team})
+    @OnClick({R.id.iv_content_voice, R.id.iv_question_voice, R.id.iv_reason_voice, R.id.iv_handle_voice, R.id.tv_add_team, R.id.tv_addViedeo, R.id.iv_takevideo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_content_voice:
@@ -238,6 +267,18 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_add_team:
                 startActivity(new Intent(AddReportCompleteActivity.this, SelectOAPresonActivity.class));
+                break;
+            // 添加视频
+            case R.id.tv_addViedeo:
+                Bundle bundle_addvideo = new Bundle();
+                bundle_addvideo.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                JumpItent.jump(AddReportCompleteActivity.this, TakeVideoActivity.class, bundle_addvideo);
+                break;
+            // 查看视频
+            case R.id.iv_takevideo:
+                Bundle bundle_takevideo = new Bundle();
+                bundle_takevideo.putString("videoPath", mVieoPath);
+                JumpItent.jump(AddReportCompleteActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
         }
     }
@@ -279,5 +320,18 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
         new TrueFalseDialog(this, "系统提示", "是否放弃本条完成工作？", () -> {
             finish();
         }).showDialog();
+    }
+
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            mVieoPath = takeVdideoMode.getMImagePath();
+            mUploadKey = takeVdideoMode.getMKey();
+            if (!StringUtils.isEmpty(mVieoPath)) {
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+            }
+            tvAddViedeo.setText("重新拍摄");
+        }
     }
 }

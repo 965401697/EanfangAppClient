@@ -139,7 +139,7 @@ public interface UserApi {
     String GET_ORGUNIT_ENT_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/add";
 
     /**
-     * 填写企业资料
+     * 保存企业资料
      */
     String GET_ORGUNIT_ENT_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/insert";
 

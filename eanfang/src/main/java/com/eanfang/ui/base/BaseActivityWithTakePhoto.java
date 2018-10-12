@@ -282,16 +282,6 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
 
     public void takePhoto(Context context, int resultCode) {
         this.resultCode = resultCode;
-//        TakePhoto takePhoto = getTakePhoto();
-//        configCompress(takePhoto);
-//        configTakePhotoOption(takePhoto);
-////        takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
-//
-//        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
-//        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-//        Uri imageUri = Uri.fromFile(file);
-//        takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
-//        new Thread(() -> initDialog());
         initDialog(context);
     }
 
