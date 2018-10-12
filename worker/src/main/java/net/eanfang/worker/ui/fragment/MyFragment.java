@@ -25,8 +25,8 @@ import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.AuthListActivity;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
+import net.eanfang.worker.ui.activity.my.NewAuthListActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
 import net.eanfang.worker.ui.widget.InviteView;
@@ -129,7 +129,7 @@ public class MyFragment extends BaseFragment {
         });
         // 二维码头像
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(),  EanfangApplication.get().getUser().getAccount().getQrCode());
+            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
             personalQRCodeDialog.show();
         });
 
@@ -172,7 +172,7 @@ public class MyFragment extends BaseFragment {
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
-            JumpItent.jump(getActivity(), AuthListActivity.class);
+            JumpItent.jump(getActivity(), NewAuthListActivity.class);
         }
     }
 }

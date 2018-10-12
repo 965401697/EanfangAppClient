@@ -15,53 +15,31 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.WorkerInfoBean;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Guanluocang
- * @date on 2018/6/19  17:21
- * @decision 技师认证 列表
- */
-@Deprecated
-public class AuthListActivity extends BaseActivity {
+public class NewAuthListActivity extends BaseWorkerActivity {
 
-    // 基本资料
-    @BindView(R.id.rl_base_info)
-    RelativeLayout rlBaseInfo;
     @BindView(R.id.tv_base_info)
     TextView tvBaseInfo;
-    //系统类别
-    @BindView(R.id.rl_systom_type)
-    RelativeLayout rlSystomType;
-    @BindView(R.id.tv_sys_type)
-    TextView tvSysType;
-    //业务类型
-    @BindView(R.id.rl_business_type)
-    RelativeLayout rlBusinessType;
-    @BindView(R.id.tv_business_type)
-    TextView tvBusinessType;
-    // 服务区域
-    @BindView(R.id.rl_service_area)
-    RelativeLayout rlServiceArea;
-    @BindView(R.id.tv_service_area)
-    TextView tvServiceArea;
-    // 补充资料
-    @BindView(R.id.rl_other_info)
-    RelativeLayout rlOtherInfo;
+    @BindView(R.id.tv_skill)
+    TextView tvSkill;
+    @BindView(R.id.tv_own)
+    TextView tvOwn;
+    @BindView(R.id.tv_certificate)
+    TextView tvCertificate;
     @BindView(R.id.tv_confim)
     TextView tvConfim;
     @BindView(R.id.rl_is_auth)
     RelativeLayout rlIsAuth;
-
     private WorkerInfoBean workerInfoBean;
 
     //提交认证 弹框
@@ -72,7 +50,7 @@ public class AuthListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth_list);
+        setContentView(R.layout.activity_new_auth_list);
         ButterKnife.bind(this);
         initView();
     }
@@ -98,34 +76,32 @@ public class AuthListActivity extends BaseActivity {
                 }));
         // 获取技师信息
         EanfangHttp.get(UserApi.GET_WORKER_INFO)
-                .execute(new EanfangCallback<WorkerInfoBean>(AuthListActivity.this, true, WorkerInfoBean.class, (bean) -> {
+                .execute(new EanfangCallback<WorkerInfoBean>(NewAuthListActivity.this, true, WorkerInfoBean.class, (bean) -> {
                     workerInfoBean = bean;
                 }));
     }
 
-    @OnClick({R.id.rl_base_info, R.id.rl_systom_type, R.id.rl_business_type, R.id.rl_service_area, R.id.rl_other_info, R.id.tv_confim})
+    @OnClick({R.id.rl_base_info, R.id.rl_skill, R.id.rl_own, R.id.rl_certificate, R.id.tv_confim})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            // 基本资料
+            // 实名认证
             case R.id.rl_base_info:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("workerInfoBean", workerInfoBean);
                 bundle.putInt("status", verify);
-                JumpItent.jump(this, AuthWorkerInfoActivity.class, bundle);
+                JumpItent.jump(this, CertificationActivity.class, bundle);
                 break;
-            //系统类别
-            case R.id.rl_systom_type:
+            //技能资质
+            case R.id.rl_skill:
                 startActivity(new Intent(this, AuthWorkerSysTypeActivity.class).putExtra("status", verify));
                 break;
-            // 业务类型
-            case R.id.rl_business_type:
+            // 个人经历
+            case R.id.rl_own:
                 startActivity(new Intent(this, AuthWorkerBizActivity.class).putExtra("status", verify));
                 break;
-            //服务区域
-            case R.id.rl_service_area:
+            //荣誉证书
+            case R.id.rl_certificate:
                 startActivity(new Intent(this, AuthWorkerAreaActivity.class).putExtra("status", verify));
-                break;
-            case R.id.rl_other_info:
                 break;
             case R.id.tv_confim:
                 doVerify();
@@ -140,7 +116,7 @@ public class AuthListActivity extends BaseActivity {
         } else {
             rlIsAuth.setVisibility(View.GONE);
         }
-        // 基本资料
+        // 实名认证
         if (baseStatus > 0) {
             tvBaseInfo.setText("已完善");
             tvBaseInfo.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
@@ -148,29 +124,29 @@ public class AuthListActivity extends BaseActivity {
             tvBaseInfo.setText("待完善");
             tvBaseInfo.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
-        //系统类别
+        //技能资质
         if (serviceStatus > 0) {
-            tvSysType.setText("已完善");
-            tvSysType.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
+            tvSkill.setText("已完善");
+            tvSkill.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
         } else {
-            tvSysType.setText("待完善");
-            tvSysType.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
+            tvSkill.setText("待完善");
+            tvSkill.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
-        //业务类型
+        //个人经历
         if (bizStatus > 0) {
-            tvBusinessType.setText("已完善");
-            tvBusinessType.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
+            tvOwn.setText("已完善");
+            tvOwn.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
         } else {
-            tvBusinessType.setText("待完善");
-            tvBusinessType.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
+            tvOwn.setText("待完善");
+            tvOwn.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
-        //服务区域
+        //荣誉证书
         if (areaStatus > 0) {
-            tvServiceArea.setText("已完善");
-            tvServiceArea.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
+            tvCertificate.setText("已完善");
+            tvCertificate.setTextColor(ContextCompat.getColor(this, R.color.color_bottom));
         } else {
-            tvServiceArea.setText("待完善");
-            tvServiceArea.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
+            tvCertificate.setText("待完善");
+            tvCertificate.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
         // 当认证都大于0
         if (baseStatus > 0 && serviceStatus > 0 && bizStatus > 0 && areaStatus > 0 && (verify != 1 && verify != 2)) {
@@ -199,7 +175,7 @@ public class AuthListActivity extends BaseActivity {
 
     // 认证提交完毕 提示页面
     public void doJumpConfirm() {
-        Intent intent = new Intent(AuthListActivity.this, StateChangeActivity.class);
+        Intent intent = new Intent(NewAuthListActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
         message.setTitle("认证提交成功");
@@ -214,5 +190,4 @@ public class AuthListActivity extends BaseActivity {
         startActivity(intent);
         finishSelf();
     }
-
 }
