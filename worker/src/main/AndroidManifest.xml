@@ -605,10 +605,10 @@
         <activity android:name=".ui.activity.worksapce.datastatistics.DataInstallActivity" />
         <!-- 统计数据设计 -->
         <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
-        <activity android:name=".ui.activity.my.NewAuthListActivity" />
-        <activity android:name=".ui.activity.my.CertificationActivity" />
-        <activity android:name=".ui.activity.my.IdentityCardCertification" />
-        <activity android:name=".ui.activity.my.OtherDataActivity"></activity>
+        <activity android:name=".ui.activity.my.certification.NewAuthListActivity" />
+        <activity android:name=".ui.activity.my.certification.CertificationActivity" />
+        <activity android:name=".ui.activity.my.certification.IdentityCardCertification" />
+        <activity android:name=".ui.activity.my.certification.OtherDataActivity"></activity>
     </application>
 
 </manifest>

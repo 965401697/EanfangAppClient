@@ -157,6 +157,10 @@ public interface UserApi {
      */
     String GET_TECH_WORKER_ADD = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insert";
     /**
+     * 填写技师信息 实名认证
+     */
+    String GET_TECH_WORKER_ADD_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insertV2";
+    /**
      * 加载系统类别
      */
     String GET_TECH_WORKER_SYS = BuildConfig.API_HOST + "/yaf_sys/basedata2user/list/";

@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.my;
+package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
+import com.yaf.base.entity.TechWorkerVerifyEntity;
+import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 
@@ -50,6 +52,8 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     EditText etIntro;
 
     private final int HEADER_PIC = 107;
+    private TechWorkerVerifyEntity techWorkerVerifyEntity = new TechWorkerVerifyEntity();
+    ;
 
 
     @Override
@@ -62,6 +66,8 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
 
         initViews();
         setOnClick();
+
+
     }
 
     private void initViews() {
@@ -76,6 +82,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void setOnClick() {
+
 
         llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(CertificationActivity.this, HEADER_PIC)));
     }
@@ -97,13 +104,15 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEADER_PIC:
-//                workerInfoBean.setAvatarPhoto(imgKey);
+                techWorkerVerifyEntity.setAvatarPhoto(imgKey);
                 ivHeader.setImageURI("file://" + image.getOriginalPath());
                 break;
             default:
                 break;
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+
+
         });
 
     }
@@ -113,13 +122,10 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         String cardId = etCardId.getText().toString().trim();
         String info = etIntro.getText().toString().trim();
 
-
-//        if (StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
-//            showToast("请选择技师头像");
-//            return;
-//        } else if (StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
-//            workerInfoBean.setAvatarPhoto(workerInfoBean.getAvatarPhoto());
-//        }
+        if (StringUtils.isEmpty(techWorkerVerifyEntity.getAvatarPhoto())) {
+            showToast("请选择技师头像");
+            return;
+        }
 
         if (StringUtils.isEmpty(cardId)) {
             showToast("请输入身份证号");
@@ -131,58 +137,23 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         }
 
 
-//        if (StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
-//            showToast("请添加身份证正面照");
-//            return;
-//        }
-//        if (StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
-//            showToast("请添加手持身份证照片");
-//            return;
-//        }
-//        if (StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
-//            showToast("请添加身份证反面照");
-//            return;
-//        }
-//        workerInfoBean.setContactName(mUrgentName);
-//        workerInfoBean.setContactPhone(mUrgentPhone);
-//        workerInfoBean.setPayAccount(mPayAccount);
-//        workerInfoBean.setIntro(mEtIntro);
-//        workerInfoBean.setPayType(GetConstDataUtils.getPayTypeList().indexOf(tvPayType.getText().toString().trim()));
-//        workerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(tvWorkingLevel.getText().toString().trim()));
-//        workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(tvWorkingYear.getText().toString().trim()));
-//        workerInfoBean.setAccId(workerInfoBean.getAccId());
-//        workerInfoBean.setUserId(EanfangApplication.getApplication().getUser().getAccount().getNullUser());
-//        workerInfoBean.setId(workerInfoBean.getId());
-//
-//        workerInfoBean.setStatus(0);
-//        String json = JSONObject.toJSONString(workerInfoBean);
-//        if (uploadMap.size() != 0) {
-//            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-//                @Override
-//                public void onOssSuccess() {
-//                    runOnUiThread(() -> submitSuccess(json));
-//                }
-//            });
-//        } else {
-//            submitSuccess(json);
-//        }
+        techWorkerVerifyEntity.setAccId(EanfangApplication.get().getAccId());
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setRealName(tvContactName.getText().toString().trim());
+        accountEntity.setMobile(tvContactPhone.getText().toString().trim());
+        accountEntity.setIdCard(cardId);
+        accountEntity.setGender(rbMan.isChecked() ? 1 : 0);
+        techWorkerVerifyEntity.setAccountEntity(accountEntity);
+        techWorkerVerifyEntity.setIntro(info);
+
+        Intent intent = new Intent(this, IdentityCardCertification.class);
+        intent.putExtra("bean", techWorkerVerifyEntity);
+        startActivity(intent);
     }
 
     @OnClick(R.id.tv_confim)
     public void onViewClicked() {
-        Intent intent = new Intent(this, IdentityCardCertification.class);
-        startActivity(intent);
+        setData();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (data == null) {
-//            return;
-//        }
-//        if (requestCode == REQUETST_ADD_PHOTO && resultCode == RESULT_ADD_PHOTO) {
-//            workerInfoBean = (WorkerInfoBean) data.getSerializableExtra("photos");
-//        }
-//
-//    }
 }

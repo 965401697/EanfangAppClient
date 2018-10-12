@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_contact_line_gray"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.my.NewAuthListActivity">
+    tools:context="net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity">
 
 
     <LinearLayout

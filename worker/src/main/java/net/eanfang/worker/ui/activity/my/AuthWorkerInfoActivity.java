@@ -53,6 +53,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师认证 填写个人资料 照片 等
  */
+@Deprecated
 public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
 
