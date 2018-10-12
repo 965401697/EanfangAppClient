@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.my;
+package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,9 @@ import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.my.AuthWorkerAreaActivity;
+import net.eanfang.worker.ui.activity.my.AuthWorkerBizActivity;
+import net.eanfang.worker.ui.activity.my.AuthWorkerSysTypeActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;

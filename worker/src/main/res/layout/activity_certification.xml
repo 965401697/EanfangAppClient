@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     android:background="@color/color_contact_line_gray"
-    tools:context="net.eanfang.worker.ui.activity.my.CertificationActivity">
+    tools:context="net.eanfang.worker.ui.activity.my.certification.CertificationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

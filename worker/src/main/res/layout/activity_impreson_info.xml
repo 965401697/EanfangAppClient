@@ -61,6 +61,21 @@
         android:paddingLeft="@dimen/dimen_34"
         android:text="清除聊天记录"
         android:textColor="@color/color_client_neworder"
+        android:visibility="gone"
         android:textSize="@dimen/textSize_15" />
+
+    <TextView
+        android:id="@+id/tv_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/bg_ll_btn"
+        android:layout_margin="@dimen/dimen_40"
+        android:visibility="gone"
+        android:padding="@dimen/dimen_30"
+        android:text="添加好友"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textSize_12" />
 
 </LinearLayout>

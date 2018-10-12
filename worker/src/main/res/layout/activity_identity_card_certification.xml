@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.my.IdentityCardCertification">
+    tools:context="net.eanfang.worker.ui.activity.my.certification.IdentityCardCertification">
 
 
     <include layout="@layout/header" />
@@ -244,7 +244,10 @@
         android:id="@+id/tv_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimen_40"
+        android:layout_marginBottom="@dimen/dimen_20"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_marginRight="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_20"
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
