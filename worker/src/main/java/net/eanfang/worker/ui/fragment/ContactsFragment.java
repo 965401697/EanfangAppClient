@@ -65,6 +65,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     private OrgEntity mOrgEntity;
     private View view;
 
+
+    public final int CREAT_TEAM_CODE = 49;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_contact;
@@ -314,7 +317,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         rl_create_team.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CreatTeamActivity.class));
+                startActivityForResult(new Intent(getActivity(), CreatTeamActivity.class), CREAT_TEAM_CODE);
             }
         });
 //        rl_create_team.setOnClickListener(new View.OnClickListener() {
@@ -325,6 +328,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 //            }
 //        });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getData();
     }
 
     @Override

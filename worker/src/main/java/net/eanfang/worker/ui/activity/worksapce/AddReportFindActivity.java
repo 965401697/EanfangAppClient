@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
@@ -76,7 +78,13 @@ public class AddReportFindActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //是否要保存
+                giveUp();
+            }
+        });
         setTitle("发现问题");
         setRightTitle("提交");
         bean = new WorkAddReportBean.WorkReportDetailsBean();
@@ -224,5 +232,25 @@ public class AddReportFindActivity extends BaseWorkerActivity {
             teamAdapter.setNewData(newPresonList);
         }
 
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            giveUp();
+        }
+        return false;
+    }
+
+    /**
+     * 放弃新建汇报
+     */
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃本条发现问题？", () -> {
+            finish();
+        }).showDialog();
     }
 }

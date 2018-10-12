@@ -319,24 +319,15 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
             return;
         }
 
-        if (beanList.size() == 0) {
-            showToast("请填写完成工作的内容");
-            return;
-        }
-        if (planList.size() == 0) {
-            showToast("请填写后续计划的内容");
-            return;
-        }
-
         if (beanList.size() < 3) {
-            showToast("完成工作的内容少于3条");
+            showToast("完成工作请最少填写三条");
+            return;
+        }
+        if (planList.size() < 3) {
+            showToast("后续计划请最少填写三条");
             return;
         }
 
-        if (planList.size() < 3) {
-            showToast("后续计划的内容少于3条");
-            return;
-        }
 
         bean.setType(GetConstDataUtils.getWorkReportTypeList().indexOf(task_title));
         if (newPresonList.size() == 0) {

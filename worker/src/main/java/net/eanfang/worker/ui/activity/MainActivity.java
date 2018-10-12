@@ -643,6 +643,9 @@ public class MainActivity extends BaseActivity {
             String frgTag = mTabHost.getCurrentTabTag();
             ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
             contactListFragment.onActivityResult(requestCode, resultCode, data);
+        }else if(resultCode == RESULT_OK && requestCode == 49){
+            ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
+            contactsFragment.onActivityResult(requestCode,resultCode,data);
         }
     }
 }

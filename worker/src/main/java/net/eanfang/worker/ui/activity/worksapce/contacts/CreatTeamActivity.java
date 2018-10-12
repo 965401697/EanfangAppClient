@@ -39,12 +39,19 @@ public class CreatTeamActivity extends BaseWorkerActivity {
     }
 
     private void createCompany() {
+
+        if (TextUtils.isEmpty(etInputCompany.getText().toString().trim())) {
+            showToast("请填写公司名字");
+            return;
+        }
+
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD)
                 .params("name", etInputCompany.getText().toString().trim())
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
                     SwitchCompany(bean.getOrgId());
                     updateData();
 //                    mRefreshListener.refreshData();
+                    setResult(RESULT_OK);
                     finish();
                 }));
     }
@@ -54,10 +61,6 @@ public class CreatTeamActivity extends BaseWorkerActivity {
      */
     private void SwitchCompany(Long companyid) {
 
-        if (TextUtils.isEmpty(etInputCompany.getText().toString().trim())) {
-            showToast("请填写公司名字");
-            return;
-        }
 
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
@@ -68,7 +71,7 @@ public class CreatTeamActivity extends BaseWorkerActivity {
                     EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
                     EanfangHttp.setWorker();
 
-                    finish();
+//                    finish();
                 }));
     }
 

@@ -47,6 +47,7 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
     private String mUserId;
     private String mTitle;
     private User mUser;
+    private boolean b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,12 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
                 cleanGroupMsg();
                 break;
             case R.id.rl_info:
+
+                if (!b) {
+                    ToastUtil.get().showToast(IMPresonInfoActivity.this, "请先添加好友");
+                    return;
+                }
+
                 Intent intent = new Intent(IMPresonInfoActivity.this, IMCardActivity.class);
                 intent.putExtra("user", mUser);
                 startActivity(intent);
@@ -141,7 +148,7 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<String>(this, true, String.class, (s) -> {
                     try {
                         JSONObject jsonObject = new JSONObject(s);
-                        boolean b = jsonObject.getBoolean("exists");
+                        b = jsonObject.getBoolean("exists");
 
                         if (b) {
                             tvClear.setVisibility(View.VISIBLE);
