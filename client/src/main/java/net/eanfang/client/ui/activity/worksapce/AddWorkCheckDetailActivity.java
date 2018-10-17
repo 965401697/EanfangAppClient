@@ -151,7 +151,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
         detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
         detailsBean.setInfo(etInputCheckContent.getText().toString().trim());
 
-        String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck",mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck", mPhotosSnpl, uploadMap, true);
         detailsBean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {
@@ -188,21 +188,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
     @OnClick(R.id.iv_checked_voice)
     public void onViewClicked() {
         PermissionUtils.get(this).getVoicePermission(() -> {
-            RecognitionManager.getSingleton().startRecognitionWithDialog(AddWorkCheckDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                @Override
-                public void result(String msg) {
-                    etInputCheckContent.setText(msg + "");
-                    //获取焦点
-                    etInputCheckContent.requestFocus();
-                    //将光标定位到文字最后，以便修改
-                    etInputCheckContent.setSelection(msg.length());
-                }
-
-                @Override
-                public void error(String errorMsg) {
-                    showToast(errorMsg);
-                }
-            });
+            RecognitionManager.getSingleton().startRecognitionWithDialog(AddWorkCheckDetailActivity.this, etInputCheckContent);
         });
     }
 }

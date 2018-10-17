@@ -359,17 +359,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(FillRepairInfoActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etRemainQuestion.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(FillRepairInfoActivity.this, etRemainQuestion);
             });
         });
         etRemainQuestion.addTextChangedListener(new TextWatcher() {

@@ -191,17 +191,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         // 原因判断
         ivVoiceInputTroubleReason.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroubleReason.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroubleReason);
             });
         });
         etTroubleReason.addTextChangedListener(new TextWatcher() {
@@ -236,17 +226,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         //过程方法
         ivVoiceInputTroublePoint.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroublePoint.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroublePoint);
             });
         });
         etTroublePoint.addTextChangedListener(new TextWatcher() {
@@ -282,17 +262,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         // 处理措施
         ivVoiceInputTroubleDeal.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroubleDeal.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroubleDeal);
             });
         });
         etTroubleDeal.addTextChangedListener(new TextWatcher() {
@@ -327,17 +297,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         // 使用建议
         ivVoiceInputTroubleUseAdvance.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroubleUseAdvace.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroubleUseAdvace);
             });
         });
         etTroubleUseAdvace.addTextChangedListener(new TextWatcher() {

@@ -4,8 +4,10 @@ package com.eanfang.ui.base.voice;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.eanfang.util.JsonParser;
+import com.eanfang.util.ToastUtil;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -62,12 +64,24 @@ public class RecognitionManager {
         void result(String msg);
 
         void error(String errorMsg);
-
     }
 
 
     //有动画效果
     private RecognizerDialog iatDialog;
+
+    private EditText editText;
+
+    public void startRecognitionWithDialog(Context mContext, EditText mEditText) {
+        this.editText = mEditText;
+
+        // ②初始化有交互动画的语音识别器
+        iatDialog = new RecognizerDialog(mContext, mInitListener);
+        //③设置监听，实现听写结果的回调
+        iatDialog.setListener(mRecognizersDialog);
+        //开始听写，需将sdk中的assets文件下的文件夹拷入项目的assets文件夹下（没有的话自己新建）
+        iatDialog.show();
+    }
 
     public void startRecognitionWithDialog(Context mContext, final onRecognitionListen listen) {
         this.listen = listen;
@@ -92,7 +106,11 @@ public class RecognitionManager {
 
         @Override
         public void onError(SpeechError speechError) {
-            listen.error(speechError.getMessage());
+            if (listen == null) {
+                ToastUtil.get().showToast(editText.getContext(), "识别错误");
+            } else {
+                listen.error(speechError.getMessage());
+            }
             speechError.getPlainDescription(true);
         }
     };
@@ -119,15 +137,15 @@ public class RecognitionManager {
         }
     };
 
-    public void startRecognition(onRecognitionListen listen) {
-        this.listen = listen;
-        //2.设置听写参数
-        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
-        mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-        mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");
-        // 3.开始听写
-        mIat.startListening(mRecoListener);
-    }
+//    public void startRecognition(onRecognitionListen listen) {
+//        this.listen = listen;
+//        //2.设置听写参数
+//        mIat.setParameter(SpeechConstant.DOMAIN, "iat");
+//        mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+//        mIat.setParameter(SpeechConstant.ACCENT, "mandarin ");
+//        // 3.开始听写
+//        mIat.startListening(mRecoListener);
+//    }
 
 
     //听写监听器
@@ -173,6 +191,7 @@ public class RecognitionManager {
     private String result = "";
 
     private void analyzeJson(RecognizerResult recognizerResult, boolean isLast) {
+        String content = editText.getText().toString();
         if (!isLast) {
             resultJson += recognizerResult.getResultString() + ",";
         } else {
@@ -180,7 +199,16 @@ public class RecognitionManager {
         }
         if (!isLast) {
             result = JsonParser.parseIatResult(recognizerResult.getResultString());
-            listen.result(result);
+            if (listen == null) {
+                content += result;
+                editText.setText(content + "");
+                //获取焦点
+                editText.requestFocus();
+                //将光标定位到文字最后，以便修改
+                editText.setSelection(content.length());
+            } else {
+                listen.result(result);
+            }
         }
     }
 }
