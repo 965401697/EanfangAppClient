@@ -106,10 +106,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private AuthCompanyBaseInfoBean byNetBean;
     private String firstTraed, secondTraed;
-    private String longitude, orgName;
     private String latitude;
     private String itemcity;
     private String itemzone;
+    private String longitude, orgName;
     private Long orgid;
 
     // 区别
@@ -177,7 +177,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             etCompany.setEnabled(false);
             isEdit = true;
             setRightGone();
-            doRevoke();
         });
     }
 
@@ -357,25 +356,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         }).showDialog();
     }
 
-    /**
-     * 重新编辑
-     */
-    private void doRevoke() {
-        ivUpload.setEnabled(true);
-        ivUpload2.setEnabled(true);
-        edCompanyNumber.setEnabled(true);
-        etMoney.setEnabled(true);
-        llType.setEnabled(true);
-        llOfficeAddress.setEnabled(true);
-        tvOfficeAddress.setEnabled(true);
-        etLegalPersion.setEnabled(true);
-        llCompanyScale.setEnabled(true);
-        etPhone.setEnabled(true);
-        etDetailOfficeAddress.setEnabled(true);
-        etDesc.setEnabled(true);
-        btnComplete.setVisibility(View.VISIBLE);
-        setRightGone();
-    }
 
     /**
      * 图片选择 回调

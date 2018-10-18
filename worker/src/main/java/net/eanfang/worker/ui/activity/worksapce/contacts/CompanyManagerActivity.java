@@ -5,7 +5,12 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONPObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -63,7 +68,7 @@ public class CompanyManagerActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation})
+    @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             // 完善资料
@@ -73,7 +78,11 @@ public class CompanyManagerActivity extends BaseActivity {
                 bundle_prefect.putLong("orgid", mOrgId);
                 bundle_prefect.putString("orgName", mOrgName);
                 bundle_prefect.putString("assign", "prefect");
-                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+                if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看 资料
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+                } else {
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyFirstActivity.class, bundle_prefect);
+                }
                 break;
             // 资质认证
             case R.id.rl_auth:
@@ -109,6 +118,21 @@ public class CompanyManagerActivity extends BaseActivity {
                 if (!PermKit.get().getCooperationListAllPerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
                 break;
+            case R.id.tv_againAuth:
+                doUndoVerify();
+                break;
         }
     }
+
+    /**
+     * 进行撤销认证操作
+     */
+    public void doUndoVerify() {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
+            EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + mOrgId).
+                    execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                    }));
+        }).showDialog();
+    }
+
 }
