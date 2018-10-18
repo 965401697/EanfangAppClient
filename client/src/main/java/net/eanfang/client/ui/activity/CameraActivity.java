@@ -536,21 +536,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
 
     private void inputVoice(EditText editText) {
         PermissionUtils.get(this).getVoicePermission(() -> {
-            RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, new RecognitionManager.onRecognitionListen() {
-                @Override
-                public void result(String msg) {
-                    editText.setText(msg + "");
-                    //获取焦点
-                    editText.requestFocus();
-                    //将光标定位到文字最后，以便修改
-                    editText.setSelection(msg.length());
-                }
-
-                @Override
-                public void error(String errorMsg) {
-                    showToast(errorMsg);
-                }
-            });
+            RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, editText);
         });
     }
 }

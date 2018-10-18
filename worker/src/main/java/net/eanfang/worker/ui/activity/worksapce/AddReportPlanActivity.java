@@ -252,21 +252,7 @@ public class AddReportPlanActivity extends BaseWorkerActivity implements View.On
 
     private void inputVoice(EditText editText) {
         PermissionUtils.get(this).getVoicePermission(() -> {
-            RecognitionManager.getSingleton().startRecognitionWithDialog(AddReportPlanActivity.this, new RecognitionManager.onRecognitionListen() {
-                @Override
-                public void result(String msg) {
-                    editText.setText(msg + "");
-                    //获取焦点
-                    editText.requestFocus();
-                    //将光标定位到文字最后，以便修改
-                    editText.setSelection(msg.length());
-                }
-
-                @Override
-                public void error(String errorMsg) {
-                    showToast(errorMsg);
-                }
-            });
+            RecognitionManager.getSingleton().startRecognitionWithDialog(AddReportPlanActivity.this, editText);
         });
     }
 

@@ -16,6 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
@@ -129,8 +130,13 @@ public class MyFragment extends BaseFragment {
         });
         // 二维码头像
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
-            personalQRCodeDialog.show();
+            Bundle bundle = new Bundle();
+            bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
+            bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+            bundle.putString("qrcodeMessage", "personal");
+            JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
+//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
+//            personalQRCodeDialog.show();
         });
 
     }

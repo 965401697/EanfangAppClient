@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.annimon.stream.Stream;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -31,7 +30,6 @@ import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -83,6 +81,9 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     // 设备库 RequestCode
     private static final int REQUEST_EQUIPMENT = 3000;
+    //设备品牌回调 code
+    private final int REQUEST_DEVICE_BRAND_CODE = 1001;
+    private final int RESULT_DEVICE_BRAND_CODE = 1002;
 
     //故障设备名称
     @BindView(R.id.tv_faultDeviceName)
@@ -228,25 +229,13 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
     }
 
+    private String message = "";
+
     private void setListener() {
         rlConfirmDevice.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::checkInfo, this::onSubmitClient));
         ivInputVoice.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        evFaultDescripte.setText(msg + "");
-                        //获取焦点
-                        evFaultDescripte.requestFocus();
-                        //将光标定位到文字最后，以便修改
-                        evFaultDescripte.setSelection(msg.length());
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, evFaultDescripte);
             });
         });
         // 扫一扫设备
@@ -413,6 +402,8 @@ public class AddTroubleActivity extends BaseClientActivity {
 
             repairBugEntity.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
             repairBugEntity.setRepairCount(custDeviceEntity.getDeviceVersion());
+        } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
+            tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
         }
     }
 
@@ -447,15 +438,18 @@ public class AddTroubleActivity extends BaseClientActivity {
                     showToast("请先选择故障设备");
                     return;
                 }
-                PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
-                    tvDeviceBrand.setText(item);
-                    if (item.equals("其他")) {
-                        llInputBrand.setVisibility(View.VISIBLE);
-
-                    } else {
-                        llInputBrand.setVisibility(View.GONE);
-                    }
-                }));
+                Bundle bundle_device = new Bundle();
+                bundle_device.putString("busOneCode", busOneCode);
+                JumpItent.jump(AddTroubleActivity.this, DeviceBrandActivity.class, bundle_device, REQUEST_DEVICE_BRAND_CODE);
+//                PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+//                    tvDeviceBrand.setText(item);
+//                    if (item.equals("其他")) {
+//                        llInputBrand.setVisibility(View.VISIBLE);
+//
+//                    } else {
+//                        llInputBrand.setVisibility(View.GONE);
+//                    }
+//                }));
                 break;
             // 故障设备型号
             case R.id.ll_devicesModel:
@@ -529,5 +523,6 @@ public class AddTroubleActivity extends BaseClientActivity {
             tvAddViedeo.setText("重新拍摄");
         }
     }
+
 
 }

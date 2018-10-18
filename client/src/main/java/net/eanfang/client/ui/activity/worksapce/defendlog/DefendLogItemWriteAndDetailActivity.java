@@ -171,21 +171,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
     @OnClick(R.id.iv_project_voice)
     public void onViewClicked() {
         PermissionUtils.get(this).getVoicePermission(() -> {
-            RecognitionManager.getSingleton().startRecognitionWithDialog(DefendLogItemWriteAndDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                @Override
-                public void result(String msg) {
-                    evDefendDesc.setText(msg + "");
-                    //获取焦点
-                    evDefendDesc.requestFocus();
-                    //将光标定位到文字最后，以便修改
-                    evDefendDesc.setSelection(msg.length());
-                }
-
-                @Override
-                public void error(String errorMsg) {
-                    showToast(errorMsg);
-                }
-            });
+            RecognitionManager.getSingleton().startRecognitionWithDialog(DefendLogItemWriteAndDetailActivity.this, evDefendDesc);
         });
     }
 }
