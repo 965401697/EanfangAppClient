@@ -176,6 +176,8 @@ public class MainActivity extends BaseClientActivity {
 //                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
                 if (var == 0) {
                     redPoint.setVisibility(View.GONE);
+                }else {
+                    redPoint.setVisibility(View.VISIBLE);
                 }
             });
         });
@@ -528,6 +530,9 @@ public class MainActivity extends BaseClientActivity {
             String frgTag = mTabHost.getCurrentTabTag();
             ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
             contactListFragment.onActivityResult(requestCode, resultCode, data);
+        }else if(resultCode == RESULT_OK && requestCode == 49){
+            ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
+            contactsFragment.onActivityResult(requestCode,resultCode,data);
         }
     }
 

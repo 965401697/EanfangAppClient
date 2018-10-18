@@ -44,6 +44,8 @@ import net.eanfang.worker.ui.adapter.ParentAdapter;
 import java.util.Collections;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by MrHou
  *
@@ -333,7 +335,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getData();
+        if (resultCode == RESULT_OK && requestCode == 49) {
+            getData();
+        }
     }
 
     @Override

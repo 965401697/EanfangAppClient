@@ -161,6 +161,60 @@ public interface UserApi {
      */
     String GET_TECH_WORKER_ADD_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insertV2";
     /**
+     * 填写技师信息 证书填写
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/insert";
+    /**
+     * 填写技师信息 证书列表
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE_LIST = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/list";
+    /**
+     * 填写技师信息 证书列表删除
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE_DELETE = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/delete";
+
+    /**
+     * 填写技师信息 证书列表更新
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE_UPDATE = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/update";
+    /**
+     * 填写技师信息 教育经历添加
+     */
+    String GET_TECH_WORKER_ADD_EDUCATION = BuildConfig.API_HOST + "/yaf_shop/educationexperience/insert";
+    /**
+     * 填写技师信息 教育经历删除
+     */
+    String GET_TECH_WORKER_EDUCATION_DELETE = BuildConfig.API_HOST + "/yaf_shop/educationexperience/delete";
+
+    /**
+     * 填写技师信息 教育经历List
+     */
+    String GET_TECH_WORKER_EDUCATION_LIST = BuildConfig.API_HOST + "/yaf_shop/educationexperience/list";
+
+    /**
+     * 填写技师信息 教育经历更新
+     */
+    String GET_TECH_WORKER_WORK_UPDATE = BuildConfig.API_HOST + "/yaf_shop/jobexperience/update";
+    /**
+     * 填写技师信息 工作经历添加
+     */
+    String GET_TECH_WORKER_ADD_WORK = BuildConfig.API_HOST + "/yaf_shop/jobexperience/insert";
+    /**
+     * 填写技师信息 工作经历删除
+     */
+    String GET_TECH_WORKER_WORK_DELETE = BuildConfig.API_HOST + "/yaf_shop/jobexperience/delete";
+
+    /**
+     * 填写技师信息 工作经历List
+     */
+    String GET_TECH_WORKER_WORK_LIST = BuildConfig.API_HOST + "/yaf_shop/jobexperience/list";
+
+    /**
+     * 填写技师信息 工作经历更新
+     */
+    String GET_TECH_WORKER_EDUCATION_UPDATE = BuildConfig.API_HOST + "/yaf_shop/educationexperience/update";
+
+    /**
      * 加载系统类别
      */
     String GET_TECH_WORKER_SYS = BuildConfig.API_HOST + "/yaf_sys/basedata2user/list/";

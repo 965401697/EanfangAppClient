@@ -163,6 +163,8 @@ public class GetConstDataUtils {
 
     private static List<String> repairMisinformationList;
 
+    private static List<String> diplomaList;//学历
+
 //    private static List<String> noticeTypeList;
 
     private static List<String> dataList;//数据库查询数据集合
@@ -706,6 +708,17 @@ public class GetConstDataUtils {
             }
         }
         return maintainStatusList;
+    }
+
+    public static List<String> getDiplomaList() {
+        if (diplomaList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (diplomaList == null) {
+                    diplomaList = Config.get().getConstBean().getData().getConst().get(Constant.DIPLOMA);
+                }
+            }
+        }
+        return diplomaList;
     }
 
 

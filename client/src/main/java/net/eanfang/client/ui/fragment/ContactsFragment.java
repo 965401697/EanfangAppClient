@@ -44,6 +44,8 @@ import net.eanfang.client.ui.adapter.ParentAdapter;
 import java.util.Collections;
 import java.util.List;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by MrHou
  *
@@ -64,6 +66,8 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     private int mOldPosition = 0;
     private OrgEntity mOrgEntity;
     private View view;
+
+    public final int CREAT_TEAM_CODE = 49;
 
     @Override
     protected int setLayoutResouceId() {
@@ -318,7 +322,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         rl_create_team.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CreatTeamActivity.class));
+                startActivityForResult(new Intent(getActivity(), CreatTeamActivity.class), CREAT_TEAM_CODE);
             }
         });
 //        rl_create_team.setOnClickListener(new View.OnClickListener() {
@@ -329,6 +333,14 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 //            }
 //        });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 49) {
+            getData();
+        }
     }
 
     @Override
