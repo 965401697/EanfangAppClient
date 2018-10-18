@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
@@ -28,6 +29,12 @@ public class CompanyManagerActivity extends BaseActivity {
     RelativeLayout rlAuth;
     @BindView(R.id.rl_is_auth)
     RelativeLayout rlIsAuth;
+    // 重新认证
+    @BindView(R.id.tv_againAuth)
+    TextView tvAgainAuth;
+    // 荣誉证书
+    @BindView(R.id.rl_honorcertificate)
+    RelativeLayout rlHonorcertificate;
     private Long mOrgId;
     private String mOrgName = "";
     //认证中显示标示

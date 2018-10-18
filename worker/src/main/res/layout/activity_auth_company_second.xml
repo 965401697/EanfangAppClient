@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.worksapce.contacts.AuthCompanyBasicActivity">
+    tools:context="net.eanfang.worker.ui.activity.worksapce.contacts.AuthCompanySecondActivity">
 
 </android.support.constraint.ConstraintLayout>

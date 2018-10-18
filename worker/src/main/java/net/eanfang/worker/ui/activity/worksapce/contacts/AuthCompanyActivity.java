@@ -51,7 +51,7 @@ import butterknife.ButterKnife;
  *
  * @on 2018/1/25  14:00
  * @email houzhongzhou@yeah.net
- * @desc 安防公司认证
+ * @desc 安防公司认证 完善基本资料
  */
 
 public class AuthCompanyActivity extends BaseActivityWithTakePhoto {

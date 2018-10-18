@@ -608,7 +608,9 @@
         <activity android:name=".ui.activity.my.certification.NewAuthListActivity" />
         <activity android:name=".ui.activity.my.certification.CertificationActivity" />
         <activity android:name=".ui.activity.my.certification.IdentityCardCertification" />
-        <activity android:name=".ui.activity.my.certification.OtherDataActivity"></activity>
+        <activity android:name=".ui.activity.my.certification.OtherDataActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanySecondActivity"></activity>
     </application>
 
 </manifest>
