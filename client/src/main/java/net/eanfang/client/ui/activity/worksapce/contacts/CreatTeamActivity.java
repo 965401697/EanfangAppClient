@@ -49,6 +49,9 @@ public class CreatTeamActivity extends BaseClientActivity {
                     SwitchCompany(bean.getOrgId());
                     updateData();
 //                    mRefreshListener.refreshData();
+
+                    setResult(RESULT_OK);
+
                     finish();
                 }));
     }
@@ -66,7 +69,7 @@ public class CreatTeamActivity extends BaseClientActivity {
                     EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
                     EanfangHttp.setClient();
 
-                    finish();
+//                    finish();
                 }));
     }
 

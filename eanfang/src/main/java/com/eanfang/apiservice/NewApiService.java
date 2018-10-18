@@ -138,6 +138,12 @@ public interface NewApiService {
     String GET_UNREAD_MSG = BuildConfig.API_HOST + "/yaf_sys/notice/maintain";
 
     /**
+     * 获取官方消息通知
+     */
+    String GET_OFFICIAL_MSG = BuildConfig.API_HOST + "/yaf_sys/noticepush/appList";
+
+
+    /**
      * 推送已读Or未读
      */
     String GET_PUSH_MSG_INFO = BuildConfig.API_HOST + "/yaf_sys/notice/info/";

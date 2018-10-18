@@ -245,6 +245,8 @@ public class MainActivity extends BaseActivity {
 //                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
                 if (var == 0) {
                     redPoint.setVisibility(View.GONE);
+                }else {
+                    redPoint.setVisibility(View.VISIBLE);
                 }
             });
         });

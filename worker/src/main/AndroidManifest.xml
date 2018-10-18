@@ -611,6 +611,18 @@
         <activity android:name=".ui.activity.my.certification.OtherDataActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyFirstActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.AuthCompanySecondActivity"></activity>
+        <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
+        <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
+        <activity android:name=".ui.activity.my.certification.AddCertificationActivity" />
+        <activity android:name=".ui.activity.my.certification.OwmHistoryActivity" />
+        <activity android:name=".ui.activity.my.certification.AddEducationHistoryActivity" />
+        <activity android:name=".ui.activity.my.certification.WorkHistoryActivity" />
+        <activity android:name=".ui.activity.my.certification.AddWorkActivity" />
+        <activity android:name=".ui.activity.my.certification.SkillTypeActivity" />
+        <activity android:name=".ui.activity.my.certification.SkillAreaActivity" />
+        <activity android:name=".ui.activity.my.certification.SkillCertificafeListActivity" />
+        <activity android:name=".ui.activity.my.certification.AddSkillCertificafeActivity"></activity>
     </application>
 
 </manifest>

@@ -18,9 +18,6 @@ import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.AuthWorkerAreaActivity;
-import net.eanfang.worker.ui.activity.my.AuthWorkerBizActivity;
-import net.eanfang.worker.ui.activity.my.AuthWorkerSysTypeActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
@@ -96,15 +93,15 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 break;
             //技能资质
             case R.id.rl_skill:
-                startActivity(new Intent(this, AuthWorkerSysTypeActivity.class).putExtra("status", verify));
+                startActivity(new Intent(this, SkillTypeActivity.class).putExtra("status", verify));
                 break;
             // 个人经历
             case R.id.rl_own:
-                startActivity(new Intent(this, AuthWorkerBizActivity.class).putExtra("status", verify));
+                startActivity(new Intent(this, OwmHistoryActivity.class).putExtra("status", verify));
                 break;
             //荣誉证书
             case R.id.rl_certificate:
-                startActivity(new Intent(this, AuthWorkerAreaActivity.class).putExtra("status", verify));
+                startActivity(new Intent(this, CertificateListActivity.class).putExtra("status", verify));
                 break;
             case R.id.tv_confim:
                 doVerify();

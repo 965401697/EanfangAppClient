@@ -37,6 +37,7 @@ import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyConversationListFragment;
 import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;
@@ -413,7 +414,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void setListener() {
-        // 业务通知
+        // 官方通知
+        view.findViewById(R.id.ll_official).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+//            bundle.putInt("mMessageCount", mMessageCount);
+            JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
+        });       // 业务通知
         view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt("mMessageCount", mMessageCount);
