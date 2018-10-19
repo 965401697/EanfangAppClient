@@ -8,231 +8,309 @@
 
     <include layout="@layout/header" />
 
-    <RelativeLayout
-        android:id="@+id/rl_is_auth"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_60"
-        android:background="@color/color_auth_top_back">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="您当前的资料认证认证中，无法修改"
-            android:textColor="@color/color_auth_top_text"
-            android:textSize="@dimen/textSize_12" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_prefectInfo"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_100"
-        android:background="@color/color_white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/dimen_20"
-            android:drawableLeft="@mipmap/ic_work_prefect_info"
-            android:drawablePadding="@dimen/dimen_22"
-            android:gravity="center_vertical"
-            android:text="完善资料"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_14" />
-
-        <ImageView
-            android:layout_width="@dimen/dimen_12"
-            android:layout_height="@dimen/dimen_24"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dimen_40"
-            android:src="@mipmap/ic_icon_right" />
-    </RelativeLayout>
-
-    <View style="@style/style_common_line_gray" />
-
-    <RelativeLayout
-        android:id="@+id/rl_auth"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_100"
-        android:background="@color/color_white">
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="12dp"
-            android:drawableLeft="@mipmap/ic_work_auth_info"
-            android:drawablePadding="@dimen/dimen_22"
-            android:gravity="center_vertical"
-            android:text="资质认证"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_14" />
-
-        <ImageView
-            android:layout_width="@dimen/dimen_12"
-            android:layout_height="@dimen/dimen_24"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dimen_40"
-            android:src="@mipmap/ic_icon_right" />
-    </RelativeLayout>
-
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <RelativeLayout
-            android:id="@+id/rl_admin_set"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:background="@color/color_white">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_is_auth"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60"
+                android:background="@color/color_auth_top_back">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="您当前的资料认证认证中，无法修改"
+                    android:textColor="@color/color_auth_top_text"
+                    android:textSize="@dimen/textSize_12" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_admin_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="12dp"
-                android:drawableLeft="@mipmap/ic_admin"
-                android:drawablePadding="@dimen/dimen_22"
-                android:gravity="center_vertical"
-                android:text="管理员设置"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_admin"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="管理员设置"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
-            <ImageView
-                android:layout_width="@dimen/dimen_12"
-                android:layout_height="@dimen/dimen_24"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:src="@mipmap/ic_icon_right" />
-        </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_creat_section"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:background="@color/color_white">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="12dp"
-                android:drawableLeft="@mipmap/ic_section"
-                android:drawablePadding="@dimen/dimen_22"
-                android:gravity="center_vertical"
-                android:text="创建部门"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <ImageView
-                android:layout_width="@dimen/dimen_12"
-                android:layout_height="@dimen/dimen_24"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:src="@mipmap/ic_icon_right" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_add_staff"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:background="@color/color_white">
+                <RelativeLayout
+                    android:id="@+id/rl_creat_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="12dp"
-                android:drawableLeft="@mipmap/ic_add_preson"
-                android:drawablePadding="@dimen/dimen_22"
-                android:gravity="center_vertical"
-                android:text="添加人员"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_section"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="创建部门"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
-            <ImageView
-                android:layout_width="@dimen/dimen_12"
-                android:layout_height="@dimen/dimen_24"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:src="@mipmap/ic_icon_right" />
-        </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_permission"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:background="@color/color_white">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="12dp"
-                android:drawableLeft="@mipmap/ic_presion"
-                android:drawablePadding="@dimen/dimen_22"
-                android:gravity="center_vertical"
-                android:text="权限管理"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <ImageView
-                android:layout_width="@dimen/dimen_12"
-                android:layout_height="@dimen/dimen_24"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:src="@mipmap/ic_icon_right" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_cooperation_relation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100"
-            android:background="@color/color_white">
+                <RelativeLayout
+                    android:id="@+id/rl_add_staff"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="12dp"
-                android:drawableLeft="@mipmap/ic_cooperation"
-                android:drawablePadding="@dimen/dimen_22"
-                android:gravity="center_vertical"
-                android:text="合作关系"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_add_preson"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="添加人员"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
-            <ImageView
-                android:layout_width="@dimen/dimen_12"
-                android:layout_height="@dimen/dimen_24"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_40"
-                android:src="@mipmap/ic_icon_right" />
-        </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_permission"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_presion"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="权限管理"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_cooperation_relation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_cooperation"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="合作关系"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:gravity="center_vertical"
+                        android:text="企业认证信息"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/tv_againAuth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:gravity="center"
+                        android:text="重新认证"
+                        android:textColor="@color/colorPrimary"
+                        android:visibility="gone" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_prefectInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:drawableLeft="@mipmap/ic_work_prefect_info"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="完善资料"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_auth"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_work_auth_info"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="资质认证"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_honorcertificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_100"
+                    android:background="@color/color_white">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@mipmap/ic_worker_honorcertificate"
+                        android:drawablePadding="@dimen/dimen_22"
+                        android:gravity="center_vertical"
+                        android:text="荣誉证书"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dimen_12"
+                        android:layout_height="@dimen/dimen_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:src="@mipmap/ic_icon_right" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
 </LinearLayout>

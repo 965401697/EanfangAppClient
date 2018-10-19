@@ -80,7 +80,6 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
         businessCooperationAddAdapter.setNewData(mOsList);
         osCooperationAddAdapter.setNewData(mBusinessList);
-
     }
 
     @OnClick(R.id.tv_go)
@@ -92,10 +91,10 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_limit:
-                PickerSelectUtil.singleTextPicker(this, "", tvLimit, GetConstDataUtils.getWorkingLevelList());
+                PickerSelectUtil.singleTextPicker(this, "", tvLimit, GetConstDataUtils.getWorkingYearList());
                 break;
             case R.id.ll_ability:
-                PickerSelectUtil.singleTextPicker(this, "", tvAbility, GetConstDataUtils.getWorkingYearList());
+                PickerSelectUtil.singleTextPicker(this, "", tvAbility, GetConstDataUtils.getWorkingLevelList());
                 break;
         }
     }

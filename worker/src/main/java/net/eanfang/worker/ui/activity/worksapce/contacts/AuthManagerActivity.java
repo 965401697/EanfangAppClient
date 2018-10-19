@@ -9,6 +9,8 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifySecondActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,11 +66,11 @@ public class AuthManagerActivity extends BaseActivity {
                 break;
             // 系统类别
             case R.id.rl_systom_type:
-                JumpItent.jump(AuthManagerActivity.this, AuthSystemTypeActivity.class);
+                JumpItent.jump(AuthManagerActivity.this, AuthQualifyFirstActivity.class);
                 break;
             // 业务类别
             case R.id.rl_business_type:
-                JumpItent.jump(AuthManagerActivity.this, AuthBizActivity.class);
+                JumpItent.jump(AuthManagerActivity.this, AuthQualifySecondActivity.class);
                 break;
             // 服务区域
             case R.id.rl_service_area:

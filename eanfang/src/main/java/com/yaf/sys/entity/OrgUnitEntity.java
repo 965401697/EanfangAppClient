@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.yaf.base.entity.ShopCompanyEntity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @TableName(value = "sys_org_unit")
 public class OrgUnitEntity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId(value = "org_id", type = IdType.INPUT)
     //组织结构id
@@ -36,7 +37,7 @@ public class OrgUnitEntity implements Serializable {
     @NotNull
     @Digits(integer = 19, fraction = 0)
     private Long orgId;
-    
+
     //管理员
     //@TableField(value = "admin_user_id")
     @NotNull
@@ -99,7 +100,7 @@ public class OrgUnitEntity implements Serializable {
     //创建时间
     //@TableField(value = "create_time")
     private Date createTime;
-    
+
     //更新时间
     @Getter
     @Setter
@@ -426,15 +427,20 @@ public class OrgUnitEntity implements Serializable {
         result = prime * result + ((adminUserId == null) ? 0 : adminUserId.hashCode());
         return result;
     }
-    
+
     //手工代码
     @Getter
     @Setter
-    @TableField(exist=false)
+    @TableField(exist = false)
     private UserEntity userEntity;
-    
+    //手工代码
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private ShopCompanyEntity shopCompanyEntity;
+
     @Getter
     @Setter
     private Long accId;
-    
+
 }

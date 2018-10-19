@@ -116,9 +116,14 @@ public interface UserApi {
      */
     String GET_ORGUNIT_SHOP_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/add";
     /**
-     * 填写企业资料
+     * 填写企业资料 技师端
      */
     String GET_ORGUNIT_SHOP_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/insert";
+
+    /**
+     * 技师端安防公司完善资质认证
+     */
+    String GET_WORKER_COMPANY_QUALIFY = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/insertV2";
     /**
      * 填写系统类别
      */
@@ -139,7 +144,7 @@ public interface UserApi {
     String GET_ORGUNIT_ENT_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/add";
 
     /**
-     * 保存企业资料
+     * 保存企业资料 客户端
      */
     String GET_ORGUNIT_ENT_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/insert";
 
