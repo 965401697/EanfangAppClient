@@ -61,7 +61,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  * @email houzhongzhou@yeah.net
  * @desc 添加完成工作
  */
-
+@Deprecated
 public class AddReportCompleteActivity extends BaseWorkerActivity {
 
     @BindView(R.id.et_input_content)

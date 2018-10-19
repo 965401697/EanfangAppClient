@@ -12,7 +12,6 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkReportListBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
@@ -51,7 +50,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new WorkReportListAdapter();
+        mAdapter = new WorkReportListAdapter(mType);
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -86,10 +85,10 @@ public class WorkReportListFragment extends TemplateItemListFragment {
     protected void getData() {
 
         QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(mTitle)) {
-            String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
-            queryEntry.getEquals().put(Constant.STATUS, status);
-        }
+//        if (!Constant.ALL.equals(mTitle)) {
+//            String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
+//            queryEntry.getEquals().put(Constant.STATUS, status);
+//        }
         if (Constant.COMPANY_DATA_CODE == mType) {
             queryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
         } else if (Constant.CREATE_DATA_CODE == mType) {

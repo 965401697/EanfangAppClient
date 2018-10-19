@@ -620,7 +620,10 @@
         <activity android:name=".ui.activity.my.certification.SkillTypeActivity" />
         <activity android:name=".ui.activity.my.certification.SkillAreaActivity" />
         <activity android:name=".ui.activity.my.certification.SkillCertificafeListActivity" />
-        <activity android:name=".ui.activity.my.certification.AddSkillCertificafeActivity"></activity>
+        <activity android:name=".ui.activity.my.certification.AddSkillCertificafeActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity"></activity>
     </application>
 
 </manifest>
