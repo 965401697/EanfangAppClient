@@ -252,9 +252,9 @@
         <activity android:name=".ui.activity.worksapce.SignListActivity" />
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
         <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthSystemTypeActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthBizActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifySecondActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.AuthAreaActivity" />
         <!-- 技师认证 填写个人资料 照片 等 -->
         <activity
@@ -609,8 +609,8 @@
         <activity android:name=".ui.activity.my.certification.CertificationActivity" />
         <activity android:name=".ui.activity.my.certification.IdentityCardCertification" />
         <activity android:name=".ui.activity.my.certification.OtherDataActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyFirstActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanySecondActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity"></activity>
         <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />

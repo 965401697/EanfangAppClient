@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.contacts;
+package net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,7 +80,6 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
     private String itemzone;
 
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
-    private AuthCompanyBaseInfoBean byNetBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,6 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_auth_company_first);
         ButterKnife.bind(this);
         initView();
-        initListener();
         initData();
     }
 
@@ -119,7 +117,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
                 .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
-                    byNetBean = beans;
+                    infoBean = beans;
                     fillData();
                 }));
     }
@@ -155,17 +153,12 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         infoBean.setOrgId(orgid);
         infoBean.setLegalName(etLegalPersion.getText().toString().trim());
         infoBean.setTelPhone(etPhone.getText().toString().trim());
-        infoBean.setUnitType(3);
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
         if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
-        } else {
-            infoBean.setAreaCode(byNetBean.getAreaCode());
         }
-        if (byNetBean.getAdminUserId().equals("")) {
+        if (infoBean.getAdminUserId() == null) {
             infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
-        } else {
-            infoBean.setAdminUserId(byNetBean.getAdminUserId());
         }
 
         String json = JSONObject.toJSONString(infoBean);
@@ -179,7 +172,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
         // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
-        if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
+        if (infoBean.getStatus() != 0 && infoBean.getStatus() != 3) {
             btnComplete.setVisibility(View.GONE);
             ivUpload.setEnabled(false);
             etCompany.setEnabled(false);
@@ -191,31 +184,28 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             etPhone.setEnabled(false);
             etDetailOfficeAddress.setEnabled(false);
         }
-        if (byNetBean.getStatus() != 2) {
-            setRightGone();
-        }
-        if (byNetBean != null) {
-            if (byNetBean.getLicenseCode() != null) {
-                edCompanyNumber.setText(byNetBean.getLicenseCode());
+        if (infoBean != null) {
+            if (infoBean.getLicenseCode() != null) {
+                edCompanyNumber.setText(infoBean.getLicenseCode());
             }
-            if (byNetBean.getRegisterAssets() != null) {
-                etMoney.setText(byNetBean.getRegisterAssets());
+            if (infoBean.getRegisterAssets() != null) {
+                etMoney.setText(infoBean.getRegisterAssets());
             }
-            if (byNetBean.getLegalName() != null) {
-                etLegalPersion.setText(byNetBean.getLegalName());
+            if (infoBean.getLegalName() != null) {
+                etLegalPersion.setText(infoBean.getLegalName());
             }
-            if (byNetBean.getTelPhone() != null) {
-                etPhone.setText(byNetBean.getTelPhone());
+            if (infoBean.getTelPhone() != null) {
+                etPhone.setText(infoBean.getTelPhone());
             }
-            if (byNetBean.getOfficeAddress() != null) {
-                etDetailOfficeAddress.setText(byNetBean.getOfficeAddress());
+            if (infoBean.getOfficeAddress() != null) {
+                etDetailOfficeAddress.setText(infoBean.getOfficeAddress());
             }
-            if (byNetBean.getAreaCode() != null) {
-                tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
+            if (infoBean.getAreaCode() != null) {
+                tvOfficeAddress.setText(Config.get().getAddressByCode(infoBean.getAreaCode()));
             }
-            if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
-                ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
-                infoBean.setLicensePic(byNetBean.getLicensePic());
+            if (!StringUtils.isEmpty(infoBean.getLicensePic())) {
+                ivUpload.setImageURI(BuildConfig.OSS_SERVER + infoBean.getLicensePic());
+                infoBean.setLicensePic(infoBean.getLicensePic());
             }
         }
     }
@@ -246,12 +236,9 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
     }
 
     private void commit(String json) {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
+        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
                 .upJson(json)
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
-                    //保存成功后，提交认证
-                    byNetBean = new AuthCompanyBaseInfoBean();
-                    byNetBean.setOrgId(bean.getOrgId());
                     doJumpSecond();
                 }));
     }
@@ -286,7 +273,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
      */
     private void doJumpSecond() {
         Bundle bundle = new Bundle();
-        bundle.putLong("mOrgId", byNetBean.getOrgId());
+        bundle.putLong("mOrgId", orgid);
         JumpItent.jump(AuthCompanyFirstActivity.this, AuthCompanySecondActivity.class, bundle);
     }
 

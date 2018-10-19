@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.contacts.AuthCompanySecondActivity">
+    tools:context="net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity">
 
     <include layout="@layout/header" />
 
@@ -126,7 +126,6 @@
                         android:id="@+id/tv_company_scale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="asdf"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_14" />
 
@@ -166,7 +165,6 @@
                         android:layout_toLeftOf="@id/iv_type"
                         android:layout_toRightOf="@id/tv_type_temp"
                         android:gravity="right"
-                        android:text="adsf "
                         android:textColor="@color/font_color"
                         android:textSize="@dimen/textSize_14" />
 
@@ -221,16 +219,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_margin="@dimen/dimen_30"
                     android:text="公司描述:"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
+                <View style="@style/style_common_line_gray" />
+
                 <EditText
                     android:id="@+id/et_desc"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_200"
                     android:layout_margin="5dp"
                     android:background="@drawable/bg_ll_selctor"
                     android:gravity="top"

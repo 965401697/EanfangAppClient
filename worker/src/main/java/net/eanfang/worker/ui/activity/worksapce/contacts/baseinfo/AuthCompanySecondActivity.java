@@ -1,5 +1,6 @@
-package net.eanfang.worker.ui.activity.worksapce.contacts;
+package net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthCompanyBaseInfoBean;
+import com.eanfang.model.Message;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
@@ -30,8 +32,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.BaseDataEntity;
+import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 
 import java.util.List;
 
@@ -69,7 +73,6 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
     private String secondTraed;
 
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
-    private AuthCompanyBaseInfoBean byNetBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +87,13 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
     private void initView() {
         setTitle("完善资料");
         setLeftBack();
-        orgid = getIntent().getLongExtra("orgid", 0);
-
+        orgid = getIntent().getLongExtra("mOrgId", 0);
     }
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
                 .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
-                    byNetBean = beans;
+                    infoBean = beans;
                     fillData();
                 }));
     }
@@ -111,20 +113,56 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
     }
 
     /**
-     * 行业类型
+     * 初始化  填充数据
      */
-    private void showTradType() {
-        List<BaseDataEntity> baseDataBeanList = Config.get().getIndustryList();
-        List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
-        List<String> tradeFirststr = Stream.of(tradeFirst).map(first -> first.getDataName()).toList();
-        List<List<String>> secondStr = Stream.of(tradeFirst).map(firtstr -> Stream.of(baseDataBeanList).filter(second -> second.getLevel() == 3 && second.getDataCode().startsWith(firtstr.getDataCode())).map(second -> second.getDataName()).toList()).toList();
-
-        PickerSelectUtil.linkagePicker(this, "行业类型", tradeFirststr, secondStr, ((first, second) -> {
-            secondTraed = second;
-            String tradeStr = first + " - " + second;
-            tvType.setText(tradeStr);
-        }));
+    private void fillData() {
+        //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
+        // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
+        if (infoBean.getStatus() != 0 && infoBean.getStatus() != 3) {
+            btnComplete.setVisibility(View.GONE);
+            ivUpload2.setEnabled(false);
+            llType.setEnabled(false);
+            llCompanyScale.setEnabled(false);
+            etDesc.setEnabled(false);
+        }
+        if (infoBean.getStatus() != 2) {
+            setRightGone();
+        }
+        if (infoBean != null) {
+            if (infoBean.getTradeTypeCode() != null) {
+                tvType.setText(Config.get().getBaseNameByCode(infoBean.getTradeTypeCode(), Constant.INDUSTRY));
+            }
+            if (infoBean.getScale() >= 0) {
+                tvCompanyScale.setText(GetConstDataUtils.getOrgUnitScaleList().get(infoBean.getScale()));
+            }
+            if (infoBean.getIntro() != null) {
+                etDesc.setText(infoBean.getIntro());
+            }
+            if (!StringUtils.isEmpty(infoBean.getLogoPic())) {
+                ivUpload2.setImageURI(BuildConfig.OSS_SERVER + infoBean.getLogoPic());
+                infoBean.setLogoPic(infoBean.getLogoPic());
+            }
+        }
     }
+
+    private void setData() {
+        // 行业类型
+        infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        // 公司规模
+        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
+        infoBean.setStatus(1);
+        infoBean.setOrgId(orgid);
+        infoBean.setUnitType(3);
+        infoBean.setIntro(etDesc.getText().toString().trim());
+        if (infoBean.getAdminUserId() == null) {
+            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+        } else {
+            infoBean.setAdminUserId(infoBean.getAdminUserId());
+        }
+        String json = JSONObject.toJSONString(infoBean);
+        commit(json);
+    }
+
 
     /**
      * 进行字段的约束判断
@@ -141,67 +179,31 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         }
     }
 
-    private void setData() {
-        if (byNetBean.getTradeTypeCode().equals("")) {
-            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
-        } else {
-            infoBean.setTradeTypeCode(byNetBean.getTradeTypeCode());
-        }
-
-        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
-        infoBean.setStatus(1);
-        infoBean.setOrgId(orgid);
-        infoBean.setUnitType(3);
-        infoBean.setIntro(etDesc.getText().toString().trim());
-        if (byNetBean.getAdminUserId().equals("")) {
-            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
-        } else {
-            infoBean.setAdminUserId(byNetBean.getAdminUserId());
-        }
-        String json = JSONObject.toJSONString(infoBean);
-        commit(json);
-    }
-
     /**
-     * 初始化  填充数据
+     * 保存资料
      */
-    private void fillData() {
-        //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
-        // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
-        if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
-            btnComplete.setVisibility(View.GONE);
-            ivUpload2.setEnabled(false);
-            llType.setEnabled(false);
-            llCompanyScale.setEnabled(false);
-            etDesc.setEnabled(false);
-        }
-        if (byNetBean.getStatus() != 2) {
-            setRightGone();
-        }
-        if (byNetBean != null) {
-            if (byNetBean.getTradeTypeCode() != null) {
-                tvType.setText(Config.get().getBaseNameByCode(byNetBean.getTradeTypeCode(), Constant.INDUSTRY));
-            }
-            if (byNetBean.getScale() >= 0) {
-                tvCompanyScale.setText(GetConstDataUtils.getOrgUnitScaleList().get(byNetBean.getScale()));
-            }
-            if (byNetBean.getIntro() != null) {
-                etDesc.setText(byNetBean.getIntro());
-            }
-            if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
-                ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
-                infoBean.setLogoPic(byNetBean.getLogoPic());
-            }
-        }
-    }
-
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
                 .upJson(json)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    showToast("保存成功");
-                    finishSelf();
+                .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
+                    submitSuccess();
                 }));
+    }
+
+    /**
+     * 行业类型
+     */
+    private void showTradType() {
+        List<BaseDataEntity> baseDataBeanList = Config.get().getIndustryList();
+        List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
+        List<String> tradeFirststr = Stream.of(tradeFirst).map(first -> first.getDataName()).toList();
+        List<List<String>> secondStr = Stream.of(tradeFirst).map(firtstr -> Stream.of(baseDataBeanList).filter(second -> second.getLevel() == 3 && second.getDataCode().startsWith(firtstr.getDataCode())).map(second -> second.getDataName()).toList()).toList();
+
+        PickerSelectUtil.linkagePicker(this, "行业类型", tradeFirststr, secondStr, ((first, second) -> {
+            secondTraed = second;
+            String tradeStr = first + " - " + second;
+            tvType.setText(tradeStr);
+        }));
     }
 
     /**
@@ -228,4 +230,20 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
 
     }
 
+    private void submitSuccess() {
+        Intent intent = new Intent(AuthCompanySecondActivity.this, StateChangeActivity.class);
+        Bundle bundle = new Bundle();
+        Message message = new Message();
+        message.setTitle("提交成功");
+        message.setMsgTitle("尊敬的用户，您必须进行资质认证才可以接单，并获得更多订单");
+        message.setMsgContent("");
+        message.setTip("");
+        message.setShowOkBtn(true);
+        message.setShowLogo(true);
+        bundle.putSerializable("message", message);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finishSelf();
+        EanfangApplication.get().closeActivity(AuthCompanyFirstActivity.class.getName());
+    }
 }

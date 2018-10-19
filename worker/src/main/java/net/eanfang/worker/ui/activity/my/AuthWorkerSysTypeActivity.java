@@ -52,6 +52,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
 
     // 是否编辑
     private boolean isEdit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +88,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
             }
         }
         if (status == 1 || status == 2) {
-            tagWorkType.setEnabled(false);
+//            tagWorkType.setEnabled(false);
             tvConfim.setText("确定");
         }
         if (status != 2) {
@@ -136,7 +137,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
      * 重新编辑
      */
     private void doRevoke() {
-        tagWorkType.setEnabled(true);
+//        tagWorkType.setEnabled(true);
     }
 
     private void commit() {

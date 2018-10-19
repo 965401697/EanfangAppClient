@@ -17,6 +17,9 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,10 +64,21 @@ public class CompanyManagerActivity extends BaseActivity {
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
         adminUserId = getIntent().getStringExtra("adminUserId");
+        /**
+         *  0 未认证，待认证
+         *  1认证中
+         *  2已认证
+         *  3认证失败，请重新认证
+         * */
         if ("1".equals(isAuth)) {
             rlIsAuth.setVisibility(View.VISIBLE);
         } else {
             rlIsAuth.setVisibility(View.GONE);
+        }
+        if ("2".equals(isAuth)) {
+            tvAgainAuth.setVisibility(View.VISIBLE);
+        } else {
+            tvAgainAuth.setVisibility(View.GONE);
         }
     }
 
@@ -79,7 +93,7 @@ public class CompanyManagerActivity extends BaseActivity {
                 bundle_prefect.putString("orgName", mOrgName);
                 bundle_prefect.putString("assign", "prefect");
                 if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看 资料
-                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_prefect);
                 } else {
                     JumpItent.jump(CompanyManagerActivity.this, AuthCompanyFirstActivity.class, bundle_prefect);
                 }
@@ -89,7 +103,7 @@ public class CompanyManagerActivity extends BaseActivity {
                 if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
                 Bundle bundle_auth = new Bundle();
                 bundle_auth.putLong("orgid", mOrgId);
-                JumpItent.jump(CompanyManagerActivity.this, AuthSystemTypeActivity.class, bundle_auth);
+                JumpItent.jump(CompanyManagerActivity.this, AuthQualifyFirstActivity.class, bundle_auth);
 
                 break;
 

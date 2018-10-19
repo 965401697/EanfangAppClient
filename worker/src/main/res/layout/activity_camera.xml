@@ -303,8 +303,8 @@
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:checked="true"
-                        android:gravity="center"
                         android:text="白色"
+                        android:gravity="center"
                         android:textColor="@drawable/select_camera_text_back"
                         android:textSize="12sp" />
 

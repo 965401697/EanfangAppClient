@@ -22,6 +22,9 @@ import com.yaf.sys.entity.BaseDataEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifySecondActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -44,6 +47,7 @@ public class AuthAreaActivity extends BaseActivity {
     ExpandableListView elvArea;
     @BindView(R.id.tv_confim)
     TextView tvConfim;
+
     List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     private GroupAdapter mAdapter;
     private Long orgid;
@@ -216,9 +220,9 @@ public class AuthAreaActivity extends BaseActivity {
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(AuthCompanyActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthSystemTypeActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthBizActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthCompanyDataActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthQualifyFirstActivity.class.getName());
+        EanfangApplication.get().closeActivity(AuthQualifySecondActivity.class.getName());
     }
 
     public void doJumpConfirm() {

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.contacts.AuthCompanyFirstActivity">
+    tools:context="net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity">
 
     <include layout="@layout/header" />
 
@@ -125,8 +125,9 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="单位名称"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
@@ -152,9 +153,10 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="营业执照号码"
                         android:inputType="number"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
@@ -183,7 +185,7 @@
                         android:gravity="right"
                         android:hint="注册资本(万)"
                         android:inputType="number"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
@@ -209,6 +211,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="单位电话"
                         android:inputType="phone|number"
                         android:maxLength="11"
@@ -238,6 +241,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="法人代表"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
