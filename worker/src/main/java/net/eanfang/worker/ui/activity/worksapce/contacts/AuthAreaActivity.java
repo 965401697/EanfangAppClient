@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -17,14 +16,15 @@ import com.eanfang.model.GrantChange;
 import com.eanfang.model.Message;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity;
-import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifySecondActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifySecondActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -226,19 +226,12 @@ public class AuthAreaActivity extends BaseActivity {
     }
 
     public void doJumpConfirm() {
-        Intent intent = new Intent(AuthAreaActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
-        message.setTitle("认证提交成功");
-        message.setMsgTitle("您的技师认证资料已经提交成功");
-        message.setMsgContent("我们会在72小时内进行审核");
-        message.setMsgHelp("如需修改认证资料");
-        message.setShowOkBtn(true);
-        message.setShowLogo(true);
-        message.setTip("");
+        message.setMsgContent("认证提交成功");
+        message.setTip("确定");
         bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        JumpItent.jump(AuthAreaActivity.this, StateChangeActivity.class, bundle);
         finishSelf();
     }
 

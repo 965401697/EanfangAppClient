@@ -32,6 +32,7 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -199,7 +200,7 @@ public class TaskPublishActivity extends BaseActivity {
         bean.setBudget(GetConstDataUtils.getBudgetList().indexOf(tvBudget.getText().toString().trim()));
         bean.setToDoorTime(tvLoginTime.getText().toString().trim());
         bean.setDescription(etDesc.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/",mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/", mPhotosSnpl, uploadMap, true);
         bean.setPictures(ursStr);
         String json = JSONObject.toJSONString(bean);
         if (uploadMap.size() != 0) {
@@ -229,17 +230,12 @@ public class TaskPublishActivity extends BaseActivity {
 
     private void submitSuccess() {
 
-        Intent intent = new Intent(this, StateChangeActivity.class);
         Message message = new Message();
-        message.setTitle("找工人成功");
-        message.setMsgTitle("您的任务已经发布成功");
-        message.setMsgContent("请耐心等待技师接单。");
-        message.setShowLogo(true);
-        message.setShowOkBtn(true);
+        message.setMsgContent("找工人成功。");
         Bundle bundle = new Bundle();
         bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        JumpItent.jump(TaskPublishActivity.this, StateChangeActivity.class, bundle);
+
         finish();
     }
 

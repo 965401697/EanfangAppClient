@@ -29,6 +29,7 @@ import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
@@ -370,18 +371,12 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 .upJson(jsonString)
                 .execute(new EanfangCallback<WorkTaskInfoBean>(this, true, WorkTaskInfoBean.class, (bean) -> {
                     runOnUiThread(() -> {
-                        Intent intent = new Intent(TaskActivity.this, StateChangeActivity.class);
                         Bundle bundle = new Bundle();
                         Message message = new Message();
-                        message.setTitle("任务指派成功");
-                        message.setMsgTitle("您的工作任务已指派成功");
-                        message.setMsgContent("您可以随时通过我的工作任务查看");
-                        message.setShowOkBtn(true);
-                        message.setShowLogo(true);
-                        message.setTip("");
+                        message.setMsgContent("任务指派成功");
+                        message.setTip("确定");
                         bundle.putSerializable("message", message);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        JumpItent.jump(TaskActivity.this, StateChangeActivity.class, bundle);
 
                         //分享
                         if (newPresonList.size() == 0 && newGroupList.size() == 0) {

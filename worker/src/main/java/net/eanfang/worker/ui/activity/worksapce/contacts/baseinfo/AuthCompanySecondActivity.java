@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +23,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -231,18 +231,12 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
     }
 
     private void submitSuccess() {
-        Intent intent = new Intent(AuthCompanySecondActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
-        message.setTitle("提交成功");
-        message.setMsgTitle("尊敬的用户，您必须进行资质认证才可以接单，并获得更多订单");
-        message.setMsgContent("");
-        message.setTip("");
-        message.setShowOkBtn(true);
-        message.setShowLogo(true);
+        message.setMsgContent("尊敬的用户，您必须进行资质认证才可以接单，并获得更多订单");
+        message.setTip("前往资质认证");
         bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        JumpItent.jump(AuthCompanySecondActivity.this, StateChangeActivity.class, bundle);
         finishSelf();
         EanfangApplication.get().closeActivity(AuthCompanyFirstActivity.class.getName());
     }

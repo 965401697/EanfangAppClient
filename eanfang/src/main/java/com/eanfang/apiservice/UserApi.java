@@ -402,5 +402,21 @@ public interface UserApi {
      * 修改密码
      */
     String UPDATA_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changeAppkey";
+    /**
+     * 添加资质证书
+     */
+    String ADD_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/insert";
+    /**
+     * 修改资质证书
+     */
+    String UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/update";
+    /**
+     * 查看资质证书列表
+     */
+    String LIST_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/list";
+    /**
+     * 查看资质证书列表
+     */
+    String DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/delete";
 
 }

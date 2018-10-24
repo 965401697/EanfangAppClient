@@ -266,18 +266,12 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
                 }));
     }
 
-    private void submitSuccess(/*OrderReturnBean bean*/) {
-//        ordernum = bean.getOrdernum();
-//        status = bean.getStatus();
-//        doorfee = bean.getDoorfee();
-//        showToast("下单成功");
+    private void submitSuccess() {
         Intent intent = new Intent(AuthCompanySecondActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
-        message.setTitle("提交成功");
         message.setMsgTitle("您的资料已提交成功");
-        message.setMsgContent("");
-        message.setTip("");
+        message.setTip("前往资质认证");
         message.setShowOkBtn(true);
         message.setShowLogo(true);
         bundle.putSerializable("message", message);

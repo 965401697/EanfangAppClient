@@ -22,6 +22,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
@@ -94,11 +95,9 @@ public class PayActivity extends BaseWorkerActivity {
                             // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付成功");
                             EanfangApplication.get().closeActivity(PayActivity.class.getName());
-                            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("message", MessageUtil.paySuccess());
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+                            JumpItent.jump(PayActivity.this, StateChangeActivity.class, bundle);
                         } else {
                             // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付失败");

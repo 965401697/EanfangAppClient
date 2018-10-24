@@ -88,6 +88,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         initView();
         initData();
+        initListener();
     }
 
     private void initView() {

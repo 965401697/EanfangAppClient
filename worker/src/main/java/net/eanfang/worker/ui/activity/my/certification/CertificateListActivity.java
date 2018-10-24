@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -40,7 +41,14 @@ public class CertificateListActivity extends BaseWorkerActivity {
     TextView tvSub;
 
     private final int ADD_CERTIFICATION_CODE = 101;
+    @BindView(R.id.rl_add)
+    RelativeLayout rlAdd;
     private CertificateListAdapter adapter;
+
+    // 认证状态
+    private String isAuth = "";
+    // 是否可以删除
+    private boolean isDelete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +57,21 @@ public class CertificateListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("荣誉证书");
         setLeftBack();
-
-
         initViews();
-
+        getData();
     }
 
     private void initViews() {
+        isAuth = getIntent().getStringExtra("isAuth");
+        if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
+            rlAdd.setVisibility(View.GONE);
+            tvSub.setVisibility(View.GONE);
+            isDelete = false;
+        } else {
+            rlAdd.setVisibility(View.VISIBLE);
+            tvSub.setVisibility(View.VISIBLE);
+            isDelete = true;
+        }
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +80,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CertificateListAdapter();
+        adapter = new CertificateListAdapter(isDelete);
         adapter.bindToRecyclerView(recyclerView);
 
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -77,7 +93,9 @@ public class CertificateListActivity extends BaseWorkerActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class).putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position)), ADD_CERTIFICATION_CODE);
+                startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class)
+                        .putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position))
+                        .putExtra("isAuth", isAuth), ADD_CERTIFICATION_CODE);
             }
         });
     }
@@ -132,7 +150,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
     @OnClick(R.id.tv_sub)
     public void onViewClicked() {
         Intent intent = new Intent(CertificateListActivity.this, OwnDataHintActivity.class);
-        intent.putExtra("info", "尊敬的技师，祝贺您！");
+        intent.putExtra("info", "尊敬的用户，祝贺您！赶紧去接单吧！");
         intent.putExtra("go", "");
         intent.putExtra("desc", "如有疑问，请联系客服处理");
         intent.putExtra("service", "客服热线：010-5877-8731");

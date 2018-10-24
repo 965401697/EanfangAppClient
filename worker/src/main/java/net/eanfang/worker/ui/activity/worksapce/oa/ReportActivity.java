@@ -33,6 +33,7 @@ import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
@@ -356,19 +357,12 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 .upJson(jsonString)
                 .execute(new EanfangCallback<WorkReportInfoBean>(this, true, WorkReportInfoBean.class, (bean) -> {
                     runOnUiThread(() -> {
-                        Intent intent = new Intent(ReportActivity.this, StateChangeActivity.class);
                         Bundle bundle = new Bundle();
                         Message message = new Message();
-                        message.setTitle("汇报发送成功");
-                        message.setMsgTitle("您的工作汇报已发送成功");
-                        message.setMsgContent("您可以随时通过我的汇报查看");
-                        message.setShowOkBtn(true);
-                        message.setShowLogo(true);
-                        message.setTip("");
+                        message.setMsgContent("汇报发送成功");
+                        message.setTip("确定");
                         bundle.putSerializable("message", message);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-
+                        JumpItent.jump(ReportActivity.this, StateChangeActivity.class, bundle);
 
                         //分享
                         if (newPresonList.size() == 0 && newGroupList.size() == 0) {

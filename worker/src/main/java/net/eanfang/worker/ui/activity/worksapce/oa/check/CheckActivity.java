@@ -29,6 +29,7 @@ import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
@@ -377,19 +378,14 @@ public class CheckActivity extends BaseWorkerActivity {
                 .upJson(jsonString)
                 .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
                             runOnUiThread(() -> {
-                                Intent intent = new Intent(CheckActivity.this, StateChangeActivity.class);
                                 Bundle bundle = new Bundle();
                                 Message message = new Message();
-                                message.setTitle("检查发送成功");
-                                message.setMsgTitle("您的工作检查已发送成功");
-                                message.setMsgContent("您可以随时通过我的检查查看");
+                                message.setMsgContent("检查发送成功");
                                 message.setShowOkBtn(true);
                                 message.setShowLogo(true);
-                                message.setTip("");
+                                message.setTip("确定");
                                 bundle.putSerializable("message", message);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-
+                                JumpItent.jump(CheckActivity.this, StateChangeActivity.class, bundle);
                                 //分享
                                 if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                                     finishSelf();
