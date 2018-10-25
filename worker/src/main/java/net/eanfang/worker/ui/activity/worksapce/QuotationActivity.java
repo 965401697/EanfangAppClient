@@ -30,6 +30,7 @@ import com.eanfang.model.QuotationBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.UserEntity;
 
@@ -267,15 +268,12 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         EanfangHttp.post(NewApiService.QUOTE_ORDER_INSERT)
                 .upJson(fillbean())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    Intent intent = new Intent(QuotationActivity.this, StateChangeActivity.class);
+                    Bundle bundle = new Bundle();
                     Message message = new Message();
-                    message.setTitle("提交成功");
-                    message.setMsgTitle("你的报价申请已提交成功！");
-                    message.setMsgContent("请等待相关负责人查阅。");
-                    message.setShowLogo(true);
-                    message.setShowOkBtn(true);
-                    intent.putExtra("message", message);
-                    startActivity(intent);
+                    message.setMsgContent("提交成功。");
+                    message.setTip("确定");
+                    bundle.putSerializable("message", message);
+                    JumpItent.jump(QuotationActivity.this, StateChangeActivity.class, bundle);
                     finishSelf();
                 }));
     }

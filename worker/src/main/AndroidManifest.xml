@@ -614,7 +614,9 @@
         <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
-        <activity android:name=".ui.activity.my.certification.AddCertificationActivity" />
+        <activity
+            android:name=".ui.activity.my.certification.AddCertificationActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".ui.activity.my.certification.OwmHistoryActivity" />
         <activity android:name=".ui.activity.my.certification.AddEducationHistoryActivity" />
         <activity android:name=".ui.activity.my.certification.WorkHistoryActivity" />
@@ -626,7 +628,15 @@
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
         <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
         <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
+
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity"></activity>
+
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifyListActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.contacts.verifyqualify.AddAuthQualifyActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity"></activity>
+
     </application>
 
 </manifest>

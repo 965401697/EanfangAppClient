@@ -10,7 +10,7 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scrollbars="none">
 
         <LinearLayout
@@ -189,10 +189,11 @@
 
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -309,6 +310,26 @@
                         android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_40"
+                    android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_30"
+                    android:text="保存"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/textSize_14" />
+            </LinearLayout>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

@@ -1,10 +1,13 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -40,12 +43,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * @author guanluocang
+ * @data 2018/10/22
+ * @description 添加荣誉证书
+ */
+
 public class AddCertificationActivity extends BaseActivityWithTakePhoto {
 
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_org)
     EditText etOrg;
+    @BindView(R.id.ll_date)
+    LinearLayout llDate;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.snpl_moment_accident)
@@ -54,6 +65,7 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
     EditText etCertificate;
     @BindView(R.id.tv_save)
     TextView tvSave;
+
 
     /**
      * 证书照片
@@ -70,14 +82,24 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
     private TimePickerView mTimeYearMonthDay;
     private HonorCertificateEntity bean;
     private String url = "";
+    // 认证状态
+    private String isAuth = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_certification);
         ButterKnife.bind(this);
-        setLeftBack();
+        initView();
 
+    }
+
+    private void initView() {
+        setLeftBack();
+        isAuth = getIntent().getStringExtra("isAuth");
+        if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
+            doUnWrite();
+        }
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
 
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
@@ -87,10 +109,27 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
 
         if (bean != null) {
             fillData();
-            setTitle("修改证书");
+            if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
+                setTitle("查看证书");
+            } else {
+                setTitle("修改证书");
+            }
+
         } else {
             setTitle("添加证书");
         }
+    }
+
+    /**
+     * 只进行查看操作不看编辑
+     */
+    private void doUnWrite() {
+        tvSave.setVisibility(View.GONE);
+        etCertificate.setEnabled(false);
+        etName.setEnabled(false);
+        etOrg.setEnabled(false);
+        llDate.setEnabled(false);
+        snplMomentAccident.setEditable(false);
     }
 
     private void fillData() {
@@ -115,6 +154,8 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_date:
+                // 隐藏软键盘
+                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AddCertificationActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 mTimeYearMonthDay.show();
                 break;
             case R.id.tv_save:
@@ -227,7 +268,7 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
                 .setContentTextSize(18)//滚轮文字大小
                 .setTitleSize(20)//标题文字大小
 //                .setTitleText("上门日期")//标题文字
-                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
                 .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
                 .setRangDate(startDate, endDate)//起始终止年月日设定
                 .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。

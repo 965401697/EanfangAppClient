@@ -19,6 +19,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.MaintenanceBean;
 import com.eanfang.model.Message;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 
 import net.eanfang.worker.R;
@@ -154,19 +155,12 @@ public class MaintenanceActivity extends BaseWorkerActivity {
         EanfangHttp.post(NewApiService.POST_ADD_MAINTAIN)
                 .upJson(json.toString())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-//                    LogUtils.d(TAG, "网络请求成功");
-                    Intent intent = new Intent(MaintenanceActivity.this, StateChangeActivity.class);
                     Bundle bundle = new Bundle();
                     Message message = new Message();
-                    message.setTitle("下单成功");
-                    message.setMsgTitle("您的维保信息已提交成功");
-                    message.setMsgContent("您可以随时通过历史纪录查看。");
-                    message.setShowOkBtn(true);
-                    message.setShowLogo(true);
-                    message.setTip("");
+                    message.setMsgContent("下单成功。");
+                    message.setTip("确定");
                     bundle.putSerializable("message", message);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    JumpItent.jump(MaintenanceActivity.this, StateChangeActivity.class, bundle);
                     EanfangApplication.get().closeActivity(MaintenanceActivity.class.getName());
                 }));
     }

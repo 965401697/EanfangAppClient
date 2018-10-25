@@ -25,6 +25,7 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -200,19 +201,13 @@ public class TakeApplyAddActivity extends BaseActivity {
     private void submitSuccess() {
         showToast("接单成功");
 //        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
-        Intent intent = new Intent(TakeApplyAddActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
-        message.setTitle("任务接单");
-        message.setMsgTitle("您的接单申请已提交成功");
-        message.setMsgContent("请耐心等待发包方确认。");
-        message.setShowOkBtn(true);
-        message.setShowLogo(true);
+        message.setMsgContent("任务接单。");
 
-        message.setTip("");
+        message.setTip("确定");
         bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        JumpItent.jump(TakeApplyAddActivity.this, StateChangeActivity.class, bundle);
         setResult(RESULT_OK);
         finish();
     }

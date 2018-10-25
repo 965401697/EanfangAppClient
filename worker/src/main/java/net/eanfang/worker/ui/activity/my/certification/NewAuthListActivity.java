@@ -175,19 +175,13 @@ public class NewAuthListActivity extends BaseWorkerActivity {
 
     // 认证提交完毕 提示页面
     public void doJumpConfirm() {
-        Intent intent = new Intent(NewAuthListActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
-        message.setTitle("认证提交成功");
-        message.setMsgTitle("您的技师认证资料已经提交成功");
-        message.setMsgContent("我们会在72小时内进行审核");
+        message.setMsgContent("认证提交成功");
         message.setMsgHelp("如需修改认证资料");
-        message.setShowOkBtn(true);
-        message.setShowLogo(true);
-        message.setTip("");
+        message.setTip("确定");
         bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        JumpItent.jump(NewAuthListActivity.this, StateChangeActivity.class, bundle);
         finishSelf();
     }
 }

@@ -10,6 +10,7 @@
     <include layout="@layout/header" />
 
     <RelativeLayout
+        android:id="@+id/rl_add"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_222">
 
@@ -47,7 +48,7 @@
         android:padding="@dimen/dimen_30"
         android:text="提交"
         android:textColor="@color/color_white"
-        android:visibility="gone"
-        android:textSize="@dimen/textSize_14" />
+        android:textSize="@dimen/textSize_14"
+        android:visibility="visible" />
 
 </LinearLayout>

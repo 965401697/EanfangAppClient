@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,6 +18,7 @@ import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.ShopCompanyEntity;
@@ -40,12 +39,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by MrHou
- *
- * @on 2018/1/25  16:41
- * @email houzhongzhou@yeah.net
- * @desc 系统类别
+ * @author guanluocang
+ * @data 2018/10/23
+ * @description 安防公司认证基本资料
  */
+
 
 public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
@@ -100,8 +98,6 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     private int mCompanyType = 1;
 
 
-    private Long userid = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +136,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
     private void initBusinessData() {
         // 业务类别
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + userid + "/BIZ_TYPE")
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/BIZ_TYPE")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant_business = bean;
                     addBusResult();
@@ -150,7 +146,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
     private void initSystemData() {
         // 系统类别
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + userid + "/SYS_TYPE")
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/SYS_TYPE")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant_system = bean;
                     // 系统类别
@@ -316,17 +312,17 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         EanfangHttp.post(UserApi.GET_WORKER_COMPANY_QUALIFY)
                 .upJson(requestContent)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("提交成功");
+                    jump();
                 }));
 
 
     }
 
     private void jump() {
-        Intent intent = new Intent(AuthQualifyFirstActivity.this, AuthQualifySecondActivity.class);
-        intent.putExtra("orgid", orgid);
-        intent.putExtra("verifyStatus", verifyStatus);
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putLong("orgid", orgid);
+        bundle.putInt("verifyStatus", verifyStatus);
+        JumpItent.jump(AuthQualifyFirstActivity.this, AuthQualifySecondActivity.class, bundle);
     }
 
     @Override
