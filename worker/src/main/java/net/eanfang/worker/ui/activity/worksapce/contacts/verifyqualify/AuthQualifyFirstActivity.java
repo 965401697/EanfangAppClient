@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,8 +19,10 @@ import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.ShopCompanyEntity;
 import com.yaf.sys.entity.BaseDataEntity;
@@ -130,8 +133,19 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                     }
                     initSystemData();
                     initBusinessData();
+                    initBaseInfo();
                 }));
 
+    }
+
+    private void initBaseInfo() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("orgId", orgid + "");
+        EanfangHttp.post(UserApi.FIRST_QUALIFY)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    Log.e("", "");
+                }));
     }
 
     private void initBusinessData() {
@@ -189,16 +203,18 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         }
 
         // 系统类别
+
         List<Integer> checkList_system = Stream.of(systemTypeList)
-                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()).toList();
+                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_system.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
+                .map(beans -> beans.getDataId()).distinct().toList();
+
         List<Integer> unCheckList_system = Stream.of(systemTypeList)
-                .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).toList();
+                .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_system.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
+                .map(beans -> beans.getDataId()).distinct().toList();
 
         grantChange_system.setAddIds(checkList_system);
         grantChange_system.setDelIds(unCheckList_system);
-        if ((unCheckList_system.size() == 0) && (checkList_system.size() == 0) && (byNetGrant_business.getList().size() <= 0)) {
+        if ((unCheckList_system.size() == 0) && (checkList_system.size() == 0) && (byNetGrant_system.getList().size() <= 0)) {
             showToast("请选择一种系统类别");
             return;
         }
@@ -206,11 +222,10 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         // 业务类别
         List<Integer> checkList_business = Stream.of(businessTypeList)
                 .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId())
-                .toList();
+                .map(beans -> beans.getDataId()) .distinct().toList();
         List<Integer> unCheckList_business = Stream.of(businessTypeList)
                 .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).toList();
+                .map(beans -> beans.getDataId()).distinct().toList();
 
         grantChange_business.setAddIds(checkList_business);
         grantChange_business.setDelIds(unCheckList_business);

@@ -18,7 +18,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.QualificationCertificateEntity;
+import com.yaf.base.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
@@ -52,6 +52,8 @@ public class AuthQualifyListActivity extends BaseActivity {
     // 认证状态
     private int verifyStatus;
 
+    private Long mOrgId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class AuthQualifyListActivity extends BaseActivity {
         setTitle("技能资质");
         setLeftBack();
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
+        mOrgId = getIntent().getLongExtra("orgid", 0);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         qualifyListAdapter = new QualifyListAdapter(true);
         qualifyListAdapter.bindToRecyclerView(recyclerView);
@@ -91,7 +94,7 @@ public class AuthQualifyListActivity extends BaseActivity {
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("orgId", mOrgId + "");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -113,6 +116,7 @@ public class AuthQualifyListActivity extends BaseActivity {
             case R.id.tv_add:
                 Bundle bundle = new Bundle();
                 bundle.putInt("verifyStatus", verifyStatus);
+                bundle.putLong("orgid", mOrgId);
                 JumpItent.jump(AuthQualifyListActivity.this, AddAuthQualifyActivity.class, bundle, REQUEST_AUTH);
                 break;
             case R.id.tv_sub:
@@ -134,7 +138,7 @@ public class AuthQualifyListActivity extends BaseActivity {
     }
 
     private void delete(BaseQuickAdapter adapter, int position) {
-        EanfangHttp.post(UserApi.DELETE_QUALIFY + "/" + ((QualificationCertificateEntity) adapter.getData().get(position)).getId())
+        EanfangHttp.post(UserApi.DELETE_QUALIFY + "/" + ((AptitudeCertificateEntity) adapter.getData().get(position)).getId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {

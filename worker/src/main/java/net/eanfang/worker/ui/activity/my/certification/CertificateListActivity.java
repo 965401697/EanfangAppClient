@@ -49,6 +49,9 @@ public class CertificateListActivity extends BaseWorkerActivity {
     private String isAuth = "";
     // 是否可以删除
     private boolean isDelete = false;
+    // 是否安防公司的荣誉证书
+    private String isCompany = "";
+    private Long orgid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,8 @@ public class CertificateListActivity extends BaseWorkerActivity {
 
     private void initViews() {
         isAuth = getIntent().getStringExtra("isAuth");
+        isCompany = getIntent().getStringExtra("role");
+        orgid = getIntent().getLongExtra("orgid", 0);
         if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
             rlAdd.setVisibility(View.GONE);
             tvSub.setVisibility(View.GONE);
@@ -75,7 +80,9 @@ public class CertificateListActivity extends BaseWorkerActivity {
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class), ADD_CERTIFICATION_CODE);
+                startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class)
+                        .putExtra("role", "company")
+                        .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
             }
         });
 
@@ -95,18 +102,26 @@ public class CertificateListActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class)
                         .putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position))
-                        .putExtra("isAuth", isAuth), ADD_CERTIFICATION_CODE);
+                        .putExtra("isAuth", isAuth)
+                        .putExtra("role", "company")
+                        .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
             }
         });
     }
 
 
     private void getData() {
+        String url = "";
         QueryEntry queryEntry = new QueryEntry();
 
         queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
-        EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST)
+        if (isCompany.equals("company")) {
+            url = UserApi.COMPANY_CERTIFICATE_LIST;// 安防公司
+        } else {
+            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST;// 技师认证
+        }
+        EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<HonorCerticificateListBean>(this, true, HonorCerticificateListBean.class) {
                     @Override
@@ -133,7 +148,13 @@ public class CertificateListActivity extends BaseWorkerActivity {
 
 
     private void delete(BaseQuickAdapter adapter, int position) {
-        EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_DELETE + "/" + ((HonorCertificateEntity) adapter.getData().get(position)).getId())
+        String url = "";
+        if (isCompany.equals("company")) {
+            url = UserApi.COMPANY_CERTIFICATE_DELETE;// 安防公司
+        } else {
+            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_DELETE;// 技师认证
+        }
+        EanfangHttp.post(url + "/" + ((HonorCertificateEntity) adapter.getData().get(position)).getId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {

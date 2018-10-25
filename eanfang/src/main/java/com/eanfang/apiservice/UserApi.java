@@ -403,20 +403,46 @@ public interface UserApi {
      */
     String UPDATA_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changeAppkey";
     /**
-     * 添加资质证书
-     */
-    String ADD_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/insert";
+     * 安防公司认证相关
+     * */
     /**
-     * 修改资质证书
+     * 安防公司添加资质认证第一步详情
      */
-    String UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/update";
+    String FIRST_QUALIFY = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/detail/sp1";
+
     /**
-     * 查看资质证书列表
+     * 安防公司添加资质证书
      */
-    String LIST_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/list";
+    String ADD_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/insert";
     /**
-     * 查看资质证书列表
+     * 安防公司修改资质证书
      */
-    String DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/delete";
+    String UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/update";
+    /**
+     * 安防公司查看资质证书列表
+     */
+    String LIST_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/list";
+    /**
+     * 安防公司查看资质证书列表 刪除
+     */
+    String DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/delete";
+
+    /**
+     * 安防公司荣誉 证书填写
+     */
+    String COMPANY_ADD_CERTIFICATE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/insert";
+    /**
+     * 安防公司荣誉 证书列表
+     */
+    String COMPANY_CERTIFICATE_LIST = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/list";
+    /**
+     * 安防公司荣誉 证书列表删除
+     */
+    String COMPANY_CERTIFICATE_DELETE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/delete";
+
+    /**
+     * 安防公司荣誉 证书列表更新
+     */
+    String COMPANY_CERTIFICATE_UPDATE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/update";
 
 }
