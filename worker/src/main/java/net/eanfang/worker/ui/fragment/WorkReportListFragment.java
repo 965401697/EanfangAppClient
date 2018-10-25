@@ -1,6 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -12,12 +12,13 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkReportListBean;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.worker.ui.adapter.WorkReportListAdapter;
-import net.eanfang.worker.ui.widget.WorkReportInfoView;
 
 
 /**
@@ -34,6 +35,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
     private String mTitle;
     private int mType;
     private WorkReportListAdapter mAdapter;
+    private QueryEntry mQueryEntry;
 
     public static WorkReportListFragment getInstance(String title, int type) {
         WorkReportListFragment sf = new WorkReportListFragment();
@@ -60,11 +62,18 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 if (!PermKit.get().getWorkReportDetailPrem()) return;
 
                 if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+//                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {
                     getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                 }
 
-                new WorkReportInfoView((Activity) view.getContext(), true, ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId(), false).show();
+//                new WorkReportInfoView((Activity) view.getContext(), true, ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId(), false).show();
 
+
+                Intent intent = new Intent(getActivity(), WorkReportDetailActivity.class);
+                intent.putExtra("id", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
+                intent.putExtra("type", GetConstDataUtils.getWorkReportTypeList().get((((WorkReportListBean.ListBean) adapter.getData().get(position)).getType())));
+                intent.putExtra("name", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
+                startActivity(intent);
             }
         });
     }
@@ -81,26 +90,27 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 }));
     }
 
-    @Override
-    protected void getData() {
 
-        QueryEntry queryEntry = new QueryEntry();
+    protected void getData() {
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
 //        if (!Constant.ALL.equals(mTitle)) {
 //            String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
 //            queryEntry.getEquals().put(Constant.STATUS, status);
 //        }
         if (Constant.COMPANY_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
         } else if (Constant.CREATE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         }
-        queryEntry.setPage(mPage);
-        queryEntry.setSize(10);
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_WORK_REPORT_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true, WorkReportListBean.class) {
 
                     @Override
@@ -151,4 +161,21 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 });
     }
 
+    public void getData(QueryEntry queryEntry) {
+        this.mQueryEntry = queryEntry;
+        mPage = 1;
+        getData();
+    }
+
+    public void setmQueryEntry(QueryEntry mQueryEntry) {
+        this.mQueryEntry = mQueryEntry;
+        getData();
+    }
+
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
 }

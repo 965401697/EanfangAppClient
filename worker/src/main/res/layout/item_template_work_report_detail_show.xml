@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen_30"
-    android:layout_marginTop="@dimen/dimen_30"
-    >
+    android:layout_marginTop="@dimen/dimen_30">
 
     <TextView
         android:id="@+id/tv_title"
@@ -16,14 +15,13 @@
         android:textColor="@color/colorPrimary" />
 
 
-    <TextView
-        android:id="@+id/tv_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/iv_pack"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dimen_30"
-        android:text="删除"
-        android:textColor="#FF4A4A" />
+        android:src="@mipmap/pack" />
 
     <LinearLayout
         android:id="@+id/ll_content"
@@ -31,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_30"
-        android:layout_toLeftOf="@+id/tv_delete"
+        android:layout_toLeftOf="@+id/iv_pack"
         android:layout_toRightOf="@+id/tv_title"
         android:orientation="vertical">
 
@@ -202,16 +200,4 @@
 
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_pack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/ll_content"
-        android:layout_marginBottom="@dimen/dimen_20"
-        android:layout_marginRight="@dimen/dimen_30"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:text="收起"
-        android:textColor="@color/colorPrimary" />
 </RelativeLayout>

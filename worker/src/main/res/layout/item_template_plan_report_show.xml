@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/dimen_30"
-    android:layout_marginTop="@dimen/dimen_30"
-    >
+    android:layout_marginTop="@dimen/dimen_30">
 
     <TextView
         android:id="@+id/tv_title"
@@ -61,7 +60,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="遗留问题：" />
+                android:text="目的：" />
 
             <TextView
                 android:id="@+id/tv_work_question"
@@ -82,7 +81,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="未完成原因：" />
+                android:text="标准：" />
 
             <TextView
                 android:id="@+id/tv_work_reason"
@@ -94,8 +93,6 @@
                 android:singleLine="true"
                 android:text="工作内容：阿斯顿发asdfasdf" />
         </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +101,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="处理：" />
+                android:text="期限：" />
 
             <TextView
                 android:id="@+id/tv_work_handle"
@@ -116,7 +113,6 @@
                 android:singleLine="true"
                 android:text="工作内容：阿斯顿发asdfasdf" />
         </LinearLayout>
-
 
         <TextView
             android:id="@+id/tv_person"

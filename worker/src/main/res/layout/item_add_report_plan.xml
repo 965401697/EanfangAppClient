@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_complete_work"
+    android:id="@+id/ll_report_plan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/content_bg"
@@ -27,9 +27,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dimen_30"
+                    android:text="添加后续计划"
                     android:textColor="@color/color_client_neworder"
-                    android:textSize="16sp"
-                    android:text="添加完成工作" />
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -38,7 +38,7 @@
 
 
                     <EditText
-                        android:id="@+id/et_input_content"
+                        android:id="@+id/et_input_content_plan"
                         android:layout_width="0dp"
                         android:layout_height="80dp"
                         android:layout_marginLeft="@dimen/dimen_30"
@@ -52,7 +52,7 @@
                         android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:id="@+id/iv_content_voice"
+                        android:id="@+id/iv_content_voice_plan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -74,21 +74,21 @@
 
 
                 <EditText
-                    android:id="@+id/et_input_legacy"
+                    android:id="@+id/et_input_legacy_plan"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_weight="1"
                     android:background="@drawable/bg_ll_selctor"
                     android:gravity="left"
-                    android:hint="请输入遗留问题"
+                    android:hint="请输入目的"
                     android:paddingLeft="@dimen/dimen_10"
-                    android:textSize="@dimen/textSize_14"
                     android:paddingTop="@dimen/dimen_10"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize_14" />
 
                 <ImageView
-                    android:id="@+id/iv_question_voice"
+                    android:id="@+id/iv_question_voice_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -108,21 +108,21 @@
 
 
                 <EditText
-                    android:id="@+id/et_input_reason"
+                    android:id="@+id/et_input_reason_plan"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_weight="1"
                     android:background="@drawable/bg_ll_selctor"
-                    android:textSize="@dimen/textSize_14"
                     android:gravity="left"
-                    android:hint="请输入未完成原因"
+                    android:hint="请输入标准"
                     android:paddingLeft="@dimen/dimen_10"
                     android:paddingTop="@dimen/dimen_10"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize_14" />
 
                 <ImageView
-                    android:id="@+id/iv_reason_voice"
+                    android:id="@+id/iv_reason_voice_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -135,39 +135,37 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_30"
-                android:layout_marginTop="@dimen/dimen_30"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20"
+                android:textColor="@color/black">
 
-
-                <EditText
-                    android:id="@+id/et_input_handle"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_ll_selctor"
-                    android:gravity="left"
-                    android:textSize="@dimen/textSize_14"
-                    android:hint="请输入处理措施"
-                    android:paddingLeft="@dimen/dimen_10"
-                    android:paddingTop="@dimen/dimen_10"
-                    android:textColor="@color/black" />
-
-                <ImageView
-                    android:id="@+id/iv_handle_voice"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="期限"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_address"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/dimen_20"
-                    android:layout_marginRight="@dimen/dimen_20"
-                    android:src="@mipmap/ic_worker_voice_input" />
-
-
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/arrow_down" />
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,13 +199,14 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_team_work"
+                    android:id="@+id/rv_team_plan"
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/dimen_20"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_20" />
 
 
             </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -251,7 +250,7 @@
                     android:orientation="horizontal">
 
                     <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_photos_work"
+                        android:id="@+id/snpl_photos_plan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dimen_20"
@@ -273,18 +272,18 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_addViedeo_work"
+                    android:id="@+id/tv_addViedeo_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_margin="@dimen/dimen_20"
-                    android:text="小视频"
-                    android:textColor="@color/color_client_neworder"
+                    android:text="拍摄小视频(点我)"
+                    android:textColor="#FFB400"
                     android:textSize="16sp" />
 
 
                 <RelativeLayout
-                    android:id="@+id/rl_thumbnail_work"
+                    android:id="@+id/rl_thumbnail_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_200"
                     android:layout_marginLeft="@dimen/dimen_20"
@@ -292,14 +291,14 @@
 
 
                     <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_takevideo_work"
-                        android:layout_width="@dimen/dimen_150"
-                        android:layout_height="@dimen/dimen_150"
+                        android:id="@+id/iv_takevideo_plan"
+                        android:layout_width="@dimen/dimen_170"
+                        android:layout_height="@dimen/dimen_170"
                         android:layout_centerInParent="true" />
 
                     <RelativeLayout
-                        android:layout_width="@dimen/dimen_150"
-                        android:layout_height="@dimen/dimen_150"
+                        android:layout_width="@dimen/dimen_170"
+                        android:layout_height="@dimen/dimen_170"
                         android:layout_centerInParent="true"
                         android:background="#1A000000"
                         android:visibility="visible" />
@@ -321,7 +320,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_complete_work"
+                    android:id="@+id/tv_complete_plan"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_marginLeft="@dimen/dimen_40"
@@ -329,18 +328,18 @@
                     android:layout_weight="0.5"
                     android:background="@drawable/shape_bg_sure"
                     android:gravity="center"
-                    android:text="确定"
+                    android:text="完成并关闭"
                     android:textColor="@color/white" />
 
                 <TextView
-                    android:id="@+id/tv_cancle_work"
+                    android:id="@+id/tv_cancle_plan"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_marginRight="@dimen/dimen_40"
                     android:layout_weight="1"
                     android:background="@drawable/shape_bg_save"
                     android:gravity="center"
-                    android:text="保存并调价下一条"
+                    android:text="保存并填写下一条"
                     android:textColor="@color/white" />
 
             </LinearLayout>

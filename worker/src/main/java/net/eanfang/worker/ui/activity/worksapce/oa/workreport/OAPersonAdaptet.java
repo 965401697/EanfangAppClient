@@ -19,6 +19,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 
 import java.util.List;
 
@@ -31,13 +32,18 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
 
     private Context mContext;
     private List<TemplateBean.Preson> mData;
+    private int mFlag;
 
     public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data) {
         this.mContext = context;
         this.mData = data;
-
     }
 
+    public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data, int flag) {
+        this.mContext = context;
+        this.mData = data;
+        this.mFlag = flag;
+    }
 
     @NonNull
     @Override
@@ -56,8 +62,16 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //选择协同人员
-                    ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class));
+                    if (mFlag != 0) {
+                        ((CreationWorkReportActivity) mContext).setFlag(mFlag);
+
+                    }
+                    if (mFlag == 4) {
+                        ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), CreationWorkReportActivity.REQUEST_CODE_GROUP);
+                    } else {
+                        //选择协同人员
+                        ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class));
+                    }
                 }
             });
         } else {
@@ -65,7 +79,11 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.ivSub.setVisibility(View.VISIBLE);
             TemplateBean.Preson preson = mData.get(position);
             holder.name.setText(preson.getName());
-            holder.userHeader.setImageURI(BuildConfig.OSS_SERVER + preson.getProtraivat());
+            if (preson.getProtraivat().startsWith("http")) {
+                holder.userHeader.setImageURI(preson.getProtraivat());
+            } else {
+                holder.userHeader.setImageURI(BuildConfig.OSS_SERVER + preson.getProtraivat());
+            }
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

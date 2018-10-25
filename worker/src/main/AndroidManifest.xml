@@ -610,7 +610,7 @@
         <activity android:name=".ui.activity.my.certification.IdentityCardCertification" />
         <activity android:name=".ui.activity.my.certification.OtherDataActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity" />
         <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
@@ -625,7 +625,8 @@
         <activity android:name=".ui.activity.my.certification.AddSkillCertificafeActivity" />
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
         <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
-        <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity"></activity>
     </application>
 
 </manifest>

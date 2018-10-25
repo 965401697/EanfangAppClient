@@ -64,7 +64,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2"
-       android:layout_below="@+id/tv_look"
+        android:layout_below="@+id/tv_look"
         android:layout_marginTop="@dimen/dimen_15"
         android:background="@color/content_bg" />
 

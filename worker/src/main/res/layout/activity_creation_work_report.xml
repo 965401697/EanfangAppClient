@@ -11,6 +11,7 @@
     <include layout="@layout/header" />
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -115,12 +116,11 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_complete_work"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-               />
+                    android:layout_height="wrap_content" />
 
 
                 <include
-                    layout="@layout/item_add_complete_work"
+                    layout="@layout/item_add_report_work"
                     android:visibility="gone" />
 
 
@@ -172,10 +172,13 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/report_find_list"
+                    android:id="@+id/rv_find_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <include
+                    layout="@layout/item_add_report_question"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -195,12 +198,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:text="*"
+                        android:textColor="#FF1616" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dimen_92"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dimen_30"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="后续计划"
@@ -230,6 +239,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+
+                <include
+                    layout="@layout/item_add_report_plan"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -270,9 +283,11 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
+                    android:id="@+id/rv_send_who"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15" />
 
             </LinearLayout>
 
@@ -313,9 +328,11 @@
 
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_group"
+                    android:id="@+id/rv_send_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15" />
 
             </LinearLayout>
 

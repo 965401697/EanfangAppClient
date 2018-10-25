@@ -1,5 +1,7 @@
 package com.eanfang.model;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -444,6 +446,7 @@ public class WorkReportInfoBean implements Serializable {
 
             private Long accId;
             private String realName;
+            private String avatar;
 
             public Long getAccId() {
                 return accId;
@@ -460,10 +463,19 @@ public class WorkReportInfoBean implements Serializable {
             public void setRealName(String realName) {
                 this.realName = realName;
             }
+
+            public String getAvatar() {
+                return avatar;
+            }
         }
     }
 
-    public static class WorkReportDetailsBean implements Serializable {
+    public static class WorkReportDetailsBean implements Serializable, MultiItemEntity {
+
+
+        //多布局type
+        public static final int FOLD = 1;//折叠
+        public static final int EXPAND = 2; //展开
         /**
          * field1 : 1112
          * field2 : 2233
@@ -486,6 +498,8 @@ public class WorkReportInfoBean implements Serializable {
         private String field5;
         private String pictures;
         private String mp4_path;
+
+        private int itemType;
 
         public String getField1() {
             return field1 == null ? "" : field1;
@@ -565,6 +579,15 @@ public class WorkReportInfoBean implements Serializable {
 
         public void setMp4_path(String mp4_path) {
             this.mp4_path = mp4_path;
+        }
+
+        public void setItemType(int itemType) {
+            this.itemType = itemType;
+        }
+
+        @Override
+        public int getItemType() {
+            return itemType;
         }
     }
 }

@@ -126,12 +126,12 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     private String assigneeOrgCode;
 
     private ArrayList<TemplateBean.Preson> newGroupList = new ArrayList<>();
+    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
     private SendPersonAdapter sendGroupAdapter;
     private final int REQUEST_CODE_GROUP = 101;
-    private int isSend = -1;
 
+    private int isSend = -1;
     private SendPersonAdapter sendPersonAdapter;
-    private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
 
 
     private Handler handler = new Handler() {
