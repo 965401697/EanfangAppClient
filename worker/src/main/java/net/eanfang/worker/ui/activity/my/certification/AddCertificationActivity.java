@@ -84,6 +84,9 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
     private String url = "";
     // 认证状态
     private String isAuth = "";
+    // 是否安防公司的荣誉证书
+    private String isCompany = "";
+    private Long orgid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +100,9 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
     private void initView() {
         setLeftBack();
         isAuth = getIntent().getStringExtra("isAuth");
-        if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
+        isCompany = getIntent().getStringExtra("role");
+        orgid = getIntent().getLongExtra("orgid", 0);
+        if ("2".equals(isAuth) || "1".equals(isAuth)) {//如果已认证  只进行查看资质认证
             doUnWrite();
         }
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
@@ -170,12 +175,23 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
 
         HonorCertificateEntity entity = new HonorCertificateEntity();
         entity.setAccId(EanfangApplication.get().getAccId());
-        if (bean != null) {
-            entity.setId(bean.getId());
-            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_UPDATE;
-        } else {
-            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE;
+        if (isCompany.equals("company")) {// 安防公司
+            if (bean != null) {
+                entity.setId(bean.getId());
+                url = UserApi.COMPANY_CERTIFICATE_UPDATE;
+            } else {
+                url = UserApi.COMPANY_ADD_CERTIFICATE;
+            }
+            entity.setOrgId(orgid);
+        } else {// 技师
+            if (bean != null) {
+                entity.setId(bean.getId());
+                url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_UPDATE;
+            } else {
+                url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE;
+            }
         }
+
         entity.setHonorName(etName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
         entity.setAwardTime(DateUtils.parseDate(tvTime.getText().toString().trim(), "yyyy-MM-dd"));

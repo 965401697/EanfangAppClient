@@ -40,7 +40,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_sigin" />
+                android:src="@mipmap/ic_sign_pressed" />
 
             <TextView
                 android:id="@+id/tv_sign"
@@ -62,7 +62,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_footer" />
+                android:src="@mipmap/ic_sign_foot_unpressed" />
 
             <TextView
                 android:layout_width="wrap_content"

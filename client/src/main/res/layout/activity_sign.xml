@@ -141,14 +141,14 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_sigin" />
+                android:src="@mipmap/ic_sign_pressed" />
 
             <TextView
                 android:id="@+id/tv_sign_or_signout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=""
+                android:text="签到"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -163,7 +163,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_footer" />
+                android:src="@mipmap/ic_sign_foot_unpressed" />
 
             <TextView
                 android:layout_width="wrap_content"

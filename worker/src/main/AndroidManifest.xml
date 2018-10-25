@@ -248,7 +248,9 @@
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.PartnerActivity" />
-        <activity android:name=".ui.activity.worksapce.SignActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.SignActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity android:name=".ui.activity.worksapce.SignListActivity" />
         <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
         <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />

@@ -9,7 +9,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.QualificationCertificateEntity;
+import com.yaf.base.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
 
@@ -19,7 +19,7 @@ import net.eanfang.worker.R;
  * @description 资质证书adapter
  */
 
-public class QualifyListAdapter extends BaseQuickAdapter<QualificationCertificateEntity, BaseViewHolder> {
+public class QualifyListAdapter extends BaseQuickAdapter<AptitudeCertificateEntity, BaseViewHolder> {
     private boolean isDelete;
 
     public QualifyListAdapter(boolean mDelete) {
@@ -28,7 +28,7 @@ public class QualifyListAdapter extends BaseQuickAdapter<QualificationCertificat
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, QualificationCertificateEntity item) {
+    protected void convert(BaseViewHolder helper, AptitudeCertificateEntity item) {
         helper.setText(R.id.tv_school_name, "证书名称：" + item.getCertificateName());
         helper.setText(R.id.tv_school_major, "资质等级：" + item.getCertificateLevel());
         helper.setText(R.id.tv_school_time, "起止时间：" + V.v(() -> DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd")) + "至" + V.v(() -> DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd")));

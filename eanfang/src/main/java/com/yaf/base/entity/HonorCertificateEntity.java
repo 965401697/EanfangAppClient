@@ -35,6 +35,9 @@ public class HonorCertificateEntity implements Serializable {
 	//所属的acc_id
 	//@TableField(value = "acc_id")
 	private Long accId;
+	//组织机构id
+	//@TableField(value = "org_id")
+	private Long orgId;
 	//所属的user_id
 	//@TableField(value = "user_id")
 	private Long userId;

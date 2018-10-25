@@ -1,93 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
-
-        <include layout="@layout/header" />
-
-        <TextView
-            android:id="@+id/tv_sigin_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_ll_selctor"
-            android:padding="5dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="14sp" />
 
         <com.amap.api.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_margin="5dp" />
+            android:layout_height="@dimen/dimen_400" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@drawable/bg_ll_selctor"
+            android:background="@mipmap/ic_sign_visit_back"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingLeft="@dimen/dimen_80"
+            android:paddingRight="@dimen/dimen_80">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_visit_object" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="拜访对象"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:layout_marginLeft="@dimen/dimen_34"
+                android:text="拜访对象:"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_15" />
 
             <EditText
                 android:id="@+id/et_visit_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_100"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="1"
                 android:background="@null"
-                android:gravity="center"
-                android:hint="请输入拜访对象" />
+                android:hint="请输入"
+                android:textColor="#C2E1FF"
+                android:textColorHint="#C2E1FF"
+                android:textSize="@dimen/textSize_15" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_signin"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/blue_point"
+        <TextView
+            android:id="@+id/text_clock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
             android:gravity="center"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_15" />
+
+        <RelativeLayout
+            android:id="@+id/rl_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/ic_workspace_sign_back"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_sign_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text=""
-                android:textColor="@color/white" />
-
-            <TextClock
-                android:id="@+id/text_clock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-light"
-                android:format12Hour="h:mm"
-                android:format24Hour="H:mm"
+                android:text="签到"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                android:textSize="@dimen/textSize_18" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ll_sign_times"
@@ -96,7 +89,8 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="30dp"
@@ -136,19 +130,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_20">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_sigin" />
 
             <TextView
                 android:id="@+id/tv_sign_or_signout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_sign_pressed"
+                android:drawablePadding="@dimen/dimen_24"
                 android:gravity="center"
-                android:text=""
+                android:text="签到"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -158,16 +151,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_20">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_footer" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_sign_foot_unpressed"
+                android:drawablePadding="@dimen/dimen_24"
                 android:gravity="center"
                 android:text="足迹"
                 android:textColor="@color/black" />
@@ -176,4 +168,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
