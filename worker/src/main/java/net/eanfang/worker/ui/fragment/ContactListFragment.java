@@ -79,6 +79,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private MyConversationListFragment myConversationListFragment;
     private Uri uri;
     private final int REQUST_REFRESH_CODE = 101;
+    private FragmentTransaction transaction;
 
     @Override
     protected int setLayoutResouceId() {
@@ -94,15 +95,19 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //防止刷新
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_message, container, false);
             initView();
             setListener();
+            doHttpNoticeCount();
+        }else {
+            initView();
         }
-        ViewGroup parent = (ViewGroup) view.getParent();
-        if (parent != null) {
-            parent.removeView(view);
-        }
+//        ViewGroup parent = (ViewGroup) view.getParent();
+//        if (parent != null) {
+//            parent.removeView(view);
+//        }
 
         return view;
     }
@@ -122,9 +127,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                 .build();
-//        myConversationListFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
+        myConversationListFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, myConversationListFragment);
         transaction.commit();
 
@@ -152,7 +157,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         }, Conversation.ConversationType.GROUP);
 
 
-        doHttpNoticeCount();
+
 
         /**
          * 设置会话列表界面操作的监听器。
@@ -235,9 +240,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     public void onResume() {
         super.onResume();
 //        doHttpNoticeCount();
-        if (myConversationListFragment != null && uri != null)
-            myConversationListFragment.setUri(uri);
-
+//        if (myConversationListFragment != null && uri != null)
+//            myConversationListFragment.setUri(uri);
+//
         ((MainActivity) getActivity()).getIMUnreadMessageCount();
     }
 

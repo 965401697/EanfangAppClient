@@ -112,4 +112,9 @@ public class ConversationActivity extends BaseWorkerActivity {
                 }));
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

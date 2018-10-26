@@ -98,11 +98,15 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             view = inflater.inflate(R.layout.fragment_message, container, false);
             initView();
             setListener();
+            doHttpNoticeCount();
+        } else {
+            initView();//手动刷新
         }
-        ViewGroup parent = (ViewGroup) view.getParent();
-        if (parent != null) {
-            parent.removeView(view);
-        }
+        // TODO: 2018/10/26 让会话列表自己刷新
+//        ViewGroup parent = (ViewGroup) view.getParent();
+//        if (parent != null) {
+//            parent.removeView(view);
+//        }
 
         return view;
     }
@@ -152,7 +156,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         }, Conversation.ConversationType.GROUP);
 
 
-        doHttpNoticeCount();
+//        doHttpNoticeCount();
 
         /**
          * 设置会话列表界面操作的监听器。
@@ -235,8 +239,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     public void onResume() {
         super.onResume();
 //        doHttpNoticeCount();
-        if (myConversationListFragment != null && uri != null)
-            myConversationListFragment.setUri(uri);
+//        if (myConversationListFragment != null && uri != null)
+//            myConversationListFragment.setUri(uri);
 
         ((MainActivity) getActivity()).getIMUnreadMessageCount();
     }

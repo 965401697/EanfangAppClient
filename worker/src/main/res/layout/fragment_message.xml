@@ -80,7 +80,7 @@
                     android:layout_width="@dimen/dimen_70"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_gravity="center"
-                    android:src="@mipmap/ic_news_system" />
+                    android:src="@mipmap/ic_official_notice" />
 
                 <LinearLayout
                     android:id="@+id/ll_official"

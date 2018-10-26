@@ -10,155 +10,149 @@
 
     <include layout="@layout/header" />
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="none">
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_200"
+            android:background="@color/color_white"
             android:orientation="vertical">
 
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_200"
-                android:background="@color/color_white"
-                android:orientation="vertical">
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_50"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dimen_38"
-                        android:text="技能能力"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/textSize_13" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dimen_38"
-                        android:text="服务区域"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dimen_38"
-                        android:text="资质证书"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="提交成功"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/dimen_20"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/point_3" />
-
-                    <TextView
-                        android:layout_width="@dimen/dimen_120"
-                        android:layout_height="@dimen/dimen_2"
-                        android:layout_gravity="center_vertical"
-                        android:background="@color/colorPrimary" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/point_1" />
-
-                    <TextView
-                        android:layout_width="@dimen/dimen_120"
-                        android:layout_height="@dimen/dimen_2"
-                        android:layout_gravity="center_vertical"
-                        android:background="#DEDEDE" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/point_0" />
-
-                    <TextView
-                        android:layout_width="@dimen/dimen_120"
-                        android:layout_height="@dimen/dimen_2"
-                        android:layout_gravity="center_vertical"
-                        android:background="#DEDEDE" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/point_0" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/dimen_14"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_90"
-                    android:layout_marginLeft="@dimen/dimen_20"
-                    android:gravity="center_vertical"
-                    android:text="选择服务区域"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_15" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_38"
+                    android:text="技能能力"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_13" />
 
 
-                <View
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_38"
+                    android:text="服务区域"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_38"
+                    android:text="资质证书"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提交成功"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/point_3" />
+
+                <TextView
+                    android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_2"
-                    android:background="@color/content_bg" />
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/colorPrimary" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_kind"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/point_1" />
+
+                <TextView
+                    android:layout_width="@dimen/dimen_120"
+                    android:layout_height="@dimen/dimen_2"
+                    android:layout_gravity="center_vertical"
+                    android:background="#DEDEDE" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/point_0" />
+
+                <TextView
+                    android:layout_width="@dimen/dimen_120"
+                    android:layout_height="@dimen/dimen_2"
+                    android:layout_gravity="center_vertical"
+                    android:background="#DEDEDE" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/point_0" />
 
             </LinearLayout>
 
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:gravity="center_vertical"
+                android:text="选择服务区域"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:background="@color/content_bg" />
+
+
+                <ExpandableListView
+                    android:id="@+id/elv_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
     <TextView

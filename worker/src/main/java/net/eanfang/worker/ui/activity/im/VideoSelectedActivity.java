@@ -74,7 +74,7 @@ public class VideoSelectedActivity extends BaseActivity {
 
                     if (bean.getFlag() == 0) {
                         if (pathList.size() >= 9) {
-                            ToastUtil.get().showToast(VideoSelectedActivity.this, "最高只能选择9个视频文件");
+                            ToastUtil.get().showToast(VideoSelectedActivity.this, "最多只能选择9个视频文件");
                         } else {
                             bean.setFlag(1);
                             pathList.add(bean.getName());
