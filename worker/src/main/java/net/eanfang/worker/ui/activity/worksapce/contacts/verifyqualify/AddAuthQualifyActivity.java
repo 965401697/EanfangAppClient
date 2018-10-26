@@ -15,7 +15,6 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -29,7 +28,7 @@ import com.eanfang.util.V;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.QualificationCertificateEntity;
+import com.yaf.base.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
 
@@ -90,13 +89,15 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
 
     private TimePickerView mTimeYearMonthDay;
     private String url = "";
-    private QualificationCertificateEntity qualificationCertificateEntity;
+    private AptitudeCertificateEntity aptitudeCertificateEntity;
 
     // 起始 or 结束
     private boolean isBegin = true;
 
     // 认证状态
     private String isAuth;
+
+    private Long mOrgId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,15 +113,16 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
         setTitle("技能资质");
         setLeftBack();
         isAuth = getIntent().getStringExtra("isAuth");
+        mOrgId = getIntent().getLongExtra("orgid", 0);
         // 查看详情
-        qualificationCertificateEntity = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
+        aptitudeCertificateEntity = (AptitudeCertificateEntity) getIntent().getSerializableExtra("bean");
 
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
 
         doSelectYearMonthDay();
 
-        if (qualificationCertificateEntity != null) {
+        if (aptitudeCertificateEntity != null) {
             fillData();
         }
         if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
@@ -134,8 +136,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         ArrayList<String> picList = new ArrayList<>();
-        if (qualificationCertificateEntity.getCertificatePics() != null) {
-            String[] pics = qualificationCertificateEntity.getCertificatePics().split(",");
+        if (aptitudeCertificateEntity.getCertificatePics() != null) {
+            String[] pics = aptitudeCertificateEntity.getCertificatePics().split(",");
 
             for (int i = 0; i < pics.length; i++) {
                 picList.add(BuildConfig.OSS_SERVER + pics[i]);
@@ -143,17 +145,17 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
         }
 
         // 证书名称
-        etCertificateName.setText(qualificationCertificateEntity.getCertificateName());
+        etCertificateName.setText(aptitudeCertificateEntity.getCertificateName());
         // 发证机构
-        etOrg.setText(qualificationCertificateEntity.getAwardOrg());
+        etOrg.setText(aptitudeCertificateEntity.getAwardOrg());
         // 资质等级
-        etLevel.setText(qualificationCertificateEntity.getCertificateLevel());
+        etLevel.setText(aptitudeCertificateEntity.getCertificateLevel());
         // 证书编号
-        etNum.setText(qualificationCertificateEntity.getCertificateNumber());
+        etNum.setText(aptitudeCertificateEntity.getCertificateNumber());
         // 有效时间
-        tvBeginTime.setText(V.v(() -> DateUtils.formatDate(qualificationCertificateEntity.getBeginTime(), "yyyy-MM-dd")));
+        tvBeginTime.setText(V.v(() -> DateUtils.formatDate(aptitudeCertificateEntity.getBeginTime(), "yyyy-MM-dd")));
         // 有效时间
-        tvEndTime.setText(V.v(() -> DateUtils.formatDate(qualificationCertificateEntity.getEndTime(), "yyyy-MM-dd")));
+        tvEndTime.setText(V.v(() -> DateUtils.formatDate(aptitudeCertificateEntity.getEndTime(), "yyyy-MM-dd")));
         // 照片
         snplMomentAccident.setData(picList);
     }
@@ -202,11 +204,10 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
             return;
         }
 
-        QualificationCertificateEntity bean = new QualificationCertificateEntity();
-        bean.setAccId(EanfangApplication.get().getAccId());
-        bean.setUserId(EanfangApplication.get().getUserId());
+        AptitudeCertificateEntity bean = new AptitudeCertificateEntity();
         bean.setCertificateName(mCertificateName);
         bean.setAwardOrg(mOrg);
+        bean.setOrgId(mOrgId);
         bean.setCertificateLevel(mLevel);
         bean.setCertificateNumber(mNum);
         bean.setBeginTime(DateUtils.parseDate(mBeginTime, "yyyy-MM-dd"));
@@ -214,8 +215,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
         bean.setCertificatePics(pic);
         // TODO
         bean.setType(0);
-        if (qualificationCertificateEntity != null) {
-            bean.setId(qualificationCertificateEntity.getId());
+        if (aptitudeCertificateEntity != null) {
+            bean.setId(aptitudeCertificateEntity.getId());
             url = UserApi.UPDATA_QUALIFY;
         } else {
             url = UserApi.ADD_QUALIFY;

@@ -141,8 +141,8 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
     }
 
     private void commit() {
-        List<Integer> checkList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == true
-                && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
+        List<Integer> checkList = Stream.of(businessOneList)
+                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
                 .map(beans -> beans.getDataId()).distinct().toList();
         List<Integer> unCheckList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == false
                 && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)

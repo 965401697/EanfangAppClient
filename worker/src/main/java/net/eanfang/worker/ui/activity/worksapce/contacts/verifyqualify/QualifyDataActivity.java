@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -126,7 +125,7 @@ public class QualifyDataActivity extends BaseActivity {
     private void getQuailifyData() {
         QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("orgId", orgid+"");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))

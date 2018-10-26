@@ -122,6 +122,8 @@ public class CompanyManagerActivity extends BaseActivity {
             case R.id.rl_honorcertificate:
                 Bundle bundle = new Bundle();
                 bundle.putString("isAuth", isAuth);
+                bundle.putLong("orgid", mOrgId);
+                bundle.putString("role", "company");
                 JumpItent.jump(CompanyManagerActivity.this, CertificateListActivity.class, bundle);
 
                 break;
