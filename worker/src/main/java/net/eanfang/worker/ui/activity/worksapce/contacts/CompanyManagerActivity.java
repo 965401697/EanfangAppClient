@@ -5,10 +5,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -47,8 +45,6 @@ public class CompanyManagerActivity extends BaseActivity {
     // 荣誉证书
     @BindView(R.id.rl_honorcertificate)
     RelativeLayout rlHonorcertificate;
-    @BindView(R.id.tv_save)
-    TextView tvSave;
     private Long mOrgId;
     private String mOrgName = "";
     //认证中显示标示
@@ -89,7 +85,7 @@ public class CompanyManagerActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff,
-            R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.rl_honorcertificate, R.id.tv_save})
+            R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.rl_honorcertificate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             // 完善资料
@@ -155,22 +151,9 @@ public class CompanyManagerActivity extends BaseActivity {
             case R.id.tv_againAuth:
                 doUndoVerify();
                 break;
-            case R.id.tv_save:
-                commitVerfiy();
-                break;
         }
     }
 
-    /**
-     * 提交认证
-     */
-    private void commitVerfiy() {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + mOrgId)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    showToast("提交成功");
-                    finishSelf();
-                }));
-    }
 
     /**
      * 进行撤销认证操作
@@ -179,6 +162,9 @@ public class CompanyManagerActivity extends BaseActivity {
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
             EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + mOrgId).
                     execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        showToast("撤销成功");
+                        tvAgainAuth.setVisibility(View.GONE);
+                        isAuth = "0";
                     }));
         }).showDialog();
     }

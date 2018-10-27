@@ -236,6 +236,8 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         message.setMsgContent("尊敬的用户，您必须进行资质认证才可以接单，并获得更多订单");
         message.setTip("前往资质认证");
         bundle.putSerializable("message", message);
+        message.setMsgHelp("go_quaility");
+        bundle.putLong("orgid", orgid);
         JumpItent.jump(AuthCompanySecondActivity.this, StateChangeActivity.class, bundle);
         finishSelf();
         EanfangApplication.get().closeActivity(AuthCompanyFirstActivity.class.getName());

@@ -43,12 +43,9 @@ public class CertificateListActivity extends BaseWorkerActivity {
     private final int ADD_CERTIFICATION_CODE = 101;
     @BindView(R.id.rl_add)
     RelativeLayout rlAdd;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
     private CertificateListAdapter adapter;
-
-    // 认证状态
-    private String isAuth = "";
-    // 是否可以删除
-    private boolean isDelete = false;
     // 是否安防公司的荣誉证书
     private String isCompany = "";
     private Long orgid;
@@ -65,18 +62,9 @@ public class CertificateListActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-        isAuth = getIntent().getStringExtra("isAuth");
         isCompany = getIntent().getStringExtra("role");
         orgid = getIntent().getLongExtra("orgid", 0);
-        if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
-            rlAdd.setVisibility(View.GONE);
-            tvSub.setVisibility(View.GONE);
-            isDelete = false;
-        } else {
-            rlAdd.setVisibility(View.VISIBLE);
-            tvSub.setVisibility(View.VISIBLE);
-            isDelete = true;
-        }
+
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +75,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
         });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CertificateListAdapter(isDelete);
+        adapter = new CertificateListAdapter();
         adapter.bindToRecyclerView(recyclerView);
 
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -102,7 +90,6 @@ public class CertificateListActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class)
                         .putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position))
-                        .putExtra("isAuth", isAuth)
                         .putExtra("role", "company")
                         .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
             }
@@ -131,6 +118,11 @@ public class CertificateListActivity extends BaseWorkerActivity {
                         if (bean.getList().size() > 0) {
 //                            adapter.getData().clear();
                             adapter.setNewData(bean.getList());
+                            tvNodata.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        } else {
+                            tvNodata.setVisibility(View.VISIBLE);
+                            recyclerView.setVisibility(View.GONE);
                         }
 
                     }

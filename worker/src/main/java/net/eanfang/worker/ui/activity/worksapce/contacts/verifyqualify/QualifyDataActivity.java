@@ -17,8 +17,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AptitudeCertificateBean;
 import com.eanfang.model.AuthCompanyBaseInfoBean;
+import com.eanfang.model.QualifyFirstBean;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
@@ -101,6 +103,7 @@ public class QualifyDataActivity extends BaseActivity {
                     tagBusinessType.setEnabled(false);
                     initSystemData();
                     initBusinessData();
+                    initBaseInfo();
                 }));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -119,13 +122,29 @@ public class QualifyDataActivity extends BaseActivity {
         getQuailifyData();
     }
 
+    private void initBaseInfo() {
+        EanfangHttp.post(UserApi.FIRST_QUALIFY)
+                .params("orgId", orgid + "")
+                .execute(new EanfangCallback<QualifyFirstBean>(this, true, QualifyFirstBean.class, (bean) -> {
+                    tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel()));
+                    tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear()));
+                    // 厂商
+                    if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2) {
+                        rvVendor.setChecked(true);
+                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1) {// 公司
+                        rbCompany.setChecked(true);
+                    }
+                }));
+    }
+
+
     /**
      * 资质证书
      */
     private void getQuailifyData() {
         QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("orgId", orgid+"");
+        queryEntry.getEquals().put("orgId", orgid + "");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))

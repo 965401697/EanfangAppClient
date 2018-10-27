@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.net.Uri;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -18,11 +17,9 @@ import net.eanfang.worker.R;
  */
 
 public class CertificateListAdapter extends BaseQuickAdapter<HonorCertificateEntity, BaseViewHolder> {
-    private boolean isDelete;
 
-    public CertificateListAdapter(boolean mDelete) {
+    public CertificateListAdapter() {
         super(R.layout.item_certificate_list);
-        this.isDelete = mDelete;
     }
 
     @Override
@@ -37,11 +34,6 @@ public class CertificateListAdapter extends BaseQuickAdapter<HonorCertificateEnt
             ((SimpleDraweeView) helper.getView(R.id.iv_certificate_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_certificate_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
-        }
-        if (isDelete) {// 可以删除
-            helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
-        } else {// 不可删除
-            helper.getView(R.id.tv_delete).setVisibility(View.GONE);
         }
         helper.addOnClickListener(R.id.tv_delete);
     }

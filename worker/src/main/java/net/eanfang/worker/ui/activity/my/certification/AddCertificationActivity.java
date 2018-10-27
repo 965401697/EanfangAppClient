@@ -82,8 +82,6 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
     private TimePickerView mTimeYearMonthDay;
     private HonorCertificateEntity bean;
     private String url = "";
-    // 认证状态
-    private String isAuth = "";
     // 是否安防公司的荣誉证书
     private String isCompany = "";
     private Long orgid;
@@ -99,12 +97,8 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
 
     private void initView() {
         setLeftBack();
-        isAuth = getIntent().getStringExtra("isAuth");
         isCompany = getIntent().getStringExtra("role");
         orgid = getIntent().getLongExtra("orgid", 0);
-        if ("2".equals(isAuth) || "1".equals(isAuth)) {//如果已认证  只进行查看资质认证
-            doUnWrite();
-        }
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
 
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
@@ -114,11 +108,7 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto {
 
         if (bean != null) {
             fillData();
-            if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
-                setTitle("查看证书");
-            } else {
-                setTitle("修改证书");
-            }
+            setTitle("修改证书");
 
         } else {
             setTitle("添加证书");
