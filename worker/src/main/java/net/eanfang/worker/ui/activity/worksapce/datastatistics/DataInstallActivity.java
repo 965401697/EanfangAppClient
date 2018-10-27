@@ -21,7 +21,6 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.datastatistics.DataInstallBean;
-import com.eanfang.model.datastatistics.DataStatisticsBean;
 import com.eanfang.model.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
@@ -128,9 +127,6 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
     // 故障类型
     private List<DataInstallBean.BussinessBean> bussinessBeanList = new ArrayList<>();
     private ArrayList<PieEntry> bussinessEntryList = new ArrayList<>();
-    // 设备完好率
-    private List<DataStatisticsBean.FailureBean> failureBeanList = new ArrayList<>();
-    private ArrayList<PieEntry> failureEntryList = new ArrayList<>();
 
     //当前公司ID
     private Long mOrgId;
@@ -276,8 +272,8 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
             //设置数据
             bussinessEntryList.clear();
             for (int i = 0; i < bussinessBeanList.size(); i++) {
-                if (bussinessBeanList.get(i).getCount() != 0) {
-                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getCount(), bussinessBeanList.get(i).getTypeStr()));
+                if (bussinessBeanList.get(i).getNum() != 0) {
+                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getNum(), bussinessBeanList.get(i).getTypeStr()));
                 }
             }
             if (bussinessEntryList.size() <= 5) {
@@ -288,7 +284,8 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
 
 
         }
-        if (bussinessEntryList.size() <= 0 && failureEntryList.size() <= 0) {
+
+        if (bussinessEntryList.size() <= 0) {
             tvPieNoresult.setVisibility(View.VISIBLE);
             llIntact.setVisibility(View.GONE);
             llFault.setVisibility(View.GONE);

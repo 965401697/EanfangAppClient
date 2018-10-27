@@ -111,6 +111,7 @@ public interface UserApi {
     String GET_SIGN_COUNT = BuildConfig.API_HOST + "/yaf_oa/sign/querySignCount";
     String GET_SIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/sign/userList";
     String GET_SIGN_DETAIL = BuildConfig.API_HOST + "/yaf_oa/sign/detail";
+
     /**
      * 新增安防公司
      */
@@ -445,6 +446,10 @@ public interface UserApi {
      */
     String COMPANY_CERTIFICATE_UPDATE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/update";
 
+    /**
+     * 签到签退列表
+     */
+    String SIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/sign/userListNew";
     /**
      * 技师技能认证的 系统类别和业务类型的提交
      */

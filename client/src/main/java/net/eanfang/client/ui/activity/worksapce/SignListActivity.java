@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,12 +16,16 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.SignListAdapter;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,38 +51,49 @@ public class SignListActivity extends BaseActivity {
     private String title;
     private int status;
 
+    private SignListAdapter signListAdapter;
+
+    private List<SignListBean> signListBeanList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_list);
         ButterKnife.bind(this);
         initView();
+        initData();
     }
 
     private void initView() {
+        setTitle("足迹");
+        setLeftBack();
         title = getIntent().getStringExtra("title");
         status = getIntent().getIntExtra("status", 0);
         if (status == 1) tvSign.setText("签退");
-        setTitle("足迹");
-        setLeftBack();
+
+
+        revList.setLayoutManager(new LinearLayoutManager(this));
+        revList.addItemDecoration(new BGASpaceItemDecoration(30));
+        signListAdapter = new SignListAdapter();
+        signListAdapter.bindToRecyclerView(revList);
+
         llSignLayout.setOnClickListener(v -> finishSelf());
-        initData();
+
     }
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("status", status + "");
         queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
-        EanfangHttp.post(UserApi.GET_SIGN_LIST)
+        EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, (bean) -> {
-                    initAdapter(bean.getList());
+                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, true, (bean) -> {
+                    signListBeanList = bean;
+                    initAdapter();
                 }));
     }
 
-    private void initAdapter(List<SignListBean.ListBean> mDataList) {
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        SignListAdapter adapter = new SignListAdapter(R.layout.item_sign_list, mDataList);
+    private void initAdapter() {
+        signListAdapter.setNewData(signListBeanList);
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -88,13 +102,14 @@ public class SignListActivity extends BaseActivity {
                 } else {
                     if (!PermKit.get().getSignOutDetailPrem()) return;
                 }
-                startActivity(new Intent(SignListActivity.this, SignListDetailActivity.class)
-                        .putExtra("id", mDataList.get(position).getId())
-                        .putExtra("bean", mDataList.get(position))
-                        .putExtra("title", title)
-                        .putExtra("status", status));
+
+                Bundle bundle = new Bundle();
+                bundle.putString("id", signListBeanList.get(position).getList().get(position).getId());
+                bundle.putInt("status", status);
+                bundle.putSerializable("bean", (Serializable) signListBeanList.get(position).getList().get(position));
+                JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
             }
         });
-        revList.setAdapter(adapter);
+        revList.setAdapter(signListAdapter);
     }
 }

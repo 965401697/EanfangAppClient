@@ -15,8 +15,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AptitudeCertificateBean;
 import com.eanfang.model.AuthCompanyBaseInfoBean;
-import com.eanfang.model.QualifyListBean;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
@@ -129,9 +129,9 @@ public class QualifyDataActivity extends BaseActivity {
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<QualifyListBean>(this, true, QualifyListBean.class) {
+                .execute(new EanfangCallback<AptitudeCertificateBean>(this, true, AptitudeCertificateBean.class) {
                     @Override
-                    public void onSuccess(QualifyListBean bean) {
+                    public void onSuccess(AptitudeCertificateBean bean) {
                         if (bean.getList().size() > 0) {
                             qualifyListAdapter.setNewData(bean.getList());
                         }

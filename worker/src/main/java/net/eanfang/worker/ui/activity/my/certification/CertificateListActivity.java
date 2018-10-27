@@ -114,11 +114,12 @@ public class CertificateListActivity extends BaseWorkerActivity {
         String url = "";
         QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         if (isCompany.equals("company")) {
+            queryEntry.getEquals().put("orgId", orgid + "");
             url = UserApi.COMPANY_CERTIFICATE_LIST;// 安防公司
         } else {
+            queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
             url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST;// 技师认证
         }
         EanfangHttp.post(url)

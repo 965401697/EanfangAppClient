@@ -14,7 +14,7 @@
         android:layout_height="80dp"
         android:layout_above="@+id/et_group_name"
         android:layout_centerHorizontal="true"
-        fresco:placeholderImage="@mipmap/camera" />
+        fresco:placeholderImage="@mipmap/ic_camera" />
 
 
     <EditText

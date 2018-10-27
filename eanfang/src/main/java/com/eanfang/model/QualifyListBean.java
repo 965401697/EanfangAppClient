@@ -1,6 +1,6 @@
 package com.eanfang.model;
 
-import com.yaf.base.entity.AptitudeCertificateEntity;
+import com.yaf.base.entity.QualificationCertificateEntity;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class QualifyListBean {
     private int pageSize;
     private int totalCount;
     private int totalPage;
-    private List<AptitudeCertificateEntity> list;
+    private List<QualificationCertificateEntity> list;
 
     public int getCurrPage() {
         return currPage;
@@ -47,11 +47,11 @@ public class QualifyListBean {
         this.totalPage = totalPage;
     }
 
-    public List<AptitudeCertificateEntity> getList() {
+    public List<QualificationCertificateEntity> getList() {
         return list;
     }
 
-    public void setList(List<AptitudeCertificateEntity> list) {
+    public void setList(List<QualificationCertificateEntity> list) {
         this.list = list;
     }
 }

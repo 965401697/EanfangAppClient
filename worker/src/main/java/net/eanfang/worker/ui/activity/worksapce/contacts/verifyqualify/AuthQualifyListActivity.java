@@ -12,8 +12,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AptitudeCertificateBean;
 import com.eanfang.model.Message;
-import com.eanfang.model.QualifyListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -98,9 +98,9 @@ public class AuthQualifyListActivity extends BaseActivity {
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<QualifyListBean>(this, true, QualifyListBean.class) {
+                .execute(new EanfangCallback<AptitudeCertificateBean>(this, true, AptitudeCertificateBean.class) {
                     @Override
-                    public void onSuccess(QualifyListBean bean) {
+                    public void onSuccess(AptitudeCertificateBean bean) {
                         if (bean.getList().size() > 0) {
                             qualifyListAdapter.setNewData(bean.getList());
                             tvSub.setVisibility(View.VISIBLE);

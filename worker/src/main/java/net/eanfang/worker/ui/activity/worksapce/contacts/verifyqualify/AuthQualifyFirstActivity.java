@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,13 +15,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthCompanyBaseInfoBean;
 import com.eanfang.model.GrantChange;
+import com.eanfang.model.QualifyFirstBean;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.ShopCompanyEntity;
 import com.yaf.sys.entity.BaseDataEntity;
@@ -139,12 +137,17 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     }
 
     private void initBaseInfo() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("orgId", orgid + "");
         EanfangHttp.post(UserApi.FIRST_QUALIFY)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    Log.e("", "");
+                .params("orgId", orgid + "")
+                .execute(new EanfangCallback<QualifyFirstBean>(this, true, QualifyFirstBean.class, (bean) -> {
+                    tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel()));
+                    tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear()));
+                    // 厂商
+                    if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2) {
+                        rvVendor.setChecked(true);
+                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1) {// 公司
+                        rbCompany.setChecked(true);
+                    }
                 }));
     }
 
@@ -222,7 +225,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         // 业务类别
         List<Integer> checkList_business = Stream.of(businessTypeList)
                 .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()) .distinct().toList();
+                .map(beans -> beans.getDataId()).distinct().toList();
         List<Integer> unCheckList_business = Stream.of(businessTypeList)
                 .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
                 .map(beans -> beans.getDataId()).distinct().toList();
@@ -237,7 +240,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
         shopCompanyEntity.setWorking_level(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
         shopCompanyEntity.setWorking_year(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
-        shopCompanyEntity.setIsManufacturer(mCompanyType);
+        shopCompanyEntity.setIs_manufacturer(mCompanyType);
         orgUnitEntity.setOrgId(orgid);
         orgUnitEntity.setShopCompanyEntity(shopCompanyEntity);
 

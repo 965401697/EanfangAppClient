@@ -398,8 +398,8 @@ public class HomeFragment extends BaseFragment {
         homeDataAdapter.bindToRecyclerView(rvData);
         homeDataAdapter.setNewData(clientDataList);
         tvReapirTotal.setText(bean.getAll() + "");
-        tvDesitnTotal.setText(bean.getDesign().getCount() + "");
-        tvInstallTotal.setText(bean.getInstall().getCount() + "");
+        tvDesitnTotal.setText(bean.getDesign().getNum() + "");
+        tvInstallTotal.setText(bean.getInstall().getNum() + "");
     }
 
     private void initFalseData() {

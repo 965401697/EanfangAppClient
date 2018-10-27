@@ -19,10 +19,12 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.SignListAdapter;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,42 +50,48 @@ public class SignListActivity extends BaseActivity {
     private String title;
     private int status;
 
+    private SignListAdapter signListAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_list);
         ButterKnife.bind(this);
         initView();
+        initData();
     }
 
     private void initView() {
+        setTitle("足迹");
+        setLeftBack();
         title = getIntent().getStringExtra("title");
         status = getIntent().getIntExtra("status", 0);
         if (status == 1) tvSign.setText("签退");
-        setTitle("足迹");
-        setLeftBack();
+
+        revList.setLayoutManager(new LinearLayoutManager(this));
+        revList.addItemDecoration(new BGASpaceItemDecoration(30));
+        signListAdapter = new SignListAdapter();
+        signListAdapter.bindToRecyclerView(revList);
+
         llSignLayout.setOnClickListener(v -> finishSelf());
-        initData();
     }
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("status", status + "");
         queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
-        EanfangHttp.post(UserApi.GET_SIGN_LIST)
+        EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, (bean) -> {
-                    initAdapter(bean.getList());
+                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, true, (bean) -> {
+                    initAdapter(bean);
                 }));
     }
 
-    private void initAdapter(List<SignListBean.ListBean> mDataList) {
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        SignListAdapter adapter = new SignListAdapter(R.layout.item_sign_list, mDataList);
+    private void initAdapter(List<SignListBean> dataBeanList) {
+        signListAdapter.setNewData(dataBeanList);
+
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                 if (status == 0) {
                     if (!PermKit.get().getSignInDetailPrem()) return;
                 } else {
@@ -91,12 +99,11 @@ public class SignListActivity extends BaseActivity {
                 }
 
                 startActivity(new Intent(SignListActivity.this, SignListDetailActivity.class)
-                        .putExtra("id", mDataList.get(position).getId())
-                        .putExtra("bean", mDataList.get(position))
-                        .putExtra("title", title)
+                        .putExtra("id", dataBeanList.get(position).getList().get(position).getId())
+                        .putExtra("bean", (Serializable) dataBeanList.get(position).getList().get(position))
                         .putExtra("status", status));
             }
         });
-        revList.setAdapter(adapter);
+        revList.setAdapter(signListAdapter);
     }
 }
