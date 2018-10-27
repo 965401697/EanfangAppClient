@@ -59,7 +59,7 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
                     helper.setText(R.id.tv_work_question, "遗留问题：无");
 
                 }
-                helper.addOnClickListener(R.id.tv_look);
+                helper.addOnClickListener(R.id.rl_show);
                 helper.addOnClickListener(R.id.tv_delete);
                 break;
             case WorkAddReportBean.WorkReportDetailsBean.EXPAND:

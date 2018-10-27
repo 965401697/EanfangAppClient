@@ -478,7 +478,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                     WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
-                    if (view.getId() == R.id.tv_look) {
+                    if (view.getId() == R.id.rl_show) {
                         b.setItemType(2);
                         adapter.notifyItemChanged(position);
                     } else if (view.getId() == R.id.tv_delete) {
@@ -698,7 +698,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                     WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
-                    if (view.getId() == R.id.tv_look) {
+                    if (view.getId() == R.id.rl_show) {
                         b.setItemType(2);
                         adapter.notifyItemChanged(position);
                     } else if (view.getId() == R.id.tv_delete) {
@@ -848,7 +848,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                     WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
-                    if (view.getId() == R.id.tv_look) {
+                    if (view.getId() == R.id.rl_show) {
                         b.setItemType(2);
                         adapter.notifyItemChanged(position);
                     } else if (view.getId() == R.id.tv_delete) {

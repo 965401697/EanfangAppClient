@@ -60,7 +60,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
                     helper.setText(R.id.tv_work_question, "遗留问题：无");
 
                 }
-                helper.addOnClickListener(R.id.iv_show);
+                helper.addOnClickListener(R.id.rl_show);
 //                helper.setVisible(R.id.tv_delete,false);
                 break;
             case WorkAddReportBean.WorkReportDetailsBean.EXPAND:
@@ -84,7 +84,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
                     helper.setText(R.id.tv_work_handle, "无");
 
                 }
-                if (!TextUtils.isEmpty(item.getField2())) {
+                if (!TextUtils.isEmpty(item.getField2())&& !item.getField2().contains("(") && item.getField2().contains("-")) {
                     helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "协同人员：");
                     String[] info = item.getField2().split(",");

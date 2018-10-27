@@ -59,7 +59,7 @@ public class FindQuestionReportAdapter extends BaseMultiItemQuickAdapter<WorkAdd
                     helper.setText(R.id.tv_work_question, "处理措施：无");
 
                 }
-                helper.addOnClickListener(R.id.tv_look);
+                helper.addOnClickListener(R.id.rl_show);
                 helper.addOnClickListener(R.id.tv_delete);
                 break;
             case WorkAddReportBean.WorkReportDetailsBean.EXPAND:

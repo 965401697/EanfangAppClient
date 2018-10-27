@@ -61,7 +61,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                     helper.setText(R.id.tv_work_question, "处理措施：无");
 
                 }
-                helper.addOnClickListener(R.id.iv_show);
+                helper.addOnClickListener(R.id.rl_show);
 //                helper.addOnClickListener(R.id.tv_delete);
                 break;
             case WorkAddReportBean.WorkReportDetailsBean.EXPAND:
@@ -74,7 +74,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
 
                 }
 
-                if (!TextUtils.isEmpty(item.getField2())) {
+                if (!TextUtils.isEmpty(item.getField2())&& !item.getField2().contains("(") && item.getField2().contains("-")) {
                     helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "责任人：");
                     String[] info = item.getField2().split(",");

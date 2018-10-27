@@ -1,9 +1,11 @@
 package net.eanfang.worker.ui.activity.worksapce.oa.workreport;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -67,6 +70,8 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
     private FindQuestionDetailAdapter findAdapter;
     private PlanDetailAdapter planAdapter;
 
+    private WorkReportInfoBean mBean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +84,24 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //分享聊天
+                if (mBean != null) {
+                    Intent intent = new Intent(WorkReportDetailActivity.this, SelectIMContactActivity.class);
+                    Bundle bundle = new Bundle();
 
+                    bundle.putString("id", String.valueOf(mBean.getId()));
+                    bundle.putString("orderNum", mBean.getCreateOrg().getOrgName());
+                    if (mBean.getWorkReportDetails() != null && !TextUtils.isEmpty(mBean.getWorkReportDetails().get(0).getPictures())) {
+                        bundle.putString("picUrl", mBean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
+                    }
+                    bundle.putString("creatTime", String.valueOf(mBean.getType()));
+                    bundle.putString("workerName", mBean.getCreateUser().getAccountEntity().getRealName());
+                    bundle.putString("status", String.valueOf(mBean.getStatus()));
+                    bundle.putString("shareType", "3");
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -115,7 +137,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
                 WorkReportInfoBean.WorkReportDetailsBean b = (WorkReportInfoBean.WorkReportDetailsBean) adapter.getData().get(position);
-                if (view.getId() == R.id.iv_show) {
+                if (view.getId() == R.id.rl_show) {
                     b.setItemType(2);
                     adapter.notifyItemChanged(position);
                 } else if (view.getId() == R.id.iv_pack) {
@@ -132,7 +154,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                 .tag(this)
                 .params("id", mId)
                 .execute(new EanfangCallback<WorkReportInfoBean>(this, true, WorkReportInfoBean.class, (bean) -> {
-//                            share(bean);
+                            mBean = bean;
 
                             setTitle(bean.getCreateUser().getAccountEntity().getRealName() + "的" + GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
 
