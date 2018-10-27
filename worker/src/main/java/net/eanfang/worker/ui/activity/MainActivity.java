@@ -245,7 +245,7 @@ public class MainActivity extends BaseActivity {
 //                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
                 if (var == 0) {
                     redPoint.setVisibility(View.GONE);
-                }else {
+                } else {
                     redPoint.setVisibility(View.VISIBLE);
                 }
             });
@@ -415,6 +415,9 @@ public class MainActivity extends BaseActivity {
          */
         @Override
         public boolean onReceived(Message message, int left) {
+
+            getIMUnreadMessageCount();
+
             //开发者根据自己需求自行处理
             boolean isDelect = false;
             String type = message.getObjectName();
@@ -481,7 +484,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
+    // TODO: 2018/10/26 删除群聊也要刷新
     public void getIMUnreadMessageCount() {
         RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
@@ -645,9 +648,9 @@ public class MainActivity extends BaseActivity {
             String frgTag = mTabHost.getCurrentTabTag();
             ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
             contactListFragment.onActivityResult(requestCode, resultCode, data);
-        }else if(resultCode == RESULT_OK && requestCode == 49){
+        } else if (resultCode == RESULT_OK && requestCode == 49) {
             ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
-            contactsFragment.onActivityResult(requestCode,resultCode,data);
+            contactsFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 }

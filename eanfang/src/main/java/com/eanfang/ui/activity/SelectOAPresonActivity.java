@@ -57,6 +57,7 @@ public class SelectOAPresonActivity extends BaseActivity {
 
     private TemplateBean.Preson oldPreson;
     private String isRadio;
+    private String IM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class SelectOAPresonActivity extends BaseActivity {
         });
 
         isRadio = getIntent().getStringExtra("isRadio");//单选 多选
+        IM = getIntent().getStringExtra("IM");//单选 多选
 
     }
 
@@ -226,7 +228,6 @@ public class SelectOAPresonActivity extends BaseActivity {
 //        mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
 
 
-
         if (!TextUtils.isEmpty(isRadio)) {// 单选
 
             List<TreeItem> treeItemList = ItemHelperFactory.createTreeItemList(mTemplateBeanList, OrgSelectGroupSingleItem.class, null);
@@ -251,10 +252,8 @@ public class SelectOAPresonActivity extends BaseActivity {
             }
             mTreeRecyclerAdapter.getItemManager().replaceAllItem(treeItemList);
         }
-        
-        
-        
-        
+
+
         recyclerView.setAdapter(mTreeRecyclerAdapter);
 
 
@@ -313,7 +312,11 @@ public class SelectOAPresonActivity extends BaseActivity {
             return;
         }
         EventBus.getDefault().post(presonList);
-        endTransaction(true);
+        if (TextUtils.isEmpty(IM)) {//点击会话界面 发送OA 界面不能销毁
+            endTransaction(true);
+        } else {
+            finishSelf();
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import net.eanfang.worker.ui.activity.im.SampleExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -54,6 +55,14 @@ public class WorkerApplication extends EanfangApplication {
 
             EanfangApplication.AppType = BuildConfig.TYPE;
         }
+
+
+        Conversation.ConversationType[] types = new Conversation.ConversationType[] {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP,
+                Conversation.ConversationType.DISCUSSION
+        };
+        RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override

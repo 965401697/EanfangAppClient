@@ -467,6 +467,10 @@ public class WorkReportInfoBean implements Serializable {
             public String getAvatar() {
                 return avatar;
             }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
         }
     }
 

@@ -450,4 +450,9 @@ public interface UserApi {
      * 签到签退列表
      */
     String SIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/sign/userListNew";
+    /**
+     * 技师技能认证的 系统类别和业务类型的提交
+     */
+    String TECH_WORKER_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/updateV2";
+
 }

@@ -364,6 +364,9 @@ public class MainActivity extends BaseClientActivity {
          */
         @Override
         public boolean onReceived(Message message, int left) {
+
+            getIMUnreadMessageCount();
+
             //开发者根据自己需求自行处理
             boolean isDelect = false;
             String type = message.getObjectName();

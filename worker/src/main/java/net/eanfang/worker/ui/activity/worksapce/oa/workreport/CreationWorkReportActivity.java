@@ -17,14 +17,17 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddReportBean;
 import com.eanfang.model.WorkReportInfoBean;
+import com.eanfang.model.device.User;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.takevideo.PlayVideoActivity;
@@ -63,6 +66,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imlib.model.Conversation;
 
 import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
@@ -222,7 +226,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             ToastUtil.get().showToast(CreationWorkReportActivity.this, "发送成功");
-            finishSelf();
+            finish();
         }
     };
 
@@ -236,6 +240,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         setLeftBack();
 
         initViews();
+
+
     }
 
     private void initViews() {
@@ -261,8 +267,46 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         snplPhotosWork.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         snplPhotosQuestion.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
         snplPhotosPlan.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
+
+
+        String targetId = getIntent().getStringExtra("targetId");
+        String conversationType = getIntent().getStringExtra("conversationType");
+        if (!TextUtils.isEmpty(targetId) && Conversation.ConversationType.GROUP.getName().toUpperCase().equals(conversationType.toUpperCase())) {
+            getGroupDetail(targetId);
+        } else {
+            getPresonDetail(targetId);
+        }
     }
 
+
+    private void getGroupDetail(String targetId) {
+
+        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                .params("ryGroupId", targetId)
+                .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setName(bean.getGroup().getGroupName());
+                    preson.setProtraivat(bean.getGroup().getHeadPortrait());
+                    preson.setId(bean.getGroup().getRcloudGroupId());
+                    groupList.add(preson);
+                    groupAdaptet.setNewData(groupList);
+                }));
+    }
+
+    private void getPresonDetail(String id) {
+
+        EanfangHttp.get(UserApi.POST_USER_INFO + id)
+                .execute(new EanfangCallback<User>(this, false, User.class, (bean) -> {
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setName(bean.getNickName());
+                    preson.setProtraivat(bean.getAvatar());
+                    preson.setId(bean.getAccId());
+                    preson.setUserId(bean.getIdCard());
+                    whoList.add(preson);
+                    whoPlanAdaptet.setNewData(whoList);
+                }));
+    }
 
     public void setFlag(int flag) {
         this.mFlag = flag;
@@ -912,12 +956,13 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         Intent intent = new Intent(CreationWorkReportActivity.this, StateChangeActivity.class);
                         Bundle bundle = new Bundle();
                         Message message = new Message();
-                        message.setTitle("汇报发送成功");
-                        message.setMsgTitle("您的工作汇报已发送成功");
-                        message.setMsgContent("您可以随时通过我的汇报查看");
+//                        message.setTitle("汇报发送成功");
+//                        message.setMsgTitle("汇报发送成功\r\n您的工作汇报已发送成功");
+                        message.setMsgContent("汇报发送成功\n" +
+                                "您的工作汇报已发送成功\r\n您可以随时通过我的汇报查看");
                         message.setShowOkBtn(true);
                         message.setShowLogo(true);
-                        message.setTip("");
+                        message.setTip("确定");
                         bundle.putSerializable("message", message);
                         intent.putExtras(bundle);
                         startActivity(intent);

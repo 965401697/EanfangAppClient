@@ -70,7 +70,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), CreationWorkReportActivity.REQUEST_CODE_GROUP);
                     } else {
                         //选择协同人员
-                        ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class));
+                        ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class).putExtra("IM", "IM"));
                     }
                 }
             });

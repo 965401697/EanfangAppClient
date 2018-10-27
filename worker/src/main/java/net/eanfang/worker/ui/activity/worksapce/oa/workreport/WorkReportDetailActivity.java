@@ -72,7 +72,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_detail);
         ButterKnife.bind(this);
-        setTitle(getIntent().getStringExtra("name") + "的" + getIntent().getStringExtra("type"));
+
         setLeftBack();
 
         setRightTitle("分享");
@@ -133,6 +133,9 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                 .params("id", mId)
                 .execute(new EanfangCallback<WorkReportInfoBean>(this, true, WorkReportInfoBean.class, (bean) -> {
 //                            share(bean);
+
+                            setTitle(bean.getCreateUser().getAccountEntity().getRealName() + "的" + GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
+
                             completeList = new ArrayList<>();
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
