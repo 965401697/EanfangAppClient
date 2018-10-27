@@ -145,6 +145,8 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
+        <View style="@style/style_common_line_vertical_gray" />
+
         <LinearLayout
             android:id="@+id/ll_footer"
             android:layout_width="0dp"

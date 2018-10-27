@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextClock;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -38,6 +37,7 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -60,16 +60,14 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
 
     private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
-    @BindView(R.id.tv_sigin_address)
-    TextView tvSiginAddress;
     @BindView(R.id.mapView)
     MapView mapView;
     @BindView(R.id.et_visit_name)
     EditText etVisitName;
     @BindView(R.id.text_clock)
-    TextClock textClock;
-    @BindView(R.id.ll_signin)
-    LinearLayout llSignin;
+    TextView textClock;
+    @BindView(R.id.rl_signin)
+    RelativeLayout rlSignin;
     @BindView(R.id.tv_sign_times)
     TextView tvSignTimes;
     @BindView(R.id.ll_footer)
@@ -100,7 +98,6 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         initView();
         // 此方法必须重写
         mapView.onCreate(savedInstanceState);
-        initTextClock();
         initGPS();
         initMap();
         setClick();
@@ -115,11 +112,12 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         tvSignHadTime.setText("你已经" + title);
         tvSignOrSignout.setText(title);
         tvSignName.setText(title);
+        textClock.setText(new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
     }
 
     private void setClick() {
 
-        llSignin.setOnClickListener(v -> fillData());
+        rlSignin.setOnClickListener(v -> fillData());
         llFooter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,25 +240,6 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
 
 
     /**
-     * 初始化时间控件
-     */
-    private void initTextClock() {
-        if (!("").equals(getDateFormate(this))) {
-            textClock.setFormat12Hour(getDateFormate(this));
-            textClock.setFormat24Hour(getDateFormate(this));
-        } else {
-            textClock.setFormat12Hour("yyyy-dd-MM");
-            textClock.setFormat24Hour("yyyy-dd-MM");
-        }
-
-    }
-
-    private String getDateFormate(Context context) {
-        return Settings.System.getString(context.getContentResolver(),
-                Settings.System.DATE_FORMAT);
-    }
-
-    /**
      * 初始化gps
      */
 
@@ -308,7 +287,6 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
                 cityAddress = amapLocation.getCity();
                 contry = amapLocation.getDistrict();
                 detailPlace = sb.toString();
-                tvSiginAddress.setText(detailPlace);
 
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();

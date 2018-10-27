@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/dimen_30"
+    android:paddingTop="@dimen/dimen_40">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_header"
+        android:layout_width="@dimen/dimen_90"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/dimen_24"
+        app:placeholderImage="@mipmap/ic_nodata" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_visit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_14">
+
+            <TextView
+                android:id="@+id/tv_sign_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:src="@mipmap/ic_icon_right" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:drawableLeft="@mipmap/ic_sign_commit_location"
+            android:drawablePadding="@dimen/dimen_10"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_15" />
+
+
+    </LinearLayout>
+
+    <View style="@style/style_common_line_gray" />
+
+</LinearLayout>

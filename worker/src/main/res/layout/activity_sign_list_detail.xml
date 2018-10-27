@@ -1,105 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/header" />
 
-    <com.amap.api.maps.MapView
-        android:id="@+id/mapView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        <com.amap.api.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/dimen_20"
-        android:paddingTop="@dimen/dimen_20">
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_header"
-            android:layout_width="@dimen/dimen_80"
-            android:layout_height="@dimen/dimen_80"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_20"
-            android:layout_marginRight="@dimen/dimen_24"
-            fresco:placeholderImage="@mipmap/ic_header"
-            fresco:roundAsCircle="true" />
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_200"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_white" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical">
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:background="@drawable/bg_ll_selctor"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dimen_20">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="小强"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tv_company_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="法安视"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="123334"
-                android:textColor="@color/common_ext_color" />
-
-            <TextView
-                android:id="@+id/tv_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="北京"
-                android:textColor="@color/common_ext_color" />
-
-            <RelativeLayout
+            <ImageView
+                android:id="@+id/iv_open"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20">
+                android:padding="@dimen/dimen_20"
+                android:src="@mipmap/ic_sign_detail_top" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:paddingRight="@dimen/dimen_40">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_sign_commit_time"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="签到时间"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_25" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_25"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:paddingRight="@dimen/dimen_40">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_sign_commit_location"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="所在位置："
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_25" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_25"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:paddingRight="@dimen/dimen_40">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_sign_detail_personal"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="拜访对象"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
 
                 <TextView
                     android:id="@+id/tv_visit_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小强"
-                    android:textColor="@color/black" />
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
+
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_25" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_25"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:paddingRight="@dimen/dimen_40">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="备注"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
 
                 <TextView
                     android:id="@+id/tv_remark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_visit_name"
-                    android:text="123334"
-                    android:textColor="@color/common_ext_color" />
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sdv_pic"
-                    android:layout_width="@dimen/dimen_60"
-                    android:layout_height="@dimen/dimen_60"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dimen_24"
-                    />
+            <LinearLayout
+                android:id="@+id/ll_photos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:paddingRight="@dimen/dimen_40"
+                android:visibility="gone">
 
-            </RelativeLayout>
-
+                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    android:id="@+id/snpl_moment_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_200"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                    app:bga_snpl_editable="true"
+                    app:bga_snpl_itemCornerRadius="0dp"
+                    app:bga_snpl_itemSpanCount="3"
+                    app:bga_snpl_itemWhiteSpacing="4dp"
+                    app:bga_snpl_itemWidth="0dp"
+                    app:bga_snpl_maxItemCount="3"
+                    app:bga_snpl_otherWhiteSpacing="100dp"
+                    app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
+                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                    app:bga_snpl_plusEnable="true"
+                    app:bga_snpl_sortable="true" />
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
+    </RelativeLayout>
 </LinearLayout>

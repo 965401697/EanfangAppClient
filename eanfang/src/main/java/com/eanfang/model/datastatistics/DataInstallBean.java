@@ -55,15 +55,15 @@ public class DataInstallBean implements Serializable {
          * status : 0
          */
 
-        private int count;
+        private int num;
         private int status;
 
-        public int getCount() {
-            return count;
+        public int getNum() {
+            return num;
         }
 
-        public void setCount(int count) {
-            this.count = count;
+        public void setNum(int num) {
+            this.num = num;
         }
 
         public int getStatus() {
@@ -81,15 +81,15 @@ public class DataInstallBean implements Serializable {
          * typeStr : 电视监控
          */
 
-        private int count;
+        private int num;
         private String typeStr;
 
-        public int getCount() {
-            return count;
+        public int getNum() {
+            return num;
         }
 
-        public void setCount(int count) {
-            this.count = count;
+        public void setNum(int num) {
+            this.num = num;
         }
 
         public String getTypeStr() {
@@ -108,16 +108,16 @@ public class DataInstallBean implements Serializable {
          * repairCompanyId : 0
          */
 
-        private int count;
+        private int num;
         private String clientCompanyName;
         private String ownerCompanyId;
 
-        public int getCount() {
-            return count;
+        public int getNum() {
+            return num;
         }
 
-        public void setCount(int count) {
-            this.count = count;
+        public void setNum(int num) {
+            this.num = num;
         }
 
         public String getClientCompanyName() {

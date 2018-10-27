@@ -86,15 +86,15 @@ public class SignInCommitActivity extends BaseActivity {
     private void oss() {
 
 
-        if (snplMomentAddPhotos.getData().size() > 1) {
-            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true).split(",")[0];
-        } else {
-            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true);
-        }
-
+//        if (snplMomentAddPhotos.getData().size() > 1) {
+//            ursStr = PhotoUtils.getPhotoUrl("oa/sign/", snplMomentAddPhotos, uploadMap, true).split(",")[0];
+//        } else {
+//            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true);
+//        }
+        ursStr = PhotoUtils.getPhotoUrl("oa/sign/", snplMomentAddPhotos, uploadMap, true);
         if (snplMomentAddPhotos.getData().size() >= 1) {
 
-            OSSUtils.initOSS(this).asyncPutImage(ursStr, snplMomentAddPhotos.getData().get(0), new OSSCallBack(SignInCommitActivity.this, true) {
+            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(SignInCommitActivity.this, true) {
                 @Override
                 public void onFinish() {
                     commit(ursStr);

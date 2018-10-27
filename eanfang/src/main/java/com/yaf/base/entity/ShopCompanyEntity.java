@@ -107,9 +107,6 @@ public class ShopCompanyEntity implements Serializable {
     //整体评价（1：好评，2：中评，3：差评）
     //@TableField(value = "general_evaluation")
     private Integer generalEvaluation;
-    //是否生产厂商
-    //@TableField(value = "is_manufacturer")
-    private Integer isManufacturer;
     //是否官网显示（0：不显示，1：显示）
     //@TableField(value = "show_www")
     private Integer showWww;
@@ -118,6 +115,7 @@ public class ShopCompanyEntity implements Serializable {
     // 能力等级
     private int working_year;
     // 公司类型
+    //是否生产厂商
     private int is_manufacturer;
 
     /**

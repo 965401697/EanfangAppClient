@@ -19,7 +19,7 @@ public class HomeDataAdapter extends BaseQuickAdapter<HomeDatastisticeBean.Group
     @Override
     protected void convert(BaseViewHolder helper, HomeDatastisticeBean.GroupBean item) {
         // 数量
-        helper.setText(R.id.tv_repair_num, item.getCount() + "");
+        helper.setText(R.id.tv_repair_num, item.getNum() + "");
         if ("已修复".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
             helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_one);
         } else if ("维修中".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
