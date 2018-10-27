@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ExpandableListView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -160,36 +161,49 @@ public class SkillAreaActivity extends BaseWorkerActivity {
         return resultList;
     }
 
+//    private void commit() {
+//        checkListId = getListData(areaListBean, true);
+//        unCheckListId = getListData(areaListBean, false);
+//        grantChange.setAddIds(checkListId);
+//        grantChange.setDelIds(unCheckListId);
+//
+//        if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
+//            showToast("请至少选择一个服务区域");
+//        } else {
+//            for (int i = 0; i < areaListBean.size(); i++) {
+//                if (areaListBean.get(i).isCheck()) {
+//
+////                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
+////                            .upJson(JSONObject.toJSONString(grantChange))
+////                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+////                            showToast("认证资料提交成功");
+////                                commitVerfiy();
+////                            }));
+////                    break;
+//                }
+//
+//            }
+//        }
+//
+//    }
+
     private void commit() {
         checkListId = getListData(areaListBean, true);
         unCheckListId = getListData(areaListBean, false);
         grantChange.setAddIds(checkListId);
         grantChange.setDelIds(unCheckListId);
+        EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA)
+                .upJson(JSONObject.toJSONString(grantChange))
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 
-        if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
-            showToast("请至少选择一个服务区域");
-        } else {
-            for (int i = 0; i < areaListBean.size(); i++) {
-                if (areaListBean.get(i).isCheck()) {
-
-//                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
-//                            .upJson(JSONObject.toJSONString(grantChange))
-//                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-//                            showToast("认证资料提交成功");
-//                                commitVerfiy();
-//                            }));
-//                    break;
-                }
-
-            }
-        }
-
+                    Intent intent = new Intent(this, SkillCertificafeListActivity.class);
+                    startAnimActivity(intent);
+                    finishSelf();
+                }));
     }
 
     @OnClick(R.id.tv_go)
     public void onViewClicked() {
-//        commit();
-        Intent intent=new Intent(this,SkillCertificafeListActivity.class);
-        startAnimActivity(intent);
+        commit();
     }
 }

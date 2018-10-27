@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -161,6 +162,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                 .upJson(requestContent)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
 //                    jump();
+
+                    startAnimActivity(new Intent(this, SkillAreaActivity.class));
                 }));
 
 
@@ -171,7 +174,6 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
         doVerify();
 
-//        startAnimActivity(new Intent(this, SkillAreaActivity.class));
     }
 
     @OnClick({R.id.ll_limit, R.id.ll_ability})

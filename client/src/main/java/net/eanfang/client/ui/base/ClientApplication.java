@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.util.SharePreferenceUtil;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -13,6 +14,8 @@ import net.eanfang.client.ui.activity.im.CustomizeMessage;
 import net.eanfang.client.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
+
+import java.io.IOException;
 
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
@@ -45,7 +48,13 @@ public class ClientApplication extends EanfangApplication {
 
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
 
-            EanfangApplication.AppType = BuildConfig.TYPE;
+//            EanfangApplication.AppType = BuildConfig.TYPE;
+
+            try {
+                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP,BuildConfig.TYPE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
 

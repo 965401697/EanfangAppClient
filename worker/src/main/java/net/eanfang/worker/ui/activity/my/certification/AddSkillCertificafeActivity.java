@@ -115,9 +115,9 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         entity.setAccId(EanfangApplication.get().getAccId());
         if (bean != null) {
             entity.setId(bean.getId());
-            url = UserApi.UPDATA_QUALIFY;
+            url = UserApi.TECH_WORKER_UPDATA_QUALIFY;
         } else {
-            url = UserApi.ADD_QUALIFY;
+            url = UserApi.TECH_WORKER_ADD_QUALIFY;
         }
         entity.setCertificateName(etCertificateName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());

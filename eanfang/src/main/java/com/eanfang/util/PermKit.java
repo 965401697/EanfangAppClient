@@ -57,13 +57,22 @@ public class PermKit {
             Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //如果是技师端  并且
-            if (EanfangApplication.AppType.equals("worker") && EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
-                intent.putExtra("info", "请先进行技师认证。");
-            } else if (EanfangApplication.get().getCompanyId() != null && EanfangApplication.get().getCompanyId() != 0) {
-                intent.putExtra("info", "暂无权限访问，联系企业管理员添加权限。");
-            } else {
-                intent.putExtra("info", "暂无权限访问，请创建或加入企业后再试。");
+
+            try {
+                String appType = (String) SharePreferenceUtil.get().get("app", "");
+
+                if (appType.equals("worker") && EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
+                    intent.putExtra("info", "请先进行技师认证。");
+                } else if (EanfangApplication.get().getCompanyId() != null && EanfangApplication.get().getCompanyId() != 0) {
+                    intent.putExtra("info", "暂无权限访问，联系企业管理员添加权限。");
+                } else {
+                    intent.putExtra("info", "暂无权限访问，请创建或加入企业后再试。");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+
             EanfangApplication.getApplication().startActivity(intent);
         }
         return isPerm;

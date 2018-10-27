@@ -450,4 +450,21 @@ public interface UserApi {
      */
     String TECH_WORKER_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/updateV2";
 
+    /**
+     * 技师技能认证添加资质证书
+     */
+    String TECH_WORKER_ADD_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/insert";
+    /**
+     * 技师技能认证修改资质证书
+     */
+    String TECH_WORKER_UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/update";
+    /**
+     * 技师技能认证查看资质证书列表
+     */
+    String TECH_WORKER_LIST_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/list";
+    /**
+     * 技师技能认证查看资质证书列表
+     */
+    String TECH_WORKER_DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/delete";
+
 }

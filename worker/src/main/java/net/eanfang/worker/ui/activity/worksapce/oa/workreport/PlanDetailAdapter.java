@@ -86,6 +86,7 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
 
                 }
                 if (!TextUtils.isEmpty(item.getField2())) {
+                    helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "协同人员：");
                     String[] info = item.getField2().split(",");
 
@@ -127,6 +128,7 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
                     teamAdapter.setNewData(list);
 
                 } else {
+                    helper.setVisible(R.id.recycler_view, false);
                     helper.setText(R.id.tv_person, "协同人员：无");
 
                 }

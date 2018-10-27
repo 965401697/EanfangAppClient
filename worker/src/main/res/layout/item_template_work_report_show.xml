@@ -185,6 +185,7 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_takevideo_work"
                 android:layout_width="@dimen/dimen_120"
+                android:visibility="invisible"
                 android:layout_height="@dimen/dimen_120" />
 
             <RelativeLayout

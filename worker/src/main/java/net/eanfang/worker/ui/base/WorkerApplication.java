@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.SharePreferenceUtil;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.ui.activity.MainActivity;
@@ -12,6 +14,8 @@ import net.eanfang.worker.ui.activity.im.CustomizeMessage;
 import net.eanfang.worker.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.worker.ui.activity.im.MyConversationClickListener;
 import net.eanfang.worker.ui.activity.im.SampleExtensionModule;
+
+import java.io.IOException;
 
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
@@ -51,9 +55,19 @@ public class WorkerApplication extends EanfangApplication {
             RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
 
             RongIM.registerMessageType(CustomizeMessage.class);
+
+            EanfangHttp.setClient();
+
             RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
 
-            EanfangApplication.AppType = BuildConfig.TYPE;
+//            EanfangApplication.AppType = BuildConfig.TYPE;
+
+            try {
+                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP,BuildConfig.TYPE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
 

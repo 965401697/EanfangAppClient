@@ -13,7 +13,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.QualifyListBean;
+import com.eanfang.model.QualifyCertificafeListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.QualificationCertificateEntity;
@@ -72,11 +72,11 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
         queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
-        EanfangHttp.post(UserApi.LIST_QUALIFY)
+        EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<QualifyListBean>(this, true, QualifyListBean.class) {
+                .execute(new EanfangCallback<QualifyCertificafeListBean>(this, true, QualifyCertificafeListBean.class) {
                     @Override
-                    public void onSuccess(QualifyListBean bean) {
+                    public void onSuccess(QualifyCertificafeListBean bean) {
 
                         if (bean.getList().size() > 0) {
 //                            adapter.getData().clear();
@@ -99,7 +99,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
 
     private void delete(BaseQuickAdapter adapter, int position) {
-        EanfangHttp.post(UserApi.GET_TECH_WORKER_EDUCATION_DELETE + "/" + ((QualificationCertificateEntity) adapter.getData().get(position)).getId())
+        EanfangHttp.post(UserApi.TECH_WORKER_DELETE_QUALIFY + "/" + ((QualificationCertificateEntity) adapter.getData().get(position)).getId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {

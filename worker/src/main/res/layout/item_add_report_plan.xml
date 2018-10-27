@@ -294,6 +294,7 @@
                         android:id="@+id/iv_takevideo_plan"
                         android:layout_width="@dimen/dimen_170"
                         android:layout_height="@dimen/dimen_170"
+                        android:visibility="invisible"
                         android:layout_centerInParent="true" />
 
                     <RelativeLayout

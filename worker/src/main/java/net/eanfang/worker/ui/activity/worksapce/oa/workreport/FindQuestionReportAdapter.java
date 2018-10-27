@@ -73,6 +73,7 @@ public class FindQuestionReportAdapter extends BaseMultiItemQuickAdapter<WorkAdd
                 }
 
                 if (!TextUtils.isEmpty(item.getField2())) {
+                    helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "责任人：");
                     String[] info = item.getField2().split(",");
 
@@ -114,6 +115,7 @@ public class FindQuestionReportAdapter extends BaseMultiItemQuickAdapter<WorkAdd
                     teamAdapter.setNewData(list);
 
                 } else {
+                    helper.setVisible(R.id.recycler_view, false);
                     helper.setText(R.id.tv_person, "责任人：无");
 
                 }
@@ -127,7 +129,7 @@ public class FindQuestionReportAdapter extends BaseMultiItemQuickAdapter<WorkAdd
                 } else {
                     helper.setText(R.id.tv_vodio, "小视频：");
                     helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
-                    helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
+                    helper.setVisible(R.id.iv_takevideo_work, true);
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getMp4_path() + ".jpg"));
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setOnClickListener(new View.OnClickListener() {
                         @Override

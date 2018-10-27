@@ -85,6 +85,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
 
                 }
                 if (!TextUtils.isEmpty(item.getField2())) {
+                    helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "协同人员：");
                     String[] info = item.getField2().split(",");
 
@@ -127,7 +128,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
 
                 } else {
                     helper.setText(R.id.tv_person, "协同人员：无");
-
+                    helper.setVisible(R.id.recycler_view, false);
                 }
 
                 initPic(helper, item);

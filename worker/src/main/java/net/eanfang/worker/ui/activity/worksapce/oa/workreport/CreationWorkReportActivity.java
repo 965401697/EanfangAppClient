@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
@@ -66,7 +68,6 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imlib.model.Conversation;
 
 import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
@@ -237,7 +238,13 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_creation_work_report);
         ButterKnife.bind(this);
         setTitle("新建汇报");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //是否要保存
+                giveUp();
+            }
+        });
 
         initViews();
 
@@ -271,11 +278,13 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
         String targetId = getIntent().getStringExtra("targetId");
         String conversationType = getIntent().getStringExtra("conversationType");
-        if (!TextUtils.isEmpty(targetId) && Conversation.ConversationType.GROUP.getName().toUpperCase().equals(conversationType.toUpperCase())) {
+        if (!TextUtils.isEmpty(targetId)) {
+//        if (!TextUtils.isEmpty(targetId) && Conversation.ConversationType.GROUP.getName().toUpperCase().equals(conversationType.toUpperCase())) {
             getGroupDetail(targetId);
-        } else {
-            getPresonDetail(targetId);
         }
+//        else {
+//            getPresonDetail(targetId);
+//        }
     }
 
 
@@ -601,7 +610,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             // 查看视频
             case R.id.iv_takevideo_question:
                 Bundle bundle_takevideo = new Bundle();
-                bundle_takevideo.putString("videoPath", mQuestionUploadKey);
+                bundle_takevideo.putString("videoPath", mQuestionVieoPath);
                 JumpItent.jump(CreationWorkReportActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_sure_find_question:
@@ -737,7 +746,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             // 查看视频
             case R.id.iv_takevideo_plan:
                 Bundle bundle_takevideo = new Bundle();
-                bundle_takevideo.putString("videoPath", mPlanUploadKey);
+                bundle_takevideo.putString("videoPath", mPlanVieoPath);
                 JumpItent.jump(CreationWorkReportActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete_plan:
@@ -1107,6 +1116,26 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
         }
 
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            giveUp();
+        }
+        return false;
+    }
+
+    /**
+     * 放弃新建汇报
+     */
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃工作汇报？", () -> {
+            finish();
+        }).showDialog();
     }
 
 }

@@ -75,6 +75,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                 }
 
                 if (!TextUtils.isEmpty(item.getField2())) {
+                    helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "责任人：");
                     String[] info = item.getField2().split(",");
 
@@ -116,6 +117,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                     teamAdapter.setNewData(list);
 
                 } else {
+                    helper.setVisible(R.id.recycler_view, false);
                     helper.setText(R.id.tv_person, "责任人：无");
 
                 }
