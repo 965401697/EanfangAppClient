@@ -15,6 +15,7 @@ import com.amap.api.services.geocoder.GeocodeSearch;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
+import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
@@ -112,12 +113,13 @@ public class SignListDetailActivity extends BaseActivity {
             tvRemark.setVisibility(View.GONE);
         }
 
-            if (StringUtils.isValid(listBean.getPictures())) {
-                String[] friontPic = listBean.getPictures().split(",");
-                imageList.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-            }
-            snplMomentPhotos.setData(imageList);
-            snplMomentPhotos.setEditable(false);
+        if (StringUtils.isValid(listBean.getPictures())) {
+            String[] friontPic = listBean.getPictures().split(",");
+            imageList.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+        }
+        snplMomentPhotos.setDelegate(new BGASortableDelegate(this));
+        snplMomentPhotos.setData(imageList);
+        snplMomentPhotos.setEditable(false);
     }
 
 

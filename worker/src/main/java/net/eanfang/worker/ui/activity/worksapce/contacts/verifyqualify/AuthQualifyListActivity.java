@@ -120,9 +120,19 @@ public class AuthQualifyListActivity extends BaseActivity {
                 JumpItent.jump(AuthQualifyListActivity.this, AddAuthQualifyActivity.class, bundle, REQUEST_AUTH);
                 break;
             case R.id.tv_sub:
-                doFinish();
+                commitVerfiy();
                 break;
         }
+    }
+
+    /**
+     * 提交认证
+     */
+    private void commitVerfiy() {
+        EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + mOrgId)
+                .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
+                    doFinish();
+                }));
     }
 
     private void doFinish() {

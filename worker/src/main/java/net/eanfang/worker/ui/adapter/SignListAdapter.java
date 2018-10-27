@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.adapter;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,11 +17,18 @@ import net.eanfang.worker.R;
 
 public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHolder> {
 
-    public SignListAdapter() {
+    private onSecondClickListener onSecondClickListener;
+
+    public SignListAdapter(onSecondClickListener mOnSecondClickListener) {
         super(R.layout.item_sign_list);
+        this.onSecondClickListener = mOnSecondClickListener;
     }
 
     private SignSecondAdapter signListSecondAdapter;
+
+    public interface onSecondClickListener {
+        void onSecondClick(int position);
+    }
 
     @Override
     protected void convert(BaseViewHolder helper, SignListBean item) {
@@ -37,38 +45,14 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHold
         signListSecondAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         signListSecondAdapter.bindToRecyclerView(rv_footer);
         signListSecondAdapter.setNewData(item.getList());
-//
-        //        SimpleDraweeView ivPic1, ivPic2, ivPic3;
-//        ivPic1 = helper.getView(R.id.iv_pic1);
-//        ivPic2 = helper.getView(R.id.iv_pic2);
-//        ivPic3 = helper.getView(R.id.iv_pic3);
-//        if (!StringUtils.isEmpty(item.getPictures())) {
-//            String[] urls = item.getPictures().split(",");
-//
-//            if (urls.length >= 1) {
-//                ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
-//                ivPic1.setVisibility(View.VISIBLE);
-//            } else {
-//                ivPic1.setVisibility(View.GONE);
-//                ivPic2.setVisibility(View.GONE);
-//                ivPic3.setVisibility(View.GONE);
-//            }
-//
-//            if (urls.length >= 2) {
-//                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
-//                ivPic2.setVisibility(View.VISIBLE);
-//            } else {
-//                ivPic2.setVisibility(View.GONE);
-//                ivPic3.setVisibility(View.GONE);
-//            }
-//            if (urls.length >= 3) {
-//                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
-//                ivPic3.setVisibility(View.VISIBLE);
-//            } else {
-//                ivPic3.setVisibility(View.GONE);
-//            }
-//        } else {
-//            helper.setVisible(R.id.ll_image, false);
-//        }
+        rv_footer.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                onSecondClickListener.onSecondClick(position);
+            }
+        });
+
     }
+
+
 }

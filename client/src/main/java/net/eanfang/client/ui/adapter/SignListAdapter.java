@@ -2,6 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -15,11 +16,19 @@ import net.eanfang.client.R;
  */
 
 public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHolder> {
-    public SignListAdapter() {
+
+    private onSecondClickListener onSecondClickListener;
+
+    public SignListAdapter(onSecondClickListener mOnSecondClickListener) {
         super(R.layout.item_sign_list);
+        this.onSecondClickListener = mOnSecondClickListener;
     }
 
     private SignSecondAdapter signListSecondAdapter;
+
+    public interface onSecondClickListener {
+        void onSecondClick(int position);
+    }
 
     @Override
     protected void convert(BaseViewHolder helper, SignListBean item) {
@@ -35,47 +44,11 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHold
         signListSecondAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         signListSecondAdapter.bindToRecyclerView(rv_footer);
         signListSecondAdapter.setNewData(item.getList());
-
-//        SimpleDraweeView ivPic1, ivPic2, ivPic3;
-//        ivPic1 = helper.getView(R.id.iv_pic1);
-//        ivPic2 = helper.getView(R.id.iv_pic2);
-//        ivPic3 = helper.getView(R.id.iv_pic3);
-//        helper.setText(R.id.tv_sign_time, item.getSignTime());
-//        helper.setText(R.id.tv_address, Config.get().getAddressByCode(item.getZoneCode()) + item.getDetailPlace());
-//        helper.setText(R.id.tv_visit_name, item.getVisitorName());
-//        helper.setText(R.id.tv_remark, item.getRemarkInfo());
-
-//        ((SimpleDraweeView) helper.getView(R.id.iv_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar()));
-//        helper.setText(R.id.tv_visit_name, EanfangApplication.get().getUser().getAccount().getRealName());
-
-
-//        if (!StringUtils.isEmpty(item.getPictures())) {
-//            String[] urls = item.getPictures().split(",");
-//
-//            if (urls.length >= 1) {
-//                ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
-//                ivPic1.setVisibility(View.VISIBLE);
-//            } else {
-//                ivPic1.setVisibility(View.GONE);
-//                ivPic2.setVisibility(View.GONE);
-//                ivPic3.setVisibility(View.GONE);
-//            }
-//
-//            if (urls.length >= 2) {
-//                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
-//                ivPic2.setVisibility(View.VISIBLE);
-//            } else {
-//                ivPic2.setVisibility(View.GONE);
-//                ivPic3.setVisibility(View.GONE);
-//            }
-//            if (urls.length >= 3) {
-//                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
-//                ivPic3.setVisibility(View.VISIBLE);
-//            } else {
-//                ivPic3.setVisibility(View.GONE);
-//            }
-//        } else {
-//            helper.setVisible(R.id.ll_image, false);
-//        }
+        rv_footer.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                onSecondClickListener.onSecondClick(position);
+            }
+        });
     }
 }

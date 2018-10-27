@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.PermKit;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
@@ -25,6 +24,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.SignListAdapter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
  * @desc 签到列表
  */
 
-public class SignListActivity extends BaseActivity {
+public class SignListActivity extends BaseActivity implements SignListAdapter.onSecondClickListener {
     @BindView(R.id.rev_list)
     RecyclerView revList;
     @BindView(R.id.ll_sign_layout)
@@ -51,6 +51,10 @@ public class SignListActivity extends BaseActivity {
     private int status;
 
     private SignListAdapter signListAdapter;
+
+    private List<SignListBean> signListBeanList = new ArrayList<>();
+
+    private int mFirstPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class SignListActivity extends BaseActivity {
 
         revList.setLayoutManager(new LinearLayoutManager(this));
         revList.addItemDecoration(new BGASpaceItemDecoration(30));
-        signListAdapter = new SignListAdapter();
+        signListAdapter = new SignListAdapter(this);
         signListAdapter.bindToRecyclerView(revList);
 
         llSignLayout.setOnClickListener(v -> finishSelf());
@@ -82,28 +86,27 @@ public class SignListActivity extends BaseActivity {
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, true, (bean) -> {
-                    initAdapter(bean);
+                    signListBeanList = bean;
+                    initAdapter();
                 }));
     }
 
-    private void initAdapter(List<SignListBean> dataBeanList) {
-        signListAdapter.setNewData(dataBeanList);
-
+    private void initAdapter() {
+        signListAdapter.setNewData(signListBeanList);
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (status == 0) {
-                    if (!PermKit.get().getSignInDetailPrem()) return;
-                } else {
-                    if (!PermKit.get().getSignOutDetailPrem()) return;
-                }
-
-                startActivity(new Intent(SignListActivity.this, SignListDetailActivity.class)
-                        .putExtra("id", dataBeanList.get(position).getList().get(position).getId())
-                        .putExtra("bean", (Serializable) dataBeanList.get(position).getList().get(position))
-                        .putExtra("status", status));
+                mFirstPosition = position;
             }
         });
-        revList.setAdapter(signListAdapter);
+    }
+
+    @Override
+    public void onSecondClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", signListBeanList.get(mFirstPosition).getList().get(position).getId());
+        bundle.putInt("status", status);
+        bundle.putSerializable("bean", (Serializable) signListBeanList.get(mFirstPosition).getList().get(position));
+        JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
     }
 }
