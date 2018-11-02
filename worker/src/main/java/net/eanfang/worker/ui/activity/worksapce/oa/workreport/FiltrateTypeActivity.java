@@ -176,7 +176,7 @@ public class FiltrateTypeActivity extends BaseWorkerActivity {
                 queryEntry.getIsIn().put("createUserId", idList);
             } else {
                 TemplateBean.Preson p = newPresonList.get(0);
-                queryEntry.getEquals().put("createUserId", p.getId());
+                queryEntry.getEquals().put("createUserId", p.getUserId());
             }
         }
 
