@@ -147,7 +147,9 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
 
     private void setData() {
         // 行业类型
-        infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        if (!StringUtils.isEmpty(secondTraed)) {
+            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        }
         // 公司规模
         infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
         infoBean.setStatus(1);
