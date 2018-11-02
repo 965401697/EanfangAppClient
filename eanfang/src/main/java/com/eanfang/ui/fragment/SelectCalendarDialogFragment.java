@@ -16,6 +16,8 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @author guanluocang
  * @data 2018/11/1
@@ -26,7 +28,7 @@ public class SelectCalendarDialogFragment extends DialogFragment implements OnDa
 
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+    SimpleDateFormat ss = new SimpleDateFormat("");
 
     private SelectCalendarTimeListener selectTimeListener;
 
@@ -46,8 +48,6 @@ public class SelectCalendarDialogFragment extends DialogFragment implements OnDa
         }
     }
 
-
-    
 
     @NonNull
     @Override

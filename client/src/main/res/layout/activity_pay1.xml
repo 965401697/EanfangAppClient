@@ -232,13 +232,15 @@
                 <LinearLayout
                     android:id="@+id/ll_coupons"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_260"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_38"
                     android:layout_marginRight="@dimen/dimen_38"
                     android:layout_marginTop="@dimen/dimen_26"
                     android:background="@drawable/bg_ll_selctor"
                     android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:paddingTop="@dimen/textSize_20">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -282,12 +284,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_80"
                         android:layout_marginLeft="@dimen/dimen_34"
-                        android:layout_marginTop="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_30"
                         android:background="@drawable/bg_client_pay_coupon_back"
                         android:hint="请输入优惠码"
                         android:padding="@dimen/dimen_10"
                         android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textSize="@dimen/textSize_15"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
