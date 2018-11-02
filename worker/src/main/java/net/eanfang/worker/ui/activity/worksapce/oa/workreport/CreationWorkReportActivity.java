@@ -923,8 +923,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             return;
         }
 
-        if (mPlanReportAdapter == null || mPlanReportAdapter.getData().size() == 0) {
-            showToast("完成工作请最少填写一条");
+        if (mQuestionAdapter == null || mQuestionAdapter.getData().size() == 0) {
+            showToast("发现问题请最少填写一条");
             return;
         }
 
