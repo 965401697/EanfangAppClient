@@ -39,10 +39,12 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
      */
 
     private Activity mActivity;
+    private List<WorkAddReportBean.WorkReportDetailsBean> mData;
 
     public WorKReportAdapter(List<WorkAddReportBean.WorkReportDetailsBean> data, Activity activity) {
         super(data);
         this.mActivity = activity;
+        this.mData = data;
         addItemType(WorkAddReportBean.WorkReportDetailsBean.FOLD, R.layout.item_template_work_report_normal);
         addItemType(WorkAddReportBean.WorkReportDetailsBean.EXPAND, R.layout.item_template_work_report_show);
     }
@@ -58,6 +60,13 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
                 } else {
                     helper.setText(R.id.tv_work_question, "遗留问题：无");
 
+                }
+                if (mData.size() - 1 == helper.getAdapterPosition()) {
+
+                    helper.getView(R.id.rl_show).setBackground(mActivity.getResources().getDrawable(R.drawable.shape_corner_bottom));
+                    helper.setVisible(R.id.v_line, false);
+                } else {
+                    helper.setVisible(R.id.v_line, true);
                 }
                 helper.addOnClickListener(R.id.rl_show);
                 helper.addOnClickListener(R.id.tv_delete);

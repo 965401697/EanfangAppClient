@@ -206,5 +206,4 @@ dependencies {
     //    implementation 'org.greenrobot:greendao:3.2.2' // add library
     implementation project(':zxing')
     implementation project(':IMKit')
-    implementation project(':IMLib')
 }

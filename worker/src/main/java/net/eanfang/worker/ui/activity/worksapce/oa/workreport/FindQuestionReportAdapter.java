@@ -59,6 +59,13 @@ public class FindQuestionReportAdapter extends BaseMultiItemQuickAdapter<WorkAdd
                     helper.setText(R.id.tv_work_question, "处理措施：无");
 
                 }
+                if (mData.size() - 1 == helper.getAdapterPosition()) {
+
+                    helper.getView(R.id.rl_show).setBackground(mComtext.getResources().getDrawable(R.drawable.shape_corner_bottom));
+                    helper.setVisible(R.id.v_line, false);
+                } else {
+                    helper.setVisible(R.id.v_line, true);
+                }
                 helper.addOnClickListener(R.id.rl_show);
                 helper.addOnClickListener(R.id.tv_delete);
                 break;

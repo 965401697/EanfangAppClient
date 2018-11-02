@@ -31,7 +31,8 @@
             android:gravity="center_vertical"
             android:text="待付款"
             android:textColor="@color/color_bottom"
-            android:textSize="@dimen/textSize_13" />
+            android:textSize="@dimen/textSize_13"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <View
@@ -43,14 +44,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_20"
         android:layout_marginTop="@dimen/dimen_20"
-        android:orientation="horizontal"
- >
+        android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/iv_upload"
-            android:layout_marginLeft="@dimen/dimen_38"
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_38"
             android:visibility="visible"
             fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="技师："
                 android:textColor="@color/color_client_neworder"
-                android:textSize= "@dimen/textSize_12" />
+                android:textSize="@dimen/textSize_12" />
 
 
         </LinearLayout>

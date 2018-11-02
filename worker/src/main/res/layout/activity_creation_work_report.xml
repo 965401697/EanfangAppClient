@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context="net.eanfang.worker.ui.activity.worksapce.oa.workreport.CreationWorkReportActivity">
 
     <include layout="@layout/header" />
@@ -24,10 +23,13 @@
             <LinearLayout
                 android:id="@+id/ll_report_type"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="@dimen/dimen_100"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_26"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="@dimen/dimen_30">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,21 +63,18 @@
                     android:src="@mipmap/arrow_down" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
-                android:background="@color/content_bg" />
-
 
             <LinearLayout
+                android:id="@+id/ll_work"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_20"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white">
+                    android:layout_height="@dimen/dimen_100">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -97,18 +96,15 @@
 
                     <TextView
                         android:id="@+id/tv_add_complete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_120"
+                        android:layout_height="@dimen/dimen_60"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_30"
                         android:background="@drawable/bg_ll_btn"
-                        android:paddingBottom="4dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="4dp"
+                        android:gravity="center"
                         android:text="添加"
                         android:textColor="#fff"
-                        android:textSize="16sp" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -126,27 +122,33 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
-                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_100"
                     android:background="@color/white">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:text="*"
+                        android:textColor="#FF1616" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dimen_92"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dimen_30"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发现问题"
@@ -155,18 +157,15 @@
 
                     <TextView
                         android:id="@+id/tv_add_find"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_120"
+                        android:layout_height="@dimen/dimen_60"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_30"
                         android:background="@drawable/bg_ll_btn"
-                        android:paddingBottom="4dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="4dp"
+                        android:gravity="center"
                         android:text="添加"
                         android:textColor="#fff"
-                        android:textSize="16sp" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -183,20 +182,18 @@
             </LinearLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
-                android:background="@color/content_bg" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dimen_100"
                     android:background="@color/white">
 
                     <TextView
@@ -219,18 +216,15 @@
 
                     <TextView
                         android:id="@+id/tv_add_plan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/dimen_120"
+                        android:layout_height="@dimen/dimen_60"
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_30"
                         android:background="@drawable/bg_ll_btn"
-                        android:paddingBottom="4dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="4dp"
+                        android:gravity="center"
                         android:text="添加"
                         android:textColor="#fff"
-                        android:textSize="16sp" />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -247,17 +241,13 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
-                android:background="@color/content_bg" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/white"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -292,17 +282,13 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
-                android:background="@color/content_bg" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@color/white"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -337,10 +323,6 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_2"
-                android:background="@color/content_bg" />
 
             <TextView
                 android:id="@+id/tv_sub"

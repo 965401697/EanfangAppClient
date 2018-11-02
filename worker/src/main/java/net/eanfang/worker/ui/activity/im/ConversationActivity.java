@@ -49,7 +49,7 @@ public class ConversationActivity extends BaseWorkerActivity {
         startTransaction(true);
 
         String type = getIntent().getData().getLastPathSegment().toUpperCase(Locale.US);
-
+        Conversation.ConversationType conversationType = Conversation.ConversationType.valueOf(type);
         setRightTitle("设置");
 
         if (type.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
@@ -83,6 +83,29 @@ public class ConversationActivity extends BaseWorkerActivity {
                 startActivity(intent);
             }
         });
+
+//        RongIMClient.setReadReceiptListener(new RongIMClient.ReadReceiptListener() {
+//            @Override
+//            public void onReadReceiptReceived(Message message) {
+//
+//                if (mId.equals(message.getTargetId()) && type.equals(message.getConversationType().getName().toUpperCase())) {
+//
+//                    ReadReceiptMessage content = (ReadReceiptMessage) message.getContent();
+//                    long ntfTime = content.getLastMessageSendTime();    //获取发送时间戳
+//                }
+//                Log.e("zzw", "onReadReceiptReceived=" + message.getObjectName().toString());
+//            }
+//
+//            @Override
+//            public void onMessageReceiptRequest(Conversation.ConversationType conversationType, String s, String s1) {
+//                Log.e("zzw", "onMessageReceiptRequest=" + s + "=" + s1);
+//            }
+//
+//            @Override
+//            public void onMessageReceiptResponse(Conversation.ConversationType conversationType, String s, String s1, HashMap<String, Long> hashMap) {
+//                Log.e("zzw", "onMessageReceiptResponse=" + s + "=" + s1);
+//            }
+//        });
     }
 
     private void initData() {
@@ -111,10 +134,5 @@ public class ConversationActivity extends BaseWorkerActivity {
                     }
                 }));
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

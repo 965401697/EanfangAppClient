@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.SharePreferenceUtil;
 
 import net.eanfang.worker.BuildConfig;
@@ -51,32 +50,34 @@ public class WorkerApplication extends EanfangApplication {
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             RongIM.init(this);
 
+
+
+
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
 
             RongIM.registerMessageType(CustomizeMessage.class);
 
-            EanfangHttp.setClient();
 
             RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
 
 //            EanfangApplication.AppType = BuildConfig.TYPE;
 
+
+            Conversation.ConversationType[] types = new Conversation.ConversationType[]{
+                    Conversation.ConversationType.PRIVATE,
+                    Conversation.ConversationType.GROUP,
+                    Conversation.ConversationType.DISCUSSION
+            };
+            RongIM.getInstance().setReadReceiptConversationTypeList(types);
+
             try {
-                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP,BuildConfig.TYPE);
+                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP, BuildConfig.TYPE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
-
-
-        Conversation.ConversationType[] types = new Conversation.ConversationType[] {
-                Conversation.ConversationType.PRIVATE,
-                Conversation.ConversationType.GROUP,
-                Conversation.ConversationType.DISCUSSION
-        };
-        RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override

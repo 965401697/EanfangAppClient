@@ -106,7 +106,7 @@
             android:name=".takevideo.PlayVideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.QrCodeShowActivity"></activity>
+        <activity android:name=".ui.activity.QrCodeShowActivity" />
     </application>
 
 </manifest>

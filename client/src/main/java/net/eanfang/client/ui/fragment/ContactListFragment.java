@@ -94,14 +94,14 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
+//        if (view == null) {
             view = inflater.inflate(R.layout.fragment_message, container, false);
             initView();
             setListener();
-            doHttpNoticeCount();
-        } else {
-            initView();//手动刷新
-        }
+//            doHttpNoticeCount();
+//        } else {
+//            initView();//手动刷新
+//        }
         // TODO: 2018/10/26 让会话列表自己刷新
 //        ViewGroup parent = (ViewGroup) view.getParent();
 //        if (parent != null) {
@@ -114,7 +114,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView() {
 
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
         //设置私聊会话，该会话聚合显示
@@ -126,7 +126,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                 .build();
-//        fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
+        myConversationListFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, myConversationListFragment);
@@ -156,7 +156,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         }, Conversation.ConversationType.GROUP);
 
 
-//        doHttpNoticeCount();
+        doHttpNoticeCount();
 
         /**
          * 设置会话列表界面操作的监听器。
@@ -247,7 +247,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private void doHttpNoticeCount() {
 
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
+//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
 
         EanfangHttp.get(NewApiService.GET_PUSH_COUNT)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
@@ -257,7 +257,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
 
-                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+//                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
 
 
                         if (bean.containsKey("sys")) {
@@ -281,7 +281,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);
-                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+//                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
                     }
                 });
     }
@@ -438,7 +438,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        doHttpNoticeCount();
+//        doHttpNoticeCount();
     }
 
     @Override
