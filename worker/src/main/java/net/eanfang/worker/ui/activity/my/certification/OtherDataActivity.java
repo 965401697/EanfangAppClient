@@ -134,7 +134,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
                                             "才可以接单，并获得更多订单");
                                     intent.putExtra("go","前往资质认证");
                                     intent.putExtra("desc","如有疑问，请联系客服处理");
-                                    intent.putExtra("service","客服热线：010-5877-8731");
+                                    intent.putExtra("service","客服热线：" + R.string.text_service_telphone);
                                     closeActivity();
                                 }));
 
@@ -152,7 +152,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
                                 "才可以接单，并获得更多订单");
                         intent.putExtra("go","前往资质认证");
                         intent.putExtra("desc","如有疑问，请联系客服处理");
-                        intent.putExtra("service","客服热线：010-5877-8731");
+                        intent.putExtra("service","客服热线：" + R.string.text_service_telphone);
                         closeActivity();
                     }));
 

@@ -217,10 +217,27 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
         grantChange_system.setAddIds(checkList_system);
         grantChange_system.setDelIds(unCheckList_system);
-        if ((unCheckList_system.size() == 0) && (checkList_system.size() == 0) && (byNetGrant_system.getList().size() <= 0)) {
-            showToast("请选择一种系统类别");
-            return;
+        if (checkList_system.size() <= 0) {// 当前本地提示没有进行选择
+            if (byNetGrant_system.getList().size() <= 0) {// 网络获取提示没有进行选择
+                showToast("请选择一种系统类别");
+                return;
+            } else {
+                if (unCheckList_system.size() == byNetGrant_system.getList().size()) {
+                    showToast("请选择一种系统类别");
+                    return;
+                }
+            }
         }
+//        if (byNetGrant_system.getList().size() <= 0) {
+//            if (checkList_system.size() <= 0) {// 当前选择的数量 == 0 进行提示选择
+//                return;
+//            }
+//        } else {
+//            if (unCheckList_system.size() == byNetGrant_system.getList().size()) {// 删除的数量 == 网络获取的数量 进行提示选择
+//                showToast("请选择一种系统类别");
+//                return;
+//            }
+//        }
 
         // 业务类别
         List<Integer> checkList_business = Stream.of(businessTypeList)
@@ -232,11 +249,28 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
         grantChange_business.setAddIds(checkList_business);
         grantChange_business.setDelIds(unCheckList_business);
-
-        if ((unCheckList_business.size() == 0) && (checkList_business.size() == 0) && (byNetGrant_business.getList().size() <= 0)) {
-            showToast("请至少选择一种业务类别");
-            return;
+        if (checkList_business.size() <= 0) {
+            if (byNetGrant_business.getList().size() <= 0) {
+                showToast("请选择一种业务类别");
+                return;
+            } else {
+                if (unCheckList_business.size() == byNetGrant_business.getList().size()) {
+                    showToast("请选择一种业务类别");
+                    return;
+                }
+            }
         }
+//        if (byNetGrant_business.getList().size() <= 0) {
+//            if (checkList_business.size() <= 0) {// 当前选择的数量 == 0 进行提示选择
+//
+//                return;
+//            }
+//        } else {
+//            if (unCheckList_business.size() == byNetGrant_business.getList().size()) {// 删除的数量 == 网络获取的数量 进行提示选择
+//                showToast("请选择一种业务类别");
+//                return;
+//            }
+//        }
 
         shopCompanyEntity.setWorking_level(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
         shopCompanyEntity.setWorking_year(GetConstDataUtils.getWorkingYearList().indexOf(mYear));

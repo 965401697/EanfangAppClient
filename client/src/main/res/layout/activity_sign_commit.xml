@@ -101,7 +101,7 @@
             app:bga_snpl_maxItemCount="3"
             app:bga_snpl_otherWhiteSpacing="100dp"
             app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-            app:bga_snpl_plusDrawable="@mipmap/ic_camera"
+            app:bga_snpl_plusDrawable="@mipmap/ic_sign_takephoto"
             app:bga_snpl_plusEnable="true"
             app:bga_snpl_sortable="true" />
 

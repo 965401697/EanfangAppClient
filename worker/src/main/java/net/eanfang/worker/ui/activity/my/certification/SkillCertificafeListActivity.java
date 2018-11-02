@@ -122,7 +122,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                         "以提高行业内声望");
                 intent.putExtra("go", "去添加个人经历");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
-                intent.putExtra("service", "客服热线：010-5877-8731");
+                intent.putExtra("service", "客服热线：400-890-9280");
                 startActivity(intent);
                 finishSelf();
                 break;

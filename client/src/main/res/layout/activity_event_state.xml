@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="010-5877-8731"
+                android:text="@string/text_service_telphone"
                 android:textColor="@color/font_color"
                 android:textScaleX="1.2"
                 android:textSize="7sp"

@@ -167,7 +167,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
         intent.putExtra("info", "尊敬的用户，祝贺您！赶紧去接单吧！");
         intent.putExtra("go", "");
         intent.putExtra("desc", "如有疑问，请联系客服处理");
-        intent.putExtra("service", "客服热线：010-5877-8731");
+        intent.putExtra("service", "客服热线：400-890-9280");
         startActivity(intent);
         finishSelf();
     }

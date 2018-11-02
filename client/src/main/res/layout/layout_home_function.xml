@@ -52,15 +52,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_level4"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="visible">
 
 
         <TextView
             android:id="@+id/tv_monitor"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_client_home_monitor"
-            android:text="@string/text_home_monitor"
-            android:visibility="invisible" />
+            android:text="@string/text_home_monitor" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <TextView
             android:layout_width="0dp"

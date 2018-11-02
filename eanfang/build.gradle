@@ -44,17 +44,17 @@ android {
 
 //            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "HOST", "\"http://7.196.57.45:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
+//            buildConfigField("String", "HOST", "\"http://7.196.57.45:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
+            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.30:8080\"")
         }
         //  测试
         staging {
-            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化
@@ -217,4 +217,6 @@ dependencies {
     implementation files('libs/pldroid-shortvideo-1.14.0.jar')
     // 播放视频
     implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
+    // 日历
+    compile 'com.github.prolificinteractive:material-calendarview:2.0.0'
 }

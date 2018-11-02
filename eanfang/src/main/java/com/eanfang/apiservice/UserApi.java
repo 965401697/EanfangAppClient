@@ -472,4 +472,8 @@ public interface UserApi {
      */
     String TECH_WORKER_DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/delete";
 
+    /**
+     * 首页获取订单数量
+     */
+    String HOME_GET_ORDER_NUM = BuildConfig.API_HOST + "/yaf_repair/order/orderNum";
 }

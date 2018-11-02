@@ -74,13 +74,14 @@ android {
         }
         //  测试
         staging {
-            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-
+            //签名配置
+            signingConfig signingConfigs.release
+            buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             minifyEnabled true //开启代码混淆
             zipAlignEnabled true
             shrinkResources true // 移除无用资源
-            signingConfig signingConfigs.stagingConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {

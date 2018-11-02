@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -66,8 +65,8 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
     EditText etVisitName;
     @BindView(R.id.text_clock)
     TextView textClock;
-    @BindView(R.id.rl_signin)
-    RelativeLayout rlSignin;
+    @BindView(R.id.ll_signin)
+    LinearLayout llSignin;
     @BindView(R.id.tv_sign_times)
     TextView tvSignTimes;
     @BindView(R.id.ll_footer)
@@ -112,12 +111,12 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         tvSignHadTime.setText("你已经" + title);
         tvSignOrSignout.setText(title);
         tvSignName.setText(title);
-        textClock.setText( new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
+        textClock.setText(new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
     }
 
     private void setClick() {
 
-        rlSignin.setOnClickListener(v -> fillData());
+        llSignin.setOnClickListener(v -> fillData());
         llFooter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

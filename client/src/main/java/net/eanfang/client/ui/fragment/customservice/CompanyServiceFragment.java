@@ -37,6 +37,6 @@ public class CompanyServiceFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        findViewById(R.id.tv_service_phone).setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
+        findViewById(R.id.tv_service_phone).setOnClickListener((view) -> CallUtils.call(getContext(), "400-890-9280"));
     }
 }

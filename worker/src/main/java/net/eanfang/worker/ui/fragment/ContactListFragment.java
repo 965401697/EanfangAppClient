@@ -101,7 +101,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             initView();
             setListener();
             doHttpNoticeCount();
-        }else {
+        } else {
             initView();
         }
 //        ViewGroup parent = (ViewGroup) view.getParent();
@@ -155,8 +155,6 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
             }
         }, Conversation.ConversationType.GROUP);
-
-
 
 
         /**
@@ -295,8 +293,10 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             ((TextView) view.findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
         }
 
+
         qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
+                .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
@@ -325,6 +325,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewSys
                 .bindTarget(view.findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
+                .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)

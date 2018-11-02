@@ -39,7 +39,7 @@ public class PartnerOrgTypeListView extends BaseDialog {
     private Activity mContext;
     private List<PartnerBean.ListBean> mDataList;
 
-    public PartnerOrgTypeListView(Activity context, boolean isfull,List<PartnerBean.ListBean> dataList) {
+    public PartnerOrgTypeListView(Activity context, boolean isfull, List<PartnerBean.ListBean> dataList) {
         super(context, isfull);
         this.mContext = context;
         this.mDataList = dataList;
@@ -56,14 +56,14 @@ public class PartnerOrgTypeListView extends BaseDialog {
         tvTitle.setText("客户管理");
         ivLeft.setOnClickListener(v -> dismiss());
         tvCallServicePhone.setOnClickListener((v) -> {
-            CallUtils.call(context, "010-5877-8732");
+            CallUtils.call(context, "400-890-9280");
         });
         initAdapter();
     }
 
     private void initAdapter() {
         rvList.setLayoutManager(new LinearLayoutManager(mContext));
-        CooperationAdapter adapter=new CooperationAdapter(R.layout.item_bind_company,mDataList);
+        CooperationAdapter adapter = new CooperationAdapter(R.layout.item_bind_company, mDataList);
         rvList.setAdapter(adapter);
     }
 }

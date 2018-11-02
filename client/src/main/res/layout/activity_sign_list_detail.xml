@@ -29,7 +29,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dimen_40"
             android:layout_marginRight="@dimen/dimen_40"
-            android:background="@drawable/bg_ll_selctor"
+            android:background="@drawable/bg_sign_detail"
             android:orientation="vertical"
             android:paddingBottom="@dimen/dimen_20">
 

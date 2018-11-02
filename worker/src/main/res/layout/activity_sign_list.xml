@@ -21,12 +21,12 @@
 
     </LinearLayout>
 
+    <View style="@style/style_common_line_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/dimen_10"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -68,7 +68,7 @@
                 android:drawablePadding="@dimen/dimen_24"
                 android:gravity="center"
                 android:text="足迹"
-                android:textColor="@color/black" />
+                android:textColor="#4988F5" />
         </LinearLayout>
 
     </LinearLayout>

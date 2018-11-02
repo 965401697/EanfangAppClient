@@ -69,7 +69,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen_38"
-        android:text="如有疑问，请联系客服处理，客服热线：010-5877-8731"
+        android:text="如有疑问，请联系客服处理，客服热线：400-890-9280"
         android:textSize="@dimen/textSize_13" />
 
 

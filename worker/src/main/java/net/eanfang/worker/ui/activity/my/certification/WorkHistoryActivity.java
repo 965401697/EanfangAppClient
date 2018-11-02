@@ -127,7 +127,7 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
                         "以展示更强的权威性");
                 intent.putExtra("go", "去添加荣誉证书");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
-                intent.putExtra("service", "客服热线：010-5877-8731");
+                intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
                 startActivity(intent);
                 finishSelf();
                 break;

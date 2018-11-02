@@ -108,6 +108,13 @@
         <item name="android:textSize">@dimen/textSize_12</item>
     </style>
 
+    <style name="style_client_home_meun_new">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_client_menu</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
+    </style>
+
     <style name="style_common_line_gray">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_1</item>
@@ -155,4 +162,8 @@
         <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
+    <!--  -->
+    <style name="Theme.picker" parent="@android:style/Theme.Holo.Light">
+        <item name="android:textColor">#333333</item>
+    </style>
 </resources>

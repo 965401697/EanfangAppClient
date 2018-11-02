@@ -14,12 +14,15 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,7 +35,7 @@ import butterknife.OnClick;
  * @date on 2018/6/5  14:29
  * @decision 预约上门时间
  */
-public class RepairAppointTimeActivity extends BaseActivity {
+public class RepairAppointTimeActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.tv_doorTime)
     TextView tvDoorTime;
@@ -59,11 +62,13 @@ public class RepairAppointTimeActivity extends BaseActivity {
         setTitle("预约上门时间");
         setLeftBack();
         setRightTitle("确认");
-        doSelectYearMonthDay();
-        doSelectMonthMinSec();
+//        doSelectYearMonthDay();
+//        doSelectMonthMinSec();
     }
 
     private void initListener() {
+
+
         setRightTitleOnClickListener((v) -> {
             String contract_door = tvDoorTime.getText().toString().trim();
             String contract_specific = tvSpecificTime.getText().toString().trim();
@@ -155,11 +160,21 @@ public class RepairAppointTimeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_doorTime:
-                mTimeYearMonthDay.show();
+//                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_specificTime:
-                mTimeHourMinSec.show();
+//                mTimeHourMinSec.show();
                 break;
+        }
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            tvDoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));
+        } else {
+            tvDoorTime.setText(time);
         }
     }
 }

@@ -7,12 +7,17 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.HomeOrderNumBean;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
+import com.eanfang.witget.SetQBadgeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
@@ -63,6 +68,12 @@ public class WorkspaceFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        doHttpOrderNums();
+    }
+
+    @Override
     protected void initView() {
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
         String companyName = EanfangApplication.getApplication().getUser()
@@ -87,6 +98,7 @@ public class WorkspaceFragment extends BaseFragment {
                 }
             }).show();
         });
+
     }
 
     private void setLogpic() {
@@ -262,5 +274,15 @@ public class WorkspaceFragment extends BaseFragment {
 
     }
 
+    /**
+     * 获取订单数量
+     */
+    private void doHttpOrderNums() {
+        EanfangHttp.get(UserApi.HOME_GET_ORDER_NUM).execute(new EanfangCallback<HomeOrderNumBean>(getActivity(), false, HomeOrderNumBean.class, (bean -> {
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_report), bean.getReport());// 汇报
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_task), bean.getTask());// 任务
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_inspect), bean.getInspect());//检查
+        })));
+    }
 
 }

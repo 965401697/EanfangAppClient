@@ -566,4 +566,9 @@ public interface NewApiService {
      */
     String REPAIR_PROJECT_LIST = BASE_URL + "/yaf_project/project/projectList";
 
+    /**
+     * 报修支付优惠码
+     */
+    String REPAIR_PAY_COUPON = BASE_URL + "/yaf_sys/couponPay/repair";
+
 }

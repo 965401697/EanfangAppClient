@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
 import com.eanfang.util.MessageUtil;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.yaf.base.entity.InvoiceEntity;
@@ -75,8 +78,16 @@ public class NewPayActivity extends BaseClientActivity {
     CheckBox cbInvoice;
     @BindView(R.id.ll_edit_invoice)
     LinearLayout ll;
+    @BindView(R.id.tv_coupon)
+    TextView tvCoupon;
+    @BindView(R.id.ll_coupons)
+    LinearLayout llCoupons;
+    @BindView(R.id.et_coupon)
+    EditText etCoupon;
+    @BindView(R.id.cb_coupon)
+    CheckBox cbCoupon;
 
-    private boolean mPayType = true;//微信 false
+    private int mPayType = 0;//微信 0  支付宝 1 优惠券 3
 
 
     private Boolean isFaPiao = false;
@@ -130,10 +141,7 @@ public class NewPayActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("支付");
         setLeftBack();
-
-
         initData();
-
         startTransaction(true);
     }
 
@@ -164,7 +172,8 @@ public class NewPayActivity extends BaseClientActivity {
         tvPrice.setText(String.valueOf(payLogEntity.getPayPrice() / 100.0));
 
 
-        cbWeixinPay.setChecked(mPayType);
+        cbWeixinPay.setChecked(true);
+        tvWx.setTextColor(getResources().getColor(R.color.color_service_title));
 
         cbInvoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -186,6 +195,26 @@ public class NewPayActivity extends BaseClientActivity {
                 }
             }
         });
+
+        // 获取优惠券焦点
+        etCoupon.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 获得焦点
+                    mPayType = 3;
+                    cbCoupon.setChecked(mPayType == 3 ? true : false);
+                    cbAlipay.setChecked(!(mPayType == 3 ? true : false));
+                    cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
+
+                    tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                    tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                    tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
+                }
+            }
+        });
+
     }
 
     /**
@@ -208,17 +237,31 @@ public class NewPayActivity extends BaseClientActivity {
                 startActivityForResult(in, INVOCIE_REQUEST_CODE);
                 break;
             case R.id.ll_wx:
-                mPayType = true;
-                cbAlipay.setChecked(!mPayType);
-                cbWeixinPay.setChecked(mPayType);
+                mPayType = 0;
+
+                cbWeixinPay.setChecked(mPayType == 0 ? true : false);
+                cbAlipay.setChecked(!(mPayType == 0 ? true : false));
+                cbCoupon.setChecked(!(mPayType == 0 ? true : false));
+
+                tvWx.setTextColor(getResources().getColor(R.color.color_service_title));
+                tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                doGoneCoupon();
                 break;
             case R.id.ll_alipay:
-                mPayType = false;
-                cbAlipay.setChecked(!mPayType);
-                cbWeixinPay.setChecked(mPayType);
-                break;
-            case R.id.tv_outline_pay:
+                mPayType = 1;
 
+                cbAlipay.setChecked(mPayType == 1 ? true : false);
+                cbWeixinPay.setChecked(!(mPayType == 1 ? true : false));
+                cbCoupon.setChecked(!(mPayType == 1 ? true : false));
+
+                tvZfb.setTextColor(getResources().getColor(R.color.color_service_title));
+                tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                doGoneCoupon();
+                break;
+
+            case R.id.tv_outline_pay:
                 EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
@@ -228,19 +271,56 @@ public class NewPayActivity extends BaseClientActivity {
 
                 break;
             case R.id.tv_pay:
-                if (!mPayType) {
+                if (mPayType == 1) {
                     //支付宝支付
                     payLogEntity.setPayType(0);
                     aliPay();
-                } else {
+                } else if (mPayType == 0) {
                     //微信支付
                     payLogEntity.setPayType(1);
                     isWeixinAvilible(NewPayActivity.this);
+                } else {
+                    //优惠券支付
+                    payLogEntity.setPayType(3);
+                    doVaiCoupons();
                 }
-
-
                 break;
         }
+    }
+
+    public void doVaiCoupons() {
+        String coupon = etCoupon.getText().toString().trim();
+        if (StringUtils.isEmpty(coupon)) {
+            showToast("请输入优惠码");
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("couponNum", coupon);
+        payLogEntity.setPayJson(jsonObject.toJSONString());
+
+        isCouponsPay();
+    }
+
+    /**
+     * 优惠券支付
+     */
+    private void isCouponsPay() {
+        EanfangHttp.post(NewApiService.REPAIR_PAY_COUPON)
+                .upJson(JSON.toJSONString(payLogEntity))
+                .execute(new EanfangCallback<JSONObject>(NewPayActivity.this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        super.onSuccess(bean);
+                        EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                        Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("message", MessageUtil.paySuccess());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                });
+
     }
 
     /**
@@ -350,15 +430,14 @@ public class NewPayActivity extends BaseClientActivity {
     public void subInvoice() {
 
         if (!cbInvoice.isChecked()) {
-            if (!mPayType) {
-                //支付宝支付
+            if (mPayType == 1) {//支付宝支付 优惠券支付
                 EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", MessageUtil.paySuccess());
                 intent.putExtras(bundle);
                 startActivity(intent);
-            } else {
+            } else if (mPayType == 0) {
                 //微信支付
                 endTransaction(true);
             }
@@ -370,15 +449,14 @@ public class NewPayActivity extends BaseClientActivity {
                 .execute(new EanfangCallback(NewPayActivity.this, false, JSONObject.class) {
                     @Override
                     public void onSuccess(Object bean) {
-                        if (!mPayType) {
-                            //支付宝支付
+                        if (mPayType == 1) {       //支付宝支付 优惠券支付
                             EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
                             Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("message", MessageUtil.paySuccess());
                             intent.putExtras(bundle);
                             startActivity(intent);
-                        } else {
+                        } else if (mPayType == 0) {
                             //微信支付
                             endTransaction(true);
                         }
@@ -427,4 +505,14 @@ public class NewPayActivity extends BaseClientActivity {
         super.onDestroy();
         transactionActivities.remove(this);
     }
+
+    /**
+     * 取消优惠码输入焦点
+     */
+    public void doGoneCoupon() {
+        etCoupon.clearFocus();//取消焦点
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+    }
 }
+

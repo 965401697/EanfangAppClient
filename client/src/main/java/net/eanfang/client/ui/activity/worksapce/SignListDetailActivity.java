@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,17 +9,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.maps.model.MarkerOptions;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.LocationUtil;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -61,11 +63,7 @@ public class SignListDetailActivity extends BaseActivity {
     private AMap aMap;
     private Marker marker;
     private LatLng latLng2;
-    private float distance = -1;
-    private GeocodeSearch geocoderSearch;
     private SignListBean.ListBean listBean;
-    private int status;
-    private LocationUtil locationUtil;
 
 
     private ArrayList<String> imageList = new ArrayList<>();
@@ -84,14 +82,12 @@ public class SignListDetailActivity extends BaseActivity {
             aMap = mapView.getMap();
         }
         initView();
-        locationUtil = LocationUtil.get(this, mapView);
         //禁止拖拽
-        locationUtil.mAMap.getUiSettings().setAllGesturesEnabled(false);
+        aMap.getUiSettings().setAllGesturesEnabled(false);
         initLocation();
     }
 
     private void initView() {
-        status = getIntent().getIntExtra("status", 0);
         listBean = (SignListBean.ListBean) getIntent().getSerializableExtra("bean");
         setTitle("足迹");
         setLeftBack();
@@ -124,11 +120,11 @@ public class SignListDetailActivity extends BaseActivity {
 
 
     private void initLocation() {
-//        LocationUtil.get().addListener(this, TAG);
-        locationUtil.startOnce();
         String latitude = listBean.getLatitude();
         String longitude = listBean.getLongitude();
         latLng2 = new LatLng(NumberUtil.parseDouble(latitude, 0), NumberUtil.parseDouble(longitude, 0));
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng2, 15));// 第二个参数： 地图缩放比例 4-20 越大范围越小 反之。
+        drawMaker(latLng2);
     }
 
     @Override
@@ -151,7 +147,6 @@ public class SignListDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        locationUtil.stop();
         mapView.onDestroy();
     }
 
@@ -169,44 +164,25 @@ public class SignListDetailActivity extends BaseActivity {
     }
 
 
-//    @Override
-//    public void onLocation(LatLng latLng) {
-//        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
-//        drawMaker(latLng);
-//        distance = AMapUtils.calculateLineDistance(latLng, latLng2);
-//        aMap.setMyLocationStyle(new MyLocationStyle());
-//        geocoderSearch = new GeocodeSearch(this);
-//        geocoderSearch.setOnGeocodeSearchListener(this);
-//        LatLonPoint latLonPoint = new LatLonPoint(latLng.latitude, latLng.longitude);
-//        RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200, GeocodeSearch.AMAP);
-//
-//        geocoderSearch.getFromLocationAsyn(query);
-//    }
+    private void drawMaker(LatLng latLng) {
+        if (marker == null) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng)
+                    .draggable(true).
+                    icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.position_picker)));
+            marker = aMap.addMarker(markerOptions);
+        } else {
+            marker.setPosition(latLng);
+            mapView.invalidate();
+        }
 
-//    private void drawMaker(LatLng latLng) {
-//        if (marker == null) {
-//            MarkerOptions markerOptions = new MarkerOptions();
-//            markerOptions.position(latLng)
-//                    .draggable(true).
-//                    icon(new MyLocationStyle().getMyLocationIcon()).setFlat(true);
-//            marker = aMap.addMarker(markerOptions);
-//        } else {
-//            marker.setPosition(latLng);
-//            mapView.invalidate();
-//        }
-//
-//
-//    }
-//
-//    @Override
-//    public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
-//        regeocodeResult.getRegeocodeAddress();
-//        tvAddress.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
-//    }
-//
-//    @Override
-//    public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-//
-//    }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //在activity执行onSaveInstanceState时执行mMapView.onSaveInstanceState (outState)，实现地图生命周期管理
+        mapView.onSaveInstanceState(outState);
+    }
 }
