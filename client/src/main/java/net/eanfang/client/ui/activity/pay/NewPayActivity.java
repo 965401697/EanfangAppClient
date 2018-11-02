@@ -80,15 +80,15 @@ public class NewPayActivity extends BaseClientActivity {
     LinearLayout ll;
     @BindView(R.id.tv_coupon)
     TextView tvCoupon;
-    @BindView(R.id.ll_coupons)
-    LinearLayout llCoupons;
     @BindView(R.id.et_coupon)
     EditText etCoupon;
     @BindView(R.id.cb_coupon)
     CheckBox cbCoupon;
+    @BindView(R.id.ll_coupons)
+    LinearLayout llCoupons;
 
-    private int mPayType = 0;//微信 0  支付宝 1 优惠券 3
-
+    private int mPayType = 1;//微信 1 支付宝 0 优惠券 3
+    private String mPayPrice;
 
     private Boolean isFaPiao = false;
     private WXPayBean wxPayBean;
@@ -157,12 +157,13 @@ public class NewPayActivity extends BaseClientActivity {
             finishSelf();
         }
 
-        calcPrice();
+//        calcPrice();
 
         MoneyAdapter moneyAdapter = new MoneyAdapter(R.layout.item_money);
         List<MoneyBean> list = new ArrayList<>();
         MoneyBean bean = new MoneyBean();
         bean.money = (float) (payLogEntity.getPayPrice() / 100.0);
+        mPayPrice = String.valueOf(payLogEntity.getPayPrice() / 100.0);
         bean.title = "上门费";
         list.add(bean);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -207,26 +208,18 @@ public class NewPayActivity extends BaseClientActivity {
                     cbCoupon.setChecked(mPayType == 3 ? true : false);
                     cbAlipay.setChecked(!(mPayType == 3 ? true : false));
                     cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
-
                     tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
                     tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
                     tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
+                    tvPrice.setText(0 + "");
                 }
             }
         });
 
     }
 
-    /**
-     * 计算非用  测试用的 后起会通过后台返回的数值进行计算
-     */
-    private void calcPrice() {
-        payLogEntity.setOriginPrice(1);
-        payLogEntity.setReducedPrice(0);
-        payLogEntity.setPayPrice(1);
-    }
 
-    @OnClick({R.id.ll_edit_invoice, R.id.ll_wx, R.id.ll_alipay, R.id.tv_outline_pay, R.id.tv_pay})
+    @OnClick({R.id.ll_edit_invoice, R.id.ll_wx, R.id.ll_alipay, R.id.tv_outline_pay, R.id.tv_pay, R.id.ll_coupons})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_edit_invoice:
@@ -237,27 +230,27 @@ public class NewPayActivity extends BaseClientActivity {
                 startActivityForResult(in, INVOCIE_REQUEST_CODE);
                 break;
             case R.id.ll_wx:
-                mPayType = 0;
-
-                cbWeixinPay.setChecked(mPayType == 0 ? true : false);
-                cbAlipay.setChecked(!(mPayType == 0 ? true : false));
-                cbCoupon.setChecked(!(mPayType == 0 ? true : false));
-
+                mPayType = 1;
+                cbWeixinPay.setChecked(mPayType == 1 ? true : false);
+                cbAlipay.setChecked(!(mPayType == 1 ? true : false));
+                cbCoupon.setChecked(!(mPayType == 1 ? true : false));
                 tvWx.setTextColor(getResources().getColor(R.color.color_service_title));
                 tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                etCoupon.setVisibility(View.GONE);
+                tvPrice.setText(mPayPrice);
                 doGoneCoupon();
                 break;
             case R.id.ll_alipay:
-                mPayType = 1;
-
-                cbAlipay.setChecked(mPayType == 1 ? true : false);
-                cbWeixinPay.setChecked(!(mPayType == 1 ? true : false));
-                cbCoupon.setChecked(!(mPayType == 1 ? true : false));
-
+                mPayType = 0;
+                cbAlipay.setChecked(mPayType == 0 ? true : false);
+                cbWeixinPay.setChecked(!(mPayType == 0 ? true : false));
+                cbCoupon.setChecked(!(mPayType == 0 ? true : false));
                 tvZfb.setTextColor(getResources().getColor(R.color.color_service_title));
                 tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvPrice.setText(mPayPrice);
+                etCoupon.setVisibility(View.GONE);
                 doGoneCoupon();
                 break;
 
@@ -268,22 +261,36 @@ public class NewPayActivity extends BaseClientActivity {
                 bundle.putSerializable("message", MessageUtil.payLatter());
                 intent.putExtras(bundle);
                 startActivity(intent);
-
                 break;
             case R.id.tv_pay:
-                if (mPayType == 1) {
+                if (mPayType == 0) {
                     //支付宝支付
                     payLogEntity.setPayType(0);
-                    aliPay();
-                } else if (mPayType == 0) {
+                    doPayType(mPayType);
+                } else if (mPayType == 1) {
                     //微信支付
                     payLogEntity.setPayType(1);
-                    isWeixinAvilible(NewPayActivity.this);
-                } else {
+                    doPayType(mPayType);
+                } else if (mPayType == 3) {
                     //优惠券支付
                     payLogEntity.setPayType(3);
-                    doVaiCoupons();
+                    doPayType(mPayType);
                 }
+                break;
+            case R.id.ll_coupons:
+                etCoupon.setVisibility(View.VISIBLE);
+                //将光标定位
+                etCoupon.requestFocus();
+                etCoupon.setFocusable(true);
+                etCoupon.setFocusableInTouchMode(true);
+                mPayType = 3;
+                cbCoupon.setChecked(mPayType == 3 ? true : false);
+                cbAlipay.setChecked(!(mPayType == 3 ? true : false));
+                cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
+                tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
+                tvPrice.setText(0 + "");
                 break;
         }
     }
@@ -320,6 +327,22 @@ public class NewPayActivity extends BaseClientActivity {
                         startActivity(intent);
                     }
                 });
+
+    }
+
+    /**
+     * 判断支付方式 进行修改价格
+     */
+    public void doPayType(int type) { // 支付方式  0、1：微信和支付宝：价格原始不变    3： 优惠券 实际价格:0
+        if (type == 1) {
+            isWeixinAvilible(NewPayActivity.this);
+        } else if (type == 0) {
+            aliPay();
+        } else if (type == 3) {
+            payLogEntity.setReducedPrice(payLogEntity.getOriginPrice());//OriginPrice() 原始价格 ReducedPrice 优惠价格(默认为0)
+            payLogEntity.setPayPrice(0);// PayPrice支付价格
+            doVaiCoupons();
+        }
 
     }
 

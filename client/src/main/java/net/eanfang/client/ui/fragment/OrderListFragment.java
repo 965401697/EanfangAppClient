@@ -21,7 +21,6 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
@@ -223,21 +222,20 @@ public class OrderListFragment extends BaseFragment implements
      */
     private void payment(RepairOrderEntity orderEntity) {
 
-        PayLogEntity payLogEntity = new PayLogEntity();
-        payLogEntity.setOrderId(orderEntity.getId());
-        payLogEntity.setOrderNum(orderEntity.getOrderNum());
-        payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
-        payLogEntity.setAssigneeUserId(orderEntity.getOwnerUserId());
-        payLogEntity.setAssigneeOrgCode(orderEntity.getOwnerOrgCode());
-        payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
-
-        //查询上门费
-        payLogEntity.setOriginPrice(100);
-        //实际支付的价格
-//        payLogEntity.setOriginPrice(orderEntity.getPayLogEntity().getPayPrice());
+//        PayLogEntity payLogEntity = new PayLogEntity();
+//        payLogEntity.setOrderId(orderEntity.getId());
+//        payLogEntity.setOrderNum(orderEntity.getOrderNum());
+//        payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+//        payLogEntity.setAssigneeUserId(orderEntity.getOwnerUserId());
+//        payLogEntity.setAssigneeOrgCode(orderEntity.getOwnerOrgCode());
+//        payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
+//
+//        payLogEntity.setOriginPrice(orderEntity.getPayLogEntity().getOriginPrice());// 原始价格
+//        payLogEntity.setPayPrice(orderEntity.getPayLogEntity().getPayPrice());//实际支付价格
+//        payLogEntity.setReducedPrice(0);// 优惠价格
 
         Intent intent = new Intent(getActivity(), NewPayActivity.class);
-        intent.putExtra("payLogEntity", payLogEntity);
+        intent.putExtra("payLogEntity", orderEntity.getPayLogEntity());
         startActivity(intent);
     }
 
