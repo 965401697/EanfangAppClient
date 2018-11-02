@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -96,14 +97,14 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //防止刷新
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_message, container, false);
-            initView();
-            setListener();
-            doHttpNoticeCount();
-        } else {
-            initView();
-        }
+//        if (view == null) {
+        view = inflater.inflate(R.layout.fragment_message, container, false);
+        initView();
+        setListener();
+//            doHttpNoticeCount();
+//        } else {
+//            initView();
+//        }
 //        ViewGroup parent = (ViewGroup) view.getParent();
 //        if (parent != null) {
 //            parent.removeView(view);
@@ -115,7 +116,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView() {
 
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
         //设置私聊会话，该会话聚合显示
@@ -129,9 +130,20 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .build();
         myConversationListFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
+        getActivity().getSupportFragmentManager().getFragments();
+
         transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        transaction = this.getChildFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, myConversationListFragment);
         transaction.commit();
+
+//        RelativeLayout relativeLayout = (RelativeLayout) myConversationListFragment.getmView();
+//        ConversationListFragment conversationListFragment = ((ContactListFragment) getActivity().getSupportFragmentManager().getFragments().get(0)).getMyConversationListFragment();
+//        RelativeLayout relativeLayout = (RelativeLayout) conversationListFragment.getView();
+//        if (relativeLayout != null) {
+//            Log.e("zzw", relativeLayout.getChildCount() + "");
+//            Log.e("zzw", relativeLayout.getChildAt(2).getId() + "");
+//        }
 
         setGroupInfo();//对比数据
 
@@ -156,7 +168,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             }
         }, Conversation.ConversationType.GROUP);
 
-
+        doHttpNoticeCount();
         /**
          * 设置会话列表界面操作的监听器。
          */
@@ -235,6 +247,17 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        RelativeLayout relativeLayout = (RelativeLayout) myConversationListFragment.getmView();
+    }
+
+
+    public MyConversationListFragment getMyConversationListFragment() {
+        return myConversationListFragment;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 //        doHttpNoticeCount();
@@ -246,7 +269,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private void doHttpNoticeCount() {
 
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
+//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
 
         EanfangHttp.get(NewApiService.GET_PUSH_COUNT)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
@@ -256,7 +279,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
 
-                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+//                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
 
 
                         if (bean.containsKey("sys")) {
@@ -280,7 +303,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);
-                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+//                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
                     }
                 });
     }
@@ -445,7 +468,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        doHttpNoticeCount();
+//        doHttpNoticeCount();
     }
 
     @Override

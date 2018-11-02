@@ -91,8 +91,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     EditText etInputHandle;
     @BindView(R.id.rv_team_work)
     RecyclerView rvTeamWork;
-    @BindView(R.id.tv_addViedeo_work)
-    TextView tvAddViedeoWork;
+    //    @BindView(R.id.tv_addViedeo_work)
+//    TextView tvAddViedeoWork;
     @BindView(R.id.snpl_photos_work)
     BGASortableNinePhotoLayout snplPhotosWork;
     @BindView(R.id.iv_takevideo_work)
@@ -113,6 +113,14 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     RecyclerView rvSendGroup;
     @BindView(R.id.scroll_view)
     NestedScrollView scrollView;
+    @BindView(R.id.tv_add_complete)
+    TextView tvAddComplete;
+    @BindView(R.id.ll_work)
+    LinearLayout llWork;
+    @BindView(R.id.tv_add_find)
+    TextView tvAddFind;
+    @BindView(R.id.tv_add_plan)
+    TextView tvAddPlan;
 
 
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
@@ -143,8 +151,6 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     EditText etInputHandleQuestion;
     @BindView(R.id.snpl_photos_question)
     BGASortableNinePhotoLayout snplPhotosQuestion;
-    @BindView(R.id.tv_addViedeo_question)
-    TextView tvAddViedeoQuestion;
     @BindView(R.id.iv_takevideo_question)
     SimpleDraweeView ivTakevideoQuestion;
     @BindView(R.id.rl_thumbnail_question)
@@ -183,8 +189,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     TextView tvTime;
     @BindView(R.id.snpl_photos_plan)
     BGASortableNinePhotoLayout snplPhotosPlan;
-    @BindView(R.id.tv_addViedeo_plan)
-    TextView tvAddViedeoPlan;
+    //    @BindView(R.id.tv_addViedeo_plan)
+//    TextView tvAddViedeoPlan;
     @BindView(R.id.iv_takevideo_plan)
     SimpleDraweeView ivTakevideoPlan;
     @BindView(R.id.rl_thumbnail_plan)
@@ -326,7 +332,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
      *
      * @param view
      */
-    @OnClick({R.id.ll_report_type, R.id.tv_add_complete, R.id.iv_content_voice, R.id.iv_question_voice, R.id.iv_reason_voice, R.id.iv_handle_voice, R.id.tv_addViedeo_work, R.id.iv_takevideo_work, R.id.tv_complete_work, R.id.tv_cancle_work})
+    @OnClick({R.id.ll_report_type, R.id.tv_add_complete, R.id.iv_content_voice, R.id.iv_question_voice, R.id.iv_reason_voice, R.id.iv_handle_voice, R.id.iv_takevideo_work, R.id.tv_add_video, R.id.tv_complete_work, R.id.tv_cancle_work})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_report_type:
@@ -334,6 +340,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_add_complete:
                 llCompleteWork.setVisibility(View.VISIBLE);
+                tvAddComplete.setVisibility(View.INVISIBLE);
+//                llWork.setBackground(getResources().getDrawable(R.drawable.shape_corner_top));
                 break;
             case R.id.iv_content_voice:
                 inputVoice(etInputContent);
@@ -347,7 +355,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             case R.id.iv_handle_voice:
                 inputVoice(etInputHandle);
                 break;
-            case R.id.tv_addViedeo_work:
+            case R.id.tv_add_video:
                 mVidioFlag = 1;
                 Bundle bundle_addvideo = new Bundle();
                 bundle_addvideo.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -366,6 +374,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 } else {
                     if (addDataToWrok()) llCompleteWork.setVisibility(View.GONE);
                 }
+                tvAddComplete.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_cancle_work:
                 //保存 并 下一条
@@ -399,7 +408,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         mVieoPath = "";
         mUploadKey = "";
         ivTakevideoWork.setVisibility(View.INVISIBLE);
-        tvAddViedeoWork.setText("拍摄小视频(点我)");
+        rlThumbnailWork.setVisibility(View.GONE);
     }
 
     private boolean addDataToWrok() {
@@ -450,10 +459,12 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
-                    if (isTrue) {
-                        subWorkData(workBean);
-                        isTrue = false;
-                    }
+                    runOnUiThread(() -> {
+                        if (isTrue) {
+                            subWorkData(workBean);
+                            isTrue = false;
+                        }
+                    });
                 }
 
             });
@@ -508,7 +519,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         mQuestionVieoPath = "";
         mQuestionUploadKey = "";
         ivTakevideoQuestion.setVisibility(View.INVISIBLE);
-        tvAddViedeoQuestion.setText("拍摄小视频(点我)");
+        rlThumbnailQuestion.setVisibility(View.GONE);
     }
 
     private boolean closeQuestionWrite() {
@@ -589,11 +600,12 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
 
     //============================================================================================================发现问题
-    @OnClick({R.id.tv_add_find, R.id.iv_content_voice_question, R.id.iv_question_voice_question, R.id.tv_sure_find_question, R.id.tv_addViedeo_question, R.id.iv_takevideo_question, R.id.tv_save_find_question})
+    @OnClick({R.id.tv_add_find, R.id.iv_content_voice_question, R.id.iv_question_voice_question, R.id.tv_sure_find_question, R.id.tv_add_video_question, R.id.iv_takevideo_question, R.id.tv_save_find_question})
     public void onViewQuestionClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_add_find:
                 llFindQuestion.setVisibility(View.VISIBLE);
+                tvAddFind.setVisibility(View.INVISIBLE);
                 break;
             case R.id.iv_content_voice_question:
                 inputVoice(etInputContentQuestion);
@@ -601,7 +613,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             case R.id.iv_question_voice_question:
                 inputVoice(etInputHandleQuestion);
                 break;
-            case R.id.tv_addViedeo_question:
+            case R.id.tv_add_video_question:
                 mVidioFlag = 2;
                 Bundle bundle_addvideo = new Bundle();
                 bundle_addvideo.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -622,7 +634,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
                     if (addQuestionData()) llFindQuestion.setVisibility(View.GONE);
                 }
-
+                tvAddFind.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_save_find_question:
                 addQuestionData();
@@ -719,11 +731,12 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     //======================================================================================================================后续计划
 
 
-    @OnClick({R.id.tv_add_plan, R.id.iv_content_voice_plan, R.id.iv_question_voice_plan, R.id.iv_reason_voice_plan, R.id.ll_time, R.id.tv_addViedeo_plan, R.id.iv_takevideo_plan, R.id.tv_complete_plan, R.id.tv_cancle_plan})
+    @OnClick({R.id.tv_add_plan, R.id.iv_content_voice_plan, R.id.iv_question_voice_plan, R.id.iv_reason_voice_plan, R.id.ll_time, R.id.tv_add_video_plan, R.id.iv_takevideo_plan, R.id.tv_complete_plan, R.id.tv_cancle_plan})
     public void onPlanViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_add_plan:
                 llReportPlan.setVisibility(View.VISIBLE);
+                tvAddPlan.setVisibility(View.INVISIBLE);
                 break;
             case R.id.iv_content_voice_plan:
                 inputVoice(etInputContentPlan);
@@ -737,7 +750,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             case R.id.ll_time:
                 PickerSelectUtil.onUpYearMonthDayPicker(this, tvTime);
                 break;
-            case R.id.tv_addViedeo_plan:
+            case R.id.tv_add_video_plan:
                 mVidioFlag = 3;
                 Bundle bundle_addvideo = new Bundle();
                 bundle_addvideo.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -758,7 +771,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                     if (setPlanData())
                         llReportPlan.setVisibility(View.GONE);
                 }
-
+                tvAddPlan.setVisibility(View.VISIBLE);
 
                 break;
             case R.id.tv_cancle_plan:
@@ -879,7 +892,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         mPlanUploadKey = "";
         mPlanVieoPath = "";
         ivTakevideoPlan.setVisibility(View.INVISIBLE);
-        tvAddViedeoPlan.setText("拍摄小视频(点我)");
+        rlThumbnailPlan.setVisibility(View.GONE);
     }
 
 
@@ -909,6 +922,12 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             showToast("完成工作请最少填写三条");
             return;
         }
+
+        if (mPlanReportAdapter == null || mPlanReportAdapter.getData().size() == 0) {
+            showToast("完成工作请最少填写一条");
+            return;
+        }
+
         if (mPlanReportAdapter == null || mPlanReportAdapter.getData().size() < 3) {
             showToast("后续计划请最少填写三条");
             return;
@@ -1024,21 +1043,21 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         if (takeVdideoMode != null) {
             switch (mVidioFlag) {
                 case 1:
-                    vidio(takeVdideoMode, this.mUploadKey, this.mVieoPath, ivTakevideoWork, tvAddViedeoWork);
+                    vidio(takeVdideoMode, this.mUploadKey, this.mVieoPath, ivTakevideoWork, rlThumbnailWork);
                     break;
                 case 2:
-                    vidio(takeVdideoMode, this.mQuestionUploadKey, this.mQuestionVieoPath, ivTakevideoQuestion, tvAddViedeoQuestion);
+                    vidio(takeVdideoMode, this.mQuestionUploadKey, this.mQuestionVieoPath, ivTakevideoQuestion, rlThumbnailQuestion);
                     break;
                 case 3:
-                    vidio(takeVdideoMode, this.mPlanUploadKey, this.mPlanVieoPath, ivTakevideoPlan, tvAddViedeoPlan);
+                    vidio(takeVdideoMode, this.mPlanUploadKey, this.mPlanVieoPath, ivTakevideoPlan, rlThumbnailPlan);
                     break;
             }
         }
     }
 
 
-    private void vidio(TakeVdideoMode takeVdideoMode, String key, String path, SimpleDraweeView view, TextView textView) {
-//        rlThumbnailWork.setVisibility(View.VISIBLE);
+    private void vidio(TakeVdideoMode takeVdideoMode, String key, String path, SimpleDraweeView view, RelativeLayout relativeLayout) {
+
         path = takeVdideoMode.getMImagePath();
         key = takeVdideoMode.getMKey();
         if (mVidioFlag == 1) {
@@ -1057,7 +1076,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             }
             view.setImageBitmap(PhotoUtils.getVideoThumbnail(path, 100, 100, MINI_KIND));
         }
-        textView.setText("重新拍摄小视频(点我)");
+        relativeLayout.setVisibility(View.VISIBLE);
     }
 
 

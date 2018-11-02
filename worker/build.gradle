@@ -215,7 +215,6 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.47'
     compile 'org.projectlombok:lombok:1.16.18'
     implementation project(':IMKit')
-    implementation project(':IMLib')
     implementation project(':zxing')
     // flowlayout
     compile 'com.zhy:flowlayout-lib:1.0.3'

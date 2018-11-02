@@ -527,7 +527,7 @@
         <activity android:name=".ui.activity.worksapce.oa.SelectOAGroupActivity" />
         <activity android:name=".ui.activity.worksapce.oa.OASearchActivity">
             <intent-filter>
-                <action android:name="com.eanfang.net.intent.action.OA_SEARCH" />
+                <action android:name="com.eanfang.net.intent.action.worker.OA_SEARCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -630,15 +630,22 @@
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
         <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
         <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
-
-        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity"></activity>
-
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifyListActivity" />
         <activity
             android:name=".ui.activity.worksapce.contacts.verifyqualify.AddAuthQualifyActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity" />
+        <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
+        <activity android:name=".ui.activity.im.CreateGroupActivity">
 
+            <intent-filter>
+                <action android:name="com.eanfang.net.intent.action.IM_CREATE_GROUP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>

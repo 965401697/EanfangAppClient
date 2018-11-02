@@ -60,13 +60,14 @@
         android:layout_toLeftOf="@+id/tv_delete"
         android:drawableRight="@mipmap/arrow_right"
         android:text="点击查看更多"
+        android:layout_marginBottom="@dimen/dimen_30"
         android:textColor="@color/colorPrimary" />
 
     <View
+        android:id="@+id/v_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2"
         android:layout_below="@+id/tv_look"
-        android:layout_marginTop="@dimen/dimen_15"
         android:background="@color/content_bg" />
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.oa.workreport;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,8 +20,10 @@ import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -62,12 +65,19 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mFlag != 0) {
+                    if (mFlag != 0 && mFlag != 6) {
                         ((CreationWorkReportActivity) mContext).setFlag(mFlag);
 
                     }
                     if (mFlag == 4) {
                         ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), CreationWorkReportActivity.REQUEST_CODE_GROUP);
+                    } else if (mFlag == 6) {
+                        Intent intent = new Intent(new Intent(mContext, NewSelectIMContactActivity.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("list", (Serializable) getData());
+                        intent.putExtras(bundle);
+                        intent.putExtra("flag", 1);
+                        mContext.startActivity(intent);
                     } else {
                         //选择协同人员
                         ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class).putExtra("IM", "IM"));
@@ -126,6 +136,4 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
 
         }
     }
-
-
 }

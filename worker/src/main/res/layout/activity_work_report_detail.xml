@@ -40,7 +40,7 @@
                     android:layout_alignTop="@+id/iv_header"
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_toRightOf="@+id/iv_header"
-                    android:text="安德森"
+                    android:text=" "
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -51,7 +51,7 @@
                     android:layout_alignBottom="@+id/iv_header"
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_toRightOf="@+id/iv_header"
-                    android:text="安德森"
+                    android:text=" "
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -64,7 +64,7 @@
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:layout_toRightOf="@+id/iv_header"
-                    android:text="安德森"
+                    android:text=" "
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -76,7 +76,7 @@
                     android:layout_alignTop="@+id/iv_header"
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:layout_marginRight="@dimen/dimen_36"
-                    android:text="安德森" />
+                    android:text=" " />
 
                 <TextView
                     android:id="@+id/tv_week"
@@ -86,7 +86,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:layout_marginRight="@dimen/dimen_36"
-                    android:text="安德森" />
+                    android:text=" " />
 
                 <TextView
                     android:id="@+id/tv_date"
@@ -97,7 +97,7 @@
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:layout_marginRight="@dimen/dimen_36"
                     android:layout_marginTop="@dimen/dimen_20"
-                    android:text="安德森" />
+                    android:text=" " />
 
             </RelativeLayout>
 
