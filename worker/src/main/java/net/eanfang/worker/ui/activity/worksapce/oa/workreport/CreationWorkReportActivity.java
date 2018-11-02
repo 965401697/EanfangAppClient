@@ -459,10 +459,12 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
-                    if (isTrue) {
-                        subWorkData(workBean);
-                        isTrue = false;
-                    }
+                    runOnUiThread(() -> {
+                        if (isTrue) {
+                            subWorkData(workBean);
+                            isTrue = false;
+                        }
+                    });
                 }
 
             });
