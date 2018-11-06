@@ -12,11 +12,15 @@ import android.view.View;
 import android.widget.TimePicker;
 
 import com.eanfang.R;
+import com.eanfang.util.StringUtils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import org.threeten.bp.format.DateTimeFormatter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author guanluocang
@@ -32,6 +36,13 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
 
     private String mCalendarTime = "";
     private String mHourTime = "";
+
+    private TimePicker timePicker;
+
+    public static SelectTimeDialogFragment newInstance() {
+        SelectTimeDialogFragment selectTimeDialogFragment = new SelectTimeDialogFragment();
+        return selectTimeDialogFragment;
+    }
 
     // 回调接口，用于传递数据给Activity
     public interface SelectTimeListener {
@@ -53,13 +64,13 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_select_time_dialog, null);
 
         MaterialCalendarView widget = view.findViewById(R.id.calendarView);
 
-        TimePicker timePicker = view.findViewById(R.id.timepicker);
+        timePicker = view.findViewById(R.id.timepicker);
         //是否使用24小时制
         timePicker.setIs24HourView(true);
         TimeListener times = new TimeListener();
@@ -77,6 +88,12 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
     public DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
+            if (StringUtils.isEmpty(mCalendarTime)) {
+                mCalendarTime = (new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            }
+            int hour = timePicker.getCurrentHour();
+            int minute = timePicker.getCurrentMinute();
+            mHourTime = hour + ":" + minute + ":00";
             selectTimeListener.getData(mCalendarTime + " " + mHourTime);
         }
     };

@@ -17,9 +17,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -28,9 +25,10 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
@@ -44,6 +42,7 @@ import net.eanfang.client.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,7 +53,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DefendLogWriteActivity extends BaseClientActivity implements View.OnClickListener {
+public class DefendLogWriteActivity extends BaseClientActivity implements View.OnClickListener, SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.tv_open_time)
     TextView tvOpenTime;
@@ -103,7 +102,6 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
     private final int ADD_CAUSE = 1;
 
 
-    private TimePickerView mTimeYearMonthDayHMS;
     private TextView currentTextView;
 
     private final int REQUEST_CODE_GROUP = 102;
@@ -207,7 +205,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
             }
         });
 
-        doSelectYearMonthDayHMS();
+//        doSelectYearMonthDayHMS();
     }
 
 
@@ -220,24 +218,24 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
         Calendar endDate = Calendar.getInstance();
         startDate.set(2000, 0, 1, 0, 0, 0);
         endDate.set(2040, 11, 31, 0, 0, 0);
-        mTimeYearMonthDayHMS = new TimePickerBuilder(DefendLogWriteActivity.this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
-            }
-        })
-                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
-                .setCancelText("取消")//取消按钮文字
-                .setSubmitText("确定")//确认按钮文字
-                .setContentTextSize(18)//滚轮文字大小
-                .setTitleSize(20)//标题文字大小
-                .setTitleText(" ")//标题文字
-                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
-                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-                .setRangDate(startDate, endDate)//起始终止年月日设定
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .isDialog(false)//是否显示为对话框样式
-                .build();
+//        mTimeYearMonthDayHMS = new TimePickerBuilder(DefendLogWriteActivity.this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
+//            }
+//        })
+//                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
+//                .setCancelText("取消")//取消按钮文字
+//                .setSubmitText("确定")//确认按钮文字
+//                .setContentTextSize(18)//滚轮文字大小
+//                .setTitleSize(20)//标题文字大小
+//                .setTitleText(" ")//标题文字
+//                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+//                .setRangDate(startDate, endDate)//起始终止年月日设定
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(false)//是否显示为对话框样式
+//                .build();
     }
 
     @Override
@@ -246,15 +244,17 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
             case R.id.ll_open_time:
 
                 currentTextView = tvOpenTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+//                mTimeYearMonthDayHMS.show();
 
                 break;
             case R.id.ll_close_time:
 
                 currentTextView = tvCloseTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+//                mTimeYearMonthDayHMS.show();
 
                 break;
             case R.id.ll_depend_person:
@@ -404,9 +404,9 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                 }));
     }
 
-    /**
-     * 责任人
-     */
+/**
+ * 责任人
+ */
 
     /**
      * 责任人
@@ -507,4 +507,12 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
     }
 
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            currentTextView.setText(time);
+        }
+    }
 }

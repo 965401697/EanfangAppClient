@@ -9,13 +9,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.util.ETimeUtils;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.CooperationAddAdapter;
@@ -23,6 +21,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FiltrateTypeActivity extends BaseWorkerActivity {
+public class FiltrateTypeActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener{
 
 
     @BindView(R.id.recycler_type)
@@ -56,7 +55,7 @@ public class FiltrateTypeActivity extends BaseWorkerActivity {
 
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
 
-    private TimePickerView mTimeYearMonthDay;
+//    private TimePickerView mTimeYearMonthDay;
 
     private TextView mCurrentText;
 
@@ -96,7 +95,7 @@ public class FiltrateTypeActivity extends BaseWorkerActivity {
         typeAdapter.setNewData(mTypeList);
         statusAdapter.setNewData(mStatusList);
 
-        doSelectYearMonthDay();
+//        doSelectYearMonthDay();
     }
 
     @OnClick({R.id.ll_start, R.id.ll_end, R.id.tv_cancle, R.id.tv_sure})
@@ -104,11 +103,13 @@ public class FiltrateTypeActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.ll_start:
                 mCurrentText = tvStart;
-                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDay.show();
                 break;
             case R.id.ll_end:
                 mCurrentText = tvEnd;
-                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDay.show();
                 break;
             case R.id.tv_cancle:
                 finishSelf();
@@ -230,23 +231,32 @@ public class FiltrateTypeActivity extends BaseWorkerActivity {
         Calendar endDate = Calendar.getInstance();
         startDate.set(1960, 1, 1);
         endDate.set(2040, 11, 31);
-        mTimeYearMonthDay = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                mCurrentText.setText(ETimeUtils.getTimeByYearMonthDay(date));
-            }
-        })
-                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .setCancelText("取消")//取消按钮文字
-                .setSubmitText("确定")//确认按钮文字
-                .setContentTextSize(18)//滚轮文字大小
-                .setTitleSize(20)//标题文字大小
-//                .setTitleText("上门日期")//标题文字
-                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
-                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-                .setRangDate(startDate, endDate)//起始终止年月日设定
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .isDialog(false)//是否显示为对话框样式
-                .build();
+//        mTimeYearMonthDay = new TimePickerBuilder(this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                mCurrentText.setText(ETimeUtils.getTimeByYearMonthDay(date));
+//            }
+//        })
+//                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+//                .setCancelText("取消")//取消按钮文字
+//                .setSubmitText("确定")//确认按钮文字
+//                .setContentTextSize(18)//滚轮文字大小
+//                .setTitleSize(20)//标题文字大小
+////                .setTitleText("上门日期")//标题文字
+//                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+//                .setRangDate(startDate, endDate)//起始终止年月日设定
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(false)//是否显示为对话框样式
+//                .build();
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            mCurrentText.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            mCurrentText.setText(time);
+        }
     }
 }

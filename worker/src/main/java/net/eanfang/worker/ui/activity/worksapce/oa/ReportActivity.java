@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -110,7 +109,6 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
     @BindView(R.id.rv_group)
     RecyclerView rvGroup;
 
-    private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private int posistion;
