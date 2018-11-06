@@ -416,21 +416,20 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
 
+        if (presonList.size() > 0) {
+            if (isSend == 1) {
 
-                if (presonList.size() > 0) {
-                    if (isSend == 1) {
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendPersonAdapter.getData());
+                hashSet.addAll(presonList);
 
-                        Set hashSet = new HashSet();
-                        hashSet.addAll(sendPersonAdapter.getData());
-                        hashSet.addAll(presonList);
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
+                }
+                newPresonList.addAll(hashSet);
+                sendPersonAdapter.setNewData(newPresonList);
 
-                        if (newPresonList.size() > 0) {
-                            newPresonList.clear();
-                        }
-                        newPresonList.addAll(hashSet);
-                        sendPersonAdapter.setNewData(newPresonList);
-
-                    } else if (isSend == 0) {
+            } else if (isSend == 0) {
 //                        TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 //
 //                        etPhoneNum.setText(bean.getMobile());
@@ -442,21 +441,21 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 //                        } else {
 //                            assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
 //                        }
-                    } else {
+            } else {
 
-                        Set hashSet = new HashSet();
-                        hashSet.addAll(sendGroupAdapter.getData());
-                        hashSet.addAll(presonList);
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendGroupAdapter.getData());
+                hashSet.addAll(presonList);
 
-                        if (newGroupList.size() > 0) {
-                            newGroupList.clear();
-                        }
-                        newGroupList.addAll(hashSet);
+                if (newGroupList.size() > 0) {
+                    newGroupList.clear();
+                }
+                newGroupList.addAll(hashSet);
 
-                        sendGroupAdapter.setNewData(newGroupList);
-                    }
-
+                sendGroupAdapter.setNewData(newGroupList);
             }
+
+        }
     }
 
     private boolean checkInfo() {

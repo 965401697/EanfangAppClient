@@ -143,9 +143,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                     tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel()));
                     tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear()));
                     // 厂商
-                    if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2) {
+                    if (bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 2) {
                         rvVendor.setChecked(true);
-                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1) {// 公司
+                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 1) {// 公司
                         rbCompany.setChecked(true);
                     }
                 }));

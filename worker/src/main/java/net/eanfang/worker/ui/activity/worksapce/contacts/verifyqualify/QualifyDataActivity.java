@@ -16,9 +16,7 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AptitudeCertificateBean;
-import com.eanfang.model.AuthCompanyBaseInfoBean;
 import com.eanfang.model.QualifyFirstBean;
-import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
@@ -33,6 +31,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.QualifyListAdapter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,11 +70,12 @@ public class QualifyDataActivity extends BaseActivity {
 
 
     // 获取系统类别
-    List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
-    private SystypeBean byNetGrant_system;
+    List<BaseDataEntity> mSystemTypeAllList = Config.get().getBusinessList(1);
+    List<BaseDataEntity> systemTypeList = new ArrayList<>();
     // 业务类别
-    List<BaseDataEntity> businessTypeList = Config.get().getServiceList(1);
-    private SystypeBean byNetGrant_business;
+    List<BaseDataEntity> mBusinessTypeAllList = Config.get().getServiceList(1);
+    List<BaseDataEntity> businessTypeList = new ArrayList<>();
+
 
     // 认证状态
     private String isAuth = "";
@@ -97,14 +97,10 @@ public class QualifyDataActivity extends BaseActivity {
     }
 
     private void initData() {
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
-                .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
-                    tagSystemType.setEnabled(false);
-                    tagBusinessType.setEnabled(false);
-                    initSystemData();
-                    initBusinessData();
-                    initBaseInfo();
-                }));
+        tagSystemType.setEnabled(false);
+        tagBusinessType.setEnabled(false);
+
+        initBaseInfo();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         qualifyListAdapter = new QualifyListAdapter(false);
@@ -129,11 +125,12 @@ public class QualifyDataActivity extends BaseActivity {
                     tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel()));
                     tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear()));
                     // 厂商
-                    if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2) {
+                    if (bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 2) {
                         rvVendor.setChecked(true);
-                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1) {// 公司
+                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 1) {// 公司
                         rbCompany.setChecked(true);
                     }
+                    initBusinessData(bean);
                 }));
     }
 
@@ -158,36 +155,30 @@ public class QualifyDataActivity extends BaseActivity {
                 });
     }
 
-    private void initBusinessData() {
-        // 业务类别
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/BIZ_TYPE")
-                .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
-                    byNetGrant_business = bean;
-                    addBusResult();
-                }));
-
-    }
-
-    private void initSystemData() {
-        // 系统类别
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/SYS_TYPE")
-                .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
-                    byNetGrant_system = bean;
-                    // 系统类别
-                    addSysResult();
-                }));
-
+    private void initBusinessData(QualifyFirstBean qualifyFirstBean) {
+        // 系统类别 datatype ：1
+        for (BaseDataEntity baseDataEntity : qualifyFirstBean.getCompany2baseDataList()) {
+            if (baseDataEntity.getDataType() == 1)
+                systemTypeList.add(baseDataEntity);
+        }
+        // 业务类别 datatype ：2
+        for (BaseDataEntity baseDataEntity : qualifyFirstBean.getCompany2baseDataList()) {
+            if (baseDataEntity.getDataType() == 2)
+                businessTypeList.add(baseDataEntity);
+        }
+        addSysResult();
+        addBusResult();
     }
 
     public void addSysResult() {
-        for (int i = 0; i < systemTypeList.size(); i++) {
-            for (int j = 0; j < byNetGrant_system.getList().size(); j++) {
-                if (systemTypeList.get(i).getDataId().equals(byNetGrant_system.getList().get(j).getDataId())) {
-                    systemTypeList.get(i).setCheck(true);
+        for (int i = 0; i < mSystemTypeAllList.size(); i++) {
+            for (int j = 0; j < systemTypeList.size(); j++) {
+                if (mSystemTypeAllList.get(i).getDataId().equals(systemTypeList.get(j).getDataId())) {
+                    mSystemTypeAllList.get(i).setCheck(true);
                 }
             }
         }
-        tagSystemType.setAdapter(new TagAdapter<BaseDataEntity>(systemTypeList) {
+        tagSystemType.setAdapter(new TagAdapter<BaseDataEntity>(mSystemTypeAllList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
                 TextView tv = (TextView) LayoutInflater.from(QualifyDataActivity.this).inflate(R.layout.layout_trouble_result_item, tagSystemType, false);
@@ -197,7 +188,7 @@ public class QualifyDataActivity extends BaseActivity {
 
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
-                Long coutn = Stream.of(byNetGrant_system.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
+                Long coutn = Stream.of(systemTypeList).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
                 if (coutn > 0) {
                     return true;
                 }
@@ -209,14 +200,14 @@ public class QualifyDataActivity extends BaseActivity {
 
     public void addBusResult() {
         // 业务类型
-        for (int i = 0; i < businessTypeList.size(); i++) {
-            for (int j = 0; j < byNetGrant_business.getList().size(); j++) {
-                if (businessTypeList.get(i).getDataId().equals(byNetGrant_business.getList().get(j).getDataId())) {
-                    businessTypeList.get(i).setCheck(true);
+        for (int i = 0; i < mBusinessTypeAllList.size(); i++) {
+            for (int j = 0; j < businessTypeList.size(); j++) {
+                if (mBusinessTypeAllList.get(i).getDataId().equals(businessTypeList.get(j).getDataId())) {
+                    mBusinessTypeAllList.get(i).setCheck(true);
                 }
             }
         }
-        tagBusinessType.setAdapter(new TagAdapter<BaseDataEntity>(businessTypeList) {
+        tagBusinessType.setAdapter(new TagAdapter<BaseDataEntity>(mBusinessTypeAllList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
                 TextView tv = (TextView) LayoutInflater.from(QualifyDataActivity.this).inflate(R.layout.layout_trouble_result_item, tagBusinessType, false);
@@ -226,7 +217,7 @@ public class QualifyDataActivity extends BaseActivity {
 
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
-                Long coutn = Stream.of(byNetGrant_business.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
+                Long coutn = Stream.of(businessTypeList).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
                 if (coutn > 0) {
                     return true;
                 }

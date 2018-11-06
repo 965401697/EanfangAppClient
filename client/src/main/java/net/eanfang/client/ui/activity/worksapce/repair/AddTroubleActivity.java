@@ -379,7 +379,8 @@ public class AddTroubleActivity extends BaseClientActivity {
             }
 
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {// 故障简述
-            tvFaultDescripte.setText(data.getStringExtra("faultDes"));
+            tvFaultDescripte.setText(data.getStringExtra("sketch"));
+            evFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
             dataId = Long.valueOf(data.getStringExtra("datasId"));
 //            String[] imgs = mGetImgs.split(",");
