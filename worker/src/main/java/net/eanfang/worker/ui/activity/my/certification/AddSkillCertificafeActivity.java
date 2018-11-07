@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -64,7 +63,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     private static final int REQUEST_CODE_CHOOSE_CERTIFICATE = 1;
     private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
     private String pic;
-    private TimePickerView mTimeYearMonthDay;
     private String url;
 
     private QualificationCertificateEntity bean;

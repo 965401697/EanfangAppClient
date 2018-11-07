@@ -10,9 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -21,7 +18,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.util.ETimeUtils;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -32,6 +29,7 @@ import com.yaf.base.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +45,7 @@ import butterknife.OnClick;
  * @description 添加资质证书
  */
 
-public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
+public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements SelectTimeDialogFragment.SelectTimeListener {
 
     // 证书名称
     @BindView(R.id.et_certificate_name)
@@ -87,7 +85,7 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
     private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
     private String pic;
 
-    private TimePickerView mTimeYearMonthDay;
+    //    private TimePickerView mTimeYearMonthDay;
     private String url = "";
     private AptitudeCertificateEntity aptitudeCertificateEntity;
 
@@ -256,13 +254,15 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
                 isBegin = true;
                 // 隐藏软键盘
                 ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AddAuthQualifyActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                mTimeYearMonthDay.show();
+//                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_end_date:
                 isBegin = false;
                 // 隐藏软键盘
                 ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AddAuthQualifyActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                mTimeYearMonthDay.show();
+//                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.tv_save:
                 doVerify();
@@ -292,29 +292,46 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto {
         Calendar endDate = Calendar.getInstance();
         startDate.set(1960, 1, 1);
         endDate.set(2040, 11, 31);
-        mTimeYearMonthDay = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                if (isBegin) {
-                    tvBeginTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
-                } else {
-                    tvEndTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
-                }
-            }
-        })
-                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .setCancelText("取消")//取消按钮文字
-                .setSubmitText("确定")//确认按钮文字
-                .setContentTextSize(18)//滚轮文字大小
-                .setTitleSize(20)//标题文字大小
-//                .setTitleText("上门日期")//标题文字
-                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
-                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-                .setRangDate(startDate, endDate)//起始终止年月日设定
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .isDialog(false)//是否显示为对话框样式
-                .build();
+//        mTimeYearMonthDay = new TimePickerBuilder(this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                if (isBegin) {
+//                    tvBeginTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
+//                } else {
+//                    tvEndTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
+//                }
+//            }
+//        })
+//                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+//                .setCancelText("取消")//取消按钮文字
+//                .setSubmitText("确定")//确认按钮文字
+//                .setContentTextSize(18)//滚轮文字大小
+//                .setTitleSize(20)//标题文字大小
+////                .setTitleText("上门日期")//标题文字
+//                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
+//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+//                .setRangDate(startDate, endDate)//起始终止年月日设定
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(false)//是否显示为对话框样式
+//                .build();
     }
 
 
+    @Override
+    public void getData(String time) {
+        if (isBegin) {
+            if (StringUtils.isEmpty(time) || " ".equals(time)) {
+                tvBeginTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            } else {
+                tvBeginTime.setText(time);
+            }
+        } else {
+            if (StringUtils.isEmpty(time) || " ".equals(time)) {
+                tvEndTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            } else {
+                tvEndTime.setText(time);
+            }
+        }
+
+    }
 }

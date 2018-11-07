@@ -31,7 +31,6 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoActivity;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
@@ -52,7 +51,7 @@ import java.util.Date;
  * @desc activity基类
  */
 
-public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implements
+public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.TakePhotoActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private int resultCode;
@@ -303,7 +302,7 @@ public abstract class BaseActivityWithTakePhoto extends TakePhotoActivity implem
                                     takePhoto.onPickMultipleWithCrop(limit, getCropOptions());
                                     break;
                                 case 0:
-//                                TakePhoto takePhoto = getTakePhoto();
+//                                TakePhotoActivity takePhoto = getTakePhoto();
                                     configCompress(takePhoto);
                                     configTakePhotoOption(takePhoto);
 //        takePhoto.onPickMultipleWithCrop(limit, getCropOptions());

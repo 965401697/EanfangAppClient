@@ -22,6 +22,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.yaf.base.entity.ShopCompanyEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 import com.yaf.sys.entity.OrgUnitEntity;
@@ -140,12 +141,12 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         EanfangHttp.post(UserApi.FIRST_QUALIFY)
                 .params("orgId", orgid + "")
                 .execute(new EanfangCallback<QualifyFirstBean>(this, true, QualifyFirstBean.class, (bean) -> {
-                    tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel()));
-                    tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear()));
+                    tvAbility.setText(V.v(() -> GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel())));
+                    tvLimit.setText(V.v(() -> GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear())));
                     // 厂商
-                    if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2) {
+                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 2)) {
                         rvVendor.setChecked(true);
-                    } else if (bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1) {// 公司
+                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 1)) {// 公司
                         rbCompany.setChecked(true);
                     }
                 }));

@@ -17,8 +17,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -31,6 +29,7 @@ import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.UserEntity;
 
@@ -69,7 +68,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private String lon, lat, province, city, zone, contry;
     private String orderID, clientName, clientPhone, assigneeOrgCode;
     private Long oid, topid, assigneeUserId;
-    private int deviceSum = 0, partsSum = 0, serviceSum = 0, posistion;
+    private int deviceSum = 0, partsSum = 0, serviceSum = 0;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private QuotationDetailAdapter devicesAdapter;
@@ -81,7 +80,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private LinearLayout llProjectAddress;
     private RelativeLayout ll_client_name, ll_clent_phone;
 
-    private OptionsPickerView pvOptions_NoLink;
+    //    private OptionsPickerView pvOptions_NoLink;
     private QuotationBean bean = new QuotationBean();
 
 
@@ -208,16 +207,17 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
             showToast("暂无其他员工可选");
             return;
         }
-        pvOptions_NoLink = new OptionsPickerBuilder(this, (options1, options2, options3, v) -> {
-            posistion = options1;
-            et_contract_phone.setText(userlist.get(posistion).getAccountEntity().getMobile());
-            et_contract.setText(userlist.get(posistion).getAccountEntity().getRealName());
-            assigneeUserId = userlist.get(posistion).getUserId();
-            assigneeOrgCode = userlist.get(posistion).getDepartmentEntity().getOrgCode();
-            topid = userlist.get(posistion).getTopCompanyId();
-        }).build();
-        pvOptions_NoLink.setPicker(userNameList);
-        pvOptions_NoLink.show();
+        PickerSelectUtil.singleTextPicker(this, "", userNameList, new PickerSelectUtil.OnOptionPickListener() {
+            @Override
+            public void picker(int index, String item) {
+                et_contract_phone.setText(userlist.get(index).getAccountEntity().getMobile());
+                et_contract.setText(userlist.get(index).getAccountEntity().getRealName());
+                assigneeUserId = userlist.get(index).getUserId();
+                assigneeOrgCode = userlist.get(index).getDepartmentEntity().getOrgCode();
+                topid = userlist.get(index).getTopCompanyId();
+            }
+        });
+
     }
 
     private boolean checkInfo(boolean check) {

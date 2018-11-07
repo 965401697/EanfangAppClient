@@ -1,10 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,9 +10,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -30,6 +25,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
@@ -43,6 +39,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +56,7 @@ import butterknife.ButterKnife;
  * @desc 发包
  */
 
-public class TaskPublishActivity extends BaseActivity {
+public class TaskPublishActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
     /**
      * 选择地址 回调 code
      */
@@ -111,7 +108,7 @@ public class TaskPublishActivity extends BaseActivity {
     private String latitude;
     private String itemcity;
     private String itemzone;
-    private TimePickerView pvTime;
+    //    private TimePickerView pvTime;
     private Map<String, String> uploadMap = new HashMap<>();
     private TaskPublishBean bean = new TaskPublishBean();
 
@@ -158,10 +155,7 @@ public class TaskPublishActivity extends BaseActivity {
             startActivityForResult(intent, ADDRESS_CALLBACK_CODE);
         });
         llLoginTime.setOnClickListener((v) -> {
-            if (pvTime != null) {
-                pvTime.show();
-                pvTime.show();
-            }
+            new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
         });
         llBusinessType.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", tvBusinessType, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
@@ -232,6 +226,7 @@ public class TaskPublishActivity extends BaseActivity {
 
         Message message = new Message();
         message.setMsgContent("找工人成功。");
+        message.setTip("确定");
         Bundle bundle = new Bundle();
         bundle.putSerializable("message", message);
         JumpItent.jump(TaskPublishActivity.this, StateChangeActivity.class, bundle);
@@ -278,20 +273,29 @@ public class TaskPublishActivity extends BaseActivity {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 11, 31);
         //时间选择器
-        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-                tvLoginTime.setText(GetDateUtils.dateToDateTimeString(date));
-            }
-        })
-                .setTitleText("踏勘时间")
-                .setType(new boolean[]{true, true, true, true, true, true})
-                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setDividerColor(Color.DKGRAY)
-                .setContentTextSize(20)
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
-                .build();
+//        pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+//                tvLoginTime.setText(GetDateUtils.dateToDateTimeString(date));
+//            }
+//        })
+//                .setTitleText("踏勘时间")
+//                .setType(new boolean[]{true, true, true, true, true, true})
+//                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
+//                .setDividerColor(Color.DKGRAY)
+//                .setContentTextSize(20)
+//                .setDate(selectedDate)
+//                .setRangDate(startDate, endDate)
+//                .build();
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            tvLoginTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            tvLoginTime.setText(time);
+        }
     }
 }

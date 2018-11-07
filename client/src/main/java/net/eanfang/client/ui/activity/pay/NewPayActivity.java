@@ -326,6 +326,7 @@ public class NewPayActivity extends BaseClientActivity {
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
+
                 });
 
     }

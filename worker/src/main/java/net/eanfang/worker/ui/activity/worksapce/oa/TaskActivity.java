@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -90,7 +89,6 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     RecyclerView rvGroup;
     private int posistion;
 
-    private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private List<WorkTaskBean.WorkTaskDetailsBean> beanList = new ArrayList<>();
