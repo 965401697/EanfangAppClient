@@ -607,7 +607,12 @@
         <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyFirstActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.AuthCompanySecondActivity" />
         <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
+
         <activity android:name=".ui.activity.worksapce.RealTimeMonitorActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
     </application>
 
 </manifest>

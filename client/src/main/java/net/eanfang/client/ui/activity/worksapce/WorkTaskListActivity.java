@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-
+@Deprecated
 public class WorkTaskListActivity extends BaseClientActivity {
 
     private static String titleBar;
@@ -59,7 +59,7 @@ public class WorkTaskListActivity extends BaseClientActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTaskListFragment.getInstance(title, type));
+            mFragments.add(WorkTaskListFragment.getInstance(title, String.valueOf(type)));
         }
 
 
