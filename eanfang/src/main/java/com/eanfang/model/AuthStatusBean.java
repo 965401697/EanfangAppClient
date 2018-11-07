@@ -17,34 +17,36 @@ public class AuthStatusBean implements Serializable {
      * base : 1
      */
 
-    private int area;
-    private int biz;
-    private int service;
+
+
+    private int apt;
+    private int honor;
+    private int exp;
     private int base;
     private int verify;
 
-    public int getArea() {
-        return area;
+    public int getApt() {
+        return apt;
     }
 
-    public void setArea(int area) {
-        this.area = area;
+    public void setApt(int apt) {
+        this.apt = apt;
     }
 
-    public int getBiz() {
-        return biz;
+    public int getHonor() {
+        return honor;
     }
 
-    public void setBiz(int biz) {
-        this.biz = biz;
+    public void setHonor(int honor) {
+        this.honor = honor;
     }
 
-    public int getService() {
-        return service;
+    public int getExp() {
+        return exp;
     }
 
-    public void setService(int service) {
-        this.service = service;
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 
     public int getBase() {

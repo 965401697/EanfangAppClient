@@ -18,10 +18,22 @@ import java.util.List;
 
 public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewHolder> {
 
-    private List<CheckBox> checkBoxList = new ArrayList<>();
+
+    private List<Integer> scheckedId = new ArrayList<>();
+    private List<Integer> unSCheckedId = new ArrayList<>();
+
+    private List<Integer> bcheckedId = new ArrayList<>();
+    private List<Integer> unbCheckedId = new ArrayList<>();
+
+    private int mFlag;
 
     public SkillTypeAdapter(int layoutResId) {
         super(layoutResId);
+    }
+
+    public SkillTypeAdapter(int layoutResId, int flag) {
+        super(layoutResId);
+        this.mFlag = flag;
     }
 
     @Override
@@ -32,20 +44,50 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    checkBoxList.add(((CheckBox) helper.getView(R.id.cb_check)));
                     item.setCheck(true);
+                    if (item.getDataType() == 1) {
+                        scheckedId.add(item.getDataId());
+                    } else {
+                        bcheckedId.add(item.getDataId());
+                    }
                 } else {
                     item.setCheck(false);
-                    checkBoxList.remove((CheckBox) helper.getView(R.id.cb_check));
+                    if (item.getDataType() == 1) {
+                        unSCheckedId.add(item.getDataId());
+                    } else {
+                        unbCheckedId.add(item.getDataId());
+                    }
                 }
             }
         });
 
+        if (item.isCheck()) {
+            ((CheckBox) helper.getView(R.id.cb_check)).setChecked(item.isCheck());
+        } else {
+            ((CheckBox) helper.getView(R.id.cb_check)).setChecked(item.isCheck());
+        }
 
+        if (mFlag != 0) {
+            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
+        } else {
+            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(true);
+        }
     }
 
-    public List<CheckBox> getCheckBoxList() {
-        return checkBoxList;
+    public List<Integer> getScheckedId() {
+        return scheckedId;
+    }
+
+    public List<Integer> getUnSCheckedId() {
+        return unSCheckedId;
+    }
+
+    public List<Integer> getBcheckedId() {
+        return bcheckedId;
+    }
+
+    public List<Integer> getUnbCheckedId() {
+        return unbCheckedId;
     }
 }
 

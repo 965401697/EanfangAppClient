@@ -34,6 +34,9 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_sub)
     TextView tvSub;
     private QualificationAdapter adapter;
+    private int mStatus;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +44,10 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("技能认证");
         setLeftBack();
-
+        mStatus = getIntent().getIntExtra("status", -1);
         initViews();
     }
+
     private void initViews() {
 
 
@@ -64,6 +68,10 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                 startActivityForResult(new Intent(SkillCertificafeListActivity.this, AddSkillCertificafeActivity.class).putExtra("bean", (QualificationCertificateEntity) adapter.getData().get(position)), ADD_EDUCATION_CODE);
             }
         });
+
+        if (mStatus > 0) {
+            getData();
+        }
     }
 
 
@@ -124,12 +132,12 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：400-890-9280");
                 startActivity(intent);
-                finishSelf();
+                endTransaction(true);
                 break;
 
             case R.id.tv_add:
-
                 startActivityForResult(new Intent(SkillCertificafeListActivity.this, AddSkillCertificafeActivity.class), ADD_EDUCATION_CODE);
+                endTransaction(true);
                 break;
         }
     }

@@ -35,15 +35,19 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
     private WorkListAdapter adapter;
 
     private final int ADD_WORK_CODE = 101;
+    private int mStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_history);
         ButterKnife.bind(this);
+        startTransaction(true);
         setTitle("工作经历");
         setLeftBack();
         initViews();
+
+        getData();
     }
 
     private void initViews() {
@@ -81,8 +85,10 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
                     public void onSuccess(JobListBean bean) {
 
                         if (bean.getList().size() > 0) {
-//                            adapter.getData().clear();
                             adapter.setNewData(bean.getList());
+                            if (tvSub.getVisibility() == View.GONE) {
+                                tvSub.setVisibility(View.VISIBLE);
+                            }
                         }
 
                     }
@@ -129,7 +135,7 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
                 startActivity(intent);
-                finishSelf();
+                endTransaction(false);
                 break;
         }
     }
@@ -141,9 +147,6 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
         if (resultCode == RESULT_OK && requestCode == ADD_WORK_CODE) {
             getData();
 
-            if (tvSub.getVisibility() == View.GONE) {
-                tvSub.setVisibility(View.VISIBLE);
-            }
         }
 
     }

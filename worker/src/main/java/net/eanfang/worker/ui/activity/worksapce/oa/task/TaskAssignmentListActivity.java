@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa.workreport;
+package net.eanfang.worker.ui.activity.worksapce.oa.task;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.fragment.WorkReportListFragment;
+import net.eanfang.worker.ui.fragment.WorkTaskListFragment;
 
 import java.util.ArrayList;
 
@@ -21,52 +21,52 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class WorkReportListActivity extends BaseWorkerActivity {
-    //    private static String titleBar;
-//    public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();
-    @BindView(R.id.tl_work_list)
-    SlidingTabLayout tlWorkList;
-    @BindView(R.id.vp_work_list)
-    ViewPager vpWorkList;
+public class TaskAssignmentListActivity extends BaseWorkerActivity {
+
+
+    @BindView(R.id.tl_task_list)
+    SlidingTabLayout tlTaskList;
+    @BindView(R.id.vp_task_list)
+    ViewPager vpTaskList;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles = {"我发出的", "我负责的", "全部"};
     private MyPagerAdapter mAdapter;
     private final int FILTRATE_TYPE_CODE = 101;
-    //    private String type;
+    private final int REFRESH_CODE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_report_list2);
+        setContentView(R.layout.activity_task_assignment_list);
         ButterKnife.bind(this);
         initView();
     }
 
     private void initView() {
-        setTitle("工作汇报");
+        setTitle("布置任务");
         setLeftBack();
         setRightImageResId(R.mipmap.add);
         setRightImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(WorkReportListActivity.this, CreationWorkReportActivity.class), FILTRATE_TYPE_CODE);
+                startActivityForResult(new Intent(TaskAssignmentListActivity.this, TaskAssignmentCreationActivity.class), REFRESH_CODE);
             }
         });
 
-        mFragments.add(WorkReportListFragment.getInstance("我发出的", 1));
-        mFragments.add(WorkReportListFragment.getInstance("我负责的", 2));
-        mFragments.add(WorkReportListFragment.getInstance("全部", 0));
+        mFragments.add(WorkTaskListFragment.getInstance("我发出的", "1"));
+        mFragments.add(WorkTaskListFragment.getInstance("我负责的", "2"));
+        mFragments.add(WorkTaskListFragment.getInstance("全部", "0"));
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        vpWorkList.setAdapter(mAdapter);
-        tlWorkList.setViewPager(vpWorkList, mTitles, this, mFragments);
+        vpTaskList.setAdapter(mAdapter);
+        tlTaskList.setViewPager(vpTaskList, mTitles, this, mFragments);
 
-        vpWorkList.setCurrentItem(0);
+        vpTaskList.setCurrentItem(0);
     }
 
     @OnClick(R.id.tv_filtrate)
     public void onViewClicked() {
-        startActivityForResult(new Intent(this, FiltrateTypeActivity.class), FILTRATE_TYPE_CODE);
+        startActivityForResult(new Intent(this, FiltrateTaskActivity.class), FILTRATE_TYPE_CODE);
     }
 
 
@@ -94,14 +94,15 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int currentTab = tlTaskList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
 
-            int currentTab = tlWorkList.getCurrentTab();
 
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
-                ((WorkReportListFragment) mFragments.get(currentTab)).getReportData(queryEntry);
+                ((WorkTaskListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
         }
     }
 }
+

@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师绑定系统类别
  */
-
+@Deprecated
 public class AuthWorkerSysTypeActivity extends BaseActivity {
 
     @BindView(R.id.tag_work_type)

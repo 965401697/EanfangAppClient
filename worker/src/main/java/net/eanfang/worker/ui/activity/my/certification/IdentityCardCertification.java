@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.eanfang.oss.OSSCallBack;
@@ -40,7 +41,7 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
     @BindView(R.id.tv_save)
     TextView tvSave;
 
-    private TechWorkerVerifyEntity techWorkerVerifyEntity;
+    private TechWorkerVerifyEntity mTechWorkerVerifyEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,9 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         setTitle("身份信息");
         setLeftBack();
+        mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) getIntent().getSerializableExtra("bean");
+
         initListener();
-        techWorkerVerifyEntity = (TechWorkerVerifyEntity) getIntent().getSerializableExtra("bean");
     }
 
     private void initListener() {
@@ -61,28 +63,39 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
             doSave();
         });
 
+        if (!TextUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardFront())) {
+            fillData();
+        }
 
+
+    }
+
+
+    private void fillData() {
+        ivIdCardFront.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront());
+        ivIdCardBack.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide());
+        ivIdCardInHand.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand());
     }
 
     /**
      * 保存照片
      */
     private void doSave() {
-        if (StringUtils.isEmpty(techWorkerVerifyEntity.getIdCardFront())) {
+        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardFront())) {
             showToast("请添加身份证正面照");
             return;
         }
-        if (StringUtils.isEmpty(techWorkerVerifyEntity.getIdCardHand())) {
+        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardHand())) {
             showToast("请添加手持身份证照片");
             return;
         }
-        if (StringUtils.isEmpty(techWorkerVerifyEntity.getIdCardSide())) {
+        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardSide())) {
             showToast("请添加身份证反面照");
             return;
         }
 
         Intent intent = new Intent(this, OtherDataActivity.class);
-        intent.putExtra("bean", techWorkerVerifyEntity);
+        intent.putExtra("bean", mTechWorkerVerifyEntity);
         startActivity(intent);
     }
 
@@ -97,17 +110,17 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
         switch (resultCode) {
             // 身份证正面
             case ID_CARD_FRONT:
-                techWorkerVerifyEntity.setIdCardFront(imgKey);
+                mTechWorkerVerifyEntity.setIdCardFront(imgKey);
                 ivIdCardFront.setImageURI("file://" + image.getOriginalPath());
                 break;
             // 反面
             case ID_CARD_SIDE:
-                techWorkerVerifyEntity.setIdCardSide(imgKey);
+                mTechWorkerVerifyEntity.setIdCardSide(imgKey);
                 ivIdCardBack.setImageURI("file://" + image.getOriginalPath());
                 break;
             // 手持
             case ID_CARD_HAND:
-                techWorkerVerifyEntity.setIdCardHand(imgKey);
+                mTechWorkerVerifyEntity.setIdCardHand(imgKey);
                 ivIdCardInHand.setImageURI("file://" + image.getOriginalPath());
                 break;
         }

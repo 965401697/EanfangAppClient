@@ -32,8 +32,8 @@ import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentListActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
@@ -235,7 +235,8 @@ public class WorkspaceFragment extends BaseFragment {
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
 //            new TaskCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+//            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+            Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
             startActivity(intent);
         });
 

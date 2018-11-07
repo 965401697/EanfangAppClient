@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="小破孩"
-            android:textColor="#0000ff"
+            android:textColor="@color/color_client_neworder"
             android:textSize="14sp" />
 
 
@@ -31,18 +31,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/select_worker"
             android:gravity="center"
             android:padding="5dp"
-            android:text="已读"
-            android:textColor="@color/black" />
+            android:text=" " />
     </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
-        android:background="#87ceeb" />
+        android:background="@color/content_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +54,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            fresco:placeholderImage="@mipmap/no_img" />
+            fresco:placeholderImage="@mipmap/ic_header" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,17 +68,16 @@
                 android:id="@+id/tv_depart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="部门："
-                android:textColor="@color/black"
+                android:text="部门    "
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="标题："
-                android:textColor="@color/black"
-
+                android:text="标题        "
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
 
@@ -88,8 +85,8 @@
                 android:id="@+id/tv_pub_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发布人："
-                android:textColor="@color/black"
+                android:text="发布人    "
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
             <TextView
@@ -97,16 +94,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="接收人："
-                android:visibility="gone"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_pub_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发布时间："
-                android:textColor="@color/black"
+                android:text="发布时间"
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
         </LinearLayout>

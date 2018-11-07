@@ -14,7 +14,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.Message;
-import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
@@ -40,18 +39,36 @@ public class NewAuthListActivity extends BaseWorkerActivity {
     TextView tvConfim;
     @BindView(R.id.rl_is_auth)
     RelativeLayout rlIsAuth;
-    private WorkerInfoBean workerInfoBean;
+
 
     //提交认证 弹框
     private CommitVerfiyView verfiyView;
 
-    private int verify = 100;
+    private int verify = -1;
+    private AuthStatusBean mAuthStatusBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_auth_list);
         ButterKnife.bind(this);
+
+        setRightTitle("重新认证");
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /**
+                 * 重新认证
+                 */
+//                new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
+//                    EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+//                            .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+//                                commit();
+//                            }));
+//                }).showDialog();
+            }
+        });
+
         initView();
     }
 
@@ -72,12 +89,8 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 .params("accId", EanfangApplication.getApplication().getAccId())
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
                     verify = bean.getVerify();
-                    doChange(bean.getBase(), bean.getBiz(), bean.getService(), bean.getArea(), bean.getVerify());
-                }));
-        // 获取技师信息
-        EanfangHttp.get(UserApi.GET_WORKER_INFO)
-                .execute(new EanfangCallback<WorkerInfoBean>(NewAuthListActivity.this, true, WorkerInfoBean.class, (bean) -> {
-                    workerInfoBean = bean;
+                    mAuthStatusBean = bean;
+                    doChange(bean.getBase(), bean.getApt(), bean.getExp(), bean.getHonor(), bean.getVerify());
                 }));
     }
 
@@ -86,22 +99,29 @@ public class NewAuthListActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             // 实名认证
             case R.id.rl_base_info:
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("workerInfoBean", workerInfoBean);
-                bundle.putInt("status", verify);
-                JumpItent.jump(this, CertificationActivity.class, bundle);
+                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
+                    JumpItent.jump(this, CertificationInfoActivity.class);
+                } else {
+                    startActivity(new Intent(this, CertificationActivity.class).putExtra("status", mAuthStatusBean.getBase()));
+                }
                 break;
             //技能资质
             case R.id.rl_skill:
-                startActivity(new Intent(this, SkillTypeActivity.class).putExtra("status", verify));
+                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
+                    JumpItent.jump(this, SkillInfoDetailActivity.class);
+                } else {
+                    startActivity(new Intent(this, SkillTypeActivity.class).putExtra("status", mAuthStatusBean.getApt()));
+                }
                 break;
             // 个人经历
             case R.id.rl_own:
-                startActivity(new Intent(this, OwmHistoryActivity.class).putExtra("status", verify));
+
+                startActivity(new Intent(this, OwmHistoryActivity.class));
+
                 break;
             //荣誉证书
             case R.id.rl_certificate:
-                startActivity(new Intent(this, CertificateListActivity.class).putExtra("status", verify));
+                startActivity(new Intent(this, CertificateListActivity.class));
                 break;
             case R.id.tv_confim:
                 doVerify();
@@ -149,7 +169,7 @@ public class NewAuthListActivity extends BaseWorkerActivity {
             tvCertificate.setTextColor(ContextCompat.getColor(this, R.color.color_auth_list_unfinish));
         }
         // 当认证都大于0
-        if (baseStatus > 0 && serviceStatus > 0 && bizStatus > 0 && areaStatus > 0 && (verify != 1 && verify != 2)) {
+        if (baseStatus > 0 && serviceStatus > 0 && (verify != 1 && verify != 2)) {
             tvConfim.setVisibility(View.VISIBLE);
         } else {
             tvConfim.setVisibility(View.GONE);
