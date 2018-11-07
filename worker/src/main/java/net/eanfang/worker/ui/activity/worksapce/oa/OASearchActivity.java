@@ -114,6 +114,9 @@ public class OASearchActivity extends BaseWorkerActivity {
      */
     private void initPhoneData(String content) {
         presonList.clear();
+        if (mTemplateBeanList == null || mTemplateBeanList.size() <= 0) {
+            return;
+        }
         for (TemplateBean templateBean : mTemplateBeanList) {
             for (TemplateBean.Preson preson : templateBean.getPresons()) {
                 if (preson.getMobile().contains(content) || preson.getName().contains(content)) {
