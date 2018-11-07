@@ -39,15 +39,21 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_sub)
     TextView tvSub;
     private EducationListAdapter adapter;
+    private int mStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_owm_history);
         ButterKnife.bind(this);
+        startTransaction(true);
         setTitle("个人经历");
         setLeftBack();
         initViews();
+
+
+        getData();
+
     }
 
     private void initViews() {
@@ -85,8 +91,10 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
                     public void onSuccess(EducationListBean bean) {
 
                         if (bean.getList().size() > 0) {
-//                            adapter.getData().clear();
                             adapter.setNewData(bean.getList());
+                            if (tvSub.getVisibility() == View.GONE) {
+                                tvSub.setVisibility(View.VISIBLE);
+                            }
                         }
 
                     }
@@ -124,8 +132,8 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.tv_sub:
                 Intent intent = new Intent(OwmHistoryActivity.this, WorkHistoryActivity.class);
+                intent.putExtra("status", mStatus);
                 startActivity(intent);
-                finishSelf();
                 break;
 
             case R.id.tv_add_education:
@@ -141,10 +149,6 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
 
         if (resultCode == RESULT_OK && requestCode == ADD_EDUCATION_CODE) {
             getData();
-
-            if (tvSub.getVisibility() == View.GONE) {
-                tvSub.setVisibility(View.VISIBLE);
-            }
         }
 
     }

@@ -607,12 +607,17 @@
         <activity android:name=".ui.activity.worksapce.datastatistics.DataInstallActivity" />
         <!-- 统计数据设计 -->
         <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
+        <!-- 新的技师认证页面 -->
         <activity android:name=".ui.activity.my.certification.NewAuthListActivity" />
+        <!-- 实名认证 -->
         <activity android:name=".ui.activity.my.certification.CertificationActivity" />
+        <!-- 身份证验证 -->
         <activity android:name=".ui.activity.my.certification.IdentityCardCertification" />
+        <!-- 其他资料的验证 -->
         <activity android:name=".ui.activity.my.certification.OtherDataActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity" />
+        <!-- 荣誉证书 -->
         <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
         <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
@@ -638,14 +643,18 @@
         <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity" />
         <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
         <activity android:name=".ui.activity.im.CreateGroupActivity">
-
             <intent-filter>
                 <action android:name="com.eanfang.net.intent.action.IM_CREATE_GROUP" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
+        <activity android:name=".ui.activity.my.certification.CertificationInfoActivity" />
+        <activity android:name=".ui.activity.my.certification.SkillInfoDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity"></activity>
     </application>
 
 </manifest>

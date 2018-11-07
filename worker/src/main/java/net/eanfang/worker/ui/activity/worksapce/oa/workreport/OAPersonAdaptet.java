@@ -22,6 +22,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -66,11 +67,15 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                 @Override
                 public void onClick(View v) {
                     if (mFlag != 0 && mFlag != 6) {
-                        ((CreationWorkReportActivity) mContext).setFlag(mFlag);
+                        if(mContext instanceof  CreationWorkReportActivity) {
+                            ((CreationWorkReportActivity) mContext).setFlag(mFlag);
+                        }else if(mContext instanceof  TaskAssignmentCreationActivity){
+                            ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
+                        }
 
                     }
-                    if (mFlag == 4) {
-                        ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), CreationWorkReportActivity.REQUEST_CODE_GROUP);
+                    if (mFlag == 4) {//选择群组
+                        ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), 101);
                     } else if (mFlag == 6) {
                         Intent intent = new Intent(new Intent(mContext, NewSelectIMContactActivity.class));
                         Bundle bundle = new Bundle();

@@ -94,7 +94,7 @@ public class AuthListActivity extends BaseActivity {
                 .params("accId", EanfangApplication.getApplication().getAccId())
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
                     verify = bean.getVerify();
-                    doChange(bean.getBase(), bean.getBiz(), bean.getService(), bean.getArea(), bean.getVerify());
+//                    doChange(bean.getBase(), bean.getBiz(), bean.getService(), bean.getArea(), bean.getVerify());
                 }));
         // 获取技师信息
         EanfangHttp.get(UserApi.GET_WORKER_INFO)

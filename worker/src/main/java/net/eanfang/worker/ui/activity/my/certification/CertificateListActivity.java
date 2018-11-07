@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,7 +70,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class)
-                        .putExtra("role", "company")
+                        .putExtra("role", isCompany)
                         .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
             }
         });
@@ -90,7 +91,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 startActivityForResult(new Intent(CertificateListActivity.this, AddCertificationActivity.class)
                         .putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position))
-                        .putExtra("role", "company")
+                        .putExtra("role", isCompany)
                         .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
             }
         });
@@ -102,7 +103,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
         QueryEntry queryEntry = new QueryEntry();
 
         queryEntry.getEquals().put("type", "0");
-        if (isCompany.equals("company")) {
+        if (!TextUtils.isEmpty(isCompany) && isCompany.equals("company")) {
             queryEntry.getEquals().put("orgId", orgid + "");
             url = UserApi.COMPANY_CERTIFICATE_LIST;// 安防公司
         } else {
@@ -116,7 +117,6 @@ public class CertificateListActivity extends BaseWorkerActivity {
                     public void onSuccess(HonorCerticificateListBean bean) {
 
                         if (bean.getList().size() > 0) {
-//                            adapter.getData().clear();
                             adapter.setNewData(bean.getList());
                             tvNodata.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
@@ -178,10 +178,6 @@ public class CertificateListActivity extends BaseWorkerActivity {
 
         if (resultCode == RESULT_OK && requestCode == ADD_CERTIFICATION_CODE) {
             getData();
-
-            if (tvSub.getVisibility() == View.GONE) {
-                tvSub.setVisibility(View.VISIBLE);
-            }
         }
 
     }

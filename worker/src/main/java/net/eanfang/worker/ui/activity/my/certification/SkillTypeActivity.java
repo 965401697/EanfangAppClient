@@ -8,18 +8,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
-import com.eanfang.model.SystypeBean;
-import com.eanfang.model.WorkerInfoBean;
+import com.eanfang.model.WorkerVerifySkillBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.yaf.base.entity.TechWorkerVerifyEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -27,6 +26,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -63,13 +63,11 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
     // 系统类别
     private GrantChange grantChange_system = new GrantChange();
-    private SystypeBean byNetGrant_system = new SystypeBean();
     // 业务类别
     private GrantChange grantChange_business = new GrantChange();
-    private SystypeBean byNetGrant_business = new SystypeBean();
 
-
-    private WorkerInfoBean workerInfoBean;
+    private TechWorkerVerifyEntity workerInfoBean;
+    private int mStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +76,14 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("技能资质");
         setLeftBack();
+         startTransaction(true);
+        mStatus = getIntent().getIntExtra("status", -1);
+        if (mStatus > 0) {
+            getSkillInfo();
+        }
 
         initViews();
+//        initData();
     }
 
     private void initViews() {
@@ -96,6 +100,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         osCooperationAddAdapter.setNewData(systemTypeList);
     }
 
+
     private void doVerify() {
 
         String mYear = tvLimit.getText().toString().trim();
@@ -109,40 +114,15 @@ public class SkillTypeActivity extends BaseWorkerActivity {
             return;
         }
 
-        // 系统类别
-        List<Integer> checkList_system = Stream.of(systemTypeList)
-                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()).toList();
-        List<Integer> unCheckList_system = Stream.of(systemTypeList)
-                .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).toList();
-
-        grantChange_system.setAddIds(checkList_system);
-        grantChange_system.setDelIds(unCheckList_system);
-        if ((unCheckList_system.size() == 0) && (checkList_system.size() == 0) && (byNetGrant_business.getList().size() <= 0)) {
-            showToast("请选择一种系统类别");
-            return;
-        }
-
-        // 业务类别
-        List<Integer> checkList_business = Stream.of(businessTypeList)
-                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId())
-                .toList();
-        List<Integer> unCheckList_business = Stream.of(businessTypeList)
-                .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).toList();
-
-        grantChange_business.setAddIds(checkList_business);
-        grantChange_business.setDelIds(unCheckList_business);
-
-        if ((unCheckList_business.size() == 0) && (checkList_business.size() == 0) && (byNetGrant_business.getList().size() <= 0)) {
-            showToast("请至少选择一种业务类别");
-            return;
-        }
+        grantChange_system.setAddIds(osCooperationAddAdapter.getScheckedId());
+        grantChange_system.setDelIds(osCooperationAddAdapter.getUnSCheckedId());
 
 
-        workerInfoBean = new WorkerInfoBean();
+        grantChange_business.setAddIds(businessCooperationAddAdapter.getBcheckedId());
+        grantChange_business.setDelIds(businessCooperationAddAdapter.getUnbCheckedId());
+
+
+        workerInfoBean = new TechWorkerVerifyEntity();
         workerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
         workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
         workerInfoBean.setAccId(EanfangApplication.get().getAccId());
@@ -161,19 +141,54 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         EanfangHttp.post(UserApi.TECH_WORKER_VERIFY)
                 .upJson(requestContent)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-//                    jump();
-
-                    startAnimActivity(new Intent(this, SkillAreaActivity.class));
+                    startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
                 }));
 
 
     }
 
+    private void getSkillInfo() {
+
+        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL)
+                .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
+                .execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
+                    List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
+                    List<BaseDataEntity> sList = new ArrayList<>();
+                    List<BaseDataEntity> bList = new ArrayList<>();
+                    sList.addAll(systemTypeList);
+                    bList.addAll(businessTypeList);
+
+                    // 系统类别
+                    for (BaseDataEntity checkedS : SystemBusinessList) {
+                        for (BaseDataEntity s : sList) {
+                            if (s.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
+                                s.setCheck(true);
+                                break;
+                            } else {
+                                for (BaseDataEntity checkedB : bList) {
+                                    if (checkedB.getDataId() == checkedS.getDataId()) {
+                                        checkedB.setCheck(true);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    osCooperationAddAdapter.setNewData(sList);
+                    businessCooperationAddAdapter.setNewData(bList);
+                    fillData(bean);
+                }));
+    }
+
+    private void fillData(WorkerVerifySkillBean bean) {
+        tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
+        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getWorkerVerify().getWorkingLevel()));
+    }
+
     @OnClick(R.id.tv_go)
     public void onViewClicked() {
-
         doVerify();
-
     }
 
     @OnClick({R.id.ll_limit, R.id.ll_ability})

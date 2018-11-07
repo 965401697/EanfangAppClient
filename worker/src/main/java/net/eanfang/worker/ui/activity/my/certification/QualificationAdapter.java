@@ -17,15 +17,23 @@ import net.eanfang.worker.R;
  */
 
 public class QualificationAdapter extends BaseQuickAdapter<QualificationCertificateEntity, BaseViewHolder> {
+    private int mFlag;
+
     public QualificationAdapter() {
         super(R.layout.item_certificate_list);
+    }
+
+    public QualificationAdapter(int flag) {
+        super(R.layout.item_certificate_list);
+        this.mFlag = flag;
+
     }
 
     @Override
     protected void convert(BaseViewHolder helper, QualificationCertificateEntity item) {
         helper.setText(R.id.tv_school_name, "证书名称：" + item.getCertificateName());
         helper.setText(R.id.tv_school_major, "资质等级：" + item.getCertificateLevel());
-        helper.setText(R.id.tv_school_time, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd")+" 至 "+DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
+        helper.setText(R.id.tv_school_time, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd") + " 至 " + DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
 
         if (item.getCertificatePics() != null) {
             String[] urls = V.v(() -> item.getCertificatePics().split(","));
@@ -36,6 +44,12 @@ public class QualificationAdapter extends BaseQuickAdapter<QualificationCertific
         }
 
         helper.addOnClickListener(R.id.tv_delete);
+
+        if (mFlag != 0) {
+            helper.setVisible(R.id.tv_delete, false);
+        } else {
+            helper.setVisible(R.id.tv_delete, true);
+        }
     }
 }
 

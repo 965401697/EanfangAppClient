@@ -165,7 +165,7 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
 
         HonorCertificateEntity entity = new HonorCertificateEntity();
         entity.setAccId(EanfangApplication.get().getAccId());
-        if (isCompany.equals("company")) {// 安防公司
+        if (!TextUtils.isEmpty(isCompany) && isCompany.equals("company")) {// 安防公司
             if (bean != null) {
                 entity.setId(bean.getId());
                 url = UserApi.COMPANY_CERTIFICATE_UPDATE;

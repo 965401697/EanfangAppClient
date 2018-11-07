@@ -61,7 +61,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
                 if (!PermKit.get().getWorkReportDetailPrem()) return;
 
-                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                if (mType == 2 && ((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
 //                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {
                     getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                 }
@@ -90,7 +90,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 }));
     }
 
-
+    @Override
     protected void getData() {
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
@@ -115,6 +115,8 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onSuccess(WorkReportListBean bean) {
+
+                        mQueryEntry = null;//释放对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -161,16 +163,12 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 });
     }
 
-    public void getData(QueryEntry queryEntry) {
+    public void getReportData(QueryEntry queryEntry) {
         this.mQueryEntry = queryEntry;
         mPage = 1;
         getData();
     }
 
-    public void setmQueryEntry(QueryEntry mQueryEntry) {
-        this.mQueryEntry = mQueryEntry;
-        getData();
-    }
 
     @Override
     public void onRefresh() {
