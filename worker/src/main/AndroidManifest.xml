@@ -619,7 +619,9 @@
         <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity" />
         <!-- 荣誉证书 -->
         <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
+        <!--官方消息-->
         <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
+        <!--官方消息详情-->
         <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
         <activity
             android:name=".ui.activity.my.certification.AddCertificationActivity"

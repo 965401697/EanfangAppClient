@@ -609,6 +609,10 @@
         <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
 
         <activity android:name=".ui.activity.worksapce.RealTimeMonitorActivity"></activity>
+        <!--官方消息-->
+        <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
+        <!--官方消息详情-->
+        <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
         <!--工作汇报列表-->
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
         <!--工作汇报刷选-->

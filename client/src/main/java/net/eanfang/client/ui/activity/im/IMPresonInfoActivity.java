@@ -1,13 +1,16 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -15,9 +18,11 @@ import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,9 +42,12 @@ public class IMPresonInfoActivity extends BaseClientActivity {
     TextView tvPhone;
     @BindView(R.id.tv_clear)
     TextView tvClear;
+    @BindView(R.id.tv_friend)
+    TextView tvFriend;
     private String mUserId;
     private String mTitle;
     private User mUser;
+    private boolean b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,10 +72,17 @@ public class IMPresonInfoActivity extends BaseClientActivity {
                     setTitle(bean.getNickName());
                     UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+
+                    if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                        tvClear.setVisibility(View.VISIBLE);
+                    } else {
+                        checkFriends();
+                    }
                 }));
     }
 
-    @OnClick({R.id.tv_clear, R.id.rl_info})
+    @OnClick({R.id.tv_clear, R.id.rl_info ,R.id.tv_friend})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_clear:
@@ -75,11 +90,87 @@ public class IMPresonInfoActivity extends BaseClientActivity {
                 cleanGroupMsg();
                 break;
             case R.id.rl_info:
+
+
+                if (!b) {
+                    ToastUtil.get().showToast(IMPresonInfoActivity.this, "请先添加好友");
+                    return;
+                }
+
                 Intent intent = new Intent(IMPresonInfoActivity.this, IMCardActivity.class);
                 intent.putExtra("user", mUser);
                 startActivity(intent);
                 break;
+            case R.id.tv_friend:
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("mobile", mUser.getMobile());
+                    jsonObject.put("email", mUser.getEmail());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                DialogShow(jsonObject, mUser.getNickName());
+                break;
         }
+    }
+
+    private void checkFriends() {
+
+        EanfangHttp.post(UserApi.POST_CHECK_FRIEND)
+                .params("accId", mUser.getAccId())
+                .params("inviteeAccId", EanfangApplication.get().getAccId())
+                .execute(new EanfangCallback<String>(this, true, String.class, (s) -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        b = jsonObject.getBoolean("exists");
+
+                        if (b) {
+                            tvClear.setVisibility(View.VISIBLE);
+                        } else {
+                            tvFriend.setVisibility(View.VISIBLE);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }));
+    }
+
+    private void DialogShow(JSONObject jsonObject, String name) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+//                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setTitle("添加好友")//设置对话框的标题
+                .setMessage("您确定添加“" + name + "”为好友？")//设置对话框的内容
+                //设置对话框的按钮
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EanfangHttp.post(UserApi.POST_ADD_FRIEND)
+                                .upJson(jsonObject)
+                                .execute(new EanfangCallback<JSONObject>(IMPresonInfoActivity.this, true, JSONObject.class, (bean) -> {
+
+
+                                    EanfangHttp.post(UserApi.POST_ADD_FRIEND_PUSH)
+                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("targetIds", mUser.getAccId())
+                                            .execute(new EanfangCallback<JSONObject>(IMPresonInfoActivity.this, true, JSONObject.class, (json) -> {
+                                                IMPresonInfoActivity.this.finish();
+                                                ToastUtil.get().showToast(IMPresonInfoActivity.this, "发送成功");
+                                            }));
+
+                                }));
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
     }
 
     /**

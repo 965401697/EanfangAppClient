@@ -401,9 +401,11 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
                 .execute(new EanfangCallback<User>(getActivity(), false, User.class, (bean) -> {
-                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                    if (bean != null) {
+                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
 
-                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+                    }
                 }));
 
     }

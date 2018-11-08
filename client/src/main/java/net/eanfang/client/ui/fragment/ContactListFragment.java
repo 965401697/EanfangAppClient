@@ -37,6 +37,7 @@ import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;
@@ -95,9 +96,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_message, container, false);
-            initView();
-            setListener();
+        view = inflater.inflate(R.layout.fragment_message, container, false);
+        initView();
+        setListener();
 //            doHttpNoticeCount();
 //        } else {
 //            initView();//手动刷新
@@ -378,9 +379,11 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
                 .execute(new EanfangCallback<User>(getActivity(), false, User.class, (bean) -> {
-                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                    if (bean != null) {
+                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
 
-                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+                    }
                 }));
 
     }
@@ -420,6 +423,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void setListener() {
+        // 官方通知
+        view.findViewById(R.id.ll_official).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+//            bundle.putInt("mMessageCount", mMessageCount);
+            JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
+        });
         // 业务通知
         view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
