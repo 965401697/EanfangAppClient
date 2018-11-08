@@ -624,24 +624,39 @@
         <activity
             android:name=".ui.activity.my.certification.AddCertificationActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!--技师个人经历-->
         <activity android:name=".ui.activity.my.certification.OwmHistoryActivity" />
+        <!--技师添加教育经历-->
         <activity android:name=".ui.activity.my.certification.AddEducationHistoryActivity" />
+        <!--技师工作经历-->
         <activity android:name=".ui.activity.my.certification.WorkHistoryActivity" />
+        <!--技师添加工作经历-->
         <activity android:name=".ui.activity.my.certification.AddWorkActivity" />
+        <!--技师绑定system ，type-->
         <activity android:name=".ui.activity.my.certification.SkillTypeActivity" />
+        <!--技师区域绑定-->
         <activity android:name=".ui.activity.my.certification.SkillAreaActivity" />
+        <!--技师技能认证-->
         <activity android:name=".ui.activity.my.certification.SkillCertificafeListActivity" />
+        <!--技师添加技能证书-->
         <activity android:name=".ui.activity.my.certification.AddSkillCertificafeActivity" />
+        <!--工作汇报列表-->
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
+        <!--工作汇报刷选-->
         <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
+        <!--创建工作汇报-->
         <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
+        <!--工作汇报详情-->
         <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity" />
+
         <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifyListActivity" />
         <activity
             android:name=".ui.activity.worksapce.contacts.verifyqualify.AddAuthQualifyActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity" />
+        <!--新的选择联系人-->
         <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
+        <!--新的创建群组-->
         <activity android:name=".ui.activity.im.CreateGroupActivity">
             <intent-filter>
                 <action android:name="com.eanfang.net.intent.action.IM_CREATE_GROUP" />
@@ -649,12 +664,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!--技师实名认证-->
         <activity android:name=".ui.activity.my.certification.CertificationInfoActivity" />
+        <!--技师技能资质详情-->
         <activity android:name=".ui.activity.my.certification.SkillInfoDetailActivity" />
+        <!--布置任务列表-->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
+        <!--筛选布置任务-->
         <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
+        <!--创建布置任务-->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
-        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity"></activity>
+        <!--布置任务详情-->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
     </application>
 
 </manifest>

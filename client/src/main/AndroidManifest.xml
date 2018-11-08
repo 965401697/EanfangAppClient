@@ -609,9 +609,21 @@
         <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
 
         <activity android:name=".ui.activity.worksapce.RealTimeMonitorActivity"></activity>
+        <!--工作汇报列表-->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
+        <!--工作汇报刷选-->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
+        <!--创建工作汇报-->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
+        <!--工作汇报详情-->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity" />
+        <!--布置任务列表-->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
+        <!--筛选布置任务-->
         <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
+        <!--创建布置任务-->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
+        <!--布置任务详情-->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
     </application>
 
