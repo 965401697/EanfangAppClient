@@ -3,8 +3,8 @@
     android:id="@+id/rl_show"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:paddingTop="@dimen/dimen_30">
+    android:paddingTop="@dimen/dimen_30"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_title"
@@ -51,10 +51,10 @@
 
 
     <View
-        android:id="@+id/v_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2"
-        android:layout_below="@+id/tv_look"
+        android:layout_below="@+id/tv_work_question"
+        android:layout_marginTop="@dimen/dimen_15"
         android:background="@color/content_bg" />
 
 </RelativeLayout>
