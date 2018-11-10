@@ -337,17 +337,21 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id", examDeviceEntity.getShopMaintenanceOrderId());
+            // TODO: 2018/11/8 对象为空
 
-            if (maintenanceHandeCheckAdapter.getData() != null) {
-                JSONArray examResultEntity = new JSONArray();
+            jsonObject.put("id", mId);
 
-                for (ShopMaintenanceExamResultEntity examResult : maintenanceHandeCheckAdapter.getData()) {
-                    examResult.setShopMaintenanceOrderId(examDeviceEntity.getShopMaintenanceOrderId());
-                    examResultEntity.add(examResult);
+
+                if (maintenanceHandeCheckAdapter.getData() != null) {
+                    JSONArray examResultEntity = new JSONArray();
+
+                    for (ShopMaintenanceExamResultEntity examResult : maintenanceHandeCheckAdapter.getData()) {
+                        examResult.setShopMaintenanceOrderId(examDeviceEntity.getShopMaintenanceOrderId());
+                        examResultEntity.add(examResult);
+                    }
+                    jsonObject.put("examResultEntityList", examResultEntity);
                 }
-                jsonObject.put("examResultEntityList", examResultEntity);
-            }
+
 //===========================================================================================
 
 
@@ -391,7 +395,9 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             }
 
             confirmEntity.setTeamWorker(stringBuffer.toString());
-            confirmEntity.setShopMaintenanceOrderId(examDeviceEntity.getShopMaintenanceOrderId());
+
+            confirmEntity.setShopMaintenanceOrderId(mId);
+
 
             jsonObject.put("confirmEntity", confirmEntity);
 

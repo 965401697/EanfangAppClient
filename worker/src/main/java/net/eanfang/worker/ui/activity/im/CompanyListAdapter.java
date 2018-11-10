@@ -23,7 +23,7 @@ public class CompanyListAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHold
         if (item.getOrgUnitEntity() != null && !TextUtils.isEmpty(item.getOrgUnitEntity().getLogoPic())) {
             ((SimpleDraweeView) helper.getView(R.id.iv_company)).setImageURI(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic());
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_company)).setImageURI(com.eanfang.BuildConfig.OSS_SERVER);
+            ((SimpleDraweeView) helper.getView(R.id.iv_company)).setImageResource(R.mipmap.ic_nodata);
         }
         helper.setText(R.id.tv_company_name, item.getOrgName());
     }
