@@ -22,6 +22,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.AddNewCheckActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 
 import java.io.Serializable;
@@ -67,10 +68,12 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                 @Override
                 public void onClick(View v) {
                     if (mFlag != 0 && mFlag != 6) {
-                        if(mContext instanceof  CreationWorkReportActivity) {
+                        if (mContext instanceof CreationWorkReportActivity) {
                             ((CreationWorkReportActivity) mContext).setFlag(mFlag);
-                        }else if(mContext instanceof  TaskAssignmentCreationActivity){
+                        } else if (mContext instanceof TaskAssignmentCreationActivity) {
                             ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof AddNewCheckActivity) {
+                            ((AddNewCheckActivity) mContext).setFlag(mFlag);
                         }
 
                     }

@@ -3,16 +3,9 @@
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/color_white"
     android:layout_marginBottom="@dimen/dimen_30"
     android:layout_marginTop="@dimen/dimen_30">
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_30"
-        android:text="工作1"
-        android:textColor="@color/colorPrimary" />
 
 
     <ImageView
@@ -23,6 +16,7 @@
         android:layout_marginRight="@dimen/dimen_30"
         android:src="@mipmap/pack" />
 
+
     <LinearLayout
         android:id="@+id/ll_content"
         android:layout_width="match_parent"
@@ -30,12 +24,29 @@
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_30"
         android:layout_toLeftOf="@+id/iv_pack"
-        android:layout_toRightOf="@+id/tv_title"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="任务标题：" />
+
+            <TextView
+                android:id="@+id/tv_check_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_work_content"
+                android:text="工作内容：阿斯顿发asdfasdf" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,14 +70,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="遗留问题：" />
+                android:text="设备：" />
 
             <TextView
-                android:id="@+id/tv_work_question"
+                android:id="@+id/tv_check_device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_work_content"
-                android:text="工作内容：阿斯顿发asd阿斯顿发送到发送到发送到发斯蒂芬fasdf" />
+                android:layout_below="@+id/tv_work_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -77,55 +87,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="未完成原因：" />
+                android:text="位置区域：" />
 
             <TextView
-                android:id="@+id/tv_work_reason"
+                android:id="@+id/tv_check_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_work_content"
                 android:text="工作内容：阿斯顿发asdfasdf" />
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="处理：" />
-
-            <TextView
-                android:id="@+id/tv_work_handle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_work_content"
-                android:text="工作内容：阿斯顿发asdfasdf" />
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tv_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:text="协同人员：" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20" />
 
         <TextView
             android:id="@+id/tv_adjunct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_20"
-            android:text="照片：" />
+            android:text="附件：" />
 
         <LinearLayout
             android:id="@+id/ll_pic"
@@ -174,7 +151,8 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_takevideo_work"
                 android:layout_width="@dimen/dimen_120"
-                android:layout_height="@dimen/dimen_120" />
+                android:layout_height="@dimen/dimen_120"
+                android:visibility="invisible" />
 
             <RelativeLayout
                 android:layout_width="@dimen/dimen_120"
@@ -191,4 +169,16 @@
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_pack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ll_content"
+        android:layout_marginBottom="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="收起"
+        android:textColor="@color/colorPrimary" />
 </RelativeLayout>

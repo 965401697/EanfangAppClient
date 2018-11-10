@@ -22,7 +22,8 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,21 +53,27 @@
                 android:orientation="horizontal"
                 android:padding="15dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="处理明细"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
                 <EditText
                     android:id="@+id/et_input_check_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_180"
                     android:layout_marginLeft="5dp"
-                    android:background="@null"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:gravity="start"
                     android:hint="请填写处理明细"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textColorHint="@color/color_bottom"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:id="@+id/iv_title_voice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:src="@mipmap/ic_worker_voice_input" />
 
             </LinearLayout>
 
@@ -78,21 +85,18 @@
                 android:orientation="horizontal"
                 android:padding="15dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="备注"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
                 <EditText
                     android:id="@+id/et_remark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_180"
                     android:layout_marginLeft="5dp"
-                    android:background="@null"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:gravity="start"
                     android:hint="请填写备注"
-                    android:textSize="16sp" />
+                    android:textColor="@color/color_client_neworder"
+                    android:textColorHint="@color/color_bottom"
+                    android:textSize="@dimen/textSize_14" />
 
             </LinearLayout>
 
@@ -108,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="附件"
-                    android:textColor="@color/client_form_title_color"
+                    android:textColor="@color/color_client_neworder"
                     android:textSize="16sp" />
 
                 <TextView

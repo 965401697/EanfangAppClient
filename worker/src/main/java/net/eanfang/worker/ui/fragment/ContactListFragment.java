@@ -28,6 +28,7 @@ import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.V;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
