@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -10,13 +11,12 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.client.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.client.ui.adapter.WorkTaskListAdapter;
-import net.eanfang.client.ui.widget.WorkTaskInfoView;
 
 
 /**
@@ -34,10 +34,12 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
     private String mType;
     private WorkTaskListAdapter mAdapter;
 
-    public static WorkTaskListFragment getInstance(String title, int type) {
+    private QueryEntry mQueryEntry;
+
+    public static WorkTaskListFragment getInstance(String title, String type) {
         WorkTaskListFragment sf = new WorkTaskListFragment();
         sf.mTitle = title;
-        sf.mType = String.valueOf(type);
+        sf.mType = type;
         return sf;
 
     }
@@ -50,7 +52,7 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
     @Override
     protected void initAdapter() {
 
-        mAdapter = new WorkTaskListAdapter();
+        mAdapter = new WorkTaskListAdapter(Integer.parseInt(mType));
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
 
@@ -58,47 +60,54 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
+
                 if (!PermKit.get().getWorkTaskDetailPrem()) return;
 
                 WorkTaskListBean.ListBean bean = (WorkTaskListBean.ListBean) adapter.getData().get(position);
 
-                if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
+                if (Integer.parseInt(mType) == 2 && bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
                     getFirstLookData(bean.getId());
                 }
-                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
+//                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
+                Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
+                intent.putExtra("id", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getId());
+                intent.putExtra("name", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
+                startActivity(intent);
             }
         });
     }
 
     @Override
     protected void getData() {
-        String status = "";
-        if (!mTitle.equals("全部")) {
-            status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
-        }
+//        String status = "";
+//        if (!mTitle.equals("全部")) {
+//            status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
+//        }
+        if (mQueryEntry == null) mQueryEntry = new QueryEntry();
 
-        QueryEntry queryEntry = new QueryEntry();
         if ("0".equals(mType)) {
-            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+            mQueryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
         } else if ("1".equals(mType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         } else if ("2".equals(mType)) {
-            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         }
-        if (!mTitle.equals("全部")) {
-            queryEntry.getEquals().put("status", status);
-        }
+//        if (!mTitle.equals("全部")) {
+//            mQueryEntry.getEquals().put("status", status);
+//        }
 
-        queryEntry.setPage(mPage);
-        queryEntry.setSize(10);
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.setSize(10);
 
 
         EanfangHttp.post(NewApiService.GET_WORK_TASK_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkTaskListBean>(getActivity(), true, WorkTaskListBean.class) {
 
                     @Override
                     public void onSuccess(WorkTaskListBean bean) {
+
+                        mQueryEntry = null;//释放以前对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -147,6 +156,18 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
 
     }
 
+    public void getTaskData(QueryEntry queryEntry) {
+        this.mQueryEntry = queryEntry;
+        mPage = 1;
+        getData();
+    }
+
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
 
     /**
      * 首次阅读，更新状态

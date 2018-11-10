@@ -32,9 +32,9 @@ import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
-import net.eanfang.client.ui.activity.worksapce.oa.ReportParentActivity;
-import net.eanfang.client.ui.activity.worksapce.oa.TaskParentActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.check.CheckParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentListActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
@@ -214,14 +214,16 @@ public class WorkspaceFragment extends BaseFragment {
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
 //            new ReportCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+//            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
             startActivity(intent);
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
 //            new TaskCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+//            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+            Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
             startActivity(intent);
         });
 

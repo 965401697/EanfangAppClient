@@ -8,13 +8,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.Message;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
@@ -60,12 +64,19 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 /**
                  * 重新认证
                  */
-//                new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
-//                    EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
-//                            .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
-//                                commit();
-//                            }));
-//                }).showDialog();
+                if (verify == 1) {
+                    ToastUtil.get().showToast(NewAuthListActivity.this, "信息认证中，不能撤销");
+                    return;
+                } else if (verify == 0) {
+                    ToastUtil.get().showToast(NewAuthListActivity.this, "认证信息还没有提交，不能撤销");
+                    return;
+                }
+                new TrueFalseDialog(NewAuthListActivity.this, "系统提示", "是否撤销认证并保存信息", () -> {
+                    EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                            .execute(new EanfangCallback<JSONPObject>(NewAuthListActivity.this, true, JSONPObject.class, bean -> {
+                                tvConfim.setVisibility(View.VISIBLE);
+                            }));
+                }).showDialog();
             }
         });
 
