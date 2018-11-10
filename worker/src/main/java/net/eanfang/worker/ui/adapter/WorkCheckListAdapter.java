@@ -29,6 +29,27 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
 
     @Override
     protected void convert(BaseViewHolder helper, WorkCheckListBean.ListBean item) {
+        /**
+         *
+         *  ("待处理",0),
+         *  ("待审核",1),
+         *  ("已拒绝",2),
+         *  ("处理完成",3);
+         */
+        if (item.getStatus() == 0) {
+            helper.setText(R.id.tv_status, "待处理");
+            helper.setTextColor(R.id.tv_company_name, R.color.colorPrimary);
+        } else if (item.getStatus() == 1) {
+            helper.setText(R.id.tv_status, "待审核");
+            helper.setTextColor(R.id.tv_company_name, R.color.color_bottom);
+        } else if (item.getStatus() == 2) {
+            helper.setText(R.id.tv_status, "已拒绝");
+            helper.setTextColor(R.id.tv_company_name, R.color.color_bottom);
+        } else if (item.getStatus() == 3) {
+            helper.setText(R.id.tv_status, "处理完成");
+            helper.setTextColor(R.id.tv_company_name, R.color.color_bottom);
+        }
+
         helper.setText(R.id.tv_company_name, item.getCompanyName());
         helper.setText(R.id.tv_check_person, "检查人：" + item.getCreateUser().getAccountEntity().getRealName());
 //        helper.setText(R.id.tv_duty_person, "负责人：" + item.getAssigneeUser().getAccountEntity().getRealName());

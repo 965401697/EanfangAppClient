@@ -178,7 +178,6 @@
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
         <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
-        <activity android:name=".ui.activity.worksapce.oa.check.CheckActivity" />
         <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
@@ -572,7 +571,6 @@
         <!-- 布置任务 -->
         <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
         <!-- 设备检点 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.CheckParentActivity" />
         <!-- 报装 -->
         <activity android:name=".ui.activity.worksapce.InstallOrderParentActivity" />
         <!-- 报价管控 -->
@@ -654,7 +652,15 @@
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
         <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
-        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
+        <!-- 设备点检列表 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckListActivity" />
+        <!-- 添加设备点检 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.AddNewCheckActivity" />
+        <!-- 筛选设备点检 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.FiltrateCheckActivity" />
+        <!-- 设备点检处理 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.DealWithFirstActivity" />
     </application>
 
 </manifest>

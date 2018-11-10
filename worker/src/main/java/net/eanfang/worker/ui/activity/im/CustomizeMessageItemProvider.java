@@ -21,11 +21,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
-import net.eanfang.worker.ui.widget.WorkCheckInfoView;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -155,7 +155,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 //            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
             view.getContext().startActivity(new Intent((Activity) view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("5")) {
-            new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+//            new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
 
         } else if (customizeMessage.getShareType().equals("6")) {
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));

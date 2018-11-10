@@ -20,11 +20,18 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="小破孩"
             android:textColor="#0000ff"
             android:textSize="14sp" />
 
-
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/color_bottom"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <TextView
@@ -45,7 +52,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            fresco:placeholderImage="@mipmap/ic_camera" />
+            fresco:placeholderImage="@mipmap/ic_nodata" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="检查人："
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
             <TextView
@@ -69,8 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="责任人："
-                android:visibility="gone"
-                android:textSize="14sp" />
+                android:textColor="@color/color_client_neworder"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_change_tiem"
@@ -78,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="整改期限："
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
             <TextView
@@ -86,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:text="检查时间："
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
         </LinearLayout>

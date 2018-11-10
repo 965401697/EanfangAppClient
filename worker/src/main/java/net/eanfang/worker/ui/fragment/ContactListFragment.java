@@ -28,6 +28,7 @@ import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.V;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
@@ -401,7 +402,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
                 .execute(new EanfangCallback<User>(getActivity(), false, User.class, (bean) -> {
-                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                    UserInfo userInfo = new UserInfo(V.v(() -> bean.getAccId()), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
 
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
                 }));
