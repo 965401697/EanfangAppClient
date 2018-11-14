@@ -36,6 +36,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
     private MaintenanceListAdapter mAdapter;
     private int currentPosition;
 
+    private Long mUseId = EanfangApplication.get().getUserId();
 
     public static MaintenanceListFragment getInstance(int status, String title) {
         MaintenanceListFragment sf = new MaintenanceListFragment();
@@ -146,43 +147,38 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         //获取：1:待预约，2:待上门，3:维修中，4:待验收，5:订单完成)
         switch (item.getStatus()) {
             case 1:
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
-                // 解决方式
-                Bundle bundle = new Bundle();
-                bundle.putLong("orderId", item.getId());
-                bundle.putInt("type", 1);
-                JumpItent.jump(getActivity(), MaintenanceAppointTimeActivity.class, bundle);
-                //给客户联系人打电话
-                CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                //只有当前登陆人为订单负责人才可以操作
+                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                    // 解决方式
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("orderId", item.getId());
+                    bundle.putInt("type", 1);
+                    JumpItent.jump(getActivity(), MaintenanceAppointTimeActivity.class, bundle);
+                    //给客户联系人打电话
+                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                }
                 break;
             case 2:
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
                         //只有当前登陆人为订单负责人才可以操作
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
-                        Bundle b = new Bundle();
-                        b.putLong("orderId", item.getId());
-                        JumpItent.jump(getActivity(), MaintenanceAppointTimeActivity.class, b);
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            Bundle b = new Bundle();
+                            b.putLong("orderId", item.getId());
+                            JumpItent.jump(getActivity(), MaintenanceAppointTimeActivity.class, b);
+                        }
                         break;
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
-                        intent = new Intent(getActivity(), SignInActivity.class);
-                        intent.putExtra("orderId", item.getId());
-                        intent.putExtra("latitude", item.getLatitude());
-                        intent.putExtra("longitude", item.getLongitude());
-                        intent.putExtra("isFromType", 1);
-                        startActivity(intent);
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            intent = new Intent(getActivity(), SignInActivity.class);
+                            intent.putExtra("orderId", item.getId());
+                            intent.putExtra("latitude", item.getLatitude());
+                            intent.putExtra("longitude", item.getLongitude());
+                            intent.putExtra("isFromType", 1);
+                            startActivity(intent);
+                        }
                         break;
                 }
                 break;
@@ -190,21 +186,21 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 switch (view.getId()) {
                     case R.id.tv_do_first:
                         //给客户联系人打电话
-                        CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                        }
                         break;
                     case R.id.tv_do_second:
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
                         //只有当前登陆人为订单负责人才可以操作
-                        intent = new Intent(getActivity(), MaintenanceHandleActivity.class);
-                        intent.putExtra("orderId", item.getId());
-                        intent.putExtra("list", (ArrayList) item.getExamDeviceEntityList());
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            intent = new Intent(getActivity(), MaintenanceHandleActivity.class);
+                            intent.putExtra("orderId", item.getId());
+                            intent.putExtra("list", (ArrayList) item.getExamDeviceEntityList());
 //                        intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
 //                        intent.putExtra("companyUid", item.getAssigneeOrg().getCompanyId());
 //                        intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
                         break;
                     default:
                         break;
@@ -215,18 +211,16 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 switch (view.getId()) {
 
                     case R.id.tv_do_second:
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
                         //只有当前登陆人为订单负责人才可以操作
-                        if (!PermKit.get().getMaintenanceBughandlePrem()) return;
-                        intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
-                        intent.putExtra("orderId", item.getId());
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            if (!PermKit.get().getMaintenanceBughandlePrem()) return;
+                            intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
+                            intent.putExtra("orderId", item.getId());
 //                        intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
 //                        intent.putExtra("companyUid", item.getAssigneeOrg().getCompanyId());
 //                        intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());
-                        startActivity(intent);
+                            startActivity(intent);
+                        }
 
                         break;
                     default:
@@ -248,5 +242,14 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
 
     public int getCurrentPosition() {
         return currentPosition;
+    }
+
+    public boolean doCompare(Long assingerUserId, Long userId) {
+
+        if (assingerUserId.equals(userId)) {
+            return true;
+        }
+        showToast("当前无权限操作订单");
+        return false;
     }
 }

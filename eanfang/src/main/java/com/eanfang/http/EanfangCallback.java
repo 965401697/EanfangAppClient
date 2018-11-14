@@ -164,9 +164,9 @@ public class EanfangCallback<T> extends StringCallback {
                 message = resultJson.getString("message");
             }
             //消息数量
-            if (resultJson.containsKey("noticeCount")) {
-                updateNoticeCount(resultJson);
-            }
+//            if (resultJson.containsKey("noticeCount")) {
+//                updateNoticeCount(resultJson);
+//            }
             if (resultJson.containsKey("data")) {
                 if (clazz.getName().contains("String")) {
                     resultString = resultJson.get("data").toString();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,10 +22,12 @@ import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.device.User;
+import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
@@ -165,22 +168,32 @@ public class MainActivity extends BaseClientActivity {
 //                        //  showToast("消息被清空了");
 //                    }
 //                });
-        if (Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0) {
-            redPoint.setVisibility(View.VISIBLE);
-        } else {
-            redPoint.setVisibility(View.GONE);
-        }
-        //变量监听
-        Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
-            runOnUiThread(() -> {
-//                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
-                if (var == 0) {
-                    redPoint.setVisibility(View.GONE);
-                }else {
-                    redPoint.setVisibility(View.VISIBLE);
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(MainActivity.this, false, AllMessageBean.class, (bean -> {
+            new Handler(getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // 桌面气泡赋值
+                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
                 }
-            });
-        });
+            }, 3 * 1000);
+            if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCam() > 0) {// 进行底部消息小红点的显示
+                redPoint.setVisibility(View.VISIBLE);
+            } else {
+                redPoint.setVisibility(View.GONE);
+            }
+
+            //变量监听
+//            Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
+//                runOnUiThread(() -> {
+////                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
+//                    if (var == 0) {
+//                        redPoint.setVisibility(View.GONE);
+//                    } else {
+//                        redPoint.setVisibility(View.VISIBLE);
+//                    }
+//                });
+//            });
+        })));
     }
 
 
@@ -223,6 +236,7 @@ public class MainActivity extends BaseClientActivity {
     /**
      * 请求基础数据
      */
+
     private void getBaseData() {
         String url;
         BaseDataBean dataBean = Config.get().getBaseDataBean();
@@ -320,13 +334,13 @@ public class MainActivity extends BaseClientActivity {
                 .params("userId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
-                        Log.e("zzw1",str+"");
+                        Log.e("zzw1", str + "");
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
                         EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
                         ClientApplication.connect(token, MainActivity.this);
                     }
-                    Log.e("zzw2",str+"");
+                    Log.e("zzw2", str + "");
                 }));
 
 
@@ -533,9 +547,9 @@ public class MainActivity extends BaseClientActivity {
             String frgTag = mTabHost.getCurrentTabTag();
             ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
             contactListFragment.onActivityResult(requestCode, resultCode, data);
-        }else if(resultCode == RESULT_OK && requestCode == 49){
+        } else if (resultCode == RESULT_OK && requestCode == 49) {
             ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
-            contactsFragment.onActivityResult(requestCode,resultCode,data);
+            contactsFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

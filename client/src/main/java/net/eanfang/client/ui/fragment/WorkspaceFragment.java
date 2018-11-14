@@ -11,7 +11,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.HomeOrderNumBean;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
@@ -280,7 +280,7 @@ public class WorkspaceFragment extends BaseFragment {
      * 获取订单数量
      */
     private void doHttpOrderNums() {
-        EanfangHttp.get(UserApi.HOME_GET_ORDER_NUM).execute(new EanfangCallback<HomeOrderNumBean>(getActivity(), false, HomeOrderNumBean.class, (bean -> {
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_report), bean.getReport());// 汇报
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_task), bean.getTask());// 任务
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_inspect), bean.getInspect());//检查

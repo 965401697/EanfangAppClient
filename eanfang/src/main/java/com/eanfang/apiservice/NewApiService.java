@@ -151,10 +151,6 @@ public interface NewApiService {
     String GET_PUSH_READ_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/readall/";
     //推送消息  全部删除
     String GET_PUSH_DELETE_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/delete/";
-    /**
-     * 获取推送消息数量
-     */
-    String GET_PUSH_COUNT = BuildConfig.API_HOST + "/yaf_sys/notice/count/sysBiz";
 
     /**
      * app首页 获取最新通知

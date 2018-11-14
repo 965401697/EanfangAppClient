@@ -10,6 +10,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -66,6 +67,8 @@ public class OrderListFragment extends BaseFragment implements
     private RepairedManageOrderAdapter adapter;
     private String status;
 
+    private Long mUseId = EanfangApplication.get().getUserId();
+
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
         sf.mTitle = title;
@@ -117,7 +120,9 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        payment(item);
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            payment(item);
+                        }
 //                        startActivity(new Intent(getActivity(), PayActivity.class)
 //                                .putExtra("ordernum", item.getOrderNum())
 //                                .putExtra("orderType", "报修"));
@@ -130,7 +135,9 @@ public class OrderListFragment extends BaseFragment implements
             case 1:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        }
                         break;
                     default:
                         break;
@@ -140,7 +147,9 @@ public class OrderListFragment extends BaseFragment implements
             case 2:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        }
                         break;
                     default:
                         break;
@@ -150,7 +159,9 @@ public class OrderListFragment extends BaseFragment implements
             case 3:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        }
                         break;
                     default:
                         break;
@@ -160,21 +171,27 @@ public class OrderListFragment extends BaseFragment implements
             case 4:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-                        CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
+                        }
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
+                        }
                         break;
                     case R.id.tv_finish:
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
+                        }
                         break;
                     default:
                         break;
@@ -189,20 +206,23 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
-
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
+                        }
                         break;
                     case R.id.tv_do_second:// 评价技师
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                                .putExtra("flag", 0)
-                                .putExtra("ordernum", item.getOrderNum())
-                                .putExtra("workerUid", item.getAssigneeUserId())
-                                .putExtra("orderId", item.getId())
-                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
+                                    .putExtra("flag", 0)
+                                    .putExtra("ordernum", item.getOrderNum())
+                                    .putExtra("workerUid", item.getAssigneeUserId())
+                                    .putExtra("orderId", item.getId())
+                                    .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
+                        }
                         break;
                     default:
                         break;
@@ -398,5 +418,14 @@ public class OrderListFragment extends BaseFragment implements
             default:
                 break;
         }
+    }
+
+    public boolean doCompare(Long assingerUserId, Long userId) {
+
+        if (assingerUserId.equals(userId)) {
+            return true;
+        }
+        showToast("当前无权限操作订单");
+        return false;
     }
 }
