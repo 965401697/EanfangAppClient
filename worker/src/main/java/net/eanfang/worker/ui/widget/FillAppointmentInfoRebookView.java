@@ -16,9 +16,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
 
@@ -109,11 +107,12 @@ public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGr
      * 带点筛选
      */
     private void doHttp(String bookTime) {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("orderId", orderId + "");
-        queryEntry.getEquals().put("bookTime", bookTime);
+//        QueryEntry queryEntry = new QueryEntry();
+//        queryEntry.getEquals().put("orderId", orderId + "");
+//        queryEntry.getEquals().put("bookTime", bookTime);
         EanfangHttp.post(RepairApi.POST_FLOW_REBOOK)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .params("orderId", orderId + "")
+                .params("bookTime", bookTime)
                 .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
                     dismiss();

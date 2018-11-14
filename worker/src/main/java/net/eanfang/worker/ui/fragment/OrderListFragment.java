@@ -128,10 +128,6 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_second:
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
                         if (doCompare(item.getAssigneeUserId(), mUseId)) {
                             // 解决方式
                             Bundle bundle = new Bundle();
@@ -149,20 +145,12 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
                     case R.id.tv_do_first:
                         //只有当前登陆人为订单负责人才可以操作
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
                         if (doCompare(item.getAssigneeUserId(), mUseId)) {
                             new FillAppointmentInfoRebookView(getActivity(), true, item.getId(), true).show();
                         }
                         break;
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
                         if (doCompare(item.getAssigneeUserId(), mUseId)) {
                             intent = new Intent(getActivity(), SignInActivity.class);
                             intent.putExtra("orderId", item.getId());
