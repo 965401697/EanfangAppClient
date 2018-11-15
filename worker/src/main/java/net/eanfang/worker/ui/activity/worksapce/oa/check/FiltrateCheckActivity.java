@@ -183,13 +183,13 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
 
             if (queryEntry == null) queryEntry = new QueryEntry();
 
-            queryEntry.getGtEquals().put("checkTime", tvCheckTime.getText().toString().trim());
+            queryEntry.getGtEquals().put("createTime", tvCheckTime.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvUpdateTime.getText().toString().trim())) {
 
             if (queryEntry == null) queryEntry = new QueryEntry();
 
-            queryEntry.getLtEquals().put("updateTime", tvUpdateTime.getText().toString().trim());
+            queryEntry.getLtEquals().put("createTime", tvUpdateTime.getText().toString().trim());
         }
 
         Intent intent = new Intent();

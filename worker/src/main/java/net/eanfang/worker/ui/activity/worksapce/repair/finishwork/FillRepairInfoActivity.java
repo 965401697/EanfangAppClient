@@ -64,7 +64,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -489,7 +488,8 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         // 完成时间 维修工时  根据当前时间进行计算 并提交
         bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
-        Date finishDay = GetDateUtils.getDate(Calendar.YEAR + "", Calendar.MONTH + "", Calendar.DATE + "", Calendar.HOUR + "", Calendar.MINUTE + "", Calendar.SECOND + "");
+//        Date finishDay = GetDateUtils.getDate(Calendar.YEAR + "", Calendar.MONTH + "", Calendar.DATE + "", Calendar.HOUR + "", Calendar.MINUTE + "", Calendar.SECOND + "");
+        Date finishDay = GetDateUtils.getDateNow();
         long day = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "day");
         long hours = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "hours");
         long minutes = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "minutes");

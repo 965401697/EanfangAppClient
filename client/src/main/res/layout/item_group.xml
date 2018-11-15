@@ -10,6 +10,7 @@
         android:layout_width="@dimen/dimen_100"
         android:layout_height="@dimen/dimen_100"
         android:layout_gravity="center"
+        android:src="@mipmap/ic_nodata"
         fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
@@ -20,6 +21,9 @@
         android:layout_below="@+id/iv_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dimen_16"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
         android:text=" "
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_12" />

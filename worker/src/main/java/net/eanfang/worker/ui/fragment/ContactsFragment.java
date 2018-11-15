@@ -67,6 +67,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     private OrgEntity mOrgEntity;
     private View view;
 
+    public static boolean isRefresh = false;
 
     public final int CREAT_TEAM_CODE = 49;
 
@@ -311,6 +312,15 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     break;
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isRefresh) {
+            getData();
+            isRefresh = false;
+        }
     }
 
     @Override

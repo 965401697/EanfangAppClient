@@ -36,6 +36,10 @@ public class WorkReportListFragment extends TemplateItemListFragment {
     private int mType;
     private WorkReportListAdapter mAdapter;
     private QueryEntry mQueryEntry;
+    public static final int DETAILL_REQUEST_CODE = 22;//点击详情的返回刷新的code
+
+    private WorkReportListBean.ListBean mDetailBean;
+    private int mPosition;
 
     public static WorkReportListFragment getInstance(String title, int type) {
         WorkReportListFragment sf = new WorkReportListFragment();
@@ -56,6 +60,8 @@ public class WorkReportListFragment extends TemplateItemListFragment {
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
+
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
@@ -64,6 +70,8 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 if (mType == 2 && ((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
 //                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {
                     getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
+                    mDetailBean = ((WorkReportListBean.ListBean) adapter.getData().get(position));
+                    mPosition = position;
                 }
 
 //                new WorkReportInfoView((Activity) view.getContext(), true, ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId(), false).show();
@@ -73,7 +81,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 intent.putExtra("id", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                 intent.putExtra("type", GetConstDataUtils.getWorkReportTypeList().get((((WorkReportListBean.ListBean) adapter.getData().get(position)).getType())));
                 intent.putExtra("name", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, DETAILL_REQUEST_CODE);
             }
         });
     }
@@ -176,4 +184,15 @@ public class WorkReportListFragment extends TemplateItemListFragment {
         mPage = 1;
         getData();
     }
+
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailBean != null) {
+            mDetailBean.setStatus(1);
+            mAdapter.notifyItemChanged(mPosition);
+        }
+    }
+
 }

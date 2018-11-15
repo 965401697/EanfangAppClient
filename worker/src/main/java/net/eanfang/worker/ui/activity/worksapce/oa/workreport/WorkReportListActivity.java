@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static net.eanfang.worker.ui.fragment.WorkReportListFragment.DETAILL_REQUEST_CODE;
+
 public class WorkReportListActivity extends BaseWorkerActivity {
     //    private static String titleBar;
 //    public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();
@@ -94,13 +96,15 @@ public class WorkReportListActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int currentTab = tlWorkList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
-
-            int currentTab = tlWorkList.getCurrentTab();
-
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
                 ((WorkReportListFragment) mFragments.get(currentTab)).getReportData(queryEntry);
+            }
+        } else if (resultCode == RESULT_OK && requestCode == DETAILL_REQUEST_CODE) {
+            if (currentTab == 1) {
+                ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
             }
         }
     }
