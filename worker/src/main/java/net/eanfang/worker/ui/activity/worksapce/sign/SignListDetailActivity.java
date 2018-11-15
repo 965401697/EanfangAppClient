@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.sign;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;

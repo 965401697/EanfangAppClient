@@ -173,10 +173,12 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
         // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
+        if (infoBean.getStatus() != 0) {
+            etCompany.setEnabled(false);
+        }
         if (infoBean.getStatus() != 0 && infoBean.getStatus() != 3) {
             btnComplete.setVisibility(View.GONE);
             ivUpload.setEnabled(false);
-            etCompany.setEnabled(false);
             edCompanyNumber.setEnabled(false);
             etMoney.setEnabled(false);
             llOfficeAddress.setEnabled(false);

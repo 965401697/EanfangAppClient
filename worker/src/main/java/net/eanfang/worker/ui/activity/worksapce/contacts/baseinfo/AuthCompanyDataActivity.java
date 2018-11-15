@@ -155,6 +155,9 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
                 ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
                 byNetBean.setLicensePic(byNetBean.getLicensePic());
             }
+            if (!StringUtils.isEmpty(byNetBean.getName())) {
+                etCompany.setText(byNetBean.getName());
+            }
         }
     }
 

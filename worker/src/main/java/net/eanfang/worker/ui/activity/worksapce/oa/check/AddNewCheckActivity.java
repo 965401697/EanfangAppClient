@@ -633,6 +633,9 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
         }
     }
 
+    /**
+     * 人员选择
+     * */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 

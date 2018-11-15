@@ -9,7 +9,7 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.SignActivity;
+import net.eanfang.client.ui.activity.worksapce.sign.SignActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

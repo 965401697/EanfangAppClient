@@ -22,7 +22,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -193,17 +192,23 @@ public class SignInActivity extends BaseWorkerActivity {
 
 
     private void doHttp(Long orderId) {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("orderId", orderId + "");
-        queryEntry.getEquals().put("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
-        queryEntry.getEquals().put("signLongitude", mLongitude + "");
-        queryEntry.getEquals().put("signLatitude", mLatitude + "");
-        queryEntry.getEquals().put("signScope", mSignScope);
-        queryEntry.getEquals().put("signCode", Config.get().getAreaCodeByName(city, county));
-        queryEntry.getEquals().put("signAddress", tvAddress.getText().toString().trim());
+//        QueryEntry queryEntry = new QueryEntry();
+//        queryEntry.getEquals().put("orderId", orderId + "");
+//        queryEntry.getEquals().put("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
+//        queryEntry.getEquals().put("signLongitude", mLongitude + "");
+//        queryEntry.getEquals().put("signLatitude", mLatitude + "");
+//        queryEntry.getEquals().put("signScope", mSignScope);
+//        queryEntry.getEquals().put("signCode", Config.get().getAreaCodeByName(city, county));
+//        queryEntry.getEquals().put("signAddress", tvAddress.getText().toString().trim());
 
         EanfangHttp.post(RepairApi.POST_FLOW_SIGNIN)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .params("orderId", orderId + "")
+                .params("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()))
+                .params("signLongitude", mLongitude + "")
+                .params("signLatitude", mLatitude + "")
+                .params("signCode", Config.get().getAreaCodeByName(city, county))
+                .params("signScope", mSignScope)
+                .params("signAddress", tvAddress.getText().toString().trim())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("签到成功");

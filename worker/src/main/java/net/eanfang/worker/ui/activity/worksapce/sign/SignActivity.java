@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.sign;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +34,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
-import net.eanfang.client.R;
+import net.eanfang.worker.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,11 +52,11 @@ import butterknife.ButterKnife;
 
 public class SignActivity extends BaseActivity implements LocationSource, AMapLocationListener {
 
-    public static final String TAG = SignActivity.class.getSimpleName();
 
     private static final int SIGN_REQUEST = 100;
     private static final int SIGN_RESULT = 200;
 
+    public static final String TAG = SignActivity.class.getSimpleName();
     private static final int STROKE_COLOR = Color.argb(180, 3, 145, 255);
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
     @BindView(R.id.mapView)
@@ -125,6 +125,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
                 } else {
                     if (!PermKit.get().getSignOutListPrem()) return;
                 }
+
                 startActivity(new Intent(SignActivity.this, SignListActivity.class)
                         .putExtra("title", title)
                         .putExtra("status", status));
@@ -142,6 +143,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
                     } else {
                         llSignTimes.setVisibility(View.GONE);
                     }
+
                 }));
     }
 
@@ -344,4 +346,5 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
             signCount();
         }
     }
+
 }

@@ -1,5 +1,6 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.client.ui.activity.worksapce.sign;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,8 +22,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.SignListAdapter;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.adapter.SignListAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,15 +55,17 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private String title;
     private int status;
 
+    @BindView(R.id.swipre_fresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     private SignListAdapter signListAdapter;
 
     private List<SignListBean> signListBeanList = new ArrayList<>();
-
     private int mFirstPosition;
 
-    @BindView(R.id.swipre_fresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
     private int page = 1;
+
+    private static final int REQUEST_FILTRATE = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +79,11 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private void initView() {
         setTitle("足迹");
         setLeftBack();
+        setRightTitle("查找");
         title = getIntent().getStringExtra("title");
         status = getIntent().getIntExtra("status", 0);
         if (status == 1) tvSign.setText("签退");
+
 
         revList.setLayoutManager(new LinearLayoutManager(this));
         revList.addItemDecoration(new BGASpaceItemDecoration(30));
@@ -89,10 +94,16 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         signListAdapter.setOnLoadMoreListener(this, revList);
+
+        setRightImageOnClickListener((v) -> {
+            JumpItent.jump(SignListActivity.this, SignFiltrateActivity.class, REQUEST_FILTRATE);
+        });
     }
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setPage(page);
+        queryEntry.setSize(10);
         queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -105,6 +116,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     }
 
     private void initAdapter() {
+
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -177,6 +189,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
                 break;
         }
     }
+
     @Override
     public void onSecondClick(int position) {
         Bundle bundle = new Bundle();
@@ -184,5 +197,16 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         bundle.putInt("status", status);
         bundle.putSerializable("bean", (Serializable) signListBeanList.get(mFirstPosition).getList().get(position));
         JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        if (requestCode == REQUEST_FILTRATE) {
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.sign;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
-import net.eanfang.client.R;
+import net.eanfang.worker.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +59,6 @@ public class SignInCommitActivity extends BaseActivity {
     private Map<String, String> uploadMap = new HashMap<>();
     private String title;
     private int status;
-
     private String ursStr;
 
     @Override
@@ -88,12 +87,11 @@ public class SignInCommitActivity extends BaseActivity {
 
 
 //        if (snplMomentAddPhotos.getData().size() > 1) {
-//            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true).split(",")[0];
+//            ursStr = PhotoUtils.getPhotoUrl("oa/sign/", snplMomentAddPhotos, uploadMap, true).split(",")[0];
 //        } else {
 //            ursStr = PhotoUtils.getPhotoUrl("oa/sign/",snplMomentAddPhotos, uploadMap, true);
 //        }
         ursStr = PhotoUtils.getPhotoUrl("oa/sign/", snplMomentAddPhotos, uploadMap, true);
-
         if (snplMomentAddPhotos.getData().size() >= 1) {
 
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(SignInCommitActivity.this, true) {

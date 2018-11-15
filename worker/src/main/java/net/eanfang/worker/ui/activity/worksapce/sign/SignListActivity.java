@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.sign;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,8 +21,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.SignListAdapter;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.adapter.SignListAdapter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,14 +54,14 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private String title;
     private int status;
 
-    @BindView(R.id.swipre_fresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
     private SignListAdapter signListAdapter;
 
     private List<SignListBean> signListBeanList = new ArrayList<>();
+
     private int mFirstPosition;
 
+    @BindView(R.id.swipre_fresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private int page = 1;
 
     @Override
@@ -80,7 +80,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         status = getIntent().getIntExtra("status", 0);
         if (status == 1) tvSign.setText("签退");
 
-
         revList.setLayoutManager(new LinearLayoutManager(this));
         revList.addItemDecoration(new BGASpaceItemDecoration(30));
         signListAdapter = new SignListAdapter(this);
@@ -90,13 +89,10 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         signListAdapter.setOnLoadMoreListener(this, revList);
-
     }
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setPage(page);
-        queryEntry.setSize(10);
         queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -109,7 +105,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     }
 
     private void initAdapter() {
-
         revList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -182,7 +177,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
                 break;
         }
     }
-
     @Override
     public void onSecondClick(int position) {
         Bundle bundle = new Bundle();

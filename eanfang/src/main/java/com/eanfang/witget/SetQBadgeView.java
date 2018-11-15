@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 
+import com.eanfang.application.EanfangApplication;
+
 import q.rorbin.badgeview.QBadgeView;
 
 /**
@@ -32,7 +34,7 @@ public class SetQBadgeView {
 
     public void setBadgeView(Context mContext, View weidgt, int num) {
         this.mView = weidgt;
-        qBadgeViewSys = new QBadgeView(mContext);
+        qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
         qBadgeViewSys.bindTarget(mView)
                 .setBadgeNumber(num)
                 .setBadgeBackgroundColor(0xFFFF0000)
