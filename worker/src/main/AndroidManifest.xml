@@ -67,6 +67,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
+    <!-- 华为桌面消息图标权限 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
     <application
         android:name=".ui.base.WorkerApplication"
         android:allowBackup="true"

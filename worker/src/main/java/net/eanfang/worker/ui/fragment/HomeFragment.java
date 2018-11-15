@@ -20,7 +20,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.HomeOrderNumBean;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
@@ -395,13 +395,12 @@ public class HomeFragment extends BaseFragment {
      * 获取订单数量
      */
     private void doHttpOrderNums() {
-        EanfangHttp.get(UserApi.HOME_GET_ORDER_NUM).execute(new EanfangCallback<HomeOrderNumBean>(getActivity(), false, HomeOrderNumBean.class, (bean -> {
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_reparir_order), bean.getRepair());// 报修
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_install_order), bean.getInstall());// 报装
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_design_order), bean.getDesign());//设计
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_maintain_order), bean.getMaintain());//维保
             SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_inside_price), bean.getQuote());//报价
-
         })));
     }
 

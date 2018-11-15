@@ -76,6 +76,11 @@ public class CompanyListView extends BaseDialog {
         revCompanyList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId().equals(beanList.get(position).getOrgId())) {
+                    showToast("无需切换公司");
+                    dismiss();
+                    return;
+                }
                 SwitchCompany(beanList.get(position).getOrgId());
                 String companyName = null;
                 if (beanList.get(position).getOrgName() != null) {
@@ -99,10 +104,12 @@ public class CompanyListView extends BaseDialog {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
-                    PermKit.permList.clear();
-                    EanfangApplication.get().remove(LoginBean.class.getName());
-                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-                    EanfangHttp.setToken(bean.getToken());
+                    if (bean != null) {
+                        PermKit.permList.clear();
+                        EanfangApplication.get().remove(LoginBean.class.getName());
+                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                        EanfangHttp.setToken(bean.getToken());
+                    }
                 }));
     }
 

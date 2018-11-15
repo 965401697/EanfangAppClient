@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18110201
-        versionName "2.3.26"
+        versionCode 18111001
+        versionName "2.3.27"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
@@ -130,14 +130,18 @@ android {
         "xiaomi" {
             dimension "app"
             manifestPlaceholders = [tac_channel: "xiaomi"]
+//            applicationId "net.eanfang.client.xiaomi.stag"
+//            resValue "string", "app_name", "小米测试版"
         }
         "baidu" {
             dimension "app"
             manifestPlaceholders = [tac_channel: "baidu"]
+//            applicationId "net.eanfang.client.baidu.stag"
+//            resValue "string", "app_name", "百度测试版"
         }
         "huawei" {
             dimension "app"
-            manifestPlaceholders = [tac_channel: "baidu"]
+            manifestPlaceholders = [tac_channel: "huawei"]
         }
         "wandoujia" {
             dimension "app"

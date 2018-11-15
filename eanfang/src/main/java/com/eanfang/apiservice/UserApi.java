@@ -490,7 +490,13 @@ public interface UserApi {
     String HOME_GET_ORDER_NUM = BuildConfig.API_HOST + "/yaf_repair/order/orderNum";
 
     /**
+     * 获取消息、通知等数量全部接口
+     */
+    String ALL_MESSAGE = BuildConfig.API_HOST + "/yaf_sys/notice/count/user/all";
+
+    /**
      * 技师技能认证的详情
      */
-    String TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
+    String
+            TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
 }

@@ -12,8 +12,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.fragment.SelectTimeDialogFragment;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
@@ -80,12 +78,15 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
      * 带点筛选
      */
     private void doHttp(int solve, String bookTime) {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("orderId", orderId + "");
-        queryEntry.getEquals().put("solve", solve + "");
-        queryEntry.getEquals().put("bookTime", bookTime);
+//        QueryEntry queryEntry = new QueryEntry();
+//        queryEntry.getEquals().put("orderId", orderId + "");
+//        queryEntry.getEquals().put("solve", solve + "");
+//        queryEntry.getEquals().put("bookTime", bookTime);
         EanfangHttp.post(RepairApi.POST_FLOW_SCREENING)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .params("orderId", orderId + "")
+                .params("solve", solve + "")
+                .params("bookTime", bookTime)
+//                .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(RepairAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
                     setResult(RESULT_OK);
@@ -168,7 +169,7 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
     @Override
     public void getData(String time) {
         if (StringUtils.isEmpty(time) || " ".equals(time)) {
-            tvDoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            tvDoorTime.setText(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         } else {
             tvDoorTime.setText(time);
         }
