@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,7 +55,13 @@ public class TaskDetailActivity extends BaseClientActivity {
         setContentView(R.layout.activity_task_detail);
         ButterKnife.bind(this);
         setTitle("任务详情");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         setRightTitle("分享");
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,5 +140,16 @@ public class TaskDetailActivity extends BaseClientActivity {
                 }
             }
         });
+    }
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }

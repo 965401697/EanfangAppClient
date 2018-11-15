@@ -33,6 +33,7 @@ public class WorkReportListActivity extends BaseClientActivity {
     private MyPagerAdapter mAdapter;
     private final int FILTRATE_TYPE_CODE = 101;
     //    private String type;
+    public static final int DETAILL_REQUEST_CODE = 22;//点击详情的返回刷新的code
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +95,17 @@ public class WorkReportListActivity extends BaseClientActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int currentTab = tlWorkList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
 
-            int currentTab = tlWorkList.getCurrentTab();
 
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
                 ((WorkReportListFragment) mFragments.get(currentTab)).getReportData(queryEntry);
+            }
+        }else if (resultCode == RESULT_OK && requestCode == DETAILL_REQUEST_CODE) {
+            if (currentTab == 1) {
+                ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
             }
         }
     }

@@ -102,6 +102,9 @@ public class TaskAssignmentListActivity extends BaseClientActivity {
             if (queryEntry != null) {
                 ((WorkTaskListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == WorkTaskListFragment.DETAIL_TASK_REQUSET_COOD) {
+            if (currentTab == 1)
+                ((WorkTaskListFragment) mFragments.get(currentTab)).refreshStatus();
         }
     }
 }

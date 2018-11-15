@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -79,7 +80,13 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_work_report_detail);
         ButterKnife.bind(this);
 
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
         setRightTitle("分享");
         setRightTitleOnClickListener(new View.OnClickListener() {
@@ -195,5 +202,17 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                             initAdapter();
                         })
                 );
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }

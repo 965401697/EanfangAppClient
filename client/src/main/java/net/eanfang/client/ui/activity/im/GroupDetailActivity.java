@@ -266,13 +266,15 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("list", friendListBeanArrayList);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
 
+                } else {
+                    if (!temp.get(position).getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                        Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
+                        intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
+                        startActivity(intent);
+                    } else {
+                        ToastUtil.get().showToast(GroupDetailActivity.this, "自己不能查看自己");
+                    }
                 }
-//                else {
-//                    Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
-//                    intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
-//                    startActivity(intent);
-//
-//                }
             }
         });
 

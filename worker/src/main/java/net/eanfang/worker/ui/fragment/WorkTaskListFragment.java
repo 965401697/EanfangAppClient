@@ -33,8 +33,10 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
     private String mTitle;
     private String mType;
     private WorkTaskListAdapter mAdapter;
-
+    public static final int DETAIL_TASK_REQUSET_COOD = 9;
     private QueryEntry mQueryEntry;
+    private WorkTaskListBean.ListBean mDetailTaskBean;
+    private int mPosition;
 
     public static WorkTaskListFragment getInstance(String title, String type) {
         WorkTaskListFragment sf = new WorkTaskListFragment();
@@ -57,6 +59,7 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
         mAdapter.setOnLoadMoreListener(this);
 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
@@ -67,12 +70,14 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
 
                 if (Integer.parseInt(mType) == 2 && bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
                     getFirstLookData(bean.getId());
+                    mDetailTaskBean = ((WorkTaskListBean.ListBean) adapter.getData().get(position));
+                    mPosition = position;
                 }
 //                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
                 Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
                 intent.putExtra("id", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getId());
                 intent.putExtra("name", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, DETAIL_TASK_REQUSET_COOD);
             }
         });
     }
@@ -167,6 +172,16 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
         mQueryEntry = null;
         mPage = 1;
         getData();
+    }
+
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setStatus(1);
+            mAdapter.notifyItemChanged(mPosition);
+        }
     }
 
     /**

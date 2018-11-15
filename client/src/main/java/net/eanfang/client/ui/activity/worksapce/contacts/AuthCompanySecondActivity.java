@@ -37,6 +37,7 @@ import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.client.ui.fragment.ContactsFragment;
 
 import java.util.List;
 
@@ -208,11 +209,11 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         infoBean.setOrgId(orgid);
 
         infoBean.setUnitType(3);
-        if (infoBean.getAdminUserId() != null) {
-            infoBean.setAdminUserId(byNetBean.getAdminUserId());
-        } else {
-            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
-        }
+//        if (infoBean.getAdminUserId() != null) {
+//            infoBean.setAdminUserId(byNetBean.getAdminUserId());
+//        } else {
+//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+//        }
 
         String json = JSONObject.toJSONString(infoBean);
         commit(json);
@@ -262,6 +263,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
     private void commitVerfiy() {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SEND_VERIFY + byNetBean.getOrgId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    ContactsFragment.isRefresh = true;//从认领企业过来 完成认证刷新公司
                     submitSuccess();
                 }));
     }

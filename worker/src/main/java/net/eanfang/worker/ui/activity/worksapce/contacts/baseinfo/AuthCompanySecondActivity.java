@@ -36,6 +36,7 @@ import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.util.List;
 
@@ -156,11 +157,11 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         infoBean.setOrgId(orgid);
         infoBean.setUnitType(3);
         infoBean.setIntro(etDesc.getText().toString().trim());
-        if (infoBean.getAdminUserId() == null) {
-            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
-        } else {
-            infoBean.setAdminUserId(infoBean.getAdminUserId());
-        }
+//        if (infoBean.getAdminUserId() == null) { todo 李旭让去掉
+//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+//        } else {
+//            infoBean.setAdminUserId(infoBean.getAdminUserId());
+//        }
         String json = JSONObject.toJSONString(infoBean);
         commit(json);
     }
@@ -188,6 +189,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT)
                 .upJson(json)
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
+                    ContactsFragment.isRefresh = true;//从认领企业过来 完成认证刷新公司
                     submitSuccess();
                 }));
     }

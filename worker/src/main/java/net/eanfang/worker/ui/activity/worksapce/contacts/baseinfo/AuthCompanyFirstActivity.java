@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -158,9 +157,9 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         }
-        if (infoBean.getAdminUserId() == null) {
-            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
-        }
+//        if (infoBean.getAdminUserId() == null) {
+//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+//        }
 
         String json = JSONObject.toJSONString(infoBean);
         commit(json);
