@@ -176,7 +176,7 @@ public class MainActivity extends BaseClientActivity {
 //                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
                 if (var == 0) {
                     redPoint.setVisibility(View.GONE);
-                }else {
+                } else {
                     redPoint.setVisibility(View.VISIBLE);
                 }
             });
@@ -320,13 +320,13 @@ public class MainActivity extends BaseClientActivity {
                 .params("userId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
-                        Log.e("zzw1",str+"");
+                        Log.e("zzw1", str + "");
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
                         EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
                         ClientApplication.connect(token, MainActivity.this);
                     }
-                    Log.e("zzw2",str+"");
+                    Log.e("zzw2", str + "");
                 }));
 
 
@@ -535,7 +535,7 @@ public class MainActivity extends BaseClientActivity {
             contactListFragment.onActivityResult(requestCode, resultCode, data);
         }else if(resultCode == RESULT_OK && requestCode == 49){
             ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
-            contactsFragment.onActivityResult(requestCode,resultCode,data);
+            contactsFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

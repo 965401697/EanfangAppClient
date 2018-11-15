@@ -151,6 +151,10 @@ public interface UserApi {
      * 新增企业
      */
     String GET_ORGUNIT_ENT_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/add";
+    /**
+     * 待认领企业的lsit
+     */
+    String GET_CLAIM_ORGUNIT_LIST = BuildConfig.API_HOST + "/yaf_sys/orgunit/claim/list  ";
 
     /**
      * 保存企业资料 客户端

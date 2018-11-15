@@ -1021,7 +1021,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         Bundle b = new Bundle();
 
                         b.putString("id", String.valueOf(bean.getId()));
-                        b.putString("orderNum", EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyEntity().getOrgName());
+                        b.putString("orderNum", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
                         if (bean.getWorkReportDetails() != null && bean.getWorkReportDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkReportDetails().get(0).getPictures())) {
                             bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                         }

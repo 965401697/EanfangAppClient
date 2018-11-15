@@ -96,12 +96,15 @@ public class TaskAssignmentListActivity extends BaseWorkerActivity {
         super.onActivityResult(requestCode, resultCode, data);
         int currentTab = tlTaskList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
-
-
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
                 ((WorkTaskListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == WorkTaskListFragment.DETAIL_TASK_REQUSET_COOD) {
+            if (currentTab == 1)
+                ((WorkTaskListFragment) mFragments.get(currentTab)).refreshStatus();
+        } else if (resultCode == RESULT_OK && requestCode == WorkTaskListFragment.DETAIL_TASK_REQUSET_COOD) {
+
         }
     }
 }

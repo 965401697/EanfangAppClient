@@ -218,4 +218,5 @@ dependencies {
     implementation project(':zxing')
     // flowlayout
     compile 'com.zhy:flowlayout-lib:1.0.3'
+    implementation project(':IMLib')
 }

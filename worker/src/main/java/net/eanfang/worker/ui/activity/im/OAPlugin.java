@@ -12,7 +12,6 @@ import android.util.Log;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.CreationWorkReportActivity;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
@@ -44,7 +43,7 @@ public class OAPlugin implements IPluginModule {
         this.conversationType = rongExtension.getConversationType();
         this.targetId = rongExtension.getTargetId();
         if (conversationType.getName().toUpperCase().equals(Conversation.ConversationType.GROUP.getName().toUpperCase())) {
-            Intent intent = new Intent(fragment.getActivity(), CreationWorkReportActivity.class);
+            Intent intent = new Intent(fragment.getActivity(), OAListActivity.class);
             intent.putExtra("targetId", targetId);
             intent.putExtra("conversationType", conversationType.getName());
             rongExtension.startActivityForPluginResult(intent, 198, this);

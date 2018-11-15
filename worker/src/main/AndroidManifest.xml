@@ -684,6 +684,12 @@
         <activity android:name=".ui.activity.worksapce.oa.check.DealWithFirstActivity" />
         <!--布置任务详情-->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
+        <!-- 创建团队的详情 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamDetailActivity" />
+        <!-- 创建团队的状态提示页 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
+
+        <activity android:name=".ui.activity.im.OAListActivity"></activity>
     </application>
 
 </manifest>

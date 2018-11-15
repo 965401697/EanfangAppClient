@@ -69,6 +69,8 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
     public final int CREAT_TEAM_CODE = 49;
 
+    public static boolean isRefresh = false;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_contact;
@@ -314,6 +316,17 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     break;
             }
         });
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //创建完企业刷新公司
+        if (isRefresh) {
+            getData();
+            isRefresh = false;
+        }
     }
 
     @Override
