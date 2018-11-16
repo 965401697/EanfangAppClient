@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.im;
+package net.eanfang.client.ui.activity.im;
 
 import android.app.Dialog;
 import android.net.Uri;
@@ -32,8 +32,8 @@ import com.eanfang.util.compound.CompoundHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
 
 import org.json.JSONArray;
 import org.json.JSONException;

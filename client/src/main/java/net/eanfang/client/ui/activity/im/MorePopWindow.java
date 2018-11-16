@@ -68,7 +68,7 @@ public class MorePopWindow extends PopupWindow {
                     return;
                 }
 
-                Intent intent = new Intent(new Intent(context, SelectIMContactActivity.class));
+                Intent intent = new Intent(new Intent(context, NewSelectIMContactActivity.class));
 //                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
                 intent.putExtra("flag", 1);
                 context.startActivity(intent);

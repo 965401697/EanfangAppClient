@@ -115,6 +115,15 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
         iv_left = (ImageView) findViewById(R.id.iv_left);
         iv_left.setOnClickListener(v -> finish());
     }
+    /**
+     * 返回监听
+     *
+     * @param listener
+     */
+    public void setLeftBack(View.OnClickListener listener) {
+        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left.setOnClickListener(listener);
+    }
 
     @Override
     protected void onStart() {

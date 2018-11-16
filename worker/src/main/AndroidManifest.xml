@@ -691,8 +691,8 @@
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamDetailActivity" />
         <!-- 创建团队的状态提示页 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
-
-        <activity android:name=".ui.activity.im.OAListActivity"></activity>
+        <activity android:name=".ui.activity.im.OAListActivity" />
+        <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity"></activity>
     </application>
 
 </manifest>

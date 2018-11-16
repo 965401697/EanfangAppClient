@@ -176,7 +176,7 @@ public class MainActivity extends BaseClientActivity {
                 public void run() {
                     // 桌面气泡赋值
                     BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
- 
+
                 }
             }, 3 * 1000);
             if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCam() > 0) {// 进行底部消息小红点的显示

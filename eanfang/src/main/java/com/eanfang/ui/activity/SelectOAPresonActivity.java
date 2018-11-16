@@ -147,7 +147,7 @@ public class SelectOAPresonActivity extends BaseActivity {
                     .execute(new EanfangCallback<UserEntity>(this, true, UserEntity.class, true, (list) -> {
                         OrganizationBean bean = new OrganizationBean();
                         bean.setOrgName(companyName);
-                        bean.setOrgId(companyId);
+                        bean.setCompanyId(companyId);
                         bean.setStaff(list);
                         getSection(bean);
 

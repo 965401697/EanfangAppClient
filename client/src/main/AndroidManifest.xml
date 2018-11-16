@@ -637,6 +637,12 @@
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
         <!--Im 窗口的OA办公界面-->
         <activity android:name=".ui.activity.im.OAListActivity"></activity>
+        <!--创建群组组织联系人-->
+        <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity"></activity>
+        <!-- 新的创建群组 -->
+        <activity android:name=".ui.activity.im.CreateGroupActivity" />
+        <!-- 新的选择联系人 -->
+        <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
     </application>
 
 </manifest>

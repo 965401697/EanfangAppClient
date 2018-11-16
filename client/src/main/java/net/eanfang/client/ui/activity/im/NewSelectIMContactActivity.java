@@ -27,7 +27,6 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
@@ -133,7 +132,7 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         supprotToolbar();
         setTitle("选择联系人");
-
+        startTransaction(true);
         dialog = DialogUtil.createLoadingDialog(NewSelectIMContactActivity.this);
 
         bundle = getIntent().getExtras();
@@ -229,7 +228,7 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
                         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                Intent intent = new Intent(NewSelectIMContactActivity.this, SelectOAPresonActivity.class);
+                                Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
                                 intent.putExtra("companyId", String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()));
                                 intent.putExtra("companyName", ((OrgEntity) adapter.getData().get(position)).getOrgName());
                                 Bundle bundle = new Bundle();
@@ -254,6 +253,7 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
         if (mOldPresonList != null && mOldPresonList.size() > 0) {
             rlSelected.setVisibility(View.VISIBLE);
             mHeaderIconAdapter.setNewData(mOldPresonList);
+            newPresonList.addAll(mOldPresonList);//加入创建的老数据
         }
     }
 
