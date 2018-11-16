@@ -20,6 +20,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.CreateGroupActivity;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
@@ -67,9 +68,9 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                 @Override
                 public void onClick(View v) {
                     if (mFlag != 0 && mFlag != 6) {
-                        if(mContext instanceof  CreationWorkReportActivity) {
+                        if (mContext instanceof CreationWorkReportActivity) {
                             ((CreationWorkReportActivity) mContext).setFlag(mFlag);
-                        }else if(mContext instanceof TaskAssignmentCreationActivity){
+                        } else if (mContext instanceof TaskAssignmentCreationActivity) {
                             ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
                         }
 
@@ -82,6 +83,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         bundle.putSerializable("list", (Serializable) getData());
                         intent.putExtras(bundle);
                         intent.putExtra("flag", 1);
+                        ((CreateGroupActivity) mContext).finishSelf();
                         mContext.startActivity(intent);
                     } else {
                         //选择协同人员

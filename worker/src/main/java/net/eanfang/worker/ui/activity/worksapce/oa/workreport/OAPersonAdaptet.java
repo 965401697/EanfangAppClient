@@ -20,6 +20,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.CreateGroupActivity;
 import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.AddNewCheckActivity;
@@ -85,6 +86,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         bundle.putSerializable("list", (Serializable) getData());
                         intent.putExtras(bundle);
                         intent.putExtra("flag", 1);
+                        ((CreateGroupActivity) mContext).finishSelf();
                         mContext.startActivity(intent);
                     } else {
                         //选择协同人员
