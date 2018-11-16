@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18111001
-        versionName "2.3.27"
+        versionCode 18111601
+        versionName "2.3.28_beta"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -83,6 +83,19 @@ android {
             zipAlignEnabled true
             shrinkResources true // 移除无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('staging')) {
+                    variant.outputs.all {
+                        outputFileName = "client_beta_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                    }
+                }
+            }
+            // 批量打包(gradle 3.0.0 以上)
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "client_beta_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                }
+            }
         }
         release {
             //签名配置

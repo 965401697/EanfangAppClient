@@ -171,14 +171,14 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
                 }
-                if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
-                }
+//                if (view.getId() == R.id.ll_item) {
+//                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+//                    if (secondItem.getVisibility() == View.VISIBLE) {
+//                        secondItem.setVisibility(View.GONE);
+//                    } else {
+//                        secondItem.setVisibility(View.VISIBLE);
+//                    }
+//                }
             }
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

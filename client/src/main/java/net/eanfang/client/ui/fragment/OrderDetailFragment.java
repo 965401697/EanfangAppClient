@@ -246,14 +246,15 @@ public class OrderDetailFragment extends BaseFragment {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
-                } else if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
                 }
+//                else if (view.getId() == R.id.ll_item) {// 展开收起
+//                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+//                    if (secondItem.getVisibility() == View.VISIBLE) {
+//                        secondItem.setVisibility(View.GONE);
+//                    } else {
+//                        secondItem.setVisibility(View.VISIBLE);
+//                    }
+//                }
             }
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

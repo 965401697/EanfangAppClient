@@ -44,9 +44,9 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHold
         signListSecondAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         signListSecondAdapter.bindToRecyclerView(rv_footer);
         signListSecondAdapter.setNewData(item.getList());
-        rv_footer.addOnItemTouchListener(new com.chad.library.adapter.base.listener.OnItemClickListener() {
+        signListSecondAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 onSecondClickListener.onSecondClick(position);
             }
         });

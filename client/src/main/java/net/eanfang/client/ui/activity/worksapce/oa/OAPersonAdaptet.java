@@ -22,6 +22,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
+import net.eanfang.client.ui.activity.worksapce.sign.SignFiltrateActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -70,8 +71,10 @@ public class OAPersonAdaptet
 //                        if (mContext instanceof CreationWorkReportActivity) {
 //                            ((CreationWorkReportActivity) mContext).setFlag(mFlag);
 //                        } else
-                            if (mContext instanceof TaskAssignmentCreationActivity) {
+                        if (mContext instanceof TaskAssignmentCreationActivity) {
                             ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof SignFiltrateActivity) {
+                            ((SignFiltrateActivity) mContext).setFlag(mFlag);
                         }
 
                     }

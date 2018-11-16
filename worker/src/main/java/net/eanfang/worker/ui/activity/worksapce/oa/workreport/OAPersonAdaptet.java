@@ -24,6 +24,7 @@ import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.AddNewCheckActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
+import net.eanfang.worker.ui.activity.worksapce.sign.SignFiltrateActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -74,6 +75,8 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                             ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
                         } else if (mContext instanceof AddNewCheckActivity) {
                             ((AddNewCheckActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof SignFiltrateActivity) {
+                            ((SignFiltrateActivity) mContext).setFlag(mFlag);
                         }
 
                     }

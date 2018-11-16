@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/color_contact_line_gray"
+    android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.sign.SignFiltrateActivity">
 
     <include layout="@layout/header" />
@@ -50,7 +50,7 @@
                         android:layout_height="@dimen/dimen_60"
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
-                        android:checked="true"
+                        android:checked="false"
                         android:gravity="center"
                         android:text="签到"
                         android:textColor="@drawable/select_camera_text_back"
@@ -101,6 +101,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/dimen_30"
@@ -144,7 +145,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="签到时间"
+                        android:text="开始时间"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
 
@@ -155,7 +156,7 @@
                         android:layout_alignParentRight="true"
                         android:drawablePadding="@dimen/dimen_30"
                         android:drawableRight="@mipmap/ic_icon_right"
-                        android:text="请选择"
+                        android:hint="请选择"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_15" />
                 </RelativeLayout>
@@ -171,7 +172,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="签退时间"
+                        android:text="结束时间"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
 
@@ -182,7 +183,7 @@
                         android:layout_alignParentRight="true"
                         android:drawablePadding="@dimen/dimen_30"
                         android:drawableRight="@mipmap/ic_icon_right"
-                        android:text="请选择"
+                        android:hint="请选择"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_15" />
                 </RelativeLayout>
@@ -197,7 +198,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_complete_work"
+                    android:id="@+id/tv_cancle_work"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_marginLeft="@dimen/dimen_40"
@@ -209,7 +210,7 @@
                     android:textColor="@color/color_client_neworder" />
 
                 <TextView
-                    android:id="@+id/tv_cancle_work"
+                    android:id="@+id/tv_complete_work"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_marginRight="@dimen/dimen_40"

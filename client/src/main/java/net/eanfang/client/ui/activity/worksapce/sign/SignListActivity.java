@@ -65,7 +65,10 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
     private int page = 1;
 
+    private static final int RESULT_FILTRATE = 1001;
     private static final int REQUEST_FILTRATE = 1002;
+
+    private QueryEntry mQueryEntry = new QueryEntry();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,18 +98,20 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
         signListAdapter.setOnLoadMoreListener(this, revList);
 
-        setRightImageOnClickListener((v) -> {
+        setRightTitleOnClickListener((v) -> {
             JumpItent.jump(SignListActivity.this, SignFiltrateActivity.class, REQUEST_FILTRATE);
         });
     }
 
     private void initData() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setPage(page);
-        queryEntry.setSize(10);
-        queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        mQueryEntry.setPage(page);
+        mQueryEntry.setSize(10);
+        mQueryEntry.getEquals().put("createCompanyId", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getCompanyId() + "");
+        if (!mQueryEntry.getEquals().containsKey("createUserId") && !mQueryEntry.getEquals().containsKey("createOrgCode")) {
+            mQueryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        }
         EanfangHttp.post(UserApi.SIGN_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, true, (bean) -> {
                     signListBeanList = bean;
                     initAdapter();
@@ -174,6 +179,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         switch (option) {
             case TOP_REFRESH:
                 //下拉刷新
+                mQueryEntry = new QueryEntry();
                 page--;
                 if (page <= 0) {
                     page = 1;
@@ -205,8 +211,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         if (data == null) {
             return;
         }
-        if (requestCode == REQUEST_FILTRATE) {
-
+        if (requestCode == REQUEST_FILTRATE && resultCode == RESULT_FILTRATE) {
+            mQueryEntry = (QueryEntry) data.getSerializableExtra("query_foot");
+            initData();
         }
     }
 }

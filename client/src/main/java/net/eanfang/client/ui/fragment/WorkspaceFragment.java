@@ -95,6 +95,8 @@ public class WorkspaceFragment extends BaseFragment {
                 }
                 if (url != null) {
                     iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                } else {
+                    iv_company_logo.setImageURI("");
                 }
             }).show();
         });

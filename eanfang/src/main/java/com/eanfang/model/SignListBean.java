@@ -3,6 +3,7 @@ package com.eanfang.model;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,12 +18,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class SignListBean implements Serializable {
-
 
     private String signDay;
     private List<ListBean> list;
-
 
     @Getter
     @Setter
@@ -47,7 +47,6 @@ public class SignListBean implements Serializable {
         private int sum;
         private String visitorName;
         private String zoneCode;
-
 
         @Getter
         @Setter
@@ -95,5 +94,6 @@ public class SignListBean implements Serializable {
             }
         }
     }
+
 }
 
