@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_2"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_36"
+        android:text="科技为本"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize_15" />
+
+    <TextView
+        android:id="@+id/tv_claim"
+        android:layout_width="@dimen/dimen_130"
+        android:layout_height="@dimen/dimen_56"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_36"
+        android:background="@drawable/bg_ll_btn"
+        android:gravity="center"
+        android:text="免费认领"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_company_name"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_44"
+        android:text="13382"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_13" />
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_tel"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="13382"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_13" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_code"
+        android:layout_marginBottom="@dimen/dimen_30"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="13382"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_13" />
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.im.OAListActivity">
+
+    <include layout="@layout/header" />
+
+    <TextView
+        android:id="@+id/tv_work_report"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_client_work_report"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_work_report" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <TextView
+        android:id="@+id/tv_work_task"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_client_work_task"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_work_task" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <TextView
+        android:id="@+id/tv_work_inspect"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_client_work_inspect"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_work_inspect" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <TextView
+        android:id="@+id/tv_work_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_work_transfer"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_work_transfer" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <TextView
+        android:id="@+id/tv_work_talk"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_work_talk"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_work_talk" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <TextView
+        android:id="@+id/tv_shop_log"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_client_shop_log"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_opne_shop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <TextView
+        android:id="@+id/tv_defend_log"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120"
+        android:drawableLeft="@mipmap/ic_client_defend_log"
+        android:drawablePadding="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dimen_38"
+        android:text="@string/text_defend_log" />
+
+</LinearLayout>
