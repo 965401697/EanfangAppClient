@@ -37,7 +37,6 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-
             // 上线url
             buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
@@ -69,6 +68,11 @@ android {
             // 上线url
 //            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
 //            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+        }
+        release {
+            // 上线url
             buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             // 不显示Log

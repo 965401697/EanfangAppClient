@@ -39,12 +39,6 @@ android {
 
     //签名设置
     signingConfigs {
-        stagingConfig {
-            keyAlias KEY_ALIAS_WORKER
-            keyPassword KEY_PASSWORD_WORKER
-            storeFile file('../worker/keystore/worker.jks')
-            storePassword KEYSTORE_PASSWORD_WORKER
-        }
         release {
             keyAlias KEY_ALIAS_WORKER
             keyPassword KEY_PASSWORD_WORKER
@@ -65,20 +59,12 @@ android {
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-
-            // 上线url
-            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
         }
         //  测试
         staging {
             //签名配置
             signingConfig signingConfigs.release
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             minifyEnabled true //开启代码混淆
             zipAlignEnabled true
             shrinkResources true // 移除无用资源
@@ -97,11 +83,12 @@ android {
                 }
             }
         }
+
         release {
             //签名配置
             signingConfig signingConfigs.release
 
-            buildConfigField("String", "BUGLY_WORKER", "\"a6bae9f6ee\"")
+            buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
             //Zipalign优化

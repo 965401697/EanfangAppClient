@@ -52,7 +52,6 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.release
             buildConfigField("boolean", "LOG_DEBUG", "true")
             buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
@@ -89,105 +88,106 @@ android {
                 }
             }
         }
-        release {
-            //签名配置
-            signingConfig signingConfigs.release
+    }
 
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //正式的bugly
-            buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
+    release {
+        //签名配置
+        signingConfig signingConfigs.release
 
-            //Zipalign优化
-            zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
-            //混淆
-            minifyEnabled true
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // 批量打包(gradle 3.0.0 以下)
-            applicationVariants.all { variant ->
-                if (variant.buildType.name.equals('release')) {
-                    variant.outputs.all {
-                        outputFileName = "client_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
-                    }
-                }
-            }
-            // 批量打包(gradle 3.0.0 以上)
-            android.applicationVariants.all { variant ->
+        // 不显示Log
+        buildConfigField("boolean", "LOG_DEBUG", "false")
+        //测试的bugly
+        buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
+
+        //Zipalign优化
+        zipAlignEnabled true
+        // 移除无用的resource文件
+        shrinkResources false
+        //混淆
+        minifyEnabled true
+        //加载默认混淆配置文件
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        // 批量打包(gradle 3.0.0 以下)
+        applicationVariants.all { variant ->
+            if (variant.buildType.name.equals('release')) {
                 variant.outputs.all {
                     outputFileName = "client_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
                 }
             }
         }
-
+        // 批量打包(gradle 3.0.0 以上)
+        android.applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "client_release_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+            }
+        }
     }
 
+}
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    dexOptions {//解决分包gradle 编译oom问题
-        javaMaxHeapSize "4g"
-    }
+
+compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+}
+dexOptions {//解决分包gradle 编译oom问题
+    javaMaxHeapSize "4g"
+}
 // aapt2 问题 png图片问题
-    aaptOptions.cruncherEnabled = false
-    aaptOptions.useNewCruncher = false
+aaptOptions.cruncherEnabled = false
+aaptOptions.useNewCruncher = false
 
-    //多渠道打包，命令行打包：gradlew assembleRelease
-    productFlavors {
-        // gradle 3.0.0 以上需要有这个
-        // dimension "app"
-        "xiaomi" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "xiaomi"]
+//多渠道打包，命令行打包：gradlew assembleRelease
+productFlavors {
+    // gradle 3.0.0 以上需要有这个
+    // dimension "app"
+    "xiaomi" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "xiaomi"]
 //            applicationId "net.eanfang.client.xiaomi.stag"
 //            resValue "string", "app_name", "小米测试版"
-        }
-        "baidu" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "baidu"]
+    }
+    "baidu" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "baidu"]
 //            applicationId "net.eanfang.client.baidu.stag"
 //            resValue "string", "app_name", "百度测试版"
-        }
-        "huawei" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "huawei"]
-        }
-        "wandoujia" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "wandoujia"]
-        }
-        "meizu" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "meizu"]
-        }
-        "tencent" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "tencent"]
-        }
-        "qh360" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "qh360"]
-        }
-        "oppo" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "oppo"]
-        }
-        "vivo" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "vivo"]
-        }
-        "lenovo" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "lenovo"]
-        }
-        "samsung" {
-            dimension "app"
-            manifestPlaceholders = [tac_channel: "samsung"]
-        }
+    }
+    "huawei" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "huawei"]
+    }
+    "wandoujia" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "wandoujia"]
+    }
+    "meizu" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "meizu"]
+    }
+    "tencent" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "tencent"]
+    }
+    "qh360" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "qh360"]
+    }
+    "oppo" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "oppo"]
+    }
+    "vivo" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "vivo"]
+    }
+    "lenovo" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "lenovo"]
+    }
+    "samsung" {
+        dimension "app"
+        manifestPlaceholders = [tac_channel: "samsung"]
     }
 }
 

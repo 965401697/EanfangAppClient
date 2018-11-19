@@ -394,6 +394,7 @@ public class WorkspaceFragment extends BaseFragment {
                 .setBadgeTextSize(11, true);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -137,6 +137,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             btnComplete.setVisibility(View.GONE);
             ivUploadlogo.setEnabled(false);
             llOfficeAddress.setEnabled(false);
+            setOnFouse(etCompany);
             setOnFouse(etLegalPersion);
             setOnFouse(etDetailOfficeAddress);
             setOnFouse(etPhone);

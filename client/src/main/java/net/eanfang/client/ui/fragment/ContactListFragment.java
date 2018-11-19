@@ -271,6 +271,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initCamCount(0);
                         mCamCount = 0;
                     }
+                    if (bean.getCam() > 0) {// 官方通知
+                        initCamCount(bean.getCam());
+                        mCamCount = bean.getCam();
+                    } else {
+                        initCamCount(0);
+                        mCamCount = 0;
+                    }
                 }));
     }
 
@@ -285,8 +292,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .setBadgeNumber(cam)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setBadgeTextSize(11, true);
 
     }

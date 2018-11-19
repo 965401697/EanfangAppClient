@@ -30,9 +30,7 @@ android {
     buildTypes {
         debug {
         }
-        //  测试
-        staging {
-        }
+
         release {
             release {
                 minifyEnabled false
