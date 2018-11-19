@@ -45,4 +45,16 @@
             android:src="@mipmap/arrow_right" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/textSize_20"
+        android:layout_marginLeft="@dimen/dimen_36"
+        android:layout_marginRight="@dimen/dimen_34"
+        android:gravity="center"
+        android:text="转让管理员需提供公司营业执照复印件加盖公章授权书(______公司授权____变更主管理员、被授权人身份证信息+复印)加盖公章拨打400-890-9280，由客服在1-2个工作日内人工办理。"
+        android:textSize="@dimen/textSize_11" />
+
 </RelativeLayout>

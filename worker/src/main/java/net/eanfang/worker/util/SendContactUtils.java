@@ -3,7 +3,6 @@ package net.eanfang.worker.util;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 
 import com.eanfang.model.TemplateBean;
 
@@ -16,6 +15,7 @@ import java.util.regex.Pattern;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 
 /**
  * Created by O u r on 2018/8/1.
@@ -107,15 +107,15 @@ public class SendContactUtils {
                 conversationType = Conversation.ConversationType.GROUP;
             }
 
-            RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, "报修订单", "报修订单", new RongIMClient.SendMessageCallback() {
+            Message message = RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, "报修订单", "报修订单", new RongIMClient.SendMessageCallback() {
                 @Override
                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-                    Log.e("zzw", "发送失败=" + integer + "=" + errorCode);
+
                 }
 
                 @Override
                 public void onSuccess(Integer integer) {
-                    Log.e("zzw", "发送成功=" + integer);
+
                 }
             });
         }

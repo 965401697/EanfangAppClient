@@ -3,18 +3,32 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class OwnDataHintActivity extends BaseClientActivity {
+
+    @BindView(R.id.tv_info)
+    TextView tvInfo;
+    @BindView(R.id.tv_go)
+    TextView tvGo;
+    @BindView(R.id.tv_desc)
+    TextView tvDesc;
+    @BindView(R.id.tv_service)
+    TextView tvService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_data_hint);
+        ButterKnife.bind(this);
         setTitle("提交成功");
         setLeftBack();
 

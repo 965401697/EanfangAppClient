@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18090701
-        versionName "2.3.21"
+        versionCode 18111601
+        versionName "2.3.28_beta"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -39,11 +39,17 @@ android {
 
     //签名设置
     signingConfigs {
-        release {
-            keyAlias 'workers'
-            keyPassword 'eanfang'
+        stagingConfig {
+            keyAlias KEY_ALIAS_WORKER
+            keyPassword KEY_PASSWORD_WORKER
             storeFile file('../worker/keystore/worker.jks')
-            storePassword 'eanfang'
+            storePassword KEYSTORE_PASSWORD_WORKER
+        }
+        release {
+            keyAlias KEY_ALIAS_WORKER
+            keyPassword KEY_PASSWORD_WORKER
+            storeFile file('../worker/keystore/worker.jks')
+            storePassword KEYSTORE_PASSWORD_WORKER
         }
     }
     sourceSets {
@@ -59,6 +65,37 @@ android {
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
+//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+
+            // 上线url
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+        }
+        //  测试
+        staging {
+            //签名配置
+            signingConfig signingConfigs.release
+            buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+            minifyEnabled true //开启代码混淆
+            zipAlignEnabled true
+            shrinkResources true // 移除无用资源
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('staging')) {
+                    variant.outputs.all {
+                        outputFileName = "client_beta_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                    }
+                }
+            }
+            // 批量打包(gradle 3.0.0 以上)
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "client_beta_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                }
+            }
         }
         release {
             //签名配置
@@ -70,7 +107,7 @@ android {
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件 表示去掉没有引用的资源，可以减少应用的体积，但这个只有在混淆开启后才有效。
-//            shrinkResources false
+            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件
@@ -166,7 +203,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    implementation project(':eanfang')
     //fresco
     implementation 'com.facebook.fresco:fresco:1.5.0'
     //
@@ -191,8 +227,9 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.47'
     compile 'org.projectlombok:lombok:1.16.18'
     implementation project(':IMKit')
-    implementation project(':IMLib')
     implementation project(':zxing')
     // flowlayout
     compile 'com.zhy:flowlayout-lib:1.0.3'
+    implementation project(':IMLib')
+    implementation project(':eanfang')
 }

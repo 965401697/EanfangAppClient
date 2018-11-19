@@ -11,7 +11,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_weight="1"
-        android:textColor="@color/config_black_color"
+        android:textColor="#999999"
         android:textSize="@dimen/textSize_14" />
 
 

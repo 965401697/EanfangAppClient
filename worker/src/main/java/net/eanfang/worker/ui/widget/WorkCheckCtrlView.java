@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.WorkCheckListActivity;
 
 import butterknife.BindView;
@@ -53,7 +52,7 @@ public class WorkCheckCtrlView extends BaseDialog {
 
     private void initView() {
         ivLeft.setOnClickListener(v -> dismiss());
-        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, CheckActivity.class)));
+//        ivAdd.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, CheckActivity.class)));
         tvTitle.setText("设备点检");
         llMineAssignment.setOnClickListener((v) -> {
             jump("我创建的检查", "1");

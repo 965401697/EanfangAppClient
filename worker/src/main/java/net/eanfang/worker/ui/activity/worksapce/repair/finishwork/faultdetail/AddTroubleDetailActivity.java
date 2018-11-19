@@ -252,20 +252,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         // 原因判断
         ivVoiceInputTroubleReason.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroubleReason.setText(msg + "");
-                        etTroubleReason.requestFocus();
-                        //将光标定位到文字最后，以便修改
-                        etTroubleReason.setSelection(msg.length());
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, etTroubleReason);
             });
         });
         etTroubleReason.addTextChangedListener(new TextWatcher() {
@@ -300,17 +287,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         //过程方法
         ivVoiceInputTroublePoint.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroublePoint.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, etTroublePoint);
             });
         });
         etTroublePoint.addTextChangedListener(new TextWatcher() {
@@ -346,17 +323,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         // 处理措施
         ivVoiceInputTroubleDeal.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroubleDeal.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, etTroubleDeal);
             });
         });
         etTroubleDeal.addTextChangedListener(new TextWatcher() {
@@ -391,17 +358,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         // 使用建议
         ivVoiceInputTroubleUseAdvance.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        etTroubleUseAdvace.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleDetailActivity.this, etTroubleUseAdvace);
             });
         });
         etTroubleUseAdvace.addTextChangedListener(new TextWatcher() {

@@ -66,7 +66,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_order_id, "订单编号：");
         }
         helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
-        helper.setText(R.id.tv_arriveTime, "到达时限：" + GetConstDataUtils.getArriveList().get(item.getArriveTimeLimit()));
+        if (item.getArriveTimeLimit() != null) {
+            helper.setText(R.id.tv_arriveTime, "到达时限：" + GetConstDataUtils.getArriveList().get(item.getArriveTimeLimit()));
+        } else {
+            helper.setText(R.id.tv_arriveTime, "到达时限： 0 ");
+        }
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
@@ -94,14 +98,17 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         if (item.getStatus() == 2) {
             helper.setText(R.id.tv_do_first, "改约");
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 3) {
             helper.setText(R.id.tv_do_first, "联系客户");
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 4) {
             helper.setText(R.id.tv_do_first, "联系客户");
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "查看故障处理");
-            helper.setVisible(R.id.tv_state, false);
             helper.setVisible(R.id.iv_finish, true);
+            helper.setVisible(R.id.tv_state, false);
             if (item.getClientEvaluateId() == null || item.getClientEvaluateId().longValue() <= 0) {
                 helper.setVisible(R.id.tv_do_second, true);
             } else {

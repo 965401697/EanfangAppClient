@@ -26,7 +26,7 @@ public class GroupFriendsAdapter extends BaseQuickAdapter<GroupDetailBean.ListBe
 
 
         helper.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
-
+        helper.getView(R.id.tv_letter).setVisibility(View.GONE);
 
         if (item.getFlag() == 0) {
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(false);

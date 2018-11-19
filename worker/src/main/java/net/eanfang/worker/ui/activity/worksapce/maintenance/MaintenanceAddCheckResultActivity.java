@@ -84,7 +84,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
         }
     }
 
-    @OnClick({R.id.tv_add, R.id.ll_conclusion,R.id.tv_conclusion})
+    @OnClick({R.id.tv_add, R.id.ll_conclusion, R.id.tv_conclusion})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_add:
@@ -171,7 +171,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
             ToastUtil.get().showToast(this, "请选择处理结论");
             return false;
         }
-        checkResultPhoto = PhotoUtils.getPhotoUrl(snplPhoto, uploadMap, false);
+        checkResultPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplPhoto, uploadMap, false);
         if (StringUtils.isEmpty(checkResultPhoto)) {
             showToast("请选择照片");
             return false;

@@ -56,8 +56,10 @@ import butterknife.OnClick;
  */
 public class DataStatisticsActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
+    // 数据分析选择系统类别：全部，电子监控
     @BindView(R.id.tv_dataSelectType)
     TextView tvDataSelectType;
+    // 本月 昨日
     @BindView(R.id.rb_dataTimeToday)
     RadioButton rbDataTimeToday;
     @BindView(R.id.rb_dataTimeMonth)
@@ -101,12 +103,16 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     @BindView(R.id.ll_fault)
     LinearLayout llFault;
 
+    // 昨日报修 暂无数据
     @BindView(R.id.tv_repair_noresult)
     TextView tvRepairNoresult;
+    // 五家公司 暂无数据
     @BindView(R.id.tv_five_noresult)
     TextView tvFiveNoresult;
+    // 设备情况 暂无数据
     @BindView(R.id.tv_device_noresult)
     TextView tvDeviceNoresult;
+    // 昨日报修 暂无数据
     @BindView(R.id.tv_pie_noresult)
     TextView tvPieNoresult;
 
@@ -168,7 +174,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      * @decision 初始化视图
      */
     private void initView() {
-        setTitle("数据统计");
+        setTitle("报修数据统计");
         setLeftBack();
         mOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
@@ -217,6 +223,9 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
 
     }
 
+    /**
+     * 获取公司
+     */
     private void doGetComapnyData(String orgId) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("topCompanyId", orgId + "");
@@ -254,7 +263,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         EanfangHttp.post(NewApiService.REPAIR_DATA_STATISTICE)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<DataStatisticsBean>(this, true, DataStatisticsBean.class, bean -> {
-                    setData(bean);
+//                    setData(bean);
                 }));
 
     }
@@ -563,6 +572,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
          * */
         pieChart.setDrawEntryLabels(true);
         pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setNoDataText("暂无数据");
     }
 
 }

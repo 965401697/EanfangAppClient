@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
- >
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -30,7 +29,7 @@
             android:textSize="@dimen/textSize_18" />
 
         <TextView
-            android:id="@+id/tv_company_name"
+            android:id="@+id/tv_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -53,6 +52,7 @@
 
 
     <TextView
+        android:id="@+id/tv_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tv_service"
@@ -68,7 +68,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen_38"
-        android:text="如有疑问，请联系客服处理，客服热线：010-5877-8731"
+        android:text="如有疑问，请联系客服处理，客服热线：400-890-9280"
         android:textSize="@dimen/textSize_13" />
 
 

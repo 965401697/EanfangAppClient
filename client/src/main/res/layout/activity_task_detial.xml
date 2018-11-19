@@ -71,11 +71,11 @@
 
                 <ImageView
                     android:id="@+id/iv_address"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/ic_worker_detail_area_down" />
             </LinearLayout>
 
             <LinearLayout
@@ -103,11 +103,11 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/ic_worker_detail_area_down" />
             </LinearLayout>
 
             <LinearLayout
@@ -135,11 +135,11 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/ic_worker_detail_area_down" />
             </LinearLayout>
 
             <LinearLayout
@@ -167,11 +167,11 @@
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/ic_worker_detail_area_down" />
             </LinearLayout>
 
             <LinearLayout
@@ -200,11 +200,12 @@
 
                 <ImageView
                     android:id="@+id/iv_addre"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/ic_worker_detail_area_down" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -213,14 +214,31 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="内容"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:text="内容"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_content_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_comment"
@@ -240,13 +258,30 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="目的"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="目的"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_target_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_goal"
@@ -266,13 +301,30 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="标准"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="标准"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_standard_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_30"
+                        android:src="@mipmap/ic_client_voice_input" />
+
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/et_standard"
@@ -289,51 +341,95 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dimen_20"
+
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_92"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/dimen_39"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="参与人员"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_add_team"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dimen_39"
+                        android:background="@drawable/bg_client_camera_text_back_pressed"
+                        android:paddingBottom="@dimen/dimen_6"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingRight="@dimen/dimen_15"
+                        android:paddingTop="@dimen/dimen_6"
+                        android:text="添加成员"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_12" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/background" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_team"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="参与人员"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/et_worker"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:gravity="left"
-                    android:hint="请输入参与人员"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="附件"
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="附件"
-                    android:textColor="@color/client_form_title_color"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="（最多上传3张）"
+                        android:textColor="@color/font_color"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_addViedeo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="（最多上传3张）"
-                    android:textColor="@color/font_color"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="@dimen/dimen_30"
+                    android:background="@drawable/bg_client_camera_text_back_pressed"
+                    android:padding="@dimen/dimen_10"
+                    android:text="添加视频"
+                    android:textColor="@color/color_white" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -342,25 +438,58 @@
                 android:background="#fff"
                 android:orientation="vertical">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                    android:id="@+id/snpl_moment_add_photos"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="20dp"
-                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                    app:bga_snpl_editable="true"
-                    app:bga_snpl_itemCornerRadius="0dp"
-                    app:bga_snpl_itemSpanCount="3"
-                    app:bga_snpl_itemWhiteSpacing="4dp"
-                    app:bga_snpl_itemWidth="0dp"
-                    app:bga_snpl_maxItemCount="3"
-                    app:bga_snpl_otherWhiteSpacing="100dp"
-                    app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                    app:bga_snpl_plusEnable="true"
-                    app:bga_snpl_sortable="true" />
+                    android:orientation="horizontal">
 
+                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:id="@+id/snpl_moment_add_photos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                        app:bga_snpl_editable="true"
+                        app:bga_snpl_itemCornerRadius="0dp"
+                        app:bga_snpl_itemSpanCount="3"
+                        app:bga_snpl_itemWhiteSpacing="4dp"
+                        app:bga_snpl_itemWidth="0dp"
+                        app:bga_snpl_maxItemCount="3"
+                        app:bga_snpl_otherWhiteSpacing="100dp"
+                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                        app:bga_snpl_plusEnable="true"
+                        app:bga_snpl_sortable="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_thumbnail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_200"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:visibility="gone">
+
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_takevideo"
+                            android:layout_width="@dimen/dimen_150"
+                            android:layout_height="@dimen/dimen_150"
+                            android:layout_centerInParent="true" />
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dimen_150"
+                            android:layout_height="@dimen/dimen_150"
+                            android:layout_centerInParent="true"
+                            android:background="#1A000000"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/ic_play_video" />
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

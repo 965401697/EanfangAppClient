@@ -46,11 +46,14 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {
             // 口碑
-            helper.setText(R.id.tv_koubei, item.getPublicPraise() / 100 + "");
+            helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise()));
         }
         if (item.getGoodRate() != 0) {
             // 好评率
-            helper.setText(R.id.tv_haopinglv, item.getGoodRate() + "%" + "");
+            java.text.NumberFormat percentFormat = java.text.NumberFormat.getPercentInstance();
+
+            //自动转换成百分比显示..
+            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double)(item.getGoodRate() * 0.01),2) + "%"));
         }
 
         // 认证
@@ -75,4 +78,17 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
 //        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;
 //        helper.setRating(R.id.rb_star1, stars);
     }
+
+    /**
+     * 保留几位小数
+     *
+     * @param a
+     * @param n
+     * @return
+     */
+    public double SplitAndRound(double a, int n) {
+        a = a * Math.pow(10, n);
+        return (Math.round(a)) / (Math.pow(10, n));
+    }
+
 }

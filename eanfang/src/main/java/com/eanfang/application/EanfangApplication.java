@@ -133,11 +133,24 @@ public class EanfangApplication extends CustomeApplication {
         if (EanfangApplication.get().getUser() != null) {
             EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
         }
-        if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("client")) {
-            EanfangHttp.setClient();
-        } else if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("worker")) {
-            EanfangHttp.setWorker();
+
+        try {
+            String appType = (String) SharePreferenceUtil.get().get("app", "");
+            if (appType.equals("client")) {
+                EanfangHttp.setClient();
+            } else if (appType.equals("worker")) {
+                EanfangHttp.setWorker();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+//        if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("client")) {
+//            EanfangHttp.setClient();
+//        } else if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("worker")) {
+//            EanfangHttp.setWorker();
+//        }
     }
 
 

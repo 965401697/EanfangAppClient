@@ -1,5 +1,7 @@
 package com.eanfang.model;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -444,6 +446,15 @@ public class WorkTaskInfoBean implements Serializable {
 
             private Long accId;
             private String realName;
+            private String avatar;
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
+            }
 
             public Long getAccId() {
                 return accId;
@@ -463,7 +474,7 @@ public class WorkTaskInfoBean implements Serializable {
         }
     }
 
-    public static class WorkTaskDetailsBean implements Serializable {
+    public static class WorkTaskDetailsBean implements Serializable, MultiItemEntity {
         /**
          * criterion : 完美完成
          * endTime : 2017-12-07 09:48:57
@@ -480,6 +491,10 @@ public class WorkTaskInfoBean implements Serializable {
          * pictures : 照片地址
          */
 
+        //多布局type
+        public static final int FOLD = 1;//折叠
+        public static final int EXPAND = 2; //展开
+
         private String criterion;
         private String endTime;
         private int firstCallback;
@@ -493,6 +508,8 @@ public class WorkTaskInfoBean implements Serializable {
         private int thenCallback;
         private String title;
         private String pictures;
+        private String mp4Path;
+        private int itemType;
 
         public String getCriterion() {
             return criterion == null ? "" : criterion;
@@ -596,6 +613,23 @@ public class WorkTaskInfoBean implements Serializable {
 
         public void setPictures(String pictures) {
             this.pictures = pictures;
+        }
+
+        public String getMp4_path() {
+            return mp4Path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4Path = mp4_path;
+        }
+
+        @Override
+        public int getItemType() {
+            return itemType;
+        }
+
+        public void setItemType(int itemType) {
+            this.itemType = itemType;
         }
     }
 }

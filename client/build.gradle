@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18090701
-        versionName "2.3.21"
+        versionCode 18111601
+        versionName "2.3.28_beta"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
@@ -37,11 +37,17 @@ android {
 
     //签名设置
     signingConfigs {
+        stagingConfig {
+            keyAlias KEY_ALIAS_CLIENT
+            keyPassword KEY_PASSWORD_CLIENT
+            storeFile file('../worker/keystore/client.jks')
+            storePassword KEYSTORE_PASSWORD_CLIENT
+        }
         release {
-            keyAlias 'clients'
-            keyPassword 'eanfang'
+            keyAlias KEY_ALIAS_CLIENT
+            keyPassword KEY_PASSWORD_CLIENT
             storeFile file('../client/keystore/client.jks')
-            storePassword 'eanfang'
+            storePassword KEYSTORE_PASSWORD_CLIENT
         }
     }
     buildTypes {
@@ -49,7 +55,39 @@ android {
             signingConfig signingConfigs.release
             buildConfigField("boolean", "LOG_DEBUG", "true")
             buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
+//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
+            // 上线url
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+        }
+        //  测试
+        staging {
+            //签名配置
+            signingConfig signingConfigs.release
+            buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+
+            minifyEnabled true //开启代码混淆
+            zipAlignEnabled true
+            shrinkResources true // 移除无用资源
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 批量打包(gradle 3.0.0 以下)
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('staging')) {
+                    variant.outputs.all {
+                        outputFileName = "client_beta_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                    }
+                }
+            }
+            // 批量打包(gradle 3.0.0 以上)
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "client_beta_v${defaultConfig.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                }
+            }
         }
         release {
             //签名配置
@@ -105,14 +143,18 @@ android {
         "xiaomi" {
             dimension "app"
             manifestPlaceholders = [tac_channel: "xiaomi"]
+//            applicationId "net.eanfang.client.xiaomi.stag"
+//            resValue "string", "app_name", "小米测试版"
         }
         "baidu" {
             dimension "app"
             manifestPlaceholders = [tac_channel: "baidu"]
+//            applicationId "net.eanfang.client.baidu.stag"
+//            resValue "string", "app_name", "百度测试版"
         }
         "huawei" {
             dimension "app"
-            manifestPlaceholders = [tac_channel: "baidu"]
+            manifestPlaceholders = [tac_channel: "huawei"]
         }
         "wandoujia" {
             dimension "app"
@@ -173,18 +215,15 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     // -------------------- 以上4个库是必须依赖的 ----------------------------
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
     compile 'com.github.vipulasri:timelineview:1.0.5'
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
-
     compile 'org.projectlombok:lombok:1.16.18'
-
     //    implementation 'org.greenrobot:greendao:3.2.2' // add library
     implementation project(':zxing')
     implementation project(':IMKit')
     implementation project(':IMLib')
+//    implementation project(':Sight')
 }
-

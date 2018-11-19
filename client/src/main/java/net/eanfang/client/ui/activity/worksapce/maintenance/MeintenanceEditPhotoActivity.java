@@ -145,25 +145,25 @@ public class MeintenanceEditPhotoActivity extends BaseClientActivity {
 
     private void doSubmitData() {
         //维保前 （3张）
-        String before = PhotoUtils.getPhotoUrl(snplBeforePhoto, uploadMap, false);
+        String before = PhotoUtils.getPhotoUrl("biz/maintain/",snplBeforePhoto, uploadMap, false);
         if (StringUtils.isEmpty(before)) {
             showToast("请选择维保前照片");
             return;
         }
         //处理后现场 （3张）
-        String after = PhotoUtils.getPhotoUrl(snplEndPhoto, uploadMap, false);
+        String after = PhotoUtils.getPhotoUrl("biz/maintain/",snplEndPhoto, uploadMap, false);
         if (StringUtils.isEmpty(after)) {
             showToast("请选择处理后现场照片");
             return;
         }
         //维保后 （3张）
-        String end = PhotoUtils.getPhotoUrl(snplPhoto, uploadMap, false);
+        String end = PhotoUtils.getPhotoUrl("biz/maintain/",snplPhoto, uploadMap, false);
         if (StringUtils.isEmpty(end)) {
             showToast("请选择维保后照片");
             return;
         }
         //功能正常照片
-        String function = PhotoUtils.getPhotoUrl(snplFunctionPhoto, uploadMap, false);
+        String function = PhotoUtils.getPhotoUrl("biz/maintain/",snplFunctionPhoto, uploadMap, false);
         if (StringUtils.isEmpty(function)) {
             showToast("请选择功能正常照片");
             return;

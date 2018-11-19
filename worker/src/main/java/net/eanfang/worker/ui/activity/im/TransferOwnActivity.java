@@ -11,7 +11,6 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
@@ -101,7 +100,7 @@ public class TransferOwnActivity extends BaseWorkerActivity {
                         ownId = "";
                         bean.setFlag(0);
                     } else {
-                        ((FriendListBean) adapter.getData().get(mOldPosition)).setFlag(0);
+                        ((GroupDetailBean.ListBean) adapter.getData().get(mOldPosition)).setFlag(0);
                         mOldPosition = position;
                         ownId = bean.getAccId();
                         bean.setFlag(1);

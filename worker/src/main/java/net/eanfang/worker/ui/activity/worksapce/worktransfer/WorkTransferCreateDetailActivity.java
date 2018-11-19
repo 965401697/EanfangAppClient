@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.worktransfer;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,25 +15,37 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.model.WorkTransferDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.takevideo.TakeVdideoMode;
+import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
-
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.widget.WorkTrancferCreateSelectClassListView;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * @author Guanluocang
@@ -59,10 +72,23 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
     EditText etInputDescribe;
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
+    // 照片和短视频
+    @BindView(R.id.tv_addViedeo)
+    TextView tvAddViedeo;
+    @BindView(R.id.iv_takevideo)
+    SimpleDraweeView ivTakevideo;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
     @BindView(R.id.et_input_note)
     EditText etInputNote;
     @BindView(R.id.rl_confirm)
     RelativeLayout rlConfirm;
+    //详细描述
+    @BindView(R.id.iv_desc_voice)
+    ImageView ivDescVoice;
+    // 备注信息
+    @BindView(R.id.iv_remark_voice)
+    ImageView ivRemarkVoice;
 
     private HashMap<String, String> uploadMap = new HashMap<>();
 
@@ -84,6 +110,14 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
      * 状态ID
      */
     private int mStatusID = 100;
+    /**
+     * 视频上传key
+     */
+    private String mUploadKey = "";
+    /**
+     * 视频路径
+     */
+    private String mVieoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +126,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
         initPhoto();
+        initListener();
     }
 
     private void initPhoto() {
@@ -124,8 +159,26 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             unFinishDetail = (WorkTransferDetailBean.NotDidEntityListBean) getIntent().getSerializableExtra("unFinishDetail");
             followThingDetail = (WorkTransferDetailBean.FollowUpEntityListBean) getIntent().getSerializableExtra("followThingDetail");
             attentionDetail = (WorkTransferDetailBean.NoticeEntityListBean) getIntent().getSerializableExtra("attentionDetail");
+            ivDescVoice.setVisibility(View.GONE);
+            ivRemarkVoice.setVisibility(View.GONE);
+            tvAddViedeo.setVisibility(View.GONE);
             initData();
         }
+    }
+
+    private void initListener() {
+        // 拍摄视频
+        tvAddViedeo.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            JumpItent.jump(WorkTransferCreateDetailActivity.this, TakeVideoActivity.class, bundle);
+        });
+        //视频展示
+        ivTakevideo.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", mVieoPath);
+            JumpItent.jump(WorkTransferCreateDetailActivity.this, PlayVideoActivity.class, bundle);
+        });
     }
 
     @OnClick({R.id.rl_select_status, R.id.rl_confirm})
@@ -181,7 +234,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             return;
         }
         // 添加照片
-        String presentationPic = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String presentationPic = PhotoUtils.getPhotoUrl("oa/transfer/", snplMomentAddPhotos, uploadMap, true);
         if ("ADD_HAND".equals(mSwitch)) {
             changeGoodDetail.setPicture(presentationPic);
             //备注
@@ -193,6 +246,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             // 详细描述
             changeGoodDetail.setDescription(mDescribe);
             changeGoodDetail.setType(1);
+            changeGoodDetail.setMp4_path(mUploadKey);
         } else if ("ADD_FINISH_WORK".equals(mSwitch)) {
             finishDetail.setPicture(presentationPic);
             //备注
@@ -204,6 +258,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             // 详细描述
             finishDetail.setDescription(mDescribe);
             finishDetail.setType(2);
+            finishDetail.setMp4_path(mUploadKey);
         } else if ("ADD_UNFINISH_THINGS".equals(mSwitch)) {
             unFinishDetail.setPicture(presentationPic);
             //备注
@@ -215,6 +270,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             // 详细描述
             unFinishDetail.setDescription(mDescribe);
             unFinishDetail.setType(3);
+            unFinishDetail.setMp4_path(mUploadKey);
         } else if ("ADD_FLOW_THINGS".equals(mSwitch)) {
             followThingDetail.setPicture(presentationPic);
             //备注
@@ -226,6 +282,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             // 详细描述
             followThingDetail.setDescription(mDescribe);
             followThingDetail.setType(4);
+            followThingDetail.setMp4_path(mUploadKey);
         } else if ("ADD_ATTENTION_THINGS".equals(mSwitch)) {
             attentionDetail.setPicture(presentationPic);
             //备注
@@ -237,6 +294,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             // 详细描述
             attentionDetail.setDescription(mDescribe);
             attentionDetail.setType(5);
+            attentionDetail.setMp4_path(mUploadKey);
         }
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -298,13 +356,21 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (changeGoodDetail.getPicture() != null) {
+            if (!StringUtils.isEmpty(changeGoodDetail.getPicture())) {
+                snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = changeGoodDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            } else {
+                snplMomentAddPhotos.setVisibility(View.GONE);
             }
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+            if (!StringUtils.isEmpty(changeGoodDetail.getMp4_path())) {
+                rlThumbnail.setVisibility(View.VISIBLE);
+                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".jpg"));
+                mVieoPath = BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".mp4";
+            }
         }
         if (finishDetail != null) {
             etInputContent.setText("交接内容:  " + finishDetail.getContent());
@@ -316,13 +382,21 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (finishDetail.getPicture() != null) {
+            if (!StringUtils.isEmpty(finishDetail.getPicture())) {
+                snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = finishDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            } else {
+                snplMomentAddPhotos.setVisibility(View.GONE);
             }
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+            if (!StringUtils.isEmpty(finishDetail.getMp4_path())) {
+                rlThumbnail.setVisibility(View.VISIBLE);
+                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".jpg"));
+                mVieoPath = BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".mp4";
+            }
         }
         if (unFinishDetail != null) {
             etInputContent.setText("交接内容:  " + unFinishDetail.getContent());
@@ -334,13 +408,21 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (unFinishDetail.getPicture() != null) {
+            if (!StringUtils.isEmpty(unFinishDetail.getPicture())) {
+                snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = unFinishDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            } else {
+                snplMomentAddPhotos.setVisibility(View.GONE);
             }
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+            if (!StringUtils.isEmpty(unFinishDetail.getMp4_path())) {
+                rlThumbnail.setVisibility(View.VISIBLE);
+                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".jpg"));
+                mVieoPath = BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".mp4";
+            }
         }
         if (followThingDetail != null) {
             etInputContent.setText("交接内容:  " + followThingDetail.getContent());
@@ -352,13 +434,21 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (followThingDetail.getPicture() != null) {
+            if (!StringUtils.isEmpty(followThingDetail.getPicture())) {
+                snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = followThingDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            } else {
+                snplMomentAddPhotos.setVisibility(View.GONE);
             }
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+            if (!StringUtils.isEmpty(followThingDetail.getMp4_path())) {
+                rlThumbnail.setVisibility(View.VISIBLE);
+                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".jpg"));
+                mVieoPath = BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".mp4";
+            }
         }
         if (attentionDetail != null) {
             etInputContent.setText("交接内容:  " + attentionDetail.getContent());
@@ -370,14 +460,53 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (attentionDetail.getPicture() != null) {
+            if (!StringUtils.isEmpty(attentionDetail.getPicture())) {
+                snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = attentionDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            } else {
+                snplMomentAddPhotos.setVisibility(View.GONE);
             }
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+            if (!StringUtils.isEmpty(attentionDetail.getMp4_path())) {
+                rlThumbnail.setVisibility(View.VISIBLE);
+                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".jpg"));
+                mVieoPath = BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".mp4";
+            }
         }
 
+    }
+
+    @OnClick({R.id.iv_desc_voice, R.id.iv_remark_voice})
+    public void onViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_desc_voice:
+                inputVoice(etInputDescribe);
+                break;
+            case R.id.iv_remark_voice:
+                inputVoice(etInputNote);
+                break;
+        }
+    }
+
+    private void inputVoice(EditText editText) {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(WorkTransferCreateDetailActivity.this, editText);
+        });
+    }
+
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            mVieoPath = takeVdideoMode.getMImagePath();
+            mUploadKey = takeVdideoMode.getMKey();
+            if (!StringUtils.isEmpty(mVieoPath)) {
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+            }
+            tvAddViedeo.setText("重新拍摄");
+        }
     }
 }

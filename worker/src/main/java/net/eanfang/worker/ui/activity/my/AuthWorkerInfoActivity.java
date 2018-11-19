@@ -53,6 +53,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师认证 填写个人资料 照片 等
  */
+@Deprecated
 public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
 
@@ -61,6 +62,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
     private final int HEADER_PIC = 107;
 
+    @BindView(R.id.ll_headers)
+    LinearLayout llHeaders;
     //联系人姓名
     @BindView(R.id.tv_contact_name)
     TextView tvContactName;
@@ -86,9 +89,9 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     // 支付类型
     @BindView(R.id.ll_payType)
     LinearLayout llPayType;
+
     @BindView(R.id.tv_payType)
     TextView tvPayType;
-
     @BindView(R.id.iv_header)
     SimpleDraweeView ivHeader;
     // 紧急联系电话
@@ -105,8 +108,6 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     TextView tvConfim;
     @BindView(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
-    @BindView(R.id.ll_headers)
-    LinearLayout llHeaders;
 
     private String isAuthen = "";
     private int status;
@@ -378,7 +379,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             return;
         }
         TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
+        String imgKey = "account/"+UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEADER_PIC:
                 workerInfoBean.setAvatarPhoto(imgKey);

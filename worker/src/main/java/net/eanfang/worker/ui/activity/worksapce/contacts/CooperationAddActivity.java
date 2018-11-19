@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -22,9 +19,10 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.CooperationSearchBean;
-import com.eanfang.util.ETimeUtils;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CooperationEntity;
@@ -34,6 +32,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.CooperationAddAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -43,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CooperationAddActivity extends BaseWorkerActivity {
+public class CooperationAddActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.iv_company_logo)
     SimpleDraweeView ivCompanyLogo;
@@ -76,7 +75,7 @@ public class CooperationAddActivity extends BaseWorkerActivity {
 
     private CooperationSearchBean.ListBean mBean;
 
-    private TimePickerView mTimeYearMonthDay;
+//    private TimePickerView mTimeYearMonthDay;
 
     private TextView currentTextView;
 
@@ -126,7 +125,7 @@ public class CooperationAddActivity extends BaseWorkerActivity {
         osCooperationAddAdapter.setNewData(mBusinessList);
 
 
-        doSelectYearMonthDay();
+//        doSelectYearMonthDay();
     }
 
 
@@ -197,24 +196,24 @@ public class CooperationAddActivity extends BaseWorkerActivity {
         Calendar endDate = Calendar.getInstance();
         startDate.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DATE));
         endDate.set(2040, 11, 31);
-        mTimeYearMonthDay = new TimePickerBuilder(CooperationAddActivity.this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                currentTextView.setText(ETimeUtils.getTimeByYearMonthDay(date));
-            }
-        })
-                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-                .setCancelText("取消")//取消按钮文字
-                .setSubmitText("确定")//确认按钮文字
-                .setContentTextSize(18)//滚轮文字大小
-                .setTitleSize(20)//标题文字大小
-//                .setTitleText("上门日期")//标题文字
-                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
-                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-                .setRangDate(startDate, endDate)//起始终止年月日设定
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .isDialog(false)//是否显示为对话框样式
-                .build();
+//        mTimeYearMonthDay = new TimePickerBuilder(CooperationAddActivity.this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                currentTextView.setText(ETimeUtils.getTimeByYearMonthDay(date));
+//            }
+//        })
+//                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+//                .setCancelText("取消")//取消按钮文字
+//                .setSubmitText("确定")//确认按钮文字
+//                .setContentTextSize(18)//滚轮文字大小
+//                .setTitleSize(20)//标题文字大小
+////                .setTitleText("上门日期")//标题文字
+//                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+//                .setRangDate(startDate, endDate)//起始终止年月日设定
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(false)//是否显示为对话框样式
+//                .build();
     }
 
 
@@ -223,15 +222,26 @@ public class CooperationAddActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.ll_start_time:
                 currentTextView = tvStartTime;
-                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDay.show();
                 break;
             case R.id.ll_end_time:
                 currentTextView = tvEndTime;
-                mTimeYearMonthDay.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDay.show();
                 break;
             case R.id.tv_sub:
                 sub();
                 break;
+        }
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            currentTextView.setText(time);
         }
     }
 

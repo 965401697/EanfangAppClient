@@ -1,5 +1,7 @@
 package com.eanfang.config;
 
+import android.os.Environment;
+
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.eanfang.application.EanfangApplication;
@@ -20,6 +22,8 @@ import java.util.List;
  */
 public class Config {
     private static Config config = new Config();
+
+    public static final String VIDEO_STORAGE_DIR = Environment.getExternalStorageDirectory() + "/eanfang/";
     /**
      * 基础数据 分隔字符
      */

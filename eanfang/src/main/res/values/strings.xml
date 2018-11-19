@@ -82,12 +82,16 @@
     <string name="text_service_content">完善个人资料，如姓名，地址等相关信息，即可享受享受易安防完整平台服务。</string>
     <string name="text_service_nav">我的 >> 点击头像 >> 完善资料</string>
     <string name="text_service_tel">咨询电话:</string>
-    <string name="text_service_telphone">010-5877-8731</string>
+    <string name="text_service_telphone">400-890-9280</string>
     <string name="text_data_change">切换</string>
 
     <!-- 帮助页面 -->
     <string name="text_data_repair_dealy">昨日报修</string>
     <string name="text_data_repair_five">报修前五家单位</string>
+    <string name="text_data_install_dealy">昨日报装</string>
+    <string name="text_data_install_five">报装前五家单位</string>
+    <string name="text_data_design_dealy">昨日设计</string>
+    <string name="text_data_design_five">设计前五家单位</string>
     <string name="text_data_devices">设备情况</string>
     <string name="text_data_monitor">监控系统</string>
     <string name="text_data_self">防盗系统</string>
@@ -110,4 +114,7 @@
     <string name="text_work_talk_ten">10.如何能更容易理解我想要表达的意思</string>
     <string name="text_work_talk_eleven">11.你觉得我们错失的最大机遇是什么</string>
     <string name="text_work_talk_input">请输入文字内容</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

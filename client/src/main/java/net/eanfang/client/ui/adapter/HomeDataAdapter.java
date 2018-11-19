@@ -19,7 +19,9 @@ public class HomeDataAdapter extends BaseQuickAdapter<HomeDatastisticeBean.Group
 
     @Override
     protected void convert(BaseViewHolder helper, HomeDatastisticeBean.GroupBean item) {
-        helper.setText(R.id.tv_repair_num, item.getCount() + "");
+        // 数量
+        helper.setText(R.id.tv_repair_num, item.getNum() + "");
+
         if ("已修复".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
             helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_one);
         } else if ("维修中".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
@@ -29,6 +31,12 @@ public class HomeDataAdapter extends BaseQuickAdapter<HomeDatastisticeBean.Group
         } else {
             helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_four);
         }
-        helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
+        // 底下类型
+        if ("5".equals(item.getType())) {
+            helper.setText(R.id.tv_repair_type, "待处理");
+        } else {
+            helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
+        }
+
     }
 }

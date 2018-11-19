@@ -20,8 +20,11 @@
         android:layout_below="@+id/iv_icon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dimen_16"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
         android:text=" "
         android:textColor="@color/color_client_neworder"
-        android:textSize="@dimen/textSize_12" />
+        android:textSize="@dimen/textSize_12"  />
 
 </RelativeLayout>

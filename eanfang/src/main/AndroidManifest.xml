@@ -100,7 +100,13 @@
         <activity android:name=".ui.activity.SelectPresonActivity" />
         <activity android:name=".ui.activity.kpbs.KPBSActivity" />
         <activity android:name=".ui.activity.AuthWorkerAreaNewActivity" />
-        <activity android:name=".ui.activity.NoPermissionActivity"></activity>
+        <activity android:name=".ui.activity.NoPermissionActivity" />
+        <activity android:name=".takevideo.TakeVideoActivity" />
+        <activity
+            android:name=".takevideo.PlayVideoActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.QrCodeShowActivity" />
     </application>
 
 </manifest>

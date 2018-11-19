@@ -109,6 +109,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_finish, true);
 
             helper.setVisible(R.id.tv_do_first, false);
+            helper.setVisible(R.id.iv_finish, false);
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "完工报告");
             helper.setVisible(R.id.tv_state, false);

@@ -4,11 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -216,6 +220,9 @@ public class StringUtils {
         System.out.println("isvalid:" + isValid("bac83aad1e1e3315b814160de69467d0PGFn05GfO4Bj2gcKyH4jcCfOS + CIkfDv0ZNNjBJ7TqM ="));
     }
 
+    /**
+     * 截取url中 字段值
+     */
     public static String getValueByName(String url, String name) {
         String result = "";
         int index = url.indexOf("?");
@@ -228,6 +235,16 @@ public class StringUtils {
             }
         }
         return result;
+    }
+
+    public static void showKeyboard(Context context, View editText) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
+            }
+        }, 200);
     }
 
 }

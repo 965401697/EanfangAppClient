@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,11 +16,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
@@ -106,7 +107,6 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     @BindView(R.id.rv_group)
     RecyclerView rvGroup;
 
-    private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private int posistion;
@@ -139,6 +139,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
         }
     };
 
+    private boolean isEventBus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +151,13 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
 
     private void initView() {
         setTitle("新建汇报");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //是否要保存
+                giveUp();
+            }
+        });
 
         btnAddComplete.setOnClickListener(this);
         btnAddFind.setOnClickListener(this);
@@ -246,19 +253,22 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_complete://完成工作
+                isEventBus = false;
                 Intent intent = new Intent(ReportActivity.this, AddReportCompleteActivity.class);
                 startActivityForResult(intent, 1);
                 break;
             case R.id.btn_add_find://发现问题
+                isEventBus = false;
                 intent = new Intent(ReportActivity.this, AddReportFindActivity.class);
                 startActivityForResult(intent, 2);
                 break;
             case R.id.tv_add_plan://后续计划
+                isEventBus = false;
                 intent = new Intent(ReportActivity.this, AddReportPlanActivity.class);
                 startActivityForResult(intent, 3);
                 break;
             case R.id.ll_depend_person://联系人
-
+                isEventBus = true;
                 isSend = 0;
 
                 Intent in = new Intent(this, SelectOrganizationActivity.class);
@@ -270,12 +280,13 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 break;
 
             case R.id.tv_send://选择人员
-
+                isEventBus = true;
                 isSend = 1;
                 startActivity(new Intent(ReportActivity.this, SelectOAPresonActivity.class));
                 break;
 
             case R.id.tv_send_group://选择群组
+                isEventBus = true;
                 isSend = 2;
                 startActivityForResult(new Intent(ReportActivity.this, SelectOAGroupActivity.class), REQUEST_CODE_GROUP);
                 break;
@@ -296,6 +307,27 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             showToast("请选择类型");
             return;
         }
+
+        if (beanList.size() == 0) {
+            showToast("请填写完成工作的内容");
+            return;
+        }
+
+        if (planList.size() == 0) {
+            showToast("请填写后续计划的内容");
+            return;
+        }
+
+        if (beanList.size() < 3) {
+            showToast("完成工作的内容少于3条");
+            return;
+        }
+
+        if (planList.size() < 3) {
+            showToast("后续计划的内容少于3条");
+            return;
+        }
+
         if (newPresonList.size() == 0) {
             //工作协同默认值
             bean.setAssigneeUserId(EanfangApplication.get().getUserId());
@@ -394,6 +426,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
+        if (!isEventBus) return;
 
         if (presonList.size() > 0) {
             if (isSend == 1) {
@@ -490,5 +523,25 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             });
             planAdapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            giveUp();
+        }
+        return false;
+    }
+
+    /**
+     * 放弃新建汇报
+     */
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃工作汇报？", () -> {
+            finish();
+        }).showDialog();
     }
 }

@@ -83,7 +83,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/dimen_38"
-            android:text="010-5877-8731"
+            android:text="400-890-9280"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/textSize_13" />
     </LinearLayout>

@@ -61,6 +61,8 @@ public class OrderDetailFragment extends BaseFragment {
     private ImageView iv_phone;
     private TextView tv_number;
     private TextView tv_feature_time;
+    private TextView tv_project_name;
+    private TextView tv_repair_remarkinfo;
     // 故障明细数量
     private TextView mTvFaultNum;
     // 保修人
@@ -109,6 +111,9 @@ public class OrderDetailFragment extends BaseFragment {
         llm = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setNestedScrollingEnabled(false);
+
+        tv_project_name = findViewById(R.id.tv_project_name);
+        tv_repair_remarkinfo = findViewById(R.id.tv_repair_remarkinfo);
 
         tv_company_name = findViewById(R.id.tv_company_name);
         tv_contract_name = findViewById(R.id.tv_contract_name);
@@ -166,14 +171,14 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
                 }
-                if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
-                }
+//                if (view.getId() == R.id.ll_item) {
+//                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+//                    if (secondItem.getVisibility() == View.VISIBLE) {
+//                        secondItem.setVisibility(View.GONE);
+//                    } else {
+//                        secondItem.setVisibility(View.VISIBLE);
+//                    }
+//                }
             }
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -211,7 +216,16 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_company_name.setText(V.v(() -> bean.getRepairCompany()));//单位名称
                     tv_contract_name.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getRealName()));//联系人
                     tv_contract_phone.setText(V.v(() -> bean.getOwnerUser().getAccountEntity().getMobile()));// 联系人手机号
-                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
+                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + bean.getAddress());
+//                    tv_address.setText(Config.get().getAddressByCode(bean.getPlaceCode()) + "\r\n" + bean.getAddress());
+
+                    if (!TextUtils.isEmpty(bean.getProjectName())) {
+                        tv_project_name.setText(bean.getProjectName());//项目名称
+                    }
+                    if (!TextUtils.isEmpty(bean.getRemarkInfo())) {
+                        tv_repair_remarkinfo.setText(bean.getRemarkInfo());//备注信息
+                    }
+
                     // 现场联系人
                     repairContacts.setText(V.v(() -> bean.getRepairContacts()));
                     // 联系人手机号

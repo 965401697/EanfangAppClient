@@ -115,9 +115,17 @@
             android:layout_height="@dimen/dimen_26"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/dimen_34"
-            android:src="@mipmap/arrow_right" />
+            android:src="@mipmap/arrow_right"
+            android:visibility="gone" />
     </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_role"
+        android:background="@color/white"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_sure"

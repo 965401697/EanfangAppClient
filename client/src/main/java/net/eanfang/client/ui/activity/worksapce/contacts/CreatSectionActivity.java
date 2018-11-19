@@ -44,13 +44,7 @@ public class CreatSectionActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         setTitle("创建部门");
         setLeftBack();
-        setRightTitle("创建");
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                created();
-            }
-        });
+
     }
 
     @OnClick(R.id.ll_section)
@@ -114,10 +108,15 @@ public class CreatSectionActivity extends BaseClientActivity {
             SectionBean sectionBean = (SectionBean) o;
             tvSectionName.setText(sectionBean.getOrgName());
             parentOrgId = sectionBean.getOrgId();
-        }else if (o instanceof SectionBean.ChildrenBean) {
+        } else if (o instanceof SectionBean.ChildrenBean) {
             SectionBean.ChildrenBean childrenBean = (SectionBean.ChildrenBean) o;
             tvSectionName.setText(childrenBean.getOrgName());
             parentOrgId = childrenBean.getOrgId();
         }
+    }
+
+    @OnClick(R.id.tv_created)
+    public void onViewClicked() {
+        created();
     }
 }

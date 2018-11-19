@@ -61,7 +61,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
             if (!TextUtils.isEmpty(path)) {
                 ivIcon.setImageURI("file://" + path);
 
-                imgKey = UuidUtil.getUUID() + ".png";
+                imgKey = "im/group/"+UuidUtil.getUUID() + ".png";
 
             }
 
@@ -168,7 +168,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
             return;
         }
         TImage image = result.getImage();
-        imgKey = UuidUtil.getUUID() + ".png";
+        imgKey = "im/group/"+UuidUtil.getUUID() + ".png";
 
         ivIcon.setImageURI("file://" + image.getOriginalPath());
 

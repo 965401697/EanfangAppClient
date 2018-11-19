@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,21 +13,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.sys.entity.UserEntity;
@@ -41,6 +41,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -52,7 +53,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OpenShopLogWriteActivity extends BaseClientActivity {
+public class OpenShopLogWriteActivity extends BaseClientActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.et_company_name)
     TextView etCompanyName;
@@ -90,11 +91,10 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
     private String assigneeOrgCode;
     private Long assigneeTopCompanyId;
     private Long assigneeCompanyId;
-    private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
 
-    private TimePickerView mTimeYearMonthDayHMS;
+    //    private TimePickerView mTimeYearMonthDayHMS;
     private TextView currentTextView;
 
 
@@ -159,7 +159,11 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         });
 
         getData();
-        doSelectYearMonthDayHMS();
+//        doSelectYearMonthDayHMS();
+        String targetId = getIntent().getStringExtra("targetId");
+        if (!TextUtils.isEmpty(targetId)) {
+            getGroupDetail(targetId);
+        }
     }
 
 
@@ -168,33 +172,38 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         switch (view.getId()) {
             case R.id.ll_staff_in_time:
                 currentTextView = tvStaffInTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+//                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
+//                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_staff_out_time:
                 currentTextView = tvStaffOutTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_client_in_time:
                 currentTextView = tvClientInTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_client_out_time:
                 currentTextView = tvClientOutTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_open_time:
                 currentTextView = tvOpenTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                SelectTimeDialogFragment selectTimeDialogFragment = new SelectTimeDialogFragment();
+                if (selectTimeDialogFragment == null) {
+                    selectTimeDialogFragment = selectTimeDialogFragment.newInstance();
+                }
+                Dialog mDialog = selectTimeDialogFragment.getDialog();
+                if (mDialog==null || !mDialog.isShowing()) {
+                    selectTimeDialogFragment.show(getSupportFragmentManager(), "");
+                }
+
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_close_time:
                 currentTextView = tvCloseTime;
-                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
-                mTimeYearMonthDayHMS.show();
+                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_depend_person:
 //                showDependPerson();
@@ -223,6 +232,25 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         }
     }
 
+    /**
+     * 获取当前的群组信息
+     *
+     * @param targetId
+     */
+    private void getGroupDetail(String targetId) {
+
+        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                .params("ryGroupId", targetId)
+                .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setName(bean.getGroup().getGroupName());
+                    preson.setProtraivat(bean.getGroup().getHeadPortrait());
+                    preson.setId(bean.getGroup().getRcloudGroupId());
+                    newGroupList.add(preson);
+                    sendGroupAdapter.setNewData(newGroupList);
+                }));
+    }
 
     /**
      * 选择年月日时分秒
@@ -233,24 +261,24 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
         Calendar endDate = Calendar.getInstance();
         startDate.set(2000, 0, 1, 0, 0, 0);
         endDate.set(2040, 11, 31, 0, 0, 0);
-        mTimeYearMonthDayHMS = new TimePickerBuilder(OpenShopLogWriteActivity.this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
-            }
-        })
-                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
-                .setCancelText("取消")//取消按钮文字
-                .setSubmitText("确定")//确认按钮文字
-                .setContentTextSize(18)//滚轮文字大小
-                .setTitleSize(20)//标题文字大小
-                .setTitleText(" ")//标题文字
-                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
-                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-                .setRangDate(startDate, endDate)//起始终止年月日设定
-                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-                .isDialog(false)//是否显示为对话框样式
-                .build();
+//        mTimeYearMonthDayHMS = new TimePickerBuilder(OpenShopLogWriteActivity.this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                currentTextView.setText(ETimeUtils.getTimeByYearMonthDayHourMinSec(date));
+//            }
+//        })
+//                .setType(new boolean[]{true, true, true, true, true, true})// 默认全部显示
+//                .setCancelText("取消")//取消按钮文字
+//                .setSubmitText("确定")//确认按钮文字
+//                .setContentTextSize(18)//滚轮文字大小
+//                .setTitleSize(20)//标题文字大小
+//                .setTitleText(" ")//标题文字
+//                .setOutSideCancelable(false)//点击屏幕，点在控件外部范围时，是否取消显示
+//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+//                .setRangDate(startDate, endDate)//起始终止年月日设定
+//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+//                .isDialog(false)//是否显示为对话框样式
+//                .build();
     }
 
 
@@ -341,7 +369,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
                 .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
 
                     //分享
-                    if (newPresonList.size() == 0 && newGroupList.size() == 0)  {
+                    if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         finishSelf();
                         return;
                     }
@@ -497,5 +525,14 @@ public class OpenShopLogWriteActivity extends BaseClientActivity {
             }
         }
 
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            currentTextView.setText(time);
+        }
     }
 }

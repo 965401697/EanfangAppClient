@@ -2,14 +2,19 @@ package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -19,7 +24,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RoleBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.device.User;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -51,6 +56,9 @@ public class PermissionManagerActivity extends BaseClientActivity {
     LinearLayout llRole;
     @BindView(R.id.rl_checked_staff)
     RelativeLayout rlCheckedStaff;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    private AolltRoleAdapter aolltRoleAdapter;
 
     private TemplateBean.Preson mBean;
 
@@ -75,6 +83,8 @@ public class PermissionManagerActivity extends BaseClientActivity {
                 subMermission();
             }
         });
+
+        initViews();
     }
 
 
@@ -83,16 +93,16 @@ public class PermissionManagerActivity extends BaseClientActivity {
         switch (view.getId()) {
             case R.id.rl_checked_staff:
             case R.id.ll_select_staff:
-                Intent intent = new Intent(this, SelectOrganizationActivity.class);
+                Intent intent = new Intent(this, SelectOAPresonActivity.class);
                 intent.putExtra("isRadio", "isRadio");
                 startActivity(intent);
                 break;
 
-            case R.id.ll_role:
-                Intent in = new Intent(this, AolltRoleActivity.class);
-                in.putStringArrayListExtra("roleNameList", roleNameList);
-                startActivityForResult(in, ROLE_FLAG);
-                break;
+//            case R.id.ll_role:
+//                Intent in = new Intent(this, AolltRoleActivity.class);
+//                in.putStringArrayListExtra("roleNameList", roleNameList);
+//                startActivityForResult(in, ROLE_FLAG);
+//                break;
         }
     }
 
@@ -101,7 +111,7 @@ public class PermissionManagerActivity extends BaseClientActivity {
             ToastUtil.get().showToast(this, "员工不能为空");
             return;
         }
-        if (TextUtils.isEmpty(tvRole.getText().toString().trim())) {
+        if (roleIdList.size() == 0) {
             ToastUtil.get().showToast(this, "角色不能为空");
             return;
         }
@@ -133,6 +143,7 @@ public class PermissionManagerActivity extends BaseClientActivity {
             llSelectStaff.setVisibility(View.GONE);
             rlCheckedStaff.setVisibility(View.VISIBLE);
             llRole.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.VISIBLE);
 
 
             EanfangHttp.get(UserApi.POST_USER_INFO + mBean.getId())
@@ -141,50 +152,122 @@ public class PermissionManagerActivity extends BaseClientActivity {
 
                         ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + b.getAvatar());
                         tvNamePhone.setText(b.getRealName() + "(" + b.getMobile() + ")");
-                        if(!TextUtils.isEmpty(b.getAreaCode())) {
+                        if (!TextUtils.isEmpty(b.getAreaCode())) {
                             tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());
                         }
 
 
                         EanfangHttp.get(NewApiService.MY_CURREMT_LIST_ROLE + mBean.getUserId())
-                                .execute(new EanfangCallback<RoleBean>(PermissionManagerActivity.this, true, RoleBean.class, true, (list) -> {
+                                .execute(new EanfangCallback<RoleBean>(PermissionManagerActivity.this, false, RoleBean.class, true, (list) -> {
+                                    roleNameList.clear();
                                     for (RoleBean roleBean : list) {
                                         roleNameList.add(roleBean.getRoleName());
+                                        initData();
                                     }
                                 }));
 
                     }));
 
-
         } else {
             llSelectStaff.setVisibility(View.VISIBLE);
             rlCheckedStaff.setVisibility(View.GONE);
             llRole.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
         }
 
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == ROLE_FLAG) {
-                roleIdList.clear();
-                roleNameList.clear();
 
-                roleIdList = data.getStringArrayListExtra("roleIdList");
-                roleNameList = data.getStringArrayListExtra("roleNameList");
+    private void initData() {
+        EanfangHttp.get(NewApiService.MY_LIST_ROLE)
+                .execute(new EanfangCallback<RoleBean>(this, true, RoleBean.class, true, (list) -> {
 
-                StringBuffer stringBuffer = new StringBuffer();
-                for (String s : roleNameList) {
-                    stringBuffer.append(s + ",");
+                    for (RoleBean roleBean : list) {
+                        if (roleNameList.contains(roleBean.getRoleName())) {
+                            roleBean.setChecked(true);
+                            roleIdList.add(roleBean.getRoleId());
+                        }
+                    }
+
+
+                    aolltRoleAdapter.getData().clear();
+                    aolltRoleAdapter.setNewData(list);
+                }));
+    }
+
+
+    private void initViews() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        aolltRoleAdapter = new AolltRoleAdapter(R.layout.item_role);
+        aolltRoleAdapter.bindToRecyclerView(recyclerView);
+
+
+        aolltRoleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                RoleBean bean = (RoleBean) adapter.getData().get(position);
+
+                if (bean.isChecked()) {
+                    bean.setChecked(false);
+                    roleIdList.remove(bean.getRoleId());
+//                    roleNameList.remove(bean.getRoleName());
+
+                } else {
+                    bean.setChecked(true);
+                    roleIdList.add(bean.getRoleId());
+//                    roleNameList.add(bean.getRoleName());
                 }
-                tvRole.setText(stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1));
-
-
+                adapter.notifyDataSetChanged();
             }
+        });
+    }
+
+    /**
+     * 角色选择的adapter
+     */
+    class AolltRoleAdapter extends BaseQuickAdapter<RoleBean, BaseViewHolder> {
+
+
+        public AolltRoleAdapter(int layoutResId) {
+            super(layoutResId);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, RoleBean item) {
+
+            if (item.isChecked()) {
+                ((ImageView) helper.getView(R.id.iv_checked)).setImageDrawable(getResources().getDrawable(R.drawable.ic_checked));
+            } else {
+                ((ImageView) helper.getView(R.id.iv_checked)).setImageDrawable(getResources().getDrawable(R.drawable.ic_no_checked));
+            }
+
+            helper.setText(R.id.tv_role, item.getRoleName());
         }
     }
+
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            if (requestCode == ROLE_FLAG) {
+//                roleIdList.clear();
+//                roleNameList.clear();
+//
+//                roleIdList = data.getStringArrayListExtra("roleIdList");
+//                roleNameList = data.getStringArrayListExtra("roleNameList");
+//
+//                StringBuffer stringBuffer = new StringBuffer();
+//                for (String s : roleNameList) {
+//                    stringBuffer.append(s + ",");
+//                }
+//                tvRole.setText(stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1));
+//
+//
+//            }
+//        }
+//    }
 
 }

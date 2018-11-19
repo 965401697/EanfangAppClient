@@ -59,7 +59,7 @@ public class PartnerOrgTypeListView extends BaseDialog {
     private void initView() {
         tvTitle.setText("客户管理");
         ivLeft.setOnClickListener(v -> dismiss());
-        tvCallServicePhone.setOnClickListener((v) -> CallUtils.call(context, "010-5877-8732"));
+        tvCallServicePhone.setOnClickListener((v) -> CallUtils.call(context, "400-890-9280"));
         initAdapter();
     }
 
@@ -69,10 +69,10 @@ public class PartnerOrgTypeListView extends BaseDialog {
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             switch (view.getId()) {
                 case R.id.btn_confirm:
-                    audit(1,mDataList.get(position).getId());
+                    audit(1, mDataList.get(position).getId());
                     break;
                 case R.id.btn_unconfirm:
-                    audit(2,mDataList.get(position).getId());
+                    audit(2, mDataList.get(position).getId());
                     break;
                 default:
                     break;
@@ -81,7 +81,7 @@ public class PartnerOrgTypeListView extends BaseDialog {
         rvList.setAdapter(adapter);
     }
 
-    private void audit(int stauts,Long id) {
+    private void audit(int stauts, Long id) {
         EanfangHttp.post(UserApi.GET_COOPERATION_AUDIT)
                 .params("id", id)
                 .params("status", stauts)

@@ -4,17 +4,26 @@
 
 package com.eanfang.util;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import static com.eanfang.config.Config.VIDEO_STORAGE_DIR;
 
 /**
  * @author hou
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc
  */
 public class FileUtils {
@@ -304,5 +313,67 @@ public class FileUtils {
         }
         return path_dir;
     }
+
+    /**
+     * Bitmap保存成File
+     *
+     * @param bitmap input bitmap
+     * @param name   output file's name
+     * @return String output file's path
+     */
+
+    public static String bitmapToFile(Bitmap bitmap, String name) {
+
+
+        File f = new File(VIDEO_STORAGE_DIR + name + ".jpg");
+
+        if (f.exists()) f.delete();
+
+        FileOutputStream fOut = null;
+
+        try {
+
+            fOut = new FileOutputStream(f);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+
+            fOut.flush();
+
+            fOut.close();
+
+        } catch (IOException e) {
+
+            return null;
+
+        }
+
+        return f.getAbsolutePath();
+
+    }
+
+    /**
+     * 网络图片转为bitmap
+     */
+    public static Bitmap returnBitMap(String url) {
+        URL myFileUrl = null;
+        Bitmap bitmap = null;
+        try {
+            myFileUrl = new URL(url);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+    }
+
 
 }

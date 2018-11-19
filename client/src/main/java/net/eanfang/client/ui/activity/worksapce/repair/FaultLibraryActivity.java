@@ -105,6 +105,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
+                intent.putExtra("sketch", ((FaultListBean.ListBean) adapter.getData().get(position)).getSketch());
                 intent.putExtra("faultDes", ((FaultListBean.ListBean) adapter.getData().get(position)).getDescription());
                 intent.putExtra("faultImgs", ((FaultListBean.ListBean) adapter.getData().get(position)).getPictures());
                 intent.putExtra("datasId", ((FaultListBean.ListBean) adapter.getData().get(position)).getId());

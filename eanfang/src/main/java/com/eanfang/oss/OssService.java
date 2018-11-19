@@ -101,7 +101,51 @@ public class OssService {
         return new PutObjectRequest(bucket, objectKey, localFileUrl);
     }
 
+    /**
+     * 上传视频
+     */
+    public synchronized void putVideo(String objectKey, String urlPath) {
+        PutObjectRequest put = getPutObjectRequest(objectKey, urlPath);
+        JSONObject resultJson = new JSONObject();
+        //如果为空  则跳过
+        if (put == null) {
+            resultJson.put("code", UPLOAD_SUCCESS);
+            int curr = this.getOssCallBack().get().getCurrent() + 1;
+            getOssCallBack().get().setCurrent(curr);
+            EventBus.getDefault().post(resultJson);
+            return;
+        }
 
+        OSSAsyncTask<PutObjectResult> asyncTask = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest request, PutObjectResult result) {
+
+                resultJson.put("code", UPLOAD_SUCCESS);
+                synchronized (getOssCallBack().get()) {
+                    int curr = getOssCallBack().get().getCurrent() + 1;
+                    getOssCallBack().get().setCurrent(curr);
+                }
+                EventBus.getDefault().post(resultJson);
+
+                activity.runOnUiThread(() -> {
+                    getOssCallBack().get().onOssProgress(null, getOssCallBack().get().getCurrent(), getOssCallBack().get().getTotal());
+                });
+
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest request, ClientException clientException, ServiceException serviceException) {
+                resultJson.put("code", UPLOAD_FAILED);
+                EventBus.getDefault().post(resultJson);
+            }
+        });
+        uploadThreads.add(asyncTask);
+
+    }
+
+    /**
+     * 上传图片
+     */
     public synchronized void putImage(String objectKey, String urlPath) {
         //图片压缩
         LubanUtils.compress(activity, urlPath, (path) -> {
@@ -154,6 +198,25 @@ public class OssService {
         });
     }
 
+    /**
+     * 上传视频
+     */
+    public void asyncPutVideo(String objectKey, String videoPath, OSSCallBack ossCallBack) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        //清空线程
+        uploadThreads.clear();
+        this.getOssCallBack().get().setTotal(1);
+        this.getOssCallBack().set(ossCallBack);
+        putVideo(objectKey, videoPath);
+        //开始执行检测线程
+        asyncCheck();
+    }
+
+    /**
+     * 上传单张图片
+     */
     public void asyncPutImage(String objectKey, String urlPath, OSSCallBack ossCallBack) {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -168,6 +231,9 @@ public class OssService {
 
     }
 
+    /**
+     * 上传多张图片
+     */
     public void asyncPutImages(final Map<String, String> objectMap, final OSSCallBack callBack) {
         //初始化 总数
         this.getOssCallBack().get().setTotal(objectMap.keySet().size());
@@ -216,9 +282,12 @@ public class OssService {
                 EventBus.getDefault().unregister(this);
                 return;
             }
+            int mTotal = this.getOssCallBack().get().getTotal();
+            int mCurrent = this.getOssCallBack().get().getCurrent();
             //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
-            Log.e("ossService", "onEvent: total:" + this.getOssCallBack().get().getTotal() + "  curr:" + this.getOssCallBack().get().getCurrent());
-            if (this.getOssCallBack().get().getCurrent() >= this.getOssCallBack().get().getTotal()) {
+            Log.e("ossService", "onEvent: total:" + mTotal + "  curr:" + mCurrent);
+            if (mCurrent >= mTotal) {
+                Log.e("ossServiceSuccess", "total:" + mTotal + "  curr:" + mCurrent);
                 activity.runOnUiThread(() -> {
                     getOssCallBack().get().onSuccess(null, null);
                 });

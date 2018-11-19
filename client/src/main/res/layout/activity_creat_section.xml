@@ -56,16 +56,15 @@
             android:src="@mipmap/arrow_right" />
     </LinearLayout>
 
-
-    <!--    <TextView
-            android:id="@+id/tv_created"
-            android:layout_width="match_parent"
-            android:visibility="visible"
-            android:layout_height="@dimen/dimen_86"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_service_title"
-            android:gravity="center"
-            android:text="完成创建"
-            android:textColor="@color/white" />-->
+    <TextView
+        android:id="@+id/tv_created"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_86"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_service_title"
+        android:gravity="center"
+        android:text="完成创建"
+        android:textColor="@color/white"
+        android:visibility="visible" />
 
 </RelativeLayout>

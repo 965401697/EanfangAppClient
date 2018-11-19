@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师绑定业务类型
  */
-
+@Deprecated
 public class AuthWorkerBizActivity extends BaseActivity {
 
     @BindView(R.id.tag_work_type)
@@ -89,7 +89,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
         }
         if (status == 1 || status == 2) {
             tvConfim.setText("确定");
-            tagWorkType.setEnabled(false);
+//            tagWorkType.setEnabled(false);
         }
         if (status != 2) {
             setRightGone();
@@ -137,7 +137,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
      * 重新编辑
      */
     private void doRevoke() {
-        tagWorkType.setEnabled(true);
+//        tagWorkType.setEnabled(true);
     }
 
     private void commit() {

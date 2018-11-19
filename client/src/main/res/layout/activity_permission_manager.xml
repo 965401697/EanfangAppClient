@@ -115,6 +115,15 @@
             android:layout_height="@dimen/dimen_26"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/dimen_34"
+            android:visibility="gone"
             android:src="@mipmap/arrow_right" />
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_role" />
 </RelativeLayout>

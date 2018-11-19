@@ -138,6 +138,12 @@ public interface NewApiService {
     String GET_UNREAD_MSG = BuildConfig.API_HOST + "/yaf_sys/notice/maintain";
 
     /**
+     * 获取官方消息通知
+     */
+    String GET_OFFICIAL_MSG = BuildConfig.API_HOST + "/yaf_sys/noticepush/appList";
+
+
+    /**
      * 推送已读Or未读
      */
     String GET_PUSH_MSG_INFO = BuildConfig.API_HOST + "/yaf_sys/notice/info/";
@@ -145,10 +151,6 @@ public interface NewApiService {
     String GET_PUSH_READ_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/readall/";
     //推送消息  全部删除
     String GET_PUSH_DELETE_ALL = BuildConfig.API_HOST + "/yaf_sys/notice/delete/";
-    /**
-     * 获取推送消息数量
-     */
-    String GET_PUSH_COUNT = BuildConfig.API_HOST + "/yaf_sys/notice/count/sysBiz";
 
     /**
      * app首页 获取最新通知
@@ -474,6 +476,14 @@ public interface NewApiService {
      */
     String REPAIR_DATA_STATISTICE = BASE_URL + "/yaf_statistics/failureStatistics/app/allCount";
     /**
+     * 报装统计接口
+     */
+    String INSTALL_DATA_STATISTICE = BASE_URL + "/yaf_statistics/repairStatistics/app/installAllCount";
+    /**
+     * 免费设计统计接口
+     */
+    String DESIGN_DATA_STATISTICE = BASE_URL + "/yaf_statistics/repairStatistics/app/designAllCount";
+    /**
      * 维保管控列表接口
      */
     String MAINTENANCE_GET_LIST = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/list";
@@ -547,5 +557,14 @@ public interface NewApiService {
      * 首页统计数据
      */
     String HOME_DATASTASTISTICS = BASE_URL + "/yaf_statistics/repairOrderStatistics/app/Count";
+    /**
+     * 报修的选择的项目列表
+     */
+    String REPAIR_PROJECT_LIST = BASE_URL + "/yaf_project/project/projectList";
+
+    /**
+     * 报修支付优惠码
+     */
+    String REPAIR_PAY_COUPON = BASE_URL + "/yaf_sys/couponPay/repair";
 
 }

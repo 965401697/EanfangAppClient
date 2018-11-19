@@ -3,12 +3,17 @@ package com.eanfang.model;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 描述：交接班详情
  *
  * @author Guanluocang
  * @date on 2018/8/3$  20:43$
  */
+@Getter
+@Setter
 public class WorkTransferDetailBean implements Serializable {
 
 
@@ -2019,6 +2024,7 @@ public class WorkTransferDetailBean implements Serializable {
         private String picture;
         private int status;
         private int type;
+        private String mp4_path;
 
         public String getContent() {
             return content;
@@ -2082,6 +2088,14 @@ public class WorkTransferDetailBean implements Serializable {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
         }
     }
 
@@ -2105,6 +2119,7 @@ public class WorkTransferDetailBean implements Serializable {
         private String picture;
         private int status;
         private int type;
+        private String mp4_path;
 
         public String getContent() {
             return content;
@@ -2168,6 +2183,14 @@ public class WorkTransferDetailBean implements Serializable {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
         }
     }
 
@@ -2191,6 +2214,7 @@ public class WorkTransferDetailBean implements Serializable {
         private String picture;
         private int status;
         private int type;
+        private String mp4_path;
 
         public String getContent() {
             return content;
@@ -2254,6 +2278,14 @@ public class WorkTransferDetailBean implements Serializable {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
         }
     }
 
@@ -2277,6 +2309,7 @@ public class WorkTransferDetailBean implements Serializable {
         private String picture;
         private int status;
         private int type;
+        private String mp4_path;
 
         public String getContent() {
             return content;
@@ -2340,6 +2373,14 @@ public class WorkTransferDetailBean implements Serializable {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
         }
     }
 
@@ -2363,6 +2404,7 @@ public class WorkTransferDetailBean implements Serializable {
         private String picture;
         private int status;
         private int type;
+        private String mp4_path;
 
         public String getContent() {
             return content;
@@ -2426,6 +2468,14 @@ public class WorkTransferDetailBean implements Serializable {
 
         public void setType(int type) {
             this.type = type;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
         }
     }
 }

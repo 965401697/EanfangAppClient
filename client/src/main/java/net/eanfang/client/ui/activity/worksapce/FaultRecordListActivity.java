@@ -16,6 +16,7 @@ import com.eanfang.model.FaultListsBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.client.R;
@@ -79,6 +80,13 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 RepairFailureEntity bean = (RepairFailureEntity) adapter.getData().get(position);
+
+//                if (bean.getRepairOrderEntity() == null || bean.getRepairOrderEntity().getStatus() == 1) {
+                if (bean.getRepairOrderEntity() == null || bean.getStatus() == 0) {
+                    ToastUtil.get().showToast(FaultRecordListActivity.this, "该故障未处理，不能查看详情");
+                    return;
+                }
+
                 int isPhoneSolve = bean.getRepairOrderEntity().getIsPhoneSolve();
 
                 String status = "";

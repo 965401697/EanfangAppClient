@@ -10,75 +10,69 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/bg_ll_selctor"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="时间："
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/bg_ll_selctor"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="地点："
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/bg_ll_selctor"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="拜访对象："
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bg_ll_selctor"
+        android:background="@color/color_white"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingLeft="@dimen/dimen_38">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_sign_commit_time"
+                android:drawablePadding="@dimen/dimen_10"
+                android:text="签到时间："
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="啊是的啊是的"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_10">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/ic_sign_commit_time"
+                android:drawablePadding="@dimen/dimen_10"
+                android:text="签到地点："
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="啊是的啊是的"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@color/color_white"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/et_remark"
@@ -87,8 +81,10 @@
             android:background="@null"
             android:gravity="top"
             android:hint="请填写备注"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:padding="@dimen/dimen_10"
+            android:textColor="@color/color_client_neworder"
+            android:textColorHint="@color/color_bottom"
+            android:textSize="@dimen/textSize_15" />
 
         <com.photopicker.com.widget.BGASortableNinePhotoLayout
             android:id="@+id/snpl_moment_add_photos"
@@ -105,7 +101,7 @@
             app:bga_snpl_maxItemCount="3"
             app:bga_snpl_otherWhiteSpacing="100dp"
             app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-            app:bga_snpl_plusDrawable="@mipmap/camera"
+            app:bga_snpl_plusDrawable="@mipmap/ic_sign_takephoto"
             app:bga_snpl_plusEnable="true"
             app:bga_snpl_sortable="true" />
 
@@ -114,22 +110,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@drawable/bg_ll_selctor"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@color/color_white"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="@dimen/dimen_30">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="当前企业："
-            android:textColor="@color/black" />
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_14" />
 
         <TextView
             android:id="@+id/tv_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@color/color_white"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拜访对象："
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_14" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
     </LinearLayout>
 
     <Button

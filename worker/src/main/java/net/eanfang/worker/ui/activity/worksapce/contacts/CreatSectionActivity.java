@@ -44,13 +44,13 @@ public class CreatSectionActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("创建部门");
         setLeftBack();
-        setRightTitle("创建");
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                created();
-            }
-        });
+//        setRightTitle("创建");
+//        setRightTitleOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                created();
+//            }
+//        });
     }
 
     @OnClick(R.id.ll_section)
@@ -115,5 +115,10 @@ public class CreatSectionActivity extends BaseWorkerActivity {
             tvSectionName.setText(sectionBean.getOrgName());
             parentOrgId = sectionBean.getOrgId();
         }
+    }
+
+    @OnClick(R.id.tv_created)
+    public void onViewClicked() {
+        created();
     }
 }

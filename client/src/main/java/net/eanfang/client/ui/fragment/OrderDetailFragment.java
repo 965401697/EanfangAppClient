@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -66,7 +67,8 @@ public class OrderDetailFragment extends BaseFragment {
     private ImageView iv_phone;
     private TextView tv_number;
     private TextView tv_feature_time;
-
+    private TextView tv_project_name;
+    private TextView tv_repair_remarkinfo;
     // 支付布局
     private LinearLayout llPay;
     // 去支付
@@ -80,7 +82,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_bottomLeft;
 
     // userid
-    private Long mUserId;
+    private Long mUserId = EanfangApplication.get().getUserId();
     private Long mItemId;
     private int mIsPhoneSolve;
     // 订单状态
@@ -120,6 +122,7 @@ public class OrderDetailFragment extends BaseFragment {
     private View line;
     private PayLogEntity payLogEntity;
 
+
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
         sf.id = id;
@@ -152,6 +155,8 @@ public class OrderDetailFragment extends BaseFragment {
         tv_phone_desc = findViewById(R.id.tv_phone_desc);
         tv_contract_name = findViewById(R.id.tv_contract_name);
         tv_contract_phone = findViewById(R.id.tv_contract_phone);
+        tv_project_name = findViewById(R.id.tv_project_name);
+        tv_repair_remarkinfo = findViewById(R.id.tv_repair_remarkinfo);
 //----------------------------
         tv_address = findViewById(R.id.tv_address);
         iv_pic = findViewById(R.id.iv_pic);
@@ -180,35 +185,35 @@ public class OrderDetailFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        tvDoPay.setOnClickListener((v) -> startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity)));
+        tvDoPay.setOnClickListener((v) -> {
+            if (doCompare(mAssigneeUserId, mUserId)) {
+                startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity));
+            }
+        });
+
         // 确认完工  立即评价
         tvBottomRight.setOnClickListener((v) -> {
             if (mOrderStatus == 4) {// 确认完工
-//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-//                    showToast("当前订单负责人可以操作");
-//                    return;
-//                }
-                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
+                if (doCompare(mAssigneeUserId, mUserId)) {
+                    new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
+                }
+
             } else if (mOrderStatus == 5) {//立即评价
-//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-//                    showToast("当前订单负责人可以操作");
-//                    return;
-//                }
-                startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                        .putExtra("flag", 0)
-                        .putExtra("ordernum", mOrderNum)
-                        .putExtra("workerUid", mAssigneeUserId)
-                        .putExtra("orderId", mItemId)
-                        .putExtra("avatar", mHeadUrl));
+                if (doCompare(mAssigneeUserId, mUserId)) {
+                    startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
+                            .putExtra("flag", 0)
+                            .putExtra("ordernum", mOrderNum)
+                            .putExtra("workerUid", mAssigneeUserId)
+                            .putExtra("orderId", mItemId)
+                            .putExtra("avatar", mHeadUrl));
+                }
             }
         });
         // 查看完工报告
         tv_bottomLeft.setOnClickListener((v) -> {
-//            if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-//                showToast("当前订单负责人可以操作");
-//                return;
-//            }
-            new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
+            if (doCompare(mAssigneeUserId, mUserId)) {
+                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
+            }
         });
 
     }
@@ -241,14 +246,15 @@ public class OrderDetailFragment extends BaseFragment {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
-                } else if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
                 }
+//                else if (view.getId() == R.id.ll_item) {// 展开收起
+//                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+//                    if (secondItem.getVisibility() == View.VISIBLE) {
+//                        secondItem.setVisibility(View.GONE);
+//                    } else {
+//                        secondItem.setVisibility(View.VISIBLE);
+//                    }
+//                }
             }
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -313,7 +319,8 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                     // 回复时效
 //                    tv_time_limit.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getArriveTimeLimit())));
-                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
+//                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
+                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + bean.getAddress()));
 //                    if (bean.getBookTime() != null) {
 //                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
 //                    } else {
@@ -354,6 +361,12 @@ public class OrderDetailFragment extends BaseFragment {
                     tv_number.setText(V.v(() -> bean.getOrderNum()));
                     tv_feature_time.setText(V.v(() -> GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
 
+                    if (!TextUtils.isEmpty(bean.getProjectName())) {
+                        tv_project_name.setText(bean.getProjectName());
+                    }
+                    if (!TextUtils.isEmpty(bean.getRemarkInfo())) {
+                        tv_repair_remarkinfo.setText(bean.getRemarkInfo());
+                    }
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
 
@@ -363,7 +376,6 @@ public class OrderDetailFragment extends BaseFragment {
 //                    } else {
 //                        tv_phone_solve.setText("是");
 //                    }
-                    mUserId = bean.getOwnerUserId();
                     mItemId = bean.getId();
                     mIsPhoneSolve = bean.getIsPhoneSolve();
                     mOrderStatus = bean.getStatus();
@@ -402,5 +414,15 @@ public class OrderDetailFragment extends BaseFragment {
 
     public HashMap getHashMap() {
         return hashMap;
+    }
+
+
+    public boolean doCompare(Long assingerUserId, Long userId) {
+
+        if (assingerUserId.equals(userId)) {
+            return true;
+        }
+        showToast("当前无权限操作订单");
+        return false;
     }
 }

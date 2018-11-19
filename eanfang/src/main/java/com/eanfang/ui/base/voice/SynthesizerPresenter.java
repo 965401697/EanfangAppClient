@@ -2,6 +2,7 @@ package com.eanfang.ui.base.voice;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.util.Log;
 
 import com.camera.util.LogUtil;
 import com.eanfang.application.EanfangApplication;
@@ -10,6 +11,7 @@ import com.eanfang.util.StringUtils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 
 /**
@@ -26,6 +28,7 @@ public class SynthesizerPresenter extends MySynthesizerListener {
     private AudioManager mAudioManager;
 
     private volatile static SynthesizerPresenter mSynthesizerPresenter;
+    private int maxVolume;// 最大音量
 
     public SynthesizerPresenter() {
         mTtsListener = new MySynthesizerListener();
@@ -55,6 +58,10 @@ public class SynthesizerPresenter extends MySynthesizerListener {
     }
 
     public void initTts() {
+        //把音乐音量强制设置为最大音量
+        mAudioManager = (AudioManager) EanfangApplication.get().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);// 获取最大声音
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0);
         if (mTts == null) {
             mTts = SpeechSynthesizer.createSynthesizer(EanfangApplication.get().getApplicationContext(), new InitListener() {
                 @Override
@@ -73,11 +80,6 @@ public class SynthesizerPresenter extends MySynthesizerListener {
             mTts.setParameter(SpeechConstant.VOLUME, "100");//设置合成音量
             mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");//设置播放器音频流类型 1 系统
             mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true");// 设置播放合成音频打断音乐播放，默认为true
-            //把音乐音量强制设置为最大音量
-            mAudioManager = (AudioManager) EanfangApplication.get().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-            int mVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); // 获取当前音乐音量
-            int maxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);// 获取最大声音
-            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, maxVolume, 0);
         }
     }
 
@@ -99,7 +101,6 @@ public class SynthesizerPresenter extends MySynthesizerListener {
                 try {
                     Thread.sleep(1500);//休眠3秒
                     mTts.startSpeaking(answer, mTtsListener);
-
                 } catch (InterruptedException e) {
                 }
             }

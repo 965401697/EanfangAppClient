@@ -46,6 +46,10 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
         setTitle("合作公司列表");
         setLeftBack();
         setRightTitle("确定");
+
+        ownerCompanyId = getIntent().getStringExtra("ownerCompanyId");
+        cooperationEntity= (CooperationEntity) getIntent().getSerializableExtra("bean");
+
         setRightTitleOnClickListener(v -> {
             if (!TextUtils.isEmpty(ownerCompanyId) && cooperationEntity != null) {
                 Intent intent = new Intent();
@@ -57,7 +61,6 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
                 ToastUtil.get().showToast(EquipmentCooperationCompanyActivity.this, "请重新选择一个合作公司");
             }
         });
-        ownerCompanyId = getIntent().getStringExtra("ownerCompanyId");
         initView();
         mPage = 1;
     }

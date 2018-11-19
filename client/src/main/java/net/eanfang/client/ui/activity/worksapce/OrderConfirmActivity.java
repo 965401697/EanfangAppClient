@@ -98,7 +98,6 @@ public class OrderConfirmActivity extends BaseClientActivity {
         initData();
         initAdapter();
         registerListener();
-
     }
 
     private void initView() {
@@ -159,13 +158,11 @@ public class OrderConfirmActivity extends BaseClientActivity {
     private void getData() {
         Intent intent = getIntent();
         repairOrderEntity = V.v(() -> (RepairOrderEntity) intent.getSerializableExtra("bean"));
-        PayLogEntity payLogEntity = new PayLogEntity();
-        payLogEntity.setPayPrice(1);
-        repairOrderEntity.setPayLogEntity(payLogEntity);//测试专用
     }
 
     private void registerListener() {
         btnComplete.setOnClickListener(new MultiClickListener(this, this::doHttpSubmit));
+
     }
 
     private void doHttpSubmit() {
@@ -221,8 +218,9 @@ public class OrderConfirmActivity extends BaseClientActivity {
         payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
 
         //查询上门费
-//        payLogEntity.setOriginPrice(mDoorFee);
-        payLogEntity.setPayPrice(1);//测试用的
+        payLogEntity.setOriginPrice(mDoorFee);// 原始价格
+        payLogEntity.setPayPrice(mDoorFee);//实际支付价格
+        payLogEntity.setReducedPrice(0);// 优惠价格
 
         EanfangHttp.post(RepairApi.GET_REPAIR_PAY_RECORD)
                 .upJson(JSON.toJSONString(payLogEntity))

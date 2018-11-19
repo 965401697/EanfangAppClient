@@ -16,12 +16,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddCheckBean;
@@ -95,7 +96,6 @@ public class CheckActivity extends BaseClientActivity {
     @BindView(R.id.rv_group)
     RecyclerView rvGroup;
 
-    private OptionsPickerView pvOptions_NoLink;
     private int posistion;
     private List<String> userNameList = new ArrayList<>();
     private List<UserEntity> userlist = new ArrayList<>();
@@ -218,7 +218,10 @@ public class CheckActivity extends BaseClientActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-
+        String targetId = getIntent().getStringExtra("targetId");
+        if (!TextUtils.isEmpty(targetId)) {
+            getGroupDetail(targetId);
+        }
     }
 
 
@@ -272,6 +275,25 @@ public class CheckActivity extends BaseClientActivity {
 
         doHttp(JSON.toJSONString(bean));
 
+    }
+
+    /**
+     * 获取当前的群组信息
+     * @param targetId
+     */
+    private void getGroupDetail(String targetId) {
+
+        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                .params("ryGroupId", targetId)
+                .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setName(bean.getGroup().getGroupName());
+                    preson.setProtraivat(bean.getGroup().getHeadPortrait());
+                    preson.setId(bean.getGroup().getRcloudGroupId());
+                    newGroupList.add(preson);
+                    sendGroupAdapter.setNewData(newGroupList);
+                }));
     }
 
 

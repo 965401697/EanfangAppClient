@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师绑定系统类别
  */
-
+@Deprecated
 public class AuthWorkerSysTypeActivity extends BaseActivity {
 
     @BindView(R.id.tag_work_type)
@@ -52,6 +52,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
 
     // 是否编辑
     private boolean isEdit = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +88,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
             }
         }
         if (status == 1 || status == 2) {
-            tagWorkType.setEnabled(false);
+//            tagWorkType.setEnabled(false);
             tvConfim.setText("确定");
         }
         if (status != 2) {
@@ -136,12 +137,12 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
      * 重新编辑
      */
     private void doRevoke() {
-        tagWorkType.setEnabled(true);
+//        tagWorkType.setEnabled(true);
     }
 
     private void commit() {
-        List<Integer> checkList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == true
-                && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
+        List<Integer> checkList = Stream.of(businessOneList)
+                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
                 .map(beans -> beans.getDataId()).distinct().toList();
         List<Integer> unCheckList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == false
                 && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)

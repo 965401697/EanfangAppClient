@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-
+@Deprecated
 public class WorkReportListActivity extends BaseWorkerActivity {
     private static String titleBar;
     public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();

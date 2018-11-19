@@ -186,17 +186,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveRepairInfoActivity.this, new RecognitionManager.onRecognitionListen() {
-                    @Override
-                    public void result(String msg) {
-                        et_remain_question.setText(msg + "");
-                    }
-
-                    @Override
-                    public void error(String errorMsg) {
-                        showToast(errorMsg);
-                    }
-                });
+                RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveRepairInfoActivity.this, et_remain_question);
             });
         });
         et_remain_question.addTextChangedListener(new TextWatcher() {
@@ -317,7 +307,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         bughandleConfirmEntity.setLeftoverProblem(et_remain_question.getText().toString().trim());
 //        uploadMap.clear();
         //单据照片 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl(snpl_form_photos, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snpl_form_photos, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
         // 签退时间

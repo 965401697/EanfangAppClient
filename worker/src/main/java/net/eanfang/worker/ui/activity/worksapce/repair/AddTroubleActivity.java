@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.takevideo.TakeVdideoMode;
+import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -35,13 +39,19 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentAddActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.Subscribe;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * Created by MrHou
@@ -97,6 +107,14 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     // 确定
     @BindView(R.id.rl_confirmDevice)
     RelativeLayout rlConfirmDevice;
+    // 拍摄视频
+    @BindView(R.id.tv_addViedeo)
+    TextView tvAddViedeo;
+    @BindView(R.id.iv_takevideo)
+    ImageView ivTakevideo;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
+
     private Map<String, String> uploadMap = new HashMap<>();
     private Long orderId;
 
@@ -106,6 +124,15 @@ public class AddTroubleActivity extends BaseWorkerActivity {
     //   系统类别
     private String businessOneCode = "";
     private long clientCompanyUid;
+
+    /**
+     * 视频上传key
+     */
+    private String mUploadKey = "";
+    /**
+     * 视频路径
+     */
+    private String mVieoPath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +161,17 @@ public class AddTroubleActivity extends BaseWorkerActivity {
 
     private void setListener() {
         rlConfirmDevice.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::checkInfo, this::onSubmitWorker));
+        // 拍摄视频
+        tvAddViedeo.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
+        });
+        ivTakevideo.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", mVieoPath);
+            JumpItent.jump(AddTroubleActivity.this, PlayVideoActivity.class, bundle);
+        });
     }
 
     private void onSubmitWorker() {
@@ -148,7 +186,8 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述
         bean.setLocationNumber(etDeviceLocationNum.getText().toString().trim());//位置编号
         bean.setDeviceName(Config.get().getBusinessNameByCode(bean.getBusinessThreeCode(), 3));// 设备名称
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        bean.setMp4_path(mUploadKey);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
         bean.setPictures(ursStr);
         bean.setBusRepairOrderId(orderId);
 
@@ -198,7 +237,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             ArrayList<String> arrayImgList = new ArrayList<String>();
 //            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());
 //            snplMomentAddPhotos.setData(arrayImgList);
-        }else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {
             CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("bean");
 
             etDeviceNum.setFocusable(false);
@@ -240,7 +279,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         return true;
     }
 
-    @OnClick({R.id.ll_faultDeviceName,R.id.ll_deviceHouse, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.rl_confirmDevice, R.id.ll_faultInfo})
+    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceHouse, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.rl_confirmDevice, R.id.ll_faultInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //故障设备名称
@@ -256,7 +295,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
                 }
 
                 Bundle b = new Bundle();
-                b.putString("businessOneCode",dataCode);
+                b.putString("businessOneCode", dataCode);
                 b.putString("clientCompanyUid", String.valueOf(clientCompanyUid));
                 JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
                 break;
@@ -293,5 +332,16 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         }
     }
 
-
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            mVieoPath = takeVdideoMode.getMImagePath();
+            mUploadKey = takeVdideoMode.getMKey();
+            if (!StringUtils.isEmpty(mVieoPath)) {
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+            }
+            tvAddViedeo.setText("重新拍摄");
+        }
+    }
 }

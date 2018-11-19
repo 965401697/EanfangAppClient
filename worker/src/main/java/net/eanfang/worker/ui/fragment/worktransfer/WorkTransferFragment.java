@@ -20,7 +20,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
-
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.worker.ui.adapter.worktransfer.WorkTransferAdapter;
@@ -106,6 +105,9 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
         EanfangHttp.post(NewApiService.WORK_TRANSFER_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<WorkTransferListBean>(getActivity(), true, WorkTransferListBean.class, (bean) -> {
+                            if (getActivity() == null) {
+                                return;
+                            }
                             getActivity().runOnUiThread(() -> {
                                 if (bean.getList() != null) {
                                     workTalkBeanList = bean.getList();

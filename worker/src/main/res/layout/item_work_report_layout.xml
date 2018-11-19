@@ -3,8 +3,9 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/bg_ll_selctor"
+    android:layout_marginBottom="@dimen/dimen_20"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:text="小破孩"
-            android:textColor="#0000ff"
+            android:textColor="@color/color_client_neworder"
             android:textSize="14sp" />
 
 
@@ -31,17 +32,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/select_worker"
             android:gravity="center"
             android:padding="5dp"
-            android:text="已读" />
+            android:text=" " />
     </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
-        android:background="#87ceeb" />
+        android:background="@color/content_bg" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -69,7 +69,8 @@
                 android:id="@+id/tv_depart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="部门："
+                android:text="部门    "
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
 
@@ -77,7 +78,8 @@
                 android:id="@+id/tv_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="类型："
+                android:text="类型        "
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
 
@@ -85,7 +87,8 @@
                 android:id="@+id/tv_pub_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="总结人："
+                android:textColor="@color/color_client_neworder"
+                android:text="总结人    "
                 android:textSize="14sp" />
 
             <TextView
@@ -94,13 +97,15 @@
                 android:layout_height="wrap_content"
                 android:text="接收人："
                 android:textSize="14sp"
+                android:textColor="@color/color_client_neworder"
                 android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_pub_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="提交时间："
+                android:text="提交时间"
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
         </LinearLayout>

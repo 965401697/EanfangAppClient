@@ -35,6 +35,11 @@ import butterknife.ButterKnife;
  * @desc 搜索公司
  */
 
+/* *
+ * 2018年10月10日 10:12:30
+ *
+ * */
+@Deprecated
 public class SearchCompanyListView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;

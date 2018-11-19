@@ -1,17 +1,12 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
-import com.bigkoo.pickerview.view.TimePickerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -23,8 +18,9 @@ import com.eanfang.model.TakeApplyAddBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -34,6 +30,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -49,7 +46,7 @@ import butterknife.ButterKnife;
  * @desc 任务接单新增
  */
 
-public class TakeApplyAddActivity extends BaseActivity {
+public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
     @BindView(R.id.et_apply_company)
     EditText etApplyCompany;
     @BindView(R.id.et_contract)
@@ -77,7 +74,7 @@ public class TakeApplyAddActivity extends BaseActivity {
     private TakeApplyAddBean applyTaskBean;
     private Long entTaskPublishId;
     private HashMap<String, String> uploadMap = new HashMap<>();
-    private TimePickerView pvEndTime;
+//    private TimePickerView pvEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +91,8 @@ public class TakeApplyAddActivity extends BaseActivity {
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
         setTitle("接单申请");
         setLeftBack();
-        llDoorTime.setOnClickListener(v -> pvEndTime.show());
+        llDoorTime.setOnClickListener(v -> new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + ""))
+        ;
         tvOk.setOnClickListener(v -> commit());
         llTimeLimit.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", etTimeLimit, GetConstDataUtils.getPredictList()));
     }
@@ -166,7 +164,7 @@ public class TakeApplyAddActivity extends BaseActivity {
 //        }
         applyTaskBean.setToDoorTime(doorTime);
 
-        String ursStr = PhotoUtils.getPhotoUrl(snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/", snplMomentAddPhotos, uploadMap, true);
         applyTaskBean.setPictures(ursStr);
 
         applyTaskBean.setShopTaskPublishId(entTaskPublishId);
@@ -200,19 +198,13 @@ public class TakeApplyAddActivity extends BaseActivity {
     private void submitSuccess() {
         showToast("接单成功");
 //        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
-        Intent intent = new Intent(TakeApplyAddActivity.this, StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
-        message.setTitle("任务接单");
-        message.setMsgTitle("您的接单申请已提交成功");
-        message.setMsgContent("请耐心等待发包方确认。");
-        message.setShowOkBtn(true);
-        message.setShowLogo(true);
+        message.setMsgContent("任务接单。");
 
-        message.setTip("");
+        message.setTip("确定");
         bundle.putSerializable("message", message);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        JumpItent.jump(TakeApplyAddActivity.this, StateChangeActivity.class, bundle);
         setResult(RESULT_OK);
         finish();
     }
@@ -228,21 +220,21 @@ public class TakeApplyAddActivity extends BaseActivity {
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 11, 28);
         //时间选择器
-        pvEndTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {//选中事件回调
-                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-                tvDoorTime.setText(GetDateUtils.dateToDateTimeString(date));
-            }
-        })
-                .setTitleText("踏勘时间")
-                .setType(new boolean[]{true, true, true, true, true, true})
-                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
-                .setDividerColor(Color.DKGRAY)
-                .setContentTextSize(20)
-                .setDate(selectedDate)
-                .setRangDate(startDate, endDate)
-                .build();
+//        pvEndTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+//            @Override
+//            public void onTimeSelect(Date date, View v) {//选中事件回调
+//                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
+//                tvDoorTime.setText(GetDateUtils.dateToDateTimeString(date));
+//            }
+//        })
+//                .setTitleText("踏勘时间")
+//                .setType(new boolean[]{true, true, true, true, true, true})
+//                .setLabel("", "", "", "", "", "") //设置空字符串以隐藏单位提示   hide label
+//                .setDividerColor(Color.DKGRAY)
+//                .setContentTextSize(20)
+//                .setDate(selectedDate)
+//                .setRangDate(startDate, endDate)
+//                .build();
     }
 
     @Override
@@ -252,6 +244,15 @@ public class TakeApplyAddActivity extends BaseActivity {
             snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
             snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+        }
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            tvDoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            tvDoorTime.setText(time);
         }
     }
 }

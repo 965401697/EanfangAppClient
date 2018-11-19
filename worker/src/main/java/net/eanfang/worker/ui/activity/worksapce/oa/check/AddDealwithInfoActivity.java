@@ -97,7 +97,7 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
         addWorkInspectDetailBean.setOaWorkInspectDetailId(detailId);
         addWorkInspectDetailBean.setDisposeInfo(etInputCheckContent.getText().toString().trim());
         addWorkInspectDetailBean.setRemarkInfo(etRemark.getText().toString().trim());
-        String ursStr = PhotoUtils.getPhotoUrl(mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck", mPhotosSnpl, uploadMap, true);
         addWorkInspectDetailBean.setPictures(ursStr);
         addWorkInspectDetailBean.setOaWorkInspectId(id);
 

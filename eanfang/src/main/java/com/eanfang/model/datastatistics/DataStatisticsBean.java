@@ -246,8 +246,16 @@ public class DataStatisticsBean implements Serializable {
          */
 
         private String bussinessCode;
-        private int count;
+        private int num;
         private List<BussinessTwoCodeListBean> bussinessTwoCodeList;
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
 
         public String getBussinessCode() {
             return bussinessCode;
@@ -257,13 +265,6 @@ public class DataStatisticsBean implements Serializable {
             this.bussinessCode = bussinessCode;
         }
 
-        public int getCount() {
-            return count;
-        }
-
-        public void setCount(int count) {
-            this.count = count;
-        }
 
         public List<BussinessTwoCodeListBean> getBussinessTwoCodeList() {
             return bussinessTwoCodeList;

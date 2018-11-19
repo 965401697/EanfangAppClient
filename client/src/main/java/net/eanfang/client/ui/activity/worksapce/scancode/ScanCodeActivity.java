@@ -24,6 +24,7 @@ import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.AddFriendActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,6 +33,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import static com.eanfang.util.StringUtils.getValueByName;
 
 /**
  * @author Guanluocang
@@ -65,10 +68,16 @@ public class ScanCodeActivity extends BaseActivity {
         barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
-        if (mScanType.equals("scan_device")) {// 扫码设备
-            barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
-        } else if (mScanType.equals("scan_person")) {// 扫码技师/客户
-            barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_person));
+        if (!StringUtils.isEmpty(mScanType)) {
+            if (mScanType.equals("scan_device")) {// 扫码设备
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
+            } else if (mScanType.equals("scan_person")) {// 扫码技师/客户
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_person));
+            } else if (mScanType.equals("scan_login")) {//扫码登录
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_login));
+            } else if (mScanType.equals("scan_addfriend")) {// 扫码添加好友
+                barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_scan_addfriend));
+            }
         }
 
         barcodeScannerView.decodeContinuous(callback);
@@ -90,8 +99,16 @@ public class ScanCodeActivity extends BaseActivity {
                 //如果是true 则 解析扫到的二维码里的字符串 得到account的 ID
                 String accountId = resultString.substring(resultString.indexOf("=") + 1);
                 if (!TextUtils.isEmpty(mAddFriend)) {
-                    EventBus.getDefault().post(accountId);
+                    if (mFromWhere.equals("home_addfriend")) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("add_friend", "add_friend");
+                        bundle.putString("accountId", accountId);
+                        JumpItent.jump(ScanCodeActivity.this, AddFriendActivity.class, bundle);
+                    } else {
+                        EventBus.getDefault().post(accountId);
+                    }
                     finishSelf();
+
                 } else {
                     doGetAccount(accountId);
                 }
@@ -125,7 +142,7 @@ public class ScanCodeActivity extends BaseActivity {
                 finishSelf();
             } else if (resultString.contains("qr?uid=")) {// 扫描设备 查看设备详情 并报修
                 Bundle bundle = new Bundle();
-                bundle.putString("id", result.getText().substring(result.getText().indexOf("=") + 1));
+                bundle.putString("id", getValueByName(result.getText(), "uid"));
                 bundle.putBoolean("scan", true);
                 JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
                 finishSelf();
@@ -208,6 +225,8 @@ public class ScanCodeActivity extends BaseActivity {
                             startActivity(new Intent(ScanCodeActivity.this, LoginConfirmActivity.class)
                                     .putExtra("which", requestFrom)
                                     .putExtra("uuid", uuid));
+                            finishSelf();
+
                         } else {
                             showToast("暂无权限");
                             finish();

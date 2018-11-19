@@ -54,5 +54,6 @@
 
     <color name="color_auth_top_back">#FFFBEADA</color>
     <color name="color_auth_top_text">#FFCB7A30</color>
+    <color name="color_monitor_consulting">#363636</color>
 
 </resources>

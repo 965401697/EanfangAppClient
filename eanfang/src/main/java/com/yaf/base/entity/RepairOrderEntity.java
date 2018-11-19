@@ -140,7 +140,33 @@ public class RepairOrderEntity implements Serializable {
     //是否合格（0合格，1不合格）
     //@TableField(value = "pass")
     private Integer pass;
+    private String projectId;
+    private String projectName;
+    private String remarkInfo;
 
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getRemarkInfo() {
+        return remarkInfo;
+    }
+
+    public void setRemarkInfo(String remarkInfo) {
+        this.remarkInfo = remarkInfo;
+    }
 
     public UserEntity getOwnerUser() {
         return ownerUser;

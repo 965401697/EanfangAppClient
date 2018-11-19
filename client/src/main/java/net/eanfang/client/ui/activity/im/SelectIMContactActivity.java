@@ -22,6 +22,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupCreatBean;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
@@ -72,6 +73,13 @@ public class SelectIMContactActivity extends BaseClientActivity {
     private String path;
     private String groupName;
 
+    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private String mGroupId;
+    private String mRYGroupId;
+    private String mTitle;
+    private ArrayList<String> mUserIdList = new ArrayList<String>();
+    private ArrayList<String> mUserIconList = new ArrayList<String>();
+
     private Handler handler = new Handler() {
 
         @Override
@@ -83,12 +91,34 @@ public class SelectIMContactActivity extends BaseClientActivity {
             } else {
                 path = (String) message;
                 if (!TextUtils.isEmpty(path)) {
-                    imgKey = UuidUtil.getUUID() + ".png";
+                    imgKey = "im/select/" + UuidUtil.getUUID() + ".png";
                     creatGroup();
                 }
             }
         }
     };
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String path = (String) msg.obj;
+
+            if (!TextUtils.isEmpty(path)) {
+                String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
+                OSSUtils.initOSS(SelectIMContactActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SelectIMContactActivity.this, false) {
+
+                    @Override
+                    public void onOssSuccess() {
+//                        super.onOssSuccess();
+                        updataGroupInfo(mTitle, inageKey, "", "");
+                    }
+                });
+            }
+
+        }
+    };
+
 
     private int mFlag;
 
@@ -105,6 +135,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
         bundle = getIntent().getExtras();
 
         mFlag = getIntent().getIntExtra("flag", 0);
+        setRightTitle("确定");
 
         if (mFlag == 1) {
             //创建群组
@@ -112,6 +143,14 @@ public class SelectIMContactActivity extends BaseClientActivity {
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
         } else if (mFlag == 2) {//创建是分享
             setRightTitle("确定");
+        } else if (mFlag == 3) {//创建是分享
+            setRightTitle("添加");
+            findViewById(R.id.rl_my_group).setVisibility(View.GONE);
+            mGroupId = getIntent().getStringExtra("groupId");
+            mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+            mRYGroupId = getIntent().getStringExtra("ryGroupId");
+            mTitle = getIntent().getStringExtra("title");
+
         } else {
             setRightTitle("发送");
         }
@@ -129,6 +168,8 @@ public class SelectIMContactActivity extends BaseClientActivity {
                     } else {
                         ToastUtil.get().showToast(SelectIMContactActivity.this, "请选择要发送的好友后者群组");
                     }
+                } else if (mFlag == 3) {
+                    AddNumber();
                 } else {
                     //发送分享的群组
                     handler.post(runnable);//立马发送
@@ -146,7 +187,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("net.eanfang.client.action.SELECTFRIENDS");
+                Intent intent = new Intent(SelectIMContactActivity.this, SelectedFriendsActivity.class);
                 intent.putExtra("flag", 3);
                 startActivity(intent);
             }
@@ -154,7 +195,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
         findViewById(R.id.rl_my_group).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("net.eanfang.client.action.MYGROUPLIST");
+                Intent intent = new Intent(SelectIMContactActivity.this, MyGroupsListActivity.class);
                 intent.putExtra("isVisible", true);
                 startActivity(intent);
             }
@@ -174,14 +215,22 @@ public class SelectIMContactActivity extends BaseClientActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
+        List<TemplateBean.Preson> presons = new ArrayList<>();
+
+        for (TemplateBean.Preson p : presonList) {
+            if (!p.getId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                presons.add(p);
+            }
+        }
+
+        if (presons.size() > 0) {
 
             if (rlSelected.getVisibility() != View.VISIBLE) {
                 rlSelected.setVisibility(View.VISIBLE);
             }
             Set hashSet = new HashSet();
             hashSet.addAll(mHeaderIconAdapter.getData());
-            hashSet.addAll(presonList);
+            hashSet.addAll(presons);
 
             if (newPresonList.size() > 0) {
                 newPresonList.clear();
@@ -396,6 +445,91 @@ public class SelectIMContactActivity extends BaseClientActivity {
             }
         });
 
+    }
+
+    /**
+     * 添加成员
+     */
+    private void AddNumber() {
+
+        if (newPresonList.size() == 0) {
+            ToastUtil.get().showToast(this, "至少选择一个好友");
+            return;
+        }
+        // TODO: 2018/10/9  待优化
+        List<String> idList = new ArrayList<>();
+        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+            mUserIconList.add(bean.getAccountEntity().getAvatar());
+            idList.add(bean.getAccId());
+        }
+
+        for (TemplateBean.Preson p : newPresonList) {
+            if (!mUserIconList.contains(p.getProtraivat())) {
+                mUserIconList.add(p.getProtraivat());
+            }
+            mUserIdList.add(p.getId());
+        }
+
+        mUserIdList.removeAll(idList);
+
+        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
+
+
+        JSONArray array = new JSONArray();
+        JSONObject object = null;
+        for (String s : mUserIdList) {
+            object = new JSONObject();
+            try {
+                object.put("accId", s);
+                object.put("groupId", mGroupId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            array.put(object);
+        }
+        EanfangHttp.post(UserApi.POST_GROUP_JOIN)
+                .upJson(array)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                    ToastUtil.get().showToast(SelectIMContactActivity.this, "添加成功");
+                    setResult(RESULT_OK);
+                    endTransaction(true);
+                }));
+    }
+
+    /**
+     * 更新群组信息
+     */
+    public void updataGroupInfo(String title, String imgKey, String transfer, String notice) {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("groupId", mGroupId);
+
+            if (!TextUtils.isEmpty(title)) {
+                jsonObject.put("groupName", title);
+            }
+            if (!TextUtils.isEmpty(imgKey)) {
+                jsonObject.put("headPortrait", imgKey);
+            }
+            if (!TextUtils.isEmpty(transfer)) {
+                jsonObject.put("create_user", transfer);
+            }
+            if (!TextUtils.isEmpty(notice)) {
+                jsonObject.put("notice", notice);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //创建群组
+        EanfangHttp.post(UserApi.POST_UPDATA_GROUP)
+                .upJson(jsonObject)
+                .execute(new EanfangCallback<JSONObject>(SelectIMContactActivity.this, false, JSONObject.class, (JSONObject) -> {
+                    Group groupInfo = new Group(mRYGroupId, title, Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+                    RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+
+                }));
     }
 
     /**
