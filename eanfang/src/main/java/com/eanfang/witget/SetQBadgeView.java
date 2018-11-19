@@ -1,6 +1,5 @@
 package com.eanfang.witget;
 
-import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 
@@ -21,6 +20,7 @@ public class SetQBadgeView {
     private View mView;
 
     private SetQBadgeView() {
+        qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
     }
 
     public static SetQBadgeView getSingleton() {
@@ -32,9 +32,8 @@ public class SetQBadgeView {
     }
 
 
-    public void setBadgeView(Context mContext, View weidgt, int num) {
+    public void setBadgeView(View weidgt, int num) {
         this.mView = weidgt;
-        qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
         qBadgeViewSys.bindTarget(mView)
                 .setBadgeNumber(num)
                 .setBadgeBackgroundColor(0xFFFF0000)
