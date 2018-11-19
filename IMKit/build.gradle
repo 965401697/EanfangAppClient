@@ -6,14 +6,11 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 2018040418
-        versionName "2.8.30 Dev"
+        versionCode 18111601
+        versionName "2.3.28"
     }
     buildTypes {
         debug {
-        }
-        //  测试
-        staging {
         }
         release {
             release {
