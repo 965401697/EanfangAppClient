@@ -28,6 +28,6 @@ public class DataStatisticsInstallAdapter extends BaseQuickAdapter<DataInstallBe
     @Override
     protected void convert(BaseViewHolder helper, DataInstallBean.InstallBean item) {
         helper.setText(R.id.tv_install_name, GetConstDataUtils.getInstallStatus().get(item.getStatus()));
-        helper.setText(R.id.tv_install_count, item.getCount() + "");
+        helper.setText(R.id.tv_install_count, item.getNum() + "");
     }
 }

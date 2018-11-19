@@ -1,7 +1,11 @@
 package net.eanfang.client.ui.activity.worksapce.repair;
 
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
@@ -9,8 +13,11 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.RepairBugEntity;
 
@@ -61,6 +68,11 @@ public class FaultDetailActivity extends BaseActivity {
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.tv_faultDescripte)
     TextView tvFaultDescripte;
+    // 短视频
+    @BindView(R.id.iv_thumbnail)
+    SimpleDraweeView ivThumbnail;
+    @BindView(R.id.rl_thumbnail)
+    RelativeLayout rlThumbnail;
 
     private ArrayList<String> picList1 = new ArrayList<>();
     private RepairBugEntity repairBugEntity;
@@ -83,7 +95,11 @@ public class FaultDetailActivity extends BaseActivity {
 
     private void initData() {
         //故障设备
-        tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(repairBugEntity.getBusinessThreeCode(), 3));
+        if (TextUtils.isEmpty(repairBugEntity.getBusinessThreeName())) {
+            tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(repairBugEntity.getBusinessThreeCode(), 3));
+        } else {
+            tvFaultDeviceName.setText("其他 - " + repairBugEntity.getBusinessThreeName());
+        }
         //设备编号
         tvDeviceNum.setText(repairBugEntity.getDeviceNo());
         //位置编号
@@ -91,11 +107,28 @@ public class FaultDetailActivity extends BaseActivity {
         //故障位置
         tvDeviceLocation.setText(repairBugEntity.getBugPosition());
         // 设备品牌
-        tvDeviceBrand.setText(Config.get().getModelNameByCode(repairBugEntity.getModelCode(), 2));
+        if (TextUtils.isEmpty(repairBugEntity.getModelName())) {
+            tvDeviceBrand.setText(Config.get().getModelNameByCode(repairBugEntity.getModelCode(), 2));
+        } else {
+            tvDeviceBrand.setText("其他 - " + repairBugEntity.getModelName());
+        }
         // 故障简述
         tvFaultSketch.setText(repairBugEntity.getSketch());
         // 故障描述
         tvFaultDescripte.setText(repairBugEntity.getBugDescription());
+
+        if (!StringUtils.isEmpty(repairBugEntity.getMp4_path())) {
+            rlThumbnail.setVisibility(View.VISIBLE);
+            ivThumbnail.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".jpg"));
+        } else {
+            rlThumbnail.setVisibility(View.GONE);
+        }
+
+        ivThumbnail.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".mp4");
+            JumpItent.jump(FaultDetailActivity.this, PlayVideoActivity.class, bundle);
+        });
     }
 
     private void initNinePhoto() {

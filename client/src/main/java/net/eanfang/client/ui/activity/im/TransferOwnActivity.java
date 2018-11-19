@@ -11,14 +11,12 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.TransferOwnAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -102,7 +100,7 @@ public class TransferOwnActivity extends BaseClientActivity {
                         ownId = "";
                         bean.setFlag(0);
                     } else {
-                        ((FriendListBean) adapter.getData().get(mOldPosition)).setFlag(0);
+                        ((GroupDetailBean.ListBean) adapter.getData().get(mOldPosition)).setFlag(0);
                         mOldPosition = position;
                         ownId = bean.getAccId();
                         bean.setFlag(1);

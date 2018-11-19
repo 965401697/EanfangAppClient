@@ -14,10 +14,12 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
@@ -30,12 +32,14 @@ import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
+import com.eanfang.witget.SetQBadgeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
+import net.eanfang.client.ui.activity.worksapce.RealTimeMonitorActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataDesignActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataInstallActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
@@ -60,6 +64,8 @@ import static com.eanfang.util.V.v;
 
 public class HomeFragment extends BaseFragment {
 
+    // 实时监控
+    private TextView tvMonitor;
     //报修数量
     private TextView tvReapirTotal;
     //报装数量
@@ -102,10 +108,12 @@ public class HomeFragment extends BaseFragment {
         } else {
             tvHomeTitle.setText(orgName);
         }
+        doHttpOrderNums();
     }
 
     @Override
     protected void initView() {
+        tvMonitor = (TextView) findViewById(R.id.tv_monitor);
         rvData = (RecyclerView) findViewById(R.id.rv_reapir_data);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
@@ -154,7 +162,7 @@ public class HomeFragment extends BaseFragment {
         //开锁
         findViewById(R.id.tv_unlock).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //实时监控
-        findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
         //客服
         findViewById(R.id.tv_service).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
@@ -169,6 +177,8 @@ public class HomeFragment extends BaseFragment {
 //        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
 //            new SignCtrlView(getActivity()).show();
 //        });
+
+
     }
 
     View.OnClickListener scanSelectItemsOnClick = new View.OnClickListener() {
@@ -325,6 +335,17 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
+     * 获取订单数量
+     */
+    private void doHttpOrderNums() {
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_reparir), bean.getRepair());// 报修
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_install), bean.getInstall());// 报修
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_design), bean.getDesign());//设计
+        })));
+    }
+
+    /**
      * 統計填充数据
      */
     private void initDatastatisticsData(HomeDatastisticeBean bean) {
@@ -334,8 +355,8 @@ public class HomeFragment extends BaseFragment {
         homeDataAdapter.bindToRecyclerView(rvData);
         homeDataAdapter.setNewData(clientDataList);
         tvReapirTotal.setText(bean.getAll() + "");
-        tvDesitnTotal.setText(bean.getDesign().getCount() + "");
-        tvInstallTotal.setText(bean.getInstall().getCount() + "");
+        tvDesitnTotal.setText(bean.getDesign().getNum() + "");
+        tvInstallTotal.setText(bean.getInstall().getNum() + "");
     }
 
     @Override
@@ -351,4 +372,6 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
         findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
     }
+
+
 }

@@ -13,6 +13,8 @@
         <!--     <View
                  android:layout_width="match_parent"
                  android:layout_height="@dimen/dimen_40" />-->
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp">
@@ -61,138 +63,195 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipre_fresh"
+    <!--  <android.support.v4.widget.SwipeRefreshLayout
+          android:id="@+id/swipre_fresh"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_70"
+                android:layout_height="@dimen/dimen_70"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_official_notice" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen_70"
-                    android:layout_height="@dimen/dimen_70"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/ic_news_system" />
-
-                <LinearLayout
-                    android:id="@+id/ll_system_notice"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="13dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_sys_msg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingEnd="20dp"
-                        android:text="系统通知"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_15" />
-
-                    <TextView
-                        android:id="@+id/tv_sys_msg_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
-
-                </LinearLayout>
+                android:id="@+id/ll_official"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="13dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_official"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="12dp"
+                    android:paddingEnd="20dp"
+                    android:text="官方通知"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_official_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_12" />
 
             </LinearLayout>
-
-            <TextView style="@style/style_common_line_gray" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="8dp"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-                <ImageView
-                    android:layout_width="@dimen/dimen_70"
-                    android:layout_height="@dimen/dimen_70"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/ic_news_notice" />
-
-                <LinearLayout
-                    android:id="@+id/ll_msg_list"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="13dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_bus_msg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingEnd="20dp"
-                        android:text="业务通知"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_15" />
-
-                    <TextView
-                        android:id="@+id/tv_bus_msg_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="12dp"
-                    android:text=""
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_12" />
-
-            </LinearLayout>
-
-            <TextView style="@style/style_common_line_gray" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="会话列表" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="12dp"
+                android:text=" "
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_12" />
 
-            <FrameLayout
-                android:id="@+id/rong_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
         </LinearLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView style="@style/style_common_line_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_70"
+                android:layout_height="@dimen/dimen_70"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_news_system" />
+
+            <LinearLayout
+                android:id="@+id/ll_system_notice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="13dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_sys_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="20dp"
+                    android:text="系统通知"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_sys_msg_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="12dp"
+                android:text=""
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_12" />
+
+        </LinearLayout>
+
+        <TextView style="@style/style_common_line_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_70"
+                android:layout_height="@dimen/dimen_70"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_news_notice" />
+
+            <LinearLayout
+                android:id="@+id/ll_msg_list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="13dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_bus_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="20dp"
+                    android:text="业务通知"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_bus_msg_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="12dp"
+                android:text=""
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_12" />
+
+        </LinearLayout>
+
+        <TextView style="@style/style_common_line_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="会话列表" />
+
+        <FrameLayout
+            android:id="@+id/rong_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--    </android.support.v4.widget.SwipeRefreshLayout>-->
 </LinearLayout>

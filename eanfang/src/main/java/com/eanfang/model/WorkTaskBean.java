@@ -1,5 +1,7 @@
 package com.eanfang.model;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +72,7 @@ public class WorkTaskBean implements Serializable {
         this.workTaskDetails = workTaskDetails;
     }
 
-    public static class WorkTaskDetailsBean implements Serializable {
+    public static class WorkTaskDetailsBean implements Serializable, MultiItemEntity {
         /**
          * title : 明细标题
          * instancyLevel : 0
@@ -85,6 +87,10 @@ public class WorkTaskBean implements Serializable {
          * pictures : 照片地址
          */
 
+        //多布局type
+        public static final int FOLD = 1;//折叠
+        public static final int EXPAND = 2; //展开
+
         private String title;
         private int instancyLevel;
         private int first_look;
@@ -96,6 +102,9 @@ public class WorkTaskBean implements Serializable {
         private String criterion;
         private String joinPerson;
         private String pictures;
+        private String mp4_path;
+
+        private int itemType;
 
         public String getTitle() {
             return title == null ? "" : title;
@@ -183,6 +192,23 @@ public class WorkTaskBean implements Serializable {
 
         public void setPictures(String pictures) {
             this.pictures = pictures;
+        }
+
+        public String getMp4_path() {
+            return mp4_path;
+        }
+
+        public void setMp4_path(String mp4_path) {
+            this.mp4_path = mp4_path;
+        }
+
+        public void setItemType(int itemType) {
+            this.itemType = itemType;
+        }
+
+        @Override
+        public int getItemType() {
+            return itemType;
         }
     }
 }

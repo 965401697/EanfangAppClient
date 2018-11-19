@@ -11,21 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.pili.pldroid.player.widget.PLVideoTextureView
-            android:id="@+id/plVideoTextureView"
+        <cn.jzvd.JzvdStd
+            android:id="@+id/videoPlayer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
-
-        <Button
-            android:id="@+id/btn_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
-            android:text="上传" />
+            android:layout_height="match_parent" />
     </RelativeLayout>
 
 

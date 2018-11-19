@@ -105,7 +105,6 @@ public class OssService {
      * 上传视频
      */
     public synchronized void putVideo(String objectKey, String urlPath) {
-        //图片压缩
         PutObjectRequest put = getPutObjectRequest(objectKey, urlPath);
         JSONObject resultJson = new JSONObject();
         //如果为空  则跳过
@@ -283,9 +282,12 @@ public class OssService {
                 EventBus.getDefault().unregister(this);
                 return;
             }
+            int mTotal = this.getOssCallBack().get().getTotal();
+            int mCurrent = this.getOssCallBack().get().getCurrent();
             //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
-            Log.e("ossService", "onEvent: total:" + this.getOssCallBack().get().getTotal() + "  curr:" + this.getOssCallBack().get().getCurrent());
-            if (this.getOssCallBack().get().getCurrent() >= this.getOssCallBack().get().getTotal()) {
+            Log.e("ossService", "onEvent: total:" + mTotal + "  curr:" + mCurrent);
+            if (mCurrent >= mTotal) {
+                Log.e("ossServiceSuccess", "total:" + mTotal + "  curr:" + mCurrent);
                 activity.runOnUiThread(() -> {
                     getOssCallBack().get().onSuccess(null, null);
                 });

@@ -38,6 +38,8 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
     private int currentPosition;
 
 
+    private Long mUseId = EanfangApplication.get().getUserId();
+
     public static MaintenanceListFragment getInstance(int status, String title) {
         MaintenanceListFragment sf = new MaintenanceListFragment();
         sf.mStatus = status;
@@ -149,30 +151,38 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         switch (item.getStatus()) {
             case 1:
                 //给客户联系人打电话
-                CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                }
                 break;
             case 2:
                 //给客户联系人打电话
-                CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                }
                 break;
             case 3:// 待上门 签到
                 //给客户联系人打电话
-                CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                }
                 break;
             case 4:
-                EanfangHttp.post(NewApiService.MAINTENANCE_CLIENT_CONFIRM)
-                        .params("id", item.getId())
-                        .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
-                            @Override
-                            public void onSuccess(JSONObject bean) {
-                                Toast.makeText(getActivity(), "确认完工成功", Toast.LENGTH_SHORT).show();
-                                EventBus.getDefault().post(new BaseEvent());//刷新item
-                            }
+                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                    EanfangHttp.post(NewApiService.MAINTENANCE_CLIENT_CONFIRM)
+                            .params("id", item.getId())
+                            .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
+                                @Override
+                                public void onSuccess(JSONObject bean) {
+                                    Toast.makeText(getActivity(), "确认完工成功", Toast.LENGTH_SHORT).show();
+                                    EventBus.getDefault().post(new BaseEvent());//刷新item
+                                }
 
-                            @Override
-                            public void onCommitAgain() {
-                            }
-                        });
+                                @Override
+                                public void onCommitAgain() {
+                                }
+                            });
+                }
                 break;
 
 
@@ -180,12 +190,13 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 switch (view.getId()) {
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
-                        if (PermKit.get().getMaintenanceBughandlePrem()) {
-                            intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
-                            intent.putExtra("orderId", item.getId());
-                            startActivity(intent);
+                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                            if (PermKit.get().getMaintenanceBughandlePrem()) {
+                                intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
+                                intent.putExtra("orderId", item.getId());
+                                startActivity(intent);
+                            }
                         }
-
                         break;
                 }
                 //待确认
@@ -201,5 +212,14 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
 
     public int getCurrentPosition() {
         return currentPosition;
+    }
+
+    public boolean doCompare(Long assingerUserId, Long userId) {
+
+        if (assingerUserId.equals(userId)) {
+            return true;
+        }
+        showToast("当前无权限操作订单");
+        return false;
     }
 }

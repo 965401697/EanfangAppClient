@@ -61,6 +61,8 @@
     <uses-permission android:name="android.permission.READ_CONTAWRITE_EXTERNAL_STORAGECTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 华为桌面消息图标权限 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
 
     <application
         android:name=".ui.base.ClientApplication"
@@ -231,14 +233,14 @@
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ConstansActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyDataActivity" />
         <activity android:name=".ui.activity.worksapce.WebActivity" />
-        <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.SignListActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignListDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignListActivity" />
         <activity
-            android:name=".ui.activity.worksapce.SignActivity"
+            android:name=".ui.activity.worksapce.sign.SignActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignInCommitActivity" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:screenOrientation="portrait" />
@@ -602,8 +604,45 @@
         <activity android:name=".ui.activity.worksapce.datastatistics.DataInstallActivity" />
         <!-- 统计数据设计 -->
         <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
-        <activity android:name=".ui.activity.worksapce.takevideo.TakeVideoActivity" />
-        <activity android:name=".ui.activity.worksapce.takevideo.PlayVideoActivity"></activity>
+        <activity android:name="com.eanfang.takevideo.TakeVideoActivity" />
+        <activity android:name="com.eanfang.takevideo.PlayVideoActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanySecondActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
+        <activity android:name=".ui.activity.worksapce.RealTimeMonitorActivity" />
+        <!-- 官方消息 -->
+        <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
+        <!-- 官方消息详情 -->
+        <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
+        <!-- 工作汇报列表 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
+        <!-- 工作汇报刷选 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
+        <!-- 创建工作汇报 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
+        <!-- 工作汇报详情 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity" />
+        <!-- 布置任务列表 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
+        <!-- 筛选布置任务 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
+        <!-- 创建布置任务 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
+        <!-- 布置任务详情 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignFiltrateActivity"></activity>
+        <!-- 创建团队的详情 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamDetailActivity" />
+        <!-- 创建团队的状态提示页 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
+        <!--Im 窗口的OA办公界面-->
+        <activity android:name=".ui.activity.im.OAListActivity"></activity>
+        <!--创建群组组织联系人-->
+        <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity"></activity>
+        <!-- 新的创建群组 -->
+        <activity android:name=".ui.activity.im.CreateGroupActivity" />
+        <!-- 新的选择联系人 -->
+        <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
     </application>
 
 </manifest>

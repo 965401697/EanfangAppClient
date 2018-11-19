@@ -47,12 +47,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="text_repair_personalinfo">用户信息</string>
-    <string name="text_repair_contactslinfo">联系人信息</string>
+    <string name="text_repair_contactslinfo">现场联系人信息</string>
     <string name="text_repair_selectlocation">选择定位</string>
     <string name="text_repair_arrivetime">到达时限:</string>
     <string name="text_next">下一步</string>
     <string name="text_fault">故障</string>
     <string name="text_worker_detail_see_more_type">查看所有标签</string>
-
+    <string name="text_vistor">拜访对象:</string>
 
 </resources>

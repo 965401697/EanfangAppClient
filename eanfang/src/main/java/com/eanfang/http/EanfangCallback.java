@@ -164,9 +164,9 @@ public class EanfangCallback<T> extends StringCallback {
                 message = resultJson.getString("message");
             }
             //消息数量
-            if (resultJson.containsKey("noticeCount")) {
-                updateNoticeCount(resultJson);
-            }
+//            if (resultJson.containsKey("noticeCount")) {
+//                updateNoticeCount(resultJson);
+//            }
             if (resultJson.containsKey("data")) {
                 if (clazz.getName().contains("String")) {
                     resultString = resultJson.get("data").toString();
@@ -434,7 +434,11 @@ public class EanfangCallback<T> extends StringCallback {
      * 缺少参数 调用
      */
     public void onMissParam(String message) {
-        ToastUtil.get().showToast(this.activity, "缺少请求参数，请返回后重试");
+        if (!StringUtils.isEmpty(message)) {
+            ToastUtil.get().showToast(this.activity, message);
+        } else {
+            ToastUtil.get().showToast(this.activity, "缺少请求参数，请返回后重试");
+        }
     }
 
     /**

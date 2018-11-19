@@ -141,7 +141,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
                     runOnUiThread(() -> {
                         Intent intent = new Intent();
                         intent.putExtra("result", detailsBean);
-                        setResult(101, intent);
+                        setResult( 101, intent);
                         finish();
                     });
                 }

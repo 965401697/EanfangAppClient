@@ -114,6 +114,8 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         }
     };
 
+    private boolean isEventBus = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,6 +187,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_task:
+                isEventBus = false;
                 Intent intent = new Intent(TaskActivity.this, AddWorkTaskDeitailActivity.class);
                 startActivityForResult(intent, TASK_REQUEST_CODE);
                 break;
@@ -201,13 +204,14 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                 submit();
                 break;
             case R.id.tv_send://选择人员
-
+                isEventBus = true;
                 isSend = 1;
 
                 startActivity(new Intent(TaskActivity.this, SelectOAPresonActivity.class));
                 break;
 
             case R.id.tv_send_group://选择群组
+                isEventBus = true;
                 isSend = 2;
                 startActivityForResult(new Intent(TaskActivity.this, SelectOAGroupActivity.class), REQUEST_CODE_GROUP);
                 break;
@@ -241,6 +245,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
+        if (!isEventBus) return;
 
         if (presonList.size() > 0) {
             if (isSend == 1) {
@@ -317,7 +322,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                     newGroupList.add(preson);
                 }
             }
-    }
+        }
 
     }
 

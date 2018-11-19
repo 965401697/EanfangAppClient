@@ -11,9 +11,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
 
@@ -89,14 +87,16 @@ public class SolveModeActivity extends BaseActivity {
      * 带点筛选
      */
     private void doHttp(int solve, String bookTime) {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("orderId", orderId + "");
-        queryEntry.getEquals().put("solve", solve + "");
-        queryEntry.getEquals().put("bookTime", bookTime);
+//        QueryEntry queryEntry = new QueryEntry();
+//        queryEntry.getEquals().put("orderId", orderId + "");
+//        queryEntry.getEquals().put("solve", solve + "");
+//        queryEntry.getEquals().put("bookTime", bookTime);
         EanfangHttp.post(RepairApi.POST_FLOW_SCREENING)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .params("orderId", orderId + "")
+                .params("solve", solve + "")
+                .params("bookTime", bookTime)
                 .execute(new EanfangCallback<JSONObject>(SolveModeActivity.this, true, JSONObject.class, (bean) -> {
-                    showToast("预约成功");
+                    showToast("电话解决成功");
                     setResult(RESULT_OK);
                     finishSelf();
                 }));

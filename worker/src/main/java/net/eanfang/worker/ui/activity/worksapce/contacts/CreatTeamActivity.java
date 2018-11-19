@@ -2,31 +2,41 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.NewApiService;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.OrgUnitListBean;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
 import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.LoginActivity;
+
+import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CreatTeamActivity extends BaseWorkerActivity {
 
     @BindView(R.id.et_input_company)
     EditText etInputCompany;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_desc)
+    TextView tvDesc;
+    private CompanyListAdapter mCompanyListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,69 +44,87 @@ public class CreatTeamActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_creat_team);
         ButterKnife.bind(this);
         setLeftBack();
+        setRightTitle("创建");
+        startTransaction(true);
+        setRightTitleOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (etInputCompany.getText().toString().trim().length() <= 3) {
+                    showToast("真实团队/公司名称必须大于三个字符");
+                    return;
+                }
+
+                startActivity(getIntent().setClass(CreatTeamActivity.this, CreatTeamDetailActivity.class).putExtra("name", etInputCompany.getText().toString()));
+            }
+        });
         setTitle("创建团队");
+        etInputCompany.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (TextUtils.isEmpty(s.toString())) return;
+                //输入之后
+                searchClaimCompany(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
-    private void createCompany() {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD)
-                .params("name", etInputCompany.getText().toString().trim())
-                .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
-                    SwitchCompany(bean.getOrgId());
-                    updateData();
-//                    mRefreshListener.refreshData();
-                    finish();
-                }));
-    }
 
     /**
-     * @param companyid Go to another company
+     * 获取待认领企业的列表
      */
-    private void SwitchCompany(Long companyid) {
+    private void searchClaimCompany(String nameKey) {
 
-        if (TextUtils.isEmpty(etInputCompany.getText().toString().trim())) {
-            showToast("请填写公司名字");
-            return;
-        }
-
-        EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
-                .params("companyId", companyid)
-                .execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
-                    EanfangApplication.get().remove(LoginBean.class.getName());
-                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
-
-                    EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                    EanfangHttp.setWorker();
-
-                    finish();
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getLike().put("name", nameKey);
+        EanfangHttp.post(UserApi.GET_CLAIM_ORGUNIT_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<OrgUnitListBean>(this, true, OrgUnitListBean.class, (bean) -> {
+                    if (bean.getList().size() > 0) {
+                        initAdapter(bean);
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        tvDesc.setVisibility(View.GONE);
+                    }
                 }));
     }
 
-    private void updateData() {
-        EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback(this, true, LoginBean.class) {
-                    @Override
-                    public void onSuccess(Object bean) {
-                        super.onSuccess(bean);
-                        LoginBean loginBean = (LoginBean) bean;
-                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
 
+    private void initAdapter(OrgUnitListBean bean) {
+
+        recyclerView.setVisibility(View.VISIBLE);
+        tvDesc.setVisibility(View.VISIBLE);
+
+        if (mCompanyListAdapter == null) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mCompanyListAdapter = new CompanyListAdapter();
+            mCompanyListAdapter.bindToRecyclerView(recyclerView);
+
+            mCompanyListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+                @Override
+                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (view.getId() == R.id.tv_claim) {
+
+                        OrgUnitEntity orgUnitEntity = (OrgUnitEntity) adapter.getData().get(position);
+
+                        startActivity(new Intent(CreatTeamActivity.this, AuthCompanyFirstActivity.class).
+                                putExtra("orgName", orgUnitEntity.getName()).putExtra("orgid", orgUnitEntity.getOrgId()));
+
+                        finishSelf();
                     }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        if (code == 50014) {
-                            showToast("token已失效,请重新登录");
-                            startActivity(new Intent(CreatTeamActivity.this, LoginActivity.class));
-                            finish();
-                        }
-                    }
-                });
-    }
-
-    @OnClick(R.id.tv_confirm)
-    public void onViewClicked() {
-        createCompany();
+                }
+            });
+        }
+        mCompanyListAdapter.setNewData(bean.getList());
     }
 }

@@ -15,10 +15,12 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
@@ -32,6 +34,7 @@ import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
+import com.eanfang.witget.SetQBadgeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -137,7 +140,7 @@ public class HomeFragment extends BaseFragment {
         } else {
             tvHomeTitle.setText(orgName);
         }
-
+        doHttpOrderNums();
     }
 
     /**
@@ -389,6 +392,19 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
+     * 获取订单数量
+     */
+    private void doHttpOrderNums() {
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_reparir_order), bean.getRepair());// 报修
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_install_order), bean.getInstall());// 报装
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_design_order), bean.getDesign());//设计
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_maintain_order), bean.getMaintain());//维保
+            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_inside_price), bean.getQuote());//报价
+        })));
+    }
+
+    /**
      * 填充
      */
     private void initDatastatisticsData(HomeDatastisticeBean bean) {
@@ -398,8 +414,8 @@ public class HomeFragment extends BaseFragment {
         homeDataAdapter.bindToRecyclerView(rvData);
         homeDataAdapter.setNewData(clientDataList);
         tvReapirTotal.setText(bean.getAll() + "");
-        tvDesitnTotal.setText(bean.getDesign().getCount() + "");
-        tvInstallTotal.setText(bean.getInstall().getCount() + "");
+        tvDesitnTotal.setText(bean.getDesign().getNum() + "");
+        tvInstallTotal.setText(bean.getInstall().getNum() + "");
     }
 
     private void initFalseData() {

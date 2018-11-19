@@ -276,8 +276,8 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
             //设置数据
             bussinessEntryList.clear();
             for (int i = 0; i < bussinessBeanList.size(); i++) {
-                if (bussinessBeanList.get(i).getCount() != 0) {
-                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getCount(), bussinessBeanList.get(i).getTypeStr()));
+                if (bussinessBeanList.get(i).getNum() != 0) {
+                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getNum(), bussinessBeanList.get(i).getTypeStr()));
                 }
             }
             if (bussinessEntryList.size() <= 5) {

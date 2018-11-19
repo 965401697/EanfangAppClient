@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dimen_30"
+    android:id="@+id/rl_show"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:text="工作1"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_work_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_toLeftOf="@+id/tv_delete"
+        android:layout_toRightOf="@+id/tv_title"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：阿斯顿发沙发斯蒂芬阿斯顿发送到发斯蒂芬" />
+
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:text="删除"
+        android:textColor="#FF4A4A" />
+
+    <TextView
+        android:id="@+id/tv_work_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_work_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_toLeftOf="@+id/tv_look"
+        android:layout_toRightOf="@+id/tv_title"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：阿斯顿发asdfasdf" />
+
+    <TextView
+        android:id="@+id/tv_look"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_work_content"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_toLeftOf="@+id/tv_delete"
+        android:drawableRight="@mipmap/arrow_right"
+        android:text="点击查看更多"
+        android:layout_marginBottom="@dimen/dimen_30"
+        android:textColor="@color/colorPrimary" />
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+       android:layout_below="@+id/tv_look"
+        android:background="@color/content_bg" />
+
+</RelativeLayout>

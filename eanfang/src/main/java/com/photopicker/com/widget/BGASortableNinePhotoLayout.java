@@ -36,7 +36,7 @@ import com.photopicker.com.util.BGAPhotoPickerUtil;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import cn.bingoogolapple.baseadapter.BGAOnItemChildClickListener;
 import cn.bingoogolapple.baseadapter.BGAOnRVItemClickListener;
@@ -342,9 +342,10 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     /**
      * 设置图片路径数据集合
      *
-     * @param photos
+     * @param photos 子武修改为List 里氏替换原则
      */
-    public void setData(ArrayList<String> photos) {
+//    public void setData(ArrayList<String> photos) {
+    public void setData(List<String> photos) {
         mPhotoAdapter.setData(photos);
     }
 

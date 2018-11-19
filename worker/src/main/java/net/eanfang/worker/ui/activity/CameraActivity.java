@@ -33,6 +33,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.CameraBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeReceiver;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PermissionUtils;
@@ -50,6 +51,7 @@ import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -517,6 +519,27 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @OnClick({R.id.iv_project_voice, R.id.iv_area_voice, R.id.iv_content_voice})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_project_voice:
+                inputVoice(etProjectName);
+                break;
+            case R.id.iv_area_voice:
+                inputVoice(etRegionName);
+                break;
+            case R.id.iv_content_voice:
+                inputVoice(etProjectConment);
+                break;
+        }
+    }
+
+    private void inputVoice(EditText editText) {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, editText);
+        });
     }
 }
 

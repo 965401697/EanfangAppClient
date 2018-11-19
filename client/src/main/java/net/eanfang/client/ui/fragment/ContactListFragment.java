@@ -15,14 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
@@ -37,6 +36,7 @@ import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import java.util.ArrayList;
@@ -69,10 +69,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewCam = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     // 消息数量
     private int mMessageCount = 0;
     private int mStystemCount = 0;
+    private int mCamCount = 0;
 
     private View view;
     private MyConversationListFragment myConversationListFragment;
@@ -94,15 +96,19 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_message, container, false);
-            initView();
-            setListener();
-        }
-        ViewGroup parent = (ViewGroup) view.getParent();
-        if (parent != null) {
-            parent.removeView(view);
-        }
+//        if (view == null) {
+        view = inflater.inflate(R.layout.fragment_message, container, false);
+        initView();
+        setListener();
+//            doHttpNoticeCount();
+//        } else {
+//            initView();//手动刷新
+//        }
+        // TODO: 2018/10/26 让会话列表自己刷新
+//        ViewGroup parent = (ViewGroup) view.getParent();
+//        if (parent != null) {
+//            parent.removeView(view);
+//        }
 
         return view;
     }
@@ -110,7 +116,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView() {
 
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
         //设置私聊会话，该会话聚合显示
@@ -122,7 +128,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")//设置群组会话，该会话非聚合显示
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")//系统
                 .build();
-//        fragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
+        myConversationListFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, myConversationListFragment);
@@ -235,51 +241,54 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     public void onResume() {
         super.onResume();
 //        doHttpNoticeCount();
-        if (myConversationListFragment != null && uri != null)
-            myConversationListFragment.setUri(uri);
+//        if (myConversationListFragment != null && uri != null)
+//            myConversationListFragment.setUri(uri);
 
         ((MainActivity) getActivity()).getIMUnreadMessageCount();
     }
 
     private void doHttpNoticeCount() {
-
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
-
-        EanfangHttp.get(NewApiService.GET_PUSH_COUNT)
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
-
-
-                    @Override
-                    public void onSuccess(JSONObject bean) {
-                        super.onSuccess(bean);
-
-                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
-
-
-                        if (bean.containsKey("sys")) {
-                            initSysCount(bean.getInteger("sys"));
-                            mStystemCount = bean.getInteger("sys");
-                        } else {
-                            initSysCount(0);
-                            mStystemCount = 0;
-                        }
-                        if (bean.containsKey("biz")) {
-                            initBizCount(bean.getInteger("biz"));
-                            mMessageCount = bean.getInteger("biz");
-                        } else {
-                            initBizCount(0);
-                            mMessageCount = 0;
-                        }
-
+        EanfangHttp.get(UserApi.ALL_MESSAGE)
+                .execute(new EanfangCallback<AllMessageBean>(getActivity(), true, AllMessageBean.class, bean -> {
+                    if (bean.getSys() > 0) {// 系统消息
+                        initSysCount(bean.getSys());
+                        mStystemCount = bean.getSys();
+                    } else {
+                        initSysCount(0);
+                        mStystemCount = 0;
                     }
-
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        super.onFail(code, message, jsonObject);
-                        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+                    if (bean.getBiz() > 0) {// 业务通知
+                        initBizCount(bean.getBiz());
+                        mMessageCount = bean.getBiz();
+                    } else {
+                        initBizCount(0);
+                        mMessageCount = 0;
                     }
-                });
+                    if (bean.getCam() > 0) {// 官方通知
+                        initCamCount(bean.getCam());
+                        mCamCount = bean.getCam();
+                    } else {
+                        initCamCount(0);
+                        mCamCount = 0;
+                    }
+                }));
+    }
+
+    private void initCamCount(Integer cam) {
+
+        if (cam > 0) {
+            ((TextView) view.findViewById(R.id.tv_official_info)).setText("新通知");
+        } else {
+            ((TextView) view.findViewById(R.id.tv_official_info)).setText("没有新通知");
+        }
+        qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
+                .setBadgeNumber(cam)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(11, true);
+
     }
 
     private void initBizCount(Integer biz) {
@@ -292,6 +301,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
+                .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
@@ -320,6 +330,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewSys
                 .bindTarget(view.findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
+                .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
@@ -372,9 +383,11 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
                 .execute(new EanfangCallback<User>(getActivity(), false, User.class, (bean) -> {
-                    UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                    if (bean != null) {
+                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
 
-                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+                    }
                 }));
 
     }
@@ -414,6 +427,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void setListener() {
+        // 官方通知
+        view.findViewById(R.id.ll_official).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mCamCount", mCamCount);
+            JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
+        });
         // 业务通知
         view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -434,7 +453,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     public void onRefresh() {
-        doHttpNoticeCount();
+//        doHttpNoticeCount();
     }
 
     @Override

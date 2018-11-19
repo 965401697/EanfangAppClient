@@ -235,8 +235,8 @@
                         android:layout_marginTop="@dimen/dimen_30"
                         android:background="@drawable/select_camera_back"
                         android:gravity="start"
-                        android:padding="@dimen/dimen_10"
                         android:hint="请输入遗留问题,200字以内"
+                        android:padding="@dimen/dimen_10"
                         android:textColor="@color/color_client_neworder"
                         android:textColorHint="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
@@ -284,32 +284,82 @@
                     android:paddingTop="15dp"
                     android:visibility="visible">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="电视墙正面照"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+
+                        <TextView
+                            android:id="@+id/tv_addvideo_moment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                            android:padding="@dimen/dimen_10"
+                            android:text="添加视频"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/textSize_12" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="电视墙正面照"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
+                        android:orientation="horizontal">
+
+                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                            android:id="@+id/snpl_moment_add_photos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_30"
+                            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                            app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                            app:bga_snpl_editable="true"
+                            app:bga_snpl_itemCornerRadius="0dp"
+                            app:bga_snpl_itemSpanCount="3"
+                            app:bga_snpl_itemWhiteSpacing="4dp"
+                            app:bga_snpl_itemWidth="0dp"
+                            app:bga_snpl_maxItemCount="3"
+                            app:bga_snpl_otherWhiteSpacing="100dp"
+                            app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
+                            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                            app:bga_snpl_plusEnable="true"
+                            app:bga_snpl_sortable="true" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_thumbnail_moment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_200"
+                            android:layout_marginLeft="@dimen/dimen_20"
+                            android:visibility="gone">
 
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_moment_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_30"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
+                            <ImageView
+                                android:id="@+id/iv_thumbnail_moment"
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="@dimen/dimen_150"
+                                android:layout_centerInParent="true" />
+
+                            <RelativeLayout
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="@dimen/dimen_150"
+                                android:layout_centerInParent="true"
+                                android:background="#1A000000"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_play_video" />
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -320,33 +370,83 @@
                     android:paddingLeft="@dimen/dimen_38"
                     android:paddingTop="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="电视墙背面照"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+
+                        <TextView
+                            android:id="@+id/tv_addvideo_monitor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                            android:padding="@dimen/dimen_10"
+                            android:text="添加视频"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/textSize_12" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="电视墙背面照"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
+                        android:orientation="horizontal">
+
+                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                            android:id="@+id/snpl_monitor_add_photos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_30"
+                            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                            app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                            app:bga_snpl_editable="true"
+                            app:bga_snpl_itemCornerRadius="0dp"
+                            app:bga_snpl_itemSpanCount="3"
+                            app:bga_snpl_itemWhiteSpacing="4dp"
+                            app:bga_snpl_itemWidth="0dp"
+                            app:bga_snpl_maxItemCount="3"
+                            app:bga_snpl_otherWhiteSpacing="100dp"
+                            app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
+                            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                            app:bga_snpl_plusEnable="true"
+                            app:bga_snpl_sortable="true" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_thumbnail_monitor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_200"
+                            android:layout_marginLeft="@dimen/dimen_20"
+                            android:visibility="gone">
 
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_monitor_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_30"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
+                            <ImageView
+                                android:id="@+id/iv_thumbnail_monitor"
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="@dimen/dimen_150"
+                                android:layout_centerInParent="true" />
+
+                            <RelativeLayout
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="@dimen/dimen_150"
+                                android:layout_centerInParent="true"
+                                android:background="#1A000000"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_play_video" />
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -358,31 +458,84 @@
                     android:paddingLeft="@dimen/dimen_38"
                     android:paddingTop="15dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="机柜正面/背面"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_tools_package_add_photos"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="机柜正面/背面"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_12" />
+
+                        <TextView
+                            android:id="@+id/tv_addvideo_package"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                            android:padding="@dimen/dimen_10"
+                            android:text="添加视频"
+                            android:textColor="@color/color_white"
+                            android:textSize="@dimen/textSize_12" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_30"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
+                        android:orientation="horizontal">
+
+                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                            android:id="@+id/snpl_tools_package_add_photos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_30"
+                            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                            app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                            app:bga_snpl_editable="true"
+                            app:bga_snpl_itemCornerRadius="0dp"
+                            app:bga_snpl_itemSpanCount="3"
+                            app:bga_snpl_itemWhiteSpacing="4dp"
+                            app:bga_snpl_itemWidth="0dp"
+                            app:bga_snpl_maxItemCount="3"
+                            app:bga_snpl_otherWhiteSpacing="100dp"
+                            app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
+                            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                            app:bga_snpl_plusEnable="true"
+                            app:bga_snpl_sortable="true" />
+
+                        <RelativeLayout
+                            android:id="@+id/rl_thumbnail_tools_package"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_200"
+                            android:layout_marginLeft="@dimen/dimen_20"
+                            android:visibility="gone">
+
+
+                            <ImageView
+                                android:id="@+id/iv_thumbnail_tools_package"
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="@dimen/dimen_150"
+                                android:layout_centerInParent="true" />
+
+                            <RelativeLayout
+                                android:layout_width="@dimen/dimen_150"
+                                android:layout_height="@dimen/dimen_150"
+                                android:layout_centerInParent="true"
+                                android:background="#1A000000"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_play_video" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -420,6 +573,7 @@
                         app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
+
                 </LinearLayout>
             </LinearLayout>
 

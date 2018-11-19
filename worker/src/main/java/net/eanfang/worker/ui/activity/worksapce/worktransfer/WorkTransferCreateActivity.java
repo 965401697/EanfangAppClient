@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,9 +18,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
@@ -268,6 +271,11 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        String targetId = getIntent().getStringExtra("targetId");
+        if (!TextUtils.isEmpty(targetId)) {
+            getGroupDetail(targetId);
+        }
     }
 
     @OnClick({R.id.ll_shift, R.id.ll_receiver_person, R.id.tv_add_hand, R.id.tv_add_finish_work, R.id.tv_add_unfinish_things, R.id.tv_add_follow_things, R.id.tv_add_attention_things, R.id.tv_send, R.id.tv_send_group, R.id.rl_confirm})
@@ -420,8 +428,29 @@ public class WorkTransferCreateActivity extends BaseActivity {
     }
 
     /**
+     * 获取当前群组详情
+     *
+     * @param targetId
+     */
+    private void getGroupDetail(String targetId) {
+
+        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                .params("ryGroupId", targetId)
+                .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setName(bean.getGroup().getGroupName());
+                    preson.setProtraivat(bean.getGroup().getHeadPortrait());
+                    preson.setId(bean.getGroup().getRcloudGroupId());
+                    newGroupList.add(preson);
+                    sendGroupAdapter.setNewData(newGroupList);
+                }));
+    }
+
+    /**
      * 获取班次
      */
+
     private void doGetClass() {
         new WorkTrancferCreateSelectClassListView(WorkTransferCreateActivity.this, "class", name -> {
             tvShift.setText(name);

@@ -21,13 +21,14 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.witget.MyGridView;
-import com.eanfang.witget.PersonalQRCodeDialog;
 import com.eanfang.witget.SwitchButton;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
@@ -248,21 +249,33 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("title", title);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
                 } else if (position == temp.size() - 2 && isOwner || position == temp.size() - 1 && !isOwner) {
-                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
-                    intent.putExtra("flag", 2);
+//                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
+//                    intent.putExtra("flag", 2);
+//                    intent.putExtra("groupId", id);
+//                    intent.putExtra("title", title);
+//                    intent.putExtra("ryGroupId", groupId);
+//                    intent.putExtra("list", friendListBeanArrayList);
+//                    startActivityForResult(intent, UPDATA_GROUP_OWN);
+
+
+                    Intent intent = new Intent(new Intent(GroupDetailActivity.this, SelectIMContactActivity.class));
+//                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
+                    intent.putExtra("flag", 3);
                     intent.putExtra("groupId", id);
                     intent.putExtra("title", title);
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("list", friendListBeanArrayList);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
 
+                } else  {
+                    if (!temp.get(position).getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                        Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
+                        intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
+                        startActivity(intent);
+                    } else {
+                        ToastUtil.get().showToast(GroupDetailActivity.this, "自己不能查看自己");
+                    }
                 }
-//                else {
-//                    Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
-//                    intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
-//                    startActivity(intent);
-//
-//                }
             }
         });
 
@@ -317,9 +330,13 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 PermissionUtils.get(this).getCameraPermission(() -> takePhoto(GroupDetailActivity.this, HEADER_PIC));
                 break;
             case R.id.ll_group_qr:
-
-                PersonalQRCodeDialog personalQRCodeDialog = new PersonalQRCodeDialog(this, "qr/" + qrCode);
-                personalQRCodeDialog.show();
+                Bundle bundle = new Bundle();
+                bundle.putString("qrcodeTitle", title);
+                bundle.putString("qrcodeAddress", qrCode);
+                bundle.putString("qrcodeMessage", "group");
+                JumpItent.jump(GroupDetailActivity.this, QrCodeShowActivity.class, bundle);
+//                PersonalQRCodeDialog personalQRCodeDialog = new PersonalQRCodeDialog(this, qrCode);
+//                personalQRCodeDialog.show();
 
                 break;
             case R.id.ll_group_name:

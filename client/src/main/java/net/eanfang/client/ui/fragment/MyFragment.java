@@ -3,13 +3,14 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
+import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -73,8 +74,13 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void setListener() {
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode());
-            personalQRCodeDialog.show();
+            Bundle bundle = new Bundle();
+            bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
+            bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+            bundle.putString("qrcodeMessage", "personal");
+            JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
+//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
+//            personalQRCodeDialog.show();
         });
     }
 

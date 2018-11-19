@@ -204,7 +204,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             etCompanyName.setVisibility(View.VISIBLE);
 
             ll_user_info.setVisibility(View.VISIBLE);
-            iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_down));
+            iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.ic_worker_detail_area_down));
         } else {
             mIsCompany = false;// 公司用户为false
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
@@ -585,10 +585,10 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             case R.id.ll_user_desc://
                 if (ll_user_info.getVisibility() == View.VISIBLE) {
                     ll_user_info.setVisibility(View.GONE);
-                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_right));
+                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_black_right));
                 } else {
                     ll_user_info.setVisibility(View.VISIBLE);
-                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_down));
+                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.ic_worker_detail_area_down));
                 }
                 break;
         }

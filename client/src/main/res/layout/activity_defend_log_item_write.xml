@@ -49,7 +49,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:text="防区编号"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <EditText
@@ -83,7 +83,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:text="防区位置"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <EditText
@@ -116,7 +116,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:text="报警次数"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <EditText
@@ -152,7 +152,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:text="报警原因"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
@@ -168,12 +168,12 @@
 
                     <ImageView
                         android:id="@+id/iv_address"
-                        android:layout_width="@dimen/dimen_26"
-                        android:layout_height="@dimen/dimen_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="@dimen/dimen_34"
-                        android:src="@mipmap/arrow_down" />
+                        android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -184,14 +184,31 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_92"
-                    android:layout_marginLeft="@dimen/dimen_39"
-                    android:gravity="center"
-                    android:text="备注信息"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_15" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/dimen_92"
+                        android:layout_marginLeft="@dimen/dimen_39"
+                        android:gravity="center_vertical"
+                        android:text="备注信息"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <ImageView
+                        android:id="@+id/iv_project_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="@dimen/dimen_34"
+                        android:src="@mipmap/ic_client_voice_input" />
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

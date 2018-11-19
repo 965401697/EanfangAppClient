@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 技师绑定服务地区
  */
-
+@Deprecated
 public class AuthWorkerAreaActivity extends BaseActivity {
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;

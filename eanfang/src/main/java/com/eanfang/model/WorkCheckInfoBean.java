@@ -1,5 +1,7 @@
 package com.eanfang.model;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -256,6 +258,7 @@ public class WorkCheckInfoBean implements Serializable {
             private Long accId;
             private String mobile;
             private String realName;
+            private String avatar;
 
             public Long getAccId() {
                 return accId;
@@ -279,6 +282,14 @@ public class WorkCheckInfoBean implements Serializable {
 
             public void setRealName(String realName) {
                 this.realName = realName;
+            }
+
+            public String getAvatar() {
+                return avatar;
+            }
+
+            public void setAvatar(String avatar) {
+                this.avatar = avatar;
             }
         }
     }
@@ -375,7 +386,7 @@ public class WorkCheckInfoBean implements Serializable {
         }
     }
 
-    public static class WorkInspectDetailsBean implements Serializable {
+    public static class WorkInspectDetailsBean implements Serializable, MultiItemEntity {
         /**
          * businessThreeCode : 1.11.13
          * id : 941492980165455874
@@ -397,6 +408,8 @@ public class WorkCheckInfoBean implements Serializable {
         private Long sysWorkInspectId;
         private String title;
         private List<WorkInspectDetailDisposesBean> workInspectDetailDisposes;
+        private String mp4Path;
+        private int itemType;
 
         public String getBusinessThreeCode() {
             return businessThreeCode == null ? "" : businessThreeCode;
@@ -473,6 +486,23 @@ public class WorkCheckInfoBean implements Serializable {
             this.workInspectDetailDisposes = workInspectDetailDisposes;
         }
 
+        public String getMp4Path() {
+            return mp4Path;
+        }
+
+        public void setMp4Path(String mp4Path) {
+            this.mp4Path = mp4Path;
+        }
+
+        @Override
+        public int getItemType() {
+            return itemType;
+        }
+
+        public void setItemType(int itemType) {
+            this.itemType = itemType;
+        }
+
         public static class WorkInspectDetailDisposesBean implements Serializable {
             /**
              * disposeInfo : 处理信息
@@ -489,6 +519,9 @@ public class WorkCheckInfoBean implements Serializable {
             private String remarkInfo;
             private int status;
             private Long sysWorkInspectDetailId;
+            private String mp4Path;
+            private int itemType;
+
 
             public String getDisposeInfo() {
                 return disposeInfo == null ? "" : disposeInfo;
@@ -536,6 +569,22 @@ public class WorkCheckInfoBean implements Serializable {
 
             public void setSysWorkInspectDetailId(Long sysWorkInspectDetailId) {
                 this.sysWorkInspectDetailId = sysWorkInspectDetailId;
+            }
+
+            public String getMp4Path() {
+                return mp4Path;
+            }
+
+            public void setMp4Path(String mp4Path) {
+                this.mp4Path = mp4Path;
+            }
+
+            public int getItemType() {
+                return itemType;
+            }
+
+            public void setItemType(int itemType) {
+                this.itemType = itemType;
             }
         }
     }

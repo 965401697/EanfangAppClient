@@ -61,7 +61,7 @@
             android:background="@color/color_white"
             android:orientation="horizontal"
             android:padding="@dimen/dimen_38"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,6 +94,7 @@
                     android:src="@mipmap/ic_icon_right" />
             </LinearLayout>
         </LinearLayout>
+
 
     </LinearLayout>
 

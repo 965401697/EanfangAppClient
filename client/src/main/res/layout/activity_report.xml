@@ -340,8 +340,8 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发送给谁"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tv_send"
@@ -393,8 +393,8 @@
                         android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="发到群聊"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textColor="@color/client_form_title_color"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/tv_send_group"
@@ -433,7 +433,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="20dp"
+                android:layout_marginBottom="@dimen/dimen_40"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_marginTop="@dimen/dimen_200"
                 android:background="@drawable/bg_ll_btn"
                 android:text="提交"
                 android:textColor="@color/white" />

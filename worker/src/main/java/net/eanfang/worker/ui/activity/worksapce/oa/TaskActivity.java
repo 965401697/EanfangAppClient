@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
-import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -29,6 +28,7 @@ import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
 
@@ -89,7 +89,6 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     RecyclerView rvGroup;
     private int posistion;
 
-    private OptionsPickerView pvOptions_NoLink;
     private List<UserEntity> userlist = new ArrayList<>();
     private List<String> userNameList = new ArrayList<>();
     private List<WorkTaskBean.WorkTaskDetailsBean> beanList = new ArrayList<>();
@@ -105,6 +104,8 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     private ArrayList<TemplateBean.Preson> newGroupList = new ArrayList<>();
     private SendPersonAdapter sendPersonAdapter;
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+
+    private boolean isEventBus = false;
 
     private Handler handler = new Handler() {
 
@@ -187,11 +188,12 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_add_task:
+                isEventBus = false;
                 Intent intent = new Intent(TaskActivity.this, AddWorkTaskDeitailActivity.class);
                 startActivityForResult(intent, 1);
                 break;
             case R.id.ll_depend_person://责任人
-
+                isEventBus = true;
                 isSend = 0;
 
                 Intent in = new Intent(this, SelectOrganizationActivity.class);
@@ -199,13 +201,14 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 startActivity(in);
                 break;
             case R.id.tv_send://选择人员
-
+                isEventBus = true;
                 isSend = 1;
 
                 startActivity(new Intent(TaskActivity.this, SelectOAPresonActivity.class));
                 break;
 
             case R.id.tv_send_group://选择群组
+                isEventBus = true;
                 isSend = 2;
                 startActivityForResult(new Intent(TaskActivity.this, SelectOAGroupActivity.class), REQUEST_CODE_GROUP);
                 break;
@@ -245,6 +248,7 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
+        if (!isEventBus) return;
 
         if (presonList.size() > 0) {
             if (isSend == 1) {
@@ -365,18 +369,12 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 .upJson(jsonString)
                 .execute(new EanfangCallback<WorkTaskInfoBean>(this, true, WorkTaskInfoBean.class, (bean) -> {
                     runOnUiThread(() -> {
-                        Intent intent = new Intent(TaskActivity.this, StateChangeActivity.class);
                         Bundle bundle = new Bundle();
                         Message message = new Message();
-                        message.setTitle("任务指派成功");
-                        message.setMsgTitle("您的工作任务已指派成功");
-                        message.setMsgContent("您可以随时通过我的工作任务查看");
-                        message.setShowOkBtn(true);
-                        message.setShowLogo(true);
-                        message.setTip("");
+                        message.setMsgContent("任务指派成功");
+                        message.setTip("确定");
                         bundle.putSerializable("message", message);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        JumpItent.jump(TaskActivity.this, StateChangeActivity.class, bundle);
 
                         //分享
                         if (newPresonList.size() == 0 && newGroupList.size() == 0) {

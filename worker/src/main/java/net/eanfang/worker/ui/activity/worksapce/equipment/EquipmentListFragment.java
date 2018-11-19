@@ -50,7 +50,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!PermKit.get().getExchangeDetailPrem()) return;
                 Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
-                intent.putExtra("id", mAdapter.getData().get(position).getId());
+                intent.putExtra("id", String.valueOf(mAdapter.getData().get(position).getId()));
 //                intent.putExtra("ownerCompanyId", mOwnerCompanyId);
                 intent.putExtra("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
                 intent.putExtra("businessOneCode", mType);

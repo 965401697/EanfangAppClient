@@ -21,7 +21,6 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.datastatistics.DataInstallBean;
-import com.eanfang.model.datastatistics.DataStatisticsBean;
 import com.eanfang.model.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
@@ -52,7 +51,7 @@ import butterknife.OnClick;
  * @data 2018/9/19
  * @description 数据统计 - 设计
  */
-public class DataDesignActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener{
+public class DataDesignActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
     // 数据分析选择系统类别：全部，电子监控
     @BindView(R.id.tv_dataSelectType)
     TextView tvDataSelectType;
@@ -126,9 +125,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     // 故障类型
     private List<DataInstallBean.BussinessBean> bussinessBeanList = new ArrayList<>();
     private ArrayList<PieEntry> bussinessEntryList = new ArrayList<>();
-    // 设备完好率
-    private List<DataStatisticsBean.FailureBean> failureBeanList = new ArrayList<>();
-    private ArrayList<PieEntry> failureEntryList = new ArrayList<>();
 
     //当前公司ID
     private Long mOrgId;
@@ -147,6 +143,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             Color.rgb(255, 98, 0), Color.rgb(255, 211, 0),
             Color.rgb(130, 104, 234),
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -273,8 +270,8 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             //设置数据
             bussinessEntryList.clear();
             for (int i = 0; i < bussinessBeanList.size(); i++) {
-                if (bussinessBeanList.get(i).getCount() != 0) {
-                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getCount(), bussinessBeanList.get(i).getTypeStr()));
+                if (bussinessBeanList.get(i).getNum() != 0) {
+                    bussinessEntryList.add(new PieEntry(bussinessBeanList.get(i).getNum(), bussinessBeanList.get(i).getTypeStr()));
                 }
             }
             if (bussinessEntryList.size() <= 5) {
@@ -285,7 +282,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
 
 
         }
-        if (bussinessEntryList.size() <= 0 && failureEntryList.size() <= 0) {
+        if (bussinessEntryList.size() <= 0) {
             tvPieNoresult.setVisibility(View.VISIBLE);
             llIntact.setVisibility(View.GONE);
             llFault.setVisibility(View.GONE);

@@ -3,14 +3,25 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONPObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.my.certification.CertificateListActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +39,12 @@ public class CompanyManagerActivity extends BaseActivity {
     RelativeLayout rlAuth;
     @BindView(R.id.rl_is_auth)
     RelativeLayout rlIsAuth;
+    // 重新认证
+    @BindView(R.id.tv_againAuth)
+    TextView tvAgainAuth;
+    // 荣誉证书
+    @BindView(R.id.rl_honorcertificate)
+    RelativeLayout rlHonorcertificate;
     private Long mOrgId;
     private String mOrgName = "";
     //认证中显示标示
@@ -49,14 +66,26 @@ public class CompanyManagerActivity extends BaseActivity {
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
         adminUserId = getIntent().getStringExtra("adminUserId");
+        /**
+         *  0 未认证，待认证
+         *  1认证中
+         *  2已认证
+         *  3认证失败，请重新认证
+         * */
         if ("1".equals(isAuth)) {
             rlIsAuth.setVisibility(View.VISIBLE);
         } else {
             rlIsAuth.setVisibility(View.GONE);
         }
+        if ("2".equals(isAuth)) {
+            tvAgainAuth.setVisibility(View.VISIBLE);
+        } else {
+            tvAgainAuth.setVisibility(View.GONE);
+        }
     }
 
-    @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation})
+    @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff,
+            R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.rl_honorcertificate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             // 完善资料
@@ -66,17 +95,34 @@ public class CompanyManagerActivity extends BaseActivity {
                 bundle_prefect.putLong("orgid", mOrgId);
                 bundle_prefect.putString("orgName", mOrgName);
                 bundle_prefect.putString("assign", "prefect");
-                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyActivity.class, bundle_prefect);
+                if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看 资料
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_prefect);
+                } else {
+                    JumpItent.jump(CompanyManagerActivity.this, AuthCompanyFirstActivity.class, bundle_prefect);
+                }
                 break;
             // 资质认证
             case R.id.rl_auth:
                 if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
                 Bundle bundle_auth = new Bundle();
                 bundle_auth.putLong("orgid", mOrgId);
-                JumpItent.jump(CompanyManagerActivity.this, AuthSystemTypeActivity.class, bundle_auth);
+                bundle_auth.putString("isAuth", isAuth);
+                if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
+                    JumpItent.jump(CompanyManagerActivity.this, QualifyDataActivity.class, bundle_auth);
+                } else {
+                    JumpItent.jump(CompanyManagerActivity.this, AuthQualifyFirstActivity.class, bundle_auth);
+                }
 
                 break;
+            // 荣誉证书
+            case R.id.rl_honorcertificate:
+                Bundle bundle = new Bundle();
+                bundle.putString("isAuth", isAuth);
+                bundle.putLong("orgid", mOrgId);
+                bundle.putString("role", "company");
+                JumpItent.jump(CompanyManagerActivity.this, CertificateListActivity.class, bundle);
 
+                break;
             case R.id.rl_admin_set:
                 if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
                     JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
@@ -102,6 +148,25 @@ public class CompanyManagerActivity extends BaseActivity {
                 if (!PermKit.get().getCooperationListAllPerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
                 break;
+            case R.id.tv_againAuth:
+                doUndoVerify();
+                break;
         }
     }
+
+
+    /**
+     * 进行撤销认证操作
+     */
+    public void doUndoVerify() {
+        new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
+            EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + mOrgId).
+                    execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        showToast("撤销成功");
+                        tvAgainAuth.setVisibility(View.GONE);
+                        isAuth = "0";
+                    }));
+        }).showDialog();
+    }
+
 }

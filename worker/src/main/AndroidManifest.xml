@@ -67,6 +67,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
+    <!-- 华为桌面消息图标权限 -->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
+
     <application
         android:name=".ui.base.WorkerApplication"
         android:allowBackup="true"
@@ -178,7 +181,6 @@
         <activity android:name=".ui.activity.my.EvaluateActivity" />
         <activity android:name=".ui.activity.my.SettingActivity" />
         <activity android:name=".ui.activity.worksapce.repair.AddTroubleActivity" />
-        <activity android:name=".ui.activity.worksapce.oa.check.CheckActivity" />
         <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" />
@@ -248,13 +250,15 @@
         <activity android:name=".ui.activity.worksapce.SubcompanyActivity" />
         <activity android:name=".ui.activity.worksapce.ExternalCompanyActivity" />
         <activity android:name=".ui.activity.worksapce.PartnerActivity" />
-        <activity android:name=".ui.activity.worksapce.SignActivity" />
-        <activity android:name=".ui.activity.worksapce.SignListActivity" />
-        <activity android:name=".ui.activity.worksapce.SignInCommitActivity" />
-        <activity android:name=".ui.activity.worksapce.SignListDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthCompanyActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthSystemTypeActivity" />
-        <activity android:name=".ui.activity.worksapce.contacts.AuthBizActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.sign.SignActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <activity android:name=".ui.activity.worksapce.sign.SignListActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignInCommitActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignListDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifySecondActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.AuthAreaActivity" />
         <!-- 技师认证 填写个人资料 照片 等 -->
         <activity
@@ -525,7 +529,7 @@
         <activity android:name=".ui.activity.worksapce.oa.SelectOAGroupActivity" />
         <activity android:name=".ui.activity.worksapce.oa.OASearchActivity">
             <intent-filter>
-                <action android:name="com.eanfang.net.intent.action.OA_SEARCH" />
+                <action android:name="com.eanfang.net.intent.action.worker.OA_SEARCH" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -570,7 +574,6 @@
         <!-- 布置任务 -->
         <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
         <!-- 设备检点 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.CheckParentActivity" />
         <!-- 报装 -->
         <activity android:name=".ui.activity.worksapce.InstallOrderParentActivity" />
         <!-- 报价管控 -->
@@ -604,7 +607,92 @@
         <!-- 统计数据报装 -->
         <activity android:name=".ui.activity.worksapce.datastatistics.DataInstallActivity" />
         <!-- 统计数据设计 -->
-        <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity"/>
-</application>
+        <activity android:name=".ui.activity.worksapce.datastatistics.DataDesignActivity" />
+        <!-- 新的技师认证页面 -->
+        <activity android:name=".ui.activity.my.certification.NewAuthListActivity" />
+        <!-- 实名认证 -->
+        <activity android:name=".ui.activity.my.certification.CertificationActivity" />
+        <!-- 身份证验证 -->
+        <activity android:name=".ui.activity.my.certification.IdentityCardCertification" />
+        <!-- 其他资料的验证 -->
+        <activity android:name=".ui.activity.my.certification.OtherDataActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanySecondActivity" />
+        <!-- 荣誉证书 -->
+        <activity android:name=".ui.activity.my.certification.CertificateListActivity" />
+        <!-- 官方消息 -->
+        <activity android:name=".ui.activity.worksapce.notice.OfficialListActivity" />
+        <!-- 官方消息详情 -->
+        <activity android:name=".ui.activity.worksapce.notice.OfficialDetailActivity" />
+        <activity
+            android:name=".ui.activity.my.certification.AddCertificationActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <!-- 技师个人经历 -->
+        <activity android:name=".ui.activity.my.certification.OwmHistoryActivity" />
+        <!-- 技师添加教育经历 -->
+        <activity android:name=".ui.activity.my.certification.AddEducationHistoryActivity" />
+        <!-- 技师工作经历 -->
+        <activity android:name=".ui.activity.my.certification.WorkHistoryActivity" />
+        <!-- 技师添加工作经历 -->
+        <activity android:name=".ui.activity.my.certification.AddWorkActivity" />
+        <!-- 技师绑定system ，type -->
+        <activity android:name=".ui.activity.my.certification.SkillTypeActivity" />
+        <!-- 技师区域绑定 -->
+        <activity android:name=".ui.activity.my.certification.SkillAreaActivity" />
+        <!-- 技师技能认证 -->
+        <activity android:name=".ui.activity.my.certification.SkillCertificafeListActivity" />
+        <!-- 技师添加技能证书 -->
+        <activity android:name=".ui.activity.my.certification.AddSkillCertificafeActivity" />
+        <!-- 工作汇报列表 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity" />
+        <!-- 工作汇报刷选 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.FiltrateTypeActivity" />
+        <!-- 创建工作汇报 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.CreationWorkReportActivity" />
+        <!-- 工作汇报详情 -->
+        <activity android:name=".ui.activity.worksapce.oa.workreport.WorkReportDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.AuthQualifyListActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.contacts.verifyqualify.AddAuthQualifyActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity" />
+        <!-- 新的选择联系人 -->
+        <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
+        <!-- 新的创建群组 -->
+        <activity android:name=".ui.activity.im.CreateGroupActivity">
+            <intent-filter>
+                <action android:name="com.eanfang.net.intent.action.IM_CREATE_GROUP" />
 
-    </manifest>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 技师实名认证 -->
+        <activity android:name=".ui.activity.my.certification.CertificationInfoActivity" />
+        <!-- 技师技能资质详情 -->
+        <activity android:name=".ui.activity.my.certification.SkillInfoDetailActivity" />
+        <!-- 布置任务列表 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentListActivity" />
+        <!-- 筛选布置任务 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.FiltrateTaskActivity" />
+        <!-- 创建布置任务 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
+        <!-- 设备点检列表 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckListActivity" />
+        <!-- 添加设备点检 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.AddNewCheckActivity" />
+        <!-- 筛选设备点检 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.FiltrateCheckActivity" />
+        <!-- 设备点检处理 -->
+        <activity android:name=".ui.activity.worksapce.oa.check.DealWithFirstActivity" />
+        <!-- 布置任务详情 -->
+        <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.sign.SignFiltrateActivity"></activity>
+        <!-- 创建团队的详情 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamDetailActivity" />
+        <!-- 创建团队的状态提示页 -->
+        <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
+        <activity android:name=".ui.activity.im.OAListActivity" />
+        <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity"></activity>
+    </application>
+
+</manifest>

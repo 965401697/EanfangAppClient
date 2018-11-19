@@ -22,12 +22,12 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.task.TaskDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.client.ui.widget.WorkCheckInfoView;
-import net.eanfang.client.ui.widget.WorkReportInfoView;
-import net.eanfang.client.ui.widget.WorkTaskInfoView;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -169,9 +169,12 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("2")) {
             new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), "完成", true).show();
         } else if (customizeMessage.getShareType().equals("3")) {
-            new WorkReportInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+//            customizeMessage.setStatus("1");//点击标志位已读
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+//            new WorkReportInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
         } else if (customizeMessage.getShareType().equals("4")) {
-            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+//            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("5")) {
             new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
 

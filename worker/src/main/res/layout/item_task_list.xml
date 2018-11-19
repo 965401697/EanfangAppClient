@@ -73,7 +73,7 @@
             android:id="@+id/iv_upload"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            fresco:placeholderImage="@mipmap/camera" />
+            fresco:placeholderImage="@mipmap/ic_camera" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -53,12 +53,6 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_work_point_check"
-            style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_work_point_check"
-            android:onClick="noOpen"
-            android:text="@string/text_worker_point_check" />
 
         <TextView
             android:id="@+id/tv_work_apply_goods"
@@ -78,6 +72,10 @@
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_work_transfer"
             android:text="@string/text_work_transfer" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
 
     </LinearLayout>
 

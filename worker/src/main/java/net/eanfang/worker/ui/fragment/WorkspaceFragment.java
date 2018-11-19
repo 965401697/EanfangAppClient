@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -10,13 +12,18 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
+import com.eanfang.witget.SetQBadgeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
@@ -27,9 +34,9 @@ import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.worker.ui.activity.worksapce.FaultRecordListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentListActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.ReportParentActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.TaskParentActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckParentActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.CheckListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkControlActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferControlActivity;
 import net.eanfang.worker.ui.widget.CompanyListView;
@@ -70,6 +77,12 @@ public class WorkspaceFragment extends BaseFragment {
     @Override
     protected void initData(Bundle arguments) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        doHttpOrderNums();
     }
 
     @Override
@@ -148,6 +161,8 @@ public class WorkspaceFragment extends BaseFragment {
                 }
                 if (url != null) {
                     iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                } else {
+                    iv_company_logo.setImageURI("");
                 }
             }).show();
         });
@@ -211,21 +226,29 @@ public class WorkspaceFragment extends BaseFragment {
         //工作汇报
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
 //            new ReportCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+//            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
+//            startActivity(intent);
+
+            if (!PermKit.get().getWorkReportListPrem()) return;
+            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
+//            intent.putExtra("title", title);
+//            intent.putExtra("type", type);
             startActivity(intent);
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
 //            new TaskCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+//            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
+            Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
             startActivity(intent);
         });
 
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
 //            new WorkCheckCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
+//            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
+            Intent intent = new Intent(getActivity(), CheckListActivity.class);
             startActivity(intent);
         });
 
@@ -323,4 +346,21 @@ public class WorkspaceFragment extends BaseFragment {
 
     }
 
+    /**
+     * 获取订单数量
+     */
+    private void doHttpOrderNums() {
+        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
+            new Handler(Looper.getMainLooper()).post(() -> {//放在主线程更新 ui runonuithread 无效
+                SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_report), bean.getReport());// 汇报
+                SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_task), bean.getTask());// 任务
+                SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_inspect), bean.getInspect());//检查
+            });
+        })));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

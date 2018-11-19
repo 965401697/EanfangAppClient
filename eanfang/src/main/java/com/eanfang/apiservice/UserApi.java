@@ -78,12 +78,20 @@ public interface UserApi {
      * 获取 我管理和归属的的所有公司
      */
     String GET_BRANCH_OFFICE_LIST_ALL = BuildConfig.API_HOST + "/yaf_sys/org/company/listtopallmananger";
+    /**
+     * 获取 我管理和归属的的所有公司
+     */
+    String GET_BRANCH_OFFICE_ALL_LIST = BuildConfig.API_HOST + "/yaf_sys/org/incompany/listtree";
 
 
     /**
      * 获得某个公司下  所有的 部门树  包括员工
      */
     String GET_BRANCH_OFFICE_LIST_TREE_ALL = BuildConfig.API_HOST + "/yaf_sys/org/departmentByCompany/listtreeall";
+    /**
+     * 获得某个公司下的员工
+     */
+    String GET_BRANCH_OFFICE_LIST_TREE = BuildConfig.API_HOST + "/yaf_sys/staff/listByDepartment/";
     /**
      * 外协单位
      */
@@ -94,7 +102,7 @@ public interface UserApi {
     String GET_STAFFTEMP_LIST = BuildConfig.API_HOST + "/yaf_sys/stafftemp/list";
 
     /**
-     * 搜索客户
+     * 搜索公司
      */
     String GET_WORKCOMPANY_LIST = BuildConfig.API_HOST + "/yaf_shop/workCompany/search";
     /**
@@ -111,14 +119,20 @@ public interface UserApi {
     String GET_SIGN_COUNT = BuildConfig.API_HOST + "/yaf_oa/sign/querySignCount";
     String GET_SIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/sign/userList";
     String GET_SIGN_DETAIL = BuildConfig.API_HOST + "/yaf_oa/sign/detail";
+
     /**
      * 新增安防公司
      */
     String GET_ORGUNIT_SHOP_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/add";
     /**
-     * 填写企业资料
+     * 填写企业资料 技师端
      */
     String GET_ORGUNIT_SHOP_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/insert";
+
+    /**
+     * 技师端安防公司完善资质认证
+     */
+    String GET_WORKER_COMPANY_QUALIFY = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/insertV2";
     /**
      * 填写系统类别
      */
@@ -137,9 +151,13 @@ public interface UserApi {
      * 新增企业
      */
     String GET_ORGUNIT_ENT_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/add";
+    /**
+     * 待认领企业的lsit
+     */
+    String GET_CLAIM_ORGUNIT_LIST = BuildConfig.API_HOST + "/yaf_sys/orgunit/claim/list  ";
 
     /**
-     * 填写企业资料
+     * 保存企业资料 客户端
      */
     String GET_ORGUNIT_ENT_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/insert";
 
@@ -156,6 +174,64 @@ public interface UserApi {
      * 填写技师信息
      */
     String GET_TECH_WORKER_ADD = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insert";
+    /**
+     * 填写技师信息 实名认证
+     */
+    String GET_TECH_WORKER_ADD_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insertV2";
+    /**
+     * 填写技师信息 证书填写
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/insert";
+    /**
+     * 填写技师信息 证书列表
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE_LIST = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/list";
+    /**
+     * 填写技师信息 证书列表删除
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE_DELETE = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/delete";
+
+    /**
+     * 填写技师信息 证书列表更新
+     */
+    String GET_TECH_WORKER_ADD_CERTIFICATE_UPDATE = BuildConfig.API_HOST + "/yaf_shop/honorcertificate/update";
+    /**
+     * 填写技师信息 教育经历添加
+     */
+    String GET_TECH_WORKER_ADD_EDUCATION = BuildConfig.API_HOST + "/yaf_shop/educationexperience/insert";
+    /**
+     * 填写技师信息 教育经历删除
+     */
+    String GET_TECH_WORKER_EDUCATION_DELETE = BuildConfig.API_HOST + "/yaf_shop/educationexperience/delete";
+
+    /**
+     * 填写技师信息 教育经历List
+     */
+    String GET_TECH_WORKER_EDUCATION_LIST = BuildConfig.API_HOST + "/yaf_shop/educationexperience/list";
+
+    /**
+     * 填写技师信息 教育经历更新
+     */
+    String GET_TECH_WORKER_WORK_UPDATE = BuildConfig.API_HOST + "/yaf_shop/jobexperience/update";
+    /**
+     * 填写技师信息 工作经历添加
+     */
+    String GET_TECH_WORKER_ADD_WORK = BuildConfig.API_HOST + "/yaf_shop/jobexperience/insert";
+    /**
+     * 填写技师信息 工作经历删除
+     */
+    String GET_TECH_WORKER_WORK_DELETE = BuildConfig.API_HOST + "/yaf_shop/jobexperience/delete";
+
+    /**
+     * 填写技师信息 工作经历List
+     */
+    String GET_TECH_WORKER_WORK_LIST = BuildConfig.API_HOST + "/yaf_shop/jobexperience/list";
+
+    /**
+     * 填写技师信息 工作经历更新
+     */
+    String GET_TECH_WORKER_EDUCATION_UPDATE = BuildConfig.API_HOST + "/yaf_shop/educationexperience/update";
+
     /**
      * 加载系统类别
      */
@@ -216,6 +292,14 @@ public interface UserApi {
      * 获取好有列表
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
+
+
+    /**
+     * 查看是否是好友
+     */
+    String POST_CHECK_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/checkFriend";
+
+
     /**
      * 根據accid 獲得用戶信息
      */
@@ -331,5 +415,88 @@ public interface UserApi {
      * 修改密码
      */
     String UPDATA_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changeAppkey";
+    /**
+     * 安防公司认证相关
+     * */
+    /**
+     * 安防公司添加资质认证第一步详情
+     */
+    String FIRST_QUALIFY = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/detail/sp1";
 
+    /**
+     * 安防公司添加资质证书
+     */
+    String ADD_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/insert";
+    /**
+     * 安防公司修改资质证书
+     */
+    String UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/update";
+    /**
+     * 安防公司查看资质证书列表
+     */
+    String LIST_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/list";
+    /**
+     * 安防公司查看资质证书列表 刪除
+     */
+    String DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/aptitudecertificate/delete";
+
+    /**
+     * 安防公司荣誉 证书填写
+     */
+    String COMPANY_ADD_CERTIFICATE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/insert";
+    /**
+     * 安防公司荣誉 证书列表
+     */
+    String COMPANY_CERTIFICATE_LIST = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/list";
+    /**
+     * 安防公司荣誉 证书列表删除
+     */
+    String COMPANY_CERTIFICATE_DELETE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/delete";
+
+    /**
+     * 安防公司荣誉 证书列表更新
+     */
+    String COMPANY_CERTIFICATE_UPDATE = BuildConfig.API_HOST + "/yaf_shop/glorycertificate/update";
+
+    /**
+     * 签到签退列表
+     */
+    String SIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/sign/userListNew";
+    /**
+     * 技师技能认证的 系统类别和业务类型的提交
+     */
+    String TECH_WORKER_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/updateV2";
+
+    /**
+     * 技师技能认证添加资质证书
+     */
+    String TECH_WORKER_ADD_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/insert";
+    /**
+     * 技师技能认证修改资质证书
+     */
+    String TECH_WORKER_UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/update";
+    /**
+     * 技师技能认证查看资质证书列表
+     */
+    String TECH_WORKER_LIST_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/list";
+    /**
+     * 技师技能认证查看资质证书列表
+     */
+    String TECH_WORKER_DELETE_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/delete";
+
+    /**
+     * 首页获取订单数量
+     */
+    String HOME_GET_ORDER_NUM = BuildConfig.API_HOST + "/yaf_repair/order/orderNum";
+
+    /**
+     * 获取消息、通知等数量全部接口
+     */
+    String ALL_MESSAGE = BuildConfig.API_HOST + "/yaf_sys/notice/count/user/all";
+
+    /**
+     * 技师技能认证的详情
+     */
+    String
+            TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
 }

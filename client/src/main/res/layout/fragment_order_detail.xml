@@ -46,9 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
-                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/dimen_30"
+                    android:padding="@dimen/dimen_30"
                     android:visibility="gone">
 
                     <com.facebook.drawee.view.SimpleDraweeView
@@ -110,31 +109,30 @@
                 <View
                     android:id="@+id/line"
                     style="@style/style_common_line_gray"
-                    android:layout_marginTop="@dimen/dimen_26"
                     android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_36"
                     android:background="@color/color_white"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dimen_30">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingLeft="@dimen/dimen_30">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="单位名称"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -143,7 +141,8 @@
                                 android:id="@+id/tv_name_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="报修人    "
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13"
@@ -154,7 +153,8 @@
                                 android:id="@+id/tv_phone_desc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="手机号"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13"
@@ -164,7 +164,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="项目名称"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -172,7 +173,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="报修地址"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -261,12 +263,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:paddingLeft="@dimen/dimen_30">
+                            android:padding="@dimen/dimen_30">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="现场联系人"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -274,7 +277,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="手机号    "
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -282,7 +286,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text="备注信息  "
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
@@ -295,15 +300,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_ll_selctor"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:padding="@dimen/dimen_30">
 
                             <TextView
                                 android:id="@+id/tv_repairContacts"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text=""
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_13" />
@@ -312,9 +318,9 @@
                                 android:id="@+id/tv_repairContactPhone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text=""
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_13" />
@@ -323,9 +329,9 @@
                                 android:id="@+id/tv_repair_remarkinfo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
                                 android:layout_weight="1"
-                                android:padding="@dimen/dimen_15"
+                                android:paddingBottom="@dimen/dimen_15"
+                                android:paddingTop="@dimen/dimen_15"
                                 android:text=""
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_13" />

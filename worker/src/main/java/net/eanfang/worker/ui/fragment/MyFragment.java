@@ -16,6 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.LoginBean;
+import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
@@ -25,10 +26,10 @@ import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.AuthListActivity;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
+import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
 
@@ -129,8 +130,13 @@ public class MyFragment extends BaseFragment {
         });
         // 二维码头像
         mIvPersonalQRCode.setOnClickListener((v) -> {
-            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), "qr/" + EanfangApplication.get().getUser().getAccount().getQrCode());
-            personalQRCodeDialog.show();
+            Bundle bundle = new Bundle();
+            bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
+            bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+            bundle.putString("qrcodeMessage", "personal");
+            JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
+//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
+//            personalQRCodeDialog.show();
         });
 
     }
@@ -172,7 +178,8 @@ public class MyFragment extends BaseFragment {
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
-            JumpItent.jump(getActivity(), AuthListActivity.class);
+            JumpItent.jump(getActivity(), NewAuthListActivity.class);
+//            JumpItent.jump(getActivity(), AuthListActivity.class);
         }
     }
 }

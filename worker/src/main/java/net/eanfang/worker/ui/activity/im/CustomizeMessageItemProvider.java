@@ -21,11 +21,11 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
-import net.eanfang.worker.ui.widget.WorkCheckInfoView;
-import net.eanfang.worker.ui.widget.WorkReportInfoView;
-import net.eanfang.worker.ui.widget.WorkTaskInfoView;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -68,7 +68,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
                 holder.workerName.setText("维修历史：");
             }
             holder.status.setVisibility(View.INVISIBLE);
-        }else if (customizeMessage.getShareType().equals("3")) {
+        } else if (customizeMessage.getShareType().equals("3")) {
             holder.title.setText("工作汇报");
             holder.orderNum.setText("部门：" + customizeMessage.getOrderNum());
             holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
@@ -89,7 +89,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("整改期限：" + customizeMessage.getCreatTime());
             holder.workerName.setText("检查时间：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.INVISIBLE);
-        }else if (customizeMessage.getShareType().equals("6")) {
+        } else if (customizeMessage.getShareType().equals("6")) {
 
             holder.title.setText("交接班");
             holder.orderNum.setText("编号：" + customizeMessage.getOrderNum());
@@ -148,13 +148,17 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("2")) {
             new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), true).show();
         } else if (customizeMessage.getShareType().equals("3")) {
-            new WorkReportInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+//            customizeMessage.setStatus("1");//点击标志位已读
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+//            new WorkReportInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
         } else if (customizeMessage.getShareType().equals("4")) {
-            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+//            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("5")) {
-            new WorkCheckInfoView((Activity) view.getContext(), true,  Long.parseLong(customizeMessage.getOrderId()),true).show();
+//            new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
 
-        }else if (customizeMessage.getShareType().equals("6")) {
+        } else if (customizeMessage.getShareType().equals("6")) {
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("7")) {
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));

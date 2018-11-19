@@ -34,6 +34,7 @@ import butterknife.ButterKnife;
  * @date on 2018/6/21  10:34
  * @decision 技师认证 上传照片
  */
+@Deprecated
 public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
 
 

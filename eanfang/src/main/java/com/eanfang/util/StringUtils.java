@@ -220,6 +220,9 @@ public class StringUtils {
         System.out.println("isvalid:" + isValid("bac83aad1e1e3315b814160de69467d0PGFn05GfO4Bj2gcKyH4jcCfOS + CIkfDv0ZNNjBJ7TqM ="));
     }
 
+    /**
+     * 截取url中 字段值
+     */
     public static String getValueByName(String url, String name) {
         String result = "";
         int index = url.indexOf("?");

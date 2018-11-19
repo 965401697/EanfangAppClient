@@ -6,12 +6,13 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -122,6 +123,8 @@ public class RepairFailureEntity implements Serializable {
     //维修次数
     //@TableField(value = "repair_count")
     private Integer repairCount;
+    //短视频
+    private String mp4_path;
 
     public String getSketch() {
         return sketch;

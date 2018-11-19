@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -81,7 +82,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_bottomLeft;
 
     // userid
-    private Long mUserId;
+    private Long mUserId = EanfangApplication.get().getUserId();
     private Long mItemId;
     private int mIsPhoneSolve;
     // 订单状态
@@ -184,35 +185,35 @@ public class OrderDetailFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        tvDoPay.setOnClickListener((v) -> startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity)));
+        tvDoPay.setOnClickListener((v) -> {
+            if (doCompare(mAssigneeUserId, mUserId)) {
+                startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity));
+            }
+        });
+
         // 确认完工  立即评价
         tvBottomRight.setOnClickListener((v) -> {
             if (mOrderStatus == 4) {// 确认完工
-//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-//                    showToast("当前订单负责人可以操作");
-//                    return;
-//                }
-                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
+                if (doCompare(mAssigneeUserId, mUserId)) {
+                    new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
+                }
+
             } else if (mOrderStatus == 5) {//立即评价
-//                if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-//                    showToast("当前订单负责人可以操作");
-//                    return;
-//                }
-                startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                        .putExtra("flag", 0)
-                        .putExtra("ordernum", mOrderNum)
-                        .putExtra("workerUid", mAssigneeUserId)
-                        .putExtra("orderId", mItemId)
-                        .putExtra("avatar", mHeadUrl));
+                if (doCompare(mAssigneeUserId, mUserId)) {
+                    startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
+                            .putExtra("flag", 0)
+                            .putExtra("ordernum", mOrderNum)
+                            .putExtra("workerUid", mAssigneeUserId)
+                            .putExtra("orderId", mItemId)
+                            .putExtra("avatar", mHeadUrl));
+                }
             }
         });
         // 查看完工报告
         tv_bottomLeft.setOnClickListener((v) -> {
-//            if (!mUserId.equals(EanfangApplication.get().getUserId())) {
-//                showToast("当前订单负责人可以操作");
-//                return;
-//            }
-            new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
+            if (doCompare(mAssigneeUserId, mUserId)) {
+                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
+            }
         });
 
     }
@@ -245,14 +246,15 @@ public class OrderDetailFragment extends BaseFragment {
                         return;
                     }
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
-                } else if (view.getId() == R.id.ll_item) {
-                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
-                    if (secondItem.getVisibility() == View.VISIBLE) {
-                        secondItem.setVisibility(View.GONE);
-                    } else {
-                        secondItem.setVisibility(View.VISIBLE);
-                    }
                 }
+//                else if (view.getId() == R.id.ll_item) {// 展开收起
+//                    View secondItem = llm.findViewByPosition(position).findViewById(R.id.second_item);
+//                    if (secondItem.getVisibility() == View.VISIBLE) {
+//                        secondItem.setVisibility(View.GONE);
+//                    } else {
+//                        secondItem.setVisibility(View.VISIBLE);
+//                    }
+//                }
             }
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -374,7 +376,6 @@ public class OrderDetailFragment extends BaseFragment {
 //                    } else {
 //                        tv_phone_solve.setText("是");
 //                    }
-                    mUserId = bean.getOwnerUserId();
                     mItemId = bean.getId();
                     mIsPhoneSolve = bean.getIsPhoneSolve();
                     mOrderStatus = bean.getStatus();
@@ -413,5 +414,15 @@ public class OrderDetailFragment extends BaseFragment {
 
     public HashMap getHashMap() {
         return hashMap;
+    }
+
+
+    public boolean doCompare(Long assingerUserId, Long userId) {
+
+        if (assingerUserId.equals(userId)) {
+            return true;
+        }
+        showToast("当前无权限操作订单");
+        return false;
     }
 }

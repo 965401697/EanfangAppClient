@@ -1,6 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,8 +17,8 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.client.ui.adapter.WorkReportListAdapter;
-import net.eanfang.client.ui.widget.WorkReportInfoView;
 
 
 /**
@@ -29,13 +29,16 @@ import net.eanfang.client.ui.widget.WorkReportInfoView;
  * @desc
  */
 
-
 public class WorkReportListFragment extends TemplateItemListFragment {
 
 
     private String mTitle;
     private int mType;
     private WorkReportListAdapter mAdapter;
+    private QueryEntry mQueryEntry;
+    public static final int DETAILL_REQUEST_CODE = 22;//点击详情的返回刷新的code
+    private WorkReportListBean.ListBean mDetailBean;
+    private int mPosition;
 
     public static WorkReportListFragment getInstance(String title, int type) {
         WorkReportListFragment sf = new WorkReportListFragment();
@@ -52,7 +55,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new WorkReportListAdapter();
+        mAdapter = new WorkReportListAdapter(mType);
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -61,12 +64,21 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
                 if (!PermKit.get().getWorkReportDetailPrem()) return;
 
-                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                if (mType == 2 && ((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+//                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {
                     getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
+                    mDetailBean = ((WorkReportListBean.ListBean) adapter.getData().get(position));
+                    mPosition = position;
                 }
 
-                new WorkReportInfoView((Activity) view.getContext(), true, ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId(), false).show();
+//                new WorkReportInfoView((Activity) view.getContext(), true, ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId(), false).show();
 
+
+                Intent intent = new Intent(getActivity(), WorkReportDetailActivity.class);
+                intent.putExtra("id", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
+                intent.putExtra("type", GetConstDataUtils.getWorkReportTypeList().get((((WorkReportListBean.ListBean) adapter.getData().get(position)).getType())));
+                intent.putExtra("name", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
+                getActivity().startActivityForResult(intent,DETAILL_REQUEST_CODE);
             }
         });
     }
@@ -85,28 +97,31 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
     @Override
     protected void getData() {
-
-        QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(mTitle)) {
-            String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
-            queryEntry.getEquals().put(Constant.STATUS, status);
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
         }
+//        if (!Constant.ALL.equals(mTitle)) {
+//            String status = GetConstDataUtils.getWorkReportStatus().indexOf(getmTitle()) + "";
+//            queryEntry.getEquals().put(Constant.STATUS, status);
+//        }
         if (Constant.COMPANY_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
         } else if (Constant.CREATE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         }
-        queryEntry.setPage(mPage);
-        queryEntry.setSize(10);
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.GET_WORK_REPORT_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkReportListBean>(getActivity(), true, WorkReportListBean.class) {
 
                     @Override
                     public void onSuccess(WorkReportListBean bean) {
+
+                        mQueryEntry = null;//释放对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -153,4 +168,26 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 });
     }
 
+    public void getReportData(QueryEntry queryEntry) {
+        this.mQueryEntry = queryEntry;
+        mPage = 1;
+        getData();
+    }
+
+
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailBean != null) {
+            mDetailBean.setStatus(1);
+            mAdapter.notifyItemChanged(mPosition);
+        }
+    }
 }

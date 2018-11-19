@@ -1,5 +1,6 @@
 package com.eanfang.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class QueryEntry {
+public class QueryEntry implements Serializable{
 
     /**
      * equals =

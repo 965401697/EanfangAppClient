@@ -14,6 +14,8 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.WorkAddCheckBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -148,7 +151,7 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
         detailsBean.setBusinessThreeCode(Config.get().getBusinessCodeByName(tvThreeName.getText().toString().trim(), 3));
         detailsBean.setInfo(etInputCheckContent.getText().toString().trim());
 
-        String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck",mPhotosSnpl, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck", mPhotosSnpl, uploadMap, true);
         detailsBean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {
@@ -182,4 +185,10 @@ public class AddWorkCheckDetailActivity extends BaseClientActivity {
     }
 
 
+    @OnClick(R.id.iv_checked_voice)
+    public void onViewClicked() {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(AddWorkCheckDetailActivity.this, etInputCheckContent);
+        });
+    }
 }

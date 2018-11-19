@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18090701
-        versionName "2.3.21"
+        versionCode 18111601
+        versionName "2.3.28_beta"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -37,17 +37,22 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+
+            // 上线url
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+
+//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "HOST", "\"http://7.196.57.45:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.30:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.30:8080\"")
         }
         //  测试
         staging {
-            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化
@@ -62,8 +67,10 @@ android {
 
         release {
             // 上线url
-            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+//            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+//            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化
@@ -199,7 +206,7 @@ dependencies {
     compile 'com.github.Jlanglang:TreeRecyclerView:1.1.2'
 
     // 时间选择器
-    compile 'com.contrarywind:Android-PickerView:4.1.3'
+//    compile 'com.contrarywind:Android-PickerView:4.1.3'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
 
@@ -208,5 +215,8 @@ dependencies {
     implementation files('libs/Msc.jar')
     implementation files('libs/Sunflower.jar')
     implementation files('libs/pldroid-shortvideo-1.14.0.jar')
-    implementation files('libs/pldroid-player-2.1.5.jar')
+    // 播放视频
+    implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
+    // 日历
+    compile 'com.github.prolificinteractive:material-calendarview:2.0.0'
 }
