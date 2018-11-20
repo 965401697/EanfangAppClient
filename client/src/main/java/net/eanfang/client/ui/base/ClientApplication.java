@@ -12,6 +12,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
 import net.eanfang.client.ui.activity.im.CustomizeMessageItemProvider;
+import net.eanfang.client.ui.activity.im.CustomizeVideoMessage;
+import net.eanfang.client.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 
@@ -44,6 +46,9 @@ public class ClientApplication extends EanfangApplication {
 
             RongIM.registerMessageType(CustomizeMessage.class);
             RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
+
+            RongIM.registerMessageType(CustomizeVideoMessage.class);
+            RongIM.getInstance().registerMessageTemplate(new CustomizeVideoMessageItemProvider());
 
             //初始化微信支付
             api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);

@@ -223,7 +223,18 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new CreateGroupOrganizationAdapter(R.layout.item_one_leve);
+        mAdapter = new CreateGroupOrganizationAdapter(R.layout.item_one_leve, new CreateGroupOrganizationAdapter.SetAutoCheckedParentListener() {
+            @Override
+            public void autoCheckedParentListener(CreateGroupOrganizationAdapter adapter, int position, List<TemplateBean.Preson> list) {
+                if (adapter.getSeletePerson().containsAll(list)) {
+                    adapter.getData().get(position).setChecked(true);
+                } else {
+                    adapter.getData().get(position).setChecked(false);
+                }
+
+                adapter.notifyItemChanged(position);
+            }
+        });
 
         mAdapter.bindToRecyclerView(recyclerView);
         mAdapter.setNewData(mTemplateBeanList);

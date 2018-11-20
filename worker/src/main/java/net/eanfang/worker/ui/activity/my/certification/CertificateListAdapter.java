@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -24,9 +25,21 @@ public class CertificateListAdapter extends BaseQuickAdapter<HonorCertificateEnt
 
     @Override
     protected void convert(BaseViewHolder helper, HonorCertificateEntity item) {
-        helper.setText(R.id.tv_school_name, "荣誉名称：" + item.getHonorName());
-        helper.setText(R.id.tv_school_major, "颁发机构：" + item.getAwardOrg());
-        helper.setText(R.id.tv_school_time, "颁发时间：" + DateUtils.formatDate(item.getAwardTime(), "yyyy-MM-dd"));
+        if (!TextUtils.isEmpty(item.getHonorName())) {
+            helper.setText(R.id.tv_school_name, "荣誉名称：" + item.getHonorName());
+        } else {
+            helper.setText(R.id.tv_school_name, "荣誉名称：");
+        }
+        if (!TextUtils.isEmpty(item.getAwardOrg())) {
+            helper.setText(R.id.tv_school_major, "颁发机构：" + item.getAwardOrg());
+        } else {
+            helper.setText(R.id.tv_school_major, "颁发机构：");
+        }
+        if (item.getAwardTime() != null) {
+            helper.setText(R.id.tv_school_time, "颁发时间：" + DateUtils.formatDate(item.getAwardTime(), "yyyy-MM-dd"));
+        } else {
+            helper.setText(R.id.tv_school_time, "颁发时间：");
+        }
 
         if (item.getHonorPics() != null) {
             String[] urls = V.v(() -> item.getHonorPics().split(","));

@@ -555,7 +555,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
                     b.putString("shareType", "6");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTransferCreateActivity.this)).send();
+                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTransferCreateActivity.this), "交接班").send();
                 }));
     }
 

@@ -27,7 +27,6 @@ import com.eanfang.model.WorkTaskBean;
 import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.UserEntity;
@@ -39,7 +38,6 @@ import net.eanfang.worker.ui.adapter.AddTaskDetailAdapter;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.TaskInfoView;
-import net.eanfang.worker.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -59,7 +57,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 布置任务
  */
-
+@Deprecated
 public class TaskActivity extends BaseWorkerActivity implements View.OnClickListener {
     @BindView(R.id.btn_add_task)
     TextView btnAddTask;
@@ -409,7 +407,7 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 
-                        new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(TaskActivity.this)).send();
+//                        new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(TaskActivity.this)).send();
 
 
                     });

@@ -291,10 +291,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     b.putString("shareType", "7");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTalkCreateActivity.this)).send();
+                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTalkCreateActivity.this), "面谈员工").send();
                 }));
     }
-
 
 
     /**

@@ -454,7 +454,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this)).send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this), "设备检点").send();
 
 
                     });
@@ -635,7 +635,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
     /**
      * 人员选择
-     * */
+     */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 

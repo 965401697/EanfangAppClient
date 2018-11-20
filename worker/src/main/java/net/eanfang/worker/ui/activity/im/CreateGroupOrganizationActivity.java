@@ -222,7 +222,18 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new CreateGroupOrganizationAdapter(R.layout.item_one_leve);
+        mAdapter = new CreateGroupOrganizationAdapter(R.layout.item_one_leve, new CreateGroupOrganizationAdapter.SetAutoCheckedParentListener() {
+            @Override
+            public void autoCheckedParentListener(CreateGroupOrganizationAdapter adapter, int position, List<TemplateBean.Preson> list) {
+                if (adapter.getSeletePerson().containsAll(list)) {
+                    adapter.getData().get(position).setChecked(true);
+                } else {
+                    adapter.getData().get(position).setChecked(false);
+                }
+
+                adapter.notifyItemChanged(position);
+            }
+        });
 
         mAdapter.bindToRecyclerView(recyclerView);
         mAdapter.setNewData(mTemplateBeanList);
@@ -237,6 +248,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                     ((CreateGroupOrganizationAdapter) adapter).checkedAll(position, bean.isChecked() == true ? false : true);
                 } else if (view.getId() == R.id.rl_parent) {
                     ImageView imageView = view.findViewById(R.id.iv_select);
+                    RecyclerView recyclerView = view.findViewById(R.id.recycler_view_group);
                     ((CreateGroupOrganizationAdapter) adapter).isShow(position, imageView);
                 }
             }

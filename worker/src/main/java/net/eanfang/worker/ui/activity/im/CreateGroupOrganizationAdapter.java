@@ -13,7 +13,9 @@ import com.eanfang.model.TemplateBean;
 import net.eanfang.worker.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by O u r on 2018/11/15.
@@ -21,29 +23,36 @@ import java.util.List;
 
 public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBean, BaseViewHolder> {
 
+    private Map<Integer, OrganizationPersonAdapter> organizationPersonAdapterMap;
     //子adapter的集合
-    private List<OrganizationPersonAdapter> mAdapterList;
-    private List<RecyclerView> mRecyclerViewList;
+    private Map<Integer, RecyclerView> recyclerViewMap;
+
     private List<TemplateBean.Preson> mSeletePersonList = new ArrayList<>();
     private OrganizationPersonAdapter mAdapter;
 
-    public CreateGroupOrganizationAdapter(int layoutResId) {
+    private SetAutoCheckedParentListener mSetAutoCheckedParentListener;
+
+    public CreateGroupOrganizationAdapter(int layoutResId, SetAutoCheckedParentListener setAutoCheckedParentListener) {
         super(layoutResId);
+        this.mSetAutoCheckedParentListener = setAutoCheckedParentListener;
 
     }
 
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean item) {
-        helper.setText(R.id.tv_company_name, item.getOrgName() + "(" + item.getPresons().size() + ")");
 
 
         if (item.getPresons().size() > 0) {
+            helper.setVisible(R.id.tv_company_name, true);
+            helper.setText(R.id.tv_company_name, item.getOrgName() + "(" + item.getPresons().size() + ")");
 
-            if (mAdapterList == null) mAdapterList = new ArrayList<>();
-            if (mRecyclerViewList == null) mRecyclerViewList = new ArrayList<>();
+            if (organizationPersonAdapterMap == null)
+                organizationPersonAdapterMap = new HashMap<Integer, OrganizationPersonAdapter>();
+            if (recyclerViewMap == null) recyclerViewMap = new HashMap<Integer, RecyclerView>();
 
             helper.setVisible(R.id.cb_all_checked, true);
-            RecyclerView recyclerView = helper.getView(R.id.recycler_view);
+            RecyclerView recyclerView = helper.getView(R.id.recycler_view_group);
+            recyclerView.setTag(helper.getAdapterPosition());
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
             mAdapter = new OrganizationPersonAdapter(1);
             mAdapter.bindToRecyclerView(recyclerView);
@@ -52,8 +61,9 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
             helper.addOnClickListener(R.id.cb_all_checked);
             helper.addOnClickListener(R.id.rl_parent);
 
-            mAdapterList.add(mAdapter);
-            mRecyclerViewList.add(recyclerView);
+
+            organizationPersonAdapterMap.put(helper.getAdapterPosition(), mAdapter);
+            recyclerViewMap.put(helper.getAdapterPosition(), recyclerView);
 
             mAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
@@ -67,12 +77,17 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
                     } else {
                         mSeletePersonList.remove(preson);
                     }
+                    //设置外层的adapter的选择状态
+                    // TODO: 2018/11/19 可以进行 更进一步的优化
+                    mSetAutoCheckedParentListener.autoCheckedParentListener(CreateGroupOrganizationAdapter.this, helper.getAdapterPosition(), item.getPresons());
+
 
                     adapter.notifyItemChanged(position);
                 }
             });
 
         } else {
+            helper.setVisible(R.id.tv_company_name, false);
             helper.getView(R.id.recycler_view).setVisibility(View.GONE);
             helper.setVisible(R.id.cb_all_checked, false);
         }
@@ -98,12 +113,16 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
             preson.setChecked(isCheckAll);
         }
         if (isCheckAll) {
-            mSeletePersonList.addAll(bean.getPresons());
+            for (TemplateBean.Preson p:bean.getPresons()){
+                if(!mSeletePersonList.contains(p)){
+                    mSeletePersonList.add(p);
+                }
+            }
         } else {
             mSeletePersonList.removeAll(bean.getPresons());
         }
 
-        mAdapterList.get(position).notifyItemChanged(position);
+        organizationPersonAdapterMap.get(position).notifyItemChanged(position);
         notifyItemChanged(position);
     }
 
@@ -119,17 +138,24 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
      *
      * @param position
      */
-    public void isShow(int position , ImageView view) {
+    public void isShow(int position, ImageView view) {
         //先判断adapter是不是有元素
-        if (mAdapterList != null && mAdapterList.get(position).getData().size() > 0) {
-            if (mRecyclerViewList.get(position).getVisibility() == View.VISIBLE) {
-                mRecyclerViewList.get(position).setVisibility(View.GONE);
+        if (organizationPersonAdapterMap != null && organizationPersonAdapterMap.get(position).getData().size() > 0) {
+            if (recyclerViewMap.get(position).getVisibility() == View.VISIBLE) {
+                recyclerViewMap.get(position).setVisibility(View.GONE);
                 view.setImageDrawable(view.getContext().getResources().getDrawable(com.eanfang.R.drawable.ic_two_open));
             } else {
-                mRecyclerViewList.get(position).setVisibility(View.VISIBLE);
+                recyclerViewMap.get(position).setVisibility(View.VISIBLE);
                 view.setImageDrawable(view.getContext().getResources().getDrawable(com.eanfang.R.drawable.ic_two_close));
             }
         }
+    }
+
+    /**
+     * 子item的全选和不全选的 parent iten listenter
+     */
+    public interface SetAutoCheckedParentListener {
+        void autoCheckedParentListener(CreateGroupOrganizationAdapter adapter, int position, List<TemplateBean.Preson> list);
     }
 
 }

@@ -32,12 +32,15 @@ public class SendContactUtils {
 
     private Dialog dialog;
 
+    private String mPush;
 
-    public SendContactUtils(Bundle bundle, Handler handler, List<TemplateBean.Preson> newPresonList, Dialog dialog) {
+
+    public SendContactUtils(Bundle bundle, Handler handler, List<TemplateBean.Preson> newPresonList, Dialog dialog, String push) {
         this.bundle = bundle;
         this.handler = handler;
         this.newPresonList = newPresonList;
         this.dialog = dialog;
+        this.mPush = push;
     }
 
 
@@ -107,7 +110,7 @@ public class SendContactUtils {
                 conversationType = Conversation.ConversationType.GROUP;
             }
 
-            RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, "报修订单", "报修订单", new RongIMClient.SendMessageCallback() {
+            RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, mPush, mPush, new RongIMClient.SendMessageCallback() {
                 @Override
                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
                     Log.e("zzw", "发送失败=" + integer + "=" + errorCode);

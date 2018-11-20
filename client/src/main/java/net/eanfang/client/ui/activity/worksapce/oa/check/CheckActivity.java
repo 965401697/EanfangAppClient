@@ -279,6 +279,7 @@ public class CheckActivity extends BaseClientActivity {
 
     /**
      * 获取当前的群组信息
+     *
      * @param targetId
      */
     private void getGroupDetail(String targetId) {
@@ -414,7 +415,7 @@ public class CheckActivity extends BaseClientActivity {
                                 b.putString("status", "0");
                                 b.putString("shareType", "5");
 
-                                new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(CheckActivity.this)).send();
+                                new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(CheckActivity.this), "设备检点").send();
                             });
                         })
                 );
