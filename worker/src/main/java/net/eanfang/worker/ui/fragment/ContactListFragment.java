@@ -293,6 +293,20 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initCamCount(0);
                         mCamCount = 0;
                     }
+                    if (bean.getBiz() > 0) {// 业务通知
+                        initBizCount(bean.getBiz());
+                        mMessageCount = bean.getBiz();
+                    } else {
+                        initBizCount(0);
+                        mMessageCount = 0;
+                    }
+                    if (bean.getCam() > 0) {// 官方通知
+                        initCamCount(bean.getCam());
+                        mCamCount = 0;
+                    } else {
+                        initCamCount(0);
+                        mCamCount = 0;
+                    }
                 }));
     }
 
@@ -306,9 +320,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
                 .setBadgeNumber(cam)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
+                .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
+                .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
 
     }
@@ -323,9 +337,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
+                .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
+                .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
 
 //        if (biz <= 0) {
@@ -351,9 +365,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .bindTarget(view.findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
+                .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
+                .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
 
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,7 +33,6 @@ import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
-import com.eanfang.witget.SetQBadgeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
@@ -51,6 +51,8 @@ import net.eanfang.client.ui.adapter.HomeDataAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.util.V.v;
 
@@ -87,6 +89,12 @@ public class HomeFragment extends BaseFragment {
     private List<HomeDatastisticeBean.GroupBean> clientDataList = new ArrayList<>();
     private HomeDataAdapter homeDataAdapter;
     private RelativeLayout rlAllData;
+
+    private QBadgeView qBadgeViewRepair = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewDesign = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewQuota = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInstall = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
 
     @Override
@@ -339,9 +347,7 @@ public class HomeFragment extends BaseFragment {
      */
     private void doHttpOrderNums() {
         EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
-            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_reparir), bean.getRepair());// 报修
-            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_install), bean.getInstall());// 报修
-            SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_design), bean.getDesign());//设计
+            doSetOrderNums(bean);
         })));
     }
 
@@ -373,5 +379,31 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
     }
 
+    public void doSetOrderNums(AllMessageBean bean) {
+        // 报修
+        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir))
+                .setBadgeNumber(bean.getRepair())
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        // 报装
+        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install))
+                .setBadgeNumber(bean.getInstall())
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //设计
+        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design))
+                .setBadgeNumber(bean.getDesign())
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+    }
 
 }

@@ -37,7 +37,7 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-
+ 
             // 上线url
 //            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
 //            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
@@ -48,27 +48,10 @@ android {
 //            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
-        }
-        //  测试
-        staging {
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //Zipalign优化
-            zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
-            //混淆
-            minifyEnabled true
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
 
+        }
         release {
             // 上线url
-//            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-//            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
             buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             // 不显示Log
