@@ -3,8 +3,6 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -23,7 +21,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
-import com.eanfang.witget.SetQBadgeView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.sys.entity.OrgEntity;
 
@@ -47,6 +44,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import q.rorbin.badgeview.QBadgeView;
+
 import static com.eanfang.util.V.v;
 
 
@@ -62,12 +61,25 @@ public class WorkspaceFragment extends BaseFragment {
     private TextView tvCompanyName;
     private SimpleDraweeView iv_company_logo;
 
-    //选择地图Pop
+    /**
+     * /选择地图Pop
+     */
     private WorkSpaceSelectMapPopWindow selectMapPopWindow;
-    private Double longitude;// 经度
-    private Double latitude;//纬度
-    private String companyName = "";//所在城市
+    /**
+     * 经度
+     */
+    private Double longitude;
+    /**
+     * 纬度
+     */
+    private Double latitude;
+    //所在城市
+    private String companyName = "";
     private String mSeachRequest = "五金店";
+
+    private QBadgeView qBadgeViewReport = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewTask = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInspect = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     @Override
     protected int setLayoutResouceId() {
@@ -351,13 +363,37 @@ public class WorkspaceFragment extends BaseFragment {
      */
     private void doHttpOrderNums() {
         EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
-            new Handler(Looper.getMainLooper()).post(() -> {//放在主线程更新 ui runonuithread 无效
-                SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_report), bean.getReport());// 汇报
-                SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_task), bean.getTask());// 任务
-                SetQBadgeView.getSingleton().setBadgeView(getActivity(), findViewById(R.id.tv_work_inspect), bean.getInspect());//检查
-            });
+            doSetOrderNums(bean);
         })));
     }
+
+    public void doSetOrderNums(AllMessageBean bean) {
+        // 汇报
+        qBadgeViewReport.bindTarget(findViewById(R.id.tv_work_report))
+                .setBadgeNumber(bean.getReport())
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        // 任务
+        qBadgeViewTask.bindTarget(findViewById(R.id.tv_work_task))
+                .setBadgeNumber(bean.getTask())
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //检查
+        qBadgeViewInspect.bindTarget(findViewById(R.id.tv_work_inspect))
+                .setBadgeNumber(bean.getInspect())
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
