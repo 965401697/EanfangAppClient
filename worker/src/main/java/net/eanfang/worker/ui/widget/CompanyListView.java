@@ -1,11 +1,13 @@
 package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
@@ -17,8 +19,9 @@ import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
-import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.PermKit;
+import com.eanfang.witget.takavideo.ToastUtils;
+import com.picker.common.util.ScreenUtils;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
@@ -26,9 +29,6 @@ import net.eanfang.worker.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by MrHou
@@ -38,46 +38,54 @@ import butterknife.ButterKnife;
  * @desc Company list
  */
 
-public class CompanyListView extends BaseDialog {
-    @BindView(R.id.rev_company_list)
+public class CompanyListView extends PopupWindow {
     RecyclerView revCompanyList;
     private Activity mContext;
     private setCheckItemCompany itemCompany;
+    private SwitchCompanyListAdapter adapter;
 
-    public CompanyListView(Activity context, setCheckItemCompany itemCompany) {
+    public CompanyListView(Activity context, List<OrgEntity> mList, setCheckItemCompany itemCompany) {
         super(context);
         this.mContext = context;
         this.itemCompany = itemCompany;
-
+        View view = LayoutInflater.from(context).inflate(R.layout.view_company_list, null);
+        revCompanyList = view.findViewById(R.id.rev_company_list);
+        adapter = new SwitchCompanyListAdapter();
+        adapter.bindToRecyclerView(revCompanyList);
+        revCompanyList.setLayoutManager(new LinearLayoutManager(mContext));
+        setBackgroundDrawable(new ColorDrawable(0x70000000));
+        int width = (int) (ScreenUtils.widthPixels(context));
+        int height = (int) (ScreenUtils.heightPixels(context) * 3 / 4);
+        setWidth(width);
+        setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        setFocusable(true);
+        setOutsideTouchable(true);
+        setContentView(view);
+        initAdapter(mList);
     }
 
-    @Override
-    protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.view_company_list);
-        ButterKnife.bind(this);
-        getCompanyAllList();
-    }
 
     /**
      * Get the list of Companies
      */
     private void getCompanyAllList() {
         List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
-        //排除默认公司 只取安防公司
+//        排除默认公司 只取安防公司
         orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getUnitType() == 3).toList();
-        initAdapter(orgEntityList);
     }
 
     private void initAdapter(List<OrgEntity> beanList) {
-        SwitchCompanyListAdapter adapter = new SwitchCompanyListAdapter(R.layout.item_quotation_detail, beanList);
-        revCompanyList.addItemDecoration(new DividerItemDecoration(mContext,
-                DividerItemDecoration.VERTICAL));
-        revCompanyList.setLayoutManager(new LinearLayoutManager(mContext));
+        if (beanList == null || beanList.size() <= 0) {
+            ToastUtils.s(mContext, "暂无安防公司");
+            return;
+        }
+        backgroundAlpha(0.7f);
+        adapter.setNewData(beanList);
         revCompanyList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId().equals(beanList.get(position).getOrgId())) {
-                    showToast("无需切换公司");
+                    ToastUtils.s(mContext, "无需切换公司");
                     dismiss();
                     return;
                 }
@@ -94,7 +102,6 @@ public class CompanyListView extends BaseDialog {
                 dismiss();
             }
         });
-        revCompanyList.setAdapter(adapter);
     }
 
     /**
@@ -115,6 +122,12 @@ public class CompanyListView extends BaseDialog {
 
     public interface setCheckItemCompany {
         void getItemName(String name, String url);
+    }
+
+    public void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = mContext.getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0+
+        mContext.getWindow().setAttributes(lp);
     }
 
 }
