@@ -41,7 +41,6 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
         ((CheckBox) helper.getView(R.id.cb_check)).setText(item.getDataName());
 
 
-
         if (item.isCheck()) {
             ((CheckBox) helper.getView(R.id.cb_check)).setChecked(item.isCheck());
         } else {
@@ -50,12 +49,10 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
 
         if (mFlag != 0) {
             ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusable(false);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusableInTouchMode(false);
+            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(false);
         } else {
-            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(true);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusable(true);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusableInTouchMode(true);
+            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
+            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(false);
 
             ((CheckBox) helper.getView(R.id.cb_check)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
