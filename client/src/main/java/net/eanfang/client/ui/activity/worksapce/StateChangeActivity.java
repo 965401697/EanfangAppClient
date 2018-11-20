@@ -74,7 +74,7 @@ public class StateChangeActivity extends BaseClientActivity {
         boolean isShowLogo = message.isShowLogo();
         boolean isShowOkBtn = message.isShowOkBtn();
         String tip = message.getTip();
-        setTitle(title);
+//        setTitle(title);
 
         tv_msg_title.setText(msgTitle);
         tv_msg_content.setText(msgContent);

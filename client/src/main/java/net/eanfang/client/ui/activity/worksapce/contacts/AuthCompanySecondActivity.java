@@ -200,11 +200,15 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
      * 提交的数据
      */
     private void setData() {
+        // 行业类型
+        if (!StringUtils.isEmpty(secondTraed)) {
+            infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
+        }
+        // 公司规模
+        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
         infoBean.setLicenseCode(edCompanyNumber.getText().toString().trim());
         infoBean.setRegisterAssets(etMoney.getText().toString().trim());
 
-        infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
-        infoBean.setScale(GetConstDataUtils.getOrgUnitScaleList().indexOf(tvCompanyScale.getText().toString().trim()));
         infoBean.setStatus(1);
         infoBean.setOrgId(orgid);
 
@@ -273,7 +277,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         Bundle bundle = new Bundle();
         Message message = new Message();
         message.setMsgTitle("您的资料已提交成功");
-        message.setTip("前往资质认证");
+        message.setTip("确定");
         message.setShowOkBtn(true);
         message.setShowLogo(true);
         bundle.putSerializable("message", message);
