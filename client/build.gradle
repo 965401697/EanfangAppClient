@@ -37,7 +37,6 @@ android {
 
     //签名设置
     signingConfigs {
-
         release {
             keyAlias KEY_ALIAS_CLIENT
             keyPassword KEY_PASSWORD_CLIENT
