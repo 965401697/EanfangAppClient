@@ -51,8 +51,8 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
             ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
             ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(false);
         } else {
-            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
-            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(false);
+            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(true);
+            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(true);
 
             ((CheckBox) helper.getView(R.id.cb_check)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
