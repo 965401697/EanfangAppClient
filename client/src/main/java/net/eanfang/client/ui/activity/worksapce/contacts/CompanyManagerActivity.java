@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -58,6 +59,7 @@ public class CompanyManagerActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
+        setRightTitle("解散团队");
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
@@ -80,7 +82,8 @@ public class CompanyManagerActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.rl_prefectInfo, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth})
+    @OnClick({R.id.rl_prefectInfo, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission,
+            R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.tv_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             // 完善资料
@@ -137,8 +140,30 @@ public class CompanyManagerActivity extends BaseActivity {
             case R.id.tv_againAuth:
                 doUndoVerify();
                 break;
+            case R.id.tv_right:
+                doDisslove();
+                break;
+            default:
+                break;
 
         }
+    }
+
+    /**
+     * 解散团队
+     */
+    private void doDisslove() {
+
+
+
+        EanfangHttp.post(NewApiService.DISSLOVE_COMPANY)
+                //公司ID
+                .params("id", "")
+                //密码
+                .params("passwd", "")
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, bean -> {
+
+                }));
     }
 
     /**

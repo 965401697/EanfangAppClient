@@ -41,17 +41,22 @@ public interface NewApiService {
      * 获取公司列表
      */
 
-    String GET_COMPANY_ALL_LIST = BuildConfig.API_HOST + "/yaf_sys/org/listcompanyall";
+    String GET_COMPANY_ALL_LIST = BuildConfig.API_HOST + "/yaf_sys/org/listCompanyByAccId";
     /**
      * 切换公司
      */
 
     String SWITCH_COMPANY_ALL_LIST = BuildConfig.API_HOST + "/yaf_sys/sys/change";
+    /**
+     * 解散公司
+     */
+    String DISSLOVE_COMPANY = BuildConfig.API_HOST + "/yaf_sys/orgunit/deleteTeam";
 
     /**
      * 新增任务
      */
-    String ADD_WORK_TASK = BuildConfig.API_HOST + "/yaf_oa/workTask/insert";
+    String
+            ADD_WORK_TASK = BuildConfig.API_HOST + "/yaf_oa/workTask/insert";
 
     /**
      * 获取协同人员
