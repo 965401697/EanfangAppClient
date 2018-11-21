@@ -67,9 +67,13 @@ public class CreatTeamActivity extends BaseWorkerActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(s.toString())) return;
-                //输入之后
-                searchClaimCompany(s.toString());
+                if (TextUtils.isEmpty(s.toString())) {
+                    recyclerView.setVisibility(View.GONE);
+                    tvDesc.setVisibility(View.GONE);
+                } else {
+                    //输入之后
+                    searchClaimCompany(s.toString());
+                }
             }
 
             @Override
@@ -89,7 +93,7 @@ public class CreatTeamActivity extends BaseWorkerActivity {
         queryEntry.getLike().put("name", nameKey);
         EanfangHttp.post(UserApi.GET_CLAIM_ORGUNIT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<OrgUnitListBean>(this, true, OrgUnitListBean.class, (bean) -> {
+                .execute(new EanfangCallback<OrgUnitListBean>(this, false, OrgUnitListBean.class, (bean) -> {
                     if (bean.getList().size() > 0) {
                         initAdapter(bean);
                     } else {
