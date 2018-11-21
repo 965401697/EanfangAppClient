@@ -643,6 +643,8 @@
         <activity android:name=".ui.activity.im.CreateGroupActivity" />
         <!-- 新的选择联系人 -->
         <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
+        <!--群组的全部成员的列表-->
+        <activity android:name=".ui.activity.im.GroupMoreMemberActivity"></activity>
     </application>
 
 </manifest>
