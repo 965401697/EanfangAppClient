@@ -5,11 +5,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -58,6 +62,10 @@ import static com.eanfang.util.V.v;
  */
 public class WorkspaceFragment extends BaseFragment {
 
+    /**
+     * 箭头
+     */
+    private ImageView mIvDownIcon;
     private TextView tvCompanyName;
     private SimpleDraweeView iv_company_logo;
 
@@ -81,6 +89,14 @@ public class WorkspaceFragment extends BaseFragment {
     private QBadgeView qBadgeViewTask = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewInspect = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
+    /**
+     * 切换公司 pop
+     */
+    private CompanyListView selectCompanyPop;
+    List<OrgEntity> mList = new ArrayList<>();
+
+    private RotateAnimation rotate;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_workspace;
@@ -100,6 +116,7 @@ public class WorkspaceFragment extends BaseFragment {
     @Override
     protected void initView() {
         tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
+        mIvDownIcon = (ImageView) findViewById(R.id.iv_down_icon);
         String companyName = EanfangApplication.getApplication().getUser()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         if ("个人".equals(companyName)) {
@@ -165,24 +182,58 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
-            new CompanyListView(getActivity(), (name, url) -> {
-                if ("个人".equals(name)) {
-                    tvCompanyName.setText(name + "(点击切换公司)");
-                } else {
-                    tvCompanyName.setText(name);
-                }
-                if (url != null) {
-                    iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
-                } else {
-                    iv_company_logo.setImageURI("");
-                }
-            }).show();
+            doChangeCompany();
         });
+    }
+
+    /**
+     * 切换公司
+     */
+    private void doChangeCompany() {
+
+        EanfangHttp.post(NewApiService.GET_COMPANY_ALL_LIST)
+                .params("accId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getAccId() + "")
+                // 公司类型（单位类型0平台总公司1城市平台公司2企事业单位3安防公司）
+                .params("orgType", "3")
+                .execute(new EanfangCallback<OrgEntity>(getActivity(), false, OrgEntity.class, true, bean -> {
+                    mList = bean;
+                    if (mList == null || mList.size() <= 0) {
+                        showToast("暂无安防公司");
+                        return;
+                    }
+                    rotate = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF,
+                            0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    rotate.setDuration(300);
+                    rotate.setFillAfter(true);
+                    mIvDownIcon.startAnimation(rotate);
+                    selectCompanyPop = new CompanyListView(getActivity(), mList, ((name, url) -> {
+                        if ("个人".equals(name)) {
+                            tvCompanyName.setText(name);
+                        } else {
+                            tvCompanyName.setText(name);
+                        }
+                        if (url != null) {
+                            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                        } else {
+                            iv_company_logo.setImageURI("");
+                        }
+                        selectCompanyPop.dismiss();
+                    }));
+                    selectCompanyPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            selectCompanyPop.backgroundAlpha(1.0f);
+                            mIvDownIcon.clearAnimation();
+                        }
+                    });
+                    selectCompanyPop.showAsDropDown(findViewById(R.id.ll_company_top));
+                }));
     }
 
     /**
      * 过程管控
      */
+
     private void progressCtrl() {
         findViewById(R.id.tv_work_service).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
