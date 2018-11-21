@@ -61,6 +61,8 @@ public class CompanyListView extends PopupWindow {
         setFocusable(true);
         setOutsideTouchable(true);
         setContentView(view);
+        // 设置SelectPicPopupWindow弹出窗体动画效果
+        this.setAnimationStyle(R.style.PopupAnimation);
         initAdapter(mList);
     }
 
@@ -75,10 +77,6 @@ public class CompanyListView extends PopupWindow {
     }
 
     private void initAdapter(List<OrgEntity> beanList) {
-        if (beanList == null || beanList.size() <= 0) {
-            ToastUtils.s(mContext, "暂无安防公司");
-            return;
-        }
         backgroundAlpha(0.7f);
         adapter.setNewData(beanList);
         revCompanyList.addOnItemTouchListener(new OnItemClickListener() {

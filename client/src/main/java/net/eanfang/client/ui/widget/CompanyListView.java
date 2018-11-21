@@ -19,7 +19,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.util.PermKit;
-import com.eanfang.witget.takavideo.ToastUtils;
 import com.picker.common.util.ScreenUtils;
 import com.yaf.sys.entity.OrgEntity;
 
@@ -63,14 +62,12 @@ public class CompanyListView extends PopupWindow {
         setFocusable(true);
         setOutsideTouchable(true);
         setContentView(view);
+        // 设置SelectPicPopupWindow弹出窗体动画效果
+        this.setAnimationStyle(R.style.PopupAnimation);
         initAdapter(mList);
     }
 
     private void initAdapter(List<OrgEntity> beanList) {
-        if (beanList == null || beanList.size() <= 0) {
-            ToastUtils.s(mContext, "暂无单位");
-            return;
-        }
         OrgEntity orgEntity = new OrgEntity();
         orgEntity.setOrgName("个人");
         orgEntity.setOrgId((long) 0);

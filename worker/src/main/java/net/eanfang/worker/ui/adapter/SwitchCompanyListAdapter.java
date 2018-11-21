@@ -18,6 +18,6 @@ public class SwitchCompanyListAdapter extends BaseQuickAdapter<OrgEntity, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
-        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getOrgName());
+        helper.setText(R.id.tv_detail_name, item.getOrgName());
     }
 }
