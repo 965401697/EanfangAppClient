@@ -292,7 +292,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .setBadgeNumber(cam)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
-                .setGravityOffset(11, 0, true)
+                .setGravityOffset(0, 0, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setBadgeTextSize(11, true);
 
@@ -311,7 +311,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
+                .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
 
 //        if (biz <= 0) {
@@ -340,7 +340,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
+                .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
 
 

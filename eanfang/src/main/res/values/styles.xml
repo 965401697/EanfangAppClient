@@ -166,4 +166,9 @@
     <style name="Theme.picker" parent="@android:style/Theme.Holo.Light">
         <item name="android:textColor">#333333</item>
     </style>
+
+    <style name="PopupAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/pop_show</item>
+        <item name="android:windowExitAnimation">@anim/pop_hide</item>
+    </style>
 </resources>
