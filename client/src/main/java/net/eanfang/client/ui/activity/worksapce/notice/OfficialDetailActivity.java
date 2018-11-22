@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.notice;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -32,6 +33,15 @@ public class OfficialDetailActivity extends BaseClientActivity {
         setting.setCacheMode(WebSettings.LOAD_NO_CACHE);//不设置网络缓存
 
         mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {//页面加载完成
+                loadingDialog.dismiss();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
+                loadingDialog.show();
+            }
         });//IE内核
 
         mWebView.setWebChromeClient(new WebChromeClient() {

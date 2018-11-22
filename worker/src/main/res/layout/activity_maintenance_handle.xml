@@ -113,7 +113,14 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginRight="@dimen/dimen_28"
                         android:src="@mipmap/ic_arrow_up" />
-
+                    <TextView
+                        android:id="@+id/tv_device_handle"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="无"
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/dimen_28"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
