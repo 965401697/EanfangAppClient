@@ -15,12 +15,16 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.LoginBean;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
@@ -70,6 +74,11 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     public final int CREAT_TEAM_CODE = 49;
 
     public static boolean isRefresh = false;
+    /**
+     * 是否解散成功
+     */
+    public static boolean isDisslove = false;
+
 
     @Override
     protected int setLayoutResouceId() {
@@ -327,6 +336,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             getData();
             isRefresh = false;
         }
+        if (isDisslove) {
+            getData();
+            SwitchCompany();
+            isDisslove = false;
+        }
+
     }
 
     @Override
@@ -359,5 +374,19 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         getData();
+    }
+
+    private void SwitchCompany() {
+        EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
+                .params("companyId", 0)
+                .execute(new EanfangCallback<LoginBean>(getActivity(), false, LoginBean.class, (bean) -> {
+                    if (bean != null) {
+                        PermKit.permList.clear();
+                        EanfangApplication.get().remove(LoginBean.class.getName());
+                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                        EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                        EanfangHttp.setClient();
+                    }
+                }));
     }
 }

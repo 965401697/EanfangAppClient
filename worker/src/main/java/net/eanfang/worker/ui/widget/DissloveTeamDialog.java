@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.widget;
+package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.client.R;
+import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
