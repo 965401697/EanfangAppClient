@@ -63,7 +63,10 @@ public class UpdatePasswordActivity extends BaseActivity {
     private String mPassword = "";
     // 确认密码
     private String mConfirmPassword = "";
-
+    /**
+     * 解散团队
+     */
+    private boolean mDisslove = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,7 @@ public class UpdatePasswordActivity extends BaseActivity {
         setLeftBack();
         setTitle("修改密码");
         tvPhone.setText(EanfangApplication.getApplication().getUser().getAccount().getMobile());
+        mDisslove = getIntent().getBooleanExtra("disslove", false);
     }
 
     private void initListener() {
@@ -128,7 +132,11 @@ public class UpdatePasswordActivity extends BaseActivity {
                 .params("newKey2", mConfirmPassword)//确认密码
                 .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("修改成功");
-                    signout();
+                    if (!mDisslove) {
+                        signout();
+                    } else {
+                        finishSelf();
+                    }
                 }));
     }
 

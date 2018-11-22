@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -18,6 +17,9 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
+import net.eanfang.client.ui.fragment.ContactsFragment;
+import net.eanfang.client.ui.widget.DissloveTeamDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +30,7 @@ import butterknife.OnClick;
  * @date on 2018/5/7  11:06
  * @decision
  */
-public class CompanyManagerActivity extends BaseActivity {
+public class CompanyManagerActivity extends BaseActivity implements DissloveTeamDialog.OnForgetPasswordListener, DissloveTeamDialog.OnConfirmListener {
 
     @BindView(R.id.rl_prefectInfo)
     RelativeLayout rlPrefectInfo;
@@ -48,7 +50,13 @@ public class CompanyManagerActivity extends BaseActivity {
 
     private String adminUserId = "";
 
+    /**
+     * 解散团队
+     */
+    private DissloveTeamDialog dissloveTeamDialog;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comapany_manager);
@@ -153,17 +161,8 @@ public class CompanyManagerActivity extends BaseActivity {
      * 解散团队
      */
     private void doDisslove() {
-
-
-
-        EanfangHttp.post(NewApiService.DISSLOVE_COMPANY)
-                //公司ID
-                .params("id", "")
-                //密码
-                .params("passwd", "")
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, bean -> {
-
-                }));
+        dissloveTeamDialog = new DissloveTeamDialog(CompanyManagerActivity.this, this, this);
+        dissloveTeamDialog.show();
     }
 
     /**
@@ -175,5 +174,32 @@ public class CompanyManagerActivity extends BaseActivity {
                     .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
                     }));
         }).showDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dissloveTeamDialog != null) {
+            dissloveTeamDialog.dismiss();
+        }
+    }
+
+    /**
+     * 忘记密码
+     */
+    @Override
+    public void doForget() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("disslove", true);
+        JumpItent.jump(CompanyManagerActivity.this, UpdatePasswordActivity.class, bundle);
+    }
+
+    /**
+     * 确认解散团队
+     */
+    @Override
+    public void doConfirm() {
+        ContactsFragment.isDisslove = true;
+        finishSelf();
     }
 }
