@@ -111,12 +111,6 @@ public class WorkspaceFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         doHttpOrderNums();
-    }
-
-    @Override
-    protected void initView() {
-        tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
-        mIvDownIcon = (ImageView) findViewById(R.id.iv_down_icon);
         String companyName = EanfangApplication.getApplication().getUser()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         if ("个人".equals(companyName)) {
@@ -124,6 +118,13 @@ public class WorkspaceFragment extends BaseFragment {
         } else {
             tvCompanyName.setText(companyName);
         }
+    }
+
+    @Override
+    protected void initView() {
+        tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
+        mIvDownIcon = (ImageView) findViewById(R.id.iv_down_icon);
+
         iv_company_logo = findViewById(R.id.iv_company_logo);
         setLogpic();
         // 选择地图pop
