@@ -26,7 +26,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,14 +75,15 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("技能资质");
         setLeftBack();
-         startTransaction(true);
+        startTransaction(true);
         mStatus = getIntent().getIntExtra("status", -1);
-        if (mStatus > 0) {
-            getSkillInfo();
-        }
 
         initViews();
 //        initData();
+
+        if (mStatus > 0) {
+            getSkillInfo();
+        }
     }
 
     private void initViews() {
@@ -96,8 +96,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         businessCooperationAddAdapter.bindToRecyclerView(recyclerViewBusiness);
         osCooperationAddAdapter.bindToRecyclerView(recyclerViewOs);
 
-        businessCooperationAddAdapter.setNewData(businessTypeList);
-        osCooperationAddAdapter.setNewData(systemTypeList);
+//        businessCooperationAddAdapter.setNewData(businessTypeList);
+//        osCooperationAddAdapter.setNewData(systemTypeList);
     }
 
 
@@ -141,6 +141,15 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         EanfangHttp.post(UserApi.TECH_WORKER_VERIFY)
                 .upJson(requestContent)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+
+                    osCooperationAddAdapter.getScheckedId().clear();
+                    osCooperationAddAdapter.getUnSCheckedId().clear();
+
+
+                    businessCooperationAddAdapter.getBcheckedId().clear();
+                    businessCooperationAddAdapter.getUnbCheckedId().clear();
+
+
                     startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
                 }));
 
@@ -153,19 +162,16 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                 .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
                 .execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
                     List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
-                    List<BaseDataEntity> sList = new ArrayList<>();
-                    List<BaseDataEntity> bList = new ArrayList<>();
-                    sList.addAll(systemTypeList);
-                    bList.addAll(businessTypeList);
+
 
                     // 系统类别
                     for (BaseDataEntity checkedS : SystemBusinessList) {
-                        for (BaseDataEntity s : sList) {
-                            if (s.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
+                        for (BaseDataEntity s : systemTypeList) {
+                            if (checkedS.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
                                 s.setCheck(true);
                                 break;
                             } else {
-                                for (BaseDataEntity checkedB : bList) {
+                                for (BaseDataEntity checkedB : businessTypeList) {
                                     if (checkedB.getDataId() == checkedS.getDataId()) {
                                         checkedB.setCheck(true);
                                         break;
@@ -175,8 +181,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                         }
                     }
 
-                    osCooperationAddAdapter.setNewData(sList);
-                    businessCooperationAddAdapter.setNewData(bList);
+                    osCooperationAddAdapter.setNewData(systemTypeList);
+                    businessCooperationAddAdapter.setNewData(businessTypeList);
                     fillData(bean);
                 }));
     }
