@@ -96,8 +96,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         businessCooperationAddAdapter.bindToRecyclerView(recyclerViewBusiness);
         osCooperationAddAdapter.bindToRecyclerView(recyclerViewOs);
 
-//        businessCooperationAddAdapter.setNewData(businessTypeList);
-//        osCooperationAddAdapter.setNewData(systemTypeList);
+        businessCooperationAddAdapter.setNewData(businessTypeList);
+        osCooperationAddAdapter.setNewData(systemTypeList);
     }
 
 
