@@ -405,7 +405,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                             .params("groupName", title)
                             .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                                 ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
-
+                                //清除删除的群组信息
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
 
                                 for (Activity activity : BaseActivity.transactionActivities) {
@@ -417,19 +417,6 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 }
                 break;
         }
-    }
-
-    private void quitGroup() {
-        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
-                .params("groupId", id)
-                .params("ids", EanfangApplication.get().getAccId())
-//                .params("ids", userIdList.toString())
-                .params("groupName", title)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                    ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
-                }));
-
     }
 
     /**

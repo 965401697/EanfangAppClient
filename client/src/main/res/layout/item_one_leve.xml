@@ -16,7 +16,7 @@
             android:layout_height="@dimen/dimen_26"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_26"
-            android:src="@drawable/ic_two_close" />
+            android:src="@drawable/ic_two_open" />
 
         <TextView
             android:id="@+id/tv_company_name"

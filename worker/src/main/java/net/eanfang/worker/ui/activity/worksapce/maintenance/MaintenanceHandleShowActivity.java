@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -57,7 +58,10 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
     CheckBox cbPrint;
     @BindView(R.id.cb_host)
     CheckBox cbHost;
-
+    @BindView(R.id.iv_device_handle)
+    ImageView ivDeviceHandle;
+    @BindView(R.id.tv_device_handle)
+    TextView tvDeviceHandle;
 
     private long mId;
     private MaintenanceHandeCheckAdapter maintenanceHandeCheckAdapter;
@@ -109,19 +113,20 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
             }
         });
 
-
-        maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add, 1);
-        maintenanceHandeCheckAdapter.bindToRecyclerView(rvCheckResult);
-        maintenanceHandeCheckAdapter.setNewData(orderEntity.getExamResultEntityList());
-        maintenanceHandeCheckAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceAddCheckResultShowActivity.class);
-                intent.putExtra("bean", (ShopMaintenanceExamResultEntity) adapter.getData().get(position));
-                startActivity(intent);
-            }
-        });
-
+        if (orderEntity.getExamResultEntityList() != null && orderEntity.getExamResultEntityList().size() > 0) {
+            maintenanceHandeCheckAdapter.setNewData(orderEntity.getExamResultEntityList());
+            maintenanceHandeCheckAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceAddCheckResultShowActivity.class);
+                    intent.putExtra("bean", (ShopMaintenanceExamResultEntity) adapter.getData().get(position));
+                    startActivity(intent);
+                }
+            });
+        } else {
+            tvDeviceHandle.setVisibility(View.VISIBLE);
+            ivDeviceHandle.setVisibility(View.GONE);
+        }
 
         setChecked(cbVideo, orderEntity.getConfirmEntity().getIsVcrStoreDayNormal());
         setChecked(cbTime, orderEntity.getConfirmEntity().getIsTimeRight());

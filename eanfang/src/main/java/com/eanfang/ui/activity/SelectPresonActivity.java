@@ -69,11 +69,11 @@ public class SelectPresonActivity extends BaseActivity {
             SectionBean sectionBean = (SectionBean) getIntent().getSerializableExtra("bean");
             setTitle(sectionBean.getOrgName());
 //            for (SectionBean sectionBean : mSecondDataList) {//循环一个公司全部 部门和员工
-            TemplateBean templateBean = new TemplateBean();
             TemplateBean templateBean1 = new TemplateBean();
             List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
             if (sectionBean.getChildren() != null) {
                 for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
+                    TemplateBean templateBean = new TemplateBean();
                     List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
                     templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
                     if (!TextUtils.isEmpty(isOrganization)) {
@@ -97,13 +97,13 @@ public class SelectPresonActivity extends BaseActivity {
                         }
 
                         templateBean.setPresons(presonArrayList);
+                        if (templateBean.getPresons() != null && templateBean.getPresons().size() > 0) {
+                            mTemplateBeanList.add(templateBean);
+                        }
                     }
                 }
             }
 
-            if (templateBean.getPresons() != null && templateBean.getPresons().size() > 0) {
-                mTemplateBeanList.add(templateBean);
-            }
 
             if (!TextUtils.isEmpty(isOrganization)) {
                 templateBean1.setVisible(true);
@@ -132,11 +132,11 @@ public class SelectPresonActivity extends BaseActivity {
 
                 }
                 templateBean1.setPresons(presonArrayList1);
+                if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                    mTemplateBeanList.add(0, templateBean1);
+                }
             }
 
-            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                mTemplateBeanList.add(0, templateBean1);
-            }
 
         } else if (mFlag == 3) {
             SectionBean.ChildrenBean childrenBean = (SectionBean.ChildrenBean) getIntent().getSerializableExtra("bean");
@@ -178,9 +178,9 @@ public class SelectPresonActivity extends BaseActivity {
                 TemplateBean templateBean1 = new TemplateBean();
                 List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
 
-                TemplateBean templateBean = new TemplateBean();
                 if (sectionBean.getChildren() != null) {
                     for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
+                        TemplateBean templateBean = new TemplateBean();
                         List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
                         templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
                         if (!TextUtils.isEmpty(isOrganization)) {
@@ -237,10 +237,11 @@ public class SelectPresonActivity extends BaseActivity {
 
                     }
                     templateBean1.setPresons(presonArrayList1);
+                    if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                        mTemplateBeanList.add(templateBean1);
+                    }
                 }
-                if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                    mTemplateBeanList.add(templateBean1);
-                }
+
             }
 
 
@@ -268,12 +269,11 @@ public class SelectPresonActivity extends BaseActivity {
                 }
                 templateBean2.setPresons(presonArrayList2);
 
-
+                if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
+                    mTemplateBeanList.add(0, templateBean2);
+                }
             }
 
-            if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
-                mTemplateBeanList.add(0, templateBean2);
-            }
 
         }
 
