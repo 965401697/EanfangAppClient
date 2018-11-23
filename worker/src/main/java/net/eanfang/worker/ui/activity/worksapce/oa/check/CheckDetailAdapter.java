@@ -11,12 +11,12 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.model.WorkAddReportBean;
-import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.base.entity.WorkInspectDetailEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.ImagePerviewUtil;
@@ -28,7 +28,7 @@ import java.util.List;
  * Created by O u r on 2018/10/19.
  */
 
-public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkCheckInfoBean.WorkInspectDetailsBean, BaseViewHolder> {
+public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkInspectDetailEntity, BaseViewHolder> {
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -39,7 +39,7 @@ public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkCheckInfoB
 
     private Activity mActivity;
 
-    public CheckDetailAdapter(List<WorkCheckInfoBean.WorkInspectDetailsBean> data, Activity activity) {
+    public CheckDetailAdapter(List<WorkInspectDetailEntity> data, Activity activity) {
         super(data);
         this.mActivity = activity;
         addItemType(WorkTaskInfoBean.WorkTaskDetailsBean.FOLD, R.layout.item_check_detail_normal);
@@ -47,7 +47,7 @@ public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkCheckInfoB
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkCheckInfoBean.WorkInspectDetailsBean item) {
+    protected void convert(BaseViewHolder helper, WorkInspectDetailEntity item) {
         switch (helper.getItemViewType()) {
             case WorkAddReportBean.WorkReportDetailsBean.FOLD:
                 helper.setText(R.id.tv_work_content, "明细标题：" + item.getTitle());
@@ -93,6 +93,7 @@ public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkCheckInfoB
                 } else {
                     helper.setText(R.id.tv_vodio, "小视频：");
                     helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
+                    helper.setVisible(R.id.iv_takevideo_work, true);
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getMp4Path() + ".jpg"));
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -106,14 +107,16 @@ public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkCheckInfoB
                 }
                 helper.addOnClickListener(R.id.iv_pack);
                 break;
+            default:
+                break;
         }
     }
 
 
-    private void initPic(BaseViewHolder helper, WorkCheckInfoBean.WorkInspectDetailsBean item) {
+    private void initPic(BaseViewHolder helper, WorkInspectDetailEntity item) {
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
-            helper.setText(R.id.tv_adjunct, "照片：");
+            helper.setText(R.id.tv_adjunct, "");
             helper.setVisible(R.id.ll_pic, true);
 
             ArrayList<String> picList = new ArrayList<String>();

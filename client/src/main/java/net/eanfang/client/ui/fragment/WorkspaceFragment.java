@@ -37,7 +37,7 @@ import net.eanfang.client.ui.activity.worksapce.WebActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogParentActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceActivity;
-import net.eanfang.client.ui.activity.worksapce.oa.check.CheckParentActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.CheckListActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportListActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogParentActivity;
@@ -290,7 +290,7 @@ public class WorkspaceFragment extends BaseFragment {
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
 //            new WorkCheckCtrlView(getActivity(), true).show();
-            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
+            Intent intent = new Intent(getActivity(), CheckListActivity.class);
             startActivity(intent);
         });
 

@@ -78,7 +78,7 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
 
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_look_info_detial);
+//        setContentView(R.layout.activity_look_info_detial);
         ButterKnife.bind(this);
         initView();
         initListener();

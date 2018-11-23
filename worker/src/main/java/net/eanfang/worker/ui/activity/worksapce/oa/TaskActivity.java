@@ -37,7 +37,6 @@ import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.adapter.AddTaskDetailAdapter;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.widget.TaskInfoView;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -304,7 +303,7 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 maintenanceDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        new TaskInfoView(TaskActivity.this, true, detailsBean).show();
+//                        new TaskInfoView(TaskActivity.this, true, detailsBean).show();
                     }
                 });
                 maintenanceDetailAdapter.notifyDataSetChanged();

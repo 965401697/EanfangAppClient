@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa.check;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.model.TemplateBean;
@@ -17,8 +16,9 @@ import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
+import net.eanfang.client.ui.adapter.CooperationAddAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -39,8 +39,10 @@ import butterknife.OnClick;
  * @description 筛选 设备点检
  */
 
-public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener, RadioGroup.OnCheckedChangeListener {
+public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
+    @BindView(R.id.recycler_status)
+    RecyclerView recyclerStatus;
     @BindView(R.id.recycler_view_personal)
     RecyclerView recyclerViewPersonal;
     @BindView(R.id.tv_check_time)
@@ -56,20 +58,13 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
     @BindView(R.id.tv_sure)
     TextView tvSure;
 
-    @BindView(R.id.rb_device_checking)
-    RadioButton rbDeviceChecking;
-    @BindView(R.id.rb_device_wait)
-    RadioButton rbDeviceWait;
-    @BindView(R.id.rb_device_again)
-    RadioButton rbDeviceAgain;
-    @BindView(R.id.rb_device_finfish)
-    RadioButton rbDeviceFinfish;
-    @BindView(R.id.rg_status)
-    RadioGroup rgStatus;
-    @BindView(R.id.tv_select_person)
-    TextView tvSelectPerson;
+    /**
+     * 状态
+     */
+    List<String> mStatusList = new ArrayList<>();
 
 
+    private CooperationAddAdapter statusAdapter;
     private OAPersonAdaptet oaPersonAdaptet;
 
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
@@ -80,14 +75,6 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
      * 创建  处理  筛选 判断
      */
     private int mType = 0;
-    /**
-     * 状态选择
-     */
-    private int mStatus = 100;
-    /**
-     * 点检人  审核人
-     */
-    private String mPersonal = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,20 +87,32 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
     private void initView() {
         setTitle("筛选");
         setLeftBack();
+
         mType = getIntent().getIntExtra("type", 0);
         if (mType == 0) {// 创建
-            tvSelectPerson.setText("按点检人筛选");
-            mPersonal = "assigneeUserId  ";
+            mStatusList.add("点检中");
+            mStatusList.add("重新修改");
+            mStatusList.add("点检完毕");
+            mStatusList.add("待审核");
         } else {// 处理
-            tvSelectPerson.setText("按审核人筛选");
-            mPersonal = "createUserId";
+            mStatusList.add("待点检");
+            mStatusList.add("审核中");
+            mStatusList.add("未合格");
+            mStatusList.add("审核通过");
         }
+
+        recyclerStatus.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerViewPersonal.setLayoutManager(new GridLayoutManager(this, 5));
+
+
+        statusAdapter = new CooperationAddAdapter(R.layout.item_cooperation_add);
 
         oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>());
         recyclerViewPersonal.setAdapter(oaPersonAdaptet);
 
-        rgStatus.setOnCheckedChangeListener(this);
+        statusAdapter.bindToRecyclerView(recyclerStatus);
+
+        statusAdapter.setNewData(mStatusList);
     }
 
     @OnClick({R.id.ll_check_time, R.id.ll_update_time, R.id.tv_cancle, R.id.tv_sure})
@@ -138,11 +137,34 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
 
     private void sub() {
 
-        QueryEntry queryEntry = new QueryEntry();
-        if (mStatus != 100) {
-            queryEntry.getEquals().put("status", mStatus + "");
+        QueryEntry queryEntry = null;
+
+
+        if (statusAdapter.getCheckBoxList().size() != 0) {
+
+            if (queryEntry == null)
+                queryEntry = new QueryEntry();
+
+            List<CheckBox> statusList = statusAdapter.getCheckBoxList();
+
+
+            if (statusList.size() > 1) {
+                List<String> statusIndexList = new ArrayList<>();
+
+                for (CheckBox status : statusList) {
+                    int statusIndex = mStatusList.indexOf(status.getText().toString().trim());
+                    statusIndexList.add(String.valueOf(statusIndex));
+                }
+                queryEntry.getIsIn().put("status", statusIndexList);
+            } else {
+                queryEntry.getEquals().put("status", String.valueOf(mStatusList.indexOf(((CheckBox) statusList.get(0)).getText().toString().trim())));
+            }
+
         }
+
         if (newPresonList.size() != 0) {
+
+            if (queryEntry == null) queryEntry = new QueryEntry();
 
             if (newPresonList.size() > 1) {
                 List<String> idList = new ArrayList<>();
@@ -150,10 +172,10 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
                 for (TemplateBean.Preson p : newPresonList) {
                     idList.add(p.getUserId());
                 }
-                queryEntry.getIsIn().put(mPersonal, idList);
+                queryEntry.getIsIn().put("createUserId", idList);
             } else {
                 TemplateBean.Preson p = newPresonList.get(0);
-                queryEntry.getEquals().put(mPersonal, p.getUserId());
+                queryEntry.getEquals().put("createUserId", p.getUserId());
             }
         }
 
@@ -161,13 +183,13 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
 
             if (queryEntry == null) queryEntry = new QueryEntry();
 
-            queryEntry.getEquals().put("createTime", tvCheckTime.getText().toString().trim());
+            queryEntry.getGtEquals().put("createTime", tvCheckTime.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvUpdateTime.getText().toString().trim())) {
 
             if (queryEntry == null) queryEntry = new QueryEntry();
 
-            queryEntry.getEquals().put("changeDeadlineTime", tvUpdateTime.getText().toString().trim());
+            queryEntry.getLtEquals().put("createTime", tvUpdateTime.getText().toString().trim());
         }
 
         Intent intent = new Intent();
@@ -207,27 +229,6 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
             mCurrentText.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             mCurrentText.setText(time);
-        }
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.rb_device_checking:// "点检中",0
-                mStatus = 1;
-                break;
-            case R.id.rb_device_wait://("待审核",1)
-                mStatus = 1;// 签退
-                break;
-            case R.id.rb_device_again://("重新整改",2)
-                mStatus = 2;
-                break;
-            case R.id.rb_device_finfish://("点检完毕",3)
-                mStatus = 3;
-                break;
-            default:
-                break;
-
         }
     }
 }

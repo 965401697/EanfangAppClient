@@ -99,7 +99,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onSuccess(WorkCheckListBean bean) {
-
+                        mQueryEntry = null;
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_show"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="@dimen/dimen_30">
+
+
+    <TextView
+        android:id="@+id/tv_work_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_toLeftOf="@+id/iv_show"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：阿斯阿斯顿发顿发沙发斯蒂芬阿斯顿发送到发斯蒂芬" />
+
+
+    <ImageView
+        android:id="@+id/iv_show"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:src="@mipmap/show" />
+
+    <TextView
+        android:id="@+id/tv_work_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_work_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_toLeftOf="@+id/iv_show"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：阿斯顿发asdfasdf" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_below="@+id/tv_work_question"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:background="@color/content_bg" />
+
+</RelativeLayout>

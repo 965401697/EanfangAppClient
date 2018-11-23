@@ -3,20 +3,26 @@
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/color_white"
     android:layout_marginBottom="@dimen/dimen_30"
-    android:paddingTop="@dimen/dimen_30"
     android:layout_marginTop="@dimen/dimen_30">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:text="工作1"
+        android:textColor="@color/colorPrimary" />
 
-    <ImageView
-        android:id="@+id/iv_pack"
-        android:layout_width="@dimen/dimen_40"
-        android:layout_height="@dimen/dimen_40"
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dimen_30"
-        android:src="@mipmap/pack" />
-
+        android:text="删除"
+        android:textColor="#FF4A4A" />
 
     <LinearLayout
         android:id="@+id/ll_content"
@@ -24,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_30"
-        android:layout_toLeftOf="@+id/iv_pack"
+        android:layout_toLeftOf="@+id/tv_delete"
+        android:layout_toRightOf="@+id/tv_title"
         android:orientation="vertical">
 
         <LinearLayout
@@ -71,13 +78,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="检查设备：" />
+                android:text="设备：" />
 
             <TextView
                 android:id="@+id/tv_check_device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_work_content" />
+                android:layout_below="@+id/tv_work_content"
+                android:text="工作内容：阿斯顿发asdfasdf" />
         </LinearLayout>
 
         <LinearLayout
@@ -103,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_20"
-            android:text="附件：" />
+            android:text="照片：" />
 
         <LinearLayout
             android:id="@+id/ll_pic"

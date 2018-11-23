@@ -112,6 +112,8 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
                 helper.addOnClickListener(R.id.tv_pack);
                 helper.addOnClickListener(R.id.tv_delete);
                 break;
+            default:
+                break;
         }
     }
 
