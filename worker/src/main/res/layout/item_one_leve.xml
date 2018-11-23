@@ -16,7 +16,7 @@
             android:layout_height="@dimen/dimen_26"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_26"
-            android:src="@drawable/ic_two_close" />
+            android:src="@drawable/ic_two_open" />
 
         <TextView
             android:id="@+id/tv_company_name"
@@ -36,16 +36,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_26"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginRight="@dimen/dimen_26"
-            />
+            android:focusableInTouchMode="false" />
 
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

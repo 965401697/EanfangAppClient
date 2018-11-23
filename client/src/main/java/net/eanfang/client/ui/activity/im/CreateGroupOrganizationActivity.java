@@ -113,9 +113,9 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
                         TemplateBean templateBean1 = new TemplateBean();
                         List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
 
-                        TemplateBean templateBean = new TemplateBean();
                         if (sectionBean.getChildren() != null) {
                             for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
+                                TemplateBean templateBean = new TemplateBean();
                                 List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
                                 templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
                                 if (childrens.getStaff() != null) {
@@ -175,9 +175,9 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
 
                             }
                             templateBean1.setPresons(presonArrayList1);
-                        }
-                        if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                            mTemplateBeanList.add(templateBean1);
+                            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                                mTemplateBeanList.add(templateBean1);
+                            }
                         }
                     }
 

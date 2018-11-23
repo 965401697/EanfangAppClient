@@ -143,10 +143,10 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
         if (organizationPersonAdapterMap != null && organizationPersonAdapterMap.get(position).getData().size() > 0) {
             if (recyclerViewMap.get(position).getVisibility() == View.VISIBLE) {
                 recyclerViewMap.get(position).setVisibility(View.GONE);
-                view.setImageDrawable(view.getContext().getResources().getDrawable(com.eanfang.R.drawable.ic_two_open));
+                view.setImageDrawable(view.getContext().getResources().getDrawable(com.eanfang.R.drawable.ic_two_close));
             } else {
                 recyclerViewMap.get(position).setVisibility(View.VISIBLE);
-                view.setImageDrawable(view.getContext().getResources().getDrawable(com.eanfang.R.drawable.ic_two_close));
+                view.setImageDrawable(view.getContext().getResources().getDrawable(com.eanfang.R.drawable.ic_two_open));
             }
         }
     }

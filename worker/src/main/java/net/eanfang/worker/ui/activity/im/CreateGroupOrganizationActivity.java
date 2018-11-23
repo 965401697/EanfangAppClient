@@ -113,10 +113,11 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                         TemplateBean templateBean1 = new TemplateBean();
                         List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
 
-                        TemplateBean templateBean = new TemplateBean();
+
                         if (sectionBean.getChildren() != null) {
                             for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
                                 List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+                                TemplateBean templateBean = new TemplateBean();
                                 templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
                                 if (childrens.getStaff() != null) {
                                     for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
@@ -175,9 +176,9 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
                             }
                             templateBean1.setPresons(presonArrayList1);
-                        }
-                        if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                            mTemplateBeanList.add(templateBean1);
+                            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                                mTemplateBeanList.add(templateBean1);
+                            }
                         }
                     }
 
@@ -206,8 +207,6 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
                         }
                         templateBean2.setPresons(presonArrayList2);
-
-
                     }
 
                     if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
