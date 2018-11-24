@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 
@@ -264,7 +263,7 @@
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
-                            fresco:placeholderImage="@mipmap/no_img" />
+                            fresco:placeholderImage="@mipmap/ic_nodata" />
 
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/iv_pic2"
@@ -272,7 +271,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             android:visibility="gone"
-                            fresco:placeholderImage="@mipmap/no_img" />
+                            fresco:placeholderImage="@mipmap/ic_nodata" />
 
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/iv_pic3"
@@ -280,7 +279,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="10dp"
                             android:visibility="gone"
-                            fresco:placeholderImage="@mipmap/no_img" />
+                            fresco:placeholderImage="@mipmap/ic_nodata" />
                     </LinearLayout>
 
                     <TextView

@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa.check;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -28,10 +28,10 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkInspectDetailEntity;
 import com.yaf.base.entity.WorkInspectEntity;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
-import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
-import net.eanfang.worker.util.ImagePerviewUtil;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +45,7 @@ import butterknife.OnClick;
  * @data 2018/11/9
  * @description 查看设备点检详情 需要处理的
  */
-
-public class DealWithFirstActivity extends BaseActivity {
-
+public class DealWithFirstActivity  extends BaseActivity {
     @BindView(R.id.iv_header)
     SimpleDraweeView ivHeader;
     @BindView(R.id.tv_company)
@@ -120,7 +118,6 @@ public class DealWithFirstActivity extends BaseActivity {
 
     List<WorkInspectDetailEntity> workInspectDetailEntities = new ArrayList<>();
     private CheckDetailAdapter taskDeatilAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +125,6 @@ public class DealWithFirstActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
     }
-
     private void initView() {
         setTitle("检查任务详情");
         setLeftBack();
@@ -391,5 +387,4 @@ public class DealWithFirstActivity extends BaseActivity {
                     finishSelf();
                 }));
     }
-
 }

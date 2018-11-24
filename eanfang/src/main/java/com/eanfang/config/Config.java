@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @author wen
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc app配置信息
  */
 public class Config {

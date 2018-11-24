@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa.check;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,11 +48,11 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.WorkInspectEntity;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
-import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
-import net.eanfang.worker.util.SendContactUtils;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
+import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
+import net.eanfang.client.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -77,8 +77,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  * @description 添加设备点检
  */
 
-public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
-
+public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
     /**
      * 公司名称
      */
@@ -132,8 +131,8 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
     private Map<String, String> mUploadMap = new HashMap<>();
     private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 101;
 
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 101;
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
     private static final int RESULT_DATACODE = 200;
@@ -181,7 +180,6 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
             finishSelf();
         }
     };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,7 +189,6 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
         initView();
         initData();
     }
-
     private void initView() {
         setTitle("新建任务");
 
@@ -284,7 +281,6 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
             case R.id.tv_sub:
                 submit();
                 break;
-                default:break;
         }
     }
 

@@ -25,8 +25,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:background="@color/white"
-                android:paddingBottom="@dimen/dimen_20"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
 
                 <TextView
@@ -54,12 +54,12 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_weight="1"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:checked="false"
                         android:gravity="center"
                         android:text="点检中"
-                        android:textColor="@drawable/select_camera_text_back"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
@@ -68,11 +68,11 @@
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
                         android:text="待审核"
-                        android:textColor="@drawable/select_camera_text_back"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
@@ -81,11 +81,11 @@
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
                         android:text="重新整改"
-                        android:textColor="@drawable/select_camera_text_back"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
@@ -94,11 +94,11 @@
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"
                         android:text="点检完毕"
-                        android:textColor="@drawable/select_camera_text_back"
+                        android:textColor="@drawable/select_client_camera_text_back"
                         android:textSize="12sp" />
 
                 </RadioGroup>

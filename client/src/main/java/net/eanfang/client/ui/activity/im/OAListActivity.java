@@ -6,7 +6,7 @@ import android.view.View;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogWriteActivity;
-import net.eanfang.client.ui.activity.worksapce.oa.check.CheckActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.AddNewCheckActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.workreport.CreationWorkReportActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogWriteActivity;
@@ -39,7 +39,7 @@ public class OAListActivity extends BaseClientActivity {
     private void jump() {
         onClick((findViewById(R.id.tv_work_report)), CreationWorkReportActivity.class);
         onClick((findViewById(R.id.tv_work_task)), TaskAssignmentCreationActivity.class);
-        onClick((findViewById(R.id.tv_work_inspect)), CheckActivity.class);
+        onClick((findViewById(R.id.tv_work_inspect)), AddNewCheckActivity.class);
         onClick((findViewById(R.id.tv_work_transfer)), WorkTransferCreateActivity.class);
         onClick((findViewById(R.id.tv_work_talk)), WorkTalkCreateActivity.class);
         onClick((findViewById(R.id.tv_shop_log)), OpenShopLogWriteActivity.class);

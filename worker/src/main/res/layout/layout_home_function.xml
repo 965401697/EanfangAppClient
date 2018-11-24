@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:layout_marginTop="@dimen/dimen_40"
     android:layout_marginLeft="@dimen/dimen_20"
     android:layout_marginRight="@dimen/dimen_20"
+    android:layout_marginTop="@dimen/dimen_40"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -57,19 +57,25 @@
             android:id="@+id/tv_project_send"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_worker_project_send"
-            android:text="@string/text_worker_project_send" />
+            android:text="@string/text_worker_project_send"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_project_receive"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_worker_project_receive"
-            android:text="@string/text_worker_project_receive" />
+            android:text="@string/text_worker_project_receive"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_sign"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_worker_sign"
             android:text="@string/text_worker_sign" />
+
+        <TextView style="@style/style_client_home_meun" />
+
+        <TextView style="@style/style_client_home_meun" />
 
     </LinearLayout>
 </LinearLayout>

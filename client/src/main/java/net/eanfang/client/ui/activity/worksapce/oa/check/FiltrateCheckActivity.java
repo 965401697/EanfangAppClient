@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa.check;
+package net.eanfang.client.ui.activity.worksapce.oa.check;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -88,7 +88,6 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
      * 点检人  审核人
      */
     private String mPersonal = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
