@@ -8,8 +8,12 @@ import android.util.Log;
 
 import com.jakewharton.disklrucache.DiskLruCache;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
@@ -38,14 +42,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CacheUtil {
 
-    private static ConcurrentHashMap<String, DiskLruCache> caches = new ConcurrentHashMap<String, DiskLruCache>();
-
     private static DiskLruCache getDiskLruCache(Context context, String uniqueName) {
-        DiskLruCache cache = caches.get(uniqueName);
-        if (cache == null) {
-            cache = initCache(context, uniqueName);
-            caches.put(uniqueName, cache);
-        }
+        DiskLruCache cache = initCache(context, uniqueName);
         return cache;
     }
 
@@ -53,8 +51,7 @@ public class CacheUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
                     for (int i = 0; i < keys.size(); i++) {
                         String keyHash = hashKeyForDisk(keys.get(i));
                         DiskLruCache.Editor editor = mDiskLruCache.edit(keyHash);
@@ -65,20 +62,18 @@ public class CacheUtil {
                     }
                     mDiskLruCache.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.putCache",e.getMessage());
                 }
             }
         }).start();
     }
 
     public static void put(Context context, String uniqueName, String key, String value) {
-        Log.e("input", "onstart");
+        String keyHash = hashKeyForDisk(key);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
-                    String keyHash = hashKeyForDisk(key);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
                     DiskLruCache.Editor editor = mDiskLruCache.edit(keyHash);
                     if (editor != null) {
                         editor.set(0, value);
@@ -86,52 +81,136 @@ public class CacheUtil {
                     }
                     mDiskLruCache.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.putCache",e.getMessage());
                 }
-                Log.e("returnput", "start");
             }
         }).start();
     }
 
     public static void get(Context context, String uniqueName, String key, CacheGetCallBack callBack) {
-        Log.e("inget", "onget");
+        String keyHash = hashKeyForDisk(key);
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
-                    String keyHash = hashKeyForDisk(key);
-                    DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                     DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
+                ){
                     if (shot == null) {
                         callBack.readValue(null);
                     } else {
-                        String result = mDiskLruCache.get(keyHash).getString(0);
+                        String result = shot.getString(0);
                         callBack.readValue(result);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.getCache",e.getMessage());
                 }
-                Log.e("returnget", "123");
+
             }
         }).start();
     }
+    public static String get(Context context, String uniqueName, String key) {
+        String keyHash = hashKeyForDisk(key);
+        try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+             DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);
+        ){
+           if (shot == null) {
+                return null;
+            } else {
+                return shot.getString(0);
+            }
+        } catch (IOException e) {
+            Log.e("eanfang.getCache",e.getMessage());
+        }
 
+        return null;
+    }
     public static void getMulti(Context context, String uniqueName, List<String> keys, CacheGetCallBackMulti callBack) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
                     List<String> result = new LinkedList<String>();
                     for (String key : keys) {
                         String keyHash = hashKeyForDisk(key);
-                        String value = mDiskLruCache.get(keyHash).getString(0);
-                        result.add(value);
+                        try(DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);) {
+                            if (shot == null) {
+                                result.add(null);
+                            } else {
+                                String value = mDiskLruCache.get(keyHash).getString(0);
+                                result.add(value);
+                            }
+                        }
                     }
                     callBack.readValue(result);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.getMulti",e.getMessage());
                 }
+            }
+        }).start();
+    }
+    public static List<String> getMulti(Context context, String uniqueName, List<String> keys) {
+        try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
+            List<String> result = new LinkedList<String>();
+            for (String key : keys) {
+                String keyHash = hashKeyForDisk(key);
+                try(DiskLruCache.Snapshot shot =mDiskLruCache.get(keyHash);) {
+                    if (shot == null) {
+                        result.add(null);
+                    } else {
+                        String value = shot.getString(0);
+                        result.add(value);
+                    }
+                }
+            }
+            return result;
+        } catch (IOException e) {
+            Log.e("eanfang.getMulti",e.getMessage());
+        }
+        return null;
+    }
+    public static Object getObject(Context context, String uniqueName, String key) {
+        Log.e("inget", "onget");
+        try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
+            String keyHash = hashKeyForDisk(key);
+            try(DiskLruCache.Snapshot shot = mDiskLruCache.get(keyHash);) {
+                if (shot == null) {
+                    return null;
+                } else {
+                    try (ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(shot.getInputStream(0)))) {
+                        Object javaBean = in.readObject();
+                    } catch (Exception e) {
+                        Log.e("eanfang.cacheReadObj", e.getMessage());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            Log.e("eanfang.cacheReadObj",e.getMessage());
+        }
+
+        Log.e("returnget", "pk");
+        return null;
+    }
+    public static void putObject(Context context, String uniqueName, String key, Object javaBean) {
+        Log.e("input", "onstart");
+        String keyHash = hashKeyForDisk(key);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
+                    DiskLruCache.Editor editor = mDiskLruCache.edit(keyHash);
+                    if (editor != null) {
+                        try(ObjectOutputStream out=new ObjectOutputStream(new BufferedOutputStream(editor.newOutputStream(0)))){
+                            out.writeObject(javaBean);
+                        }catch (Exception e) {
+                            Log.e("eanfang.cacheObj",e.getMessage());
+                        }
+                        editor.commit();
+                    }
+                    mDiskLruCache.flush();
+                } catch (IOException e) {
+                    Log.e("eanfang.cacheObj",e.getMessage());
+                }
+                Log.e("returnput", "start");
             }
         }).start();
     }
@@ -140,15 +219,14 @@ public class CacheUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
                     for (String key : keys) {
                         String keyHash = hashKeyForDisk(key);
                         mDiskLruCache.remove(keyHash);
                     }
                     mDiskLruCache.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.cacheRemove",e.getMessage());
                 }
             }
         }).start();
@@ -158,13 +236,12 @@ public class CacheUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
                     String keyHash = hashKeyForDisk(key);
                     mDiskLruCache.remove(keyHash);
                     mDiskLruCache.flush();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.cacheRemove",e.getMessage());
                 }
             }
         }).start();
@@ -174,11 +251,10 @@ public class CacheUtil {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName);
+                try (DiskLruCache mDiskLruCache = getDiskLruCache(context, uniqueName)){
                     mDiskLruCache.delete();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e("eanfang.removeAll",e.getMessage());
                 }
             }
         }).start();
@@ -200,7 +276,7 @@ public class CacheUtil {
             PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             return info.versionCode;
         } catch (NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("eanfang.getAppVersion",e.getMessage());
         }
         return 1;
     }
@@ -214,7 +290,7 @@ public class CacheUtil {
             }
             mDiskLruCache = DiskLruCache.open(cacheDir, getAppVersion(context), 1, 10 * 1024 * 1024);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("eanfang.initCache",e.getMessage());
         }
         return mDiskLruCache;
     }

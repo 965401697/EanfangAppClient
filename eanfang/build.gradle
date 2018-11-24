@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18111601
-        versionName "2.3.28_beta"
+        versionCode 18112501
+        versionName "2.3.29"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -49,28 +49,11 @@ android {
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
         }
-        //  测试
-        staging {
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //Zipalign优化
-            zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
-            //混淆
-            minifyEnabled true
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
 
         release {
             // 上线url
-//            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-//            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化
