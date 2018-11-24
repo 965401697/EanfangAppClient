@@ -23,6 +23,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.CreateGroupActivity;
 import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.check.AddDealwithInfoActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.AddNewCheckActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 import net.eanfang.worker.ui.activity.worksapce.sign.SignFiltrateActivity;
@@ -78,6 +79,8 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                             ((AddNewCheckActivity) mContext).setFlag(mFlag);
                         } else if (mContext instanceof SignFiltrateActivity) {
                             ((SignFiltrateActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof AddDealwithInfoActivity) {
+                            ((AddDealwithInfoActivity) mContext).setFlag(mFlag);
                         }
 
                     }

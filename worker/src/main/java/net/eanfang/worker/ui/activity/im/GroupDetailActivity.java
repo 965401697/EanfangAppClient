@@ -151,21 +151,28 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     if (bean.getList() != null) {
 
                         for (int i = 0; i < bean.getList().size(); i++) {
+                            if (isOwner) {
+                                //群主 8个item  默认的 加 和 减
+                                if (temp.size() == 8) break;
+                            } else {
+                                //不是群主 9个item  默认的 加
+                                if (temp.size() == 9) break;
+                            }
                             if (bean.getList().get(i).getAccId().equals(bean.getGroup().getCreateUser())) {
                                 temp.add(0, bean.getList().get(i));
                             } else {
                                 temp.add(bean.getList().get(i));
-                                friendListBeanArrayList.add(bean.getList().get(i));
+
                             }
                         }
+
+                        friendListBeanArrayList.addAll(bean.getList());
 
 
                         if (bean.getList().size() > 0) {
 
-//                            mGroupsDetailAdapter.setNewData(temp);
+                            // TODO: 2018/11/21 待优化  用原生的recyclerview.adapter的 getCount();返回
                             GroupDetailBean.ListBean b = new GroupDetailBean.ListBean();//填充数据
-//                            mGroupsDetailAdapter.addData(b);
-//                            mGroupsDetailAdapter.addData(b);
 
                             if (isOwner) {
                                 temp.add(b);
@@ -173,8 +180,11 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                             } else {
                                 temp.add(b);
                             }
-
-                            groupMemberSize.setText("全部群成员（" + bean.getList().size() + "）");
+                            if (bean.getList().size() > 8) {
+                                groupMemberSize.setText("查看更多群成员（" + bean.getList().size() + "）");
+                            } else {
+                                groupMemberSize.setText("全部成员（" + bean.getList().size() + "）");
+                            }
 
 
                             if (bean.getList().get(0).getStatus() == 0) {
@@ -233,10 +243,10 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
     private void initViews() {
-//        gridView.setLayoutManager(new GridLayoutManager(this, 5));
+        //temp 判断数据是否大于10，大于就截取
         mGroupsDetailAdapter = new GroupsDetailAdapter(this, temp, isOwner);
         gridView.setAdapter(mGroupsDetailAdapter);
-//        mGroupsDetailAdapter.bindToRecyclerView(gridView);
+
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -267,7 +277,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("list", friendListBeanArrayList);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
 
-                } else  {
+                } else {
                     if (!temp.get(position).getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
                         Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
                         intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
@@ -323,9 +333,14 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
 
-    @OnClick({R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
+    @OnClick({R.id.group_member_size_item, R.id.ll_group_port, R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.group_member_size_item:
+                Intent iet = new Intent(GroupDetailActivity.this, GroupMoreMemberActivity.class);
+                iet.putExtra("list", friendListBeanArrayList);
+                startActivity(iet);
+                break;
             case R.id.ll_group_port:
                 PermissionUtils.get(this).getCameraPermission(() -> takePhoto(GroupDetailActivity.this, HEADER_PIC));
                 break;
@@ -390,7 +405,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                             .params("groupName", title)
                             .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                                 ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
-
+                                //清除删除的群组信息
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
 
                                 for (Activity activity : BaseActivity.transactionActivities) {
@@ -402,19 +417,6 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 }
                 break;
         }
-    }
-
-    private void quitGroup() {
-        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
-                .params("groupId", id)
-                .params("ids", EanfangApplication.get().getAccId())
-//                .params("ids", userIdList.toString())
-                .params("groupName", title)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                    ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
-                }));
-
     }
 
     /**

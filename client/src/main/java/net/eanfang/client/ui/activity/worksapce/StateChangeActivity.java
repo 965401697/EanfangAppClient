@@ -46,6 +46,9 @@ public class StateChangeActivity extends BaseClientActivity {
 
 
     private void bindViews() {
+        setTitle("提交成功");
+        setLeftBack();
+
         ll_message = (LinearLayout) findViewById(R.id.ll_message);
         tv_msg_title = (TextView) findViewById(R.id.tv_msg_title);
         tv_msg_content = (TextView) findViewById(R.id.tv_msg_content);
@@ -71,7 +74,7 @@ public class StateChangeActivity extends BaseClientActivity {
         boolean isShowLogo = message.isShowLogo();
         boolean isShowOkBtn = message.isShowOkBtn();
         String tip = message.getTip();
-        setTitle(title);
+//        setTitle(title);
 
         tv_msg_title.setText(msgTitle);
         tv_msg_content.setText(msgContent);
@@ -91,8 +94,8 @@ public class StateChangeActivity extends BaseClientActivity {
         }
 
         if (StringUtils.isValid(tip)) {
-            tv_tip.setVisibility(View.VISIBLE);
-            tv_tip.setText(tip);
+            tv_ok.setVisibility(View.VISIBLE);
+            tv_ok.setText(tip);
         }
 
         iv_phone.setOnClickListener(v -> {

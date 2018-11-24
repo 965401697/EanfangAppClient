@@ -13,9 +13,12 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
+import com.eanfang.takevideo.TakeVdideoMode;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -34,6 +38,7 @@ public class ConversationActivity extends BaseWorkerActivity {
     public String mId;
 
     private List<UserInfo> userInfoList = new ArrayList<>();
+    private String mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +53,11 @@ public class ConversationActivity extends BaseWorkerActivity {
         endTransaction(false);
         startTransaction(true);
 
-        String type = getIntent().getData().getLastPathSegment().toUpperCase(Locale.US);
-        Conversation.ConversationType conversationType = Conversation.ConversationType.valueOf(type);
+        mType = getIntent().getData().getLastPathSegment().toUpperCase(Locale.US);
+
         setRightTitle("设置");
 
-        if (type.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
+        if (mType.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
 
             initData();
 
@@ -65,11 +70,11 @@ public class ConversationActivity extends BaseWorkerActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
 
-                if (type.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
+                if (mType.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
 
                     intent.setClass(ConversationActivity.this, GroupDetailActivity.class);
 
-                } else if (type.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
+                } else if (mType.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
 
                     intent.setClass(ConversationActivity.this, IMPresonInfoActivity.class);
 
@@ -84,28 +89,6 @@ public class ConversationActivity extends BaseWorkerActivity {
             }
         });
 
-//        RongIMClient.setReadReceiptListener(new RongIMClient.ReadReceiptListener() {
-//            @Override
-//            public void onReadReceiptReceived(Message message) {
-//
-//                if (mId.equals(message.getTargetId()) && type.equals(message.getConversationType().getName().toUpperCase())) {
-//
-//                    ReadReceiptMessage content = (ReadReceiptMessage) message.getContent();
-//                    long ntfTime = content.getLastMessageSendTime();    //获取发送时间戳
-//                }
-//                Log.e("zzw", "onReadReceiptReceived=" + message.getObjectName().toString());
-//            }
-//
-//            @Override
-//            public void onMessageReceiptRequest(Conversation.ConversationType conversationType, String s, String s1) {
-//                Log.e("zzw", "onMessageReceiptRequest=" + s + "=" + s1);
-//            }
-//
-//            @Override
-//            public void onMessageReceiptResponse(Conversation.ConversationType conversationType, String s, String s1, HashMap<String, Long> hashMap) {
-//                Log.e("zzw", "onMessageReceiptResponse=" + s + "=" + s1);
-//            }
-//        });
     }
 
     private void initData() {
@@ -135,4 +118,56 @@ public class ConversationActivity extends BaseWorkerActivity {
                 }));
 
     }
+
+    /**
+     * 接受拍照小视频的发送event的
+     *
+     * @param takeVdideoMode
+     */
+    @Subscribe()//MAIN代表主线程
+    public void receivePath(TakeVdideoMode takeVdideoMode) {
+        if (takeVdideoMode != null) {
+            sendCheckedMsg(takeVdideoMode);
+        }
+    }
+
+
+    /**
+     * 发送
+     *
+     * @param takeVdideoMode
+     */
+    private void sendCheckedMsg(TakeVdideoMode takeVdideoMode) {
+
+        Conversation.ConversationType conversationType = null;
+
+        CustomizeVideoMessage customizeVideoMessage = new CustomizeVideoMessage();
+
+        customizeVideoMessage.setMp4Path(BuildConfig.OSS_SERVER + takeVdideoMode.getMKey() + ".mp4");
+        customizeVideoMessage.setImgUrl(takeVdideoMode.getMKey() + ".jpg");
+
+
+        if (mType.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
+
+            conversationType = Conversation.ConversationType.GROUP;
+
+        } else if (mType.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
+
+            conversationType = Conversation.ConversationType.PRIVATE;
+        }
+
+        RongIM.getInstance().sendMessage(conversationType, mId, customizeVideoMessage, "小视频", "小视频", new RongIMClient.SendMessageCallback() {
+            @Override
+            public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+
+            }
+
+            @Override
+            public void onSuccess(Integer integer) {
+
+            }
+        });
+    }
+
 }
+

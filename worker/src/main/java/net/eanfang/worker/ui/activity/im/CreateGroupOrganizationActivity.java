@@ -113,10 +113,11 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                         TemplateBean templateBean1 = new TemplateBean();
                         List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
 
-                        TemplateBean templateBean = new TemplateBean();
+
                         if (sectionBean.getChildren() != null) {
                             for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
                                 List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+                                TemplateBean templateBean = new TemplateBean();
                                 templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
                                 if (childrens.getStaff() != null) {
                                     for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
@@ -175,9 +176,9 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
                             }
                             templateBean1.setPresons(presonArrayList1);
-                        }
-                        if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                            mTemplateBeanList.add(templateBean1);
+                            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                                mTemplateBeanList.add(templateBean1);
+                            }
                         }
                     }
 
@@ -206,8 +207,6 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
                         }
                         templateBean2.setPresons(presonArrayList2);
-
-
                     }
 
                     if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
@@ -222,7 +221,18 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new CreateGroupOrganizationAdapter(R.layout.item_one_leve);
+        mAdapter = new CreateGroupOrganizationAdapter(R.layout.item_one_leve, new CreateGroupOrganizationAdapter.SetAutoCheckedParentListener() {
+            @Override
+            public void autoCheckedParentListener(CreateGroupOrganizationAdapter adapter, int position, List<TemplateBean.Preson> list) {
+                if (adapter.getSeletePerson().containsAll(list)) {
+                    adapter.getData().get(position).setChecked(true);
+                } else {
+                    adapter.getData().get(position).setChecked(false);
+                }
+
+                adapter.notifyItemChanged(position);
+            }
+        });
 
         mAdapter.bindToRecyclerView(recyclerView);
         mAdapter.setNewData(mTemplateBeanList);
@@ -237,6 +247,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                     ((CreateGroupOrganizationAdapter) adapter).checkedAll(position, bean.isChecked() == true ? false : true);
                 } else if (view.getId() == R.id.rl_parent) {
                     ImageView imageView = view.findViewById(R.id.iv_select);
+                    RecyclerView recyclerView = view.findViewById(R.id.recycler_view_group);
                     ((CreateGroupOrganizationAdapter) adapter).isShow(position, imageView);
                 }
             }

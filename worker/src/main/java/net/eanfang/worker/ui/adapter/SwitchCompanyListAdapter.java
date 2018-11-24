@@ -6,21 +6,18 @@ import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 
-import java.util.List;
-
 
 /**
  * 切换公司列表
  */
 
 public class SwitchCompanyListAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
-    public SwitchCompanyListAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
+    public SwitchCompanyListAdapter() {
+        super(R.layout.layout_item_select_company);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
-        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getOrgName());
-        helper.addOnClickListener(R.id.tv_delete);
+        helper.setText(R.id.tv_detail_name, item.getOrgName());
     }
 }

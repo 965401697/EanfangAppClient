@@ -169,8 +169,10 @@
                     android:id="@+id/rl_organization"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/white"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <ImageView
                         android:id="@+id/iv_create_team"
@@ -198,16 +200,18 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_36"
-                        android:src="@mipmap/ic_icon_right" />
+                        android:src="@mipmap/ic_icon_right"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
+
+                <TextView style="@style/style_common_line_gray" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dimen_20"
-                    android:layout_marginTop="@dimen/dimen_20"
                     android:background="@color/white" />
 
             </LinearLayout>

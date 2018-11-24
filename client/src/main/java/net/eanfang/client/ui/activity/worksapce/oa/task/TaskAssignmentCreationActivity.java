@@ -508,7 +508,7 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(TaskAssignmentCreationActivity.this)).send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(TaskAssignmentCreationActivity.this),"布置任务").send();
 
 
                     });

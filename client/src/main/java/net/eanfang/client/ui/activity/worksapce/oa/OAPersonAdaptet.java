@@ -21,6 +21,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.AddDealwithInfoActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.AddNewCheckActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 import net.eanfang.client.ui.activity.worksapce.sign.SignFiltrateActivity;
 
@@ -68,17 +70,21 @@ public class OAPersonAdaptet
                 @Override
                 public void onClick(View v) {
                     if (mFlag != 0 && mFlag != 6) {
-//                        if (mContext instanceof CreationWorkReportActivity) {
-//                            ((CreationWorkReportActivity) mContext).setFlag(mFlag);
-//                        } else
                         if (mContext instanceof TaskAssignmentCreationActivity) {
                             ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
                         } else if (mContext instanceof SignFiltrateActivity) {
                             ((SignFiltrateActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof AddDealwithInfoActivity) {
+                            ((AddDealwithInfoActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof AddNewCheckActivity) {
+                            ((AddNewCheckActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof AddNewCheckActivity) {
+                            ((AddNewCheckActivity) mContext).setFlag(mFlag);
                         }
 
                     }
-                    if (mFlag == 4) {//选择群组
+                    //选择群组
+                    if (mFlag == 4) {
                         ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), 101);
                     } else if (mFlag == 6) {
                         Intent intent = new Intent(new Intent(mContext, NewSelectIMContactActivity.class));

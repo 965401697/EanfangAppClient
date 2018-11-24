@@ -16,8 +16,8 @@ public class SampleExtensionModule extends DefaultExtensionModule {
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> pluginModuleList = new ArrayList<>();
-//        pluginModuleList.add(new SightPlugin());
         pluginModuleList.add(new OAPlugin());
+        pluginModuleList.add(new SmallVideoPlugin());
         pluginModuleList.add(new VideoPlugin());
         return pluginModuleList;
     }

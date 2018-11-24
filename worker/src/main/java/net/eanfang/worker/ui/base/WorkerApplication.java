@@ -11,6 +11,8 @@ import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;
 import net.eanfang.worker.ui.activity.im.CustomizeMessageItemProvider;
+import net.eanfang.worker.ui.activity.im.CustomizeVideoMessage;
+import net.eanfang.worker.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.worker.ui.activity.im.MyConversationClickListener;
 import net.eanfang.worker.ui.activity.im.SampleExtensionModule;
 
@@ -51,18 +53,15 @@ public class WorkerApplication extends EanfangApplication {
             RongIM.init(this);
 
 
-
-
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
 
             RongIM.registerMessageType(CustomizeMessage.class);
+            RongIM.registerMessageType(CustomizeVideoMessage.class);
 
 
             RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
-
-//            EanfangApplication.AppType = BuildConfig.TYPE;
-
+            RongIM.getInstance().registerMessageTemplate(new CustomizeVideoMessageItemProvider());
 
             Conversation.ConversationType[] types = new Conversation.ConversationType[]{
                     Conversation.ConversationType.PRIVATE,

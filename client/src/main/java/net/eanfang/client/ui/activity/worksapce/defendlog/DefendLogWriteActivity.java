@@ -425,7 +425,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                     b.putString("shareType", "9");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(DefendLogWriteActivity.this)).send();
+                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(DefendLogWriteActivity.this),"布防日志").send();
                 }));
     }
 

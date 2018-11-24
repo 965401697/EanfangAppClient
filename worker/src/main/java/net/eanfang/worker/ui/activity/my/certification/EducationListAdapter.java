@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -23,9 +24,25 @@ public class EducationListAdapter extends BaseQuickAdapter<EducationExperienceEn
 
     @Override
     protected void convert(BaseViewHolder helper, EducationExperienceEntity item) {
-        helper.setText(R.id.tv_school_name, "学校：" + item.getSchoolName());
-        helper.setText(R.id.tv_school_major, "专业：" + item.getMajorName());
-        helper.setText(R.id.tv_school_time, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd")+" 至 "+DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
+        if (!TextUtils.isEmpty(item.getSchoolName())) {
+            helper.setText(R.id.tv_school_name, "学校：" + item.getSchoolName());
+        } else {
+            helper.setText(R.id.tv_school_name, "学校：");
+        }
+        if (!TextUtils.isEmpty(item.getMajorName())) {
+            helper.setText(R.id.tv_school_major, "专业：" + item.getMajorName());
+        } else {
+            helper.setText(R.id.tv_school_major, "专业：");
+        }
+
+        if (item.getBeginTime() != null && item.getEndTime() != null) {
+
+            helper.setText(R.id.tv_school_time, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd") + " 至 " + DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
+
+        } else {
+            helper.setText(R.id.tv_school_time, "起止时间：" + " 至");
+
+        }
 
         if (item.getCertificatePics() != null) {
             String[] urls = V.v(() -> item.getCertificatePics().split(","));

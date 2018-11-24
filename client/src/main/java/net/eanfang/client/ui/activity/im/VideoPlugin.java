@@ -26,7 +26,7 @@ public class VideoPlugin implements IPluginModule {
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        return ContextCompat.getDrawable(context, R.drawable.rc_ext_plugin_image_selector);
+        return ContextCompat.getDrawable(context, R.drawable.rc_ext_plugin_video_selector);
     }
 
     @Override

@@ -3,8 +3,11 @@ package net.eanfang.client.ui.activity.worksapce.maintenance;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,15 +24,15 @@ import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
-
 import net.eanfang.client.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by O u r on 2018/7/16.
@@ -79,11 +82,16 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     ImageView ivDeviceList;
     @BindView(R.id.iv_device_test)
     ImageView ivDeviceTest;
+    @BindView(R.id.tv_device_list)
+    TextView tvDeviceList;
+    @BindView(R.id.tv_device_test)
+    TextView tvDeviceTest;
+    Unbinder unbinder;
 
     private MaintenanceOrderDetailEmphasisDeviceAdapter emphasisDeviceAdapter;
     private MaintenanceOrderDetailDeviceListAdapter deviceListAdapter;
 
-    private List<String> test = new ArrayList<>();
+
     private long mId;
     private ShopMaintenanceOrderEntity orderEntity;
 
@@ -101,10 +109,6 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-        test.add("");
-        test.add("");
-        test.add("");
-        test.add("");
         getData();
     }
 
@@ -147,7 +151,11 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         ivReportHeader.setImageURI(BuildConfig.OSS_SERVER + orderEntity.getOwnerUserEntity().getAccountEntity().getAvatar());
         tvName.setText(orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getAssigneeUserEntity().getAccountEntity().getGender() == 1 ? "先生" : "女士") + ")");
         tvCompanyName.setText(orderEntity.getOwnerUserEntity().getCompanyEntity().getOrgName());
-        tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
+        if (!TextUtils.isEmpty(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode())) {
+            tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
+        } else {
+            tvAddress.setText("无");
+        }
         tvPhone.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getMobile());
 
 
@@ -184,9 +192,19 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
             bizStr = bizStr + "  " + bizList.get(i);
         }
         tvOsType.setText("系统类别：" + bizStr);
+        if (orderEntity.getExamDeviceEntityList() != null && orderEntity.getExamDeviceEntityList().size() > 0) {
+            emphasisDeviceAdapter.setNewData(orderEntity.getExamDeviceEntityList());
+        } else {
+            tvDeviceTest.setVisibility(View.VISIBLE);
+            ivDeviceTest.setVisibility(View.GONE);
+        }
 
-        emphasisDeviceAdapter.setNewData(orderEntity.getExamDeviceEntityList());
-        deviceListAdapter.setNewData(orderEntity.getDeviceEntityList());
+        if (orderEntity.getDeviceEntityList() != null && orderEntity.getDeviceEntityList().size() > 0) {
+            deviceListAdapter.setNewData(orderEntity.getDeviceEntityList());
+        } else {
+            tvDeviceList.setVisibility(View.VISIBLE);
+            ivDeviceList.setVisibility(View.GONE);
+        }
 
     }
 
@@ -208,5 +226,19 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
                 }
                 break;
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

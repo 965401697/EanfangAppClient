@@ -60,6 +60,7 @@ android {
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
+
 //            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 

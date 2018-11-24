@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -77,6 +78,10 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     ImageView ivDeviceList;
     @BindView(R.id.iv_device_test)
     ImageView ivDeviceTest;
+    @BindView(R.id.tv_device_list)
+    TextView tvDeviceList;
+    @BindView(R.id.tv_device_test)
+    TextView tvDeviceTest;
 
     private MaintenanceOrderDetailEmphasisDeviceAdapter emphasisDeviceAdapter;
     private MaintenanceOrderDetailDeviceListAdapter deviceListAdapter;
@@ -148,7 +153,11 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
             tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName());
         }
         tvCompanyName.setText(orderEntity.getOwnerUserEntity().getCompanyEntity().getOrgName());
-        tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
+        if (!TextUtils.isEmpty(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode())) {
+            tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
+        } else {
+            tvAddress.setText("无");
+        }
         tvPhone.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getMobile());
 
 
@@ -186,8 +195,19 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         }
         tvOsType.setText("系统类别：" + bizStr);
 
-        emphasisDeviceAdapter.setNewData(orderEntity.getExamDeviceEntityList());
-        deviceListAdapter.setNewData(orderEntity.getDeviceEntityList());
+        if (orderEntity.getExamDeviceEntityList() != null && orderEntity.getExamDeviceEntityList().size() > 0) {
+            emphasisDeviceAdapter.setNewData(orderEntity.getExamDeviceEntityList());
+        } else {
+            tvDeviceTest.setVisibility(View.VISIBLE);
+            ivDeviceTest.setVisibility(View.GONE);
+        }
+
+        if (orderEntity.getDeviceEntityList() != null && orderEntity.getDeviceEntityList().size() > 0) {
+            deviceListAdapter.setNewData(orderEntity.getDeviceEntityList());
+        } else {
+            tvDeviceList.setVisibility(View.VISIBLE);
+            ivDeviceList.setVisibility(View.GONE);
+        }
 
     }
 

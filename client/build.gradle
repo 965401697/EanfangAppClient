@@ -49,19 +49,12 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             //测试环境bugly
             buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-
-            // 上线url
-            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
         }
         release {
             //签名配置
             signingConfig signingConfigs.release
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
-
             //正式环境bugly
             buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
             //Zipalign优化

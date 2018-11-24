@@ -113,6 +113,12 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
                     JumpItent.jump(this, CertificationInfoActivity.class);
                 } else {
+                    if (mAuthStatusBean == null) {
+
+                        ToastUtil.get().showToast(this, "请稍后操作");
+
+                        return;
+                    }
                     startActivity(new Intent(this, CertificationActivity.class).putExtra("status", mAuthStatusBean.getBase()));
                 }
                 break;
@@ -121,6 +127,14 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
                     JumpItent.jump(this, SkillInfoDetailActivity.class);
                 } else {
+
+                    if (mAuthStatusBean == null) {
+                        //多次访问状态的接口 造成mAuthStatusBean == null
+                        ToastUtil.get().showToast(this, "请稍后操作");
+
+                        return;
+                    }
+
                     startActivity(new Intent(this, SkillTypeActivity.class).putExtra("status", mAuthStatusBean.getApt()));
                 }
                 break;

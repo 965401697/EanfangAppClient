@@ -81,26 +81,30 @@ public class SkillAreaActivity extends BaseWorkerActivity {
     }
 
     private void initArea() {
-        //获得全部 地区数据
-        List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
-        for (int i = 0; i < areaListBean.size(); i++) {
-            BaseDataEntity provinceEntity = areaListBean.get(i);
-            //处理当前省下的所有市
-            List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
-            //查询出来后，移除，以增加效率
-            allAreaList.removeAll(cityList);
-            for (int j = 0; j < cityList.size(); j++) {
-                BaseDataEntity cityEntity = cityList.get(j);
-                //处理当前市下所有区县
-                List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
-                //查询出来后，移除，以增加效率
-                allAreaList.removeAll(countyList);
-                cityList.get(j).setChildren(countyList);
+        new Thread() {
+            @Override
+            public void run() {
+
+                //获得全部 地区数据
+                List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
+                for (int i = 0; i < areaListBean.size(); i++) {
+                    BaseDataEntity provinceEntity = areaListBean.get(i);
+                    //处理当前省下的所有市
+                    List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+                    //查询出来后，移除，以增加效率
+                    allAreaList.removeAll(cityList);
+                    for (int j = 0; j < cityList.size(); j++) {
+                        BaseDataEntity cityEntity = cityList.get(j);
+                        //处理当前市下所有区县
+                        List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                        //查询出来后，移除，以增加效率
+                        allAreaList.removeAll(countyList);
+                        cityList.get(j).setChildren(countyList);
+                    }
+                    areaListBean.get(i).setChildren(cityList);
+                }
             }
-            areaListBean.get(i).setChildren(cityList);
-
-
-        }
+        }.start();
     }
 
     private void initData() {
