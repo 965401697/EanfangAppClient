@@ -10,7 +10,7 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18112501
+        versionCode 18112502
         versionName "2.3.29"
         multiDexEnabled true
 
@@ -49,6 +49,7 @@ android {
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
         }
+        release {
             buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
             // 不显示Log
@@ -70,7 +71,7 @@ android {
     // aapt2 问题 png图片问题
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
-
+}
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
