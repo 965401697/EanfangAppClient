@@ -28,5 +28,7 @@ public class AddWorkInspectDetailBean implements Serializable {
     private String remarkInfo;
     private String pictures;
     private Long oaWorkInspectId;
+    private String mp4Path;
+    private String collaborativeUser;
 
 }

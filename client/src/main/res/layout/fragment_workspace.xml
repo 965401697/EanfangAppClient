@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/ll_header"
+        android:id="@+id/ll_company_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ic_main_top_back"
@@ -47,6 +47,7 @@
                     android:textSize="@dimen/textSize_15" />
 
                 <ImageView
+                    android:id="@+id/iv_down_icon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginLeft="5dp"

@@ -129,6 +129,9 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
         }
+        if (byNetBean.getStatus() != 0) {
+            etCompany.setEnabled(false);
+        }
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
         if (byNetBean.getStatus() != 0 && byNetBean.getStatus() != 3) {
             btnComplete.setVisibility(View.GONE);

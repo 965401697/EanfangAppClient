@@ -29,7 +29,6 @@ import com.eanfang.model.WorkAddReportBean;
 import com.eanfang.model.WorkReportInfoBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
@@ -46,7 +45,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.CompleteWorkView;
 import net.eanfang.client.ui.widget.FindTroubleView;
 import net.eanfang.client.ui.widget.WorkPlanView;
-import net.eanfang.client.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -65,7 +63,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 工作汇报
  */
-
+@Deprecated
 public class ReportActivity extends BaseClientActivity implements View.OnClickListener {
 
     @BindView(R.id.et_task_name)
@@ -398,7 +396,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 
-                        new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(ReportActivity.this)).send();
+//                        new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(ReportActivity.this)).send();
 
                     });
                 }));

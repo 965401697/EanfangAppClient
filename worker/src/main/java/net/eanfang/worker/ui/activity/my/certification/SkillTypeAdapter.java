@@ -41,7 +41,6 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
         ((CheckBox) helper.getView(R.id.cb_check)).setText(item.getDataName());
 
 
-
         if (item.isCheck()) {
             ((CheckBox) helper.getView(R.id.cb_check)).setChecked(item.isCheck());
         } else {
@@ -50,12 +49,10 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
 
         if (mFlag != 0) {
             ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusable(false);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusableInTouchMode(false);
+            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(false);
         } else {
             ((CheckBox) helper.getView(R.id.cb_check)).setClickable(true);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusable(true);
-            ((CheckBox) helper.getView(R.id.cb_check)).setFocusableInTouchMode(true);
+            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(true);
 
             ((CheckBox) helper.getView(R.id.cb_check)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -63,16 +60,34 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
                     if (isChecked) {
                         item.setCheck(true);
                         if (item.getDataType() == 1) {
-                            scheckedId.add(item.getDataId());
+                            if (unSCheckedId.contains(item.getDataId())) {
+                                unSCheckedId.remove(item.getDataId());
+                            } else {
+                                scheckedId.add(item.getDataId());
+                            }
                         } else {
-                            bcheckedId.add(item.getDataId());
+                            if (unbCheckedId.contains(item.getDataId())) {
+                                unbCheckedId.remove(item.getDataId());
+                            } else {
+
+                                bcheckedId.add(item.getDataId());
+                            }
                         }
                     } else {
                         item.setCheck(false);
                         if (item.getDataType() == 1) {
-                            unSCheckedId.add(item.getDataId());
+                            if (scheckedId.contains(item.getDataId())) {
+                                scheckedId.remove(item.getDataId());
+                            } else {
+                                unSCheckedId.add(item.getDataId());
+                            }
                         } else {
-                            unbCheckedId.add(item.getDataId());
+                            if (bcheckedId.contains(item.getDataId())) {
+                                bcheckedId.remove(item.getDataId());
+                            } else {
+                                unbCheckedId.add(item.getDataId());
+                            }
+
                         }
                     }
                 }

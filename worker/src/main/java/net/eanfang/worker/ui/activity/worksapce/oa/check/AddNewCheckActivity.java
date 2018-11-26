@@ -28,7 +28,6 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkAddCheckBean;
-import com.eanfang.model.WorkCheckInfoBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.takevideo.PlayVideoActivity;
@@ -47,6 +46,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.yaf.base.entity.WorkInspectEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
@@ -79,11 +79,19 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
+    /**
+     * 公司名称
+     */
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
+    /**
+     * 部门名称
+     */
     @BindView(R.id.tv_section_name)
     TextView tvSectionName;
-    // 任务标题
+    /**
+     * 任务标题
+     */
     @BindView(R.id.et_task_name)
     EditText etTaskName;
     // 整改期限
@@ -124,8 +132,8 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
     private Map<String, String> mUploadMap = new HashMap<>();
     private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
-
     private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 101;
+
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
     private static final int RESULT_DATACODE = 200;
@@ -143,18 +151,25 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
     private WorkAddCheckBean.WorkInspectDetailsBean detailsBean;
     private CheckAdapter checkAdapter;
-    // 存储添加检查明细
+    /**
+     * 存储添加检查明细
+     */
     private List<WorkAddCheckBean.WorkInspectDetailsBean> mCheckList;
 
     private boolean isTrue = false;
-    public int mFlag;//人员选择器的标志位
+    /**
+     * 人员选择器的标志位
+     */
+    public int mFlag;
     private OAPersonAdaptet groupAdaptet;
     private OAPersonAdaptet sendPersonAdapter;
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
     private List<TemplateBean.Preson> groupList = new ArrayList<>();
     private List<TemplateBean.Preson> whoList = new ArrayList<>();
 
-    // 设备code 设备id
+    /**
+     * 设备code 设备id
+     */
     private String dataCode = "";
 
     private Handler handler = new Handler() {
@@ -214,8 +229,6 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     private void initData() {
         tvCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         tvSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
-
-
     }
 
     @OnClick({R.id.ll_update_time, R.id.tv_add_task, R.id.tv_sub, R.id.iv_title_voice, R.id.ll_select_device,
@@ -271,6 +284,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
             case R.id.tv_sub:
                 submit();
                 break;
+                default:break;
         }
     }
 
@@ -409,7 +423,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     private void doHttp(String jsonString) {
         EanfangHttp.post(NewApiService.ADD_WORK_CHECK)
                 .upJson(jsonString)
-                .execute(new EanfangCallback<WorkCheckInfoBean>(this, true, WorkCheckInfoBean.class, (bean) -> {
+                .execute(new EanfangCallback<WorkInspectEntity>(this, true, WorkInspectEntity.class, (bean) -> {
                     runOnUiThread(() -> {
                         Bundle bundle = new Bundle();
                         Message message = new Message();
@@ -454,7 +468,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this)).send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this), "设备检点").send();
 
 
                     });
@@ -635,7 +649,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
     /**
      * 人员选择
-     * */
+     */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 

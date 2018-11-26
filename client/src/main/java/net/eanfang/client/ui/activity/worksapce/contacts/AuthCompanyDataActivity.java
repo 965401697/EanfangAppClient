@@ -97,6 +97,9 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         if (byNetBean != null) {
+            if (!StringUtils.isEmpty(byNetBean.getName())) {
+                etCompany.setText(byNetBean.getName());
+            }
             if (byNetBean.getLicenseCode() != null) {
                 edCompanyNumber.setText(byNetBean.getLicenseCode());
             }

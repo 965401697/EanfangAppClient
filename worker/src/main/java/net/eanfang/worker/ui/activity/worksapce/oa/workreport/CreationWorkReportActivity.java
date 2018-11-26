@@ -1030,7 +1030,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this)).send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this),"工作汇报").send();
 
 
                     });

@@ -195,7 +195,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                     selectTimeDialogFragment = selectTimeDialogFragment.newInstance();
                 }
                 Dialog mDialog = selectTimeDialogFragment.getDialog();
-                if (mDialog==null || !mDialog.isShowing()) {
+                if (mDialog == null || !mDialog.isShowing()) {
                     selectTimeDialogFragment.show(getSupportFragmentManager(), "");
                 }
 
@@ -401,7 +401,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                     b.putString("shareType", "8");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(OpenShopLogWriteActivity.this)).send();
+                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(OpenShopLogWriteActivity.this), "开店日志").send();
 
                 }));
     }

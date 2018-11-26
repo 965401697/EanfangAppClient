@@ -293,6 +293,20 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initCamCount(0);
                         mCamCount = 0;
                     }
+                    if (bean.getBiz() > 0) {// 业务通知
+                        initBizCount(bean.getBiz());
+                        mMessageCount = bean.getBiz();
+                    } else {
+                        initBizCount(0);
+                        mMessageCount = 0;
+                    }
+                    if (bean.getCam() > 0) {// 官方通知
+                        initCamCount(bean.getCam());
+                        mCamCount = 0;
+                    } else {
+                        initCamCount(0);
+                        mCamCount = 0;
+                    }
                 }));
     }
 

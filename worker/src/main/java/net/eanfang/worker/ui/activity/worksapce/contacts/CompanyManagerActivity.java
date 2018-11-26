@@ -22,6 +22,9 @@ import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyDat
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.QualifyDataActivity;
+import net.eanfang.worker.ui.activity.worksapce.setting.UpdatePasswordActivity;
+import net.eanfang.worker.ui.fragment.ContactsFragment;
+import net.eanfang.worker.ui.widget.DissloveTeamDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
  * @date on 2018/5/8  18:09
  * @decision 企业管理
  */
-public class CompanyManagerActivity extends BaseActivity {
+public class CompanyManagerActivity extends BaseActivity implements DissloveTeamDialog.OnForgetPasswordListener, DissloveTeamDialog.OnConfirmListener {
     @BindView(R.id.rl_prefectInfo)
     RelativeLayout rlPrefectInfo;
     @BindView(R.id.rl_auth)
@@ -50,6 +53,10 @@ public class CompanyManagerActivity extends BaseActivity {
     //认证中显示标示
     private String isAuth = "";
     private String adminUserId;
+    /**
+     * 解散团队
+     */
+    private DissloveTeamDialog dissloveTeamDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,7 @@ public class CompanyManagerActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
+        setRightTitle("解散团队");
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
@@ -85,7 +93,7 @@ public class CompanyManagerActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rl_prefectInfo, R.id.rl_auth, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff,
-            R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.rl_honorcertificate})
+            R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.rl_honorcertificate, R.id.tv_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             // 完善资料
@@ -151,7 +159,21 @@ public class CompanyManagerActivity extends BaseActivity {
             case R.id.tv_againAuth:
                 doUndoVerify();
                 break;
+            case R.id.tv_right:
+                doDisslove();
+                break;
+            default:
+                break;
+
         }
+    }
+
+    /**
+     * 解散团队
+     */
+    private void doDisslove() {
+        dissloveTeamDialog = new DissloveTeamDialog(CompanyManagerActivity.this, this, this);
+        dissloveTeamDialog.show();
     }
 
 
@@ -167,6 +189,33 @@ public class CompanyManagerActivity extends BaseActivity {
                         isAuth = "0";
                     }));
         }).showDialog();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dissloveTeamDialog != null) {
+            dissloveTeamDialog.dismiss();
+        }
+    }
+
+    /**
+     * 忘记密码
+     */
+    @Override
+    public void doForget() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("disslove", true);
+        JumpItent.jump(CompanyManagerActivity.this, UpdatePasswordActivity.class, bundle);
+    }
+
+    /**
+     * 确认解散团队
+     */
+    @Override
+    public void doConfirm() {
+        ContactsFragment.isDisslove = true;
+        finishSelf();
     }
 
 }

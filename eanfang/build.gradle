@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18111601
-        versionName "2.3.28"
+        versionCode 18112502
+        versionName "2.3.29"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -37,40 +37,23 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-
             // 上线url
-            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+//            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+//            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
 
-//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 //            buildConfigField("String", "HOST", "\"http://7.196.57.45:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
         }
-        //  测试
-        staging {
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
-            // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            //Zipalign优化
-            zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
-            //混淆
-            minifyEnabled true
-            //加载默认混淆配置文件
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-
         release {
             // 上线url
 //            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
 //            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+//            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+//            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
             // 上线url
             buildConfigField("String", "HOST", "\"http://api.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"http://api.eanfang.net\"")
@@ -94,7 +77,6 @@ android {
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
 }
-
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')

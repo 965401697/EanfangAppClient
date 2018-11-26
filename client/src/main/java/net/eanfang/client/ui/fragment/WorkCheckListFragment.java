@@ -10,12 +10,11 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckListBean;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.client.ui.activity.worksapce.oa.check.WorkCheckInfoActivity;
+import net.eanfang.client.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.client.ui.adapter.WorkCheckListAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -37,6 +36,8 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
     private WorkCheckListAdapter mAdapter;
     private int currentPosition;
     public static final int REQUST_REFRESH_CODE = 101;
+
+    private QueryEntry mQueryEntry;
 
     public static WorkCheckListFragment getInstance(String title, int type) {
         WorkCheckListFragment sf = new WorkCheckListFragment();
@@ -61,7 +62,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!PermKit.get().getWorkInspectDetailPrem()) return;
                 currentPosition = position;
-                Intent intent = new Intent(getActivity(), WorkCheckInfoActivity.class);
+                Intent intent = new Intent(getActivity(), DealWithFirstActivity.class);
                 intent.putExtra("id", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getId());
                 intent.putExtra("status", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getStatus());
                 startActivityForResult(intent, REQUST_REFRESH_CODE);
@@ -71,28 +72,29 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
 
     @Override
     protected void getData() {
-        QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(mTitle)) {
-            String status = GetConstDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";
-            queryEntry.getEquals().put(Constant.STATUS, status);
-        }
+        if (mQueryEntry == null)
+            mQueryEntry = new QueryEntry();
+//        if (!Constant.ALL.equals(mTitle)) {
+//            String status = GetConstDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";
+//            queryEntry.getEquals().put(Constant.STATUS, status);
+//        }
         if (Constant.COMPANY_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
         } else if (Constant.CREATE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == mType) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
         }
-        queryEntry.setPage(mPage);
-        queryEntry.setSize(10);
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.setSize(10);
         EanfangHttp.post(NewApiService.GET_WORK_CHECK_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkCheckListBean>(getActivity(), true, WorkCheckListBean.class) {
 
 
                     @Override
                     public void onSuccess(WorkCheckListBean bean) {
-
+                        mQueryEntry = null;
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
@@ -136,6 +138,19 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    public void getTaskData(QueryEntry queryEntry) {
+        this.mQueryEntry = queryEntry;
+        mPage = 1;
+        getData();
+    }
+
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)//MAIN代表主线程

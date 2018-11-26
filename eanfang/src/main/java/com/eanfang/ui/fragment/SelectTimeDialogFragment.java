@@ -93,7 +93,11 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
             }
             int hour = timePicker.getCurrentHour();
             int minute = timePicker.getCurrentMinute();
-            mHourTime = hour + ":" + minute + ":00";
+            if (minute < 10) {
+                mHourTime = hour + ":0" + minute + ":00";
+            } else {
+                mHourTime = hour + ":" + minute + ":00";
+            }
             selectTimeListener.getData(mCalendarTime + " " + mHourTime);
         }
     };

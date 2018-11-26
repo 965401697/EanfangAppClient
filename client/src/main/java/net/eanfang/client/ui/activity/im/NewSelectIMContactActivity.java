@@ -210,7 +210,12 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
         });
 
         initViews();
-        getData();
+        //区分个人和公司 个人不现实公司
+        if (EanfangApplication.get().getCompanyId() != 0) {
+            getData();
+        } else {
+            findViewById(R.id.rl_organization).setVisibility(View.GONE);
+        }
     }
 
     private void getData() {

@@ -11,10 +11,6 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-
-import com.eanfang.util.PermKit;
-import com.eanfang.util.ToastUtil;
-
 import net.eanfang.client.R;
 
 
@@ -63,10 +59,10 @@ public class MorePopWindow extends PopupWindow {
             @Override
             public void onClick(View v) {
 
-                if (PermKit.get().getIsOwn()) {
-                    ToastUtil.get().showToast(context,"暂无权限访问，请创建或加入企业后再试。");
-                    return;
-                }
+//                if (PermKit.get().getIsOwn()) {
+//                    ToastUtil.get().showToast(context,"暂无权限访问，请创建或加入企业后再试。");
+//                    return;
+//                }
 
                 Intent intent = new Intent(new Intent(context, NewSelectIMContactActivity.class));
 //                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));

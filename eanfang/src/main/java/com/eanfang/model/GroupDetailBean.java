@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -162,7 +163,7 @@ public class GroupDetailBean implements Serializable {
             this.status = status;
         }
 
-        public static class AccountEntityBean implements Serializable {
+        public static class AccountEntityBean implements Serializable, Comparator<AccountEntityBean> {
             /**
              * accId : 984379128553951234
              * avatar : 512ab4856d414eb888a3a36284edfa73.png
@@ -176,6 +177,25 @@ public class GroupDetailBean implements Serializable {
             private String nickName;
             private String rcloudToken;
             private int status;
+            private String firstLetter; // 拼音的首字母
+            private String pinyin; // 姓名对应的拼音
+
+
+            public String getPinyin() {
+                return pinyin;
+            }
+
+            public void setPinyin(String pinyin) {
+                this.pinyin = pinyin;
+            }
+
+            public String getFirstLetter() {
+                return firstLetter;
+            }
+
+            public void setFirstLetter(String firstLetter) {
+                this.firstLetter = firstLetter;
+            }
 
             public String getAccId() {
                 return accId;
@@ -215,6 +235,18 @@ public class GroupDetailBean implements Serializable {
 
             public void setStatus(int status) {
                 this.status = status;
+            }
+
+            @Override
+            public int compare(AccountEntityBean o1, AccountEntityBean o2) {
+                //这里主要是用来对数据里面的数据根据ABCDEFG...来排序
+                if (o2.getFirstLetter().equals("#")) {
+                    return -1;
+                } else if (o1.getFirstLetter().equals("#")) {
+                    return 1;
+                } else {
+                    return o1.getFirstLetter().compareTo(o2.getFirstLetter());
+                }
             }
         }
     }

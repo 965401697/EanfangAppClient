@@ -196,7 +196,6 @@
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
             android:screenOrientation="portrait" />
         <!-- 设备点检 新建检查 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.CheckActivity" />
         <!-- 新建工作汇报 -->
         <activity android:name=".ui.activity.worksapce.oa.ReportActivity" />
         <activity android:name=".ui.activity.worksapce.oa.TaskActivity" />
@@ -215,7 +214,6 @@
         <activity android:name=".ui.activity.worksapce.PsTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.LookTroubleDetailActivity" />
         <activity android:name=".ui.activity.worksapce.PhoneLookTroubleDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.oa.check.WorkCheckListActivity" />
         <activity android:name=".ui.activity.worksapce.oa.check.AddDealwithInfoActivity" />
         <activity android:name=".ui.activity.worksapce.OrderConfirmActivity" />
         <activity android:name=".ui.activity.worksapce.WorkerDetailActivity" />
@@ -556,7 +554,6 @@
         <!-- 布置任务 -->
         <activity android:name=".ui.activity.worksapce.oa.TaskParentActivity" />
         <!-- 设备检点 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.CheckParentActivity" />
         <!-- 开店日志 -->
         <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogParentActivity" />
         <!-- 布防日志 -->
@@ -581,11 +578,8 @@
             </intent-filter>
         </receiver>
         <!-- 工作检查 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.WorkCheckInfoActivity" />
         <!-- 处理明细 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.LookWorkCheckInfoActivity" />
         <!-- 添加处理明细 -->
-        <activity android:name=".ui.activity.worksapce.oa.check.LookDealwithCheckInfoDetailActivity" />
         <!-- 修改密码 -->
         <activity
             android:name=".ui.activity.worksapce.setting.UpdatePasswordActivity"
@@ -630,19 +624,25 @@
         <activity android:name=".ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity" />
         <!-- 布置任务详情 -->
         <activity android:name=".ui.activity.worksapce.oa.task.TaskDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.sign.SignFiltrateActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.sign.SignFiltrateActivity" />
         <!-- 创建团队的详情 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamDetailActivity" />
         <!-- 创建团队的状态提示页 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
-        <!--Im 窗口的OA办公界面-->
-        <activity android:name=".ui.activity.im.OAListActivity"></activity>
-        <!--创建群组组织联系人-->
-        <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity"></activity>
+        <!-- Im 窗口的OA办公界面 -->
+        <activity android:name=".ui.activity.im.OAListActivity" />
+        <!-- 创建群组组织联系人 -->
+        <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity" />
         <!-- 新的创建群组 -->
         <activity android:name=".ui.activity.im.CreateGroupActivity" />
         <!-- 新的选择联系人 -->
         <activity android:name=".ui.activity.im.NewSelectIMContactActivity" />
+        <!-- 群组的全部成员的列表 -->
+        <activity android:name=".ui.activity.im.GroupMoreMemberActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.CheckListActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.AddNewCheckActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.FiltrateCheckActivity" />
+        <activity android:name=".ui.activity.worksapce.oa.check.DealWithFirstActivity"></activity>
     </application>
 
 </manifest>

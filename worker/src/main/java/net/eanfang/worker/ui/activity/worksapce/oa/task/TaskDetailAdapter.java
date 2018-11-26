@@ -138,6 +138,7 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
                 } else {
                     helper.setText(R.id.tv_vodio, "小视频：");
                     helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
+                    helper.setVisible(R.id.iv_takevideo_work, true);
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getMp4_path() + ".jpg"));
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -150,6 +151,8 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
 
                 }
                 helper.addOnClickListener(R.id.iv_pack);
+                break;
+            default:
                 break;
         }
     }

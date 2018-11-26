@@ -129,12 +129,14 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
 
         ArrayList<String> picList = new ArrayList<>();
 
-        String[] pics = bean.getHonorPics().split(",");
+        if (bean.getHonorPics() != null) {
 
-        for (int i = 0; i < pics.length; i++) {
-            picList.add(BuildConfig.OSS_SERVER + pics[i]);
+            String[] pics = bean.getHonorPics().split(",");
+
+            for (int i = 0; i < pics.length; i++) {
+                picList.add(BuildConfig.OSS_SERVER + pics[i]);
+            }
         }
-
         etName.setText(bean.getHonorName());
         etOrg.setText(bean.getAwardOrg());
         tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));

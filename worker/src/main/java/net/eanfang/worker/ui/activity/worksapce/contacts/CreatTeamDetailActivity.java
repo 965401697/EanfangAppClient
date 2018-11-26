@@ -53,7 +53,7 @@ public class CreatTeamDetailActivity extends BaseWorkerActivity {
      */
     private void createCompany() {
 
-        EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_ADD)
+        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD)
                 .params("name", mName)
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
                     SwitchCompany(bean.getOrgId());

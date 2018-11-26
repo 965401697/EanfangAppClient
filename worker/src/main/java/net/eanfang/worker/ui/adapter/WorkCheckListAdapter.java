@@ -61,6 +61,8 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
             if (!StringUtils.isEmpty(item.getWorkInspectDetail().getPictures())) {
                 String[] urls = item.getWorkInspectDetail().getPictures().split(",");
                 head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            } else {
+                head_pic.setImageURI("");
             }
         }
 

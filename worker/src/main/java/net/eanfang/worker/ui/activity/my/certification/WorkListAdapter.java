@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -23,9 +24,24 @@ public class WorkListAdapter extends BaseQuickAdapter<JobExperienceEntity, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, JobExperienceEntity item) {
-        helper.setText(R.id.tv_school_name, "公司：" + item.getCompanyName());
-        helper.setText(R.id.tv_school_major, "职位：" + item.getJob());
-        helper.setText(R.id.tv_school_time, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd")+" 至 "+DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
+        if (!TextUtils.isEmpty(item.getCompanyName())) {
+            helper.setText(R.id.tv_school_name, "公司：" + item.getCompanyName());
+        } else {
+            helper.setText(R.id.tv_school_name, "公司：");
+        }
+        if (!TextUtils.isEmpty(item.getJob())) {
+            helper.setText(R.id.tv_school_major, "职位：" + item.getJob());
+        } else {
+            helper.setText(R.id.tv_school_major, "职位：");
+        }
+
+        if (item.getBeginTime() != null && item.getEndTime() != null) {
+
+            helper.setText(R.id.tv_school_time, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd") + " 至 " + DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
+
+        } else {
+            helper.setText(R.id.tv_school_time, "起止时间：" + " 至");
+        }
 
         if (item.getCardPics() != null) {
             String[] urls = V.v(() -> item.getCardPics().split(","));

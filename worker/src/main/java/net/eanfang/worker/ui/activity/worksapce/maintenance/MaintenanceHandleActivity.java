@@ -63,8 +63,6 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     LinearLayout llCheckResult;
     @BindView(R.id.rv_check_result)
     RecyclerView rvCheckResult;
-    @BindView(R.id.iv_device_handle)
-    ImageView ivDeviceHandle;
     @BindView(R.id.ll_device_handle)
     LinearLayout llDeviceHandle;
     @BindView(R.id.rv_device_handle)
@@ -89,6 +87,10 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     CheckBox cbPrint;
     @BindView(R.id.cb_host)
     CheckBox cbHost;
+    @BindView(R.id.iv_device_handle)
+    ImageView ivDeviceHandle;
+    @BindView(R.id.tv_device_handle)
+    TextView tvDeviceHandle;
 
 
     private long mId;
@@ -154,7 +156,12 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
         handleEditAdapter = new MaintenanceHandleEditAdapter(R.layout.item_maintenance_empasis_device_handle);
         handleEditAdapter.bindToRecyclerView(rvDeviceHandle);
-        handleEditAdapter.setNewData(examResultList);
+        if (examResultList != null && examResultList.size() > 0) {
+            handleEditAdapter.setNewData(examResultList);
+        } else {
+            tvDeviceHandle.setVisibility(View.VISIBLE);
+            ivDeviceHandle.setVisibility(View.GONE);
+        }
 
         handleEditAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -342,15 +349,15 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             jsonObject.put("id", mId);
 
 
-                if (maintenanceHandeCheckAdapter.getData() != null) {
-                    JSONArray examResultEntity = new JSONArray();
+            if (maintenanceHandeCheckAdapter.getData() != null) {
+                JSONArray examResultEntity = new JSONArray();
 
-                    for (ShopMaintenanceExamResultEntity examResult : maintenanceHandeCheckAdapter.getData()) {
-                        examResult.setShopMaintenanceOrderId(examDeviceEntity.getShopMaintenanceOrderId());
-                        examResultEntity.add(examResult);
-                    }
-                    jsonObject.put("examResultEntityList", examResultEntity);
+                for (ShopMaintenanceExamResultEntity examResult : maintenanceHandeCheckAdapter.getData()) {
+                    examResult.setShopMaintenanceOrderId(examDeviceEntity.getShopMaintenanceOrderId());
+                    examResultEntity.add(examResult);
                 }
+                jsonObject.put("examResultEntityList", examResultEntity);
+            }
 
 //===========================================================================================
 
@@ -404,7 +411,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
             EanfangHttp.post(NewApiService.MAINTENANCE_DISPOSE)
                     .upJson(JsonUtils.obj2String(jsonObject))
-                    .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
+                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 
                         showToast("提交成功");
 

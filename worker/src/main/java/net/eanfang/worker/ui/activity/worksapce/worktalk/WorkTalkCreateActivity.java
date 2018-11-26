@@ -246,6 +246,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 break;
         }
     }
+
     private void getGroupDetail(String targetId) {
 
         EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
@@ -260,6 +261,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     sendGroupAdapter.setNewData(newGroupList);
                 }));
     }
+
     private void doSubmit() {
         if (!doCheckInfo())
             return;
@@ -305,7 +307,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     b.putString("shareType", "7");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTalkCreateActivity.this)).send();
+                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTalkCreateActivity.this), "面谈员工").send();
                 }));
     }
 

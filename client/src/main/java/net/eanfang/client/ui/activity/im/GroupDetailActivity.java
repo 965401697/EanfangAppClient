@@ -151,6 +151,15 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     if (bean.getList() != null) {
 
                         for (int i = 0; i < bean.getList().size(); i++) {
+
+                            if (isOwner) {
+                                //群主 8个item  默认的 加 和 减
+                                if (temp.size() == 8) break;
+                            } else {
+                                //不是群主 9个item  默认的 加
+                                if (temp.size() == 9) break;
+                            }
+
                             if (bean.getList().get(i).getAccId().equals(bean.getGroup().getCreateUser())) {
                                 temp.add(0, bean.getList().get(i));
                             } else {
@@ -174,7 +183,11 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                                 temp.add(b);
                             }
 
-                            groupMemberSize.setText("全部群成员（" + bean.getList().size() + "）");
+                            if (bean.getList().size() > 8) {
+                                groupMemberSize.setText("查看更多群成员（" + bean.getList().size() + "）");
+                            } else {
+                                groupMemberSize.setText("全部成员（" + bean.getList().size() + "）");
+                            }
 
 
                             if (bean.getList().get(0).getStatus() == 0) {
@@ -322,9 +335,14 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     }
 
 
-    @OnClick({R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
+    @OnClick({R.id.group_member_size_item, R.id.ll_group_port,R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.group_member_size_item:
+                Intent iet = new Intent(GroupDetailActivity.this, GroupMoreMemberActivity.class);
+                iet.putExtra("list", friendListBeanArrayList);
+                startActivity(iet);
+                break;
             case R.id.ll_group_port:
                 PermissionUtils.get(this).getCameraPermission(() -> takePhoto(GroupDetailActivity.this, HEADER_PIC));
                 break;

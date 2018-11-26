@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18111601
-        versionName "2.3.28"
+        versionCode 18112502
+        versionName "2.3.29"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
@@ -61,7 +61,6 @@ android {
             signingConfig signingConfigs.release
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
-
             //正式环境bugly
             buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
             //Zipalign优化
