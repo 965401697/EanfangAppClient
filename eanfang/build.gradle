@@ -11,7 +11,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 18111601
-        versionName "2.3.28_beta"
+        versionName "2.3.28"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -71,6 +71,9 @@ android {
 //            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
             buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+            // 上线url
+            buildConfigField("String", "HOST", "\"http://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.eanfang.net\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化

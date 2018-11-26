@@ -415,6 +415,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
