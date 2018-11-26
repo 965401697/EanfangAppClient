@@ -369,7 +369,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                         message.setMsgContent("您可以随时通过我的工作任务查看");
                         message.setShowOkBtn(true);
                         message.setShowLogo(true);
-                        message.setTip("");
+                        message.setTip("确定");
                         bundle.putSerializable("message", message);
                         intent.putExtras(bundle);
                         startActivity(intent);

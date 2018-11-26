@@ -46,6 +46,8 @@ android {
     }
     buildTypes {
         debug {
+            //签名配置
+            signingConfig signingConfigs.release
             buildConfigField("boolean", "LOG_DEBUG", "true")
             buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
         }

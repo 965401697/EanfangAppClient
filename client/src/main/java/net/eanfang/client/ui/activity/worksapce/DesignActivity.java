@@ -251,7 +251,7 @@ public class DesignActivity extends BaseClientActivity {
             message.setMsgContent("稍后客服会与您取得联系，请保持电话畅通");
             message.setShowOkBtn(true);
             message.setShowLogo(true);
-            message.setTip("");
+            message.setTip("确定");
             bundle.putSerializable("message", message);
             intent.putExtras(bundle);
             startActivity(intent);

@@ -214,7 +214,7 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_device_checking:// "点检中",0
-                mStatus = 1;
+                mStatus = 0;
                 break;
             case R.id.rb_device_wait://("待审核",1)
                 mStatus = 1;// 签退

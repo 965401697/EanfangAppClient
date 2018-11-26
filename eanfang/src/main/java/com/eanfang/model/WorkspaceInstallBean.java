@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by yaosheng on 2017/5/17.
  */
@@ -68,6 +71,8 @@ public class WorkspaceInstallBean implements Serializable {
         this.list = list;
     }
 
+    @Getter
+    @Setter
     public static class ListBean implements Serializable {
         /**
          * budget : 4
@@ -116,6 +121,8 @@ public class WorkspaceInstallBean implements Serializable {
         private String zone;
         private Long businessOneId;
         private Long zoneId;
+        // 是否已读 未读
+        private int newOrder;
 
         public int getBudget() {
             return budget;
