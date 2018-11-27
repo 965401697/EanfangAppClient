@@ -27,7 +27,6 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
@@ -185,13 +184,13 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
             }
         });
 
-        findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NewSelectIMContactActivity.this, SelectOrganizationActivity.class);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(NewSelectIMContactActivity.this, SelectOrganizationActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
