@@ -13,6 +13,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 
 /**
  * 维保执行计划订单表
@@ -21,6 +24,8 @@ import java.util.List;
  * @email jornlin@foxmail.com
  * @date 2018-07-13 14:08:08
  */
+@Getter
+@Setter
 @TableName(value = "shop_maintenance_order")
 public class ShopMaintenanceOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -145,6 +150,8 @@ public class ShopMaintenanceOrderEntity implements Serializable {
     private Date bookTime;
 
     private Date signTime;
+    // 是否已读 未读
+    private int newOrder;
 
     /**
      * 设置：主键递增

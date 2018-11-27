@@ -14,13 +14,26 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tv_order_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:background="@drawable/select_worker"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_10"
+            android:text="未读"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_12"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="北京法安视科技有限公司（刘辉）"
-            android:textColor="@color/font_color"
-            android:textSize="16sp" />
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
 
         <TextView
             android:id="@+id/tv_state"

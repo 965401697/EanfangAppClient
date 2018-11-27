@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by Mr.hou
  *
@@ -71,6 +74,8 @@ public class WorkReportListBean implements Serializable {
         this.list = list;
     }
 
+    @Getter
+    @Setter
     public static class ListBean implements Serializable {
         /**
          * assigneeOrgCode : c.c1.2
@@ -107,6 +112,8 @@ public class WorkReportListBean implements Serializable {
         private int status;
         private int type;
         private WorkReportDetailBean workReportDetail;
+        // 是否已读 未读
+        private int newOrder;
 
         public String getAssigneeOrgCode() {
             return assigneeOrgCode == null ? "" : assigneeOrgCode;
