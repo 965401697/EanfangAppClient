@@ -216,7 +216,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setLongitude(longitude);
         installOrderConfirmBean.setClientCompanyName(company);
         installOrderConfirmBean.setZone(Config.get().getAreaCodeByName(city, zone));
-        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(),3, Constant.AREA)));
+        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(), 3, Constant.AREA)));
         installOrderConfirmBean.setConnector(contact);
         installOrderConfirmBean.setConnectorPhone(phone);
         installOrderConfirmBean.setDetailPlace(etDetailAddress.getText().toString().trim());
@@ -225,7 +225,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setRevertTimeLimit(GetConstDataUtils.getRevertList().indexOf(revertime));
         installOrderConfirmBean.setBudget(GetConstDataUtils.getBudgetList().indexOf(budget));
         installOrderConfirmBean.setBusinessOneCode(Config.get().getBusinessCodeByName(business, 1));
-        installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode(),1)));
+        installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode(), 1)));
 
         doHttp(JSON.toJSONString(installOrderConfirmBean));
 
@@ -252,7 +252,7 @@ public class InstallActivity extends BaseClientActivity {
             message.setMsgContent("稍后客服会与您取得联系，请保持电话畅通");
             message.setShowOkBtn(true);
             message.setShowLogo(true);
-            message.setTip("");
+            message.setTip("确定");
             bundle.putSerializable("message", message);
             intent.putExtras(bundle);
             startActivity(intent);

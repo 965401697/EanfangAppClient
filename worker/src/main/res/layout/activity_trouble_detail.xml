@@ -644,7 +644,7 @@
                     android:drawableLeft="@mipmap/ic_addtrouble_picture"
                     android:drawablePadding="@dimen/dimen_16"
                     android:padding="@dimen/dimen_30"
-                    android:text="请输添加现场照片"
+                    android:text="请添加现场照片"
                     android:textColor="@color/color_worker_data_item_title"
                     android:textSize="@dimen/textSize_15" />
 

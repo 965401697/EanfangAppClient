@@ -114,6 +114,7 @@ public class CompanyListView extends PopupWindow {
                         EanfangApplication.get().remove(LoginBean.class.getName());
                         EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                         EanfangHttp.setToken(bean.getToken());
+                        EanfangHttp.setWorker();
                     }
                 }));
     }

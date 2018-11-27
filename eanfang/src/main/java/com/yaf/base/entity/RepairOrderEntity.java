@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 
 /**
  * 报修单表
@@ -20,6 +23,8 @@ import java.util.List;
  * @email jornlin@foxmail.com
  * @date 2018-05-28 09:15:32
  */
+@Getter
+@Setter
 @TableName(value = "bus_repair_order")
 public class RepairOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -139,6 +144,8 @@ public class RepairOrderEntity implements Serializable {
     private Integer status;
     //是否合格（0合格，1不合格）
     //@TableField(value = "pass")
+    // 是否已读 未读
+    private int newOrder;
     private Integer pass;
     private String projectId;
     private String projectName;

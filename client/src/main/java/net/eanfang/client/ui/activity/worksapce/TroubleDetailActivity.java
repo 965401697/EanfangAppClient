@@ -23,6 +23,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -34,7 +36,6 @@ import com.yaf.base.entity.TransferLogEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.adapter.TroubleDetailAdapter;
-import net.eanfang.client.ui.adapter.TroubleHangListAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
@@ -74,9 +75,8 @@ public class TroubleDetailActivity extends BaseClientActivity {
     // 远传功能
     @BindView(R.id.tv_policeDeliver)
     TextView tvPoliceDeliver;
-    // 挂单记录
-    @BindView(R.id.rv_hangList)
-    RecyclerView rvHangList;
+    @BindView(R.id.tv_hangContnet)
+    TextView tvHangContnet;
 
 
     private RecyclerView rv_trouble;
@@ -123,8 +123,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
     private String status;
 
     // 挂单List
-    private List<TransferLogEntity> transferLogEntityList = new ArrayList<>();
-    private TroubleHangListAdapter troubleHangListAdapter;
+    private TransferLogEntity transferLogEntityHistory = new TransferLogEntity();
     /**
      * 电视墙/操作台正面全貌 (3张)
      */
@@ -349,12 +348,14 @@ public class TroubleDetailActivity extends BaseClientActivity {
             picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
         }
         initNinePhoto();
+        // 转单记录
+        transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
+        getHistory(transferLogEntityHistory);
 
     }
 
     private void initAdapter() {
         mDataList = bughandleConfirmEntity.getDetailEntityList();
-        transferLogEntityList = bughandleConfirmEntity.getTransferLogEntityList();
         quotationDetailAdapter = new TroubleDetailAdapter(R.layout.layout_trouble_adapter_item, mDataList);
         rv_trouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
@@ -368,11 +369,6 @@ public class TroubleDetailActivity extends BaseClientActivity {
                 startActivity(intent);
             }
         });
-        troubleHangListAdapter = new TroubleHangListAdapter(R.layout.layout_trouble_hanglist_item, transferLogEntityList);
-        rvHangList.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rvHangList.setLayoutManager(new LinearLayoutManager(this));
-        rvHangList.setAdapter(troubleHangListAdapter);
     }
 
     private void initNinePhoto() {
@@ -391,7 +387,18 @@ public class TroubleDetailActivity extends BaseClientActivity {
         snpl_monitor_add_photos.setEditable(false);
         snpl_tools_package_add_photos.setEditable(false);
         snpl_form_photos.setEditable(false);
+    }
 
-
+    /**
+     * 转单
+     */
+    public void getHistory(TransferLogEntity transferLogEntity) {
+        if (transferLogEntity == null) {
+            tvHangContnet.setText("暂无转单记录");
+        } else {
+            tvHangContnet.setText(transferLogEntity.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
+                    GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()) + "在" +
+                    GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()) + "转给" + transferLogEntity.getReceiveUserEntity().getAccountEntity().getRealName());
+        }
     }
 }

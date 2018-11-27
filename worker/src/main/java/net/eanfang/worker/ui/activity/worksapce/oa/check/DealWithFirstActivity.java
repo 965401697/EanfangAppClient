@@ -252,7 +252,7 @@ public class DealWithFirstActivity extends BaseActivity {
                 if (view.getId() == R.id.rl_show) {
                     b.setItemType(2);
                     adapter.notifyItemChanged(position);
-                } else if (view.getId() == R.id.iv_pack) {
+                } else if (view.getId() == R.id.iv_pack || view.getId() == R.id.tv_pack) {
                     b.setItemType(1);
                     adapter.notifyItemChanged(position);
                 }

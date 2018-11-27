@@ -19,7 +19,7 @@ public class MessageUtil {
         message.setTitle("支付成功");
         message.setMsgTitle("您的订单已支付成功");
         message.setMsgContent("稍后技师会和您取得联系,请保持电话畅通。");
-        message.setTip("");
+        message.setTip("确定");
         message.setShowOkBtn(true);
         message.setShowLogo(true);
         return message;
@@ -31,6 +31,7 @@ public class MessageUtil {
         message.setMsgTitle("您的订单已提交成功");
         message.setMsgContent("稍后技师会和您取得联系,请保持电话畅通。");
         message.setTip("");
+        message.setTip("确定");
         message.setShowOkBtn(true);
         message.setShowLogo(true);
         return message;

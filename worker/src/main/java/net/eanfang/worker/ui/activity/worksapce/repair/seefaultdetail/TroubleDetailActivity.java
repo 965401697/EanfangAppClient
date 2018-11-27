@@ -20,6 +20,8 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -34,7 +36,6 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail.LookTroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
-import net.eanfang.worker.ui.adapter.repair.TroubleHangListAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -116,9 +117,8 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     //协助人员
     @BindView(R.id.tv_team_worker)
     TextView tvTeamWorker;
-    // 挂单
-    @BindView(R.id.rv_hang_list)
-    RecyclerView rvHangList;
+    @BindView(R.id.tv_hangContnet)
+    TextView tvHangContnet;
 
     private FillTroubleDetailAdapter quotationDetailAdapter;
     private Long id;
@@ -140,8 +140,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     private ArrayList<String> picList4 = new ArrayList<>();
 
     // 挂单List
-    private List<TransferLogEntity> transferLogEntityList = new ArrayList<>();
-    private TroubleHangListAdapter troubleHangListAdapter;
+    private TransferLogEntity transferLogEntityHistory = new TransferLogEntity();
 
     private BughandleConfirmEntity bughandleConfirmEntity;
 
@@ -254,8 +253,8 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             initImageList(bughandleConfirmEntity);
             initNinePhoto();
             // 转单记录
-            if (bughandleConfirmEntity.getTransferLogEntityList() != null) {
-                transferLogEntityList = bughandleConfirmEntity.getTransferLogEntityList();
+            if (bughandleConfirmEntity.getTransferLogEntity() != null) {
+                transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
             }
             initAdapter(bughandleConfirmEntity.getDetailEntityList());
         }
@@ -313,7 +312,9 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             bundle.putString("videoPath", BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".mp4");
             JumpItent.jump(TroubleDetailActivity.this, PlayVideoActivity.class, bundle);
         });
-
+        // 转单记录
+        transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
+        getHistory(transferLogEntityHistory);
     }
 
     private void initImageList(BughandleConfirmEntity bughandleConfirmEntity) {
@@ -353,11 +354,6 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             }
         });
         // 转单
-        troubleHangListAdapter = new TroubleHangListAdapter(R.layout.layout_trouble_hanglist_item, transferLogEntityList);
-        rvHangList.addItemDecoration(new DividerItemDecoration(this,
-                DividerItemDecoration.VERTICAL));
-        rvHangList.setLayoutManager(new LinearLayoutManager(this));
-        rvHangList.setAdapter(troubleHangListAdapter);
     }
 
     private void initNinePhoto() {
@@ -377,6 +373,19 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         snplFormPhotos.setEditable(false);
 
 
+    }
+
+    /**
+     * 转单
+     */
+    public void getHistory(TransferLogEntity transferLogEntity) {
+        if (transferLogEntity == null) {
+            tvHangContnet.setText("暂无转单记录");
+        } else {
+            tvHangContnet.setText(transferLogEntity.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
+                    GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()) + "在" +
+                    GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()) + "转给" + transferLogEntity.getReceiveUserEntity().getAccountEntity().getRealName());
+        }
     }
 
     @Override
@@ -414,5 +423,6 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
                 break;
         }
     }
+
 
 }

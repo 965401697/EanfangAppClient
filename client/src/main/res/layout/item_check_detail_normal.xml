@@ -15,8 +15,7 @@
         android:layout_marginRight="@dimen/dimen_30"
         android:layout_toLeftOf="@+id/iv_show"
         android:ellipsize="end"
-        android:singleLine="true"
-        android:text="工作内容：阿斯阿斯顿发顿发沙发斯蒂芬阿斯顿发送到发斯蒂芬" />
+        android:singleLine="true"  />
 
 
     <ImageView
@@ -37,8 +36,7 @@
         android:layout_marginTop="@dimen/dimen_20"
         android:layout_toLeftOf="@+id/iv_show"
         android:ellipsize="end"
-        android:singleLine="true"
-        android:text="工作内容：阿斯顿发asdfasdf" />
+        android:singleLine="true"  />
 
 
     <View
