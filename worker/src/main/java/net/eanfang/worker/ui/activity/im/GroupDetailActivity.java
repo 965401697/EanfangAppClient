@@ -355,15 +355,23 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
                 break;
             case R.id.ll_group_name:
-                Intent intent = new Intent(this, GroupUpdataNameActivity.class);
-                startActivityForResult(intent, UPDATA_GROUP_NAME);
+                if (isOwner) {
+                    Intent intent = new Intent(this, GroupUpdataNameActivity.class);
+                    startActivityForResult(intent, UPDATA_GROUP_NAME);
+                } else {
+                    ToastUtil.get().showToast(GroupDetailActivity.this, "只有管理员才能操作");
+                }
                 break;
 
             case R.id.group_announcement:
-                Intent tempIntent = new Intent(this, GroupNoticeActivity.class);
-                tempIntent.putExtra("conversationType", Conversation.ConversationType.GROUP.getValue());
-                tempIntent.putExtra("targetId", groupId);
-                startActivityForResult(tempIntent, UPDATA_GROUP_NOTICE);
+                if (isOwner) {
+                    Intent tempIntent = new Intent(this, GroupNoticeActivity.class);
+                    tempIntent.putExtra("conversationType", Conversation.ConversationType.GROUP.getValue());
+                    tempIntent.putExtra("targetId", groupId);
+                    startActivityForResult(tempIntent, UPDATA_GROUP_NOTICE);
+                } else {
+                    ToastUtil.get().showToast(GroupDetailActivity.this, "只有管理员才能操作");
+                }
                 break;
             case R.id.group_clean:
                 cleanGroupMsg();

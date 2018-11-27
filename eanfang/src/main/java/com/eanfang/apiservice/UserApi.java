@@ -497,6 +497,5 @@ public interface UserApi {
     /**
      * 技师技能认证的详情
      */
-    String
-            TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
+    String TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
 }
