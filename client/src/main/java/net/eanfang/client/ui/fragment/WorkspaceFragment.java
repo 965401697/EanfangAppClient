@@ -275,21 +275,26 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
 //            new ReportCtrlView(getActivity(), true).show();
 //            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
-            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
-            startActivity(intent);
+            if (PermKit.get().getWorkReportListPrem()) {
+                Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
+                startActivity(intent);
+            }
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
 //            new TaskCtrlView(getActivity(), true).show();
 //            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
-            Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
-            startActivity(intent);
+            if (PermKit.get().getWorkTaskListPrem()) {
+                Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
+                startActivity(intent);
+            }
         });
 
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
 //            new WorkCheckCtrlView(getActivity(), true).show();
+            if (!PermKit.get().getWorkInspectListPrem()) return;
             Intent intent = new Intent(getActivity(), CheckListActivity.class);
             startActivity(intent);
         });
