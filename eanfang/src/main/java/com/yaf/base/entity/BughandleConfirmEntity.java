@@ -36,7 +36,7 @@ public class BughandleConfirmEntity implements Serializable {
      * 转单记录
      */
     @TableField(exist = false)
-    List<TransferLogEntity> transferLogEntityList;
+    TransferLogEntity transferLogEntity;
     /**
      * 当前故障处理人
      */

@@ -1,10 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,13 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.TransferLogEntity;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -29,7 +28,6 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
-import net.eanfang.worker.ui.adapter.PutUpOrderRecordAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -39,13 +37,13 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
- * Created by MrHou
- *
- * @on 2017/11/25  16:18
- * @email houzhongzhou@yeah.net
- * @desc 转单
+ * @author guanluocang
+ * @data 2018/11/27
+ * @description 转单
  */
+
 
 public class PutUpOrderActivity extends BaseWorkerActivity {
 
@@ -58,10 +56,23 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_put_up_apply)
     TextView tvPutUpApply;
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_order_num)
+    TextView tvOrderNum;
+    @BindView(R.id.tv_order_time)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_order_reason)
+    TextView tvOrderReason;
+    @BindView(R.id.ll_hang)
+    LinearLayout llHang;
+    @BindView(R.id.tv_no_history)
+    TextView tvNoHistory;
 
-    @BindView(R.id.rv_put_up_history)
-    RecyclerView rvPutUpHistory;
-    TransferLogEntity transferLogEntity = new TransferLogEntity();
+    // 新增转单
+    private TransferLogEntity transferLogEntity = new TransferLogEntity();
+    // 转单记录
+    private TransferLogEntity transferLogEntityHistory = new TransferLogEntity();
     // 转单原因
     @BindView(R.id.tag_reason)
     TagFlowLayout tagReason;
@@ -74,11 +85,8 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     private BughandleConfirmEntity bughandleConfirmEntity;
     private Long companyId;
     private List<String> businessId;
-    private List<TransferLogEntity> mDataList = new ArrayList<>();
-    private List<TransferLogEntity> mNewPutUpList = new ArrayList<>();
     private Long orderId;
 
-    private PutUpOrderRecordAdapter putUpOrderRecordAdapter;
 
     // 转单原因
     private int mOrderReason = 100;
@@ -102,15 +110,13 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         businessId = getIntent().getStringArrayListExtra("businessId");
         orderId = getIntent().getLongExtra("orderId", 0);
 
-        rvPutUpHistory.setLayoutManager(new LinearLayoutManager(this));
-        rvPutUpHistory.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        rvPutUpHistory.setNestedScrollingEnabled(false);
     }
 
     private void initData() {
         bughandleConfirmEntity = (BughandleConfirmEntity) getIntent().getSerializableExtra("bean");
-        mDataList = bughandleConfirmEntity.getTransferLogEntityList();
+        transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
         addReapirResultMode(GetConstDataUtils.getTransferCauseList());
+        getHistory(transferLogEntityHistory);
 
         llToWorker.setOnClickListener((v) -> {
             Intent intent = new Intent(PutUpOrderActivity.this, PutUpSelectWorkerActivity.class);
@@ -150,11 +156,6 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
                 }
             }
         });
-        if (mDataList != null) {
-            putUpOrderRecordAdapter = new PutUpOrderRecordAdapter(R.layout.layout_item_put_up_order, mDataList);
-            putUpOrderRecordAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-            rvPutUpHistory.setAdapter(putUpOrderRecordAdapter);
-        }
 
     }
 
@@ -176,9 +177,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         transferLogEntity.setOriginalUserId(EanfangApplication.getApplication().getUserId());
         transferLogEntity.setRemark(etRemarks.getText().toString().trim());
         transferLogEntity.setOrderType(0);
-
-        mNewPutUpList.add(transferLogEntity);
-        bughandleConfirmEntity.setTransferLogEntityList(mNewPutUpList);
+        bughandleConfirmEntity.setTransferLogEntity(transferLogEntity);
         return bughandleConfirmEntity;
     }
 
@@ -203,11 +202,10 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         if (data == null) {
             return;
         }
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE) {// 选择技师
             transferLogEntity.setReceiveUserId(data.getLongExtra("id", 0));
             tvWorkerName.setText(data.getStringExtra("name"));
         }
-
 
     }
 
@@ -235,5 +233,21 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
             }
         });
     }
+
+    public void getHistory(TransferLogEntity transferLogEntity) {
+        if (transferLogEntity == null) {
+            llHang.setVisibility(View.GONE);
+            tvNoHistory.setVisibility(View.VISIBLE);
+            return;
+        }
+        llHang.setVisibility(View.VISIBLE);
+        tvNoHistory.setVisibility(View.GONE);
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getReceiveUserEntity().getAccountEntity().getAvatar()));
+        tvOrderNum.setText(transferLogEntity.getOrderId() + "");
+        tvOrderTime.setText(transferLogEntity.getCreateTime() + "");
+        tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
+    }
+
+
 }
 

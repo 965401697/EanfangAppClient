@@ -358,7 +358,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                         message.setMsgContent("您可以随时通过我的汇报查看");
                         message.setShowOkBtn(true);
                         message.setShowLogo(true);
-                        message.setTip("");
+                        message.setTip("确定");
                         bundle.putSerializable("message", message);
                         intent.putExtras(bundle);
                         startActivity(intent);

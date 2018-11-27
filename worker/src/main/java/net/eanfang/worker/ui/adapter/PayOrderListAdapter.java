@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.application.EanfangApplication;
@@ -21,8 +23,13 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
 
     @Override
     protected void convert(BaseViewHolder helper, PayOrderListBean.ListBean item) {
-
-
+        // 订单是否 已读 未读 1：新订单 0 已读
+        if (item.getNewOrder() == 1) {
+            helper.getView(R.id.tv_order_read).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
+        }
+        helper.setText(R.id.tv_company_name, item.getOwnerCompanyOrg().getOrgName());
         helper.setText(R.id.tv_order_id, "单号:" + item.getOrderNum())
                 .setText(R.id.tv_appointment_time, "下单:" + item.getCreateTime())
                 .setText(R.id.tv_trouble_count, "项目:" + item.getProjectName())

@@ -191,7 +191,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
         message.setTitle("下单成功");
         message.setMsgTitle("您的报修单已下单成功");
         message.setMsgContent("稍后技师会和您取得联系,请保持电话畅通。");
-        message.setTip("");
+        message.setTip("确定");
         message.setShowOkBtn(true);
         message.setShowLogo(true);
         bundle.putSerializable("message", message);

@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.application.EanfangApplication;
@@ -22,6 +24,12 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
 
     @Override
     protected void convert(BaseViewHolder helper, WorkspaceInstallBean.ListBean item) {
+        // 订单是否 已读 未读 1：新订单 0 已读
+        if (item.getNewOrder() == 1) {
+            helper.getView(R.id.tv_order_read).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
+        }
         //报装列表 增加 联系人
         helper.setText(R.id.tv_company_name, item.getClientCompanyName() + "  (" + item.getConnector() + ")")
                 .setText(R.id.tv_order_id, "单号：" + item.getOrderNo())

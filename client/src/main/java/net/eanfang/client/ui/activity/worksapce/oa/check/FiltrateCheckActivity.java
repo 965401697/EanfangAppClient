@@ -88,6 +88,7 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
      * 点检人  审核人
      */
     private String mPersonal = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,7 +214,7 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_device_checking:// "点检中",0
-                mStatus = 1;
+                mStatus = 0;
                 break;
             case R.id.rb_device_wait://("待审核",1)
                 mStatus = 1;// 签退
