@@ -3,6 +3,7 @@ package com.eanfang.http;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -10,7 +11,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.ErrorCodeConst;
+import com.eanfang.ui.activity.NoPermissionActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
@@ -219,6 +222,12 @@ public class EanfangCallback<T> extends StringCallback {
 //                    onFail(code, message, null);
                     //taoken 过期  只弹出toast
                     EventBus.getDefault().post(code);
+                    break;
+                // 无权限
+                case ErrorCodeConst.PERMISSION_DENIED:
+                    Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    EanfangApplication.getApplication().startActivity(intent);
                     break;
                 default:
                     onFail(code, message, null);

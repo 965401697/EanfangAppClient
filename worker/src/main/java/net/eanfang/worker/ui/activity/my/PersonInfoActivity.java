@@ -23,12 +23,14 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.LoginBean;
+import com.eanfang.model.Message;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.IDCardUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -37,7 +39,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 
 import java.text.ParseException;
 
@@ -335,7 +337,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                             userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
-                        startActivity(new Intent(PersonInfoActivity.this, OwnDataHintActivity.class));
+                        Bundle bundle = new Bundle();
+                        Message message = new Message();
+                        message.setMsgContent("尊敬的用户，您的资料提交填写完毕。");
+                        message.setTip("确定");
+                        bundle.putSerializable("message", message);
+                        JumpItent.jump(PersonInfoActivity.this, StateChangeActivity.class, bundle);
                         finish();
                     });
                 }));

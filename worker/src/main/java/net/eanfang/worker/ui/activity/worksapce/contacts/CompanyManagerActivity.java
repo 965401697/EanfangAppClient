@@ -152,6 +152,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                 if (!PermKit.get().getCompanyStaffAssignrolePerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
                 break;
+            // 合作关系
             case R.id.ll_cooperation_relation:
                 if (!PermKit.get().getCooperationListAllPerm()) return;
                 JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);

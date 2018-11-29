@@ -17,7 +17,7 @@ public class ErrorCodeConst {
     /**
      * 权限不足
      */
-    public static final int PERMISSION_DENIED = -1;
+    public static final int PERMISSION_DENIED = 50030;
     public static final String PERMISSION_DENIED_STR = "权限不足";
 
     /**

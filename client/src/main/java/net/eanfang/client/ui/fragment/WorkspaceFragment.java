@@ -130,7 +130,7 @@ public class WorkspaceFragment extends BaseFragment {
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), false, OrgEntity.class, true, bean -> {
                     mList = bean;
                     if (mList == null || mList.size() <= 0) {
-                        showToast("暂无安防公司");
+                        showToast("暂无客户公司");
                         return;
                     }
                     rotate = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF,
