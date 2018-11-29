@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -172,38 +171,44 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
         switch (view.getId()) {
             case R.id.ll_staff_in_time:
                 currentTextView = tvStaffInTime;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
 //                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
 //                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_staff_out_time:
                 currentTextView = tvStaffOutTime;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_client_in_time:
                 currentTextView = tvClientInTime;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_client_out_time:
                 currentTextView = tvClientOutTime;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_open_time:
                 currentTextView = tvOpenTime;
-                SelectTimeDialogFragment selectTimeDialogFragment = new SelectTimeDialogFragment();
-                if (selectTimeDialogFragment == null) {
-                    selectTimeDialogFragment = selectTimeDialogFragment.newInstance();
-                }
-                Dialog mDialog = selectTimeDialogFragment.getDialog();
-                if (mDialog == null || !mDialog.isShowing()) {
-                    selectTimeDialogFragment.show(getSupportFragmentManager(), "");
-                }
+//                SelectTimeDialogFragment selectTimeDialogFragment = new SelectTimeDialogFragment();
+//                if (selectTimeDialogFragment == null) {
+//                    selectTimeDialogFragment = selectTimeDialogFragment.newInstance();
+//                }
+//                Dialog mDialog = selectTimeDialogFragment.getDialog();
+//                if (mDialog == null || !mDialog.isShowing()) {
+//                    selectTimeDialogFragment.show(getSupportFragmentManager(), "");
+//                }
 
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_close_time:
                 currentTextView = tvCloseTime;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_depend_person:
 //                showDependPerson();

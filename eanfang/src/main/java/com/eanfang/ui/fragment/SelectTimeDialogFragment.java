@@ -34,6 +34,8 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
 
     private SelectTimeListener selectTimeListener;
 
+    private static SelectTimeDialogFragment mSelectTimeDialogFragment;
+
     private String mCalendarTime = "";
     private String mHourTime = "";
 
@@ -42,6 +44,19 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
     public static SelectTimeDialogFragment newInstance() {
         SelectTimeDialogFragment selectTimeDialogFragment = new SelectTimeDialogFragment();
         return selectTimeDialogFragment;
+    }
+
+    //DCL
+    public static SelectTimeDialogFragment getInstance() {
+        if (mSelectTimeDialogFragment == null) {
+            synchronized (SelectTimeDialogFragment.class) {
+                if (mSelectTimeDialogFragment == null) {
+                    mSelectTimeDialogFragment = new SelectTimeDialogFragment();
+                }
+            }
+        }
+
+        return mSelectTimeDialogFragment;
     }
 
     // 回调接口，用于传递数据给Activity
@@ -125,4 +140,5 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
         }
 
     }
+
 }
