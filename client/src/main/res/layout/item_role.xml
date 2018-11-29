@@ -21,6 +21,7 @@
         android:layout_height="@dimen/dimen_32"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dimen_34"
+        android:src="@drawable/ic_checked" />
          />
 
 
