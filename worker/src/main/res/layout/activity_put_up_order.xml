@@ -149,7 +149,7 @@
                     android:background="@drawable/bg_ll_btn"
                     android:gravity="center"
                     android:padding="@dimen/dimen_30"
-                    android:text="申请挂单"
+                    android:text="申请转单"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize_13" />
             </LinearLayout>
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/dimen_30"
-                    android:text="挂单/转单记录"
+                    android:text="转单记录"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 

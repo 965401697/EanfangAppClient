@@ -104,7 +104,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
 
     private void initView() {
-        setTitle("挂单处理");
+        setTitle("转单处理");
         setLeftBack();
         companyId = getIntent().getLongExtra("companyId", 0);
         businessId = getIntent().getStringArrayListExtra("businessId");
@@ -189,7 +189,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         EanfangApplication.get().closeActivity(FillRepairInfoActivity.class.getName());
-                        showToast("挂单申请已经提交");
+                        showToast("转单申请已经提交");
                         finishSelf();
                         EanfangApplication.get().closeActivity(FillRepairInfoActivity.class.getName());
                     });

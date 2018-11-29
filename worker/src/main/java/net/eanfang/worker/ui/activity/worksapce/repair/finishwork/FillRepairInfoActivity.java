@@ -297,7 +297,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         }));
         //挂单
         tvUp.setOnClickListener(new MultiClickListener(this, this::checkInfo, () -> {
-            new TrueFalseDialog(activity, "系统提示", "是否确定挂单？", () -> {
+            new TrueFalseDialog(activity, "系统提示", "是否确定转单？", () -> {
                 fillBean();
                 putUpOrder();
             }).showDialog();

@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="技师：张三"
+                android:text="技师:张三"
                 android:textColor="@color/font_color"
                 android:textSize="14sp" />
         </LinearLayout>

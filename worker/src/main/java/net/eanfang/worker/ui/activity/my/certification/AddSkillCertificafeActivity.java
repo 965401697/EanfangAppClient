@@ -156,7 +156,7 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         }
 
         if (TextUtils.isEmpty(etOrg.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入发证名称");
+            ToastUtil.get().showToast(this, "请输入发证机构");
             return true;
         }
         if (TextUtils.isEmpty(etLevel.getText().toString())) {
@@ -169,13 +169,13 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         }
 
         if (TextUtils.isEmpty(tvTime.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选择颁发时间");
+            ToastUtil.get().showToast(this, "请选择有效时间");
             return true;
         }
 
         pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
-            showToast("请添加荣誉证书照片");
+            showToast("请添加证书照片");
             return true;
         }
 
