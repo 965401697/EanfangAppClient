@@ -181,6 +181,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (infoBackBean.getAccount().getGender() == null) {
             rbMan.setClickable(true);
             rbWoman.setClickable(true);
+            rbMan.setChecked(true);
         } else if (infoBackBean.getAccount().getGender() == 1) {// 男
 //            rbMan.setClickable(false);
 //            rbWoman.setClickable(false);

@@ -65,6 +65,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawableRight="@mipmap/ic_must_input"
                     android:text="昵称"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -138,6 +140,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawableRight="@mipmap/ic_must_input"
                     android:text="所在城市"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -177,6 +181,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawableRight="@mipmap/ic_must_input"
                     android:text="详细地址"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -308,7 +314,7 @@
                     android:background="@null"
                     android:gravity="right|center_vertical"
                     android:hint="请输入证件号码"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:maxLength="18"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
