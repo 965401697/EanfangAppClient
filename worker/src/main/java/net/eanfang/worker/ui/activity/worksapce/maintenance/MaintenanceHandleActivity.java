@@ -311,12 +311,12 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
         }
 
         if (!isAllCheck) {
-            ToastUtil.get().showToast(this, "请完选择电视监控和报警监控");
+            ToastUtil.get().showToast(this, "请选择电视监控和报警监控");
             return;
         }
 
         if (TextUtils.isEmpty(tvConclusion.getText().toString().trim())) {
-            ToastUtil.get().showToast(this, "请完选择处理结论");
+            ToastUtil.get().showToast(this, "请选择处理结论");
             return;
         }
 
@@ -336,7 +336,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
 
         if (teamAdapter == null || teamAdapter.getData().size() <= 0) {
-            ToastUtil.get().showToast(this, "请完选择团队成员");
+            ToastUtil.get().showToast(this, "请选择团队成员");
             return;
         }
 
@@ -353,7 +353,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 JSONArray examResultEntity = new JSONArray();
 
                 for (ShopMaintenanceExamResultEntity examResult : maintenanceHandeCheckAdapter.getData()) {
-                    examResult.setShopMaintenanceOrderId(examDeviceEntity.getShopMaintenanceOrderId());
+                    examResult.setShopMaintenanceOrderId(mId);
                     examResultEntity.add(examResult);
                 }
                 jsonObject.put("examResultEntityList", examResultEntity);

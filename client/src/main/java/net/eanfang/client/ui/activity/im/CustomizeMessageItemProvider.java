@@ -17,6 +17,9 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Constant;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermKit;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogDetailActivity;
