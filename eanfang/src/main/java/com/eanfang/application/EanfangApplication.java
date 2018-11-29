@@ -3,11 +3,12 @@ package com.eanfang.application;
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.FrecsoImagePipelineUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.okgo.OkGo;
 import com.okgo.cache.CacheEntity;
 import com.okgo.cache.CacheMode;
@@ -82,7 +83,11 @@ public class EanfangApplication extends CustomeApplication {
     @Override
     public void initConfig() {
         /**fresco加载图片*/
-        Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        ImagePipelineConfig frescoConfig = OkHttpImagePipelineConfigFactory.newBuilder(this, mOkHttpClient).build();
+        Fresco.initialize(this, frescoConfig);
+
+//        Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
         SharePreferenceUtil.get().init(mEanfangApplication);
 
