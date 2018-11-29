@@ -1,6 +1,7 @@
 package com.eanfang.model.device;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by O u r on 2018/4/27.
@@ -44,6 +45,15 @@ public class User implements Serializable {
     private String regTime;
     private String areaCode;
     private int status;
+    private Date birthday;
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
     public String getAreaCode() {
         return areaCode;

@@ -15,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.picker.common.util.DateUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -46,6 +47,8 @@ public class IMCardActivity extends BaseClientActivity {
     TextView tvBirthday;
     @BindView(R.id.tv_area)
     TextView tvArea;
+    @BindView(R.id.tv_delete)
+    TextView tvDelete;
     private User mUser;
 
     @Override
@@ -70,8 +73,15 @@ public class IMCardActivity extends BaseClientActivity {
         }
 
         tvName.setText("真实姓名：" + mUser.getRealName());
-//        tvBirthday.setText("生日：" + mUser.get());
+        if (mUser.getBirthday() != null) {
+            tvBirthday.setText("生日：" + DateUtils.formatDate(mUser.getBirthday(), "yyyy-MM-dd"));
+        } else {
+            tvBirthday.setVisibility(View.GONE);
+        }
         tvArea.setText("所在区域：" + Config.get().getAddressByCode(mUser.getAreaCode()));
+        if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+            tvDelete.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.tv_delete, R.id.tv_chat})
@@ -82,7 +92,7 @@ public class IMCardActivity extends BaseClientActivity {
                 break;
             case R.id.tv_chat:
                 RongIM.getInstance().startConversation(IMCardActivity.this, Conversation.ConversationType.PRIVATE, mUser.getAccId(), mUser.getNickName());
-
+                endTransaction(true);
                 break;
         }
     }

@@ -96,13 +96,16 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
     private void initViews() {
 
         ivCompanyLogo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mBean.getCompanyEntity().getLogoPic()));
-        tvCompanyName.setText(mBean.getCompanyEntity().getName());
-        tvAddress.setText(Config.get().getAddressByCode(mBean.getCompanyEntity().getAreaCode()) + mBean.getCompanyEntity().getOfficeAddress());
+        tvCompanyName.setText(TextUtils.isEmpty(mBean.getCompanyEntity().getName()) ? "" : mBean.getCompanyEntity().getName());
+        if (!TextUtils.isEmpty(mBean.getCompanyEntity().getAreaCode())) {
+            tvAddress.setText(Config.get().getAddressByCode(mBean.getCompanyEntity().getAreaCode()) + mBean.getCompanyEntity().getOfficeAddress());
+        } else {
+            tvAddress.setText("");
+        }
 
         ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mBean.getAccountEntity().getAvatar()));
-        tvName.setText(mBean.getAccountEntity().getRealName());
-        tvPhone.setText(mBean.getAccountEntity().getMobile());
-
+        tvName.setText(TextUtils.isEmpty(mBean.getAccountEntity().getRealName()) ? "" : mBean.getAccountEntity().getRealName());
+        tvPhone.setText(TextUtils.isEmpty(mBean.getAccountEntity().getMobile()) ? "" : mBean.getAccountEntity().getMobile());
 
         List<BaseDataEntity> businessList = Config.get().getBusinessList(1);
         mOsList = GetConstDataUtils.getCooperationTypeList();
