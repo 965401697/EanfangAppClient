@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18112401
-        versionName "2.3.29_beta"
+        versionCode 18112502
+        versionName "2.3.29"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -56,10 +56,10 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
+            //测试bugly
             buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
-
 //            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
@@ -70,8 +70,8 @@ android {
         release {
             //签名配置
             signingConfig signingConfigs.release
-
-            buildConfigField("String", "BUGLY_WORKER", "\"fecc678a04\"")
+            //正式bugly
+            buildConfigField("String", "BUGLY_WORKER", "\"a6bae9f6ee\"")
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "true")
             //Zipalign优化

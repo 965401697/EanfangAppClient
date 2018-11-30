@@ -7,12 +7,11 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 18111601
-        versionName "2.3.28_beta"
+        versionName "2.3.28"
     }
     buildTypes {
         debug {
         }
-
         release {
             release {
                 minifyEnabled false

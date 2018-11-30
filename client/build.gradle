@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18112401
-        versionName "2.3.29_beta"
+        versionCode 18112502
+        versionName "2.3.29"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
@@ -49,18 +49,22 @@ android {
             //签名配置
             signingConfig signingConfigs.release
             buildConfigField("boolean", "LOG_DEBUG", "true")
+            //测试环境bugly
             buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
-        }
+//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 
+            // 上线url
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+        }
         release {
             //签名配置
             signingConfig signingConfigs.release
-
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
-            //测试的bugly
-            buildConfigField("String", "BUGLY_CLIENT", "\"6f03b7d57f\"")
-
+            //正式环境bugly
+            buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件
