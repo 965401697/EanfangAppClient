@@ -164,7 +164,7 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
 
         if (cooperationEntity.getStatus() == 0) {
 
-            EanfangHttp.post(NewApiService.COOPERATION_AUDIT)
+            EanfangHttp.post(NewApiService.COOPERATION_AUDIT+"/1")
                     .upJson(array.toJSONString())
                     .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(CooperationRelationDetailActivity.this, true, com.alibaba.fastjson.JSONObject.class) {
 

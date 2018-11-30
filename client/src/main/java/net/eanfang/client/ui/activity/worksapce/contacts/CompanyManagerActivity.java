@@ -116,6 +116,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
 //                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_auth);
 //
 //                break;
+            // 管理员转让
             case R.id.rl_admin_set:
                 if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
                     JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
@@ -129,6 +130,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                 }
 
                 break;
+            // 添加员工
             case R.id.rl_add_staff:
                 if (PermKit.get().getCompanyStaffCreatPerm()) {
                     JumpItent.jump(CompanyManagerActivity.this, SearchStaffActivity.class);
@@ -140,6 +142,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                     JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
                 }
                 break;
+            // 合作关系
             case R.id.ll_cooperation_relation:
                 if (PermKit.get().getCooperationListAllPerm()) {
                     JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);

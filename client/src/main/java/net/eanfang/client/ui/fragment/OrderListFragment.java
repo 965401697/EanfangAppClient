@@ -120,7 +120,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             payment(item);
                         }
 //                        startActivity(new Intent(getActivity(), PayActivity.class)
@@ -135,7 +135,7 @@ public class OrderListFragment extends BaseFragment implements
             case 1:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         }
                         break;
@@ -147,7 +147,7 @@ public class OrderListFragment extends BaseFragment implements
             case 2:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         }
                         break;
@@ -159,7 +159,7 @@ public class OrderListFragment extends BaseFragment implements
             case 3:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         }
                         break;
@@ -171,7 +171,7 @@ public class OrderListFragment extends BaseFragment implements
             case 4:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         }
                         break;
@@ -180,7 +180,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
                         }
                         break;
@@ -189,7 +189,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
                         }
                         break;
@@ -206,7 +206,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
                         }
                         break;
@@ -215,7 +215,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                                     .putExtra("flag", 0)
                                     .putExtra("ordernum", item.getOrderNum())
@@ -425,7 +425,7 @@ public class OrderListFragment extends BaseFragment implements
         if (assingerUserId.equals(userId)) {
             return true;
         }
-        showToast("当前无权限操作订单");
+        showToast("只有订单负责人可以操作");
         return false;
     }
 }

@@ -59,7 +59,7 @@ public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkInspectDet
                 helper.addOnClickListener(R.id.tv_delete);
                 break;
             case WorkAddReportBean.WorkReportDetailsBean.EXPAND:
-                helper.setText(R.id.tv_work_content, "明细标题：" + item.getTitle());
+                helper.setText(R.id.tv_check_title, "明细标题：" + item.getTitle());
                 if (!TextUtils.isEmpty(item.getInfo())) {
                     helper.setText(R.id.tv_work_content, "检查内容：" + item.getInfo());
                 } else {

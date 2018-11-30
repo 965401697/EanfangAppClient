@@ -92,7 +92,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
             return;
         }
         String companyName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
-        new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您的定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
+        new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您确定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
             EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
                     .params("mobile", molibe)
                     .execute(new EanfangCallback<JSONObject>(AdministratorSetActivity.this, true, JSONObject.class, (bean) -> {

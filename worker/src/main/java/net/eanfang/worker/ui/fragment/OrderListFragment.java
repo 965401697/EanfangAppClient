@@ -465,7 +465,7 @@ public class OrderListFragment extends BaseFragment implements
         if (assingerUserId.equals(userId)) {
             return true;
         }
-        showToast("当前无权限操作订单");
+        showToast("只有订单负责人可以操作");
         return false;
     }
 }

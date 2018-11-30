@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -49,6 +50,7 @@ public class TaskAssignmentListActivity extends BaseClientActivity {
         setRightImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!PermKit.get().getWorkTaskCreatePrem()) return;
                 startActivityForResult(new Intent(TaskAssignmentListActivity.this, TaskAssignmentCreationActivity.class), REFRESH_CODE);
             }
         });

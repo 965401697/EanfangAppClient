@@ -151,24 +151,24 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         switch (item.getStatus()) {
             case 1:
                 //给客户联系人打电话
-                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                if (doCompare(item.getOwnerUserId(), mUseId)) {
                     CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
                 }
                 break;
             case 2:
                 //给客户联系人打电话
-                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                if (doCompare(item.getOwnerUserId(), mUseId)) {
                     CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
                 }
                 break;
             case 3:// 待上门 签到
                 //给客户联系人打电话
-                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                if (doCompare(item.getOwnerUserId(), mUseId)) {
                     CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
                 }
                 break;
             case 4:
-                if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                if (doCompare(item.getOwnerUserId(), mUseId)) {
                     EanfangHttp.post(NewApiService.MAINTENANCE_CLIENT_CONFIRM)
                             .params("id", item.getId())
                             .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
@@ -190,7 +190,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 switch (view.getId()) {
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
                             if (PermKit.get().getMaintenanceBughandlePrem()) {
                                 intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
                                 intent.putExtra("orderId", item.getId());
@@ -219,7 +219,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         if (assingerUserId.equals(userId)) {
             return true;
         }
-        showToast("当前无权限操作订单");
+        showToast("只有订单负责人可以操作");
         return false;
     }
 }

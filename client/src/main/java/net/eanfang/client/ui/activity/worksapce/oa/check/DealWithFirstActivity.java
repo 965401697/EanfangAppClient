@@ -45,7 +45,7 @@ import butterknife.OnClick;
  * @data 2018/11/9
  * @description 查看设备点检详情 需要处理的
  */
-public class DealWithFirstActivity  extends BaseActivity {
+public class DealWithFirstActivity extends BaseActivity {
     @BindView(R.id.iv_header)
     SimpleDraweeView ivHeader;
     @BindView(R.id.tv_company)
@@ -118,6 +118,7 @@ public class DealWithFirstActivity  extends BaseActivity {
 
     List<WorkInspectDetailEntity> workInspectDetailEntities = new ArrayList<>();
     private CheckDetailAdapter taskDeatilAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +126,7 @@ public class DealWithFirstActivity  extends BaseActivity {
         ButterKnife.bind(this);
         initView();
     }
+
     private void initView() {
         setTitle("检查任务详情");
         setLeftBack();
@@ -248,7 +250,7 @@ public class DealWithFirstActivity  extends BaseActivity {
                 if (view.getId() == R.id.rl_show) {
                     b.setItemType(2);
                     adapter.notifyItemChanged(position);
-                } else if (view.getId() == R.id.iv_pack) {
+                } else if (view.getId() == R.id.iv_pack || view.getId() == R.id.tv_pack) {
                     b.setItemType(1);
                     adapter.notifyItemChanged(position);
                 }

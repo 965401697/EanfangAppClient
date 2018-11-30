@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -48,6 +49,12 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
         } else if (item.getStatus() == 3) {
             helper.setText(R.id.tv_status, "处理完成");
             helper.setTextColor(R.id.tv_company_name, R.color.color_bottom);
+        }
+        // 订单是否 已读 未读 1：新订单 0 已读
+        if (item.getNewOrder() == 1) {
+            helper.getView(R.id.tv_order_read).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
         }
 
         helper.setText(R.id.tv_company_name, item.getCompanyName());

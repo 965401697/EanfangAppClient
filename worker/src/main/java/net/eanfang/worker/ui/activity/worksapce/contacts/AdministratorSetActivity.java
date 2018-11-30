@@ -35,11 +35,11 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_name)
     TextView tvName;
-//    @BindView(R.id.tv_desc)
+    //    @BindView(R.id.tv_desc)
 //    TextView tvDesc;
     private TemplateBean.Preson bean;
     private String molibe;//设置人的手机号
-    private String name ;//设置人的手机号
+    private String name;//设置人的手机号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
             return;
         }
         String companyName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
-        new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您的定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
+        new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您确定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
             EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
                     .params("mobile", molibe)
                     .execute(new EanfangCallback<JSONObject>(AdministratorSetActivity.this, true, JSONObject.class, (bean) -> {

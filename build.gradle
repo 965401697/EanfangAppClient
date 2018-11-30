@@ -1,7 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+
 buildscript {
     repositories {
+//        maven { url "https://plugins.gradle.org/m2/" }
         jcenter()
         mavenCentral()
         google()
@@ -12,7 +14,12 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         //classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
+
+//        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")
     }
+}
+plugins {
+    id "org.sonarqube" version "2.6"
 }
 
 allprojects {
@@ -35,4 +42,3 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-

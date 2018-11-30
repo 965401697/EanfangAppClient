@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -60,6 +61,7 @@ public class CheckListActivity extends BaseActivity {
         setRightImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!PermKit.get().getWorkInspectCreatePrem()) return;
                 startActivityForResult(new Intent(CheckListActivity.this, AddNewCheckActivity.class), REFRESH_CODE);
             }
         });

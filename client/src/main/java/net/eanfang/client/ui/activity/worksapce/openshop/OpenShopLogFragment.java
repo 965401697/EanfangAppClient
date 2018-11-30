@@ -61,7 +61,8 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                         putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
 
                 if (getmTitle().equals("未读日志")) {
-                    adapter.remove(position);
+                    if (String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
+                        adapter.remove(position);
                 } else if (getmTitle().equals("已读日志")) {
 
                 } else {

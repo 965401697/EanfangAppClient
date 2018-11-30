@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -50,7 +51,9 @@ public class WorkReportListActivity extends BaseClientActivity {
         setRightImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(WorkReportListActivity.this, CreationWorkReportActivity.class), FILTRATE_TYPE_CODE);
+                if (PermKit.get().getWorkReportCreatePrem()) {
+                    startActivityForResult(new Intent(WorkReportListActivity.this, CreationWorkReportActivity.class), FILTRATE_TYPE_CODE);
+                }
             }
         });
 
@@ -103,7 +106,7 @@ public class WorkReportListActivity extends BaseClientActivity {
             if (queryEntry != null) {
                 ((WorkReportListFragment) mFragments.get(currentTab)).getReportData(queryEntry);
             }
-        }else if (resultCode == RESULT_OK && requestCode == DETAILL_REQUEST_CODE) {
+        } else if (resultCode == RESULT_OK && requestCode == DETAILL_REQUEST_CODE) {
             if (currentTab == 1) {
                 ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
             }

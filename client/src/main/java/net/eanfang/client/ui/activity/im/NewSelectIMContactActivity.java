@@ -27,7 +27,6 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
@@ -147,7 +146,11 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
 
         if (mFlag == 1) {
             //创建群组
-            setRightTitle("创建");
+            if (EanfangApplication.get().getCompanyId() != 0) {
+                setRightTitle("创建");
+            } else {
+                setRightTitle("下一步");
+            }
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
         } else if (mFlag == 2) {//创建是分享
             setRightTitle("确定");
@@ -168,7 +171,15 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
             @Override
             public void onClick(View v) {
                 if (mFlag == 1) {
-                    compoundPhoto();
+                    if (EanfangApplication.get().getCompanyId() != 0) {
+                        compoundPhoto();
+                    } else {
+                        Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("list", (Serializable) newPresonList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
                 } else if (mFlag == 2) {//创建是分享
                     if (newPresonList.size() > 0) {
                         EventBus.getDefault().post(newPresonList);
@@ -185,13 +196,13 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
             }
         });
 
-        findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NewSelectIMContactActivity.this, SelectOrganizationActivity.class);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(NewSelectIMContactActivity.this, SelectOrganizationActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

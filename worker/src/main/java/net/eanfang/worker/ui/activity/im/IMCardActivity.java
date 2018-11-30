@@ -15,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.picker.common.util.DateUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -42,6 +43,8 @@ public class IMCardActivity extends BaseWorkerActivity {
     TextView tvBirthday;
     @BindView(R.id.tv_area)
     TextView tvArea;
+    @BindView(R.id.tv_delete)
+    TextView tvDelete;
     private User mUser;
 
     @Override
@@ -66,8 +69,12 @@ public class IMCardActivity extends BaseWorkerActivity {
         }
 
         tvName.setText("真实姓名：" + mUser.getRealName());
-//        tvBirthday.setText("生日：" + mUser.get());
+        tvBirthday.setText("生日：" + DateUtils.formatDate(mUser.getBirthday(), "yyyy-MM-dd"));
         tvArea.setText("所在区域：" + Config.get().getAddressByCode(mUser.getAreaCode()));
+
+        if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+            tvDelete.setVisibility(View.GONE);
+        }
     }
 
     @OnClick({R.id.tv_delete, R.id.tv_chat})
@@ -78,7 +85,7 @@ public class IMCardActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_chat:
                 RongIM.getInstance().startConversation(IMCardActivity.this, Conversation.ConversationType.PRIVATE, mUser.getAccId(), mUser.getNickName());
-
+                endTransaction(true);
                 break;
         }
     }
@@ -87,7 +94,7 @@ public class IMCardActivity extends BaseWorkerActivity {
         //删除好友
         EanfangHttp.post(UserApi.POST_DELETE_FRIEND)
                 .params("ids", mUser.getAccId())
-                .execute(new EanfangCallback<JSONObject>(IMCardActivity.this, true, org.json.JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(IMCardActivity.this, true, JSONObject.class, (bean) -> {
 
                     EanfangHttp.post(UserApi.POST_DELETE_FRIEND_PUSH)
                             .params("senderId", EanfangApplication.get().getAccId())

@@ -1,13 +1,18 @@
 package net.eanfang.client.ui.activity.im;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.takevideo.TakeVdideoMode;
 
 import net.eanfang.client.R;
@@ -15,6 +20,8 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -22,6 +29,7 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 public class ConversationActivity extends BaseClientActivity {
 
@@ -29,6 +37,8 @@ public class ConversationActivity extends BaseClientActivity {
     TextView tvTitle;
     public String mId;
     private String mType;
+
+    private List<UserInfo> userInfoList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,14 @@ public class ConversationActivity extends BaseClientActivity {
         mType = getIntent().getData().getLastPathSegment().toUpperCase(Locale.US);
 
         setRightTitle("设置");
+
+        if (mType.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
+
+            initData();
+
+
+        }
+
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +99,34 @@ public class ConversationActivity extends BaseClientActivity {
         if (takeVdideoMode != null) {
             sendCheckedMsg(takeVdideoMode);
         }
+    }
+
+    private void initData() {
+
+        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+//                .params("groupId", id)
+                .params("ryGroupId", mId)
+                .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+
+                    if (bean.getList() != null) {
+
+                        for (int i = 0; i < bean.getList().size(); i++) {
+
+                            UserInfo userInfo = new UserInfo(String.valueOf(bean.getList().get(i).getAccId()), bean.getList().get(i).getAccountEntity().getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getList().get(i).getAccountEntity().getAvatar()));
+
+                            userInfoList.add(userInfo);
+                        }
+                        RongIM.getInstance().setGroupMembersProvider(new RongIM.IGroupMembersProvider() {
+                            @Override
+                            public void getGroupMembers(String groupId, RongIM.IGroupMemberCallback callback) {
+
+                                callback.onGetGroupMembersResult(userInfoList); // 调用 callback 的 onGetGroupMembersResult 回传群组信息
+
+                            }
+                        });
+                    }
+                }));
+
     }
 
 

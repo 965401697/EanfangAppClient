@@ -62,6 +62,8 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
     ImageView ivDeviceHandle;
     @BindView(R.id.tv_device_handle)
     TextView tvDeviceHandle;
+    @BindView(R.id.tv_check_result)
+    TextView tvCheckResult;
 
     private long mId;
     private MaintenanceHandeCheckAdapter maintenanceHandeCheckAdapter;
@@ -97,23 +99,29 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
         rvCheckResult.setLayoutManager(new LinearLayoutManager(this));
         rvDeviceHandle.setLayoutManager(new LinearLayoutManager(this));
 
+        if (orderEntity.getExamDeviceEntityList() != null && orderEntity.getExamDeviceEntityList().size() > 0) {
+            handleEditAdapter = new MaintenanceHandleEditAdapter(R.layout.item_maintenance_empasis_device_handle);
+            handleEditAdapter.bindToRecyclerView(rvDeviceHandle);
+            handleEditAdapter.setNewData(orderEntity.getExamDeviceEntityList());
+            handleEditAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-        handleEditAdapter = new MaintenanceHandleEditAdapter(R.layout.item_maintenance_empasis_device_handle);
-        handleEditAdapter.bindToRecyclerView(rvDeviceHandle);
-        handleEditAdapter.setNewData(orderEntity.getExamDeviceEntityList());
-        handleEditAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                examDeviceEntity = (ShopMaintenanceExamDeviceEntity) adapter.getData().get(position);
-                Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceHandleEditShowActivity.class);
-                intent.putExtra("bean", examDeviceEntity);
+                    examDeviceEntity = (ShopMaintenanceExamDeviceEntity) adapter.getData().get(position);
+                    Intent intent = new Intent(MaintenanceHandleShowActivity.this, MaintenanceHandleEditShowActivity.class);
+                    intent.putExtra("bean", examDeviceEntity);
 //                intent.putExtra("isShow", true);//是否仅展示 不可编辑
-                startActivity(intent);
-            }
-        });
+                    startActivity(intent);
+                }
+            });
+        } else {
+            tvDeviceHandle.setVisibility(View.VISIBLE);
+            ivDeviceHandle.setVisibility(View.GONE);
+        }
 
         if (orderEntity.getExamResultEntityList() != null && orderEntity.getExamResultEntityList().size() > 0) {
+            maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add, 1);
+            maintenanceHandeCheckAdapter.bindToRecyclerView(rvCheckResult);
             maintenanceHandeCheckAdapter.setNewData(orderEntity.getExamResultEntityList());
             maintenanceHandeCheckAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
@@ -124,8 +132,7 @@ public class MaintenanceHandleShowActivity extends BaseWorkerActivity {
                 }
             });
         } else {
-            tvDeviceHandle.setVisibility(View.VISIBLE);
-            ivDeviceHandle.setVisibility(View.GONE);
+            tvCheckResult.setVisibility(View.VISIBLE);
         }
 
         setChecked(cbVideo, orderEntity.getConfirmEntity().getIsVcrStoreDayNormal());

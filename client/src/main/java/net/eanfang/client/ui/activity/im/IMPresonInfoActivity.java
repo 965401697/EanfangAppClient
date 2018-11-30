@@ -76,6 +76,7 @@ public class IMPresonInfoActivity extends BaseClientActivity {
 
                     if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
                         tvClear.setVisibility(View.VISIBLE);
+                        b = true;//如果是自己点击自己的头像
                     } else {
                         checkFriends();
                     }

@@ -130,7 +130,7 @@ public class WorkspaceFragment extends BaseFragment {
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), false, OrgEntity.class, true, bean -> {
                     mList = bean;
                     if (mList == null || mList.size() <= 0) {
-                        showToast("暂无安防公司");
+                        showToast("暂无客户公司");
                         return;
                     }
                     rotate = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF,
@@ -275,21 +275,26 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_report).setOnClickListener((v) -> {
 //            new ReportCtrlView(getActivity(), true).show();
 //            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
-            Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
-            startActivity(intent);
+            if (PermKit.get().getWorkReportListPrem()) {
+                Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
+                startActivity(intent);
+            }
         });
 
         //布置任务
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
 //            new TaskCtrlView(getActivity(), true).show();
 //            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
-            Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
-            startActivity(intent);
+            if (PermKit.get().getWorkTaskListPrem()) {
+                Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
+                startActivity(intent);
+            }
         });
 
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
 //            new WorkCheckCtrlView(getActivity(), true).show();
+            if (!PermKit.get().getWorkInspectListPrem()) return;
             Intent intent = new Intent(getActivity(), CheckListActivity.class);
             startActivity(intent);
         });

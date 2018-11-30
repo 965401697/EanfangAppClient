@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -43,6 +44,13 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 
     @Override
     protected void convert(BaseViewHolder helper, RepairOrderEntity item) {
+
+        // 订单是否 已读 未读 1：新订单 0 已读
+        if (item.getNewOrder() == 1) {
+            helper.getView(R.id.tv_order_read).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
+        }
         String str = "";
 
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {

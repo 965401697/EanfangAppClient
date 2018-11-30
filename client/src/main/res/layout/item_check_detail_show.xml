@@ -40,8 +40,7 @@
                 android:id="@+id/tv_check_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_work_content"
-                android:text="工作内容：阿斯顿发asdfasdf" />
+                android:layout_below="@+id/tv_work_content"  />
         </LinearLayout>
 
         <LinearLayout
@@ -57,8 +56,7 @@
             <TextView
                 android:id="@+id/tv_work_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="工作内容：阿斯顿发沙发斯蒂芬阿斯顿发送到发斯蒂芬" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

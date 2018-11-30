@@ -129,6 +129,7 @@ public class PasswordFragment extends BaseFragment {
      * @param pwd   验证码
      */
     private void setLogin(String phone, String pwd) {
+        EanfangHttp.setToken("");
         JSONObject object = new JSONObject();
         try {
             object.put("username", phone);
