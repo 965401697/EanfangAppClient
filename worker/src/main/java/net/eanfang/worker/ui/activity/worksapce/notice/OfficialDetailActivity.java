@@ -2,10 +2,13 @@ package net.eanfang.worker.ui.activity.worksapce.notice;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -17,6 +20,8 @@ public class OfficialDetailActivity extends BaseWorkerActivity {
 
     @BindView(R.id.wb_view)
     WebView mWebView;
+    @BindView(R.id.tv_gone)
+    TextView tvGone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,13 @@ public class OfficialDetailActivity extends BaseWorkerActivity {
 
         setTitle(getIntent().getStringExtra("title"));
         setLeftBack();
+
+        if (TextUtils.isEmpty(getIntent().getStringExtra("url"))) {
+            mWebView.setVisibility(View.GONE);
+            tvGone.setVisibility(View.VISIBLE);
+            return;
+        }
+
         WebSettings setting = mWebView.getSettings();
         setting.setJavaScriptEnabled(true);//支持js
         setting.setSupportZoom(false);//不支持缩放
@@ -35,7 +47,6 @@ public class OfficialDetailActivity extends BaseWorkerActivity {
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {//页面加载完成
-
                 loadingDialog.dismiss();
             }
 
@@ -43,8 +54,6 @@ public class OfficialDetailActivity extends BaseWorkerActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
                 loadingDialog.show();
             }
-
-
         });//IE内核
 
         mWebView.setWebChromeClient(new WebChromeClient() {

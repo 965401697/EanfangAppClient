@@ -2,10 +2,13 @@ package net.eanfang.client.ui.activity.worksapce.notice;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -17,6 +20,8 @@ public class OfficialDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.wb_view)
     WebView mWebView;
+    @BindView(R.id.tv_gone)
+    TextView tvGone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,13 @@ public class OfficialDetailActivity extends BaseClientActivity {
 
         setTitle(getIntent().getStringExtra("title"));
         setLeftBack();
+
+        if (TextUtils.isEmpty(getIntent().getStringExtra("url"))) {
+            mWebView.setVisibility(View.GONE);
+            tvGone.setVisibility(View.VISIBLE);
+            return;
+        }
+
         WebSettings setting = mWebView.getSettings();
         setting.setJavaScriptEnabled(true);//支持js
         setting.setSupportZoom(false);//不支持缩放
