@@ -58,7 +58,14 @@
                         android:text="检查结果"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
-
+                    <TextView
+                        android:id="@+id/tv_check_result"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="无"
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/dimen_28"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
