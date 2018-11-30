@@ -3,7 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.defendlog;
 import android.content.Intent;
 import android.view.View;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -59,13 +58,9 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
                 startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
                 //刷新数据
-                if (getmTitle().equals("未读日志")) {
-                    updateStatus(String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId()));//更新数据
+                if (getmTitle().equals("未读日志") && EanfangApplication.get().getAccId().equals(((ProtectionLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccId())) {
                     adapter.remove(position);
-                } else if (getmTitle().equals("已读日志")) {
-
-                } else {
-                    updateStatus(String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId()));//更新数据
+                } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && EanfangApplication.get().getAccId().equals(((ProtectionLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccId())) {
                     ((ProtectionLogEntity) adapter.getData().get(position)).setStatus(1);
                     adapter.notifyItemChanged(position);
                 }
@@ -166,11 +161,4 @@ public class DefendLogFragment extends TemplateItemListFragment {
                 });
     }
 
-    private void updateStatus(String id) {
-        EanfangHttp.post(NewApiService.OA__DEFEND_LOG_UPDATE)
-                .params("protectionLogId", id)
-                .execute(new EanfangCallback<JSONObject>(getActivity(), false, JSONObject.class) {
-                });
-
-    }
 }

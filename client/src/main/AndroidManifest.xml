@@ -405,7 +405,9 @@
         <!-- 开店日志详情 -->
         <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogDetailActivity" />
         <!-- 填写开店日志 -->
-        <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogWriteActivity" />
+        <activity android:name=".ui.activity.worksapce.openshop.OpenShopLogWriteActivity"
+
+            />
         <!-- 布防日志 -->
         <activity android:name=".ui.activity.worksapce.defendlog.DefendLogActivity" />
         <!-- 布防日志的填写和展示详情 -->
@@ -413,7 +415,8 @@
         <!-- 布防日志的二级填写和展示详情 -->
         <activity
             android:name=".ui.activity.worksapce.defendlog.DefendLogItemWriteAndDetailActivity"
-            android:windowSoftInputMode="adjustResize|adjustPan" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!-- 扫码界面 -->
         <activity

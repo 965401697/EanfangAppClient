@@ -291,11 +291,6 @@ public interface NewApiService {
      * 布防日志详情
      */
     String OA_DEFEND_LOG_DETAIL = BuildConfig.API_HOST + "/yaf_oa/protectionlog/detail";
-    /**
-     * 布防日志状态更新
-     */
-    String OA__DEFEND_LOG_UPDATE = BuildConfig.API_HOST + "/yaf_oa/protectionlog/update";
-
 
     /**
      * 报装单确认
