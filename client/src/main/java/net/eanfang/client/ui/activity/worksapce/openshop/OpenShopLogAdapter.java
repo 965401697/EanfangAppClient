@@ -33,7 +33,7 @@ public class OpenShopLogAdapter extends BaseQuickAdapter<OpenShopLogEntity, Base
             helper.setText(R.id.tv_state, "已读");
         }
         helper.setText(R.id.tv_order_id, item.getOrderNumber());
-        helper.setText(R.id.tv_create_time, GetDateUtils.dateToFormatString(item.getCreateTime(), "yyyy-MM-dd hh:mm:ss"));
+        helper.setText(R.id.tv_create_time, GetDateUtils.dateToFormatString(item.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
         helper.setText(R.id.tv_person_name, item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_preson_phone, item.getAssigneeUser().getAccountEntity().getMobile());
 
