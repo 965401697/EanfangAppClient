@@ -152,7 +152,7 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         tvName.setText(orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getAssigneeUserEntity().getAccountEntity().getGender() == 1 ? "先生" : "女士") + ")");
         tvCompanyName.setText(orderEntity.getOwnerUserEntity().getCompanyEntity().getOrgName());
         if (!TextUtils.isEmpty(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode())) {
-            tvAddress.setText(Config.get().getAddressByCode(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode()) + "" + orderEntity.getOwnerUserEntity().getAccountEntity().getAddress());
+            tvAddress.setText(Config.get().getAddressByCode(orderEntity.getPlaceCode()) + "" + orderEntity.getAddress());
         } else {
             tvAddress.setText("无");
         }
