@@ -123,9 +123,11 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
             String[] picture = bean.getPicture().split(",");
             if (picture != null && picture.length >= 1) {
                 ivPicOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[0]));
-            } else if (picture != null && picture.length >= 2) {
+            }
+            if (picture != null && picture.length >= 2) {
                 ivPicTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[1]));
-            } else if (picture != null && picture.length >= 3) {
+            }
+            if (picture != null && picture.length >= 3) {
                 ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
             }
         }
@@ -169,12 +171,16 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         tvCompanyName.setText(bean.getRepairCompany());
         tvServicePerson.setText(bean.getRepairUser());
         String[] locationPictures = bean.getLocationPictures().split(",");
-        if (locationPictures != null && locationPictures.length >= 1) {
-            ivLocaleOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[0]));
-        } else if (locationPictures != null && locationPictures.length >= 2) {
-            ivLocaleTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[1]));
-        } else if (locationPictures != null && locationPictures.length >= 3) {
-            ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
+        if (locationPictures != null) {
+            if (locationPictures != null && locationPictures.length >= 1) {
+                ivLocaleOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[0]));
+            }
+            if (locationPictures != null && locationPictures.length >= 2) {
+                ivLocaleTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[1]));
+            }
+            if (locationPictures != null && locationPictures.length >= 3) {
+                ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
+            }
         }
     }
 

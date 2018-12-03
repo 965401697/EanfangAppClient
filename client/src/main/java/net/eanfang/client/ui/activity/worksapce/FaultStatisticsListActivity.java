@@ -72,8 +72,8 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
 
             }
         });
-
-        mEndTime = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
+        //发挥昨天的23：59：59的时间
+        mEndTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
         mStartTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
         mCheckedId = R.id.rb_yesterday;//初始化默认值
         initView();
@@ -85,16 +85,19 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
                 if (checkedId == R.id.rb_yesterday) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
+                    mEndTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
                     mStartTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
                     refresh();
                 } else if (checkedId == R.id.rb_week) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
+                    mEndTime =GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
                     mStartTime = GetDateUtils.dateToDateString(GetDateUtils.getLastWeek(GetDateUtils.dateToDateString(GetDateUtils.getDateNow())));
                     refresh();
                 } else if (checkedId == R.id.rb_thirty_day) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
+                    mEndTime =GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
                     mStartTime = GetDateUtils.dateToDateString(GetDateUtils.getLastMonth(GetDateUtils.dateToDateString(GetDateUtils.getDateNow())));
                     refresh();
                 } else if (checkedId == R.id.rb_pick_day) {
@@ -205,7 +208,7 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getGtEquals().put("createTime", startTime);
-        queryEntry.getLt().put("createTime", endTime);
+        queryEntry.getLtEquals().put("createTime", endTime + " 23:59:59");
         EanfangHttp.post(NewApiService.FAULT_RECORD_TOTAL)
                 .upJson(JsonUtils.obj2String(queryEntry))
 //                .execute(new EanfangCallback<FaultTotleBean>(this, true, FaultTotleBean.class ,true) {

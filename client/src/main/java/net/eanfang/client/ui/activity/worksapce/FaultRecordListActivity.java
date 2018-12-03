@@ -135,7 +135,7 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
         queryEntry.setPage(mPage);
         if (mBundle != null) {
             queryEntry.getGtEquals().put("createTime", (String) mBundle.get("startTime"));
-            queryEntry.getLt().put("createTime", (String) mBundle.get("endTime"));
+            queryEntry.getLt().put("createTime", ((String) mBundle.get("endTime")) + " 23:59:59");
             queryEntry.getLike().put("businessThreeCode", (String) mBundle.get("bugOneCode") + "%");
             queryEntry.getEquals().put("status", (String) mBundle.get("status"));
         }

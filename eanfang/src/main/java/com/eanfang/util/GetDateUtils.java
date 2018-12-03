@@ -164,7 +164,7 @@ public class GetDateUtils {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        calendar.add(Calendar.DATE, -7); // 向前一周；如果需要向后一周，用正数即可
+        calendar.add(Calendar.DATE, -6); // 向前一周；如果需要向后一周，用正数即可
         return calendar.getTime();
 
     }
