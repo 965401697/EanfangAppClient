@@ -47,6 +47,7 @@ public class VerifyFragment extends BaseFragment {
         VerifyFragment verifyFragment = new VerifyFragment();
         return verifyFragment;
     }
+
     protected int setLayoutResouceId() {
         return R.layout.fragment_verify;
     }
@@ -187,10 +188,10 @@ public class VerifyFragment extends BaseFragment {
 
     //跳转首页
     synchronized void goMain() {
-        if(PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)){
+        if (PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)) {
             startActivity(new Intent(getActivity(), GuideActivity.class));
             finishSelf();
-        }else {
+        } else {
 
             startActivity(new Intent(getActivity(), MainActivity.class));
             finishSelf();

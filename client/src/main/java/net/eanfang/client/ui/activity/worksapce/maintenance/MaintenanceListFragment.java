@@ -19,7 +19,6 @@ import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
@@ -168,21 +167,37 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                 }
                 break;
             case 4:
-                if (doCompare(item.getOwnerUserId(), mUseId)) {
-                    EanfangHttp.post(NewApiService.MAINTENANCE_CLIENT_CONFIRM)
-                            .params("id", item.getId())
-                            .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
-                                @Override
-                                public void onSuccess(JSONObject bean) {
-                                    Toast.makeText(getActivity(), "确认完工成功", Toast.LENGTH_SHORT).show();
-                                    EventBus.getDefault().post(new BaseEvent());//刷新item
-                                }
+                switch (view.getId()) {
+                    case R.id.tv_do_first:
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
+                            if (PermKit.get().getMaintenanceBughandlePrem()) {
+                                intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
+                                intent.putExtra("orderId", item.getId());
+                                startActivity(intent);
+                            }
+                        }
+                        break;
+                    case R.id.tv_do_second:
+                        if (doCompare(item.getOwnerUserId(), mUseId)) {
+                            EanfangHttp.post(NewApiService.MAINTENANCE_CLIENT_CONFIRM)
+                                    .params("id", item.getId())
+                                    .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
+                                        @Override
+                                        public void onSuccess(JSONObject bean) {
+                                            Toast.makeText(getActivity(), "确认完工成功", Toast.LENGTH_SHORT).show();
+                                            EventBus.getDefault().post(new BaseEvent());//刷新item
+                                        }
 
-                                @Override
-                                public void onCommitAgain() {
-                                }
-                            });
+                                        @Override
+                                        public void onCommitAgain() {
+                                        }
+                                    });
+                        }
+                        break;
+                    default:
+                        break;
                 }
+
                 break;
 
 

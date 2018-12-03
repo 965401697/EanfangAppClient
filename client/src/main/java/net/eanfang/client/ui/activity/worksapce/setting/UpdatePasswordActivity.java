@@ -21,8 +21,6 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.LoginActivity;
 
-import org.json.JSONObject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -110,8 +108,8 @@ public class UpdatePasswordActivity extends BaseActivity {
 
         @Override
         public void onFinish() {
-            tvVerify.setEnabled(true);
             tvVerify.setText("获取验证码");
+            llYanzheng.setEnabled(true);
         }
     };
 
@@ -130,19 +128,20 @@ public class UpdatePasswordActivity extends BaseActivity {
      * 提交
      */
     public void doSubmit() {
-        EanfangHttp.post(UserApi.UPDATA_PASSWORD)
-                .params("mobile", mMobile)
-                .params("verifycode", mVerify)
-                .params("newKey1", mPassword)//新密码
-                .params("newKey2", mConfirmPassword)//确认密码
-                .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
-                    showToast("修改成功");
-                    if (!mDisslove) {
-                        signout();
-                    } else {
-                        finishSelf();
-                    }
-                }));
+        showToast("修改成功");
+//        EanfangHttp.post(UserApi.UPDATA_PASSWORD)
+//                .params("mobile", mMobile)
+//                .params("verifycode", mVerify)
+//                .params("newKey1", mPassword)//新密码
+//                .params("newKey2", mConfirmPassword)//确认密码
+//                .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
+//                    showToast("修改成功");
+//                    if (!mDisslove) {
+//                        signout();
+//                    } else {
+//                        finishSelf();
+//                    }
+//                }));
     }
 
     /**

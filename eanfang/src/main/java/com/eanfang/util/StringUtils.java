@@ -170,13 +170,17 @@ public class StringUtils {
     }
 
     /**
-     * 校验密码是否符合规格：6~12为字母或数字
+     * 校验密码是否符合规格：6~18位必须包含字母和数字 可以输入特殊字符
      *
      * @param pwd
      * @return
      */
     public static boolean isPwdLegal(String pwd) {
-        String REGEX_PWD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$";
+        /**
+         * ^(?![0-9]+$)(?![a-zA-Z]+$)(?=.*\d)[0-9A-Za-z]{6,
+         * */
+        String REGEX_PWD = "(?=.*[a-z])(?=.*\\d)(?=.*[#@!~%^&*])[a-z\\d#@!~%^&*]{6,18}$";
+
         if (TextUtils.isEmpty(pwd)) {
             return false;
         } else {
