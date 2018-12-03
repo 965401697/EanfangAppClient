@@ -169,11 +169,11 @@ public class PayActivity extends BaseClientActivity {
 
         btnToPayLatter.setOnClickListener(v -> {
             EanfangApplication.get().closeActivity(PayActivity.class.getName());
-            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("message", MessageUtil.payLatter());
-            intent.putExtras(bundle);
-            startActivity(intent);
+//            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("message", MessageUtil.payLatter());
+//            intent.putExtras(bundle);
+//            startActivity(intent);
         });
 
         editFapiao.setOnClickListener(v -> {

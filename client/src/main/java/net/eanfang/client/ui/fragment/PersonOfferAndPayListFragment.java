@@ -100,7 +100,7 @@ public class PersonOfferAndPayListFragment extends TemplateItemListFragment {
         Intent intent = new Intent(getActivity(), PayActivity.class);
         intent.putExtra("payLogEntity", payLogEntity);
         startActivity(intent);
-        finishSelf();
+//        finishSelf();
 
     }
 

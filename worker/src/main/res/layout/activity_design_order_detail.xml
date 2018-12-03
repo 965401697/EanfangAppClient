@@ -404,7 +404,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_40"
-                    android:text="回复时限"
+                    android:text="项目预算"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 

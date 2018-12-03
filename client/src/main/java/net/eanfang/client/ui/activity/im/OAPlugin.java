@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -40,15 +41,17 @@ public class OAPlugin implements IPluginModule {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        this.conversationType = rongExtension.getConversationType();
-        this.targetId = rongExtension.getTargetId();
-        if (conversationType.getName().toUpperCase().equals(Conversation.ConversationType.GROUP.getName().toUpperCase())) {
-            Intent intent = new Intent(fragment.getActivity(), OAListActivity.class);
-            intent.putExtra("targetId", targetId);
-            intent.putExtra("conversationType", conversationType.getName());
-            rongExtension.startActivityForPluginResult(intent, 198, this);
-        } else {
-            ToastUtil.get().showToast(fragment.getContext(), "请从群聊点击进去");
+        if (PermKit.get().getWorkReportListPrem()) {
+            this.conversationType = rongExtension.getConversationType();
+            this.targetId = rongExtension.getTargetId();
+            if (conversationType.getName().toUpperCase().equals(Conversation.ConversationType.GROUP.getName().toUpperCase())) {
+                Intent intent = new Intent(fragment.getActivity(), OAListActivity.class);
+                intent.putExtra("targetId", targetId);
+                intent.putExtra("conversationType", conversationType.getName());
+                rongExtension.startActivityForPluginResult(intent, 198, this);
+            } else {
+                ToastUtil.get().showToast(fragment.getContext(), "请从群聊点击进去");
+            }
         }
     }
 
