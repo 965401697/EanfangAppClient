@@ -208,12 +208,12 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
 
     private boolean checkedData() {
         if (TextUtils.isEmpty(etSchoolName.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入荣誉名称");
+            ToastUtil.get().showToast(this, "请输入学校名称");
             return true;
         }
 
         if (TextUtils.isEmpty(etMajor.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入颁发机构名称");
+            ToastUtil.get().showToast(this, "请输入专业名称");
             return true;
         }
 
@@ -226,13 +226,13 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
             return true;
         }
         if (TextUtils.isEmpty(tvTime.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选择颁发时间");
+            ToastUtil.get().showToast(this, "请选择起止时间");
             return true;
         }
 
         pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
-            showToast("请添加荣誉证书照片");
+            showToast("请添加证书照片");
             return true;
         }
 

@@ -177,7 +177,7 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
 
         pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
-            showToast("请添加明白或者工牌照片");
+            showToast("请添加名牌或者工牌照片");
             return true;
         }
 
@@ -229,6 +229,7 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
                 break;
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
