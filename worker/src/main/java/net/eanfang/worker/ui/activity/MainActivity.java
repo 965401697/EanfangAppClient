@@ -52,7 +52,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
-import net.eanfang.worker.ui.activity.worksapce.LoginHintActivity;
+import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
@@ -146,10 +146,13 @@ public class MainActivity extends BaseActivity {
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         //判断是否完善资料
-        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
-            startAnimActivity(new Intent(this, LoginHintActivity.class));
+//        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
+//            startAnimActivity(new Intent(this, LoginHintActivity.class));
+//        }
+        // 判断是否有密码
+        if (EanfangApplication.getApplication().getUser().getAccount().isSimplePwd() == true) {
+            startAnimActivity(new Intent(this, SetPasswordActivity.class));
         }
-
         getEquipmentUnread();//首次
 
         WorkerApplication.getApplication().setmForwardListener(new WorkerApplication.ForwardListener() {

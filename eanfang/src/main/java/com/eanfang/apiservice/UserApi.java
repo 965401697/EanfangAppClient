@@ -416,6 +416,11 @@ public interface UserApi {
      */
     String UPDATA_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changeAppkey";
     /**
+     * 新增密码
+     */
+    String ADD_PASSWORD = BuildConfig.API_HOST + "/yaf_sys/account/changekey";
+
+    /**
      * 安防公司认证相关
      * */
     /**
