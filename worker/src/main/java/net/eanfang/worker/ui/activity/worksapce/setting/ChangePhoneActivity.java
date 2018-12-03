@@ -94,7 +94,7 @@ public class ChangePhoneActivity extends BaseActivity {
 
         @Override
         public void onFinish() {
-            tvVerify.setEnabled(true);
+            llYanzheng.setEnabled(true);
             tvVerify.setText("获取验证码");
         }
     };

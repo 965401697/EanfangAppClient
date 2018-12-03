@@ -41,7 +41,7 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
                 .setText(R.id.tv_business, "业务：" + Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         if (item.getStatus() == 2) {
             if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
-                helper.setText(R.id.tv_look, "完工");
+                helper.getView(R.id.tv_finish).setVisibility(View.VISIBLE);
             } else {
                 ToastUtil.get().showToast(mContext, "只有创建人可操作");
             }
@@ -51,6 +51,7 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
         }
 
         helper.addOnClickListener(R.id.tv_look);
+        helper.addOnClickListener(R.id.tv_finish);
         //将业务类型的图片显示到列表
 //        ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(item.getPic1());
     }

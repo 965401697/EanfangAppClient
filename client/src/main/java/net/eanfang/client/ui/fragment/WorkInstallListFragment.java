@@ -59,16 +59,19 @@ public class WorkInstallListFragment extends TemplateItemListFragment {
             WorkspaceInstallBean.ListBean bean = (WorkspaceInstallBean.ListBean) adapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_look:
+                    if (PermKit.get().getInstallDetailPrem()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("orderId", bean.getId());
+                        JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
+                    }
+                    break;
+                /**
+                 * 完工
+                 * */
+                case R.id.tv_finish:
                     if (bean.getStatus() == 2) {
                         if (PermKit.get().getInstallFinishPrem()) {
                             finishWork(String.valueOf(bean.getId()), position);
-                        }
-                    } else {
-
-                        if (PermKit.get().getInstallDetailPrem()) {
-                            Bundle bundle = new Bundle();
-                            bundle.putLong("orderId", bean.getId());
-                            JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
                         }
                     }
                     break;
