@@ -95,7 +95,13 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
         businessCooperationAddAdapter.bindToRecyclerView(recyclerViewBusiness);
         osCooperationAddAdapter.bindToRecyclerView(recyclerViewOs);
-
+        // TODO: 2018/11/30  今天集合的对象引用 有待优化 
+        for (BaseDataEntity b : businessTypeList) {
+            b.setCheck(false);
+        }
+        for (BaseDataEntity s : systemTypeList) {
+            s.setCheck(false);
+        }
         businessCooperationAddAdapter.setNewData(businessTypeList);
         osCooperationAddAdapter.setNewData(systemTypeList);
     }
