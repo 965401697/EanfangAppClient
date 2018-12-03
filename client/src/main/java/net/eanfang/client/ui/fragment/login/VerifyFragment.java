@@ -23,6 +23,7 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
+import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.util.PrefUtils;
 
 import java.io.IOException;
@@ -43,10 +44,16 @@ public class VerifyFragment extends BaseFragment {
     private TextView read;
     private Button btn_login;
 
+    /**
+     * true :密码为空 或者默认密码  false:修改后的密码
+     */
+    private boolean isUpdataPassword = false;
+
     public static VerifyFragment getInstance() {
         VerifyFragment verifyFragment = new VerifyFragment();
         return verifyFragment;
     }
+
     protected int setLayoutResouceId() {
         return R.layout.fragment_verify;
     }
@@ -162,6 +169,7 @@ public class VerifyFragment extends BaseFragment {
                 .params("mobile", phone)
                 .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(getActivity(), true, LoginBean.class, (bean) -> {
+                    isUpdataPassword = bean.getAccount().isSimplePwd();
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
                     getActivity().runOnUiThread(() -> {
@@ -187,11 +195,13 @@ public class VerifyFragment extends BaseFragment {
 
     //跳转首页
     synchronized void goMain() {
-        if(PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)){
+        if (PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)) {
             startActivity(new Intent(getActivity(), GuideActivity.class));
             finishSelf();
-        }else {
-
+        } else if (isUpdataPassword) {
+            startActivity(new Intent(getActivity(), SetPasswordActivity.class));
+            finishSelf();
+        } else {
             startActivity(new Intent(getActivity(), MainActivity.class));
             finishSelf();
         }

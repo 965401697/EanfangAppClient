@@ -42,7 +42,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
-import net.eanfang.client.ui.activity.worksapce.LoginHintActivity;
+import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -114,8 +114,12 @@ public class MainActivity extends BaseClientActivity {
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
         //判断是否完善资料
-        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
-            startAnimActivity(new Intent(this, LoginHintActivity.class));
+//        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
+//            startAnimActivity(new Intent(this, LoginHintActivity.class));
+//        }
+        // 判断是否有密码
+        if (EanfangApplication.getApplication().getUser().getAccount().isSimplePwd() == true) {
+            startAnimActivity(new Intent(this, SetPasswordActivity.class));
         }
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
     }

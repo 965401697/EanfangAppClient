@@ -23,6 +23,7 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
+import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.util.PrefUtils;
 
 import java.io.IOException;
@@ -41,6 +42,10 @@ public class PasswordFragment extends BaseFragment {
     private AppCompatCheckBox cb;
     private TextView read;
     private Button btn_login;
+    /**
+     * true :密码为空 或者默认密码  false:修改后的密码
+     */
+    private boolean isUpdataPassword = false;
 
     public static PasswordFragment getInstance() {
         PasswordFragment passwordFragment = new PasswordFragment();
@@ -140,6 +145,7 @@ public class PasswordFragment extends BaseFragment {
         EanfangHttp.post(UserApi.APP_LOGIN)
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(getActivity(), true, LoginBean.class, (bean) -> {
+                    isUpdataPassword = bean.getAccount().isSimplePwd();
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
                     goMain();
@@ -152,6 +158,9 @@ public class PasswordFragment extends BaseFragment {
     synchronized void goMain() {
         if (PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)) {
             startActivity(new Intent(getActivity(), GuideActivity.class));
+            finishSelf();
+        } else if (isUpdataPassword) {
+            startActivity(new Intent(getActivity(), SetPasswordActivity.class));
             finishSelf();
         } else {
 
