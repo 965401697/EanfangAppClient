@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -86,6 +87,7 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_filtrate);
+        ButterKnife.bind(this);
         initView();
     }
 

@@ -95,7 +95,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
         llSignLayout.setOnClickListener(v -> finishSelf());
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
         signListAdapter.setOnLoadMoreListener(this, revList);
 
         setRightTitleOnClickListener((v) -> {
@@ -151,19 +150,16 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         if (page == 1) {
             if (signListBeanList.size() == 0 || signListBeanList == null) {
                 showToast("暂无数据");
-                setRightGone();
                 signListAdapter.getData().clear();
                 signListAdapter.notifyDataSetChanged();
             } else {
                 signListAdapter.getData().clear();
                 signListAdapter.setNewData(signListBeanList);
-                setRightVisible();
             }
         } else {
             if (signListBeanList.size() == 0 || signListBeanList == null) {
                 showToast("暂无更多数据");
                 page = page - 1;
-//                messageListAdapter.notifyDataSetChanged();
                 signListAdapter.loadMoreEnd();
             } else {
                 signListAdapter.addData(signListBeanList);
@@ -199,9 +195,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     @Override
     public void onSecondClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("id", signListBeanList.get(mFirstPosition).getList().get(position).getId());
+        bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getList().get(position).getId());
         bundle.putInt("status", status);
-        bundle.putSerializable("bean", (Serializable) signListBeanList.get(mFirstPosition).getList().get(position));
+        bundle.putSerializable("bean", (Serializable) signListAdapter.getData().get(mFirstPosition).getList().get(position));
         JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
     }
 
@@ -216,4 +212,5 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             initData();
         }
     }
+
 }

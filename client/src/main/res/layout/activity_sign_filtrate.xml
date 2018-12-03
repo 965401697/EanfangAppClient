@@ -49,10 +49,9 @@
                         android:layout_height="@dimen/dimen_60"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
-                        android:checked="true"
                         android:gravity="center"
                         android:text="签到"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="12sp" />
 
                     <RadioButton
@@ -196,7 +195,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_complete_work"
+                    android:id="@+id/tv_cancle_work"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_marginLeft="@dimen/dimen_40"
@@ -208,7 +207,7 @@
                     android:textColor="@color/color_client_neworder" />
 
                 <TextView
-                    android:id="@+id/tv_cancle_work"
+                    android:id="@+id/tv_complete_work"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_70"
                     android:layout_marginRight="@dimen/dimen_40"
