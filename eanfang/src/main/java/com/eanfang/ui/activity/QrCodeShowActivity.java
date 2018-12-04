@@ -74,11 +74,20 @@ public class QrCodeShowActivity extends BaseActivity {
             ivQrcode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress));
         }
         rlSaveQrcode.setOnClickListener((v) -> {
-            if (!StringUtils.isEmpty(mQrcodeAddress)) {
-                String path = FileUtils.bitmapToFile(FileUtils.returnBitMap(BuildConfig.OSS_SERVER + mQrcodeAddress), new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "_qrcode_" + mSave);
-                showToast("已保存至" + path);
-            }
+            doSaveQRCode();
         });
+    }
+
+    public void doSaveQRCode() {
+        if (!StringUtils.isEmpty(mQrcodeAddress)) {
+            String path = FileUtils.bitmapToFile(FileUtils.returnBitMap(BuildConfig.OSS_SERVER + mQrcodeAddress), new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "_qrcode_" + mSave);
+            if (!StringUtils.isEmpty(path)) {
+                showToast("已保存至" + path);
+            } else {
+                showToast("图片无效");
+            }
+
+        }
     }
 
 }

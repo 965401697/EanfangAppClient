@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.worker.ui.adapter.WorkerDetailAdapter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,10 +42,10 @@ import butterknife.ButterKnife;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
-* @date on 2018/5/8  13:48
-* @author Guanluocang
-* @decision 技师详情
-*/
+ * @author Guanluocang
+ * @date on 2018/5/8  13:48
+ * @decision 技师详情
+ */
 public class WorkDetailActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -75,14 +77,6 @@ public class WorkDetailActivity extends BaseActivity {
     RecyclerView rvList2;
     @BindView(R.id.rv_list3)
     RecyclerView rvList3;
-    @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
-    @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
-    @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
-    @BindView(R.id.iv_pic4)
-    SimpleDraweeView ivPic4;
     @BindView(R.id.iv_haopinglv)
     NumberProgressBar ivHaopinglv;
     @BindView(R.id.tv_haopinglv)
@@ -97,6 +91,8 @@ public class WorkDetailActivity extends BaseActivity {
     MaterialRatingBar rbStar4;
     @BindView(R.id.rb_star5)
     MaterialRatingBar rbStar5;
+    @BindView(R.id.rv_honor)
+    RecyclerView rvHonor;
     private String id;
 
     private ArrayList<String> mDataList1;
@@ -114,6 +110,12 @@ public class WorkDetailActivity extends BaseActivity {
     private String companyUserId;
     private String workerId;
 
+    /**
+     * 荣誉证书
+     */
+    private WorkDetailHonorAdapter workDetailHonorAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +127,7 @@ public class WorkDetailActivity extends BaseActivity {
         setTitle("技师详情");
         setLeftBack();
     }
+
     //获取技师信息
     private void getWorkerDetailData() {
         if (isComeIn) {
@@ -161,6 +164,14 @@ public class WorkDetailActivity extends BaseActivity {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
         rvList2.setLayoutManager(new GridLayoutManager(this, 2));
         rvList3.setLayoutManager(new GridLayoutManager(this, 2));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvHonor.setLayoutManager(layoutManager);
+
+        workDetailHonorAdapter = new WorkDetailHonorAdapter();
+        workDetailHonorAdapter.bindToRecyclerView(rvHonor);
+
         // 客户端扫描二维码获取数据
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
         if (mQRWorkerEntity != null) {
@@ -252,37 +263,9 @@ public class WorkDetailActivity extends BaseActivity {
 
 
     private void initHonor(WorkerEntity bean) {
-        if (!StringUtils.isEmpty(bean.getVerifyEntity().getHonorPics())) {
-            String[] urls = bean.getVerifyEntity().getHonorPics().split(",");
-
-            if (urls.length >= 1) {
-                ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
-                ivPic1.setVisibility(View.VISIBLE);
-            } else {
-                ivPic1.setVisibility(View.GONE);
-            }
-
-            if (urls.length >= 2) {
-                ivPic2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
-                ivPic2.setVisibility(View.VISIBLE);
-            } else {
-                ivPic2.setVisibility(View.GONE);
-            }
-            if (urls.length >= 3) {
-                ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
-                ivPic3.setVisibility(View.VISIBLE);
-            } else {
-                ivPic3.setVisibility(View.GONE);
-            }
-            if (urls.length >= 4) {
-                ivPic4.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
-                ivPic4.setVisibility(View.VISIBLE);
-            } else {
-                ivPic4.setVisibility(View.GONE);
-            }
+        if (bean.getHonorList() != null) {
+            workDetailHonorAdapter.setNewData(bean.getHonorList());
         }
-
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
