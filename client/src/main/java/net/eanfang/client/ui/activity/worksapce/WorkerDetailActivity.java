@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -85,14 +87,6 @@ public class WorkerDetailActivity extends BaseClientActivity {
     LinearLayout llArea;
     @BindView(R.id.rv_list1)
     RecyclerView rvList1;
-    @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
-    @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
-    @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
-    @BindView(R.id.iv_pic4)
-    SimpleDraweeView ivPic4;
     @BindView(R.id.iv_haopinglv)
     NumberProgressBar ivHaopinglv;
     @BindView(R.id.tv_haopinglv)
@@ -152,6 +146,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 评价订单
     @BindView(R.id.tv_evaluteOrder)
     TextView tvEvaluteOrder;
+    @BindView(R.id.rv_honor)
+    RecyclerView rvHonor;
 
     private boolean isTypeMore = false;
     // 业务领域查看更多
@@ -189,6 +185,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private int regionSize = 20;
 
+    /**
+     * 荣誉证书
+     */
+    private WorkDetailHonorAdapter workDetailHonorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +202,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private void initView() {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvHonor.setLayoutManager(layoutManager);
+
+        workDetailHonorAdapter = new WorkDetailHonorAdapter();
+        workDetailHonorAdapter.bindToRecyclerView(rvHonor);
 
         // 正常报修流程 获取数据
         toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
@@ -625,37 +632,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
     }
 
 
+    /**
+     * 荣誉证书
+     */
     private void initHonor(WorkerEntity bean) {
-        if (!StringUtils.isEmpty(bean.getVerifyEntity().getHonorPics())) {
-            String[] urls = bean.getVerifyEntity().getHonorPics().split(",");
-
-            if (urls.length >= 1) {
-                ivPic1.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
-                ivPic1.setVisibility(View.VISIBLE);
-            } else {
-                ivPic1.setVisibility(View.GONE);
-            }
-
-            if (urls.length >= 2) {
-                ivPic2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
-                ivPic2.setVisibility(View.VISIBLE);
-            } else {
-                ivPic2.setVisibility(View.GONE);
-            }
-            if (urls.length >= 3) {
-                ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
-                ivPic3.setVisibility(View.VISIBLE);
-            } else {
-                ivPic3.setVisibility(View.GONE);
-            }
-            if (urls.length >= 4) {
-                ivPic4.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[3]));
-                ivPic4.setVisibility(View.VISIBLE);
-            } else {
-                ivPic4.setVisibility(View.GONE);
-            }
+        if (bean.getHonorList() != null) {
+            workDetailHonorAdapter.setNewData(bean.getHonorList());
         }
-
     }
 
     @Override
