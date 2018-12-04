@@ -10,6 +10,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.User;
@@ -26,7 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 public class IMCardActivity extends BaseWorkerActivity {
@@ -69,7 +69,11 @@ public class IMCardActivity extends BaseWorkerActivity {
         }
 
         tvName.setText("真实姓名：" + mUser.getRealName());
-        tvBirthday.setText("生日：" + DateUtils.formatDate(mUser.getBirthday(), "yyyy-MM-dd"));
+        if (mUser.getBirthday() != null) {
+            tvBirthday.setText("生日：" + DateUtils.formatDate(mUser.getBirthday(), "yyyy-MM-dd"));
+        } else {
+            tvBirthday.setVisibility(View.GONE);
+        }
         tvArea.setText("所在区域：" + Config.get().getAddressByCode(mUser.getAreaCode()));
 
         if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
@@ -81,7 +85,9 @@ public class IMCardActivity extends BaseWorkerActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_delete:
-                delectFriend();
+                new TrueFalseDialog(this, "系统提示", "您确定删除该好友？", () -> {
+                    delectFriend();
+                }).showDialog();
                 break;
             case R.id.tv_chat:
                 RongIM.getInstance().startConversation(IMCardActivity.this, Conversation.ConversationType.PRIVATE, mUser.getAccId(), mUser.getNickName());
@@ -103,18 +109,8 @@ public class IMCardActivity extends BaseWorkerActivity {
                                 ToastUtil.get().showToast(IMCardActivity.this, "删除成功");
                                 endTransaction(true);
                             }));
-
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, mUser.getAccId(), new RongIMClient.ResultCallback<Boolean>() {
-                        @Override
-                        public void onSuccess(Boolean aBoolean) {
-
-                        }
-
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, mUser.getAccId(), null);
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, mUser.getAccId(), null);
                 }));
 
     }

@@ -22,6 +22,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
@@ -42,6 +43,7 @@ import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
@@ -52,6 +54,7 @@ import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.okgo.utils.HttpUtils.runOnUiThread;
 
 /**
  * Created by MrHou
@@ -214,11 +217,26 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         /**
          * 获取用户头像和名称
          */
-
         RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
             @Override
             public UserInfo getUserInfo(String s) {
-                setUserInfo(s);
+                //系统消息 也走这个  判断是个人的id 还是融云的群组id  设置系统消息的内容提供者
+                if (isInteger(s)) {
+                    setUserInfo(s);
+                } else {
+                    runOnUiThread(() -> {
+
+                        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                                .params("ryGroupId", s)
+                                .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
+
+                                    UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                                }));
+                    });
+
+                }
                 return null;
             }
         }, true);
@@ -469,5 +487,17 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         if (resultCode == RESULT_OK && requestCode == REQUST_REFRESH_CODE) {
             doHttpNoticeCount();
         }
+    }
+
+    /**
+     * 判断字符串是不是数字
+     *
+     * @param str
+     * @return
+     */
+
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
     }
 }

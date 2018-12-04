@@ -10,6 +10,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.User;
@@ -88,7 +89,9 @@ public class IMCardActivity extends BaseClientActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_delete:
-                delectFriend();
+                new TrueFalseDialog(this, "系统提示", "您确定删除该好友？", () -> {
+                    delectFriend();
+                }).showDialog();
                 break;
             case R.id.tv_chat:
                 RongIM.getInstance().startConversation(IMCardActivity.this, Conversation.ConversationType.PRIVATE, mUser.getAccId(), mUser.getNickName());
@@ -110,7 +113,7 @@ public class IMCardActivity extends BaseClientActivity {
                                 ToastUtil.get().showToast(IMCardActivity.this, "删除成功");
                                 endTransaction(true);
                             }));
-
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, mUser.getAccId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, mUser.getAccId(), new RongIMClient.ResultCallback<Boolean>() {
                         @Override
                         public void onSuccess(Boolean aBoolean) {

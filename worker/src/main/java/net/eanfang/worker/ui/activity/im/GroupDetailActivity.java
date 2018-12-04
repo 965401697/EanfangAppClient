@@ -396,7 +396,6 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
 
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
-
                                 for (Activity activity : BaseActivity.transactionActivities) {
 
                                     activity.finish();
@@ -412,7 +411,8 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                                 ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
                                 //清除删除的群组信息
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
-
+                                //清空本地的聊天信息
+                                RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, groupId, null);
                                 for (Activity activity : BaseActivity.transactionActivities) {
 
                                     activity.finish();

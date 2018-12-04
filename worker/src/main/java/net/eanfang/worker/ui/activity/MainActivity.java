@@ -29,6 +29,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
+import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.device.User;
@@ -479,6 +480,19 @@ public class MainActivity extends BaseActivity {
                     String extra = textMessage.getExtra();
                     JSONObject object = (JSONObject) JSONObject.parse(extra);
                     String id = (String) object.get("groupId");
+
+                    // 设置系统消息的内容提供者  要不然第一删除的时候  会话裂变不会显示群名称和图片
+                    runOnUiThread(() -> {
+                        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                                .params("ryGroupId", id)
+                                .execute(new EanfangCallback<GroupDetailBean>(MainActivity.this, true, GroupDetailBean.class, (bean) -> {
+
+                                    UserInfo userInfo = new UserInfo(id, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                                }));
+
+                    });
 
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, id, null);
 
