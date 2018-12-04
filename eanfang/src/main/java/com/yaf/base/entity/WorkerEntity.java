@@ -83,6 +83,9 @@ public class WorkerEntity implements Serializable {
     @TableField(exist = false)
     private Integer i;
 
+    @TableField(exist = false)
+    private List<HonorCertificateEntity> honorList;
+
     private Integer qualification;
 
     private Integer trainStatus;
@@ -276,7 +279,19 @@ public class WorkerEntity implements Serializable {
         this.workStatus = workStatus;
     }
 
+    /**
+     * 获取：honor_pics
+     */
+    public List<HonorCertificateEntity> getHonorList() {
+        return honorList;
+    }
 
+    /**
+     * 设置：honor_pics
+     */
+    public void setHonorList(List<HonorCertificateEntity> honorList) {
+        this.honorList = honorList;
+    }
 
     /*
      *===================================================================================================================================================

@@ -324,6 +324,9 @@ public class FileUtils {
 
     public static String bitmapToFile(Bitmap bitmap, String name) {
 
+        if (bitmap == null) {
+            return "";
+        }
 
         File f = new File(VIDEO_STORAGE_DIR + name + ".jpg");
 

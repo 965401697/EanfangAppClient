@@ -98,14 +98,16 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         switch (view.getId()) {
             // 完善资料
             case R.id.rl_prefectInfo:
-                if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
+
                 Bundle bundle_prefect = new Bundle();
                 bundle_prefect.putLong("orgid", mOrgId);
                 bundle_prefect.putString("orgName", mOrgName);
                 bundle_prefect.putString("assign", "prefect");
                 if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看 资料
+                    if (!PermKit.get().getWorkerCompanyDetailPerm()) return;
                     JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_prefect);
                 } else {
+                    if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
                     JumpItent.jump(CompanyManagerActivity.this, AuthCompanyFirstActivity.class, bundle_prefect);
                 }
                 break;
@@ -182,6 +184,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
      * 进行撤销认证操作
      */
     public void doUndoVerify() {
+        if (!PermKit.get().getWorkerCompanyBackPerm()) return;
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
             EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + mOrgId).
                     execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {

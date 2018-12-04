@@ -10,7 +10,7 @@
 
     <include layout="@layout/header" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/sv_worker_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -736,7 +736,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <TextView
@@ -756,48 +756,13 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_30">
+                android:padding ="@dimen/dimen_30">
 
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_honor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_pic1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
-
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_pic2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
-
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_pic3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
-
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_pic4"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
-                </LinearLayout>
+                    android:scrollbars="none" />
             </LinearLayout>
 
 
@@ -1046,7 +1011,7 @@
 
 
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

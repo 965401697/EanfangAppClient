@@ -12,6 +12,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -88,7 +89,7 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Size(min = 0, max = 255)
     private String avatarPhoto;
 
-    
+
     //无犯罪证明图片
     //@TableField(value = "crime_pic")
     @Size(min = 0, max = 50)
@@ -109,15 +110,12 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Size(min = 0, max = 50)
     private String idCardHand;
 
-    //honor_pics
-    //@TableField(value = "honor_pics")
-    @Size(min = 0, max = 200)
-    private String honorPics;
-
     //accident_pics
     //@TableField(value = "accident_pics")
     @Size(min = 0, max = 200)
     private String accidentPics;
+
+
 
     //个人简介
     //@TableField(value = "intro")
@@ -139,7 +137,7 @@ public class TechWorkerVerifyEntity implements Serializable {
     //@TableField(value = "update_time")
     private Date updateTime;
 
-    
+
     //认证时间
     //@TableField(value = "verify_time")
     private Date verifyTime;
@@ -337,19 +335,8 @@ public class TechWorkerVerifyEntity implements Serializable {
         return idCardHand;
     }
 
-    /**
-     * 设置：honor_pics
-     */
-    public void setHonorPics(String honorPics) {
-        this.honorPics = honorPics;
-    }
 
-    /**
-     * 获取：honor_pics
-     */
-    public String getHonorPics() {
-        return honorPics;
-    }
+
 
     /**
      * 设置：accident_pics
