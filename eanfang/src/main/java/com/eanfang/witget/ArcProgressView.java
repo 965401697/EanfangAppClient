@@ -131,7 +131,6 @@ public class ArcProgressView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.e(TAG, "onDraw--->");
 
         int left = mProgressWidth / 3 + getPaddingLeft();
         int right = left + 2 * mProgressR;

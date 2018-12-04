@@ -98,6 +98,8 @@
     <color name="color_repair_fault_num">#F35D3F</color>
     <color name="color_put_up_order">#C0C0C0</color>
     <color name="color_check_cancle">#FFFF7307</color>
-
+    <color name="color_worker_detail_top_back">#FF4988F5</color>
+    <color name="color_worker_detail_type">#F2F2F2</color>
+    <color name="color_worker_detail_top_grade">#2466D8</color>
 
 </resources>

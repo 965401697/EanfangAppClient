@@ -39,6 +39,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -283,6 +285,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
+        EventBus.getDefault().post("customerIsAuthing");
         finishSelf();
         EanfangApplication.get().closeActivity(AuthCompanyFirstActivity.class.getName());
     }
