@@ -3,11 +3,18 @@ package net.eanfang.client.ui.activity.worksapce.setting;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -23,6 +30,7 @@ import net.eanfang.client.ui.activity.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 
 /**
@@ -53,6 +61,10 @@ public class UpdatePasswordActivity extends BaseActivity {
     //倒计时
     @BindView(R.id.tv_verify)
     TextView tvVerify;
+    @BindView(R.id.iv_show)
+    ImageView ivShow;
+    @BindView(R.id.iv_confirm_show)
+    ImageView ivConfirmShow;
 
     //手机号
     private String mMobile = "";
@@ -60,8 +72,10 @@ public class UpdatePasswordActivity extends BaseActivity {
     private String mVerify = "";
     //新密码
     private String mPassword = "";
+    private boolean isHidden = true;
     // 确认密码
     private String mConfirmPassword = "";
+    private boolean isConfirmHidden = true;
 
     /**
      * 解散团队
@@ -128,20 +142,19 @@ public class UpdatePasswordActivity extends BaseActivity {
      * 提交
      */
     public void doSubmit() {
-        showToast("修改成功");
-//        EanfangHttp.post(UserApi.UPDATA_PASSWORD)
-//                .params("mobile", mMobile)
-//                .params("verifycode", mVerify)
-//                .params("newKey1", mPassword)//新密码
-//                .params("newKey2", mConfirmPassword)//确认密码
-//                .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
-//                    showToast("修改成功");
-//                    if (!mDisslove) {
-//                        signout();
-//                    } else {
-//                        finishSelf();
-//                    }
-//                }));
+        EanfangHttp.post(UserApi.UPDATA_PASSWORD)
+                .params("mobile", mMobile)
+                .params("verifycode", mVerify)
+                .params("newKey1", mPassword)//新密码
+                .params("newKey2", mConfirmPassword)//确认密码
+                .execute(new EanfangCallback<JSONObject>(UpdatePasswordActivity.this, true, JSONObject.class, (bean) -> {
+                    showToast("修改成功");
+                    if (!mDisslove) {
+                        signout();
+                    } else {
+                        finishSelf();
+                    }
+                }));
     }
 
     /**
@@ -204,5 +217,47 @@ public class UpdatePasswordActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         timer.cancel();
+    }
+
+    @OnClick({R.id.iv_show, R.id.iv_confirm_show})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_show:
+                if (isHidden) {
+                    etNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivShow.setImageResource(R.mipmap.ic_password_look);
+                } else {
+                    etNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivShow.setImageResource(R.mipmap.ic_password_hide);
+                }
+                isHidden = !isHidden;
+                etNewPassword.postInvalidate();
+                //切换后将EditText光标置于末尾
+                CharSequence charSequence = etNewPassword.getText();
+                if (charSequence instanceof Spannable) {
+                    Spannable spanText = (Spannable) charSequence;
+                    Selection.setSelection(spanText, charSequence.length());
+                }
+                break;
+            case R.id.iv_confirm_show:
+                if (isConfirmHidden) {
+                    etConifrmPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    ivConfirmShow.setImageResource(R.mipmap.ic_password_look);
+                } else {
+                    etConifrmPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    ivConfirmShow.setImageResource(R.mipmap.ic_password_hide);
+                }
+                isConfirmHidden = !isConfirmHidden;
+                etConifrmPassword.postInvalidate();
+                //切换后将EditText光标置于末尾
+                CharSequence charSequence_confirm = etConifrmPassword.getText();
+                if (charSequence_confirm instanceof Spannable) {
+                    Spannable spanText = (Spannable) charSequence_confirm;
+                    Selection.setSelection(spanText, charSequence_confirm.length());
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

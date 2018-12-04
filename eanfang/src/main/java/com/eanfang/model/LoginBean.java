@@ -30,6 +30,7 @@ public class LoginBean implements Serializable {
     private String token;
     private AccountEntity account;
 
+
     public List<String> getPerms() {
         if (perms == null) {
             return new ArrayList<>();

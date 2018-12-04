@@ -29,6 +29,8 @@ import lombok.Setter;
  */
 
 @TableName(value = "sys_account")
+@Getter
+@Setter
 public class AccountEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     //账号
@@ -132,6 +134,10 @@ public class AccountEntity implements Serializable {
     @Getter
     @Setter
     private String qrCode;
+    /**
+     * 判断当前密码是否是简单密码（空 || 默认手机后六位 || 默认用户名）
+     */
+    private boolean simplePwd;
 
     /**
      * 设置：账号

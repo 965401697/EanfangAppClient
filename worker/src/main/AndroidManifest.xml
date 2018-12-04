@@ -687,12 +687,13 @@
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamDetailActivity" />
         <!-- 创建团队的状态提示页 -->
         <activity android:name=".ui.activity.worksapce.contacts.CreatTeamStatusHintActivity" />
-        <!--IM的融云小窗列表-->
+        <!-- IM的融云小窗列表 -->
         <activity android:name=".ui.activity.im.OAListActivity" />
-        <!--创建群组的组织选择器-->
+        <!-- 创建群组的组织选择器 -->
         <activity android:name=".ui.activity.im.CreateGroupOrganizationActivity" />
-        <!--群组的全部成员的列表-->
-        <activity android:name=".ui.activity.im.GroupMoreMemberActivity"></activity>
+        <!-- 群组的全部成员的列表 -->
+        <activity android:name=".ui.activity.im.GroupMoreMemberActivity" />
+        <activity android:name=".ui.activity.worksapce.SetPasswordActivity"></activity>
     </application>
 
 </manifest>

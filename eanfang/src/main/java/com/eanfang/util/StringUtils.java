@@ -177,9 +177,9 @@ public class StringUtils {
      */
     public static boolean isPwdLegal(String pwd) {
         /**
-         * ^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$
+         * ^(?![0-9]+$)(?![A-Z]+$)(?![a-z]+$).{6,18}
          * */
-        String REGEX_PWD = "^(?![0-9]+$)(?![A-Z]+$)(?![a-z]+$)[0-9A-Za-z]{6,16}$";
+        String REGEX_PWD = "^(?=.*[a-z])(?=.*\\d)[\\s\\S]{5,18}$";
 
         if (TextUtils.isEmpty(pwd)) {
             return false;
