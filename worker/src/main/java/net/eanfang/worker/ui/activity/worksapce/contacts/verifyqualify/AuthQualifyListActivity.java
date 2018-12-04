@@ -23,7 +23,9 @@ import com.yaf.base.entity.AptitudeCertificateEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.adapter.QualifyListAdapter;
+import net.eanfang.worker.ui.fragment.ContactsFragment;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -144,6 +146,8 @@ public class AuthQualifyListActivity extends BaseActivity {
         JumpItent.jump(AuthQualifyListActivity.this, StateChangeActivity.class, bundle);
         EanfangApplication.get().closeActivity(AuthQualifyFirstActivity.class.getName());
         EanfangApplication.get().closeActivity(AuthQualifySecondActivity.class.getName());
+        EventBus.getDefault().post("workerIsAuthing");
+        ContactsFragment.isRefresh = true;//从认领企业过来 完成认证刷新公司
         finishSelf();
     }
 

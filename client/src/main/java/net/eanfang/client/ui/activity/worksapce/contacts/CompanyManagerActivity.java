@@ -21,6 +21,9 @@ import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.widget.DissloveTeamDialog;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -177,6 +180,9 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
             EanfangHttp.post(NewApiService.COMPANY_ENTERPRISE_AUTH_REVOKE + mOrgId)
                     .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                        showToast("撤销成功");
+                        isAuth = "0";
+                        tvAgainAuth.setVisibility(View.GONE);
                     }));
         }).showDialog();
     }
@@ -206,5 +212,12 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     public void doConfirm() {
         ContactsFragment.isDisslove = true;
         finishSelf();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)//MAIN代表主线程
+    public void receiveMessage(String message) {//该方法名可更改，不影响任何东西。
+        if (message.equals("customerIsAuthing")) {
+            isAuth = "1";
+        }
     }
 }
