@@ -9,6 +9,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.model.WorkspaceInstallBean;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.V;
 
 import net.eanfang.client.R;
 
@@ -34,11 +35,11 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
         helper.setText(R.id.tv_company_name, item.getClientCompanyName() + "  (" + item.getConnector() + ")")
                 .setText(R.id.tv_order_id, "单号：" + item.getOrderNo())
                 //下单时间 显示错误 已修改
-                .setText(R.id.tv_order, "下单：" + item.getCreateTime())
+                .setText(R.id.tv_order, "下单：" + V.v(() -> item.getCreateTime()))
                 .setText(R.id.tv_time, "工期：" + Config.get().getConstBean().getData()
-                        .getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).get(item.getPredictTime()))
-                .setText(R.id.tv_count_money, Config.get().getConstBean().getData().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).get(item.getBudget()))
-                .setText(R.id.tv_business, "业务：" + Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
+                        .getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).get(V.v(() -> item.getPredictTime())))
+                .setText(R.id.tv_count_money, Config.get().getConstBean().getData().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).get(V.v(() -> item.getBudget())))
+                .setText(R.id.tv_business, "业务：" + Config.get().getBusinessNameByCode(V.v(() -> item.getBusinessOneCode()), 1));
         if (item.getStatus() == 2) {
             if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
                 helper.getView(R.id.tv_finish).setVisibility(View.VISIBLE);

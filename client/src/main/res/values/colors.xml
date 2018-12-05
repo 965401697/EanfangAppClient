@@ -47,13 +47,11 @@
     <color name="color_home_data_two">#E6CA0A</color>
     <color name="color_home_data_three">#D91203</color>
     <color name="color_home_data_four">#CDCDCD</color>
-    <color name="color_worker_detail_type">#F2F2F2</color>
     <color name="color_service_deiveder">#CDCDCD</color>
-    <color name="color_worker_detail_top_back">#FF4988F5</color>
-    <color name="color_worker_detail_top_grade">#2466D8</color>
 
     <color name="color_auth_top_back">#FFFBEADA</color>
     <color name="color_auth_top_text">#FFCB7A30</color>
     <color name="color_monitor_consulting">#363636</color>
+    <color name="color_worker_detail_circle">#FB973B</color>
 
 </resources>

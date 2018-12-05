@@ -669,7 +669,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             radioButton.setBackground(null);
             radioButton.setButtonDrawable(null);
             radioButton.setTextColor(Color.parseColor("#666666"));
-            radioButton.setBackgroundResource(R.drawable.bg_client_worker_detail_type);
+            radioButton.setBackgroundResource(R.drawable.bg_worker_detail_type);
             parent.addView(radioButton);
         }
     }
