@@ -38,6 +38,8 @@ public class DesignOrderDetailActivity extends BaseWorkerActivity {
     TextView tvOrderTime;
     @BindView(R.id.tv_reply)
     TextView tvReply;
+    @BindView(R.id.tv_limit)
+    TextView tvLimit;
 
     private String id;
 
@@ -75,5 +77,6 @@ public class DesignOrderDetailActivity extends BaseWorkerActivity {
         tvOrderNum.setText(String.valueOf(bean.getOrderNum()));
         tvOrderTime.setText(bean.getCreateTime());
         tvReply.setText(GetConstDataUtils.getBudgetList().get(bean.getBudgetLimit()));
+        tvLimit.setText(GetConstDataUtils.getRevertList().get(bean.getRevertTimeLimit()));
     }
 }
