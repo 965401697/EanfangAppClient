@@ -196,6 +196,21 @@ public class InstallActivity extends BaseClientActivity {
             Toast.makeText(this, "业务类型不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
+        String time = tvTime.getText().toString().trim();
+        if (TextUtils.isEmpty(time)) {
+            Toast.makeText(this, "回复时限不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String projectTime = tvProjectTime.getText().toString().trim();
+        if (TextUtils.isEmpty(projectTime)) {
+            Toast.makeText(this, "预计工期不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String mBudget = tvBudget.getText().toString().trim();
+        if (TextUtils.isEmpty(mBudget)) {
+            Toast.makeText(this, "预算范围不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
         String desc = etDesc.getText().toString().trim();

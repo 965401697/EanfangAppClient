@@ -64,7 +64,7 @@
     <string name="text_service_join">2.加入/创建企业</string>
 
     <string name="text_service_join_content">创建部门，添加人员，以及权限角色匹配</string>
-    <string name="text_service_join_content_nav">通讯录 >> 创建团队 >> 添加员工 >> 登陆后台 >> 员工授权</string>
+    <string name="text_service_join_content_nav">通讯录 >> 创建团队 >> 添加员工 >> 登录后台 >> 员工授权</string>
     <string name="text_service_finish_info">3.完善公司资料</string>
     <string name="text_service_finish_info_nav">通讯录 >> 公司设置 >> 完善资料 >> 提交认证</string>
     <string name="text_service_more">4.使用更多功能</string>
