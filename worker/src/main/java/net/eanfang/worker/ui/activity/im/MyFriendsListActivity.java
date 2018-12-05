@@ -66,11 +66,14 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                     if (list.size() > 0) {
 
                         for (FriendListBean bean : list) {
-                            // 根据姓名获取拼音
-                            bean.setPinyin(bean.getNickName());
-                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
-                            if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
-                                bean.setFirstLetter("#");
+                            //防止角标越界
+                            if (bean.getNickName().length() > 0) {
+                                // 根据姓名获取拼音
+                                bean.setPinyin(bean.getNickName());
+                                bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
+                                if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                                    bean.setFirstLetter("#");
+                                }
                             }
                         }
 
