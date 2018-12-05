@@ -50,6 +50,10 @@ public class EquipmentDetailActivity extends BaseClientActivity {
     SimpleDraweeView ivPicTwo;
     @BindView(R.id.iv_pic_three)
     SimpleDraweeView ivPicThree;
+    @BindView(R.id.iv_pic_four)
+    SimpleDraweeView ivPicFour;
+    @BindView(R.id.iv_pic_five)
+    SimpleDraweeView ivPicFive;
     @BindView(R.id.tv_position)
     TextView tvPosition;
     @BindView(R.id.tv_position_num)
@@ -76,6 +80,10 @@ public class EquipmentDetailActivity extends BaseClientActivity {
     SimpleDraweeView ivLocaleTwo;
     @BindView(R.id.iv_loacle_three)
     SimpleDraweeView ivLoacleThree;
+    @BindView(R.id.iv_locale_four)
+    SimpleDraweeView ivLocaleFour;
+    @BindView(R.id.iv_loacle_five)
+    SimpleDraweeView ivLoacleFive;
     @BindView(R.id.tv_notice)
     TextView tvNotice;
 
@@ -136,6 +144,12 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         if (picture != null && picture.length >= 3) {
             ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
         }
+        if (picture != null && picture.length >= 4) {
+            ivPicFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[3]));
+        }
+        if (picture != null && picture.length >= 5) {
+            ivPicFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[4]));
+        }
 
         tvNotice.setText(bean.getDeviceInfo());
 
@@ -186,6 +200,14 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         if (locationPictures != null && locationPictures.length >= 3) {
             ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
         }
+
+        if (picture != null && picture.length >= 4) {
+            ivLocaleFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[3]));
+        }
+        if (picture != null && picture.length >= 5) {
+            ivLoacleFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[4]));
+        }
+
     }
 
     @OnClick({R.id.tv_equipment_paramter, R.id.tv_history, R.id.tv_right})
