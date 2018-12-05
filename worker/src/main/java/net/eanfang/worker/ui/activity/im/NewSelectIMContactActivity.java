@@ -410,6 +410,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         //防止创建群组的人员一个头像图片都没有 造成的空指针崩溃
         if (userIconList.size() == 0) {
             ToastUtil.get().showToast(NewSelectIMContactActivity.this, "请先上传群头像");
+            return;
         }
 
         //合成头像
