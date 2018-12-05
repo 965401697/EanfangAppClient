@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.worktalk;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -173,7 +175,16 @@ public class WorkTalkCreateActivity extends BaseActivity {
     }
 
     private void initView() {
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) tv_company_name.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(tv_company_name.getApplicationWindowToken(), 0);
+                }
+                finishSelf();
+            }
+        });
         setTitle("面谈员工");
         mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
         mCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();

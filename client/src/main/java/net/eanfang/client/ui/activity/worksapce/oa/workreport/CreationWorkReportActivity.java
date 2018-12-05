@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.oa.workreport;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -1030,7 +1032,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this),"工作汇报").send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this), "工作汇报").send();
 
 
                     });
@@ -1153,6 +1155,13 @@ public class CreationWorkReportActivity extends BaseClientActivity {
      */
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃工作汇报？", () -> {
+            //软盘关闭 聊天界面进入的话 软盘和操作板叠加
+            InputMethodManager imm = (InputMethodManager) etTaskName.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(etTaskName.getApplicationWindowToken(), 0);
+            }
+
+
             finish();
         }).showDialog();
     }

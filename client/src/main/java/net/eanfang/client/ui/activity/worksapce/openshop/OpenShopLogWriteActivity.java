@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,7 +122,17 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
         setContentView(R.layout.activity_open_shop_log_write);
         ButterKnife.bind(this);
         setTitle("开店日志");
-        setLeftBack();
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //关闭软盘
+                InputMethodManager imm = (InputMethodManager) etCompanyName.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(etCompanyName.getApplicationWindowToken(), 0);
+                }
+                finishSelf();
+            }
+        });
         initViews();
     }
 
