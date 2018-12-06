@@ -80,7 +80,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_person_name, false);
         } else {
             helper.setVisible(R.id.tv_person_name, true);
-            helper.setText(R.id.tv_person_name, "负责：" + orgName);
+            helper.setText(R.id.tv_person_name, "技师：" + orgName);
         }
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);

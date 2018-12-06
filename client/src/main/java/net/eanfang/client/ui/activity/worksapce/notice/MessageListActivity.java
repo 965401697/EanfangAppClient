@@ -145,6 +145,9 @@ public class MessageListActivity extends BaseClientActivity implements
             } else {
                 messageListAdapter.getData().clear();
                 messageListAdapter.setNewData(mDataList);
+                if (mDataList.size() < 10) {
+                    messageListAdapter.loadMoreEnd();
+                }
                 setRightVisible();
             }
         } else {

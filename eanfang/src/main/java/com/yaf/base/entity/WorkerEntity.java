@@ -70,6 +70,9 @@ public class WorkerEntity implements Serializable {
     //@TableField(value = "work_status")
     private Integer workStatus;
 
+    // 技师认证状态
+    private Integer verifyStatus;
+
     //技师最新上报位置，经度
     //@TableField(value = "lon")
     private String lon;

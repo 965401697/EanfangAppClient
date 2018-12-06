@@ -1,6 +1,7 @@
 package com.eanfang.model;
 
 import com.yaf.base.entity.WorkerEntity;
+import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
@@ -88,6 +89,7 @@ public class CollectionWorkerListBean implements Serializable {
         private int type;
         private UserEntity assigneeUserEntity;
         private WorkerEntity workerEntity;
+        private OrgEntity assigneeCompanyEntity;
 
         public Long getAssigneeId() {
             return assigneeId;
@@ -143,6 +145,14 @@ public class CollectionWorkerListBean implements Serializable {
 
         public void setWorkerEntity(WorkerEntity workerEntity) {
             this.workerEntity = workerEntity;
+        }
+
+        public OrgEntity getAssigneeCompanyEntity() {
+            return assigneeCompanyEntity;
+        }
+
+        public void setAssigneeCompanyEntity(OrgEntity assigneeCompanyEntity) {
+            this.assigneeCompanyEntity = assigneeCompanyEntity;
         }
     }
 }

@@ -20,7 +20,8 @@
             android:background="@color/color_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dimen_38">
+            android:padding="@dimen/dimen_38"
+            android:visibility="gone">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdv_workerHead"

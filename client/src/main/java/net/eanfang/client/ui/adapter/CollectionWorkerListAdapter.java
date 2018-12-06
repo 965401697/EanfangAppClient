@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -11,7 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
-import java.util.List;
+import static com.eanfang.util.V.v;
 
 
 /**
@@ -21,9 +22,8 @@ import java.util.List;
 
 public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWorkerListBean.ListBean, BaseViewHolder> {
 
-    public CollectionWorkerListAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
-        this.mData = data;
+    public CollectionWorkerListAdapter() {
+        super(R.layout.item_collection_worker);
     }
 
     @Override
@@ -32,13 +32,12 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
         if (!StringUtils.isEmpty(item.getAssigneeUserEntity().getAccountEntity().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeUserEntity().getAccountEntity().getAvatar()));
         }
-        // 公司名称
-        if (item.getWorkerEntity() != null) {
-            helper.setText(R.id.tv_companyName, item.getWorkerEntity().getCompanyEntity().getOrgName());
+        if (item.getAssigneeCompanyEntity() != null) {
+            helper.setText(R.id.tv_companyName, item.getAssigneeCompanyEntity().getOrgName());
+        }
+        if (item.getAssigneeUserEntity() != null) {
             helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
         }
-
-//        helper.setText(R.id.tv_time, item.getCreateTime());
         if (item.getWorkerEntity() != null) {
             if (item.getWorkerEntity().getPublicPraise() != 0) {
                 helper.setText(R.id.tv_koubei, item.getWorkerEntity().getPublicPraise() / 100 + "分");
@@ -47,5 +46,47 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
                 helper.setText(R.id.tv_haopinglv, item.getWorkerEntity().getGoodRate() + "%");
             }
         }
+        if (item.getWorkerEntity().getPublicPraise() != 0) {
+            // 口碑
+            helper.setText(R.id.tv_koubei, String.valueOf(item.getWorkerEntity().getPublicPraise()));
+        }
+        if (item.getWorkerEntity().getGoodRate() != 0) {
+            // 好评率
+            java.text.NumberFormat percentFormat = java.text.NumberFormat.getPercentInstance();
+
+            //自动转换成百分比显示..
+            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double) (item.getWorkerEntity().getGoodRate() * 0.01), 2) + "%"));
+        }
+        // 认证
+        if (v(() -> item.getWorkerEntity().getVerifyStatus()) != null && item.getWorkerEntity().getVerifyStatus() == 1) {
+            helper.getView(R.id.tv_auth).setVisibility(View.VISIBLE);
+        } else {
+            helper.getView(R.id.tv_auth).setVisibility(View.GONE);
+        }
+        //  培训状态 （0否，1是）
+        if (v(() -> item.getWorkerEntity().getTrainStatus()) != null && item.getWorkerEntity().getTrainStatus() == 0) {
+            helper.getView(R.id.tv_train).setVisibility(View.GONE);
+        } else if (v(() -> item.getWorkerEntity().getTrainStatus()) != null && item.getWorkerEntity().getTrainStatus() == 1) {
+            helper.getView(R.id.tv_train).setVisibility(View.VISIBLE);
+        }
+        // 资质  0否，1是
+        if (v(() -> item.getWorkerEntity().getQualification()) != null && item.getWorkerEntity().getQualification() == 0) {
+            helper.getView(R.id.tv_qualification).setVisibility(View.GONE);
+        } else if (v(() -> item.getWorkerEntity().getQualification()) != null && item.getWorkerEntity().getQualification() == 1) {
+            helper.getView(R.id.tv_qualification).setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    /**
+     * 保留几位小数
+     *
+     * @param a
+     * @param n
+     * @return
+     */
+    public double SplitAndRound(double a, int n) {
+        a = a * Math.pow(10, n);
+        return (Math.round(a)) / (Math.pow(10, n));
     }
 }

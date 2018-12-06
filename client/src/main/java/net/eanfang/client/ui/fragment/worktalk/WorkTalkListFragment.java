@@ -200,6 +200,9 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.setNewData(workTalkBeanList);
                 workTalkAdapter.disableLoadMoreIfNotFullPage();
+                if (workTalkBeanList.size() < 10) {
+                    workTalkAdapter.loadMoreEnd();
+                }
             }
         } else {
             if (workTalkBeanList.size() == 0 || workTalkBeanList == null) {

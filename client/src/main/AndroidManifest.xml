@@ -646,6 +646,8 @@
         <activity android:name=".ui.activity.worksapce.oa.check.FiltrateCheckActivity" />
         <activity android:name=".ui.activity.worksapce.oa.check.DealWithFirstActivity" />
         <activity android:name=".ui.activity.worksapce.SetPasswordActivity"></activity>
+        <!-- 评价展示 -->
+        <activity android:name=".ui.activity.worksapce.EvaluateShowActivity"></activity>
     </application>
 
 </manifest>

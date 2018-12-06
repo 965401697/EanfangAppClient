@@ -53,10 +53,9 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
             java.text.NumberFormat percentFormat = java.text.NumberFormat.getPercentInstance();
 
             //自动转换成百分比显示..
-            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double)(item.getGoodRate() * 0.01),2) + "%"));
+            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double) (item.getGoodRate() * 0.01), 2) + "%"));
         }
-
-        // 认证
+// 认证
         if (v(() -> item.getVerifyEntity().getStatus()) != null && item.getVerifyEntity().getStatus() == 2) {
             helper.getView(R.id.tv_auth).setVisibility(View.VISIBLE);
         } else {
@@ -74,6 +73,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         } else if (v(() -> item.getQualification()) != null && item.getQualification() == 1) {
             helper.getView(R.id.tv_qualification).setVisibility(View.VISIBLE);
         }
+
 
 //        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;
 //        helper.setRating(R.id.rb_star1, stars);

@@ -135,6 +135,9 @@ public class SystemNoticeActivity extends BaseActivity implements
             } else {
                 messageListAdapter.getData().clear();
                 messageListAdapter.setNewData(mDataList);
+                if (mDataList.size() < 10) {
+                    messageListAdapter.loadMoreEnd();
+                }
                 setRightVisible();
             }
         } else {
