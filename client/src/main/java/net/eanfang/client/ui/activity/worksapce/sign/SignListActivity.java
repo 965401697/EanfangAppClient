@@ -155,6 +155,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             } else {
                 signListAdapter.getData().clear();
                 signListAdapter.setNewData(signListBeanList);
+                if (signListBeanList.size() < 10) {
+                    signListAdapter.loadMoreEnd();
+                }
             }
         } else {
             if (signListBeanList.size() == 0 || signListBeanList == null) {

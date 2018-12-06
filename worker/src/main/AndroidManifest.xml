@@ -694,6 +694,8 @@
         <!-- 群组的全部成员的列表 -->
         <activity android:name=".ui.activity.im.GroupMoreMemberActivity" />
         <activity android:name=".ui.activity.worksapce.SetPasswordActivity"></activity>
+        <!-- 评价展示 -->
+        <activity android:name=".ui.activity.worksapce.EvaluateShowActivity"></activity>
     </application>
 
 </manifest>

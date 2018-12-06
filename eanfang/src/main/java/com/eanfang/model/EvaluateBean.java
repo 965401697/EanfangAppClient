@@ -7,15 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yaosheng on 2017/6/28.
+ * Created by Administrator on 2017/6/22.
  */
 
-public class GiveEvaluateBean implements Serializable {
-
+public class EvaluateBean implements Serializable {
 
     /**
      * currPage : 1
-     * list : [{"createTime":"2017-12-20 17:53","createUser":{"accId":1,"accountEntity":{"accId":1,"avatar":"4","realName":"锅子"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1},"createUserId":1,"id":6,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148801","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"accId":"936487014348365825","accountEntity":{"accId":"936487014348365825","avatar":"0","realName":"张三"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806338"}},{"createTime":"2017-12-20 17:55","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":7,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148800","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 18:06","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":8,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148803","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:43","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":9,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148804","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:50","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":10,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148805","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:54","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":11,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148806","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}},{"createTime":"2017-12-20 19:57","createUser":{"$ref":"$.data.list[0].createUser"},"createUserId":1,"id":12,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148802","orderNum":"MO1712121028320","ownerId":"936487014465806338","ownerUser":{"$ref":"$.data.list[0].ownerUser"}}]
+     * list : [{"createTime":"2017-12-20 17:53","createUserId":1,"id":6,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148801","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 17:55","createUserId":1,"id":7,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148800","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 18:06","createUserId":1,"id":8,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148803","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:43","createUserId":1,"id":9,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148804","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:50","createUserId":1,"id":10,"item1":5,"item2":5,"item3":5,"item4":5,"item5":5,"orderId":"940407881491148805","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:54","createUserId":1,"id":11,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148806","orderNum":"MO1712121028320","ownerId":"936487014465806338"},{"createTime":"2017-12-20 19:57","createUserId":1,"id":12,"item1":2,"item2":3,"item3":4,"item4":5,"item5":1,"orderId":"940407881491148802","orderNum":"MO1712121028320","ownerId":"936487014465806338"}]
      * pageSize : 10
      * totalCount : 7
      * totalPage : 1
@@ -73,7 +72,6 @@ public class GiveEvaluateBean implements Serializable {
     public static class ListBean implements Serializable {
         /**
          * createTime : 2017-12-20 17:53
-         * createUser : {"accId":1,"accountEntity":{"accId":1,"avatar":"4","realName":"锅子"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":1}
          * createUserId : 1
          * id : 6
          * item1 : 5
@@ -84,11 +82,9 @@ public class GiveEvaluateBean implements Serializable {
          * orderId : 940407881491148801
          * orderNum : MO1712121028320
          * ownerId : 936487014465806338
-         * ownerUser : {"accId":"936487014348365825","accountEntity":{"accId":"936487014348365825","avatar":"0","realName":"张三"},"companyAdmin":false,"superAdmin":false,"sysAdmin":false,"userId":"936487014465806338"}
          */
 
         private String createTime;
-        private UserEntity createUser;
         private Long createUserId;
         private Long id;
         private int item1;
@@ -99,7 +95,9 @@ public class GiveEvaluateBean implements Serializable {
         private Long orderId;
         private String orderNum;
         private Long ownerId;
+        private UserEntity createUser;
         private UserEntity ownerUser;
+        private int favorableRate;
 
         public String getCreateTime() {
             return createTime == null ? "" : createTime;
@@ -107,14 +105,6 @@ public class GiveEvaluateBean implements Serializable {
 
         public void setCreateTime(String createTime) {
             this.createTime = createTime;
-        }
-
-        public UserEntity getCreateUser() {
-            return createUser;
-        }
-
-        public void setCreateUser(UserEntity createUser) {
-            this.createUser = createUser;
         }
 
         public Long getCreateUserId() {
@@ -197,12 +187,28 @@ public class GiveEvaluateBean implements Serializable {
             this.ownerId = ownerId;
         }
 
+        public UserEntity getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(UserEntity createUser) {
+            this.createUser = createUser;
+        }
+
         public UserEntity getOwnerUser() {
             return ownerUser;
         }
 
         public void setOwnerUser(UserEntity ownerUser) {
             this.ownerUser = ownerUser;
+        }
+
+        public int getFavorableRate() {
+            return favorableRate;
+        }
+
+        public void setFavorableRate(int favorableRate) {
+            this.favorableRate = favorableRate;
         }
     }
 }

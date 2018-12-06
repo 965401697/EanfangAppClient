@@ -19,7 +19,8 @@
             android:background="@color/color_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="@dimen/dimen_38">
+            android:padding="@dimen/dimen_38"
+            android:visibility="gone">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sdv_workerHead"
@@ -97,8 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white"
-            android:visibility="gone"
-            android:padding="@dimen/dimen_30">
+            android:padding="@dimen/dimen_30"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -216,8 +217,8 @@
             android:layout_height="wrap_content"
             android:background="#fff"
             android:orientation="horizontal"
-            android:visibility="gone"
-            android:padding="15dp">
+            android:padding="15dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -247,9 +248,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:visibility="gone"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="15dp"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -307,7 +308,6 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -325,6 +325,5 @@
             android:textColor="@color/color_white"
             android:textSize="@dimen/textSize_13" />
     </LinearLayout>
-
 
 </LinearLayout>

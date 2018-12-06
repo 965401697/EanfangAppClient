@@ -5,13 +5,11 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.ReceivedEvaluateBean;
+import com.eanfang.model.EvaluateBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
-
-import java.util.List;
 
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
@@ -19,17 +17,17 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * 我的-评价的adapter
  * Created by Administrator on 2017/3/15.
  */
-public class EvaluateAdapter extends BaseQuickAdapter<ReceivedEvaluateBean.ListBean, BaseViewHolder> {
-    public EvaluateAdapter(int layoutResId, List data) {
-        super(layoutResId, data);
+public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, BaseViewHolder> {
+    public EvaluateAdapter() {
+        super(R.layout.item_evaluate);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ReceivedEvaluateBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, EvaluateBean.ListBean item) {
         SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
 
         if (!StringUtils.isEmpty(item.getCreateUser().getAccountEntity().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER+item.getCreateUser().getAccountEntity().getAvatar()));
+            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getCreateUser().getAccountEntity().getAvatar()));
         }
 
         int totalStar = item.getItem1() + item.getItem2() +
