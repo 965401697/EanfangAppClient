@@ -14,6 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.takevideo.TakeVdideoMode;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -107,23 +108,27 @@ public class ConversationActivity extends BaseClientActivity {
 //                .params("groupId", id)
                 .params("ryGroupId", mId)
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
+                    if (bean != null) {
+                        if (bean.getList() != null) {
 
-                    if (bean.getList() != null) {
+                            for (int i = 0; i < bean.getList().size(); i++) {
 
-                        for (int i = 0; i < bean.getList().size(); i++) {
+                                UserInfo userInfo = new UserInfo(String.valueOf(bean.getList().get(i).getAccId()), bean.getList().get(i).getAccountEntity().getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getList().get(i).getAccountEntity().getAvatar()));
 
-                            UserInfo userInfo = new UserInfo(String.valueOf(bean.getList().get(i).getAccId()), bean.getList().get(i).getAccountEntity().getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getList().get(i).getAccountEntity().getAvatar()));
-
-                            userInfoList.add(userInfo);
-                        }
-                        RongIM.getInstance().setGroupMembersProvider(new RongIM.IGroupMembersProvider() {
-                            @Override
-                            public void getGroupMembers(String groupId, RongIM.IGroupMemberCallback callback) {
-
-                                callback.onGetGroupMembersResult(userInfoList); // 调用 callback 的 onGetGroupMembersResult 回传群组信息
-
+                                userInfoList.add(userInfo);
                             }
-                        });
+                            RongIM.getInstance().setGroupMembersProvider(new RongIM.IGroupMembersProvider() {
+                                @Override
+                                public void getGroupMembers(String groupId, RongIM.IGroupMemberCallback callback) {
+
+                                    callback.onGetGroupMembersResult(userInfoList); // 调用 callback 的 onGetGroupMembersResult 回传群组信息
+
+                                }
+                            });
+                        }
+                    } else {
+                        ToastUtil.get().showToast(ConversationActivity.this, "群组已解散");
+                        finishSelf();
                     }
                 }));
 

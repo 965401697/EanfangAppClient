@@ -126,6 +126,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 .params("ryGroupId", groupId)
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
 
+
+                    if(bean ==null)return;//接口改过，造成了
+
                     if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
                     if (temp.size() > 0)
                         temp.clear();
