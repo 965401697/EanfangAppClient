@@ -15,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.ProtectionLogEntity;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
@@ -55,12 +56,12 @@ public class DefendLogFragment extends TemplateItemListFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 if (!PermKit.get().getProtectionDetailPrem()) return;
-
+                UserEntity bean = ((ProtectionLogEntity) (adapter.getData().get(position))).getAssigneeUser();
                 startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
                 //刷新数据
-                if (getmTitle().equals("未读日志") && EanfangApplication.get().getAccId().equals(((ProtectionLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccId())) {
+                if (getmTitle().equals("未读日志") && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
                     adapter.remove(position);
-                } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && EanfangApplication.get().getAccId().equals(((ProtectionLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccId())) {
+                } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
                     ((ProtectionLogEntity) adapter.getData().get(position)).setStatus(1);
                     adapter.notifyItemChanged(position);
                 }
@@ -80,9 +81,13 @@ public class DefendLogFragment extends TemplateItemListFragment {
                     //刷新数据
 
                     startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())));
-
-                    if (getmTitle().equals("未读日志")) {
+                    UserEntity bean = ((ProtectionLogEntity) (adapter.getData().get(position))).getAssigneeUser();
+                    //刷新数据
+                    if (getmTitle().equals("未读日志") && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
                         adapter.remove(position);
+                    } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
+                        ((ProtectionLogEntity) adapter.getData().get(position)).setStatus(1);
+                        adapter.notifyItemChanged(position);
                     }
                 default:
                     break;

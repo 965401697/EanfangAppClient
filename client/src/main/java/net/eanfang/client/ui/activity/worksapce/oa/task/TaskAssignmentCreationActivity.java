@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.oa.task;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -618,6 +620,13 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
      */
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃布置任务？", () -> {
+
+            InputMethodManager imm = (InputMethodManager) etTaskName.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(etTaskName.getApplicationWindowToken(), 0);
+            }
+
+
             finish();
         }).showDialog();
     }

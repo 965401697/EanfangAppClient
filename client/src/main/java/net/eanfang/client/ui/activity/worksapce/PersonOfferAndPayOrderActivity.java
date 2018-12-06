@@ -49,7 +49,7 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
     }
 
     private void initView() {
-        setTitle("订单明细");
+        setTitle("维修报价");
         setLeftBack();
         setLeftBack();
 

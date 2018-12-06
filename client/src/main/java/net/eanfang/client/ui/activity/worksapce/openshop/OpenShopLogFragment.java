@@ -15,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.OpenShopLogEntity;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
@@ -56,18 +57,21 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 
                 if (!PermKit.get().getOpenShopDetailPrem()) return;
 
+                UserEntity bean = ((OpenShopLogEntity) (adapter.getData().get(position))).getAssigneeUser();
+
                 //刷新数据
                 startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).
                         putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
 
                 if (getmTitle().equals("未读日志")) {
-                    if (String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getAssigneeUser().getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
+                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
                         adapter.remove(position);
-                } else if (getmTitle().equals("已读日志")) {
+                } else if (getmTitle().equals("全部日志")) {
+                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                        ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
+                        adapter.notifyItemChanged(position);
+                    }
 
-                } else {
-                    ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
-                    adapter.notifyItemChanged(position);
                 }
 
             }
@@ -85,11 +89,17 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                     break;
                 case R.id.tv_detail:
                     //刷新数据
-
+                    UserEntity bean = ((OpenShopLogEntity) (adapter.getData().get(position))).getAssigneeUser();
                     startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
-
                     if (getmTitle().equals("未读日志")) {
-                        adapter.remove(position);
+                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
+                            adapter.remove(position);
+                    } else if (getmTitle().equals("全部日志")) {
+                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                            ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
+                            adapter.notifyItemChanged(position);
+                        }
+
                     }
                     break;
                 default:
@@ -98,6 +108,7 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
         });
 
     }
+
 
     @Override
     protected void getData() {

@@ -195,8 +195,14 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
             }
         }
 
-        if (!userIconList.contains(EanfangApplication.get().getUser().getAccount().getAvatar()))
+        if (!userIconList.contains(EanfangApplication.get().getUser().getAccount().getAvatar())) {
             userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+        }
+        //防止创建群组的人员一个头像图片都没有 造成的空指针崩溃
+        if (userIconList.size() == 0) {
+            ToastUtil.get().showToast(CreateGroupActivity.this, "请先上传群头像");
+            return;
+        }
         //合成头像
 
         CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片

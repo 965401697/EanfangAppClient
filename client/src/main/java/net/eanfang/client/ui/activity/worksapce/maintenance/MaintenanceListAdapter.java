@@ -78,7 +78,7 @@ public class MaintenanceListAdapter extends BaseQuickAdapter<ShopMaintenanceOrde
         } else if (item.getStatus() == 4) {
             helper.setText(R.id.tv_state, "待验收");
             helper.setText(R.id.tv_do_second, "确认完工");
-            helper.setText(R.id.tv_do_first, "查看故障处理");
+            helper.setText(R.id.tv_do_first, "查看维保处理");
             helper.getView(R.id.tv_do_first).setVisibility(View.VISIBLE);
             helper.getView(R.id.tv_do_second).setVisibility(View.VISIBLE);
         } else if (item.getStatus() == 5) {

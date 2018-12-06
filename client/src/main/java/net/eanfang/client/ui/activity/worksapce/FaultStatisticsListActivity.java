@@ -91,57 +91,60 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
                 } else if (checkedId == R.id.rb_week) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
-                    mEndTime =GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
+                    mEndTime = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
                     mStartTime = GetDateUtils.dateToDateString(GetDateUtils.getLastWeek(GetDateUtils.dateToDateString(GetDateUtils.getDateNow())));
                     refresh();
                 } else if (checkedId == R.id.rb_thirty_day) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
-                    mEndTime =GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
+                    mEndTime = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
                     mStartTime = GetDateUtils.dateToDateString(GetDateUtils.getLastMonth(GetDateUtils.dateToDateString(GetDateUtils.getDateNow())));
                     refresh();
-                } else if (checkedId == R.id.rb_pick_day) {
-                    Calendar c = Calendar.getInstance();
-                    // 最后一个false表示不显示日期，如果要显示日期，最后参数可以是true或者不用输入
-                    new DoubleDatePickerDialog(FaultStatisticsListActivity.this, 0, new DoubleDatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
-                                              int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
-                                              int endDayOfMonth) {
-                            String textString = String.format("%d-%d-%d～%d-%d-%d", startYear,
-                                    startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-
-                            String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
-                            String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-
-                            if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
-                                ToastUtil.get().showToast(FaultStatisticsListActivity.this, "开始时间不能大于结束时间");
-                                ((RadioButton) group.findViewById(mCheckedId)).setChecked(true);
-                                return;
-                            }
-
-
-                            mStartTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
-                            mEndTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-
-
-                            refresh();
-                            ((RadioButton) group.findViewById(checkedId)).setText(textString);
-
-                        }
-
-                        @Override
-                        public void cancle() {
-                            ((RadioButton) group.findViewById(mCheckedId)).setChecked(true);
-                        }
-
-
-                    }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
                 }
             }
         });
+        findViewById(R.id.rb_pick_day).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                // 最后一个false表示不显示日期，如果要显示日期，最后参数可以是true或者不用输入
+                new DoubleDatePickerDialog(FaultStatisticsListActivity.this, 0, new DoubleDatePickerDialog.OnDateSetListener() {
 
+                    @Override
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
+                                          int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear,
+                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
+
+                        String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
+                        String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
+
+                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                            ToastUtil.get().showToast(FaultStatisticsListActivity.this, "开始时间不能大于结束时间");
+                            ((RadioButton) v).setChecked(true);
+                            return;
+                        }
+
+
+                        mStartTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
+                        mEndTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
+                        mCheckedId = R.id.rb_pick_day;
+
+                        refresh();
+                        ((RadioButton) v).setText(textString);
+
+                    }
+
+                    @Override
+                    public void cancle() {
+                        ((RadioButton) findViewById(mCheckedId)).setChecked(true);
+                    }
+
+
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
+            }
+        });
     }
 
 
