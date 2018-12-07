@@ -697,6 +697,8 @@
         <activity android:name=".ui.activity.worksapce.SetPasswordActivity"></activity>
         <!-- 评价展示 -->
         <activity android:name=".ui.activity.worksapce.EvaluateShowActivity"></activity>
+        <!-- 改约 -->
+        <activity android:name=".ui.widget.FillAppointmentInfoRebookView"></activity>
     </application>
 
 </manifest>

@@ -17,6 +17,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
@@ -90,7 +91,8 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
         timePicker.setIs24HourView(true);
         TimeListener times = new TimeListener();
         timePicker.setOnTimeChangedListener(times);
-
+        final LocalDate instance = LocalDate.now();
+        widget.setSelectedDate(instance);
         widget.setOnDateChangedListener(this);
 
         return new AlertDialog.Builder(getActivity())

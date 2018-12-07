@@ -1,12 +1,10 @@
 package net.eanfang.worker.ui.widget;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,10 +13,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.PickerSelectUtil;
+import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +33,7 @@ import butterknife.ButterKnife;
  * @desc 改约
  */
 
-public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGroup.OnCheckedChangeListener {
+public class FillAppointmentInfoRebookView extends BaseActivity implements RadioGroup.OnCheckedChangeListener, SelectTimeDialogFragment.SelectTimeListener {
     @BindView(R.id.rb_yes)
     AppCompatRadioButton rbYes;
     @BindView(R.id.rb_no)
@@ -44,8 +46,6 @@ public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGr
     Button btnCommit;
     @BindView(R.id.ll_appointment_time)
     LinearLayout llAppointmentTime;
-    @BindView(R.id.iv_left)
-    ImageView ivLeft;
     @BindView(R.id.ll_door_time)
     LinearLayout llDoorTime;
     @BindView(R.id.tv_title)
@@ -54,28 +54,22 @@ public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGr
     TextView tvPhone;
     private Long orderId;
     private boolean isReAppointment = false;
-    private Activity mContext;
-
-
-    public FillAppointmentInfoRebookView(Activity context, boolean isfull, Long orderId, boolean isReAppointment) {
-        super(context, isfull);
-        this.mContext = context;
-        this.orderId = orderId;
-        this.isReAppointment = isReAppointment;
-
-    }
 
     @Override
-    protected void initCustomView(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_appointment);
         ButterKnife.bind(this);
         initView();
-
     }
 
+
     private void initView() {
+        setLeftBack();
+        setTitle("电话筛查");
+        orderId = getIntent().getLongExtra("itemId", 0);
+        isReAppointment = getIntent().getBooleanExtra("isReAppoint", false);
         rgPhone.setOnCheckedChangeListener(this);
-        tvTitle.setText("电话筛查");
         if (isReAppointment) {
             rbNo.setChecked(true);
             rbYes.setClickable(false);
@@ -97,25 +91,20 @@ public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGr
                 doHttp(null);
             }
         });
-        ivLeft.setOnClickListener((V) -> {
-            dismiss();
-        });
-        llDoorTime.setOnClickListener(v -> PickerSelectUtil.onYearMonthDayTimePicker(mContext, "开始时间", tvIndoorTime));
+        llDoorTime.setOnClickListener(v -> new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + ""));
     }
 
     /**
      * 带点筛选
      */
+
     private void doHttp(String bookTime) {
-//        QueryEntry queryEntry = new QueryEntry();
-//        queryEntry.getEquals().put("orderId", orderId + "");
-//        queryEntry.getEquals().put("bookTime", bookTime);
         EanfangHttp.post(RepairApi.POST_FLOW_REBOOK)
                 .params("orderId", orderId + "")
                 .params("bookTime", bookTime)
-                .execute(new EanfangCallback<JSONObject>(mContext, true, JSONObject.class, (bean) -> {
+                .execute(new EanfangCallback<JSONObject>(FillAppointmentInfoRebookView.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
-                    dismiss();
+                    finishSelf();
                 }));
 
     }
@@ -132,6 +121,15 @@ public class FillAppointmentInfoRebookView extends BaseDialog implements RadioGr
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void getData(String time) {
+        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            tvIndoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        } else {
+            tvIndoorTime.setText(time);
         }
     }
 }
