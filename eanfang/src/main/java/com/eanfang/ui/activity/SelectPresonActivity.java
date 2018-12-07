@@ -212,6 +212,7 @@ public class SelectPresonActivity extends BaseActivity {
 
                 if (!TextUtils.isEmpty(isOrganization)) {
                     templateBean1.setVisible(true);
+                    templateBean2.setVisible(true);
                 }
 
                 if (sectionBean.getStaff() != null) {
