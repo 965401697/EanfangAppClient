@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONException;
@@ -42,10 +47,12 @@ public class PasswordFragment extends BaseFragment {
     private AppCompatCheckBox cb;
     private TextView read;
     private Button btn_login;
+    private ImageView mShow;
     /**
      * true :密码为空 或者默认密码  false:修改后的密码
      */
     private boolean isUpdataPassword = false;
+    private boolean isHidden = true;
 
     public static PasswordFragment getInstance() {
         PasswordFragment passwordFragment = new PasswordFragment();
@@ -69,6 +76,7 @@ public class PasswordFragment extends BaseFragment {
         cb = (AppCompatCheckBox) findViewById(R.id.cb);
         read = (TextView) findViewById(R.id.tv_read_agreement);
         btn_login = (Button) findViewById(R.id.btn_login);
+        mShow = findViewById(R.id.iv_show);
 
         try {
             InputStream is = null;
@@ -124,6 +132,23 @@ public class PasswordFragment extends BaseFragment {
             });
             Dialog noticeDialog = builder.create();
             noticeDialog.show();
+        });
+        mShow.setOnClickListener((v) -> {
+            if (isHidden) {
+                et_password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                mShow.setImageResource(R.mipmap.ic_password_look);
+            } else {
+                et_password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                mShow.setImageResource(R.mipmap.ic_password_hide);
+            }
+            isHidden = !isHidden;
+            et_password.postInvalidate();
+            //切换后将EditText光标置于末尾
+            CharSequence charSequence = et_password.getText();
+            if (charSequence instanceof Spannable) {
+                Spannable spanText = (Spannable) charSequence;
+                Selection.setSelection(spanText, charSequence.length());
+            }
         });
     }
 

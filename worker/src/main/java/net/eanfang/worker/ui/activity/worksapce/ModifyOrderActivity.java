@@ -50,6 +50,7 @@ public class ModifyOrderActivity extends BaseWorkerActivity {
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getNotEquals().put("status", "6");
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairedOrderBean>(this, true, RepairedOrderBean.class, (bean) -> {
@@ -70,8 +71,6 @@ public class ModifyOrderActivity extends BaseWorkerActivity {
                                     setResult(RESULT_CANCELED, getIntent().putExtra("lat", bean.getList().get(position).getLatitude()));
                                     setResult(RESULT_CANCELED, getIntent().putExtra("lon", bean.getList().get(position).getLongitude()));
                                     setResult(RESULT_CANCELED, getIntent().putExtra("bean", bean));
-
-
                                     finishSelf();
                                     break;
                                 default:

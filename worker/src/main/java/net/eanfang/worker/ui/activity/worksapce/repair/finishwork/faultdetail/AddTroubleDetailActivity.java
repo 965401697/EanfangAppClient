@@ -502,6 +502,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         repairFailureEntity.setBugDescription(etTroubleDesc.getText().toString().trim());
         repairFailureEntity.setSketch(etTroubleSketch.getText().toString().trim());
         repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(mIsRepairError));
+        repairFailureEntity.setBugPosition(tvDeviceLocation.getText().toString().trim());
         detailEntity.setFailureEntity(repairFailureEntity);
         //   使用建议
         detailEntity.setUseAdvice(etTroubleUseAdvace.getText().toString().trim());
