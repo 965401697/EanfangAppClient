@@ -146,7 +146,10 @@ public class OrderListFragment extends BaseFragment implements
                     case R.id.tv_do_first:
                         //只有当前登陆人为订单负责人才可以操作
                         if (doCompare(item.getAssigneeUserId(), mUseId)) {
-                            new FillAppointmentInfoRebookView(getActivity(), true, item.getId(), true).show();
+                            Bundle bundle = new Bundle();
+                            bundle.putLong("itemId", item.getId());
+                            bundle.putBoolean("isReAppoint", true);
+                            JumpItent.jump(getActivity(), FillAppointmentInfoRebookView.class, bundle);
                         }
                         break;
                     case R.id.tv_do_second:
