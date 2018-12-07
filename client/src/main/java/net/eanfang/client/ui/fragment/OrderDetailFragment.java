@@ -89,7 +89,7 @@ public class OrderDetailFragment extends BaseFragment {
     private int mOrderStatus;
     //
     private String mOrderNum = "";
-    private Long mAssigneeUserId;
+    private Long mOwnerUserId;
 
     private Long id;
     // 保修人
@@ -186,7 +186,7 @@ public class OrderDetailFragment extends BaseFragment {
     @Override
     protected void setListener() {
         tvDoPay.setOnClickListener((v) -> {
-            if (doCompare(mAssigneeUserId, mUserId)) {
+            if (doCompare(mOwnerUserId, mUserId)) {
                 startActivity(new Intent(getActivity(), NewPayActivity.class).putExtra("payLogEntity", payLogEntity));
             }
         });
@@ -194,16 +194,16 @@ public class OrderDetailFragment extends BaseFragment {
         // 确认完工  立即评价
         tvBottomRight.setOnClickListener((v) -> {
             if (mOrderStatus == 4) {// 确认完工
-                if (doCompare(mAssigneeUserId, mUserId)) {
+                if (doCompare(mOwnerUserId, mUserId)) {
                     new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
                 }
 
             } else if (mOrderStatus == 5) {//立即评价
-                if (doCompare(mAssigneeUserId, mUserId)) {
+                if (doCompare(mOwnerUserId, mUserId)) {
                     startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                             .putExtra("flag", 0)
                             .putExtra("ordernum", mOrderNum)
-                            .putExtra("workerUid", mAssigneeUserId)
+                            .putExtra("workerUid", mOwnerUserId)
                             .putExtra("orderId", mItemId)
                             .putExtra("avatar", mHeadUrl));
                 }
@@ -211,7 +211,7 @@ public class OrderDetailFragment extends BaseFragment {
         });
         // 查看完工报告
         tv_bottomLeft.setOnClickListener((v) -> {
-            if (doCompare(mAssigneeUserId, mUserId)) {
+            if (doCompare(mOwnerUserId, mUserId)) {
                 new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
             }
         });
@@ -380,7 +380,7 @@ public class OrderDetailFragment extends BaseFragment {
                     mIsPhoneSolve = bean.getIsPhoneSolve();
                     mOrderStatus = bean.getStatus();
                     mOrderNum = bean.getOrderNum();
-                    mAssigneeUserId = bean.getAssigneeUserId();
+                    mOwnerUserId = bean.getOwnerUserId();
                     //客户端
                     if (bean.getAssigneeUser() != null) {
                         mHeadUrl = bean.getAssigneeUser().getAccountEntity().getAvatar();
@@ -402,6 +402,11 @@ public class OrderDetailFragment extends BaseFragment {
                         llFinish.setVisibility(View.VISIBLE);
                         llPay.setVisibility(View.GONE);
                         tvBottomRight.setText("立即评价");
+                        if (bean.getWorkerEvaluateId() == null || bean.getWorkerEvaluateId().longValue() <= 0) {
+                            tvBottomRight.setVisibility(View.VISIBLE);
+                        } else {
+                            tvBottomRight.setVisibility(View.GONE);
+                        }
                     } else {
                         llFinish.setVisibility(View.GONE);
                         llPay.setVisibility(View.GONE);
