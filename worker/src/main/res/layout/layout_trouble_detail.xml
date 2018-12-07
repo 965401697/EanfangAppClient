@@ -112,7 +112,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="设备位置"
+                            android:text="故障位置:"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_13" />
 

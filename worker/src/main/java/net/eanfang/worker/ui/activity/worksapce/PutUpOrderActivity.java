@@ -165,6 +165,10 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
             return;
         }
         if (StringUtils.isEmpty(etRemarks.getText().toString().trim())) {
+            showToast("请输入原因描述");
+            return;
+        }
+        if (transferLogEntity.getReceiveUserId() == null) {
             showToast("请选择技师");
             return;
         }
