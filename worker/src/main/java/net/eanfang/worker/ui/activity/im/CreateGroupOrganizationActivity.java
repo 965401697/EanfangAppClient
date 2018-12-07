@@ -68,8 +68,8 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
             }
         });
 
-        companyId = getIntent().getStringExtra("companyId");//单选 多选
-        companyName = getIntent().getStringExtra("companyName");//单选 多选
+        companyId = getIntent().getStringExtra("companyId");
+        companyName = getIntent().getStringExtra("companyName");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

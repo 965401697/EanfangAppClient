@@ -157,7 +157,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="请输入故障编号"
+                        android:text="请输入位置编号"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 

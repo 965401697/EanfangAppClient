@@ -210,7 +210,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="故障编号:"
+                        android:text="位置编号:"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
@@ -232,7 +232,7 @@
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:hint="请输入故障编号"
+                        android:hint="请输入位置编号"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
