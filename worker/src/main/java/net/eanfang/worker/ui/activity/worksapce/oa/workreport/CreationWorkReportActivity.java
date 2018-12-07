@@ -1032,7 +1032,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this),"工作汇报").send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this), "工作汇报").send();
 
 
                     });
@@ -1091,51 +1091,51 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
+//        if (presonList.size() > 0) {
 
 
-            Set hashSet = new HashSet();
-            if (mFlag == 1) {
-                hashSet.addAll(oaPersonAdaptet.getData());
-            } else if (mFlag == 2) {
-                hashSet.addAll(oaPersonQuestionAdaptet.getData());
-            } else if (mFlag == 3) {
-                hashSet.addAll(whoPlanAdaptet.getData());
-            } else if (mFlag == 4) {
-                hashSet.addAll(groupAdaptet.getData());
-            } else if (mFlag == 5) {
-                hashSet.addAll(planAdaptet.getData());
-            }
-
-            hashSet.addAll(presonList);
-            if (mFlag == 3) {
-                whoList.clear();
-                whoList.addAll(hashSet);
-            } else if (mFlag == 4) {
-                groupList.clear();
-                groupList.addAll(hashSet);
-            } else {
-                newPresonList.clear();
-                newPresonList.addAll(hashSet);
-            }
-
-            if (mFlag == 1) {
-
-                oaPersonAdaptet.setNewData(newPresonList);
-            } else if (mFlag == 2) {
-
-                oaPersonQuestionAdaptet.setNewData(newPresonList);
-            } else if (mFlag == 3) {
-
-                whoPlanAdaptet.setNewData(whoList);
-            } else if (mFlag == 4) {
-
-                groupAdaptet.setNewData(groupList);
-            } else if (mFlag == 5) {
-                planAdaptet.setNewData(newPresonList);
-            }
-
+        Set hashSet = new HashSet();
+//            if (mFlag == 1) {
+//                hashSet.addAll(oaPersonAdaptet.getData());
+//            } else if (mFlag == 2) {
+//                hashSet.addAll(oaPersonQuestionAdaptet.getData());
+//            } else
+//        if (mFlag == 3) {
+//            hashSet.addAll(whoPlanAdaptet.getData());
+//        } else
+        if (mFlag == 4) {
+            hashSet.addAll(groupAdaptet.getData());
         }
+//            } else if (mFlag == 5) {
+//                hashSet.addAll(planAdaptet.getData());
+//            }
+
+//            hashSet.addAll(presonList);
+        if (mFlag == 3) {
+            whoList.clear();
+            whoList.addAll(presonList);
+        } else if (mFlag == 4) {
+            groupList.clear();
+            groupList.addAll(hashSet);
+        }
+//            else {
+//                newPresonList.clear();
+//                newPresonList.addAll(hashSet);
+//            }
+
+        if (mFlag == 1) {
+            oaPersonAdaptet.setNewData(presonList);
+        } else if (mFlag == 2) {
+            oaPersonQuestionAdaptet.setNewData(presonList);
+        } else if (mFlag == 3) {
+            whoPlanAdaptet.setNewData(whoList);
+        } else if (mFlag == 4) {
+            groupAdaptet.setNewData(groupList);
+        } else if (mFlag == 5) {
+            planAdaptet.setNewData(presonList);
+        }
+
+//        }
 
     }
 
@@ -1153,6 +1153,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     /**
      * 放弃新建汇报
      */
+
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃工作汇报？", () -> {
             //软盘关闭 聊天界面进入的话 软盘和操作板叠加

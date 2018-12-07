@@ -14,13 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.CreateGroupActivity;
+import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
@@ -87,7 +88,16 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         mContext.startActivity(intent);
                     } else {
                         //选择协同人员
-                        ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class).putExtra("IM", "IM"));
+//                        ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class).putExtra("IM", "IM"));
+
+                        Intent intent = new Intent(mContext, CreateGroupOrganizationActivity.class);
+                        intent.putExtra("isFrom", "OA");
+                        intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                        intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("list", (Serializable) mData);
+                        intent.putExtras(bundle);
+                        ((BaseActivity) mContext).startActivity(intent);
                     }
                 }
             });

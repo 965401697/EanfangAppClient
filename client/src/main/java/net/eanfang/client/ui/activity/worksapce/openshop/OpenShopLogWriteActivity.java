@@ -22,7 +22,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
@@ -33,6 +32,7 @@ import com.yaf.base.entity.OpenShopLogEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -42,6 +42,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -234,7 +235,15 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
             case R.id.tv_send:
                 isSend = 1;
 
-                startActivity(new Intent(OpenShopLogWriteActivity.this, SelectOAPresonActivity.class));
+                //                startActivity(new Intent(DefendLogWriteActivity.this, SelectOAPresonActivity.class));
+                Intent in = new Intent(this, CreateGroupOrganizationActivity.class);
+                in.putExtra("isFrom", "OA");
+                in.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                in.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                Bundle b = new Bundle();
+                b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
+                in.putExtras(b);
+                startActivity(in);
 
                 break;
             case R.id.tv_send_group:
@@ -477,22 +486,39 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
+
+        if (isSend == 1) {
+
+//                    Set hashSet = new HashSet();
+//                    hashSet.addAll(sendPersonAdapter.getData());
+//                    hashSet.addAll(presonList);
+
+//                    if (newPresonList.size() > 0) {
+//                        newPresonList.clear();
+//                    }
+//                    newPresonList.addAll(hashSet);
+            newPresonList.clear();
+            newPresonList.addAll(presonList);
+            sendPersonAdapter.setNewData(newPresonList);
+            return;
+        }
+
+
         if (presonList.size() > 0) {
-
-            if (presonList.size() > 0) {
-                if (isSend == 1) {
-
-                    Set hashSet = new HashSet();
-                    hashSet.addAll(sendPersonAdapter.getData());
-                    hashSet.addAll(presonList);
-
-                    if (newPresonList.size() > 0) {
-                        newPresonList.clear();
-                    }
-                    newPresonList.addAll(hashSet);
-                    sendPersonAdapter.setNewData(newPresonList);
-
-                } else if (isSend == 0) {
+//                if (isSend == 1) {
+//
+//                    Set hashSet = new HashSet();
+//                    hashSet.addAll(sendPersonAdapter.getData());
+//                    hashSet.addAll(presonList);
+//
+//                    if (newPresonList.size() > 0) {
+//                        newPresonList.clear();
+//                    }
+//                    newPresonList.addAll(hashSet);
+//                    sendPersonAdapter.setNewData(newPresonList);
+//
+//                } else
+            if (isSend == 0) {
 //                        TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 //
 //                        etPhoneNum.setText(bean.getMobile());
@@ -504,22 +530,22 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 //                        } else {
 //                            assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
 //                        }
-                } else {
+            } else {
 
-                    Set hashSet = new HashSet();
-                    hashSet.addAll(sendGroupAdapter.getData());
-                    hashSet.addAll(presonList);
+                Set hashSet = new HashSet();
+                hashSet.addAll(sendGroupAdapter.getData());
+                hashSet.addAll(presonList);
 
-                    if (newGroupList.size() > 0) {
-                        newGroupList.clear();
-                    }
-                    newGroupList.addAll(hashSet);
-
-                    sendGroupAdapter.setNewData(newGroupList);
+                if (newGroupList.size() > 0) {
+                    newGroupList.clear();
                 }
+                newGroupList.addAll(hashSet);
 
+                sendGroupAdapter.setNewData(newGroupList);
             }
+
         }
+
     }
 
     @Override

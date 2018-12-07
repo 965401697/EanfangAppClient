@@ -25,7 +25,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
@@ -37,6 +36,7 @@ import com.yaf.base.entity.ProtectionLogEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -44,6 +44,7 @@ import net.eanfang.client.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -260,7 +261,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
                 currentTextView = tvCloseTime;
                 if (!SelectTimeDialogFragment.getInstance().isAdded())
-                SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                    SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
 //                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
 //                mTimeYearMonthDayHMS.show();
 
@@ -277,7 +278,15 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
             case R.id.tv_send:
                 isSend = 1;
 
-                startActivity(new Intent(DefendLogWriteActivity.this, SelectOAPresonActivity.class));
+//                startActivity(new Intent(DefendLogWriteActivity.this, SelectOAPresonActivity.class));
+                Intent in = new Intent(this, CreateGroupOrganizationActivity.class);
+                in.putExtra("isFrom", "OA");
+                in.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                in.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                Bundle b = new Bundle();
+                b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
+                in.putExtras(b);
+                startActivity(in);
                 break;
             case R.id.tv_send_group:
                 isSend = 2;
@@ -441,22 +450,37 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
+        if (isSend == 1) {
 
+//                    Set hashSet = new HashSet();
+//                    hashSet.addAll(sendPersonAdapter.getData());
+//                    hashSet.addAll(presonList);
+
+//                    if (newPresonList.size() > 0) {
+//                        newPresonList.clear();
+//                    }
+//                    newPresonList.addAll(hashSet);
+            newPresonList.clear();
+            newPresonList.addAll(presonList);
+            sendPersonAdapter.setNewData(newPresonList);
+            return;
+        }
 
         if (presonList.size() > 0) {
-            if (isSend == 1) {
-
-                Set hashSet = new HashSet();
-                hashSet.addAll(sendPersonAdapter.getData());
-                hashSet.addAll(presonList);
-
-                if (newPresonList.size() > 0) {
-                    newPresonList.clear();
-                }
-                newPresonList.addAll(hashSet);
-                sendPersonAdapter.setNewData(newPresonList);
-
-            } else if (isSend == 0) {
+//            if (isSend == 1) {
+//
+//                Set hashSet = new HashSet();
+//                hashSet.addAll(sendPersonAdapter.getData());
+//                hashSet.addAll(presonList);
+//
+//                if (newPresonList.size() > 0) {
+//                    newPresonList.clear();
+//                }
+//                newPresonList.addAll(hashSet);
+//                sendPersonAdapter.setNewData(newPresonList);
+//
+//            } else
+            if (isSend == 0) {
 //                        TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 //
 //                        etPhoneNum.setText(bean.getMobile());

@@ -34,12 +34,14 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.util.SendContactUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -245,7 +247,17 @@ public class WorkTalkCreateActivity extends BaseActivity {
             case R.id.tv_send:
                 isSend = 1;
                 isWhitch = true;
-                startActivity(new Intent(this, SelectOAPresonActivity.class));
+//                startActivity(new Intent(this, SelectOAPresonActivity.class));
+
+                Intent intent = new Intent(this, CreateGroupOrganizationActivity.class);
+                intent.putExtra("isFrom", "OA");
+                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                Bundle b = new Bundle();
+                b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
+                intent.putExtras(b);
+                startActivity(intent);
+
                 break;
             case R.id.tv_send_group:
                 isSend = 2;
@@ -328,6 +340,23 @@ public class WorkTalkCreateActivity extends BaseActivity {
      */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
+
+        if (isSend == 1 && isWhitch) {
+
+//                    Set hashSet = new HashSet();
+//                    hashSet.addAll(sendPersonAdapter.getData());
+//                    hashSet.addAll(presonList);
+
+//                    if (newPresonList.size() > 0) {
+//                        newPresonList.clear();
+//                    }
+//                    newPresonList.addAll(hashSet);
+            newPresonList.clear();
+            newPresonList.addAll(presonList);
+            sendPersonAdapter.setNewData(newPresonList);
+            return;
+        }
+
         if (presonList.size() > 0) {
             TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
             if (!isWhitch) {// 面谈对象
@@ -344,19 +373,22 @@ public class WorkTalkCreateActivity extends BaseActivity {
 //                if (!TextUtils.isEmpty(bean.getOrgCode())) {
 //                    mReceiverDeparrmentID = bean.getOrgCode();
 //                }
-                if (isSend == 1) {
-
-                    Set hashSet = new HashSet();
-                    hashSet.addAll(sendPersonAdapter.getData());
-                    hashSet.addAll(presonList);
-
-                    if (newPresonList.size() > 0) {
-                        newPresonList.clear();
-                    }
-                    newPresonList.addAll(hashSet);
-                    sendPersonAdapter.setNewData(newPresonList);
-
-                } else if (isSend == 0) {
+//                if (isSend == 1) {
+//
+////                    Set hashSet = new HashSet();
+////                    hashSet.addAll(sendPersonAdapter.getData());
+////                    hashSet.addAll(presonList);
+//
+////                    if (newPresonList.size() > 0) {
+////                        newPresonList.clear();
+////                    }
+////                    newPresonList.addAll(hashSet);
+//                    newPresonList.clear();
+//                    newPresonList.addAll(presonList);
+//                    sendPersonAdapter.setNewData(newPresonList);
+//
+//                } else
+                if (isSend == 0) {
 //                        TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 //
 //                        etPhoneNum.setText(bean.getMobile());

@@ -1091,51 +1091,52 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
+//        if (presonList.size() > 0) {
 
 
-            Set hashSet = new HashSet();
-            if (mFlag == 1) {
-                hashSet.addAll(oaPersonAdaptet.getData());
-            } else if (mFlag == 2) {
-                hashSet.addAll(oaPersonQuestionAdaptet.getData());
-            } else if (mFlag == 3) {
-                hashSet.addAll(whoPlanAdaptet.getData());
-            } else if (mFlag == 4) {
-                hashSet.addAll(groupAdaptet.getData());
-            } else if (mFlag == 5) {
-                hashSet.addAll(planAdaptet.getData());
-            }
-
-            hashSet.addAll(presonList);
-            if (mFlag == 3) {
-                whoList.clear();
-                whoList.addAll(hashSet);
-            } else if (mFlag == 4) {
-                groupList.clear();
-                groupList.addAll(hashSet);
-            } else {
-                newPresonList.clear();
-                newPresonList.addAll(hashSet);
-            }
-
-            if (mFlag == 1) {
-
-                oaPersonAdaptet.setNewData(newPresonList);
-            } else if (mFlag == 2) {
-
-                oaPersonQuestionAdaptet.setNewData(newPresonList);
-            } else if (mFlag == 3) {
-
-                whoPlanAdaptet.setNewData(whoList);
-            } else if (mFlag == 4) {
-
-                groupAdaptet.setNewData(groupList);
-            } else if (mFlag == 5) {
-                planAdaptet.setNewData(newPresonList);
-            }
-
+        Set hashSet = new HashSet();
+//            if (mFlag == 1) {
+//                hashSet.addAll(oaPersonAdaptet.getData());
+//            } else if (mFlag == 2) {
+//                hashSet.addAll(oaPersonQuestionAdaptet.getData());
+//            } else
+//        if (mFlag == 3) {
+//            hashSet.addAll(whoPlanAdaptet.getData());
+//        } else
+        if (mFlag == 4) {
+            hashSet.addAll(groupAdaptet.getData());
         }
+//            } else if (mFlag == 5) {
+//                hashSet.addAll(planAdaptet.getData());
+//            }
+
+//            hashSet.addAll(presonList);
+        if (mFlag == 3) {
+            whoList.clear();
+            whoList.addAll(presonList);
+        } else if (mFlag == 4) {
+            groupList.clear();
+            groupList.addAll(hashSet);
+        }
+//            else {
+//                newPresonList.clear();
+//                newPresonList.addAll(hashSet);
+//            }
+
+        if (mFlag == 1) {
+            oaPersonAdaptet.setNewData(presonList);
+        } else if (mFlag == 2) {
+            oaPersonQuestionAdaptet.setNewData(presonList);
+        } else if (mFlag == 3) {
+            whoPlanAdaptet.setNewData(whoList);
+        } else if (mFlag == 4) {
+            groupAdaptet.setNewData(groupList);
+        } else if (mFlag == 5) {
+            planAdaptet.setNewData(presonList);
+        }
+
+//        }
+
 
     }
 

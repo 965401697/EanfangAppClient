@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +21,8 @@ import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -55,15 +58,27 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("选择联系人");
         setLeftBack();
-        setRightTitle("下一步");
+
+        String isFromOA = getIntent().getStringExtra("isFrom");
+        if (TextUtils.isEmpty(isFromOA)) {
+            setRightTitle("下一步");
+        } else {
+            setRightTitle("确定");
+        }
+
+
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateGroupOrganizationActivity.this, CreateGroupActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (TextUtils.isEmpty(isFromOA)) {
+                    Intent intent = new Intent(CreateGroupOrganizationActivity.this, CreateGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    EventBus.getDefault().post(mAdapter.getSeletePerson());
+                }
                 endTransaction(true);
             }
         });

@@ -25,7 +25,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkTransferDetailBean;
-import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DialogUtil;
@@ -35,6 +34,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.ui.adapter.worktransfer.WorkTransferDetailAttentionAdapter;
@@ -320,7 +320,17 @@ public class WorkTransferCreateActivity extends BaseActivity {
             case R.id.tv_send:
                 isSend = 1;
 
-                startActivity(new Intent(WorkTransferCreateActivity.this, SelectOAPresonActivity.class));
+//                startActivity(new Intent(WorkTransferCreateActivity.this, SelectOAPresonActivity.class));
+
+                Intent intent = new Intent(WorkTransferCreateActivity.this, CreateGroupOrganizationActivity.class);
+                intent.putExtra("isFrom", "OA");
+                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                Bundle b = new Bundle();
+                b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
+                intent.putExtras(b);
+                startActivity(intent);
+
                 break;
             case R.id.tv_send_group:
                 isSend = 2;
@@ -463,25 +473,46 @@ public class WorkTransferCreateActivity extends BaseActivity {
      */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
+
+
+        if (isSend == 1) {
+
+//                    Set hashSet = new HashSet();
+//                    hashSet.addAll(sendPersonAdapter.getData());
+//                    hashSet.addAll(presonList);
+
+//                    if (newPresonList.size() > 0) {
+//                        newPresonList.clear();
+//                    }
+//                    newPresonList.addAll(hashSet);
+            newPresonList.clear();
+            newPresonList.addAll(presonList);
+            sendPersonAdapter.setNewData(newPresonList);
+            return;
+        }
+
         if (presonList.size() > 0) {
 //            TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 //            tvReceiverName.setText(bean.getName());
 //            mReceiverId = bean.getUserId();
 //            tvTelphone.setText(bean.getMobile());
 //            mReceiverDeparrmentID = bean.getOrgCode();
-            if (isSend == 1) {
-
-                Set hashSet = new HashSet();
-                hashSet.addAll(sendPersonAdapter.getData());
-                hashSet.addAll(presonList);
-
-                if (newPresonList.size() > 0) {
-                    newPresonList.clear();
-                }
-                newPresonList.addAll(hashSet);
-                sendPersonAdapter.setNewData(newPresonList);
-
-            } else if (isSend == 0) {
+//            if (isSend == 1) {
+//
+////                Set hashSet = new HashSet();
+////                hashSet.addAll(sendPersonAdapter.getData());
+////                hashSet.addAll(presonList);
+////
+////                if (newPresonList.size() > 0) {
+////                    newPresonList.clear();
+////                }
+////                newPresonList.addAll(hashSet);
+//                newPresonList.clear();
+//                newPresonList.addAll(presonList);
+//                sendPersonAdapter.setNewData(newPresonList);
+//
+//            } else
+                if (isSend == 0) {
 //                        TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
 //
 //                        etPhoneNum.setText(bean.getMobile());

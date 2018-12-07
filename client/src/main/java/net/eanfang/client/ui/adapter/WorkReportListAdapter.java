@@ -62,7 +62,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
             helper.getView(R.id.tv_read_ns).setVisibility(View.INVISIBLE);
         }
         SimpleDraweeView head_pic = helper.getView(R.id.img_head);
-        if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
+        if (item.getWorkReportDetail() != null && !StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
             String[] urls = item.getWorkReportDetail().getPictures().split(",");
             head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
         } else {

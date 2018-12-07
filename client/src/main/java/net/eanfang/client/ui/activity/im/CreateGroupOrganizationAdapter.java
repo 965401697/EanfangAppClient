@@ -92,7 +92,7 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
             helper.setVisible(R.id.cb_all_checked, false);
         }
 
-        if (item.isChecked()) {
+        if (mSeletePersonList.containsAll(item.getPresons())) {
             ((CheckBox) helper.getView(R.id.cb_all_checked)).setChecked(true);
         } else {
             ((CheckBox) helper.getView(R.id.cb_all_checked)).setChecked(false);

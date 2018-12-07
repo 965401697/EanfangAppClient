@@ -655,34 +655,36 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (presonList.size() > 0) {
-            Set hashSet = new HashSet();
-            if (mFlag == 2) {
-                hashSet.addAll(sendPersonAdapter.getData());
-            } else if (mFlag == 4) {
-                hashSet.addAll(groupAdaptet.getData());
-            }
 
-            hashSet.addAll(presonList);
-            if (mFlag == 2) {
-                whoList.clear();
-                whoList.addAll(hashSet);
-            } else if (mFlag == 4) {
-                groupList.clear();
-                groupList.addAll(hashSet);
-            } else {
-                newPresonList.clear();
-                newPresonList.addAll(hashSet);
-            }
-
-            if (mFlag == 2) {
-                sendPersonAdapter.setNewData(whoList);
-            } else if (mFlag == 4) {
-                groupAdaptet.setNewData(groupList);
-            }
-
+//        if (presonList.size() > 0) {
+        Set hashSet = new HashSet();
+//            if (mFlag == 2) {
+//                hashSet.addAll(sendPersonAdapter.getData());
+//            } else
+        if (mFlag == 4) {
+            hashSet.addAll(groupAdaptet.getData());
         }
 
+//            hashSet.addAll(presonList);
+        if (mFlag == 2) {
+            whoList.clear();
+            whoList.addAll(presonList);
+        } else if (mFlag == 4) {
+            groupList.clear();
+            groupList.addAll(hashSet);
+        }
+//            else {
+//                newPresonList.clear();
+//                newPresonList.addAll(hashSet);
+//            }
+
+        if (mFlag == 2) {
+            sendPersonAdapter.setNewData(whoList);
+        } else if (mFlag == 4) {
+            groupAdaptet.setNewData(groupList);
+        }
+
+//    }
     }
 
 
