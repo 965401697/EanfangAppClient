@@ -106,6 +106,7 @@ public class CheckDetailAdapter extends BaseMultiItemQuickAdapter<WorkInspectDet
 
                 }
                 helper.addOnClickListener(R.id.iv_pack);
+                helper.addOnClickListener(R.id.tv_pack);
                 break;
             default:
                 break;
