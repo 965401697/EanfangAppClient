@@ -195,6 +195,8 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         myLocationStyle.radiusFillColor(FILL_COLOR);
         // 将自定义的 myLocationStyle 对象添加到地图上
         aMap.setMyLocationStyle(myLocationStyle);
+        // 缩放等级
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
     }
 
     /**
@@ -262,7 +264,6 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
                 // 显示系统小蓝点
                 mListener.onLocationChanged(amapLocation);
-                aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
                 StringBuffer sb = new StringBuffer();
                 //省信息
 //                sb.append(amapLocation.getProvince());

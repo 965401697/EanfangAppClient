@@ -73,7 +73,10 @@ public class WorkTransferDetailActivity extends BaseActivity {
      * userid
      */
 //    private String mUserId = "";
-
+    /**
+     * 订单status
+     */
+    private int mStatus = 100;
     @BindView(R.id.rv_hand_item)
     RecyclerView rvHandItem;
     /**
@@ -128,6 +131,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         setLeftBack();
         setTitle("日志详情");
         mItemId = getIntent().getStringExtra("itemId");
+        mStatus = getIntent().getIntExtra("status", 100);
 //        mUserId = getIntent().getStringExtra("userId");
 
         workTransferDetailFinishWorkAdapter = new WorkTransferDetailFinishWorkAdapter(false);
@@ -198,7 +202,11 @@ public class WorkTransferDetailActivity extends BaseActivity {
 
 
         if (bean.getAssigneeUserEntity().getUserId().equals(String.valueOf(EanfangApplication.get().getUserId()))) {
-            rlConfirm.setVisibility(View.VISIBLE);
+            if (mStatus == 0) {
+                rlConfirm.setVisibility(View.VISIBLE);
+            } else {
+                rlConfirm.setVisibility(View.GONE);
+            }
         } else {
             rlConfirm.setVisibility(View.GONE);
         }
