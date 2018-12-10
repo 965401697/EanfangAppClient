@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -58,6 +59,8 @@ public class WorkTransferDetailActivity extends BaseActivity {
     TextView tvCompanyName;
     @BindView(R.id.tv_company_phone)
     TextView tvCompanyPhone;
+    @BindView(R.id.tv_work_classes)
+    TextView tvWorkClasses;
     @BindView(R.id.tv_accept_preson)
     TextView tvAcceptPreson;
     @BindView(R.id.tv_accept_phone)
@@ -185,6 +188,8 @@ public class WorkTransferDetailActivity extends BaseActivity {
         tvCompanyName.setText(bean.getOwnerCompanyEntity().getOrgName());
         // 单位电话
         tvCompanyPhone.setText(bean.getOwnerUserEntity().getAccountEntity().getMobile());
+        //班次
+        tvWorkClasses.setText(GetConstDataUtils.getWorkTransferCreateClass().get(bean.getWorkClasses()));
         // 接收人
         tvAcceptPreson.setText(bean.getAssigneeUserEntity().getAccountEntity().getRealName());
         //接收人电话
