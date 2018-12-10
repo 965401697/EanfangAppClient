@@ -309,7 +309,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
                 .setBadgeNumber(cam)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
+                .setBadgePadding(2, true)
                 .setGravityOffset(0, 0, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setBadgeTextSize(11, true);
@@ -327,7 +327,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
+                .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
@@ -356,7 +356,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .bindTarget(view.findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
+                .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);

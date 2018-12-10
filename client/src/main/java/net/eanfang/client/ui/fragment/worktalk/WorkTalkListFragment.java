@@ -94,10 +94,10 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         }
         // 我接收的
         if (mType.equals("我接收的")) {
-            queryEntry.getEquals().put("assigneeUserId ", mUserId + "");
+            queryEntry.getEquals().put("assigneeUserId", mUserId + "");
         } else {
             // 我创建的
-            queryEntry.getEquals().put("ownerUserId  ", mUserId + "");
+            queryEntry.getEquals().put("ownerUserId", mUserId + "");
         }
         queryEntry.setPage(page);
         queryEntry.setSize(10);

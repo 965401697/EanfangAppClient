@@ -7,12 +7,12 @@
 
     <CheckBox
         android:id="@+id/cb_checked"
-        android:layout_width="@dimen/dimen_80"
-        android:layout_height="@dimen/dimen_80"
+        android:layout_width="@dimen/dimen_42"
+        android:layout_height="@dimen/dimen_42"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dimen_36"
-        android:clickable="false"
-        android:focusable="false" />
+        android:background="@drawable/selector_single_checked"
+        android:button="@null"  />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_company_logo"
