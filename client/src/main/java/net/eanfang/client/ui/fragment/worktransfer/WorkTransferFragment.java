@@ -136,10 +136,11 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
             switch (view.getId()) {
                 // 查看详情
                 case R.id.tv_seedetail:
-                    if(!PermKit.get().getExchangeDetailPrem())return;
+                    if (!PermKit.get().getExchangeDetailPrem()) return;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
 //                    bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());
+                    bundle.putInt("status", workTalkAdapter.getData().get(position).getStatus());
                     JumpItent.jump(getActivity(), WorkTransferDetailActivity.class, bundle);
                     break;
                 //联系汇报人

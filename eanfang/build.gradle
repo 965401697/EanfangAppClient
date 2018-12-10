@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18112401
-        versionName "2.3.29_beta"
+        versionCode 18120701
+        versionName "2.3.30_beta"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -37,7 +37,7 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            
+
             // 上线url
 //            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
 //            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
