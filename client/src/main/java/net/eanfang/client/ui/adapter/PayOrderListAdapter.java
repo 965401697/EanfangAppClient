@@ -33,7 +33,7 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
             helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
         }
         if (item.getAssigneeCompanyOrg() != null) {
-            helper.setText(R.id.tv_company_name, item.getAssigneeCompanyOrg().getOrgName() + "(" + item.getOfferer().getAccountEntity().getRealName() + ")");
+            helper.setText(R.id.tv_company_name, item.getOwnerCompanyOrg().getOrgName() + "(" + item.getOfferer().getAccountEntity().getRealName() + ")");
         } else {
             helper.setText(R.id.tv_company_name, item.getOfferer().getAccountEntity().getRealName());
 
