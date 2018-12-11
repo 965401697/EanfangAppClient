@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,8 @@ public class InstallActivity extends BaseClientActivity {
     EditText etDesc;
     @BindView(R.id.iv_left)
     ImageView ivLeft;
+    @BindView(R.id.rl_confirm)
+    RelativeLayout rlConfirm;
 
     private String latitude;
     private String longitude;
@@ -111,13 +114,7 @@ public class InstallActivity extends BaseClientActivity {
     private void initView() {
 
         setTitle("我要报装");
-        setRightTitle("下一步");
         ivLeft.setOnClickListener(v -> giveUp());
-        //下一步事件
-        setRightTitleOnClickListener((v) -> {
-            submit();
-        });
-
     }
 
     private void initData() {
@@ -158,7 +155,9 @@ public class InstallActivity extends BaseClientActivity {
         llBudget.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", tvBudget, GetConstDataUtils.getBudgetList());
         });
-
+        rlConfirm.setOnClickListener((v) -> {
+            submit();
+        });
     }
 
     private void submit() {

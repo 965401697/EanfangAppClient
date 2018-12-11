@@ -73,7 +73,6 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
      * 地址回掉code
      */
     private final int ADDRESS_CALLBACK_CODE = 100;
-    private String firstTraed, secondTraed;
     private String longitude, orgName;
     private String latitude;
     private String itemcity;
@@ -202,6 +201,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         infoBean.setTelPhone(etPhone.getText().toString().trim());
         infoBean.setUnitType(3);
         infoBean.setIntro(etDesc.getText().toString().trim());
+        infoBean.setScale(byNetBean.getScale());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
         if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));

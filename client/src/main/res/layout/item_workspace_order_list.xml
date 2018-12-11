@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_24"
-                    android:text="技师："
+                    android:text="报修人:"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
 

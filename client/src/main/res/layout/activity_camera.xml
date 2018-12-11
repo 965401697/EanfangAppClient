@@ -16,16 +16,15 @@
         <TextView
             android:id="@+id/tv_back"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_back"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/arrow_left"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:onClick="backTakePhoto"
+            android:padding="@dimen/dimen_15"
             android:text="相机"
             android:textColor="@color/color_white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/textSize_15" />
 
         <ImageView
             android:id="@+id/showTakePhotoImg"
@@ -161,8 +160,8 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="工程内容(*)"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_15" />
@@ -435,8 +434,6 @@
 
                 </com.eanfang.witget.CustomRadioGroup>
             </LinearLayout>
-
-
 
 
             <ImageView
