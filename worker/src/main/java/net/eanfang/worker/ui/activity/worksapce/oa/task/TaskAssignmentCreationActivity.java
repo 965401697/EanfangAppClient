@@ -575,6 +575,7 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
 //            } else
         if (mFlag == 4) {
             hashSet.addAll(groupAdaptet.getData());
+            hashSet.addAll(presonList);
         }
 
 //            hashSet.addAll(presonList);
