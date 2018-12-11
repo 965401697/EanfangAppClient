@@ -146,10 +146,14 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 break;
             //荣誉证书
             case R.id.rl_certificate:
-                startActivity(new Intent(this, CertificateListActivity.class));
+                Bundle bundle = new Bundle();
+                bundle.putString("role", "worker");
+                JumpItent.jump(this, CertificateListActivity.class, bundle);
                 break;
             case R.id.tv_confim:
                 doVerify();
+                break;
+            default:
                 break;
         }
     }
