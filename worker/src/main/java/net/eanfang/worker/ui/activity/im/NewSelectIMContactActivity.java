@@ -167,7 +167,14 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 if (mFlag == 1) {
-                    compoundPhoto();
+
+                    Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    endTransaction(true);
+//                    compoundPhoto();
                 } else if (mFlag == 2) {//创建是分享
                     if (newPresonList.size() > 0) {
                         EventBus.getDefault().post(newPresonList);

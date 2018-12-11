@@ -172,7 +172,15 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
             public void onClick(View v) {
                 if (mFlag == 1) {
                     if (EanfangApplication.get().getCompanyId() != 0) {
-                        compoundPhoto();
+//                        compoundPhoto();
+
+                        Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        endTransaction(true);
+
                     } else {
                         Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
                         Bundle bundle = new Bundle();
