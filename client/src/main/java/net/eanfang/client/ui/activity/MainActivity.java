@@ -413,6 +413,9 @@ public class MainActivity extends BaseClientActivity {
                 TextMessage messageContent = (TextMessage) message.getContent();
                 if (messageContent.getContent().equals("被删除通知")) {
 
+
+                    //删除好友的会话记录
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
 
                     for (Activity activity : transactionActivities) {
