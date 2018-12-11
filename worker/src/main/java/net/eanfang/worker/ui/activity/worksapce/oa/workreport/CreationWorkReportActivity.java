@@ -1105,6 +1105,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 //        } else
         if (mFlag == 4) {
             hashSet.addAll(groupAdaptet.getData());
+            hashSet.addAll(presonList);
         }
 //            } else if (mFlag == 5) {
 //                hashSet.addAll(planAdaptet.getData());

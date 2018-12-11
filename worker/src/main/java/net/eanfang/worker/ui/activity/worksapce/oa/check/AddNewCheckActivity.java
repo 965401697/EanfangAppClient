@@ -668,6 +668,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 //            } else
         if (mFlag == 4) {
             hashSet.addAll(groupAdaptet.getData());
+            hashSet.addAll(presonList);
         }
 
 //            hashSet.addAll(presonList);

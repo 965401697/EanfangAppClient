@@ -171,12 +171,16 @@ public class EquipmentDetailActivity extends BaseClientActivity {
         } else {
             tvEquipmentStatus.setText("报废");
         }
-        if (bean.getChargeOrgEntity() != null && bean.getChargeOrgEntity().getBelongTopCompany() != null) {
-            tvSection.setText(bean.getChargeOrgEntity().getBelongTopCompany().getOrgName());
+        if (bean.getChargeOrgEntity() != null) {
+            tvSection.setText(bean.getChargeOrgEntity().getOrgName());
+        } else {
+            tvSection.setText("无");
         }
 
         if (bean.getChargeUserEntity() != null && bean.getChargeUserEntity().getAccountEntity() != null) {
             tvPreson.setText(bean.getChargeUserEntity().getAccountEntity().getRealName());
+        } else {
+            tvPreson.setText("无");
         }
 
         tvYear.setText(bean.getWarrantyPeriod());
@@ -201,10 +205,10 @@ public class EquipmentDetailActivity extends BaseClientActivity {
             ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
         }
 
-        if (picture != null && picture.length >= 4) {
+        if (picture != null && locationPictures.length >= 4) {
             ivLocaleFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[3]));
         }
-        if (picture != null && picture.length >= 5) {
+        if (picture != null && locationPictures.length >= 5) {
             ivLoacleFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[4]));
         }
 

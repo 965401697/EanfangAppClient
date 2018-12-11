@@ -442,7 +442,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
             return false;
         }
         if (TextUtils.isEmpty(tvClientInTime.getText().toString().trim())) {
-            showToast("顾客退场时间不能为空");
+            showToast("顾客进场时间不能为空");
             return false;
         }
         if (TextUtils.isEmpty(tvClientOutTime.getText().toString().trim())) {

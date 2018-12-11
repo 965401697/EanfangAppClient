@@ -94,12 +94,10 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         }
         // 我接收的
         if (mType.equals("我接收的")) {
-            queryEntry.getEquals().put("assigneeUserId ", mUserId + "");
-            isCreate = false;
+            queryEntry.getEquals().put("assigneeUserId", mUserId + "");
         } else {
             // 我创建的
-            queryEntry.getEquals().put("ownerUserId  ", mUserId + "");
-            isCreate = true;
+            queryEntry.getEquals().put("ownerUserId", mUserId + "");
         }
         queryEntry.setPage(page);
         queryEntry.setSize(10);
@@ -125,6 +123,15 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected void initView() {
+
+        // 我接收的
+        if (mType.equals("我接收的")) {
+            isCreate = false;
+        } else {
+            // 我创建的
+            isCreate = true;
+        }
+
         swipeRefreshLayout = findViewById(R.id.srl_worktalk);
         swipeRefreshLayout.setOnRefreshListener(this);
         rv_worktalk = findViewById(R.id.rv_worktalk);
