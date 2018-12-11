@@ -66,9 +66,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
 //        helper.setText(R.id.tv_company_name, orgName);
 
         if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
-            helper.setText(R.id.tv_person_name, "报修人:" + item.getOwnerUser().getAccountEntity());
-        } else if (item.getOwnerOrg() == null) {
-            helper.setText(R.id.tv_person_name, item.getOwnerUser().getAccountEntity().getRealName());
+            helper.setText(R.id.tv_person_name, "报修人:" + item.getOwnerUser().getAccountEntity().getRealName());
         }
 
 //        String userName = "";

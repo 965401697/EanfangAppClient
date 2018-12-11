@@ -502,23 +502,11 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_header"
-                        android:layout_width="@dimen/dimen_70"
-                        android:layout_height="@dimen/dimen_70"
-                        android:visibility="gone"
-                        app:placeholderImage="@mipmap/ic_nodata"
-                        fresco:roundAsCircle="true" />
-
-                    <TextView
-                        android:id="@+id/tv_team_worker"
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_team"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@null"
-                        android:text=""
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
+                        android:scrollbars="none" />
                 </LinearLayout>
 
             </LinearLayout>

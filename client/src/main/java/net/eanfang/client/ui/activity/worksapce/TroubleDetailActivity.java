@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
@@ -35,6 +37,7 @@ import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.client.ui.adapter.TroubleDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -77,6 +80,9 @@ public class TroubleDetailActivity extends BaseClientActivity {
     TextView tvPoliceDeliver;
     @BindView(R.id.tv_hangContnet)
     TextView tvHangContnet;
+    // 协同人员
+    @BindView(R.id.rv_teamwork)
+    RecyclerView rvTeamwork;
 
 
     private RecyclerView rv_trouble;
@@ -113,8 +119,6 @@ public class TroubleDetailActivity extends BaseClientActivity {
     private TextView tv_complete;
     private TextView tv_complaint;
     //2017年7月21日
-    //协助人员
-    private TextView tv_team_worker;
 
     private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
@@ -143,6 +147,12 @@ public class TroubleDetailActivity extends BaseClientActivity {
 
     //聊天分享的必要参数
     Bundle bundle = new Bundle();
+
+    /**
+     * 协同人员
+     */
+    private MaintenanceTeamAdapter teamAdapter;
+    private List<TemplateBean.Preson> presonList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,8 +217,6 @@ public class TroubleDetailActivity extends BaseClientActivity {
         //两个操作按钮
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_complaint = (TextView) findViewById(R.id.tv_complaint);
-        //协作人员
-        tv_team_worker = (TextView) findViewById(R.id.tv_team_worker);
 
 
         //非单确认状态 隐藏确认按钮
@@ -219,6 +227,11 @@ public class TroubleDetailActivity extends BaseClientActivity {
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "400-890-9280");
         });
+        //协作人员
+        GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
+        rvTeamwork.setLayoutManager(layoutManage);
+        teamAdapter = new MaintenanceTeamAdapter();
+        teamAdapter.bindToRecyclerView(rvTeamwork);
     }
 
     private void flowConfirm() {
@@ -265,11 +278,33 @@ public class TroubleDetailActivity extends BaseClientActivity {
             tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_white));
         }
         //协作人员
-        // 目前先获取技师
-        tv_team_worker.setText(bughandleConfirmEntity.getCreateUserEntity().getAccountEntity().getRealName());
-//        if (bughandleConfirmEntity.getTeamWorker() != null) {
-//            tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
-//        }
+        if (bughandleConfirmEntity.getTeamWorker() != null && bughandleConfirmEntity.getTeamWorker().contains("-")) {
+            String[] info = bughandleConfirmEntity.getTeamWorker().split(",");
+            if (info.length > 0) {
+                //多条
+                for (int i = 0; i < info.length; i++) {
+                    String s = info[i];
+                    String headPortrait = s.split("-")[0];
+                    String name = s.split("-")[1];
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setProtraivat(headPortrait);
+                    preson.setName(name);
+                    presonList.add(preson);
+                }
+            } else {
+                //一条
+                String headPortrait = bughandleConfirmEntity.getTeamWorker().split("-")[0];
+                String name = bughandleConfirmEntity.getTeamWorker().split("-")[1];
+
+                TemplateBean.Preson preson = new TemplateBean.Preson();
+                preson.setProtraivat(headPortrait);
+                preson.setName(name);
+                presonList.add(preson);
+
+            }
+            teamAdapter.setNewData(presonList);
+        }
 
         /**
          *电视机墙正面照 拍摄视频
