@@ -216,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_38"
-                        android:text="进场时间"
+                        android:text="请选择进场时间"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
@@ -258,7 +258,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_38"
-                        android:text="退场时间"
+                        android:text="请选择退场时间"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
@@ -360,7 +360,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/dimen_38"
-                        android:text="关闭时间            "
+                        android:text="请选择关闭时间"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
