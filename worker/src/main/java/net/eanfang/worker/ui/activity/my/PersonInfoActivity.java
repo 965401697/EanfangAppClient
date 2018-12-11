@@ -100,8 +100,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     /**
      * 城市
      */
-    private String city;
-    private String contry;
+    private String city = "";
+    private String contry = "";
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -256,7 +256,10 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 //            showToast("真实姓名长度为6");
 //            return false;
 //        }
-
+        if (StringUtils.isEmpty(city) && StringUtils.isEmpty(contry)) {
+            showToast("请选择所在城市");
+            return false;
+        }
         String address = etAddress.getText().toString().trim();
         if (TextUtils.isEmpty(address)) {
             showToast("请输入详细地址");
@@ -308,10 +311,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(etIdcard.getText().toString().trim());
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        if (StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
+        if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
-        } else {
-            accountEntity.setAreaCode(loginBean.getAccount().getAreaCode());
         }
 
         submitSuccess(JSON.toJSONString(accountEntity));
