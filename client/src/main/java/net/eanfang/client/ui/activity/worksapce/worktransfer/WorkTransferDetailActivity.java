@@ -269,6 +269,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
     private void doTransferConfim() {
         EanfangHttp.post(NewApiService.WORK_TRANSFER_CONFIM + mItemId)
                 .execute(new EanfangCallback<WorkTransferDetailBean>(WorkTransferDetailActivity.this, true, WorkTransferDetailBean.class, bean -> {
+                    setResult(RESULT_OK);
                     finishSelf();
                 }));
 
