@@ -200,12 +200,12 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
      */
     private void doGetComapnyData(String orgId) {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("topCompanyId", orgId + "");
-        queryEntry.getEquals().put("companyId", orgId + "");
+//        queryEntry.getEquals().put("topCompanyId", orgId + "");
+//        queryEntry.getEquals().put("companyId", orgId + "");
         EanfangHttp.post(NewApiService.REPAIR_DATA_COMPANGY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, bean -> {
-                    List<DataStatisticsCompany.ListBean> companyEntityBeanList = bean.getList();
+                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, true, bean -> {
+                    List<DataStatisticsCompany> companyEntityBeanList = bean;
                     if (companyEntityBeanList.size() - 1 > 0) {
                         tvChildCompanyName.setText(companyEntityBeanList.size() + "");
                     } else {
@@ -217,7 +217,7 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
     private void initListener() {
         rgDataTiem.setOnCheckedChangeListener(this);
         rlChangeCompany.setOnClickListener((View v) -> {
-            new DataStatisticsCompanyListView(DataInstallActivity.this, mOrgId + "", (mCompanyName, mCompanyId, mSonId) -> {
+            new DataStatisticsCompanyListView(DataInstallActivity.this, mOrgId + "", (mCompanyName, mCompanyId) -> {
                 tvSelectCompanyName.setText(mCompanyName);
                 doGetData("");
             }).show();

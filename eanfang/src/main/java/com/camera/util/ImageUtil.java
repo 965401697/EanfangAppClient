@@ -251,8 +251,8 @@ public class ImageUtil {
 
 
         Canvas canvas = new Canvas(bitmap);
-        StaticLayout staticLayout2 = new StaticLayout(text, paint, bitmap.getWidth() ,
-                Layout.Alignment.ALIGN_OPPOSITE, 1.0F, 0.0F, true);
+        StaticLayout staticLayout2 = new StaticLayout(text, paint, bitmap.getWidth(),
+                Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
 
         canvas.translate(0, paddingTop);
         staticLayout2.draw(canvas);
