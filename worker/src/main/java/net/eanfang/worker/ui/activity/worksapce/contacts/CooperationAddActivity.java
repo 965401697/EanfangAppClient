@@ -154,6 +154,8 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
             return;
         }
 
+        businessServerBeanArrayList.clear();//清空老数据
+
         for (CheckBox osCheckBox : osCheckBoxes) {
 
             for (CheckBox businessCheckBox : businessCheckBoxes) {
