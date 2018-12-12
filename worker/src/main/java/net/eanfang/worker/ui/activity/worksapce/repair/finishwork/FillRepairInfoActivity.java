@@ -350,11 +350,20 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
             }
         });
-        // 增加团队
+        // 增加团队成员
         tvAddGroup.setOnClickListener((v) -> {
             Intent intent = new Intent(FillRepairInfoActivity.this, SelectOrganizationActivity.class);
             this.startActivity(intent);
         });
+        repairTeamWorkerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) adapter.getData().get(position);
+                adapter.getData().remove(preson);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
@@ -558,10 +567,12 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         //添加合作成员
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < mPresonList.size(); i++) {
-            stringBuilder.append(mPresonList.get(i).getName()).append("(").append(mPresonList.get(i).getMobile()).append(")");
-            if (i < mPresonList.size() - 1) {
-                stringBuilder.append(",");
+        for (int i = 0; i < repairTeamWorkerAdapter.getData().size(); i++) {
+            TemplateBean.Preson preson = repairTeamWorkerAdapter.getData().get(i);
+            if (i == repairTeamWorkerAdapter.getData().size() - 1) {
+                stringBuilder.append(preson.getProtraivat() + "-" + preson.getName());
+            } else {
+                stringBuilder.append(preson.getProtraivat() + "-" + preson.getName() + ",");
             }
         }
         bughandleConfirmEntity.setTeamWorker(String.valueOf(stringBuilder));

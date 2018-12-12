@@ -22,6 +22,15 @@ public class WorkDetailHonorAdapter extends BaseQuickAdapter<HonorCertificateEnt
 
     @Override
     protected void convert(BaseViewHolder helper, HonorCertificateEntity item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + item.getHonorPics());
+        String[] info = item.getHonorPics().split(",");
+        if (info.length > 0) {
+            //多条
+            for (int i = 0; i < info.length; i++) {
+                ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + info[i]);
+            }
+        } else {
+            //一条
+            ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + info[0]);
+        }
     }
 }
