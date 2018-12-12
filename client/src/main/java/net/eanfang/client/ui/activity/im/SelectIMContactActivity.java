@@ -217,6 +217,15 @@ public class SelectIMContactActivity extends BaseClientActivity {
         recyclerViewHori.setLayoutManager(linearLayoutManager);
         mHeaderIconAdapter = new HeaderIconAdapter(R.layout.item_header_icon);
         mHeaderIconAdapter.bindToRecyclerView(recyclerViewHori);
+        mHeaderIconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                adapter.remove(position);
+                if (adapter.getData().size() == 0) {
+                    rlSelected.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Subscribe

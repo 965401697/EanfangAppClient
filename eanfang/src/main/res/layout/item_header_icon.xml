@@ -14,7 +14,7 @@
         android:layout_marginBottom="@dimen/dimen_10"
         android:layout_marginRight="@dimen/dimen_15"
         android:layout_marginTop="@dimen/dimen_10"
-        fresco:placeholderImage="@mipmap/ic_client_camera"
+        fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
     <ImageView
