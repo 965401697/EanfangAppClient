@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class SubcompanyActivity extends BaseActivity {
 
-    @BindView(R.id.rev_list)
+    @BindView(R.id.recycler_view)
     RecyclerView revList;
 
     @Override

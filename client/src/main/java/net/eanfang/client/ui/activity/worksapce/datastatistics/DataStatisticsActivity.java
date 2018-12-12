@@ -159,6 +159,8 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             Color.rgb(130, 104, 234),
     };
 
+    List<DataStatisticsCompany> companyEntityBeanList = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,12 +230,12 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      */
     private void doGetComapnyData(String orgId) {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("topCompanyId", orgId + "");
-        queryEntry.getEquals().put("companyId", orgId + "");
+//        queryEntry.getEquals().put("topCompanyId", orgId + "");
+//        queryEntry.getEquals().put("companyId", orgId + "");
         EanfangHttp.post(NewApiService.REPAIR_DATA_COMPANGY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, bean -> {
-                    List<DataStatisticsCompany.ListBean> companyEntityBeanList = bean.getList();
+                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, true, bean -> {
+                    companyEntityBeanList = bean;
                     if (companyEntityBeanList.size() - 1 > 0) {
                         tvChildCompanyName.setText(companyEntityBeanList.size() + "");
                     } else {
@@ -245,7 +247,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initListener() {
         rgDataTiem.setOnCheckedChangeListener(this);
         rlChangeCompany.setOnClickListener((View v) -> {
-            new DataStatisticsCompanyListView(DataStatisticsActivity.this, mOrgId + "", (mCompanyName, mCompanyId, mSonId) -> {
+            new DataStatisticsCompanyListView(DataStatisticsActivity.this, mOrgId + "", (mCompanyName, mCompanyId) -> {
                 tvSelectCompanyName.setText(mCompanyName);
                 doGetData("");
             }).show();
