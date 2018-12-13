@@ -63,7 +63,7 @@ public class GiveEvaluateFragment extends BaseFragment implements
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.setPage(1);
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
         EanfangHttp.post(UserApi.GET_CILENT_EVALUATE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<EvaluateBean>(getActivity(), true, EvaluateBean.class, (bean) -> {
