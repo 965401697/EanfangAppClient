@@ -67,9 +67,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     // 故障现象比
     @BindView(R.id.pc_fault)
     PieChart pcFault;
-    // 设备完好率
-    @BindView(R.id.pc_intact)
-    PieChart pcIntact;
     //昨日报修
     @BindView(R.id.rv_repair_class_one)
     RecyclerView rvRepairClassOne;
@@ -90,9 +87,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     @BindView(R.id.rl_change_company)
     RelativeLayout rlChangeCompany;
 
-    // 设备完好率
-    @BindView(R.id.ll_intact)
-    LinearLayout llIntact;
     // 故障类型
     @BindView(R.id.ll_fault)
     LinearLayout llFault;
@@ -167,7 +161,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
          * 设置pieChart图表的描述
          * */
         initMyPieChart(pcFault);
-        initMyPieChart(pcIntact);
         // 报修
         dataStatisticsReapirAdapter = new DataStatisticsInstallAdapter(DataDesignActivity.this);
         rvRepairClassOne.setLayoutManager(new LinearLayoutManager(this));
@@ -288,11 +281,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
         }
         if (bussinessEntryList.size() <= 0) {
             tvPieNoresult.setVisibility(View.VISIBLE);
-            llIntact.setVisibility(View.GONE);
             llFault.setVisibility(View.GONE);
         } else {
             tvPieNoresult.setVisibility(View.GONE);
-            llIntact.setVisibility(View.VISIBLE);
             llFault.setVisibility(View.VISIBLE);
         }
 
@@ -347,13 +338,16 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
         if (isFive) {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
+            }
         } else {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS_MORE)
+            }
+            for (int c : LIBERTY_TWO_COLORS_MORE) {
                 colors.add(c);
+            }
         }
         dataSet.setColors(colors);
 
@@ -383,48 +377,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
 
     }
 
-    //设置数据
-    private void setIntactData(ArrayList<PieEntry> entries, boolean isFive) {
-        pcIntact.clear();
-        PieDataSet dataSet = new PieDataSet(entries, "故障修复率");
-        //设置个饼状图之间的距离
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-        if (isFive) {
-            for (int c : LIBERTY_TWO_COLORS_MORE)
-                colors.add(c);
-        } else {
-            for (int c : LIBERTY_COLORS_FiVE)
-                colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS_MORE)
-                colors.add(c);
-        }
-        dataSet.setColors(colors);
-
-//        dataSet.setValueLinePart1OffsetPercentage(80.f);
-        dataSet.setValueLinePart1Length(0.2f);
-        dataSet.setValueLinePart2Length(0.4f);
-        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-
-        PieData data = new PieData(dataSet);
-        /**
-         * 设置是否显示数据实体 显示百分比
-         * */
-        data.setDrawValues(true);
-        /**
-         * 设置所有DataSet内数据实体（百分比）的文本字体格式
-         * */
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextColor(R.color.roll_content);
-        data.setValueTextSize(15f);
-        pcIntact.setData(data);
-        // 撤销所有的亮点
-        pcIntact.highlightValues(null);
-
-        pcIntact.notifyDataSetChanged();
-        pcIntact.invalidate();
-    }
 
     public void initMyPieChart(PieChart pieChart) {
         /**

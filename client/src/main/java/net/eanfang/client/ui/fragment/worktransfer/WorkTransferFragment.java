@@ -82,6 +82,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
         getData();
     }
 
+
     /**
      * 获取数据
      */
@@ -164,6 +165,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REFRESH_LIST_CODE && resultCode == getActivity().RESULT_OK) {
             workTalkAdapter.remove(mRefreshPosition);
+            workTalkAdapter.notifyDataSetChanged();
             if (workTalkAdapter.getData().size() == 0) {
                 showToast("暂无数据");
             }
