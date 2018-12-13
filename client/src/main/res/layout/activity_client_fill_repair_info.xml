@@ -424,20 +424,12 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="@dimen/dimen_70"
-                        android:layout_height="@dimen/dimen_70"
-                        app:placeholderImage="@mipmap/ic_nodata" />
-
-                    <TextView
-                        android:id="@+id/tv_team_worker"
-                        android:layout_width="wrap_content"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_teamwork"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@null"
-                        android:text=""
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_12" />
+                        android:scrollbars="none" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -445,7 +437,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <View style="@style/style_common_line_gray" />
 

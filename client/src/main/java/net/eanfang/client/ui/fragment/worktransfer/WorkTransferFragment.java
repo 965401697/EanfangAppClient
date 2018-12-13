@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment.worktransfer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +44,8 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
     private int page = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv_worktalk;
-
+    private final int REFRESH_LIST_CODE = 99;//刷新列表的request_Code
+    private int mRefreshPosition = 0;//刷新的position
     private List<WorkTransferListBean.ListBean> workTalkBeanList = new ArrayList<>();
     private WorkTransferAdapter workTalkAdapter;
     /**
@@ -136,11 +138,13 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
             switch (view.getId()) {
                 // 查看详情
                 case R.id.tv_seedetail:
-                    if(!PermKit.get().getExchangeDetailPrem())return;
+                    if (!PermKit.get().getExchangeDetailPrem()) return;
+                    mRefreshPosition = position;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
 //                    bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());
-                    JumpItent.jump(getActivity(), WorkTransferDetailActivity.class, bundle);
+                    bundle.putInt("status", workTalkAdapter.getData().get(position).getStatus());
+                    JumpItent.jump(getActivity(), WorkTransferDetailActivity.class, bundle, REFRESH_LIST_CODE);
                     break;
                 //联系汇报人
                 case R.id.tv_contact:
@@ -153,6 +157,17 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
                     break;
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REFRESH_LIST_CODE && resultCode == getActivity().RESULT_OK) {
+            workTalkAdapter.remove(mRefreshPosition);
+            if (workTalkAdapter.getData().size() == 0) {
+                showToast("暂无数据");
+            }
+        }
     }
 
     private void dataOption(int option) {

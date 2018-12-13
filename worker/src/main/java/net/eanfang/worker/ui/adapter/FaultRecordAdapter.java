@@ -31,8 +31,8 @@ public class FaultRecordAdapter extends BaseQuickAdapter<RepairFailureEntity, Ba
         String imgUrl = V.v(() -> item.getPictures().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
             ((SimpleDraweeView) helper.getView(R.id.iv_fault_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
-        }else {
-//            ((SimpleDraweeView) helper.getView(R.id.iv_fault_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+        } else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_fault_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
         }
 
         helper.setText(R.id.tv_fault_name, item.getDeviceName());

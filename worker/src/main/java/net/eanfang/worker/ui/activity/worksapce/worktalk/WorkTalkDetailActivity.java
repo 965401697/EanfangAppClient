@@ -110,7 +110,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
         //接收人电话
         tvAcceptPhone.setText(bean.getAssigneeUserEntity().getAccountEntity().getMobile());
         //面谈对象
-        tvTalkerObject.setText(bean.getWorkerUserEntity().getAccountEntity().getNickName());
+        tvTalkerObject.setText(bean.getWorkerUserEntity().getAccountEntity().getRealName());
         //问题
         tvWrokTalkOne.setText(bean.getQuestion1());
         tvWrokTalkTwo.setText(bean.getQuestion2());

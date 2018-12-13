@@ -13,7 +13,6 @@ import android.widget.EditText;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
@@ -79,11 +78,11 @@ public class DeviceBrandActivity extends BaseActivity {
 
     private void initListener() {
 
-        rvDevicebrand.addOnItemTouchListener(new OnItemClickListener() {
+        deviceBrandAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra("deviceBrandName", mDeviceBrandList.get(position).toString());
+                intent.putExtra("deviceBrandName", deviceBrandAdapter.getData().get(position).toString());
                 setResult(RESULT_ADDRESS_CALLBACK_CODE, intent);
                 finishSelf();
             }

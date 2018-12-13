@@ -174,7 +174,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
      * 合唱头像
      */
     private void compoundPhoto() {
-        if (presonList.size() <= 1) {
+        if (oaPersonAdaptet.getData().size() <= 1) {
             ToastUtil.get().showToast(this, "最少选两个好友");
             return;
         }
@@ -183,14 +183,14 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         dialog.show();
         ArrayList<String> userIconList = new ArrayList<>();
 
-        if (presonList.size() > 3) {
+        if (oaPersonAdaptet.getData().size() > 3) {
 
             for (int i = 0; i < 3; i++) {
-                userIconList.add(presonList.get(i).getProtraivat());
+                userIconList.add(oaPersonAdaptet.getData().get(i).getProtraivat());
             }
 
         } else {
-            for (TemplateBean.Preson preson : presonList) {
+            for (TemplateBean.Preson preson : oaPersonAdaptet.getData()) {
                 userIconList.add(preson.getProtraivat());
             }
         }
@@ -212,15 +212,15 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < len; i++) {
             if (i == 0) {
-                stringBuffer.append(presonList.get(i).getName());
+                stringBuffer.append(oaPersonAdaptet.getData().get(i).getName());
             } else if (i == len - 1) {
                 if (i < 2) {
-                    stringBuffer.append("," + presonList.get(i).getName());
+                    stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName());
                 } else {
-                    stringBuffer.append("," + presonList.get(i).getName() + "...等");
+                    stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName() + "...等");
                 }
             } else {
-                stringBuffer.append("," + presonList.get(i).getName());
+                stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName());
             }
         }
         groupName = EanfangApplication.get().getUser().getAccount().getNickName() + "," + stringBuffer.toString();
@@ -233,10 +233,10 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
 
         if (TextUtils.isEmpty(etGroupName.getText().toString().trim())) {
-            if (presonList.size() > 3) {
+            if (oaPersonAdaptet.getData().size() > 3) {
                 handleNames(3);
             } else {
-                handleNames(presonList.size());
+                handleNames(oaPersonAdaptet.getData().size());
             }
         } else {
             groupName = etGroupName.getText().toString().trim();
@@ -245,7 +245,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
         ArrayList<String> list = new ArrayList<>();
         for (
-                TemplateBean.Preson p : presonList)
+                TemplateBean.Preson p : oaPersonAdaptet.getData())
 
         {
             list.add(p.getId());

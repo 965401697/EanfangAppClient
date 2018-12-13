@@ -313,7 +313,23 @@
                 android:textColorHint="@color/font_color"
                 android:textSize="16sp" />
 
+            <RelativeLayout
+                android:id="@+id/rl_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_repair_bottom_confim">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="确  定"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/textSize_13" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

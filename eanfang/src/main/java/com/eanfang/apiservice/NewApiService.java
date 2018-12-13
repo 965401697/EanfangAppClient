@@ -520,10 +520,10 @@ public interface NewApiService {
      */
     String MAINTENANCE_DETAIL_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detailDispose";
 
-    /*
-    * 报修统计获取公司
-    */
-    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
+    /**
+     * 报修统计获取公司
+     */
+    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_sys/org/company/listsubcompany";
 
     /**
      * 面谈员工列表

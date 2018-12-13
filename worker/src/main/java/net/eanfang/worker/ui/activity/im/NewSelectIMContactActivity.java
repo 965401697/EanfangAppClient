@@ -167,7 +167,14 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 if (mFlag == 1) {
-                    compoundPhoto();
+
+                    Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    endTransaction(true);
+//                    compoundPhoto();
                 } else if (mFlag == 2) {//创建是分享
                     if (newPresonList.size() > 0) {
                         EventBus.getDefault().post(newPresonList);
@@ -236,7 +243,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
                                 intent.putExtra("companyId", String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()));
                                 intent.putExtra("companyName", ((OrgEntity) adapter.getData().get(position)).getOrgName());
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("list", (Serializable) mOldPresonList);
+                                bundle.putSerializable("list", (Serializable) newPresonList);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                             }
@@ -251,13 +258,24 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         recyclerViewHori.setLayoutManager(linearLayoutManager);
         mHeaderIconAdapter = new HeaderIconAdapter(R.layout.item_header_icon);
         mHeaderIconAdapter.bindToRecyclerView(recyclerViewHori);
+        //删除已选的人
+        mHeaderIconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                newPresonList.remove(position);
+                adapter.notifyDataSetChanged();
 
+                if (newPresonList.size() == 0) {
+                    rlSelected.setVisibility(View.GONE);
+                }
+            }
+        });
         rvCompany.setNestedScrollingEnabled(false);
 
         if (mOldPresonList != null && mOldPresonList.size() > 0) {
             rlSelected.setVisibility(View.VISIBLE);
-            mHeaderIconAdapter.setNewData(mOldPresonList);
             newPresonList.addAll(mOldPresonList);//加入创建的老数据
+            mHeaderIconAdapter.setNewData(newPresonList);
         }
     }
 

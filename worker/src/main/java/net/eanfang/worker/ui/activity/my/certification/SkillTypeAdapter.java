@@ -1,7 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
+import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -54,10 +54,11 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
             ((CheckBox) helper.getView(R.id.cb_check)).setClickable(true);
             ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(true);
 
-            ((CheckBox) helper.getView(R.id.cb_check)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            ((CheckBox) helper.getView(R.id.cb_check)).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
+                public void onClick(View v) {
+
+                    if (((CheckBox) v).isChecked()) {
                         item.setCheck(true);
                         if (item.getDataType() == 1) {
                             if (unSCheckedId.contains(item.getDataId())) {

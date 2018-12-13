@@ -377,7 +377,6 @@
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
                             android:layout_marginLeft="@dimen/dimen_22"
-                            android:layout_marginRight="@dimen/dimen_48"
                             android:layout_weight="1"
                             fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -866,7 +865,7 @@
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
                             android:layout_marginLeft="@dimen/dimen_22"
-                            android:layout_marginRight="@dimen/dimen_48"
+                            android:layout_marginRight="@dimen/dimen_22"
                             android:layout_weight="1"
                             fresco:placeholderImage="@mipmap/ic_nodata" />
 

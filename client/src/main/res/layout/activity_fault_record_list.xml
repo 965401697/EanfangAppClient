@@ -37,7 +37,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="4dp"
             android:background="@null"
-            android:hint="请输入系统类别/位置/负责人 进行搜索"
+            android:hint="请输入位置标号进行搜索"
             android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_12"
             android:windowSoftInputMode="stateHidden" />

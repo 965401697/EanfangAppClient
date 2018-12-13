@@ -34,7 +34,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_sub)
     TextView tvSub;
     private QualificationAdapter adapter;
-    private int mStatus;
 
 
     @Override
@@ -44,7 +43,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("技能认证");
         setLeftBack();
-        mStatus = getIntent().getIntExtra("status", -1);
         initViews();
     }
 
@@ -69,9 +67,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
             }
         });
 
-        if (mStatus > 0) {
-            getData();
-        }
+        getData();
     }
 
 
@@ -89,6 +85,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                         if (bean.getList().size() > 0) {
 //                            adapter.getData().clear();
                             adapter.setNewData(bean.getList());
+                            tvSub.setVisibility(View.VISIBLE);
                         }
 
                     }
@@ -121,10 +118,11 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                 });
     }
 
-    @OnClick({R.id.tv_sub, R.id.tv_add})
+    @OnClick({R.id.tv_sub, R.id.tv_add,R.id.tv_jump})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_sub:
+            case R.id.tv_jump:
                 Intent intent = new Intent(SkillCertificafeListActivity.this, OwnDataHintActivity.class);
                 intent.putExtra("info", "尊敬的用户，您可以添加个人经历，\n" +
                         "以提高行业内声望");
@@ -137,7 +135,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
             case R.id.tv_add:
                 startActivityForResult(new Intent(SkillCertificafeListActivity.this, AddSkillCertificafeActivity.class), ADD_EDUCATION_CODE);
-                endTransaction(true);
+                endTransaction(false);
                 break;
         }
     }
