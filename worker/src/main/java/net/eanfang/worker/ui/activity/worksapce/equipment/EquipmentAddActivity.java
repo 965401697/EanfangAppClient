@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -32,7 +37,8 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
     TextView mTvNoData;
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-
+    @BindView(R.id.et_search)
+    EditText etSearch;
 
     private int mPage = 1;
     private EquipmentListAdapter mAdapter;
@@ -75,6 +81,24 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    searchData(s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         getData();
     }
 
@@ -158,5 +182,49 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
                     }
                 });
     }
+    private void searchData(String locationNum) {
+        QueryEntry queryEntry = new QueryEntry();
 
+        queryEntry.getEquals().put("businessThreeCode", (String) mBundle.get("businessOneCode"));
+        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+        queryEntry.getLike().put("locationNumber", locationNum);
+
+        EanfangHttp.post(NewApiService.DEVICE_LIST_ADD)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<EquipmentBean>(this, false, EquipmentBean.class) {
+                    @Override
+                    public void onSuccess(EquipmentBean bean) {
+
+                        mAdapter.getData().clear();
+                        mAdapter.setNewData(bean.getList());
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreComplete();
+                        mAdapter.loadMoreEnd();
+
+                        if (bean.getList().size() > 0) {
+                            mTvNoData.setVisibility(View.GONE);
+                        } else {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mAdapter.loadMoreEnd();//没有数据了
+                        if (mAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+    }
 }
