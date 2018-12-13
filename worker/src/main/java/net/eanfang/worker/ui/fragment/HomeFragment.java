@@ -329,15 +329,15 @@ public class HomeFragment extends BaseFragment {
                     continue;
                 }
 
-                if (noticeEntity.getNoticeType() == 12) {
+                if (noticeEntity.getNoticeType() == 22) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 27) {
+                } else if (noticeEntity.getNoticeType() == 40) {
                     data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 29) {
+                } else if (noticeEntity.getNoticeType() == 42) {
                     data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 37) {
+                } else if (noticeEntity.getNoticeType() == 51) {
                     data.add(designStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 61) {
+                } else if (noticeEntity.getNoticeType() == 62) {
                     data.add(maintainStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else {
                     continue;
