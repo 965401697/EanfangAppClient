@@ -75,7 +75,7 @@ public class CreatTeamDetailActivity extends BaseWorkerActivity {
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
 
                     EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                    EanfangHttp.setClient();
+                    EanfangHttp.setWorker();
                     updateData();
                 }));
     }
@@ -88,7 +88,6 @@ public class CreatTeamDetailActivity extends BaseWorkerActivity {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
                         EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-
 
                         startActivity(new Intent(CreatTeamDetailActivity.this, CreatTeamStatusHintActivity.class).
                                 putExtra("orgName", mName).putExtra("orgid", mOrgid));
