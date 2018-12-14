@@ -216,7 +216,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     public void onSecondClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getList().get(position).getId());
-        bundle.putInt("status", status);
+        bundle.putInt("status", signListAdapter.getData().get(mFirstPosition).getList().get(position).getStatus());
         bundle.putSerializable("bean", (Serializable) signListAdapter.getData().get(mFirstPosition).getList().get(position));
         JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
     }
