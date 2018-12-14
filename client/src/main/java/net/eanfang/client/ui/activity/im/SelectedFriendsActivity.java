@@ -137,8 +137,8 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                         startActivity(intent);
                     }
                 } else if (flag == 2) {
-                    AddNumber();
-                } else {
+//                    AddNumber();
+//                } else {
                     EventBus.getDefault().post(presonList);
                     finishSelf();
                 }
