@@ -255,7 +255,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 //            return false;
 //        }
 
-        if (StringUtils.isEmpty(city) && StringUtils.isEmpty(contry)) {
+        if (StringUtils.isEmpty(city) && StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
             showToast("请选择所在城市");
             return false;
         }

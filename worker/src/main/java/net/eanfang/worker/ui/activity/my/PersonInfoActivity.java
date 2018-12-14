@@ -256,7 +256,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 //            showToast("真实姓名长度为6");
 //            return false;
 //        }
-        if (StringUtils.isEmpty(city) && StringUtils.isEmpty(contry)) {
+        if (StringUtils.isEmpty(city) && StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
             showToast("请选择所在城市");
             return false;
         }

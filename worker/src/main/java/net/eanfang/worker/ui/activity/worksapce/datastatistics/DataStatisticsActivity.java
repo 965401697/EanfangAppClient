@@ -168,7 +168,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      * @decision 初始化视图
      */
     private void initView() {
-        setTitle("数据统计");
+        setTitle("报修数据统计");
         setLeftBack();
         mOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
@@ -385,7 +385,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     //设置数据
     private void setFaultData(ArrayList<PieEntry> entries, boolean isFive) {
         pcFault.clear();
-        PieDataSet dataSet = new PieDataSet(entries, "故障类型");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
@@ -432,7 +432,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     //设置数据
     private void setIntactData(ArrayList<PieEntry> entries, boolean isFive) {
         pcIntact.clear();
-        PieDataSet dataSet = new PieDataSet(entries, "故障修复率");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
@@ -567,6 +567,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
          * 设置pieChart图表的描述
          * */
         pieChart.getDescription().setEnabled(false);
+        pieChart.setEntryLabelColor(Color.BLACK);
         pieChart.setNoDataText("暂无数据");
     }
 

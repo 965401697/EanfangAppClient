@@ -63,7 +63,7 @@ public class EvaluateFragment extends BaseFragment implements
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
         queryEntry.setPage(1);
-        queryEntry.setSize(5);
+        queryEntry.setSize(10);
         EanfangHttp.post(UserApi.GET_WORKER_EVALUATE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<EvaluateBean>(getActivity(), true, EvaluateBean.class, (bean) -> {
@@ -75,6 +75,7 @@ public class EvaluateFragment extends BaseFragment implements
                     }
                 }));
     }
+
     @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_list);

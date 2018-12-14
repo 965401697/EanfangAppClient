@@ -275,11 +275,11 @@ public class HomeFragment extends BaseFragment {
                 if (StringUtils.isEmpty(realName)) {
                     continue;
                 }
-                if (noticeEntity.getNoticeType() == 13) {
+                if (noticeEntity.getNoticeType() == 23) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 29) {
+                } else if (noticeEntity.getNoticeType() == 42) {
                     data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 55) {
+                } else if (noticeEntity.getNoticeType() == 56) {
                     data.add(maintainStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else {
                     continue;
