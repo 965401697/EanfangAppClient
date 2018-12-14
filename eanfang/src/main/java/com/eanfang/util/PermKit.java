@@ -25,13 +25,13 @@ public class PermKit {
 
 
     public static PermKit get() {
-        if (permKit == null) {
-            synchronized (PermKit.class) {
-                if (permKit == null) {
-                    permKit = new PermKit();
-                }
-            }
-        }
+//        if (permKit == null) {
+//            synchronized (PermKit.class) {
+//                if (permKit == null) {
+//                    permKit = new PermKit();
+//                }
+//            }
+//        }
         return permKit;
     }
 
@@ -46,8 +46,8 @@ public class PermKit {
         if (permList.size() == 0) permList();
 
         boolean isPerm = false;
-        for (int i = 0; i < permList.size(); i++) {
-            if (permList.get(i).contains(permCode)) {
+        for (String p : permList) {
+            if (p.contains(permCode)) {
                 isPerm = true;
                 break;
             }

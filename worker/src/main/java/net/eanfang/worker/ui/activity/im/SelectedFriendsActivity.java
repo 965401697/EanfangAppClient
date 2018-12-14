@@ -137,8 +137,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                         startActivity(intent);
                     }
                 } else if (flag == 2) {
-                    AddNumber();
-                } else {
+//                    AddNumber();
                     EventBus.getDefault().post(presonList);
                     finishSelf();
                 }

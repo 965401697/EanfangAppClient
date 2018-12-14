@@ -71,6 +71,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
 
         }
     };
+    private ArrayList<GroupDetailBean.ListBean> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +101,13 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
         mGroupFriendsAdapter = new GroupFriendsAdapter(R.layout.item_friend_list);//标志位 就是为了显示checkbox
         mGroupFriendsAdapter.bindToRecyclerView(recyclerView);
 
+        mList = new ArrayList<>();
         for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
-            if (bean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
-                mFriendListBeanArrayList.remove(bean);//自己不能删除自己
+            if (!bean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                mList.add(bean);//自己不能删除自己
             }
         }
-        mGroupFriendsAdapter.setNewData(mFriendListBeanArrayList);
+        mGroupFriendsAdapter.setNewData(mList);
         selectFriends();
     }
 

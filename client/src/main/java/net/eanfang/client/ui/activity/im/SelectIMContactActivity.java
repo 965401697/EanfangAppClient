@@ -195,7 +195,11 @@ public class SelectIMContactActivity extends BaseClientActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SelectIMContactActivity.this, SelectedFriendsActivity.class);
-                intent.putExtra("flag", 3);
+                intent.putExtra("flag", 2);
+                intent.putExtra("groupId", mGroupId);
+                intent.putExtra("title", mTitle);
+                intent.putExtra("ryGroupId", mRYGroupId);
+                intent.putExtra("list", mFriendListBeanArrayList);
                 startActivity(intent);
             }
         });
