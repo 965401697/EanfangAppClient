@@ -88,7 +88,7 @@ public class GiveEvaluateFragment extends BaseFragment implements
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", mDataList.get(position));
+                bundle.putSerializable("bean", evaluateAdapter.getData().get(position));
                 bundle.putSerializable("status", "giv");
                 JumpItent.jump(getActivity(), EvaluateShowActivity.class, bundle);
             }

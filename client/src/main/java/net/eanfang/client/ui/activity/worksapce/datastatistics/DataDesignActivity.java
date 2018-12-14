@@ -20,7 +20,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.datastatistics.DataInstallBean;
+import com.eanfang.model.datastatistics.DataDesignBean;
 import com.eanfang.model.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
@@ -35,8 +35,8 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsInstallAdapter;
-import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsInstallCompanyAdapter;
+import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsDesignAdapter;
+import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsDesignCompanyAdapter;
 import net.eanfang.client.ui.widget.DataStatisticsCompanyListView;
 
 import java.util.ArrayList;
@@ -105,9 +105,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private DataSelectPopWindow dataSelectPopWindow;
 
     // 昨日报修
-    private DataStatisticsInstallAdapter dataStatisticsReapirAdapter;
+    private DataStatisticsDesignAdapter dataStatisticsReapirAdapter;
     // 五家公司
-    private DataStatisticsInstallCompanyAdapter dataStatisticsCompanyAdapter;
+    private DataStatisticsDesignCompanyAdapter dataStatisticsCompanyAdapter;
     // 类型
     private List<BaseDataEntity> mDataType = new ArrayList();
 
@@ -115,11 +115,11 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private String mData = "1";
 
     //报修公司
-    private List<DataInstallBean.InstallBean> installBeanList = new ArrayList<>();
+    private List<DataDesignBean.DesignBean> installBeanList = new ArrayList<>();
     // 报修五家单位
-    private List<DataInstallBean.FiveBean> fiveBeanList = new ArrayList<>();
+    private List<DataDesignBean.FiveBean> fiveBeanList = new ArrayList<>();
     // 故障类型
-    private List<DataInstallBean.BussinessBean> bussinessBeanList = new ArrayList<>();
+    private List<DataDesignBean.BussinessBean> bussinessBeanList = new ArrayList<>();
     private ArrayList<PieEntry> bussinessEntryList = new ArrayList<>();
 
     //当前公司ID
@@ -162,13 +162,13 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
          * */
         initMyPieChart(pcFault);
         // 报修
-        dataStatisticsReapirAdapter = new DataStatisticsInstallAdapter(DataDesignActivity.this);
+        dataStatisticsReapirAdapter = new DataStatisticsDesignAdapter(DataDesignActivity.this);
         rvRepairClassOne.setLayoutManager(new LinearLayoutManager(this));
         dataStatisticsReapirAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         dataStatisticsReapirAdapter.bindToRecyclerView(rvRepairClassOne);
         rvRepairClassOne.setNestedScrollingEnabled(false);
         // 五家公司
-        dataStatisticsCompanyAdapter = new DataStatisticsInstallCompanyAdapter();
+        dataStatisticsCompanyAdapter = new DataStatisticsDesignCompanyAdapter();
         rvFiveCompany.setLayoutManager(new LinearLayoutManager(this));
         dataStatisticsCompanyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         dataStatisticsCompanyAdapter.bindToRecyclerView(rvFiveCompany);
@@ -230,9 +230,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
         }
         queryEntry.getEquals().put("shopCompanyId", mOrgId + "");
         queryEntry.getEquals().put("date", mData);
-        EanfangHttp.post(NewApiService.INSTALL_DATA_STATISTICE)
+        EanfangHttp.post(NewApiService.DESIGN_DATA_STATISTICE)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DataInstallBean>(this, true, DataInstallBean.class, bean -> {
+                .execute(new EanfangCallback<DataDesignBean>(this, true, DataDesignBean.class, bean -> {
                     setData(bean);
                 }));
 
@@ -241,13 +241,13 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     /**
      * 填充数据
      */
-    private void setData(DataInstallBean bean) {
+    private void setData(DataDesignBean bean) {
 
         // 昨日报装
-        if (bean.getInstall().size() > 0) {
+        if (bean.getDesign().size() > 0) {
             installBeanList.clear();
             tvRepairNoresult.setVisibility(View.GONE);
-            installBeanList = bean.getInstall();
+            installBeanList = bean.getDesign();
             dataStatisticsReapirAdapter.setNewData(installBeanList);
         } else {
             tvRepairNoresult.setVisibility(View.VISIBLE);

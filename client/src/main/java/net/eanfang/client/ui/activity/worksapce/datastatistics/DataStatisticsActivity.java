@@ -265,7 +265,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         EanfangHttp.post(NewApiService.REPAIR_DATA_STATISTICE)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<DataStatisticsBean>(this, true, DataStatisticsBean.class, bean -> {
-//                    setData(bean);
+                    setData(bean);
                 }));
 
     }

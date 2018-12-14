@@ -62,7 +62,7 @@ public class EvaluateFragment extends BaseFragment implements
         super.onLazyLoad();
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
-        queryEntry.setPage(1);
+        queryEntry.setPage(page);
         queryEntry.setSize(10);
         EanfangHttp.post(UserApi.GET_WORKER_EVALUATE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -93,7 +93,7 @@ public class EvaluateFragment extends BaseFragment implements
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("bean", mDataList.get(position));
+                bundle.putSerializable("bean", evaluateAdapter.getData().get(position));
                 bundle.putSerializable("status", "rec");
                 JumpItent.jump(getActivity(), EvaluateShowActivity.class, bundle);
             }

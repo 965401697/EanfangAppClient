@@ -291,41 +291,20 @@
                     android:orientation="vertical"
                     android:visibility="visible">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:text="系统类别"
+                        android:textColor="@color/color_data_bottom"
+                        android:textSize="@dimen/textSize_15" />
+
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pc_fault"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_400" />
+                        android:layout_height="@dimen/dimen_400"
+                        android:layout_marginTop="@dimen/dimen_40" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_40"
-                        android:text="故障类型"
-                        android:textColor="@color/color_data_bottom"
-                        android:textSize="@dimen/textSize_15" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_intact"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/pc_intact"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dimen_400" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_40"
-                        android:text="故障修复率"
-                        android:textColor="@color/color_data_bottom"
-                        android:textSize="@dimen/textSize_15" />
 
                 </LinearLayout>
 

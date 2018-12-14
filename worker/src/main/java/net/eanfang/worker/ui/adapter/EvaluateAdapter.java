@@ -31,8 +31,8 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
         }
 
         int totalStar = item.getItem1() + item.getItem2() +
-                item.getItem3() + item.getItem4() + item.getItem5();
-        int average = totalStar / 5;
+                item.getItem3();
+        int average = totalStar / 3;
         helper.setText(R.id.tv_name, item.getCreateUser().getAccountEntity().getRealName())
                 .setText(R.id.tv_time, item.getCreateTime());
         MaterialRatingBar rb_star = helper.getView(R.id.rb_star);

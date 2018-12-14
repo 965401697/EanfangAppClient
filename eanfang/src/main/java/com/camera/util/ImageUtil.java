@@ -191,6 +191,31 @@ public class ImageUtil {
                 bitmap.getHeight() - dp2px(context, paddingBottom));
     }
 
+    //图片上绘制文字
+    private static Bitmap drawTextToBitmap(Context context, Bitmap bitmap, String text,
+                                           TextPaint paint, Rect bounds, int paddingLeft, int paddingTop) {
+        Bitmap.Config bitmapConfig = bitmap.getConfig();
+
+        paint.setDither(true); // 获取跟清晰的图像采样
+        paint.setFilterBitmap(true);// 过滤一些
+        if (bitmapConfig == null) {
+            bitmapConfig = Bitmap.Config.ARGB_8888;
+        }
+        bitmap = bitmap.copy(bitmapConfig, true);
+
+
+        Canvas canvas = new Canvas(bitmap);
+        StaticLayout staticLayout2 = new StaticLayout(text, paint, bitmap.getWidth(),
+                Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+
+        canvas.translate(0, paddingTop);
+        staticLayout2.draw(canvas);
+        canvas.save();
+        canvas.restore();
+//        canvas.drawText(text, paddingLeft, paddingTop, paint);
+        return bitmap;
+    }
+
     /**
      * 绘制文字到左下方
      *
@@ -237,30 +262,6 @@ public class ImageUtil {
                 (bitmap.getHeight() + bounds.height()) / 2);
     }
 
-    //图片上绘制文字
-    private static Bitmap drawTextToBitmap(Context context, Bitmap bitmap, String text,
-                                           TextPaint paint, Rect bounds, int paddingLeft, int paddingTop) {
-        Bitmap.Config bitmapConfig = bitmap.getConfig();
-
-        paint.setDither(true); // 获取跟清晰的图像采样
-        paint.setFilterBitmap(true);// 过滤一些
-        if (bitmapConfig == null) {
-            bitmapConfig = Bitmap.Config.ARGB_8888;
-        }
-        bitmap = bitmap.copy(bitmapConfig, true);
-
-
-        Canvas canvas = new Canvas(bitmap);
-        StaticLayout staticLayout2 = new StaticLayout(text, paint, bitmap.getWidth(),
-                Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
-
-        canvas.translate(0, paddingTop);
-        staticLayout2.draw(canvas);
-        canvas.save();
-        canvas.restore();
-//        canvas.drawText(text, paddingLeft, paddingTop, paint);
-        return bitmap;
-    }
 
     /**
      * 缩放图片
