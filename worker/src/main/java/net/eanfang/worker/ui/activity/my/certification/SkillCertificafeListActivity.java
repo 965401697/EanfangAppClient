@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,8 +30,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
     RecyclerView recyclerView;
 
     private final int ADD_EDUCATION_CODE = 101;
-    @BindView(R.id.tv_sub)
-    TextView tvSub;
     private QualificationAdapter adapter;
 
 
@@ -82,11 +79,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(QualifyCertificafeListBean bean) {
 
-                        if (bean.getList().size() > 0) {
-//                            adapter.getData().clear();
-                            adapter.setNewData(bean.getList());
-                            tvSub.setVisibility(View.VISIBLE);
-                        }
 
                     }
 
@@ -109,20 +101,15 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         adapter.remove(position);
-
-                        if (adapter.getData().size() == 0) {
-                            tvSub.setVisibility(View.GONE);
-                        }
                     }
 
                 });
     }
 
-    @OnClick({R.id.tv_sub, R.id.tv_add,R.id.tv_jump})
+    @OnClick({R.id.tv_sub, R.id.tv_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_sub:
-            case R.id.tv_jump:
                 Intent intent = new Intent(SkillCertificafeListActivity.this, OwnDataHintActivity.class);
                 intent.putExtra("info", "尊敬的用户，您可以添加个人经历，\n" +
                         "以提高行业内声望");
@@ -146,10 +133,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
         if (resultCode == RESULT_OK && requestCode == ADD_EDUCATION_CODE) {
             getData();
-
-            if (tvSub.getVisibility() == View.GONE) {
-                tvSub.setVisibility(View.VISIBLE);
-            }
         }
 
     }

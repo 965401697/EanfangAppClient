@@ -75,6 +75,7 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                     EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
                             .execute(new EanfangCallback<JSONPObject>(NewAuthListActivity.this, true, JSONPObject.class, bean -> {
                                 tvConfim.setVisibility(View.VISIBLE);
+                                verify = 0;//撤销认证  状态没有时时的刷新 减少请求 本地改变状态
                             }));
                 }).showDialog();
             }
