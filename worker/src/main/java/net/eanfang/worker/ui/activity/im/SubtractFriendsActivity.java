@@ -100,6 +100,11 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
         mGroupFriendsAdapter = new GroupFriendsAdapter(R.layout.item_friend_list);//标志位 就是为了显示checkbox
         mGroupFriendsAdapter.bindToRecyclerView(recyclerView);
 
+        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+            if (bean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                mFriendListBeanArrayList.remove(bean);//自己不能删除自己
+            }
+        }
         mGroupFriendsAdapter.setNewData(mFriendListBeanArrayList);
         selectFriends();
     }

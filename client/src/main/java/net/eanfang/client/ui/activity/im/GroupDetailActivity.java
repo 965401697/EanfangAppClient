@@ -167,10 +167,10 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                                 temp.add(0, bean.getList().get(i));
                             } else {
                                 temp.add(bean.getList().get(i));
-                                friendListBeanArrayList.add(bean.getList().get(i));
                             }
                         }
 
+                        friendListBeanArrayList.addAll(bean.getList());
 
                         if (bean.getList().size() > 0) {
 

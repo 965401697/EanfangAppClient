@@ -231,22 +231,22 @@ public class SelectIMContactActivity extends BaseClientActivity {
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        List<TemplateBean.Preson> presons = new ArrayList<>();
+//        List<TemplateBean.Preson> presons = new ArrayList<>();
+//
+//        for (TemplateBean.Preson p : presonList) {
+//            if (!p.getId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+//                presons.add(p);
+//            }
+//        }
 
-        for (TemplateBean.Preson p : presonList) {
-            if (!p.getId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
-                presons.add(p);
-            }
-        }
-
-        if (presons.size() > 0) {
+        if (presonList.size() > 0) {
 
             if (rlSelected.getVisibility() != View.VISIBLE) {
                 rlSelected.setVisibility(View.VISIBLE);
             }
             Set hashSet = new HashSet();
             hashSet.addAll(mHeaderIconAdapter.getData());
-            hashSet.addAll(presons);
+            hashSet.addAll(presonList);
 
             if (newPresonList.size() > 0) {
                 newPresonList.clear();
@@ -487,6 +487,13 @@ public class SelectIMContactActivity extends BaseClientActivity {
         }
 
         mUserIdList.removeAll(idList);
+
+        if (mUserIdList.size() == 0) {
+            mHeaderIconAdapter.getData().clear();
+            rlSelected.setVisibility(View.GONE);
+            ToastUtil.get().showToast(this, "选择的人员已在群内");
+            return;
+        }
 
         mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
         CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片

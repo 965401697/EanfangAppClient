@@ -171,23 +171,17 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
             @Override
             public void onClick(View v) {
                 if (mFlag == 1) {
-                    if (EanfangApplication.get().getCompanyId() != 0) {
+
 //                        compoundPhoto();
 
-                        Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        endTransaction(true);
+                    Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    endTransaction(true);
 
-                    } else {
-                        Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("list", (Serializable) newPresonList);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                    }
+
                 } else if (mFlag == 2) {//创建是分享
                     if (newPresonList.size() > 0) {
                         EventBus.getDefault().post(newPresonList);
