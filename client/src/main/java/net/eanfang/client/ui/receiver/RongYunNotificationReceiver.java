@@ -22,7 +22,7 @@ public class RongYunNotificationReceiver extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage message) {
-        if (message.getPushContent().equals("好友邀请") || message.getPushContent().equals("被删除通知")) {
+        if (message.getPushContent().equals("好友邀请") || message.getPushContent().equals("被删除通知") || message.getPushContent().equals("被移除群组通知")) {
 
             context.startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return true;

@@ -64,7 +64,7 @@ public class SelectedFriendsActivity extends BaseClientActivity {
             String path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                String inageKey = "im/group/"+UuidUtil.getUUID() + ".png";
+                String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
                 OSSUtils.initOSS(SelectedFriendsActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SelectedFriendsActivity.this, false) {
 
                     @Override
@@ -233,7 +233,13 @@ public class SelectedFriendsActivity extends BaseClientActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
-                        presonList.remove(position);
+
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setName(bean.getNickName());
+                        preson.setId(bean.getAccId());
+                        preson.setProtraivat(bean.getAvatar());
+                        presonList.remove(preson);
+
                         if (!TextUtils.isEmpty(bean.getAvatar())) {
                             mUserIconList.remove(bean.getAvatar());
                         }

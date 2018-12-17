@@ -232,7 +232,14 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
-                        presonList.remove(position);
+
+
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setName(bean.getNickName());
+                        preson.setId(bean.getAccId());
+                        preson.setProtraivat(bean.getAvatar());
+                        presonList.remove(preson);
+
                         if (!TextUtils.isEmpty(bean.getAvatar())) {
                             mUserIconList.remove(bean.getAvatar());
                         }

@@ -14,6 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
 
@@ -103,6 +104,7 @@ public class SettingActivity extends BaseWorkerActivity {
             dialog.dismiss();
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
             SharePreferenceUtil.get().clear();
+            PermKit.permList.clear();//清空权限
             startActivity(new Intent(SettingActivity.this, LoginActivity.class));
             SettingActivity.this.finish();
         });
