@@ -121,7 +121,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
 
 
     private int mFlag;
-
+    private boolean isCompound;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,8 +150,10 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
+            //是否是合成的头像
+            isCompound =getIntent().getBooleanExtra("isCompound", true);
 
-        } else {
+    } else {
             setRightTitle("发送");
         }
 
@@ -494,6 +496,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         }
 
         mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        if(isCompound)
         CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
 
 

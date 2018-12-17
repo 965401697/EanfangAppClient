@@ -105,6 +105,8 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private final int UPDATA_GROUP_NOTICE = 103;//更新公告
     private final int UPDATA_GROUP_SHUTUP_MBER = 104;//更新禁言人的状态
 
+    private boolean isCompound = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +135,10 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
                     if (temp.size() > 0)
                         temp.clear();
-
+                    if (bean.getGroup().getHeadPortrait().contains("CUSTOM")) {
+                        //自己选择的图片没有生成 始终不变
+                        isCompound = false;
+                    }
 
                     mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
 
@@ -264,6 +269,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("groupId", id);
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("title", title);
+                    intent.putExtra("isCompound", isCompound);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
                 } else if (position == temp.size() - 2 && isOwner || position == temp.size() - 1 && !isOwner) {
 //                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
@@ -281,6 +287,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("title", title);
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("list", friendListBeanArrayList);
+                    intent.putExtra("isCompound", isCompound);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
 
                 } else {
@@ -600,7 +607,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         }
         TImage image = result.getImage();
 
-        headPortrait = UuidUtil.getUUID() + ".png";
+        headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
 
         groupHeader.setImageURI("file://" + image.getOriginalPath());
 

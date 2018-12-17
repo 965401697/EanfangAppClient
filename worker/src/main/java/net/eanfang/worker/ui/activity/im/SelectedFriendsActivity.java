@@ -136,7 +136,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                         intent.putStringArrayListExtra("userIconList", mUserIconList);
                         startActivity(intent);
                     }
-                } else if (flag == 2) {
+                } else if (flag == 2 || flag == 3) {
 //                    AddNumber();
                     EventBus.getDefault().post(presonList);
                     finishSelf();

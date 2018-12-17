@@ -77,7 +77,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
             path = (String) message;
             if (!TextUtils.isEmpty(path)) {
-                imgKey = "im/select/" + UuidUtil.getUUID() + ".png";
+                imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
                 dialog.dismiss();
                 //头像上传成功后  提交数据
                 OSSUtils.initOSS(CreateGroupActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(CreateGroupActivity.this, false) {
@@ -145,7 +145,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
         OSSCallBack callback = null;
-        imgKey = UuidUtil.getUUID() + ".png";
+        imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEAD_PHOTO:
                 ivGroupPic.setImageURI("file://" + result.getImage().getOriginalPath());
