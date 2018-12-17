@@ -238,6 +238,10 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
      */
     private void submit() {
 
+        if (oaPersonAdaptet.getData().size() <= 1) {
+            ToastUtil.get().showToast(this, "最少选两个好友");
+            return;
+        }
 
         if (TextUtils.isEmpty(etGroupName.getText().toString().trim())) {
             if (oaPersonAdaptet.getData().size() > 3) {
