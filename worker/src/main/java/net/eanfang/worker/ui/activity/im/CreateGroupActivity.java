@@ -93,7 +93,13 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     };
     private String groupName;
     private OAPersonAdaptet oaPersonAdaptet;
-
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            tvNum.setText(oaPersonAdaptet.getData().size() + "人");
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +126,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         rvTeam.setLayoutManager(new GridLayoutManager(this, 5));
 
 
-        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 6);//说明是创建群组
+        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 6, mHandler);//说明是创建群组
 
 
         rvTeam.setAdapter(oaPersonAdaptet);

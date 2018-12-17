@@ -4,6 +4,7 @@ package net.eanfang.client.ui.activity.worksapce.oa.workreport;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
     private Context mContext;
     private List<TemplateBean.Preson> mData;
     private int mFlag;
+    private Handler mHandler;
 
     public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data) {
         this.mContext = context;
@@ -49,6 +51,13 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
         this.mContext = context;
         this.mData = data;
         this.mFlag = flag;
+    }
+
+    public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data, int flag, Handler handler) {
+        this.mContext = context;
+        this.mData = data;
+        this.mFlag = flag;
+        this.mHandler = handler;
     }
 
     @NonNull
@@ -114,6 +123,9 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mHandler != null) {
+                        mHandler.sendEmptyMessage(1);
+                    }
                     mData.remove(position);
                     notifyDataSetChanged();
                 }
