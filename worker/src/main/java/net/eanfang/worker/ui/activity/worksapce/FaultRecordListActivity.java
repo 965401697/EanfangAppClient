@@ -116,6 +116,8 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
                     searchData(s.toString());
+                } else {
+                    refresh();
                 }
             }
 
@@ -137,6 +139,9 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
     }
 
     public void refresh() {
+        if (!TextUtils.isEmpty(etSearch.getText().toString())) {
+            etSearch.setText("");
+        }
         mPage = 1;//下拉永远第一页
         getData();
     }
@@ -212,6 +217,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
                     }
                 });
     }
+
     private void searchData(String locationNum) {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getLike().put("locationNumber", locationNum);
