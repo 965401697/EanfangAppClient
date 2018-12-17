@@ -57,7 +57,7 @@ public class NewAuthListActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_new_auth_list);
         ButterKnife.bind(this);
 
-        setRightTitle("重新认证");
+
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +76,7 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                             .execute(new EanfangCallback<JSONPObject>(NewAuthListActivity.this, true, JSONPObject.class, bean -> {
                                 tvConfim.setVisibility(View.VISIBLE);
                                 verify = 0;//撤销认证  状态没有时时的刷新 减少请求 本地改变状态
+                                setRightTitle("");//重置状态
                             }));
                 }).showDialog();
             }
@@ -101,6 +102,9 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 .params("accId", EanfangApplication.getApplication().getAccId())
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
                     verify = bean.getVerify();
+                    //只有认证完成了 才显示重新认证
+                    if (verify == 2)
+                        setRightTitle("重新认证");
                     mAuthStatusBean = bean;
                     doChange(bean.getBase(), bean.getApt(), bean.getExp(), bean.getHonor(), bean.getVerify());
                 }));
