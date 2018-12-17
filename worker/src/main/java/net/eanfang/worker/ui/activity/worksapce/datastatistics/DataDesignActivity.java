@@ -328,7 +328,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     //设置数据
     private void setFaultData(ArrayList<PieEntry> entries, boolean isFive) {
         pcFault.clear();
-        PieDataSet dataSet = new PieDataSet(entries, "故障类型");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
