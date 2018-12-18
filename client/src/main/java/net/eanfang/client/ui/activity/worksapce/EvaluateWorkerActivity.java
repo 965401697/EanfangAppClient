@@ -119,7 +119,7 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
                 .upJson(JSON.toJSONString(evaluateWorkerBean))
                 .execute(new EanfangCallback<JSONObject>(EvaluateWorkerActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("评价成功");
-                    finish();
+                    finishSelf();
                 }));
     }
 

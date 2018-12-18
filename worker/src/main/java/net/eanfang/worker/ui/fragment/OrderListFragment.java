@@ -383,7 +383,7 @@ public class OrderListFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         if (status != null) {
-            int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab();
+            int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab() + 1;
             if (status.equals(String.valueOf(index))) {
                 Log.e("zzw", "onResume == " + status);
                 page = 1;
@@ -471,4 +471,5 @@ public class OrderListFragment extends BaseFragment implements
         showToast("只有订单负责人可以操作");
         return false;
     }
+
 }
