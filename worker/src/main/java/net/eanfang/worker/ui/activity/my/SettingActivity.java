@@ -102,9 +102,9 @@ public class SettingActivity extends BaseWorkerActivity {
         builder.setPositiveButton("确定", (dialog, which) -> {
             signout();
             dialog.dismiss();
+            PermKit.permList.clear();//清空权限
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
             SharePreferenceUtil.get().clear();
-            PermKit.permList.clear();//清空权限
             startActivity(new Intent(SettingActivity.this, LoginActivity.class));
             SettingActivity.this.finish();
         });
