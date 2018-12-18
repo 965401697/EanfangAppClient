@@ -380,10 +380,10 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             return false;
         }
 
-        if (StringUtils.isEmpty(et_notice.getText().toString().trim())) {
-            showToast("请输入备注信息");
-            return false;
-        }
+//        if (StringUtils.isEmpty(et_notice.getText().toString().trim())) {
+//            showToast("请输入备注信息");
+//            return false;
+//        }
 
         if (StringUtils.isEmpty(tvTime.getText().toString().trim())) {
             showToast("请选择到达时限");
@@ -416,8 +416,9 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             bean.setProjectId(String.valueOf(mProjectList.get(currentIndex).getId()));
         }
         bean.setProjectName(et_project_name.getText().toString().trim());
-        bean.setRemarkInfo(et_notice.getText().toString().trim());
-
+        if (!StringUtils.isEmpty(et_notice.getText().toString().trim())) {
+            bean.setRemarkInfo(et_notice.getText().toString().trim());
+        }
 
         bean.setRepairContactPhone(etPhone.getText().toString().trim());
         bean.setRepairContacts(etContact.getText().toString().trim());

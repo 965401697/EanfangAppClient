@@ -18,6 +18,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.BughandleConfirmEntity;
@@ -233,8 +234,11 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
                     String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
                     int position = Integer.parseInt(str);
                     mOrderReason = position;
+                } else {
+                    mOrderReason = 100;
                 }
             }
+
         });
     }
 
@@ -246,9 +250,9 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         }
         llHang.setVisibility(View.VISIBLE);
         tvNoHistory.setVisibility(View.GONE);
-        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getReceiveUserEntity().getAccountEntity().getAvatar()));
-        tvOrderNum.setText(transferLogEntity.getOrderId() + "");
-        tvOrderTime.setText(transferLogEntity.getCreateTime() + "");
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
+        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 

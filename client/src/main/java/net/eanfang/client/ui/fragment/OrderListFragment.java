@@ -264,12 +264,6 @@ public class OrderListFragment extends BaseFragment implements
 
     }
 
-    @Override
-    protected void onLazyLoad() {
-//        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
-//        ((RepairedManageActivity) getActivity()).initData();
-        getData();
-    }
 
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();
@@ -346,6 +340,13 @@ public class OrderListFragment extends BaseFragment implements
 
     public String getTitle() {
         return mTitle;
+    }
+
+    @Override
+    protected void onLazyLoad() {
+//        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
+//        ((RepairedManageActivity) getActivity()).initData();
+        getData();
     }
 
     @Override

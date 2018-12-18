@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -78,8 +79,6 @@ public class TroubleDetailActivity extends BaseClientActivity {
     // 远传功能
     @BindView(R.id.tv_policeDeliver)
     TextView tvPoliceDeliver;
-    @BindView(R.id.tv_hangContnet)
-    TextView tvHangContnet;
     // 协同人员
     @BindView(R.id.rv_teamwork)
     RecyclerView rvTeamwork;
@@ -114,7 +113,21 @@ public class TroubleDetailActivity extends BaseClientActivity {
      * 单据照片 (3张)
      */
     private BGASortableNinePhotoLayout snpl_form_photos;
-
+    /**
+     * 转单
+     */
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_order_num)
+    TextView tvOrderNum;
+    @BindView(R.id.tv_order_time)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_order_reason)
+    TextView tvOrderReason;
+    @BindView(R.id.ll_hang)
+    LinearLayout llHang;
+    @BindView(R.id.tv_no_history)
+    TextView tvNoHistory;
 
     private TextView tv_complete;
     private TextView tv_complaint;
@@ -429,11 +442,15 @@ public class TroubleDetailActivity extends BaseClientActivity {
      */
     public void getHistory(TransferLogEntity transferLogEntity) {
         if (transferLogEntity == null) {
-            tvHangContnet.setText("暂无转单记录");
-        } else {
-            tvHangContnet.setText(transferLogEntity.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
-                    GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()) + "在" +
-                    GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()) + "转给" + transferLogEntity.getReceiveUserEntity().getAccountEntity().getRealName());
+            llHang.setVisibility(View.GONE);
+            tvNoHistory.setVisibility(View.VISIBLE);
+            return;
         }
+        llHang.setVisibility(View.VISIBLE);
+        tvNoHistory.setVisibility(View.GONE);
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
+        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
+        tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 }
