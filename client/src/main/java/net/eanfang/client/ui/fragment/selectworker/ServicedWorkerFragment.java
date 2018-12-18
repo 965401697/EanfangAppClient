@@ -129,11 +129,11 @@ public class ServicedWorkerFragment extends BaseFragment {
         queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
         queryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         queryEntry.getEquals().put("served", serviceId + "");
-        queryEntry.getEquals().put("collect", collectId + "");
+//        queryEntry.getEquals().put("collect", collectId + "");
         if (mOwnerOrgId != 0) {
-            queryEntry.getEquals().put("companyId", mOwnerOrgId + "");
+//            queryEntry.getEquals().put("companyId", mOwnerOrgId + "");
         }
-        queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
+//        queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<WorkerEntity>(getActivity(), true, WorkerEntity.class, true, (list) -> {
