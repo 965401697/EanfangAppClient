@@ -114,6 +114,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                
                 if (!TextUtils.isEmpty(s)) {
                     searchData(s.toString());
                 } else {
