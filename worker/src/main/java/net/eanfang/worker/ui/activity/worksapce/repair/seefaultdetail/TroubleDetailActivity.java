@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -117,10 +118,23 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
      */
     @BindView(R.id.snpl_form_photos)
     BGASortableNinePhotoLayout snplFormPhotos;
-    @BindView(R.id.tv_hangContnet)
-    TextView tvHangContnet;
     @BindView(R.id.rv_team)
     RecyclerView rvTeam;
+    /**
+     * 转单
+     */
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_order_num)
+    TextView tvOrderNum;
+    @BindView(R.id.tv_order_time)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_order_reason)
+    TextView tvOrderReason;
+    @BindView(R.id.ll_hang)
+    LinearLayout llHang;
+    @BindView(R.id.tv_no_history)
+    TextView tvNoHistory;
 
     private FillTroubleDetailAdapter quotationDetailAdapter;
     private Long id;
@@ -416,12 +430,16 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
      */
     public void getHistory(TransferLogEntity transferLogEntity) {
         if (transferLogEntity == null) {
-            tvHangContnet.setText("暂无转单记录");
-        } else {
-            tvHangContnet.setText(transferLogEntity.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
-                    GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()) + "在" +
-                    GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()) + "转给" + transferLogEntity.getReceiveUserEntity().getAccountEntity().getRealName());
+            llHang.setVisibility(View.GONE);
+            tvNoHistory.setVisibility(View.VISIBLE);
+            return;
         }
+        llHang.setVisibility(View.VISIBLE);
+        tvNoHistory.setVisibility(View.GONE);
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
+        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
+        tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 
     @Override
