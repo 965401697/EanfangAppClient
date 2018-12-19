@@ -43,6 +43,8 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         }
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());
+        // 工作年限
+        helper.setText(R.id.tv_workTime, item.getVerifyEntity().getWorkingYear() + "");
         //姓名
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {

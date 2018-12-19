@@ -86,7 +86,7 @@
         android:layout_marginBottom="@dimen/dimen_20"
         android:layout_marginLeft="@dimen/dimen_120"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <TextView style="@style/style_common_line_gray" />

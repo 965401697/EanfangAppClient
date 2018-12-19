@@ -271,13 +271,13 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                 JumpItent.jump(AddNewCheckActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete_work:
-                llAddDetail.setVisibility(View.GONE);
-                if (closeTaskWrite()) {
+                if (addDataToWrok()) {
                     llAddDetail.setVisibility(View.GONE);
+                    tvAddTask.setVisibility(View.VISIBLE);
                 } else {
-                    if (addDataToWrok()) llAddDetail.setVisibility(View.GONE);
+                    llAddDetail.setVisibility(View.VISIBLE);
+                    tvAddTask.setVisibility(View.GONE);
                 }
-                tvAddTask.setVisibility(View.VISIBLE);
                 break;
             // 保存并添加下一条
             case R.id.tv_save:
@@ -692,7 +692,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
 //    }
 
-}
+    }
 
 
     public void setFlag(int flag) {

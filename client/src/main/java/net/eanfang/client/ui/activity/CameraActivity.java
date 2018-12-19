@@ -402,7 +402,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
                 creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
                 "地址：" + lAddress;
-        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 16, color, 5, 180);
+        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 16, color, 5, 220);
         showTakePhotoImg.setImageBitmap(textBitmap);
         flCamera.setVisibility(View.VISIBLE);
         try {
