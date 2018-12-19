@@ -18,6 +18,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
+import com.eanfang.util.SharePreferenceUtil;
 
 import java.util.List;
 
@@ -70,15 +71,28 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
         }
 
 
+        try {
+            if (SharePreferenceUtil.get().get("app", "").equals("client")) {
+                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
+
+            } else {
+                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_worker));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         if (isExpand()) {
-//            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_one_close));
+            //            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_one_close));
             viewHolder.getImageView(R.id.iv_select).setImageDrawable(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.ic_one_close));
 
         } else {
-//            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_one_opne));
+            //            viewHolder.getImageView(R.id.iv_select).setImageDrawable(viewHolder.getImageView(R.id.iv_select).getContext().getDrawable(R.drawable.ic_one_opne));
             viewHolder.getImageView(R.id.iv_select).setImageDrawable(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.ic_one_opne));
 
         }
+
         //说明是人员单选
         if (data.getFlag() == 1 || data.getFlag() == 3 || data.getFlag() == 0) {
             if (totle != 0) {

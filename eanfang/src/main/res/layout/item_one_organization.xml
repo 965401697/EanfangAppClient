@@ -60,12 +60,14 @@
 
     <CheckBox
         android:id="@+id/cb_checked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dimen_42"
+        android:layout_height="@dimen/dimen_42"
         android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dimen_26"
         android:clickable="false"
         android:focusable="false"
+        android:button="@null"
         android:focusableInTouchMode="false"
         android:visibility="gone" />
 

@@ -44,8 +44,6 @@ public class CertificateListActivity extends BaseWorkerActivity {
     private final int ADD_CERTIFICATION_CODE = 101;
     @BindView(R.id.rl_add)
     RelativeLayout rlAdd;
-    @BindView(R.id.tv_nodata)
-    TextView tvNodata;
     private CertificateListAdapter adapter;
     // 是否安防公司的荣誉证书
     private String isCompany = "";
@@ -118,12 +116,11 @@ public class CertificateListActivity extends BaseWorkerActivity {
 
                         if (bean.getList().size() > 0) {
                             adapter.setNewData(bean.getList());
-                            tvNodata.setVisibility(View.GONE);
-                            recyclerView.setVisibility(View.VISIBLE);
-                        } else {
-                            tvNodata.setVisibility(View.VISIBLE);
-                            recyclerView.setVisibility(View.GONE);
+                            if (tvSub.getVisibility() == View.GONE) {
+                                tvSub.setVisibility(View.VISIBLE);
+                            }
                         }
+
 
                     }
 

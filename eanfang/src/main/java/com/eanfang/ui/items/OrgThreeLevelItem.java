@@ -1,6 +1,7 @@
 package com.eanfang.ui.items;
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -10,6 +11,7 @@ import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
+import com.eanfang.util.SharePreferenceUtil;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -38,6 +40,17 @@ public class OrgThreeLevelItem extends TreeItem<SectionBean.ChildrenBean> {
                 holder.setText(R.id.tv_company_name, data.getOrgName());
             } else {
                 holder.setText(R.id.tv_company_name, data.getOrgName() + "(" + data.getCountStaff() + ")");
+            }
+
+            try {
+                if (SharePreferenceUtil.get().get("app", "").equals("client")) {
+                    ((CheckBox) holder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(holder.getView(R.id.ll_staff).getContext(), R.drawable.selector_single_checked_client));
+
+                } else {
+                    ((CheckBox) holder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(holder.getView(R.id.ll_staff).getContext(), R.drawable.selector_single_checked_worker));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             if (data.isChecked()) {

@@ -168,8 +168,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="@dimen/dimen_40"
                             android:layout_marginTop="@dimen/dimen_40"
-                            app:placeholderImageScaleType="centerCrop"
-                            fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
+                            fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
 
 
                     </LinearLayout>
@@ -199,8 +198,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="@dimen/dimen_40"
                             android:layout_marginTop="@dimen/dimen_40"
-                            app:placeholderImageScaleType="centerCrop"
-                            fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
+                            fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
 
                     </LinearLayout>
 
@@ -227,9 +225,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="@dimen/dimen_40"
                             android:layout_marginTop="@dimen/dimen_40"
-                            android:scaleType="fitXY"
-                            app:placeholderImageScaleType="centerCrop"
-                            fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
+                            fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
 
                     </LinearLayout>
 

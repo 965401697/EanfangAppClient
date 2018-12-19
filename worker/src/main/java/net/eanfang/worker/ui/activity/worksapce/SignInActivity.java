@@ -128,7 +128,12 @@ public class SignInActivity extends BaseWorkerActivity {
             singNotAround();
         } else {
             mSignScope = "0";
-            doHttp(orderId);
+//            doHttp(orderId);
+            if (mIsFromType == 1) {
+                doMaintenanceHttp(orderId);
+            } else {
+                doHttp(orderId);
+            }
         }
     }
 
