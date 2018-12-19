@@ -158,6 +158,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                 deviceTypeLeftAdapter.notifyDataSetChanged();
                 mLeftId = leftDataList.get(i).getDataId();
                 rightDataList = doSelectRightList(mLeftId);
+                etSearch.setText("");//切换置空
                 getData();
             }
         });

@@ -73,7 +73,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         queryEntry.getEquals().put("businessOneCode", mType);
         EanfangHttp.post(NewApiService.DEVICE_LIST_CLIENT)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<EquipmentBean>(mActivity, true, EquipmentBean.class) {
+                .execute(new EanfangCallback<EquipmentBean>(getActivity(), true, EquipmentBean.class) {
                     @Override
                     public void onSuccess(EquipmentBean bean) {
                         if (mPage == 1) {
@@ -89,8 +89,8 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
                             if (bean.getList().size() > 0) {
                                 mTvNoData.setVisibility(View.GONE);
-                                ((EquipmentListActivity) getActivity()).setEquipmentTitle(bean.getList().get(0).getOwnerCompanyEnityt().getOrgName());
-                                ((EquipmentListActivity) getActivity()).setmOwnerCompanyId(String.valueOf(bean.getList().get(0).getOwnerCompanyEnityt().getCompanyId()));
+//                                ((EquipmentListActivity) getActivity()).setEquipmentTitle(bean.getList().get(0).getOwnerCompanyEnityt().getOrgName());
+//                                ((EquipmentListActivity) getActivity()).setmOwnerCompanyId(String.valueOf(bean.getList().get(0).getOwnerCompanyEnityt().getCompanyId()));
                             } else {
                                 mTvNoData.setVisibility(View.VISIBLE);
                             }

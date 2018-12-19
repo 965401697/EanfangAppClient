@@ -91,6 +91,8 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
                     searchData(s.toString());
+                } else {
+                    refresh();
                 }
             }
 
@@ -112,6 +114,9 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
     }
 
     public void refresh() {
+        if (!TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            etSearch.setText("");
+        }
         mPage = 1;//下拉永远第一页
         getData();
     }
@@ -182,6 +187,7 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
                     }
                 });
     }
+
     private void searchData(String locationNum) {
         QueryEntry queryEntry = new QueryEntry();
 

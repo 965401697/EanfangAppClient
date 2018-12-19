@@ -57,14 +57,17 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
 
     private Integer mLeftId = 0;
     private boolean mFlag = false;//搜索的adapter的点击事件 从集合取数据
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_device_type);  ButterKnife.bind(this);
+        setContentView(R.layout.activity_select_device_type);
+        ButterKnife.bind(this);
         initView();
         initData();
         initListener();
     }
+
     /**
      * @date on 2018/5/4  15:57
      * @decision 初始化数据
@@ -150,6 +153,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                 deviceTypeLeftAdapter.notifyDataSetChanged();
                 mLeftId = leftDataList.get(i).getDataId();
                 rightDataList = doSelectRightList(mLeftId);
+                etSearch.setText("");//切换置空
                 getData();
             }
         });

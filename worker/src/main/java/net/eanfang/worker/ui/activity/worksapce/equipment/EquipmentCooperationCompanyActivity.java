@@ -122,7 +122,7 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
 
         queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
 
-        EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
+        EanfangHttp.post(NewApiService.GET_SELECT_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, true, (list) -> {
 
