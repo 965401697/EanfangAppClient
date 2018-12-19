@@ -158,6 +158,14 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
         getData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)//MAIN代表主线程
     public void receiveMessage(String message) {//该方法名可更改，不影响任何东西。

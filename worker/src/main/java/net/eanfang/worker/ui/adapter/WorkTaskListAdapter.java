@@ -1,13 +1,11 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.graphics.Color;
 import android.net.Uri;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -50,20 +48,20 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
         helper.setText(R.id.tv_depart_name, "部门            " + v(() -> item.getCreateOrg().getOrgName()));
 
 
-        if (mType == 2) {
-
-            helper.getView(R.id.tv_read_ns).setVisibility(View.VISIBLE);
-
-            if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
-                helper.setText(R.id.tv_read_ns, "已阅");
-                helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#999999"));
-            } else {
-                helper.setText(R.id.tv_read_ns, "待阅");
-                helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#FF4A4A"));
-            }
-        } else {
-            helper.getView(R.id.tv_read_ns).setVisibility(View.INVISIBLE);
-        }
+//        if (mType == 2) {
+//
+//            helper.getView(R.id.tv_read_ns).setVisibility(View.VISIBLE);
+//
+//            if (item.getStatus() == EanfangConst.WORK_TASK_STATUS_READ) {
+//                helper.setText(R.id.tv_read_ns, "已阅");
+//                helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#999999"));
+//            } else {
+//                helper.setText(R.id.tv_read_ns, "待阅");
+//                helper.setTextColor(R.id.tv_read_ns, Color.parseColor("#FF4A4A"));
+//            }
+//        } else {
+//            helper.getView(R.id.tv_read_ns).setVisibility(View.INVISIBLE);
+//        }
 
         helper.setText(R.id.tv_title_name, "标题            " + v(() -> item.getTitle()));
         helper.setText(R.id.tv_pub_time, "发布时间    " + v(() -> item.getCreateTime()));

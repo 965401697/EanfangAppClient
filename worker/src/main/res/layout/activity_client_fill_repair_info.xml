@@ -521,7 +521,7 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="@dimen/dimen_38"
                 android:paddingTop="15dp"
-                android:text="挂单/转单记录"
+                android:text="转单记录"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 

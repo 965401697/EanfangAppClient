@@ -86,7 +86,7 @@
         android:layout_marginBottom="@dimen/dimen_20"
         android:layout_marginLeft="@dimen/dimen_120"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
 
         <TextView style="@style/style_common_line_gray" />
@@ -114,6 +114,7 @@
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
+        <TextView style="@style/style_common_line_gray" />
 
         <LinearLayout
             android:id="@+id/ll_child_company"
@@ -132,7 +133,7 @@
                 android:id="@+id/tv_child_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dimen_44"
                 android:text="子公司"
                 android:textColor="@color/roll_content"
                 android:textSize="@dimen/textSize_14" />

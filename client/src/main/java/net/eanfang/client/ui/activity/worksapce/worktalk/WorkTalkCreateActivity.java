@@ -30,6 +30,7 @@ import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
@@ -233,7 +234,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
             // 面谈对象
             case R.id.ll_talk_object:
                 isWhitch = false;
-                startActivity(new Intent(this, SelectOAPresonActivity.class));
+                Bundle bundle = new Bundle();
+                bundle.putString("isRadio", "isRadio");
+                JumpItent.jump(this, SelectOAPresonActivity.class, bundle);
                 break;
             // 接收人
             case R.id.ll_receiver_person:
@@ -264,6 +267,8 @@ public class WorkTalkCreateActivity extends BaseActivity {
             // 提交
             case R.id.rl_confirm:
                 doSubmit();
+                break;
+            default:
                 break;
         }
     }
