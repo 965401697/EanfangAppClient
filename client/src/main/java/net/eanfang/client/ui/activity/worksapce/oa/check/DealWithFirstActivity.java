@@ -386,6 +386,7 @@ public class DealWithFirstActivity extends BaseActivity {
                 .params("status", status)
                 .params("id", mBean.getWorkInpectDetailDispose().getId())
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
+                    showToast("操作成功");
                     finishSelf();
                 }));
     }

@@ -141,7 +141,9 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private List<DataStatisticsBean.FailureBean> failureBeanList = new ArrayList<>();
     private ArrayList<PieEntry> failureEntryList = new ArrayList<>();
 
-    //当前公司ID
+    //当前登录人公司ID
+    private Long mMyOrgId;
+    //切换公司ID
     private Long mOrgId;
     // 当前公司名称
     private String mOrgName = "";
@@ -178,8 +180,9 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initView() {
         setTitle("报修数据统计");
         setLeftBack();
-        mOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mMyOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        mOrgId = mMyOrgId;
         /**
          * 设置pieChart图表的描述
          * */
@@ -213,10 +216,10 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initData() {
         tvCompanyName.setText(mOrgName);
         tvSelectCompanyName.setText(mOrgName);
-        // 获取统计数据
-        doGetData("");
+        // 获取统计数据 默认是总公司
+        doGetData("", mMyOrgId);
         // 获取公司
-        doGetComapnyData(mOrgId + "");
+        doGetComapnyData(mMyOrgId + "");
         BaseDataEntity baseDataEntity = new BaseDataEntity();
         baseDataEntity.setDataName("全部");
         baseDataEntity.setDataCode("");
@@ -226,7 +229,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     }
 
     /**
-     * 获取公司
+     * 获取子公司的数量 进行显示 2家子公司
      */
     private void doGetComapnyData(String orgId) {
         QueryEntry queryEntry = new QueryEntry();
@@ -247,20 +250,24 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
     private void initListener() {
         rgDataTiem.setOnCheckedChangeListener(this);
         rlChangeCompany.setOnClickListener((View v) -> {
-            new DataStatisticsCompanyListView(DataStatisticsActivity.this, mOrgId + "", (mCompanyName, mCompanyId) -> {
+            new DataStatisticsCompanyListView(DataStatisticsActivity.this, mMyOrgId + "", mOrgName, (mCompanyName, mCompanyId) -> {
                 tvSelectCompanyName.setText(mCompanyName);
-                doGetData("");
+                mOrgId = mCompanyId;
+                doGetData("", mOrgId);
+//                doGetComapnyData(mCompanyId + "");
             }).show();
-            doGetComapnyData(mOrgId + "");
         });
     }
 
-    public void doGetData(String businessCode) {
+    /**
+     * 获取统计数据
+     */
+    public void doGetData(String businessCode, Long compangId) {
         QueryEntry queryEntry = new QueryEntry();
         if (!StringUtils.isEmpty(businessCode)) {
             queryEntry.getEquals().put("bussinessCode", businessCode);
         }
-        queryEntry.getEquals().put("shopCompanyId", mOrgId + "");
+        queryEntry.getEquals().put("shopCompanyId", compangId + "");
         queryEntry.getEquals().put("date", mData);
         EanfangHttp.post(NewApiService.REPAIR_DATA_STATISTICE)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -280,8 +287,10 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             repairBeanList.clear();
             tvRepairNoresult.setVisibility(View.GONE);
             repairBeanList = bean.getRepair();
+            rvRepairClassOne.setVisibility(View.VISIBLE);
             dataStatisticsReapirAdapter.setNewData(repairBeanList);
         } else {
+            rvRepairClassOne.setVisibility(View.GONE);
             tvRepairNoresult.setVisibility(View.VISIBLE);
         }
         // 五家公司
@@ -289,8 +298,10 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             fiveBeanList.clear();
             tvFiveNoresult.setVisibility(View.GONE);
             fiveBeanList = bean.getFive();
+            rvFiveCompany.setVisibility(View.VISIBLE);
             dataStatisticsCompanyAdapter.setNewData(fiveBeanList);
         } else {
+            rvFiveCompany.setVisibility(View.GONE);
             tvFiveNoresult.setVisibility(View.VISIBLE);
         }
         // 设备情况
@@ -298,8 +309,10 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             tvDeviceNoresult.setVisibility(View.GONE);
             deviceBeanList.clear();
             deviceBeanList = bean.getDevice();
+            rvDevice.setVisibility(View.VISIBLE);
             dataStatisticsDeviceAdapter.setNewData(deviceBeanList);
         } else {
+            rvDevice.setVisibility(View.GONE);
             tvDeviceNoresult.setVisibility(View.VISIBLE);
         }
         // 饼状图
@@ -356,7 +369,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tvDataSelectType.setText(mDataType.get(i).getDataName());
                 mBussiness = mDataType.get(i).getDataCode();
-                doGetData(mDataType.get(i).getDataCode());
+                doGetData(mDataType.get(i).getDataCode(), mOrgId);
                 dataSelectPopWindow.dismiss();
             }
         });
@@ -378,12 +391,12 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
             case R.id.rb_dataTimeToday:
                 mData = "1";
                 // 获取统计数据
-                doGetData(mBussiness);
+                doGetData(mBussiness, mOrgId);
                 break;
             case R.id.rb_dataTimeMonth:
                 mData = "2";
                 // 获取统计数据
-                doGetData(mBussiness);
+                doGetData(mBussiness, mOrgId);
                 break;
         }
     }

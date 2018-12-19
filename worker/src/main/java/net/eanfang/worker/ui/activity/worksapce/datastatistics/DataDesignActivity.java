@@ -120,7 +120,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private List<DataDesignBean.BussinessBean> bussinessBeanList = new ArrayList<>();
     private ArrayList<PieEntry> bussinessEntryList = new ArrayList<>();
 
-    //当前公司ID
+    //当前登录人公司ID
+    private Long mMyOrgId;
+    //切换公司ID
     private Long mOrgId;
     // 当前公司名称
     private String mOrgName = "";
@@ -151,8 +153,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private void initView() {
         setTitle("设计数据统计");
         setLeftBack();
-        mOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mMyOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        mOrgId = mMyOrgId;
         /**
          * 设置pieChart图表的描述
          * */
@@ -175,9 +178,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
         tvCompanyName.setText(mOrgName);
         tvSelectCompanyName.setText(mOrgName);
         // 获取统计数据
-        doGetData("");
+        doGetData("", mMyOrgId);
         // 获取公司
-        doGetComapnyData(mOrgId + "");
+        doGetComapnyData(mMyOrgId + "");
         BaseDataEntity baseDataEntity = new BaseDataEntity();
         baseDataEntity.setDataName("全部");
         baseDataEntity.setDataCode("");
@@ -208,23 +211,23 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private void initListener() {
         rgDataTiem.setOnCheckedChangeListener(this);
         rlChangeCompany.setOnClickListener((View v) -> {
-            new DataStatisticsCompanyListView(DataDesignActivity.this, mOrgId + "", (mCompanyName, mCompanyId) -> {
+            new DataStatisticsCompanyListView(DataDesignActivity.this, mMyOrgId + "", mOrgName, (mCompanyName, mCompanyId) -> {
                 tvSelectCompanyName.setText(mCompanyName);
-                doGetData("");
+                mOrgId = mCompanyId;
+                doGetData("", mOrgId);
             }).show();
-            doGetComapnyData(mOrgId + "");
         });
     }
 
     /**
      * 获取数据
      */
-    public void doGetData(String businessCode) {
+    public void doGetData(String businessCode, Long compangId) {
         QueryEntry queryEntry = new QueryEntry();
         if (!StringUtils.isEmpty(businessCode)) {
             queryEntry.getEquals().put("businessOneCode", businessCode);
         }
-        queryEntry.getEquals().put("shopCompanyId", mOrgId + "");
+        queryEntry.getEquals().put("shopCompanyId", compangId + "");
         queryEntry.getEquals().put("date", mData);
         EanfangHttp.post(NewApiService.DESIGN_DATA_STATISTICE)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -244,8 +247,10 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             installBeanList.clear();
             tvRepairNoresult.setVisibility(View.GONE);
             installBeanList = bean.getDesign();
+            rvRepairClassOne.setVisibility(View.VISIBLE);
             dataStatisticsReapirAdapter.setNewData(installBeanList);
         } else {
+            rvRepairClassOne.setVisibility(View.GONE);
             tvRepairNoresult.setVisibility(View.VISIBLE);
         }
         // 五家公司
@@ -253,8 +258,10 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             fiveBeanList.clear();
             tvFiveNoresult.setVisibility(View.GONE);
             fiveBeanList = bean.getFive();
+            rvFiveCompany.setVisibility(View.VISIBLE);
             dataStatisticsCompanyAdapter.setNewData(fiveBeanList);
         } else {
+            rvFiveCompany.setVisibility(View.GONE);
             tvFiveNoresult.setVisibility(View.VISIBLE);
         }
         // 饼状图
@@ -293,7 +300,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tvDataSelectType.setText(mDataType.get(i).getDataName());
                 mBussiness = mDataType.get(i).getDataCode();
-                doGetData(mDataType.get(i).getDataCode());
+                doGetData(mDataType.get(i).getDataCode(), mOrgId);
                 dataSelectPopWindow.dismiss();
             }
         });
@@ -315,12 +322,12 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             case R.id.rb_dataTimeToday:
                 mData = "1";
                 // 获取统计数据
-                doGetData(mBussiness);
+                doGetData(mBussiness, mOrgId);
                 break;
             case R.id.rb_dataTimeMonth:
                 mData = "2";
                 // 获取统计数据
-                doGetData(mBussiness);
+                doGetData(mBussiness, mOrgId);
                 break;
         }
     }
