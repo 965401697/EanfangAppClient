@@ -395,6 +395,10 @@ public interface NewApiService {
      */
     String GET_COOPERATION_LIST = BASE_URL + "/yaf_shop/cooperation/list";
     /**
+     * 筛选合作业务的公司专用接口（根据assginee或owner信息筛选出合作业务的公司信息）
+     */
+    String GET_SELECT_COOPERATION_LIST = BASE_URL + "/yaf_shop/cooperation/selectCoopCompany";
+    /**
      * 查看合作业务的详情
      * post
      */

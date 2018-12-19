@@ -92,6 +92,8 @@ public class EquipmentAddActivity extends BaseClientActivity implements SwipeRef
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
                     searchData(s.toString());
+                } else {
+                    refresh();
                 }
             }
 
@@ -113,6 +115,9 @@ public class EquipmentAddActivity extends BaseClientActivity implements SwipeRef
     }
 
     public void refresh() {
+        if (!TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            etSearch.setText("");
+        }
         mPage = 1;//下拉永远第一页
         getData();
     }

@@ -6,7 +6,6 @@ import android.widget.CheckBox;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CooperationEntity;
 
@@ -44,7 +43,7 @@ public class EquipmentCooperationRelationAdapter extends BaseQuickAdapter<Cooper
 
         ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeOrg().getOrgUnitEntity().getLogoPic()));
         helper.setText(R.id.tv_company_name, item.getAssigneeOrg().getOrgName());
-        helper.setText(R.id.tv_time, GetDateUtils.dateToFormatString(item.getBeginTime(), "yyyy.MM.dd") + " - " + GetDateUtils.dateToFormatString(item.getEndTime(), "yyyy.MM.dd"));
+//        helper.setText(R.id.tv_time, GetDateUtils.dateToFormatString(item.getBeginTime(), "yyyy.MM.dd") + " - " + GetDateUtils.dateToFormatString(item.getEndTime(), "yyyy.MM.dd"));
         //0 待审核 1:审核通过 2：失效/拒绝
         helper.addOnClickListener(R.id.cb_check);
     }

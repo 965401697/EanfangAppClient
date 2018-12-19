@@ -183,6 +183,9 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
     @Override
     public void onRefresh(int index) {
+        if (!TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            etSearch.setText("");
+        }
         mFlag = false;
         dataOption(TOP_REFRESH);
     }
