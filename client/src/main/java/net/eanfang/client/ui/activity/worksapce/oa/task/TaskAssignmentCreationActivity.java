@@ -233,14 +233,13 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                 JumpItent.jump(TaskAssignmentCreationActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete:
-                llAddTask.setVisibility(View.GONE);
-                if (closeTaskWrite()) {
+                if (addDataToWrok()) {
                     llAddTask.setVisibility(View.GONE);
-
+                    tvAddTask.setVisibility(View.VISIBLE);
                 } else {
-                    if (addDataToWrok()) llAddTask.setVisibility(View.GONE);
+                    llAddTask.setVisibility(View.VISIBLE);
+                    tvAddTask.setVisibility(View.GONE);
                 }
-                tvAddTask.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_save:
                 //保存 并 下一条
@@ -249,6 +248,8 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
             case R.id.tv_sub:
                 submit();
                 break;
+                default:break;
+
         }
     }
 
