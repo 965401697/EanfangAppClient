@@ -204,7 +204,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, true, bean -> {
                     companyEntityBeanList = bean;
-                    if (companyEntityBeanList.size() - 1 > 0) {
+                    if (companyEntityBeanList.size() > 0) {
                         tvChildCompanyName.setText(companyEntityBeanList.size() + "");
                     } else {
                         tvChildCompanyName.setText("0");

@@ -81,7 +81,7 @@ public class EvaluateFragment extends BaseFragment implements
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_list);
         mSwipeRefreshLayout = findViewById(R.id.swipre_fresh);
-        evaluateAdapter = new EvaluateAdapter();
+        evaluateAdapter = new EvaluateAdapter("receive");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         evaluateAdapter.setOnLoadMoreListener(this, mRecyclerView);

@@ -44,6 +44,7 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
 
     private String companyId;
     private String companyName;
+    private String companyOrgCode;
 
 
     private List<TemplateBean> mTemplateBeanList = new ArrayList<>();
@@ -82,6 +83,7 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
 
         companyId = getIntent().getStringExtra("companyId");//单选 多选
         companyName = getIntent().getStringExtra("companyName");//单选 多选
+        companyOrgCode = getIntent().getStringExtra("companyOrgCode");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -98,6 +100,7 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
                     OrganizationBean bean = new OrganizationBean();
                     bean.setOrgName(companyName);
                     bean.setCompanyId(companyId);
+                    bean.setOrgCode(companyOrgCode);
                     bean.setStaff(list);
                     getSection(bean);
 

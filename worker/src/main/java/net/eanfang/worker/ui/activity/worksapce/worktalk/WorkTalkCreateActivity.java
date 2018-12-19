@@ -255,6 +255,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 Intent intent = new Intent(this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
                 intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
                 intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
@@ -270,6 +271,8 @@ public class WorkTalkCreateActivity extends BaseActivity {
             // 提交
             case R.id.rl_confirm:
                 doSubmit();
+                break;
+            default:
                 break;
         }
     }

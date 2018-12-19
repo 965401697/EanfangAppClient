@@ -325,6 +325,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 Intent intent = new Intent(WorkTransferCreateActivity.this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
                 intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
                 intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
@@ -338,6 +339,8 @@ public class WorkTransferCreateActivity extends BaseActivity {
             // 提交日志
             case R.id.rl_confirm:
                 doSubmit();
+                break;
+            default:
                 break;
         }
     }
@@ -650,6 +653,8 @@ public class WorkTransferCreateActivity extends BaseActivity {
                         sendGroupAdapter.addData(preson);
                         newGroupList.add(preson);
                     }
+                    break;
+                default:
                     break;
             }
         }
