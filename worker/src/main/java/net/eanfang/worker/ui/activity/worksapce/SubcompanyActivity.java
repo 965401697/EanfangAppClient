@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -51,6 +52,7 @@ public class SubcompanyActivity extends BaseActivity {
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST)
+                .params("companyId", EanfangApplication.get().getCompanyId())
                 .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
                     initAdapter(list);
                 }));

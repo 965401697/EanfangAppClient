@@ -293,7 +293,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     break;
                 //子公司
                 case R.id.ll_child_company:
-                    startActivity(new Intent(getActivity(), SubcompanyActivity.class));
+                    Bundle bundle_company = new Bundle();
+                    bundle_company.putString("companyId", String.valueOf(mDatas.get(position).getCompanyId()));
+                    JumpItent.jump(getActivity(), SubcompanyActivity.class, bundle_company);
                     break;
                 //外协单位
                 case R.id.ll_outside_company:
