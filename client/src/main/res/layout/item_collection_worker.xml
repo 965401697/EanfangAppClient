@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="20dp">
+        android:paddingRight="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,8 +45,10 @@
                     android:id="@+id/tv_auth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_10"
                     android:background="@drawable/bg_client_select_worker_able"
                     android:paddingBottom="@dimen/dimen_3"
+
                     android:paddingLeft="@dimen/dimen_10"
                     android:paddingRight="@dimen/dimen_10"
                     android:paddingTop="@dimen/dimen_3"
@@ -58,8 +60,8 @@
                     android:id="@+id/tv_train"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_20"
-                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
                     android:background="@drawable/bg_client_select_worker_able"
                     android:paddingBottom="@dimen/dimen_3"
                     android:paddingLeft="@dimen/dimen_10"
@@ -73,6 +75,7 @@
                     android:id="@+id/tv_qualification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
                     android:background="@drawable/bg_client_select_worker_able"
                     android:paddingBottom="@dimen/dimen_3"
                     android:paddingLeft="@dimen/dimen_10"
@@ -142,7 +145,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_horizontal"
@@ -183,17 +186,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text=""
                             android:textColor="#FFA53A"
                             android:textSize="@dimen/textSize_12" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:text="年"
-                            android:textColor="@color/color_bottom"
-                            android:textSize="@dimen/textSize_12" />
                     </LinearLayout>
                 </LinearLayout>
 

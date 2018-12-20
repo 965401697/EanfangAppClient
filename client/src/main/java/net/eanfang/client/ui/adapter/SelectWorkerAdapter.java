@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkerEntity;
@@ -43,7 +44,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());
         // 工作年限
-        helper.setText(R.id.tv_workTime, item.getVerifyEntity().getWorkingYear() + "");
+        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
         //姓名
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {

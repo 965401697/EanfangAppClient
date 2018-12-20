@@ -34,6 +34,7 @@ public class SubcompanyActivity extends BaseActivity {
     RecyclerView revList;
     @BindView(R.id.tv_nodata)
     TextView tvNodata;
+    private String mCompanyId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +48,12 @@ public class SubcompanyActivity extends BaseActivity {
     private void initView() {
         setTitle("分公司");
         setLeftBack();
+        mCompanyId = getIntent().getStringExtra("companyId");
     }
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST)
+                .params("companyId", mCompanyId)
                 .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
                     initAdapter(list);
                 }));
