@@ -75,6 +75,10 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
                     intent.putExtras(bundle);
+                    intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                    intent.putExtra("imgKey",getIntent().getStringExtra("imgKey"));
+                    intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
+
                     startActivity(intent);
                 } else {
                     EventBus.getDefault().post(mAdapter.getSeletePerson());

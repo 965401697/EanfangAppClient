@@ -146,7 +146,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
 
         if (mFlag == 1) {
             //创建群组
-            setRightTitle("创建");
+            setRightTitle("下一步");
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
         } else if (mFlag == 2) {//创建是分享
             setRightTitle("确定");
@@ -168,10 +168,18 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
             public void onClick(View v) {
                 if (mFlag == 1) {
 
+                    if (mHeaderIconAdapter.getData().size() <= 1) {
+                        ToastUtil.get().showToast(NewSelectIMContactActivity.this, "最少选两个好友");
+                        return;
+                    }
+
                     Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
                     intent.putExtras(bundle);
+                    intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                    intent.putExtra("imgKey",getIntent().getStringExtra("headPortrait"));
+                    intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
                     startActivity(intent);
                     endTransaction(true);
 //                    compoundPhoto();
@@ -245,6 +253,10 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable("list", (Serializable) newPresonList);
                                 intent.putExtras(bundle);
+                                intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                                intent.putExtra("imgKey",getIntent().getStringExtra("headPortrait"));
+                                intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
+
                                 startActivity(intent);
                             }
                         });

@@ -93,7 +93,10 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         bundle.putSerializable("list", (Serializable) getData());
                         intent.putExtras(bundle);
                         intent.putExtra("flag", 1);
-                        ((CreateGroupActivity) mContext).finishSelf();
+                        intent.putExtra("groupName", ((CreateGroupActivity) mContext).etGroupName.getText().toString());
+                        intent.putExtra("headPortrait", ((CreateGroupActivity) mContext).imgKey);
+                        intent.putExtra("locationPortrait", ((CreateGroupActivity) mContext).locationUrl);
+//                        ((CreateGroupActivity) mContext).finishSelf();
                         mContext.startActivity(intent);
                     } else {
                         //选择协同人员

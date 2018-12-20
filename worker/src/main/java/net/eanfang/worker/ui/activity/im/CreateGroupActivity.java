@@ -54,7 +54,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.iv_group_pic)
     SimpleDraweeView ivGroupPic;
     @BindView(R.id.tv_group_name)
-    EditText etGroupName;
+    public EditText etGroupName;
     @BindView(R.id.tv_num)
     TextView tvNum;
     @BindView(R.id.rv_team)
@@ -63,9 +63,8 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     Button btnCreate;
 
 
-    private String imgKey;
+
     private Dialog dialog;
-    ;
     private String path;
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
     private Handler handler = new Handler() {
@@ -91,7 +90,10 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
             }
         }
     };
-    private String groupName;
+    public String groupName = "";
+    public String imgKey = "";
+    public String locationUrl = "";
+
     private OAPersonAdaptet oaPersonAdaptet;
     private Handler mHandler = new Handler() {
         @Override
@@ -116,10 +118,25 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         Bundle bundle = getIntent().getExtras();
         presonList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
 
+        groupName = getIntent().getStringExtra("groupName");
+        imgKey = getIntent().getStringExtra("imgKey");
+        locationUrl = getIntent().getStringExtra("locationPortrait");
+
+
         initViews();
+        NewSelectIMContactActivity.transactionActivities.add(this);
     }
 
     private void initViews() {
+
+        if (!TextUtils.isEmpty(groupName)) {
+            etGroupName.setText(groupName);
+        }
+
+        if (!TextUtils.isEmpty(locationUrl)) {
+            ivGroupPic.setImageURI(locationUrl);
+        }
+
 
         tvNum.setText(presonList.size() + "人");
 
@@ -152,6 +169,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         super.takeSuccess(result, resultCode);
         OSSCallBack callback = null;
         imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
+        locationUrl = "file://" + result.getImage().getOriginalPath();
         switch (resultCode) {
             case HEAD_PHOTO:
                 ivGroupPic.setImageURI("file://" + result.getImage().getOriginalPath());
@@ -303,6 +321,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
             EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
             RongIM.getInstance().startGroupChat(CreateGroupActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+            NewSelectIMContactActivity.transactionActivities.remove(this);
             CreateGroupActivity.this.finish();
         }));
 
@@ -324,6 +343,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
      */
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃创建群组？", () -> {
+            NewSelectIMContactActivity.transactionActivities.remove(this);
             finish();
         }).showDialog();
     }

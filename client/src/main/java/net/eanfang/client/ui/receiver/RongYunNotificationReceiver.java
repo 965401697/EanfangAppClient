@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.receiver;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -23,8 +24,12 @@ public class RongYunNotificationReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage message) {
         if (message.getPushContent().equals("好友邀请") || message.getPushContent().equals("被删除通知") || message.getPushContent().equals("被移除群组通知")) {
+            //判断当前activity是否创建
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setComponent(new ComponentName(context, MainActivity.class));
 
-            context.startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            context.startActivity(intent);
+//            context.startActivity(new Intent(context, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             return true;
         }
         return false;// 返回 false, 会走融云 SDK 默认处理逻辑, 即点击该通知会打开会话列表或会话界面; 返回 true, 则由您自定义处理逻辑。
