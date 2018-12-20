@@ -103,6 +103,7 @@ public class CreatSectionActivity extends BaseClientActivity {
             OrganizationBean organizationBean = (OrganizationBean) o;
             tvSectionName.setText(organizationBean.getOrgName());
             topCompanyId = organizationBean.getTopCompanyId();
+            parentOrgId = organizationBean.getOrgId();
 
         } else if (o instanceof SectionBean) {
             SectionBean sectionBean = (SectionBean) o;
