@@ -1,12 +1,13 @@
 package com.eanfang.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.baozi.treerecyclerview.adpater.TreeRecyclerAdapter;
 import com.baozi.treerecyclerview.adpater.TreeRecyclerType;
@@ -29,6 +30,7 @@ import com.yaf.sys.entity.UserEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +39,8 @@ import butterknife.ButterKnife;
 
 public class SelectPresonActivity extends BaseActivity {
 
-    @BindView(R2.id.tv_search)
-    TextView tvSearch;
+    @BindView(R2.id.ll_search)
+    LinearLayout llSearch;
     @BindView(R2.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -344,6 +346,16 @@ public class SelectPresonActivity extends BaseActivity {
                     }
                     mTreeRecyclerAdapter.notifyDataSetChanged();
                 }
+            }
+        });
+
+        llSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //搜索界面
+                Intent intent = new Intent(SelectPresonActivity.this, SearchPersonByOrgannizationActivity.class);
+                intent.putExtra("data", (Serializable) mTemplateBeanList);
+                startActivity(intent);
             }
         });
     }
