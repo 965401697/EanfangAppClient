@@ -78,7 +78,6 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (context == null || message == null) {
             return;
         }
-        LogUtil.e(LogTag, "onNotifactionClickedResult");
 //        if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
 //            // 通知在通知栏被点击啦。。。。。
 //            // APP自己处理点击的相关动作

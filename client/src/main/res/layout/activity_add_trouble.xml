@@ -459,7 +459,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_40"
                         android:layout_weight="1"
-                        android:text="暂无简述"
+                        android:text="暂无"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13"
                         android:visibility="visible" />

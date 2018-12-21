@@ -106,20 +106,6 @@
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
             </intent-filter>
         </receiver>
-        <!-- 华为自定义的广播名称 -->
-        <receiver android:name=".ui.receiver.HuaWeiReceiver">
-            <intent-filter>
-
-                <!-- 必须,用于接收TOKEN -->
-                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
-                <!-- 必须，用于接收消息 -->
-                <action android:name="com.huawei.android.push.intent.RECEIVE" />
-                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
-                <action android:name="com.huawei.android.push.intent.CLICK" />
-                <!-- 可选，查看PUSH通道是否连接，不查看则不需要 -->
-                <action android:name="com.huawei.intent.action.PUSH_STATE" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".ui.activity.SplashActivity"
@@ -175,8 +161,18 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="net.eanfang.client"
+                    android:path="/messagelist_notify"
+                    android:scheme="xg_client" />
+            </intent-filter>
+        </activity>
         <!-- <activity android:name=".ui.activLoginClientActivityvity" /> -->
         <activity
             android:name=".ui.activity.CameraActivity"
@@ -799,20 +795,6 @@
             android:name=".ui.activity.worksapce.DesignOrderActivity"
             android:screenOrientation="portrait" />
 
-        <!-- 小米自定义的广播名称 -->
-        <receiver
-            android:name=".ui.receiver.XiaoMiReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.ERROR" />
-            </intent-filter>
-        </receiver>
         <!-- 工作检查 -->
         <!-- 处理明细 -->
         <!-- 添加处理明细 -->
