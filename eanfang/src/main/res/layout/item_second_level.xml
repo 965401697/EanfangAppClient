@@ -32,25 +32,25 @@
 
         <CheckBox
             android:id="@+id/cb_all_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_26"
+            android:button="@null"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginRight="@dimen/dimen_26"
-            />
+            android:focusableInTouchMode="false" />
 
         <!--<TextView-->
-            <!--android:id="@+id/tv_all_checked"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_marginRight="@dimen/dimen_26"-->
-            <!--android:text="全选"-->
-            <!--android:textSize="@dimen/textSize_13" />-->
+        <!--android:id="@+id/tv_all_checked"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginRight="@dimen/dimen_26"-->
+        <!--android:text="全选"-->
+        <!--android:textSize="@dimen/textSize_13" />-->
     </RelativeLayout>
 
 </LinearLayout>
