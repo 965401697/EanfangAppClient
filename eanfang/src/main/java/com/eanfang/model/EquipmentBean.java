@@ -2,6 +2,7 @@ package com.eanfang.model;
 
 import com.yaf.base.entity.CustDeviceEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +58,9 @@ public class EquipmentBean {
     }
 
     public List<CustDeviceEntity> getList() {
+        if (list == null) {
+            return new ArrayList<CustDeviceEntity>();
+        }
         return list;
     }
 
