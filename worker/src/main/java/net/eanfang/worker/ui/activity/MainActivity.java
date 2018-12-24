@@ -55,6 +55,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -164,6 +166,8 @@ public class MainActivity extends BaseActivity {
         });
 
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
+
+        getPushMessage(getIntent());
     }
 
 
@@ -688,6 +692,32 @@ public class MainActivity extends BaseActivity {
         } else if (resultCode == RESULT_OK && requestCode == 49) {
             ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
             contactsFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        /**
+         * 获取推送
+         * */
+        getPushMessage(intent);
+    }
+
+    private void getPushMessage(Intent intent) {
+        Uri uri = intent.getData();
+        int mType;
+        if (uri != null) {
+            if (!StringUtils.isEmpty(uri.getQueryParameter("type"))) {
+                mType = Integer.parseInt(uri.getQueryParameter("type"));
+                if (mType == 2) {
+                    // 打开messagelistactivity
+                    JumpItent.jump(MainActivity.this, MessageListActivity.class);
+                } else if (mType == 3) {
+                    //打开systemnoticeactivity
+                    JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
+                }
+            }
+
         }
     }
 }
