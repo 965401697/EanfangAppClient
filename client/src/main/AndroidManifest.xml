@@ -763,7 +763,6 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
         <!-- 企业管理搜索员工 -->
         <activity
@@ -953,11 +952,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.SetPasswordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- 评价展示 -->
         <activity
             android:name=".ui.activity.worksapce.EvaluateShowActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.im.SearchPersonCompanyActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

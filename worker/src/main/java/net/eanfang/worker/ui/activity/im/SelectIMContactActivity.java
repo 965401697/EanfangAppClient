@@ -26,7 +26,6 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
@@ -41,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -182,7 +182,14 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectIMContactActivity.this, SelectOrganizationActivity.class);
+                //                Intent intent = new Intent(SelectIMContactActivity.this, SelectOrganizationActivity.class);
+                Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
+                intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
+                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

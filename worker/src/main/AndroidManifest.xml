@@ -1111,6 +1111,10 @@
         <activity
             android:name=".ui.widget.FillAppointmentInfoRebookView"
             android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name=".ui.activity.im.SearchPersonCompanyActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

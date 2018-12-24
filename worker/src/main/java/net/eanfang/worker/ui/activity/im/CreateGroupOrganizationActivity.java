@@ -56,6 +56,9 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group_organization);
         ButterKnife.bind(this);
+        //----------------------------------
+        startTransaction(true);
+
         setTitle("选择联系人");
         setLeftBack();
 
@@ -271,5 +274,15 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                 }
             }
         });
+
+        llSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateGroupOrganizationActivity.this, SearchPersonCompanyActivity.class);
+                intent.putExtra("data", (Serializable) mTemplateBeanList);
+                startActivity(intent);
+            }
+        });
+
     }
 }

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
@@ -34,8 +33,6 @@ import butterknife.ButterKnife;
 public class CreateGroupOrganizationActivity extends BaseClientActivity {
 
 
-    @BindView(R.id.tv_search)
-    TextView tvSearch;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.ll_search)
@@ -57,6 +54,9 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group_organization);
         ButterKnife.bind(this);
+        //----------------------------------
+        startTransaction(true);
+
         setTitle("选择联系人");
         setLeftBack();
         String isFromOA = getIntent().getStringExtra("isFrom");
@@ -75,7 +75,7 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
                     intent.putExtras(bundle);
 
                     intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
-                    intent.putExtra("imgKey",getIntent().getStringExtra("imgKey"));
+                    intent.putExtra("imgKey", getIntent().getStringExtra("imgKey"));
                     intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
 
                     startActivity(intent);
@@ -271,6 +271,15 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
                     ImageView imageView = view.findViewById(R.id.iv_select);
                     ((CreateGroupOrganizationAdapter) adapter).isShow(position, imageView);
                 }
+            }
+        });
+
+        llSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateGroupOrganizationActivity.this, SearchPersonCompanyActivity.class);
+                intent.putExtra("data", (Serializable) mTemplateBeanList);
+                startActivity(intent);
             }
         });
     }
