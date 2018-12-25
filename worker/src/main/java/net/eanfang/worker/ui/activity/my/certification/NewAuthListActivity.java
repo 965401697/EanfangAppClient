@@ -130,7 +130,7 @@ public class NewAuthListActivity extends BaseWorkerActivity {
             //技能资质
             case R.id.rl_skill:
                 if (mAuthStatusBean.getBase() == 0) {
-                    ToastUtil.get().showToast(this, "请先进行实名操作");
+                    ToastUtil.get().showToast(this, "请先进行实名认证");
                     return;
                 }
                 if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改

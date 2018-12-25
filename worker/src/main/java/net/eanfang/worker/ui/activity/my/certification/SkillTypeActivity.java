@@ -198,8 +198,10 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void fillData(WorkerVerifySkillBean bean) {
-        tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
-        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getWorkerVerify().getWorkingLevel()));
+        if (bean.getWorkerVerify().getWorkingYear() != null)
+            tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
+        if (bean.getWorkerVerify().getWorkingLevel() != null)
+            tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getWorkerVerify().getWorkingLevel()));
     }
 
     @OnClick(R.id.tv_go)

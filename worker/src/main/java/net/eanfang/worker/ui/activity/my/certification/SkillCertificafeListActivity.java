@@ -79,6 +79,9 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(QualifyCertificafeListBean bean) {
 
+                        if (bean.getList().size() > 0) {
+                            adapter.setNewData(bean.getList());
+                        }
 
                     }
 
