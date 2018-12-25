@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.QuotationBean;
@@ -68,6 +69,8 @@ public class PayOrderDetailActivity extends BaseClientActivity {
     RecyclerView rvList1;
     @BindView(R.id.rv_list2)
     RecyclerView rvList2;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
     private Long id;
     private LinearLayoutManager llm;
     private List<QuotationBean.QuoteDevicesBean> quoteDevicesBeanList = new ArrayList<>();
@@ -122,6 +125,7 @@ public class PayOrderDetailActivity extends BaseClientActivity {
         //2017年7月6日 lin
         tvSubmitter.setText(payOrderDetailBean.getOfferer().getAccountEntity().getRealName());
         tvSubmitterPhone.setText(payOrderDetailBean.getOfferer().getAccountEntity().getMobile());
+        tvAddress.setText(Config.get().getAddressByCode(payOrderDetailBean.getZone_code()) + payOrderDetailBean.getDetail_place());
         initAdapter();
 
     }

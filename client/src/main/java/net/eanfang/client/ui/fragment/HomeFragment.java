@@ -49,6 +49,8 @@ import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -404,6 +406,10 @@ public class HomeFragment extends BaseFragment {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
+        /**
+         * 底部红点更新
+         * */
+        EventBus.getDefault().post(bean);
     }
 
 }

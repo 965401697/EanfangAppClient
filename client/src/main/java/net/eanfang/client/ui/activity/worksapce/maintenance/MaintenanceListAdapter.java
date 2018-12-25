@@ -45,7 +45,7 @@ public class MaintenanceListAdapter extends BaseQuickAdapter<ShopMaintenanceOrde
         if (item.getOrderNum() != null) {
             helper.setText(R.id.tv_order_id, "订单编号：" + item.getOrderNum());
         }
-        helper.setText(R.id.tv_plan_time, "规划时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_plan_time, "开始时间：" + GetDateUtils.dateToDateTimeString(item.getBeginTime()));
 
         if (item.getPeriod() == 0) {
             helper.setText(R.id.tv_period, "维保周期：" + "周检");

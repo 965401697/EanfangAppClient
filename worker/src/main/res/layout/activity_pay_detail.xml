@@ -289,6 +289,37 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/font_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#fff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_20"
+                    android:text="地址"
+                    android:textColor="@color/font_color"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_20"
+                    android:gravity="center_vertical|right"
+                    android:lines="3"
+                    android:textColor="@color/font_color"
+                    android:textSize="@dimen/textSize_14" />
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"

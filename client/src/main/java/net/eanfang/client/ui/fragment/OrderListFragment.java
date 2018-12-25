@@ -136,7 +136,12 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
                     case R.id.tv_do_second:
                         if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                            if (item.getAssigneeUser() != null) {
+                                CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                            } else {
+                                showToast("请等待分配技师");
+                            }
+
                         }
                         break;
                     default:
@@ -266,7 +271,7 @@ public class OrderListFragment extends BaseFragment implements
 
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(getTitle())) {
+        if (!"全部".equals(getTitle())) {
             status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
