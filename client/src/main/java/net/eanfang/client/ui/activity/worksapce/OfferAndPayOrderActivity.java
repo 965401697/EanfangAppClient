@@ -39,7 +39,6 @@ public class OfferAndPayOrderActivity extends BaseActivity {
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
     private OfferAndPayListFragment currentFragment;
-    private static String titleBar;
     private PayOrderListBean workReportListBean;
     private String type;
 
@@ -52,9 +51,8 @@ public class OfferAndPayOrderActivity extends BaseActivity {
     }
 
     private void initView() {
-        titleBar = getIntent().getStringExtra("title");
         type = getIntent().getStringExtra("type");
-        setTitle(titleBar);
+        setTitle("维修报价");
         setLeftBack();
 
         mTitles = new String[allmTitles.size()];

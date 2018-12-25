@@ -233,13 +233,13 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
                 JumpItent.jump(TaskAssignmentCreationActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete:
-                if (addDataToWrok()) {
+                if (closeTaskWrite()) {
                     llAddTask.setVisibility(View.GONE);
-                    tvAddTask.setVisibility(View.VISIBLE);
+
                 } else {
-                    llAddTask.setVisibility(View.VISIBLE);
-                    tvAddTask.setVisibility(View.GONE);
+                    if (addDataToWrok()) llAddTask.setVisibility(View.GONE);
                 }
+                tvAddTask.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_save:
                 //保存 并 下一条

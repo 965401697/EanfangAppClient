@@ -183,7 +183,7 @@ public class OrderDetailFragment extends BaseFragment {
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter  adapter, View view, int position) {
                 if (!PermKit.get().getRepairBughandlePerm()) return;
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("faultDeatail", mDataList.get(position));
