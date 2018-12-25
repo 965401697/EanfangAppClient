@@ -116,7 +116,7 @@ public class PayOrderDetailActivity extends BaseClientActivity {
         tvOrder.setText(payOrderDetailBean.getRepairOrderNum());
         tvReporter.setText(payOrderDetailBean.getReporter());
         tvPhone.setText(payOrderDetailBean.getReporterPhone());
-        tvCountMoney.setText("¥" + payOrderDetailBean.getTotalCost()/100);
+        tvCountMoney.setText("¥" + payOrderDetailBean.getTotalCost() / 100);
         //2017年7月5日
         tvClientCompanyNameWr.setText(payOrderDetailBean.getClientName());
         //2017年7月6日 lin
@@ -154,7 +154,7 @@ public class PayOrderDetailActivity extends BaseClientActivity {
         rvList2.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                new QuotationServiceView(PayOrderDetailActivity.this, quoteServicesBeanList.get(position));
+                new QuotationServiceView(PayOrderDetailActivity.this, quoteServicesBeanList.get(position)).show();
             }
         });
     }

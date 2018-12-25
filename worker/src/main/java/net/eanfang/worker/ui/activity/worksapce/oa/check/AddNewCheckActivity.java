@@ -271,13 +271,13 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                 JumpItent.jump(AddNewCheckActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete_work:
-                if (addDataToWrok()) {
+                if (closeTaskWrite()) {
                     llAddDetail.setVisibility(View.GONE);
-                    tvAddTask.setVisibility(View.VISIBLE);
+
                 } else {
-                    llAddDetail.setVisibility(View.VISIBLE);
-                    tvAddTask.setVisibility(View.GONE);
+                    if (addDataToWrok()) llAddDetail.setVisibility(View.GONE);
                 }
+                tvAddTask.setVisibility(View.VISIBLE);
                 break;
             // 保存并添加下一条
             case R.id.tv_save:

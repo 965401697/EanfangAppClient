@@ -2,13 +2,16 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RelativeLayout;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
 import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.receiver.ReceiverInit;
 import net.eanfang.client.util.PrefUtils;
 
 import butterknife.BindView;
@@ -50,10 +53,15 @@ public class MessageStateView extends BaseDialog {
         sbPersonRepair.setChecked(PrefUtils.getVBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK));
         sbPersonRepair.setOnCheckedChangeListener((view, isChecked) -> {
             PrefUtils.setBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK, isChecked);
+
+            if (!isChecked) {
+                Log.e("GG", "关闭推送");
+                XGPushManager.unregisterPush(mContext.getApplicationContext());
+            } else {
+                Log.e("GG", "打开推送");
+                ReceiverInit.getInstance().inits(mContext, EanfangApplication.get().getUser().getAccount().getMobile());
+            }
         });
-        if (sbPersonRepair.isChecked() == false) {
-            XGPushManager.unregisterPush(mContext.getApplicationContext());
-        }
 
 
     }

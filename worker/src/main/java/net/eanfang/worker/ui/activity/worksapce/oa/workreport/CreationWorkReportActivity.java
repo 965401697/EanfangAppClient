@@ -383,6 +383,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 addDataToWrok();
                 scrollView.scrollTo(0, etInputContent.getScrollY());
                 break;
+            default:
+                break;
         }
     }
 

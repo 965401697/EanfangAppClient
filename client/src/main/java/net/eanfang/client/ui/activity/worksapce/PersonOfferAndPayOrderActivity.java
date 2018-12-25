@@ -51,7 +51,6 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
     private void initView() {
         setTitle("维修报价");
         setLeftBack();
-        setLeftBack();
 
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);

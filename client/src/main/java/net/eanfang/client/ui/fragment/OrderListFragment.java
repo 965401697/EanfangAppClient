@@ -217,7 +217,6 @@ public class OrderListFragment extends BaseFragment implements
 //                        }
                         if (doCompare(item.getOwnerUserId(), mUseId)) {
                             startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                                    .putExtra("flag", 0)
                                     .putExtra("ordernum", item.getOrderNum())
                                     .putExtra("workerUid", item.getAssigneeUserId())
                                     .putExtra("orderId", item.getId())

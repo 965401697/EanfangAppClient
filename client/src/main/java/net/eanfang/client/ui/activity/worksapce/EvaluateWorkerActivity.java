@@ -76,6 +76,7 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
     private int isAnonymousValue = 2;// 1 匿名 2 不匿名
     // 赞的等级
     private int mGoodStatus = 1;
+    private static final int EVALUTAE_WORK_SUCCESS = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,7 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
                 .upJson(JSON.toJSONString(evaluateWorkerBean))
                 .execute(new EanfangCallback<JSONObject>(EvaluateWorkerActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("评价成功");
+                    setResult(EVALUTAE_WORK_SUCCESS);
                     finishSelf();
                 }));
     }
