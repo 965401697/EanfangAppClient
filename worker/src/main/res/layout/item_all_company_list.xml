@@ -34,7 +34,15 @@
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_14" />
 
-
+        <ImageView
+            android:id="@+id/iv_filiale_company"
+            android:layout_width="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_50"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_36"
+            android:src="@mipmap/filiale_company"
+            android:visibility="gone" />
+        
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/dimen_12"
