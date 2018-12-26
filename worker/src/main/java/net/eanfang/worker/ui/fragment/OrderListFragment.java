@@ -464,7 +464,10 @@ public class OrderListFragment extends BaseFragment implements
     }
 
     public boolean doCompare(Long assingerUserId, Long userId) {
-
+        if (assingerUserId == null) {
+            showToast("只有订单负责人可以操作");
+            return false;
+        }
         if (assingerUserId.equals(userId)) {
             return true;
         }

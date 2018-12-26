@@ -71,7 +71,7 @@ import butterknife.OnClick;
 
 import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
-public class TaskAssignmentCreationActivity  extends BaseClientActivity {
+public class TaskAssignmentCreationActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
@@ -233,13 +233,13 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                 JumpItent.jump(TaskAssignmentCreationActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete:
-                if (addDataToWrok()) {
+                if (closeTaskWrite()) {
                     llAddTask.setVisibility(View.GONE);
-                    tvAddTask.setVisibility(View.VISIBLE);
+
                 } else {
-                    llAddTask.setVisibility(View.VISIBLE);
-                    tvAddTask.setVisibility(View.GONE);
+                    if (addDataToWrok()) llAddTask.setVisibility(View.GONE);
                 }
+                tvAddTask.setVisibility(View.VISIBLE);
                 break;
             case R.id.tv_save:
                 //保存 并 下一条
@@ -248,7 +248,8 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
             case R.id.tv_sub:
                 submit();
                 break;
-                default:break;
+            default:
+                break;
 
         }
     }
@@ -511,7 +512,7 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(TaskAssignmentCreationActivity.this),"布置任务").send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(TaskAssignmentCreationActivity.this), "布置任务").send();
 
 
                     });

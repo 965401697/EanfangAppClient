@@ -36,6 +36,7 @@ import com.yaf.base.entity.InvoiceEntity;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -255,12 +256,13 @@ public class NewPayActivity extends BaseClientActivity {
                 break;
 
             case R.id.tv_outline_pay:
-                EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                EanfangApplication.get().closeActivity(OrderConfirmActivity.class.getName());
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", MessageUtil.payLatter());
                 intent.putExtras(bundle);
                 startActivity(intent);
+                finishSelf();
                 break;
             case R.id.tv_pay:
                 if (mPayType == 0) {

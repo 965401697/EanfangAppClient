@@ -40,6 +40,8 @@ import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -296,6 +298,11 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initCamCount(0);
                         mCamCount = 0;
                     }
+                    /**
+                     * 底部红点更新
+                     * */
+                    EventBus.getDefault().post(bean);
+
                 }));
     }
 

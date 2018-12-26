@@ -14,6 +14,8 @@ import net.eanfang.client.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -59,8 +61,8 @@ public class QuotationPartsView extends BaseDialog {
         tvTitle.setText("配件明细");
         etPartsName.setText(quotePartsBean.getPartName());
         tvUnit.setText(GetConstDataUtils.getDeviceUnitList().get(quotePartsBean.getUnit()));
-        etAmount.setText(quotePartsBean.getCount() + "");
-        etPrice.setText(quotePartsBean.getUnitPrice() + "");
+        etAmount.setText(v(() -> (quotePartsBean.getCount() + "")));
+        etPrice.setText(v(() -> (quotePartsBean.getUnitPrice() / 100)) + "");
         etPartSpeciication.setText(quotePartsBean.getPartSpeciication());
     }
 }

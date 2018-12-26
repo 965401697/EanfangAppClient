@@ -78,7 +78,9 @@ import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 public class MainActivity extends BaseClientActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
-    View redPoint;
+    private View redPointContact;
+    private View redPointHome;
+    private View redPointWork;
     private LoginBean user;
     private long mExitTime;
 
@@ -144,14 +146,15 @@ public class MainActivity extends BaseClientActivity {
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
+        redPointHome = indicator.findViewById(R.id.redPoint_home);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
-        redPoint = indicator.findViewById(R.id.redPoint);
-        initMessageCount(indicator);
+        redPointContact = indicator.findViewById(R.id.redPoint_contact);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
+        redPointWork = indicator.findViewById(R.id.redPoint_work);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
@@ -160,52 +163,6 @@ public class MainActivity extends BaseClientActivity {
 
 
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
-    }
-
-    private void initMessageCount(View indicator) {
-//        Badge qBadgeView = new QBadgeView(this)
-//                .bindTarget(indicator.findViewById(R.id.ll_news))
-//                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0 ? -1 : 0)
-//                .setBadgePadding(5, true)
-//                .setBadgeGravity(Gravity.END | Gravity.TOP)
-//                .setGravityOffset(0, 0, true)
-//                .setBadgeTextSize(18, true)
-//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-//                    //清除成功
-//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
-//                        //  showToast("消息被清空了");
-//                    }
-//                });
-
-
-        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(MainActivity.this, false, AllMessageBean.class, (bean -> {
-            new Handler(getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // 桌面气泡赋值
-                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
-
-                }
-            }, 3 * 1000);
-            if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCam() > 0) {// 进行底部消息小红点的显示
-                redPoint.setVisibility(View.VISIBLE);
-            } else {
-                redPoint.setVisibility(View.GONE);
-            }
-
-            //变量监听
-//            Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
-//                runOnUiThread(() -> {
-////                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
-//                    if (var == 0) {
-//                        redPoint.setVisibility(View.GONE);
-//                    } else {
-//                        redPoint.setVisibility(View.VISIBLE);
-//                    }
-//                });
-//            });
-        })));
     }
 
 
@@ -567,6 +524,43 @@ public class MainActivity extends BaseClientActivity {
         bundle.putSerializable("workEntriy", workerEntity);
         JumpItent.jump(MainActivity.this, WorkerDetailActivity.class, bundle);
     }
+
+    @Subscribe
+    public void onEventBottomRedIcon(AllMessageBean bean) {
+        /**
+         * 桌面app红点
+         * */
+        if (bean.getTotalCount() > 0) {
+            // 首页红点
+            new Handler(getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // 桌面气泡赋值
+                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
+
+                }
+            }, 3 * 1000);
+        }
+        //消息页面红点
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCam() > 0) {
+            redPointContact.setVisibility(View.VISIBLE);
+        } else {
+            redPointContact.setVisibility(View.GONE);
+        }
+        // 进行底部首页小红点的显示
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
+            redPointHome.setVisibility(View.VISIBLE);
+        } else {
+            redPointHome.setVisibility(View.GONE);
+        }
+        // 工作台消息红点
+        if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
+            redPointWork.setVisibility(View.VISIBLE);
+        } else {
+            redPointWork.setVisibility(View.GONE);
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
