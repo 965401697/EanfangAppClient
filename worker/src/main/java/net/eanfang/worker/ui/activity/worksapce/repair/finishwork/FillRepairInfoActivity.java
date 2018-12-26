@@ -478,7 +478,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             showToast("请填写遗留问题");
             return false;
         }
-        if (DetailEntityList != null) {
+        if (DetailEntityList != null && DetailEntityList.size() > 0) {
             //增加限制，需要先完善故障处理 在提交
             for (int i = 0; i < DetailEntityList.size(); i++) {
                 if (StringUtils.isEmpty(DetailEntityList.get(i).getCheckProcess())) {
@@ -486,6 +486,9 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                     return false;
                 }
             }
+        } else {
+            showToast("请至少添加一条故障处理明细");
+            return false;
         }
 
         return true;

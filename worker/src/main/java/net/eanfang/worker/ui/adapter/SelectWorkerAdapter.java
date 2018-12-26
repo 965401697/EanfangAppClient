@@ -6,10 +6,10 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkerEntity;
-
 
 import net.eanfang.worker.R;
 
@@ -44,16 +44,19 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());
         // 工作年限
-        helper.setText(R.id.tv_workTime, item.getVerifyEntity().getWorkingYear() + "");
+        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
         //姓名
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {
             // 口碑
-            helper.setText(R.id.tv_koubei, item.getPublicPraise() / 100 + "");
+            helper.setText(R.id.tv_koubei, item.getPublicPraise()+"");
         }
         if (item.getGoodRate() != 0) {
             // 好评率
-            helper.setText(R.id.tv_haopinglv, item.getGoodRate() + "%" + "");
+            java.text.NumberFormat percentFormat = java.text.NumberFormat.getPercentInstance();
+
+            //自动转换成百分比显示..
+            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double) (item.getGoodRate() * 0.01), 2) + "%"));
         }
 
         // 认证
@@ -77,5 +80,17 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
 
 //        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;
 //        helper.setRating(R.id.rb_star1, stars);
+    }
+
+    /**
+     * 保留几位小数
+     *
+     * @param a
+     * @param n
+     * @return
+     */
+    public double SplitAndRound(double a, int n) {
+        a = a * Math.pow(10, n);
+        return (Math.round(a)) / (Math.pow(10, n));
     }
 }

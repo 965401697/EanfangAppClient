@@ -465,7 +465,11 @@ public class AddTroubleActivity extends BaseClientActivity {
                     showToast("请选择故障设备");
                 }
                 break;
+
+            default:
+                break;
         }
+
     }
 
     public void doVerify() {

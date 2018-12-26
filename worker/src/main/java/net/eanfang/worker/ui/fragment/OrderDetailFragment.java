@@ -183,7 +183,7 @@ public class OrderDetailFragment extends BaseFragment {
         });
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter  adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!PermKit.get().getRepairBughandlePerm()) return;
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("faultDeatail", mDataList.get(position));
@@ -209,7 +209,7 @@ public class OrderDetailFragment extends BaseFragment {
                     }
                     hashMap.put("orderNum", bean.getOrderNum());
                     hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
-                    hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    hashMap.put("workerName", V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
                     hashMap.put("status", String.valueOf(bean.getStatus()));
                     hashMap.put("shareType", "1");
 

@@ -36,6 +36,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.WorkDetailHonorAdapter;
+import net.eanfang.worker.ui.adapter.WorkDetailQualificationAdapter;
 import net.eanfang.worker.ui.adapter.WorkerDetailAdapter;
 
 import java.util.ArrayList;
@@ -139,6 +140,9 @@ public class WorkDetailActivity extends BaseActivity {
     TextView tvEvaluteOrder;
     @BindView(R.id.rv_honor)
     RecyclerView rvHonor;
+    //资质证书
+    @BindView(R.id.rv_qualification)
+    RecyclerView rvQualification;
 
     private boolean isTypeMore = false;
     // 业务领域查看更多
@@ -180,6 +184,10 @@ public class WorkDetailActivity extends BaseActivity {
      * 荣誉证书
      */
     private WorkDetailHonorAdapter workDetailHonorAdapter;
+    /**
+     * 资质证书
+     */
+    private WorkDetailQualificationAdapter workDetailQualificationAdapter;
 
 
     @Override
@@ -198,9 +206,14 @@ public class WorkDetailActivity extends BaseActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvHonor.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager_qualification = new LinearLayoutManager(this);
+        layoutManager_qualification.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvQualification.setLayoutManager(layoutManager_qualification);
 
         workDetailHonorAdapter = new WorkDetailHonorAdapter();
         workDetailHonorAdapter.bindToRecyclerView(rvHonor);
+        workDetailQualificationAdapter = new WorkDetailQualificationAdapter();
+        workDetailQualificationAdapter.bindToRecyclerView(rvQualification);
 
         // 正常报修流程 获取数据
         toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
@@ -488,6 +501,9 @@ public class WorkDetailActivity extends BaseActivity {
     private void initHonor(WorkerEntity bean) {
         if (bean.getHonorList() != null) {
             workDetailHonorAdapter.setNewData(bean.getHonorList());
+        }
+        if (bean.getQualificationList() != null) {
+            workDetailQualificationAdapter.setNewData(bean.getQualificationList());
         }
     }
 

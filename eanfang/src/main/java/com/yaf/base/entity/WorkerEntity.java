@@ -89,6 +89,9 @@ public class WorkerEntity implements Serializable {
     @TableField(exist = false)
     private List<HonorCertificateEntity> honorList;
 
+    @TableField(exist = false)
+    private List<QualificationCertificateEntity> qualificationList;
+
     private Integer qualification;
 
     private Integer trainStatus;

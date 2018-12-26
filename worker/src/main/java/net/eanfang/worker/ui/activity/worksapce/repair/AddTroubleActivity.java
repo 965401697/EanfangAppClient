@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.annimon.stream.Stream;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -27,7 +26,6 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -133,6 +131,9 @@ public class AddTroubleActivity extends BaseWorkerActivity {
      * 视频路径
      */
     private String mVieoPath = "";
+    //设备品牌回调 code
+    private final int REQUEST_DEVICE_BRAND_CODE = 1001;
+    private final int RESULT_DEVICE_BRAND_CODE = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,6 +253,8 @@ public class AddTroubleActivity extends BaseWorkerActivity {
 
 //            bean.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
 //            bean.setRepairCount(custDeviceEntity.getDeviceVersion());
+        }else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
+            tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
         }
     }
 
@@ -273,7 +276,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
 //            return false;
 //        }
         if (TextUtils.isEmpty(evFaultDescripte.getText().toString().trim())) {
-            showToast("请填写故障现象");
+            showToast("请填写故障详细描述");
             return false;
         }
         return true;
@@ -312,9 +315,12 @@ public class AddTroubleActivity extends BaseWorkerActivity {
                     showToast("请先选择故障设备");
                     return;
                 }
-                PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
-                    tvDeviceBrand.setText(item);
-                }));
+                Bundle bundle_device = new Bundle();
+                bundle_device.putString("busOneCode", busOneCode);
+                JumpItent.jump(AddTroubleActivity.this, DeviceBrandActivity.class, bundle_device, REQUEST_DEVICE_BRAND_CODE);
+//                PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
+//                    tvDeviceBrand.setText(item);
+//                }));
                 break;
             // 故障设备型号
             case R.id.ll_devicesModel:
@@ -328,6 +334,8 @@ public class AddTroubleActivity extends BaseWorkerActivity {
                 } else {
                     showToast("请选择故障设备");
                 }
+                break;
+            default:
                 break;
         }
     }
