@@ -42,7 +42,7 @@
             android:layout_marginRight="@dimen/dimen_36"
             android:src="@mipmap/filiale_company"
             android:visibility="gone" />
-        
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/dimen_12"
