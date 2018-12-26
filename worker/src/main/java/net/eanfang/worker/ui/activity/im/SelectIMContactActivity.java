@@ -542,7 +542,8 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         if (mUserIdList.size() == 0) {
             mHeaderIconAdapter.getData().clear();
             rlSelected.setVisibility(View.GONE);
-            ToastUtil.get().showToast(this, "选择的人员已在群内");
+            ToastUtil.get().showToast(this, "添加成功");
+            finishSelf();
             return;
         }
 

@@ -217,41 +217,43 @@ public class SelectIMContactActivity extends BaseClientActivity {
             }
         });
 
-        initViews();
         //区分个人和公司 个人不现实公司
         if (EanfangApplication.get().getCompanyId() != 0) {
             getData();
         } else {
             findViewById(R.id.rl_organization).setVisibility(View.GONE);
         }
+        initViews();
     }
 
     private void getData() {
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_ALL_LIST)
                 .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
-                    if (list.size() > 0) {
-                        List<OrgEntity> data = new ArrayList<>();
-                        rvCompany.setLayoutManager(new LinearLayoutManager(SelectIMContactActivity.this));
+                    runOnUiThread(() -> {
+                        if (list.size() > 0) {
+                            List<OrgEntity> data = new ArrayList<>();
+                            rvCompany.setLayoutManager(new LinearLayoutManager(SelectIMContactActivity.this));
 
-                        CompanyListAdapter adapter = new CompanyListAdapter();
-                        adapter.bindToRecyclerView(rvCompany);
-                        //排除个人
-                        data = Stream.of(list).filter(bean -> bean.getOrgId() != 0).toList();
-                        adapter.addData(data);
-                        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                                Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
-                                intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
-                                intent.putExtra("companyId", String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()));
-                                intent.putExtra("companyName", ((OrgEntity) adapter.getData().get(position)).getOrgName());
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            }
-                        });
-                    }
+                            CompanyListAdapter adapter = new CompanyListAdapter();
+                            adapter.bindToRecyclerView(rvCompany);
+                            //排除个人
+                            data = Stream.of(list).filter(bean -> bean.getOrgId() != 0).toList();
+                            adapter.addData(data);
+                            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                    Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
+                                    intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
+                                    intent.putExtra("companyId", String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()));
+                                    intent.putExtra("companyName", ((OrgEntity) adapter.getData().get(position)).getOrgName());
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+                    });
                 }));
     }
 
@@ -536,7 +538,8 @@ public class SelectIMContactActivity extends BaseClientActivity {
         if (mUserIdList.size() == 0) {
             mHeaderIconAdapter.getData().clear();
             rlSelected.setVisibility(View.GONE);
-            ToastUtil.get().showToast(this, "选择的人员已在群内");
+            ToastUtil.get().showToast(this, "添加成功");
+            finishSelf();
             return;
         }
 
