@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
@@ -30,6 +31,7 @@ import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
+import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -64,6 +66,8 @@ public class SelectIMContactActivity extends BaseClientActivity {
     RelativeLayout rlSelected;
     @BindView(R.id.recycler_view_hori)
     RecyclerView recyclerViewHori;
+    @BindView(R.id.rv_company)
+    RecyclerView rvCompany;
     private HeaderIconAdapter mHeaderIconAdapter;
     private Bundle bundle;
 
@@ -151,7 +155,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
             //是否是合成的头像
-            isCompound =getIntent().getBooleanExtra("isCompound", true);
+            isCompound = getIntent().getBooleanExtra("isCompound", true);
         } else {
             setRightTitle("发送");
         }
@@ -178,20 +182,20 @@ public class SelectIMContactActivity extends BaseClientActivity {
             }
         });
 
-        findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Intent intent = new Intent(SelectIMContactActivity.this, SelectOrganizationActivity.class);
-                Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
-                intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
-                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+//        findViewById(R.id.rl_organization).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Intent intent = new Intent(SelectIMContactActivity.this, SelectOrganizationActivity.class);
+//                Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
+//                intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
+//                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+//                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
         findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,6 +218,41 @@ public class SelectIMContactActivity extends BaseClientActivity {
         });
 
         initViews();
+        //区分个人和公司 个人不现实公司
+        if (EanfangApplication.get().getCompanyId() != 0) {
+            getData();
+        } else {
+            findViewById(R.id.rl_organization).setVisibility(View.GONE);
+        }
+    }
+
+    private void getData() {
+        EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_ALL_LIST)
+                .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
+                    if (list.size() > 0) {
+                        List<OrgEntity> data = new ArrayList<>();
+                        rvCompany.setLayoutManager(new LinearLayoutManager(SelectIMContactActivity.this));
+
+                        CompanyListAdapter adapter = new CompanyListAdapter();
+                        adapter.bindToRecyclerView(rvCompany);
+                        //排除个人
+                        data = Stream.of(list).filter(bean -> bean.getOrgId() != 0).toList();
+                        adapter.addData(data);
+                        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                                Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
+                                intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
+                                intent.putExtra("companyId", String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()));
+                                intent.putExtra("companyName", ((OrgEntity) adapter.getData().get(position)).getOrgName());
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                }));
     }
 
     private void initViews() {
@@ -231,6 +270,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
                 }
             }
         });
+        rvCompany.setNestedScrollingEnabled(false);
     }
 
     @Subscribe
@@ -501,8 +541,8 @@ public class SelectIMContactActivity extends BaseClientActivity {
         }
 
         mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
-        if(isCompound)
-        CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
+        if (isCompound)
+            CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
 
 
         JSONArray array = new JSONArray();
