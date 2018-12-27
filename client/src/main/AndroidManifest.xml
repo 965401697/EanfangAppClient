@@ -166,7 +166,9 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="net.eanfang.client"
                     android:path="/messagelist_notify"
@@ -541,9 +543,6 @@
             android:name=".ui.activity.worksapce.openshop.OpenShopLogWriteActivity"
             android:screenOrientation="portrait" />
         <!-- 布防日志 -->
-        <activity
-            android:name=".ui.activity.worksapce.defendlog.DefendLogActivity"
-            android:screenOrientation="portrait" />
         <!-- 布防日志的填写和展示详情 -->
         <activity
             android:name=".ui.activity.worksapce.defendlog.DefendLogWriteActivity"
@@ -942,6 +941,7 @@
         <activity
             android:name=".ui.activity.im.SearchPersonCompanyActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.defendlog.FilterDefendLogActivity"></activity>
     </application>
 
 </manifest>

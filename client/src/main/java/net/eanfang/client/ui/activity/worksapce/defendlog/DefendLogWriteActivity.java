@@ -282,6 +282,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                 Intent in = new Intent(this, CreateGroupOrganizationActivity.class);
                 in.putExtra("isFrom", "OA");
                 in.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                in.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
                 in.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
@@ -294,6 +295,8 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                 break;
             case R.id.ll_comit:
                 sub();
+                break;
+            default:
                 break;
         }
     }

@@ -44,6 +44,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
     private String companyId;
     private String companyName;
+    private String companyOrgCode;
 
 
     private List<TemplateBean> mTemplateBeanList = new ArrayList<>();
@@ -79,7 +80,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                     bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
                     intent.putExtras(bundle);
                     intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
-                    intent.putExtra("imgKey",getIntent().getStringExtra("imgKey"));
+                    intent.putExtra("imgKey", getIntent().getStringExtra("imgKey"));
                     intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
 
                     startActivity(intent);
@@ -92,6 +93,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
         companyId = getIntent().getStringExtra("companyId");
         companyName = getIntent().getStringExtra("companyName");
+        companyOrgCode = getIntent().getStringExtra("companyOrgCode");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -108,6 +110,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                     OrganizationBean bean = new OrganizationBean();
                     bean.setOrgName(companyName);
                     bean.setCompanyId(companyId);
+                    bean.setOrgCode(companyOrgCode);
                     bean.setStaff(list);
                     getSection(bean);
 
