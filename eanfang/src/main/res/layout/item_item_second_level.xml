@@ -31,7 +31,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dimen_36"
-        android:background="#f00"
         android:button="@null"
         android:clickable="false"
         android:focusable="false"
