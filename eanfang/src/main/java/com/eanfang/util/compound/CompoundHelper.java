@@ -124,9 +124,14 @@ public class CompoundHelper {
         num = list.size();
 
         for (String b : list) {
-
+            String imgUrl = null;
+            if (b.startsWith("http")) {
+                imgUrl = b;
+            } else {
+                imgUrl = BuildConfig.OSS_SERVER + b;
+            }
             //生成图片
-            Glide.with(context).load(BuildConfig.OSS_SERVER + b).asBitmap().into(new SimpleTarget<Bitmap>() {
+            Glide.with(context).load(imgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
 
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {

@@ -27,8 +27,11 @@ public class OrganizationPersonAdapter extends BaseQuickAdapter<TemplateBean.Pre
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
         helper.setText(R.id.tv_name, item.getName());
-        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
-
+        if (item.getProtraivat().startsWith("http:")) {
+            ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(item.getProtraivat());
+        } else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+        }
         if (item.isChecked()) {
             ((CheckBox) helper.getView(R.id.cb_check)).setChecked(true);
         } else {

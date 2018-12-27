@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -68,6 +69,10 @@ public class SelectIMContactActivity extends BaseClientActivity {
     RecyclerView recyclerViewHori;
     @BindView(R.id.rv_company)
     RecyclerView rvCompany;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_no_chat)
+    TextView tvNoChat;
     private HeaderIconAdapter mHeaderIconAdapter;
     private Bundle bundle;
 
@@ -84,6 +89,14 @@ public class SelectIMContactActivity extends BaseClientActivity {
     private ArrayList<String> mUserIdList = new ArrayList<String>();
     private ArrayList<String> mUserIconList = new ArrayList<String>();
     private boolean isCompound;
+
+    //常用联系人的选中容器
+    private ArrayList<TemplateBean.Preson> mSeletePrivateChat = new ArrayList<TemplateBean.Preson>();
+
+    private List<TemplateBean.Preson> pirvateChat;
+
+    private OrganizationPersonAdapter mChatAdapter;
+
     private Handler handler = new Handler() {
 
         @Override
@@ -224,6 +237,8 @@ public class SelectIMContactActivity extends BaseClientActivity {
             findViewById(R.id.rl_organization).setVisibility(View.GONE);
         }
         initViews();
+        //获得常用联系人的会话列表
+        getPrivateChat();
     }
 
     private void getData() {
@@ -515,7 +530,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
      */
     private void AddNumber() {
 
-        if (newPresonList.size() == 0) {
+        if (newPresonList.size() == 0 && mSeletePrivateChat.size() == 0) {
             ToastUtil.get().showToast(this, "至少选择一个好友");
             return;
         }
@@ -531,6 +546,16 @@ public class SelectIMContactActivity extends BaseClientActivity {
                 mUserIconList.add(p.getProtraivat());
             }
             mUserIdList.add(p.getId());
+        }
+
+        // 私聊选择人的筛选
+        for (TemplateBean.Preson p : mSeletePrivateChat) {
+            if (!mUserIconList.contains(p.getProtraivat())) {
+                mUserIconList.add(p.getProtraivat());
+            }
+            if (!mUserIdList.contains(p.getId())) {
+                mUserIdList.add(p.getId());
+            }
         }
 
         mUserIdList.removeAll(idList);
@@ -567,6 +592,63 @@ public class SelectIMContactActivity extends BaseClientActivity {
                     setResult(RESULT_OK);
                     endTransaction(true);
                 }));
+    }
+
+    private void getPrivateChat() {
+        if (RongIM.getInstance() != null)
+            RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                @Override
+                public void onSuccess(List<Conversation> conversations) {
+
+                    if (conversations != null && conversations.size() > 0) {
+                        pirvateChat = new ArrayList<>(conversations.size());
+                        for (Conversation s : conversations) {
+                            //如果名字为空的话 就不现实这天记录
+                            if (!TextUtils.isEmpty(s.getConversationTitle())) {
+                                TemplateBean.Preson preson = new TemplateBean.Preson();
+                                preson.setProtraivat(s.getPortraitUrl());
+                                preson.setId(s.getTargetId());
+                                preson.setName(s.getConversationTitle());
+                                pirvateChat.add(preson);
+                            }
+                        }
+
+
+                        runOnUiThread(() -> {
+                            if (pirvateChat.size() > 0) {
+                                recyclerView.setVisibility(View.VISIBLE);
+                                tvNoChat.setVisibility(View.GONE);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(SelectIMContactActivity.this));
+                                mChatAdapter = new OrganizationPersonAdapter(1);
+                                mChatAdapter.bindToRecyclerView(recyclerView);
+                                mChatAdapter.setNewData(pirvateChat);
+                                mChatAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                        //设置选中不选中
+                                        TemplateBean.Preson p = (TemplateBean.Preson) adapter.getData().get(position);
+                                        if (p.isChecked()) {
+                                            p.setChecked(false);
+                                            mSeletePrivateChat.remove(p);
+                                        } else {
+                                            p.setChecked(true);
+                                            mSeletePrivateChat.add(p);
+                                        }
+
+                                        adapter.notifyItemChanged(position);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            }, Conversation.ConversationType.PRIVATE);
     }
 
     /**
