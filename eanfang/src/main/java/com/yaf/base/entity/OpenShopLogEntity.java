@@ -7,11 +7,12 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -102,6 +103,8 @@ public class OpenShopLogEntity implements Serializable {
     //创建人部门信息
     @TableField(exist = false)
     private OrgEntity ownerDepartment;
+    // 是否已读 未读
+    private int newOrder;
 
     public UserEntity getAssigneeUser() {
         return assigneeUser;

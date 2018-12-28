@@ -110,6 +110,16 @@ public class WorkTalkListBean implements Serializable {
         private String ownerUserId;
         private int status;
         private int workClasses;
+        // 是否已读 未读
+        private int newOrder;
+
+        public int getNewOrder() {
+            return newOrder;
+        }
+
+        public void setNewOrder(int newOrder) {
+            this.newOrder = newOrder;
+        }
 
         public AssigneeCompanyEntityBean getAssigneeCompanyEntity() {
             return assigneeCompanyEntity;

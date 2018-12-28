@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.activity.worksapce.oa.check;
+package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -35,44 +35,54 @@ import butterknife.OnClick;
 
 /**
  * @author guanluocang
- * @data 2018/11/8
- * @description 筛选 设备点检
+ * @data 2018/12/27
+ * @description 筛选布防日志
  */
 
-public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener, RadioGroup.OnCheckedChangeListener {
+public class FilterDefendLogActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener, RadioGroup.OnCheckedChangeListener {
 
-    @BindView(R.id.recycler_view_personal)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerViewPersonal;
-    @BindView(R.id.tv_check_time)
+    @BindView(R.id.tv_start)
     TextView tvCheckTime;
-    @BindView(R.id.ll_check_time)
+    @BindView(R.id.ll_start)
     LinearLayout llCheckTime;
-    @BindView(R.id.tv_update_time)
+    @BindView(R.id.tv_end)
     TextView tvUpdateTime;
-    @BindView(R.id.ll_update_time)
+    @BindView(R.id.ll_end)
     LinearLayout llUpdateTime;
     @BindView(R.id.tv_cancle)
     TextView tvCancle;
     @BindView(R.id.tv_sure)
     TextView tvSure;
 
-    @BindView(R.id.rb_device_checking)
-    RadioButton rbDeviceChecking;
-    @BindView(R.id.rb_device_wait)
-    RadioButton rbDeviceWait;
-    @BindView(R.id.rb_device_again)
-    RadioButton rbDeviceAgain;
-    @BindView(R.id.rb_device_finfish)
-    RadioButton rbDeviceFinfish;
+    @BindView(R.id.rb_device_read)
+    RadioButton rbDeviceRead;
+    @BindView(R.id.rb_device_unread)
+    RadioButton rbDeviceUnread;
     @BindView(R.id.rg_status)
     RadioGroup rgStatus;
-    @BindView(R.id.tv_select_person)
-    TextView tvSelectPerson;
+    /**
+     * 面谈对象筛选
+     */
+    @BindView(R.id.recycler_talk)
+    RecyclerView recyclerTalk;
+    @BindView(R.id.ll_talk)
+    LinearLayout llTalk;
+
+    public int mFlag;//人员选择器的标志位
 
 
     private OAPersonAdaptet oaPersonAdaptet;
 
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
+    /**
+     * 面谈对象
+     */
+    private OAPersonAdaptet oaPersonAdaptet_talk;
+
+    private ArrayList<TemplateBean.Preson> newPresonList_talk = new ArrayList<>();
+
 
     private TextView mCurrentText;
 
@@ -85,14 +95,23 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
      */
     private int mStatus = 100;
     /**
-     * 点检人  审核人
+     * 发送人
      */
     private String mPersonal = "";
+    /**
+     * 面谈对象
+     */
+    private String mPersonal_talk = "";
+
+    /**
+     * 面谈对象筛选
+     */
+    private String mModle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filtrate_check);
+        setContentView(R.layout.activity_filter_defend_log);
         ButterKnife.bind(this);
         initView();
     }
@@ -101,29 +120,44 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
         setTitle("筛选");
         setLeftBack();
         mType = getIntent().getIntExtra("type", 0);
+        mModle = getIntent().getStringExtra("modle");
         if (mType == 0) {// 创建
-            tvSelectPerson.setText("按点检人筛选");
             mPersonal = "assigneeUserId  ";
+            mPersonal_talk = "assigneeUserId  ";
         } else {// 处理
-            tvSelectPerson.setText("按审核人筛选");
             mPersonal = "createUserId";
+            mPersonal_talk = "createUserId";
         }
         recyclerViewPersonal.setLayoutManager(new GridLayoutManager(this, 5));
-
-        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>());
+        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 2);
         recyclerViewPersonal.setAdapter(oaPersonAdaptet);
 
+        recyclerTalk.setLayoutManager(new GridLayoutManager(this, 5));
+        oaPersonAdaptet_talk = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 1);
+        recyclerTalk.setAdapter(oaPersonAdaptet_talk);
+
         rgStatus.setOnCheckedChangeListener(this);
+        if (mModle != null) {
+            if (mModle.equals("talk")) {
+                llTalk.setVisibility(View.VISIBLE);
+            } else if (mModle.equals("transfer")) {
+                rbDeviceRead.setText("完成交接");
+                rbDeviceUnread.setText("待确认");
+            }
+        } else {
+            llTalk.setVisibility(View.GONE);
+        }
+
     }
 
-    @OnClick({R.id.ll_check_time, R.id.ll_update_time, R.id.tv_cancle, R.id.tv_sure})
+    @OnClick({R.id.ll_start, R.id.ll_end, R.id.tv_cancle, R.id.tv_sure})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_check_time:
+            case R.id.ll_start:
                 mCurrentText = tvCheckTime;
                 new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
-            case R.id.ll_update_time:
+            case R.id.ll_end:
                 mCurrentText = tvUpdateTime;
                 new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
@@ -132,6 +166,8 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
                 break;
             case R.id.tv_sure:
                 sub();
+                break;
+            default:
                 break;
         }
     }
@@ -154,6 +190,20 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
             } else {
                 TemplateBean.Preson p = newPresonList.get(0);
                 queryEntry.getEquals().put(mPersonal, p.getUserId());
+            }
+        }
+        if (newPresonList_talk.size() != 0) {
+
+            if (newPresonList_talk.size() > 1) {
+                List<String> idList = new ArrayList<>();
+
+                for (TemplateBean.Preson p : newPresonList_talk) {
+                    idList.add(p.getUserId());
+                }
+                queryEntry.getIsIn().put(mPersonal_talk, idList);
+            } else {
+                TemplateBean.Preson p = newPresonList_talk.get(0);
+                queryEntry.getEquals().put(mPersonal_talk, p.getUserId());
             }
         }
 
@@ -180,20 +230,40 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
 
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
-
         if (presonList.size() > 0) {
-
-
-            Set hashSet = new HashSet();
-            hashSet.addAll(oaPersonAdaptet.getData());
-            hashSet.addAll(presonList);
-
-            if (newPresonList.size() > 0) {
-                newPresonList.clear();
+            if (mFlag == 1) {
+                Set hashSet_talk = new HashSet();
+                hashSet_talk.addAll(oaPersonAdaptet_talk.getData());
+                hashSet_talk.addAll(presonList);
+                if (newPresonList_talk.size() > 0) {
+                    newPresonList_talk.clear();
+                }
+                newPresonList_talk.addAll(hashSet_talk);
+                oaPersonAdaptet_talk.setNewData(newPresonList_talk);
+            } else if (mFlag == 2) {
+                Set hashSet = new HashSet();
+                hashSet.addAll(oaPersonAdaptet.getData());
+                hashSet.addAll(presonList);
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
+                }
+                newPresonList.addAll(hashSet);
+                oaPersonAdaptet.setNewData(newPresonList);
             }
-            newPresonList.addAll(hashSet);
-            oaPersonAdaptet.setNewData(newPresonList);
+        }
+    }
 
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case R.id.rb_device_read://("未读",1)
+                mStatus = 1;
+                break;
+            case R.id.rb_device_unread:// "已读",0
+                mStatus = 0;
+                break;
+            default:
+                break;
 
         }
     }
@@ -210,24 +280,7 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
         }
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.rb_device_checking:// "点检中",0
-                mStatus = 0;
-                break;
-            case R.id.rb_device_wait://("待审核",1)
-                mStatus = 1;// 签退
-                break;
-            case R.id.rb_device_again://("重新整改",2)
-                mStatus = 2;
-                break;
-            case R.id.rb_device_finfish://("点检完毕",3)
-                mStatus = 3;
-                break;
-            default:
-                break;
-
-        }
+    public void setFlag(int flag) {
+        this.mFlag = flag;
     }
 }

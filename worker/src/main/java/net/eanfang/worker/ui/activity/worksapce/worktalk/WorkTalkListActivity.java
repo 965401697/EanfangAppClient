@@ -58,7 +58,7 @@ public class WorkTalkListActivity extends BaseActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTalkListFragment.getInstance(title, mType));
+//            mFragments.add(WorkTalkListFragment.getInstance(title, mType));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

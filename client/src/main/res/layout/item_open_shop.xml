@@ -17,6 +17,21 @@
         android:paddingRight="@dimen/dimen_22">
 
         <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_30"
+            android:background="@drawable/select_worker"
+            android:paddingLeft="@dimen/dimen_10"
+            android:paddingRight="@dimen/dimen_10"
+            android:text="未读"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_12"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,13 +40,7 @@
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_13" />
 
-        <TextView
-            android:id="@+id/tv_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="待付款"
-            android:textColor="@color/color_bottom"
-            android:textSize="@dimen/textSize_13" />
+
     </LinearLayout>
 
     <View
@@ -50,8 +59,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/dimen_38"
-          >
+            android:paddingLeft="@dimen/dimen_38">
 
             <TextView
 
@@ -77,18 +85,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="接收人"
-                android:visibility="gone"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_13"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="联系电话"
-                android:visibility="gone"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_13"
+                android:visibility="gone" />
 
 
         </LinearLayout>
@@ -122,18 +130,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:visibility="gone"
                 android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_13"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_preson_phone"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/color_client_neworder"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone" />
 
 
         </LinearLayout>

@@ -6,7 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -50,7 +50,7 @@ import butterknife.OnClick;
 public class ServicedWorkerFragment extends BaseFragment {
 
     private RecyclerView mRecyclerView;
-    private TextView mTvNoData;
+    private LinearLayout llnodata;
     private List<WorkerEntity> selectWorkerList = new ArrayList<>();
 
     private RepairOrderEntity toRepairBean;
@@ -90,7 +90,7 @@ public class ServicedWorkerFragment extends BaseFragment {
     @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_selectedWorker);
-        mTvNoData = findViewById(R.id.tv_noData);
+        llnodata = findViewById(R.id.ll_nodata);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
@@ -146,10 +146,10 @@ public class ServicedWorkerFragment extends BaseFragment {
     private void initAdapter() {
         if (selectWorkerList == null || selectWorkerList.size() == 0) {
             mRecyclerView.setVisibility(View.GONE);
-            mTvNoData.setVisibility(View.VISIBLE);
+            llnodata.setVisibility(View.VISIBLE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
-            mTvNoData.setVisibility(View.GONE);
+            llnodata.setVisibility(View.GONE);
             selectWorkerAdapter.refreshList(selectWorkerList);
             selectWorkerAdapter.notifyDataSetChanged();
         }
